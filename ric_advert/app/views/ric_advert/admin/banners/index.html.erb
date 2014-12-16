@@ -1,0 +1,53 @@
+<table>
+	<thead>
+		<th><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></th>
+		<th><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></th>
+		<th><%= RicAdvert.banner_model.human_attribute_name('kind').capitalize %></th>
+		<th colspan="2"></th>
+	</thead>
+	<tbody>
+		<tr><td colspan="5"><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.sofar_invalid") %></td></tr>
+		<% @sofar_invalid_banners.each do |banner| %>
+			<tr>
+				<td><%= link_to banner.advertiser.name, admin_advertiser_path(banner.advertiser) %></td>
+				<td><%= link_to banner.name, admin_banner_path(banner) %></td>
+				<td><%= banner.kind %></td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(banner), "data-no-turbolink" => true %>
+				</td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+				</td>
+			</tr>
+		<% end %>
+		<tr><td colspan="5"><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.valid") %></td></tr>
+		<% @valid_banners.each do |banner| %>
+			<tr>
+				<td><%= link_to banner.advertiser.name, admin_advertiser_path(banner.advertiser) %></td>
+				<td><%= link_to banner.name, admin_banner_path(banner) %></td>
+				<td><%= banner.kind %></td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(banner), "data-no-turbolink" => true %>
+				</td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+				</td>
+			</tr>
+		<% end %>
+		<tr><td colspan="5"><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.already_invalid") %></td></tr>
+		<% @already_invalid_banners.each do |banner| %>
+			<tr>
+				<td><%= link_to banner.advertiser.name, admin_advertiser_path(banner.advertiser) %></td>
+				<td><%= link_to banner.name, admin_banner_path(banner) %></td>
+				<td><%= banner.kind %></td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(banner), "data-no-turbolink" => true %>
+				</td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= render partial: "links" %>

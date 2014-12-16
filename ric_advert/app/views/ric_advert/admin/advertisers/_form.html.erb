@@ -1,0 +1,6 @@
+<%= form_for(@advertiser, url: (@advertiser.id.nil? ? admin_advertisers_path : admin_advertiser_path(@advertiser))) do |f| %>
+	
+	<%= f.text_field :name %><br/>
+	<%= f.submit %>
+
+<% end %>

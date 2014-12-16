@@ -1,0 +1,62 @@
+<table>
+	<tbody>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></td>
+			<td><%= link_to @banner.advertiser.name, observer_advertiser_path(@banner.advertiser) %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></td>
+			<td><%= @banner.name %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('url').capitalize %></td>
+			<td><%= @banner.url %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('kind').capitalize %></td>
+			<td><%= @banner.kind %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('image').capitalize %></td>
+			<td><%= (@banner.image.exists? ? image_tag(@banner.image.url(:thumbnail)) : "" ) %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('valid_from').capitalize %></td>
+			<td><%= l(@banner.valid_from) if @banner.valid_from %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('valid_to').capitalize %></td>
+			<td><%= l(@banner.valid_to) if @banner.valid_to %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('priority').capitalize %></td>
+			<td><%= @banner.priority %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('impressions').capitalize %></td>
+			<td><%= @banner.impressions %></td>
+		</tr>
+		<tr>
+			<td><%= RicAdvert.banner_model.human_attribute_name('clicks').capitalize %></td>
+			<td><%= @banner.clicks %></td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<th><%= RicAdvert.banner_statistic_model.human_attribute_name('ip').capitalize %></th>
+		<th><%= RicAdvert.banner_statistic_model.human_attribute_name('impressions').capitalize %></th>
+		<th><%= RicAdvert.banner_statistic_model.human_attribute_name('clicks').capitalize %></th>
+	</thead>
+	<tbody>
+		<% @banner_statistics.each do |banner_statistic| %>
+			<tr>
+				<td><%= banner_statistic.ip %></td>
+				<td><%= banner_statistic.impressions %></td>
+				<td><%= banner_statistic.clicks %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= paginate @banner_statistics %>
