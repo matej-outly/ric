@@ -102,7 +102,7 @@ module RicAdvert
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def banner_params
-						params.require(:banner).permit(:advertiser_id, :name, :kind, :image, :valid_from, :valid_to, :priority)
+						params.require(:banner).permit(:advertiser_id, :name, :url, :kind, :image, :valid_from, :valid_to, :priority)
 					end
 
 					# 
