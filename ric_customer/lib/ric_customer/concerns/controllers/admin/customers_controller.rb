@@ -39,8 +39,11 @@ module RicCustomer
 					#
 					def index
 						@search_customer = RicCustomer.customer_model.new(load_params_from_session)
-						@customers = RicCustomer.customer_model.search(load_params_from_session.symbolize_keys).order(last_name: :asc, first_name: :asc).page(params[:page])
-						
+						@customers = RicCustomer.customer_model.search(load_params_from_session.symbolize_keys).order(last_name: :asc, first_name: :asc)
+						if request.format.to_sym == :html
+							@customers = @customers.page(params[:page])
+						end
+
 						respond_to do |format|
 							format.html
 							format.xls
