@@ -1,0 +1,42 @@
+<table>
+	<tbody>
+		<tr>
+			<td><%= RicNewsletter.newsletter_model.human_attribute_name('created_at').capitalize %></td>
+			<td><%= l(@newsletter.created_at) if @newsletter.created_at %></td>
+		</tr>
+		<tr>
+			<td><%= RicNewsletter.newsletter_model.human_attribute_name('subject').capitalize %></td>
+			<td><%= @newsletter.subject %></td>
+		</tr>
+		<tr>
+			<td><%= RicNewsletter.newsletter_model.human_attribute_name('content').capitalize %></td>
+			<td><%= @newsletter.content.html_safe if @newsletter.content %></td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<th><%= RicNewsletter.sent_newsletter_model.human_attribute_name('created_at').capitalize %></th>
+		<th><%= RicNewsletter.sent_newsletter_model.human_attribute_name('sent_at').capitalize %></th>
+		<th><%= RicNewsletter.sent_newsletter_model.human_attribute_name('done').capitalize %></th>
+		<th colspan="2"></th>
+	</thead>
+	<tbody>
+		<% @newsletter.sent_newsletters.order(created_at: :desc).each do |sent_newsletter| %>
+			<tr>
+				<td><%= l(sent_newsletter.created_at) if sent_newsletter.created_at %></td>
+				<td><%= l(sent_newsletter.sent_at) if sent_newsletter.sent_at %></td>
+				<td><%= (sent_newsletter.sent_count.to_s + "/" + sent_newsletter.customers_count.to_s) if sent_newsletter.sent_count && sent_newsletter.customers_count %></td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-mail\"></i>".html_safe + t('general.action.resend'), resend_admin_sent_newsletter_path(sent_newsletter), data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+				</td>
+				<td class="action">
+					<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_sent_newsletter_path(sent_newsletter), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= render partial: "links" %>

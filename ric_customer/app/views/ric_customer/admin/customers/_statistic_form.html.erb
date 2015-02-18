@@ -1,0 +1,13 @@
+<% if !@statistic_columns.empty? %>
+	<%= gumby_form_for(@search_customer, url: statistic_search_admin_customers_path(@statistic)) do |f| %>
+		<% @statistic_columns.each do |column| %>
+			<% 
+				column_spec = @search_customer.class.method("#{@statistic.to_s}_column_spec").call(column)
+				form_method = ( column_spec[:form_method] ? column_spec[:form_method].to_sym : :text_field )
+				form_method_params = [column].concat( column_spec[:form_method_params] ? column_spec[:form_method_params] : [] )
+			%>
+			<%= f.method(form_method).call(*form_method_params) %>
+		<% end %>
+		<%= f.primary_button_row :submit, label: t("helpers.submit.search", default: "Search").capitalize %>
+	<% end %>
+<% end %>

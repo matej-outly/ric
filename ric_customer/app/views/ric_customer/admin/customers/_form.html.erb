@@ -1,0 +1,9 @@
+<%= gumby_form_for(@customer, url: (@customer.id.nil? ? admin_customers_path : admin_customer_path(@customer))) do |f| %>
+	
+	<%= f.text_input_row :first_name, :text_field %>
+	<%= f.text_input_row :last_name, :text_field %>
+	<%= f.text_input_row :email, :email_field %>
+	<%= f.text_input_row :phone, :text_field %>
+	<%= f.primary_button_row :submit %>
+
+<% end %>
