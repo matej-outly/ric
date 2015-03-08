@@ -1,37 +1,38 @@
-<table>
-	<tbody>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></td>
-			<td><%= link_to @banner.advertiser.name, admin_advertiser_path(@banner.advertiser) %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></td>
-			<td><%= @banner.name %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('url').capitalize %></td>
-			<td><%= @banner.url %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('kind').capitalize %></td>
-			<td><%= @banner.kind %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('image').capitalize %></td>
-			<td><%= (@banner.image.exists? ? image_tag(@banner.image.url(:thumbnail)) : "" ) %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('valid_from').capitalize %></td>
-			<td><%= l(@banner.valid_from) if @banner.valid_from %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('valid_to').capitalize %></td>
-			<td><%= l(@banner.valid_to) if @banner.valid_to %></td>
-		</tr>
-		<tr>
-			<td><%= RicAdvert.banner_model.human_attribute_name('priority').capitalize %></td>
-			<td><%= @banner.priority %></td>
-		</tr>
-	</tbody>
-</table>
-<%= render partial: "links" %>
+<%= render layout: "layout" do %>
+	<table>
+		<tbody>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></td>
+				<td><%= link_to @banner.advertiser.name, admin_advertiser_path(@banner.advertiser) %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></td>
+				<td><%= @banner.name %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('url').capitalize %></td>
+				<td><%= @banner.url %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('kind').capitalize %></td>
+				<td><%= @banner.kind %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('image').capitalize %></td>
+				<td><%= (@banner.image.exists? ? image_tag(@banner.image.url(:thumbnail)) : "" ) %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('valid_from').capitalize %></td>
+				<td><%= l(@banner.valid_from) if @banner.valid_from %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('valid_to').capitalize %></td>
+				<td><%= l(@banner.valid_to) if @banner.valid_to %></td>
+			</tr>
+			<tr>
+				<td><%= RicAdvert.banner_model.human_attribute_name('priority').capitalize %></td>
+				<td><%= @banner.priority %></td>
+			</tr>
+		</tbody>
+	</table>
+<% end %>

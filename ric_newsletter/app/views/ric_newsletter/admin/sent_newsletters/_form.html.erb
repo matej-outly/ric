@@ -8,7 +8,7 @@
 		customers_content += "..." 
 	%>
 	<%= f.read_only_row :customers, customers_content %>
-	<%= f.picker_row :newsletter_id, RicNewsletter::Newsletter.order(created_at: :desc), :id, :identifying_name %>
+	<%= f.picker_row :newsletter_id, RicNewsletter.newsletter_model.order(created_at: :desc), :id, :identifying_name %>
 	<%= f.primary_button_row :submit %>
 
 <% end %>

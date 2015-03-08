@@ -1,11 +1,24 @@
 <ul>
+	
+	<!-- Index -->
 	<li><%= link_to "<i class=\"icon-list\"></i>".html_safe + t('general.action.index'), admin_banners_path, class: (params[:action] == 'index' ? 'disabled' : '') %></li>
+	
+	<!-- New -->
 	<li><%= link_to "<i class=\"icon-plus\"></i>".html_safe + t('general.action.new'), new_admin_banner_path, "data-no-turbolink" => true, class: (params[:action] == 'new' || params[:action] == 'create' ? 'disabled' : '') %></li>
+	
 	<% if params[:action] == 'show' %>
+		
+		<!-- Edit -->
 		<li><%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(@banner), "data-no-turbolink" => true %></li>
+		
+		<!-- Destroy -->
 		<li><%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(@banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %></li>
+
 	<% end %>
 	<% if params[:action] == 'edit' || params[:action] == 'update' %>
+		
+		<!-- Show -->
 		<li><%= link_to "<i class=\"icon-search\"></i>".html_safe + t('general.action.show'), admin_banner_path(@banner) %></li>
+
 	<% end %>
 </ul>

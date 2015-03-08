@@ -15,12 +15,12 @@ module RicMagazine
 		#
 		# Models
 		#
-		#require 'ric_magaazine/concerns/models/article'
+		require 'ric_magazine/concerns/models/article'
 		
 		#
 		# Controllers
 		#
-		#require 'ric_magaazine/concerns/controllers/admin/articles_controller'
+		require 'ric_magazine/concerns/controllers/admin/articles_controller'
 
 		isolate_namespace RicMagazine
 	end

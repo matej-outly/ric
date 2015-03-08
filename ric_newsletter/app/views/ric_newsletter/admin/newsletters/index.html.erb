@@ -1,23 +1,24 @@
-<table>
-	<thead>
-		<th><%= RicNewsletter.newsletter_model.human_attribute_name('created_at').capitalize %></th>
-		<th><%= RicNewsletter.newsletter_model.human_attribute_name('subject').capitalize %></th>
-		<th colspan="2"></th>
-	</thead>
-	<tbody>
-		<% @newsletters.each do |newsletter| %>
-			<tr>
-				<td><%= l(newsletter.created_at) %></td>
-				<td><%= link_to newsletter.subject, admin_newsletter_path(newsletter) %></td>
-				<td class="action">
-					<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_newsletter_path(newsletter), "data-no-turbolink" => true %>
-				</td>
-				<td class="action">
-					<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_newsletter_path(newsletter), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
-				</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-<%= paginate @newsletters %>
-<%= render partial: "links" %>
+<%= render layout: "layout" do %>
+	<table>
+		<thead>
+			<th><%= RicNewsletter.newsletter_model.human_attribute_name('created_at').capitalize %></th>
+			<th><%= RicNewsletter.newsletter_model.human_attribute_name('subject').capitalize %></th>
+			<th colspan="2"></th>
+		</thead>
+		<tbody>
+			<% @newsletters.each do |newsletter| %>
+				<tr>
+					<td><%= l(newsletter.created_at) %></td>
+					<td><%= link_to newsletter.subject, admin_newsletter_path(newsletter) %></td>
+					<td class="action">
+						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_newsletter_path(newsletter), "data-no-turbolink" => true %>
+					</td>
+					<td class="action">
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_newsletter_path(newsletter), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<%= paginate @newsletters %>
+<% end %>

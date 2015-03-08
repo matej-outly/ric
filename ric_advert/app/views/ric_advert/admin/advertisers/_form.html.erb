@@ -1,6 +1,6 @@
-<%= form_for(@advertiser, url: (@advertiser.id.nil? ? admin_advertisers_path : admin_advertiser_path(@advertiser))) do |f| %>
+<%= gumby_form_for(@advertiser, url: (@advertiser.id.nil? ? admin_advertisers_path : admin_advertiser_path(@advertiser))) do |f| %>
 	
-	<%= f.text_field :name %><br/>
-	<%= f.submit %>
+	<%= f.text_input_row :name, :text_field %>
+	<%= f.primary_button_row :submit %>
 
 <% end %>

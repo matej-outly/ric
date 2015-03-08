@@ -1,0 +1,24 @@
+<%= render layout: "layout" do %>
+	<table>
+		<thead>
+			<th><%= RicMagazine.article_model.human_attribute_name('published_at').capitalize %></th>
+			<th><%= RicMagazine.article_model.human_attribute_name('title').capitalize %></th>
+			<th colspan="2"></th>
+		</thead>
+		<tbody>
+			<% @articles.each do |article| %>
+				<tr>
+					<td><%= l(article.published_at) %></td>
+					<td><%= link_to article.title, admin_article_path(article) %></td>
+					<td class="action">
+						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_article_path(article), "data-no-turbolink" => true %>
+					</td>
+					<td class="action">
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_article_path(article), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<%= paginate @articles %>
+<% end %>

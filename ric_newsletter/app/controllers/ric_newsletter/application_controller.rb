@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicNewsletter
-  class ApplicationController < ActionController::Base
-  end
+	class ApplicationController < ::ApplicationController
+	end
 end

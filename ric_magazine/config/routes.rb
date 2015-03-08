@@ -10,4 +10,15 @@
 # *****************************************************************************
 
 RicMagazine::Engine.routes.draw do
+
+	#
+	# Admin
+	#
+	namespace :admin do
+		
+		# Articles
+		resources :articles
+
+	end
+
 end

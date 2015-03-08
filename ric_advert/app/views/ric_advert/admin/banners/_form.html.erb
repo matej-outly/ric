@@ -1,13 +1,13 @@
-<%= form_for(@banner, url: (@banner.id.nil? ? admin_banners_path : admin_banner_path(@banner)), html: { :multipart => true }) do |f| %>
+<%= gumby_form_for(@banner, url: (@banner.id.nil? ? admin_banners_path : admin_banner_path(@banner)), html: { :multipart => true }) do |f| %>
 	
-	<%= f.collection_select :advertiser_id, RicAdvert.advertiser_model.all, :id, :name %><br/>
-	<%= f.text_field :name %><br/>
-	<%= f.text_field :url %><br/>
-	<%= f.text_field :kind %><br/>
-	<%= f.file_field :image %><br/>
-	<%= f.date_field :valid_from %><br/>
-	<%= f.date_field :valid_to %><br/>
-	<%= f.number_field :priority %><br/>
-	<%= f.submit %>
+	<%= f.picker_row :advertiser_id, RicAdvert.advertiser_model.all.order(name: :asc), :id, :name %>
+	<%= f.text_input_row :name, :text_field %>
+	<%= f.text_input_row :url, :text_field %>
+	<%= f.text_input_row :kind, :text_field %>
+	<%= f.text_input_row :image, :file_field %>
+	<%= f.text_input_row :valid_from, :date_field %>
+	<%= f.text_input_row :valid_to, :date_field %>
+	<%= f.text_input_row :priority, :number_field %>
+	<%= f.primary_button_row :submit %>
 
 <% end %>

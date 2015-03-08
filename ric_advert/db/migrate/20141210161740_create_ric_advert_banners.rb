@@ -3,7 +3,7 @@ class CreateRicAdvertBanners < ActiveRecord::Migration
     create_table :banners do |t|
       
       # Timestamps
-      t.timestamps
+      t.timestamps null: false
 
       # Relation to advertisers
       t.integer :advertiser_id

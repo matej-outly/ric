@@ -15,7 +15,7 @@ module RicRolling
 		#
 		# Models
 		#
-		#require 'ric_rolling/concerns/models/user'
+		require 'ric_rolling/concerns/models/user'
 		
 		#
 		# Controllers

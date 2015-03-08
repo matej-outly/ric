@@ -1,0 +1,38 @@
+<%= render layout: "layout" do %>
+	<table>
+		<tbody>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('published_at').capitalize %></td>
+				<td><%= l(@article.published_at) %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('title').capitalize %></td>
+				<td><%= @article.title %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('perex').capitalize %></td>
+				<td><%= truncate_html(@article.perex).html_safe if @article.perex %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('content').capitalize %></td>
+				<td><%= truncate_html(@article.content).html_safe if @article.content %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('keywords').capitalize %></td>
+				<td><%= @article.keywords %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('description').capitalize %></td>
+				<td><%= @article.description %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('authors').capitalize %></td>
+				<td><%= @article.authors %></td>
+			</tr>
+			<tr>
+				<td><%= RicMagazine.article_model.human_attribute_name('garantors').capitalize %></td>
+				<td><%= @article.garantors %></td>
+			</tr>
+		</tbody>
+	</table>
+<% end %>

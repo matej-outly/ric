@@ -1,0 +1,13 @@
+<%= gumby_form_for(@article, url: (@article.id.nil? ? admin_articles_path : admin_article_path(@article))) do |f| %>
+	
+	<%= f.text_input_row :published_at, :datetime_local_field %>
+	<%= f.text_input_row :title, :text_field %>
+	<%= f.text_area_row :perex %>
+	<%= f.text_area_row :content %>
+	<%= f.text_input_row :keywords, :text_field %>
+	<%= f.text_input_row :description, :text_field %>
+	<%= f.text_input_row :authors, :text_field %>
+	<%= f.text_input_row :garantors, :text_field %>
+	<%= f.primary_button_row :submit %>
+
+<% end %>

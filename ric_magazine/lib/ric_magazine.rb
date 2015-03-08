@@ -35,4 +35,16 @@ module RicMagazine
 		end
 	end
 
+	#
+	# User model
+	#
+	mattr_accessor :user_model
+	def self.user_model
+		if @@user_model.nil?
+			raise 'Please define user model'
+		else
+			return @@user_model.constantize
+		end
+	end
+
 end

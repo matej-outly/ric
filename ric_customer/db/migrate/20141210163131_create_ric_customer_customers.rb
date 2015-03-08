@@ -3,7 +3,7 @@ class CreateRicCustomerCustomers < ActiveRecord::Migration
     create_table :customers do |t|
       
       # Timestamps
-      t.timestamps
+      t.timestamps null: false
 
       # Identification
       t.string :first_name
