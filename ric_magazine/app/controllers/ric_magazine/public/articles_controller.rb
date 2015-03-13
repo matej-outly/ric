@@ -2,33 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Articles
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 3. 2015
+# * Date  : 13. 3. 2015
 # *
 # *****************************************************************************
 
-RicMagazine::Engine.routes.draw do
+require_dependency "ric_magazine/application_controller"
 
-	#
-	# Admin
-	#
-	namespace :admin do
-		
-		# Articles
-		resources :articles
-
+module RicMagazine
+	class Public::ArticlesController < ApplicationController
+		include RicMagazine::Concerns::Controllers::Public::ArticlesController
 	end
-
-	#
-	# Public
-	#
-	namespace :public do
-		
-		# Articles
-		resources :articles, only: [:index, :show]
-
-	end
-
 end

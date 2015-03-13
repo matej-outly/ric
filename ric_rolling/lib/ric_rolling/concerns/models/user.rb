@@ -27,6 +27,14 @@ module RicRolling
 
 				end
 
+				module ClassMethods
+
+					def current
+						return nil
+					end
+					
+				end
+
 			end
 		end
 	end

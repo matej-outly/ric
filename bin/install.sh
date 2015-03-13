@@ -16,6 +16,6 @@ root_dir="$script_dir/.."
 build_dir="$root_dir/build"
 
 # Install all engines
-for engine in ric_advert ric_customer ric_eshop ric_magazine ric_newsletter ric_rolling ric_tagging; do
+for engine in ric_advert ric_customer ric_eshop ric_magazine ric_newsletter ric_rolling; do
 	gem install "$build_dir"/"$engine"-*
 done

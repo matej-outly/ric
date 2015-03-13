@@ -3,7 +3,7 @@
 		<tbody>
 			<tr>
 				<td><%= RicMagazine.article_model.human_attribute_name('published_at').capitalize %></td>
-				<td><%= l(@article.published_at) %></td>
+				<td><%= l(@article.published_at) if @article.published_at %></td>
 			</tr>
 			<tr>
 				<td><%= RicMagazine.article_model.human_attribute_name('title').capitalize %></td>

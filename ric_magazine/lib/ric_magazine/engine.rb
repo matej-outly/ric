@@ -21,6 +21,7 @@ module RicMagazine
 		# Controllers
 		#
 		require 'ric_magazine/concerns/controllers/admin/articles_controller'
+		require 'ric_magazine/concerns/controllers/public/articles_controller'
 
 		isolate_namespace RicMagazine
 	end

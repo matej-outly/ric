@@ -3,7 +3,7 @@ class CreateRicRollingUsers < ActiveRecord::Migration
     create_table :users do |t|
 
       # Timestamps
-      t.timestamps null: false
+      t.timestamps null: true
 
       # Authentication
       t.string :email

@@ -100,7 +100,7 @@ module RicMagazine
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def article_params
-						params.require(:article).permit(:pubished_at, :title, :perex, :content, :keywords, :description, :authors, :garantors)
+						params.require(:article).permit(:published_at, :title, :perex, :content, :keywords, :description, :authors, :garantors)
 					end
 
 				end
