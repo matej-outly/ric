@@ -8,7 +8,7 @@
 		<tbody>
 			<% @articles.each do |article| %>
 				<tr>
-					<td><%= l(article.published_at) %></td>
+					<td><%= l(article.published_at) if article.published_at %></td>
 					<td><%= link_to article.title, admin_article_path(article) %></td>
 					<td class="action">
 						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_article_path(article), "data-no-turbolink" => true %>
