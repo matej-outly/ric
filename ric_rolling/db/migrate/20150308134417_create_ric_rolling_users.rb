@@ -4,8 +4,12 @@ class CreateRicRollingUsers < ActiveRecord::Migration
 
       # Timestamps
       t.timestamps null: true
+      t.datetime :atuhenticated_at
 
-      # Authentication
+      # Soft authentication
+      t.string :pin
+
+      # Hard authentication
       t.string :email
       t.string :encrypted_password
 

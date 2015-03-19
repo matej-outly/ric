@@ -1,0 +1,7 @@
+<%= render layout: "layout" do %>
+	<%= gumby_form_for(@user, url: sign_in_path) do |f| %>
+		<%= f.text_input_row :email, :email_field %>
+		<%= f.text_input_row :password, :password_field %>
+		<%= f.primary_button_row :submit, label: t("general.action.login") %>
+	<% end %>
+<% end %>

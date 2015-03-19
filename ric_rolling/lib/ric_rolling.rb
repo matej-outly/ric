@@ -35,4 +35,9 @@ module RicRolling
 		end
 	end
 
+	#
+	# URL base
+	#
+	mattr_accessor :url_base
+
 end
