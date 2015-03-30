@@ -12,7 +12,7 @@
 module RicRolling
 	module Concerns
 		module Controllers
-			module RegistrationsController extend ActiveSupport::Concern
+			module SessionsController extend ActiveSupport::Concern
 
 				#
 				# New

@@ -20,7 +20,8 @@ module RicRolling
 		#
 		# Controllers
 		#
-		#require 'ric_rolling/concerns/controllers/admin/users_controller'
+		require 'ric_rolling/concerns/controllers/registrations_controller'
+		require 'ric_rolling/concerns/controllers/sessions_controller'
 
 		#
 		# Mailers
