@@ -19,7 +19,7 @@ output_dir="$root_dir/build"
 mkdir -p "$output_dir"
 
 # All engines
-for engine in ric_advert ric_customer ric_eshop ric_magazine ric_newsletter ric_rolling; do
+for engine in ric_admin ric_advert ric_customer ric_eshop ric_magazine ric_newsletter ric_rolling; do
 	cd "$root_dir/$engine"
 	gem build $engine.gemspec
 	mv *.gem "$output_dir"

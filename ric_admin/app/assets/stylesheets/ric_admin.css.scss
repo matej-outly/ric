@@ -1,0 +1,288 @@
+/*****************************************************************************/
+/* Mixins                                                                    */
+/*****************************************************************************/
+
+@mixin clearfix() { 
+	*zoom:1;
+	&:before, &:after {
+		content: "";
+		display: table;
+	}
+		&:after {
+		clear: both;
+	}
+}
+
+/*****************************************************************************/
+/* Layout                                                                    */
+/*****************************************************************************/
+
+.admin {
+
+	background: #efefef;
+
+	h2 {
+		padding-top: 0.4em;
+		padding-bottom: 0.6em;
+	}
+
+	/*************************************************************************/
+	/* Header                                                                */
+	/*************************************************************************/
+
+	.navbar {
+		background: #4a4d50 image-url("ric_admin/header_bg.png") repeat-x left bottom;
+		margin-bottom: 0;
+		
+		.logo {
+			display: inline-block; vertical-align: bottom;
+		}
+
+		.menu {
+			display: inline-block; vertical-align: bottom;
+
+			[class^="icon-"] a:before, 
+			[class*=" icon-"] a:before {
+				position: static;
+				margin-right: 10px;
+			} 
+			[class^="icon-"] a:after, 
+			[class*=" icon-"] a:after {
+				position: static;
+				margin-left: 10px;
+			}
+
+			li > a {
+				padding: 0 15px;
+			}
+
+			li.delimiter {
+				padding: 0 15px;
+
+				&:before {
+					content: " ";
+					display: inline-block;
+					vertical-align: middle;
+					background: #757575;
+					width: 2px;
+					height: 40px;
+				}
+			}
+
+			li.active > a {
+				background: image-url("ric_admin/header_focus.png") no-repeat 50% bottom;
+
+				&:hover {
+					background: #868d92 image-url("ric_admin/header_focus.png") no-repeat 50% bottom;				
+				}
+			}
+		}
+	}
+
+	/*************************************************************************/
+	/* Footer                                                                */
+	/*************************************************************************/
+
+	.footer { 
+		color: #ffffff;
+		background: #406178 image-url("ric_admin/footer_bg.png") repeat-x left top;
+		font-size: 90%; 
+		padding: 20px 0; 
+
+		a {
+			color: #ffffff;
+			font-weight: 600;
+		}
+
+		.menu {
+			text-align: center;
+			margin: 25px 0;
+
+			li {
+				display: inline-block;
+				vertical-align: top; 
+				margin-right: 10px;
+				a { margin-right: 15px;	}
+				&:after { content: "|";	}
+
+				&:last-child {
+					margin-right: 0;
+					a { margin-right: 0; }
+					&:after { content: "";}
+				}
+			}
+		}
+
+		.copy {
+			text-align: center;
+			margin: 25px 0;
+			font-size: 80%; 
+			
+			li {
+				display: inline-block;
+				vertical-align: top; 
+				margin-right: 60px;
+				min-width: 80px;
+				line-height: 18px;
+
+				&:last-child {
+					margin-right: 0;
+				}
+
+			}
+		}
+
+	}
+
+	/*************************************************************************/
+	/* Content and other components                                          */
+	/*************************************************************************/
+
+	.login-info { 
+		margin-bottom: 0;
+		font-size: 80%;
+
+		[class^="icon-"] a:before, 
+		[class*=" icon-"] a:before {
+			position: static;
+			margin-right: 10px;
+		} 
+		[class^="icon-"] a:after, 
+		[class*=" icon-"] a:after {
+			position: static;
+			margin-left: 10px;
+		}
+
+		li { 
+			display: inline-block; 
+			vertical-align: top; 
+			margin-right: 10px;
+			a { margin-right: 15px; }
+			&:after { content: "|"; }
+
+			&:last-child {
+				margin-right: 0;
+				a { margin-right: 0; }
+				&:after { content: ""; }
+			}
+		}
+	}
+
+	.content {
+		padding: 20px 45px 56px 45px;
+
+		.flash.dummy {
+			height: 36px;
+		}
+	}
+
+	.side {
+		background: #ffffff;
+		padding: 20px 25px 25px 25px;
+
+		h2 {
+			padding-bottom: 0.3em;
+		}
+
+		.login-info { 
+			min-height: 36px;
+		}
+
+		.menu {
+			margin-left: -25px;
+			margin-right: -25px;
+
+			[class^="icon-"] a:before, 
+			[class*=" icon-"] a:before {
+				position: static;
+				margin-right: 10px;
+			} 
+			[class^="icon-"] a:after, 
+			[class*=" icon-"] a:after {
+				position: static;
+				margin-left: 10px;
+			}
+
+			li {
+				padding: 0 25px;
+				transition: 0.1s;
+
+				a {
+					display: block;
+					min-height: 40px;
+					padding: 6px 0;
+					border-top: 1px solid #dddddd;
+				}
+
+				&:first-child a {
+					border-top: 1px solid transparent;
+				}
+
+				&:last-child a {
+					border-bottom: 1px solid #dddddd;	
+				}
+
+				&.active {
+					background-image: image-url("ric_admin/side_focus.png");
+					background-repeat: no-repeat;
+					background-position: left top;
+				}
+
+				&:hover {
+					background-color: #626262;
+					
+					a {
+						border-top: none;
+						border-bottom: none;
+						color: #f7ae9e;
+						text-shadow: 0 1px 2px #191a1b, 0 1px 0 #191a1b;
+					}
+				
+					+ li a {
+						border-top: 1px solid transparent;
+					}
+				}
+			}
+		}
+	}
+	
+	/*************************************************************************/
+	/* Content layouts                                                       */
+	/*************************************************************************/
+
+	.layout {
+		@include clearfix();
+		min-height: 700px;
+	}
+
+	.layout.with_right_side {
+		display: table;
+		width: 100%;
+
+		.content {
+			display: table-cell;
+			vertical-align: top;
+		}
+
+		.side {
+			display: table-cell;
+			vertical-align: top;
+			width: 25%;
+		}
+
+	}
+
+	.layout.default {
+		
+		.flash {
+			float: left;
+		}
+
+		.login-info {
+			float: right;
+			text-align: right;
+		}
+
+	}
+
+}

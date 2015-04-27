@@ -1,0 +1,28 @@
+<% controller_path = controller.class.name.to_snake[0..-12] %>
+
+<div class="layout with_right_side">
+	<div class="content">
+
+		<%= render partial: "ric_admin/components/flash" %>
+		
+		<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
+		
+		<%= yield %>
+
+	</div>
+	<div class="side">
+		
+		<%= render partial: "ric_admin/components/login_info" %>
+
+		<% if lookup_context.find_all("#{controller_path}/_actions").any? %>
+			<h2><%= t("headers.actions") %></h2>
+			<%= render partial: "#{controller_path}/actions" %>
+		<% end %>
+
+		<% if lookup_context.find_all("#{controller_path}/_related").any? %>
+			<h2><%= t("headers.related") %></h2>
+			<%= render partial: "#{controller_path}/related" %>
+		<% end %>
+
+	</div>
+</div>
