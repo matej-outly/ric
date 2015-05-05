@@ -1,0 +1,16 @@
+<%= rug_menu_for(nil, name: "actions") do |m| %>
+	
+	<!-- Sign up -->
+	<%= m.item t('general.action.sign_up'), sign_up_path, icon: "user-add", active: (controller_name == "registrations") %>
+	
+	<!-- Sign in -->
+	<%= m.item t('general.action.sign_in'), sign_in_path, icon: "login", active: (controller_name == "sessions") %>
+
+	<% if user_signed_in? %>
+
+		<!-- Sign out -->
+		<%= m.item t('general.action.sign_out'), sign_out_path, icon: "logout", method: :delete %>
+
+	<% end %>
+
+<% end %>
