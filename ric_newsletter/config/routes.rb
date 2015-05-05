@@ -9,23 +9,16 @@
 # *
 # *****************************************************************************
 
-RicNewsletter::Engine.routes.draw do
+RicNewsletter::AdminEngine.routes.draw do
 
-	#
-	# Admin
-	#
-	namespace :admin do
-		
-		# Newsletters
-		resources :newsletters
+	# Newsletters
+	resources :newsletters, controller: 'admin/newsletters'
 
-	    # Sent newsletters
-	    resources :sent_newsletters, only: [:new, :create, :destroy] do
-	    	member do
-	    		get 'resend'
-	    	end
-	    end
-
+	# Sent newsletters
+	resources :sent_newsletters, controller: 'admin/sent_newsletters', only: [:new, :create, :destroy] do
+		member do
+			get 'resend'
+		end
 	end
 
 end

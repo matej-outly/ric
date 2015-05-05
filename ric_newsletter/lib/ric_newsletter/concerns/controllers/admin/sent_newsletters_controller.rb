@@ -44,7 +44,7 @@ module RicNewsletter
 						@sent_newsletter.customers_scope_params = @customers_scope_params.to_json
 						if @sent_newsletter.save
 							@sent_newsletter.enqueue
-							redirect_to admin_newsletter_path(@sent_newsletter.newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.create")
+							redirect_to newsletter_path(@sent_newsletter.newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -52,7 +52,7 @@ module RicNewsletter
 
 					def destroy
 						@sent_newsletter.destroy
-						redirect_to admin_newsletter_path(@sent_newsletter.newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.destroy")
+						redirect_to newsletter_path(@sent_newsletter.newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.destroy")
 					end
 
 					def resend
@@ -68,14 +68,14 @@ module RicNewsletter
 					def set_sent_newsletter
 						@sent_newsletter = RicNewsletter.sent_newsletter_model.find_by_id(params[:id])
 						if @sent_newsletter.nil?
-							redirect_to admin_newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.not_found")
+							redirect_to newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					def set_customers
 						@customers_scope = params[:customers_scope]
 						if !@customers_scope || !RicNewsletter.customer_model.respond_to?(@customers_scope.to_sym)
-							redirect_to admin_newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.scope_not_found")
+							redirect_to newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.scope_not_found")
 							return
 						end
 						if params[:customers_scope_params] && session[params[:customers_scope_params]]

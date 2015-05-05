@@ -61,7 +61,7 @@ module RicNewsletter
 					def create
 						@newsletter = RicNewsletter.newsletter_model.new(newsletter_params)
 						if @newsletter.save
-							redirect_to admin_newsletter_path(@newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.create")
+							redirect_to newsletter_path(@newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -72,7 +72,7 @@ module RicNewsletter
 					#
 					def update
 						if @newsletter.update(newsletter_params)
-							redirect_to admin_newsletter_path(@newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.update")
+							redirect_to newsletter_path(@newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -83,7 +83,7 @@ module RicNewsletter
 					#
 					def destroy
 						@newsletter.destroy
-						redirect_to admin_newsletters_path, notice: I18n.t("activerecord.notices.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.destroy")
+						redirect_to newsletters_path, notice: I18n.t("activerecord.notices.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -95,7 +95,7 @@ module RicNewsletter
 					def set_newsletter
 						@newsletter = RicNewsletter.newsletter_model.find_by_id(params[:id])
 						if @newsletter.nil?
-							redirect_to admin_newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.not_found")
+							redirect_to newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.not_found")
 						end
 					end
 

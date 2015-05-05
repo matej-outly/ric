@@ -9,10 +9,10 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_newsletter/application_controller"
+require_dependency "ric_newsletter/admin_controller"
 
 module RicNewsletter
-	class Admin::NewslettersController < ApplicationController
+	class Admin::NewslettersController < AdminController
 		include RicNewsletter::Concerns::Controllers::Admin::NewslettersController
 	end
 end

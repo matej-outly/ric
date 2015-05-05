@@ -1,4 +1,4 @@
-<%= render layout: "layout" do %>
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<table>
 		<tbody>
 			<tr>
@@ -30,10 +30,10 @@
 					<td><%= l(sent_newsletter.sent_at) if sent_newsletter.sent_at %></td>
 					<td><%= (sent_newsletter.sent_count.to_s + "/" + sent_newsletter.customers_count.to_s) if sent_newsletter.sent_count && sent_newsletter.customers_count %></td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-mail\"></i>".html_safe + t('general.action.resend'), resend_admin_sent_newsletter_path(sent_newsletter), data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+						<%= link_to "<i class=\"icon-mail\"></i>".html_safe + t('general.action.resend'), resend_sent_newsletter_path(sent_newsletter), data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
 					</td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_sent_newsletter_path(sent_newsletter), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), sent_newsletter_path(sent_newsletter), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
 					</td>
 				</tr>
 			<% end %>

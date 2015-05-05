@@ -1,5 +1,4 @@
-<%= gumby_form_for(@sent_newsletter, url: admin_sent_newsletters_path(customers_scope: params[:customers_scope], customers_scope_params: params[:customers_scope_params])) do |f| %>
-	
+<%= rug_form_for(@sent_newsletter, url: sent_newsletters_path(customers_scope: params[:customers_scope], customers_scope_params: params[:customers_scope_params])) do |f| %>
 	<% 
 		customers_content = ""	
 		@customers.limit(10).each do |customer| 
@@ -10,5 +9,4 @@
 	<%= f.read_only_row :customers, customers_content %>
 	<%= f.picker_row :newsletter_id, RicNewsletter.newsletter_model.order(created_at: :desc), :id, :identifying_name %>
 	<%= f.primary_button_row :submit %>
-
 <% end %>

@@ -9,7 +9,16 @@
 # *
 # *****************************************************************************
 
-require "ric_newsletter/engine"
+# Engines
+require "ric_newsletter/admin_engine"
+
+# Models
+require 'ric_newsletter/concerns/models/newsletter'
+require 'ric_newsletter/concerns/models/sent_newsletter'
+require 'ric_newsletter/concerns/models/sent_newsletter_customer'
+
+# Mailers
+require 'ric_newsletter/concerns/mailers/newsletter_mailer'
 
 module RicNewsletter
 

@@ -1,6 +1,6 @@
 <div class="menu">
 	<ul>
-		<li class="icon-left icon-user <%= (controller_name == 'users' ? 'active' : '') %>"><%= link_to t("headers.admin.users.index"), main_app.admin_users_path %></li>
+		<li class="icon-left icon-user <%= (controller_name == 'users' ? 'active' : '') %>"><%= link_to t("headers.admin.users.index"), main_app.root_path %></li>
 		<li class="delimiter"></li>
 		<li class="icon-left icon-globe"><%= link_to t("headers.web"), main_app.root_path %></li>
 	</ul>
