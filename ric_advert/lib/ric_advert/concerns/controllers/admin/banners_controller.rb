@@ -64,7 +64,7 @@ module RicAdvert
 					def create
 						@banner = RicAdvert.banner_model.new(banner_params)
 						if @banner.save
-							redirect_to admin_banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.create")
+							redirect_to banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -75,7 +75,7 @@ module RicAdvert
 					#
 					def update
 						if @banner.update(banner_params)
-							redirect_to admin_banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.update")
+							redirect_to banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -86,7 +86,7 @@ module RicAdvert
 					#
 					def destroy
 						@banner.destroy
-						redirect_to admin_banners_path, notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.destroy")
+						redirect_to banners_path, notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -94,7 +94,7 @@ module RicAdvert
 					def set_banner
 						@banner = RicAdvert.banner_model.find_by_id(params[:id])
 						if @banner.nil?
-							redirect_to admin_banners_path, notice: I18n.t("activerecord.errors.models.#{RicAdvert.banner_model.model_name.i18n_key}.not_found")
+							redirect_to banners_path, notice: I18n.t("activerecord.errors.models.#{RicAdvert.banner_model.model_name.i18n_key}.not_found")
 						end
 					end
 

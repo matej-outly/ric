@@ -1,4 +1,4 @@
-<%= render layout: "layout" do %>
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<table>
 		<thead>
 			<th><%= RicAdvert.advertiser_model.human_attribute_name('name').capitalize %></th>
@@ -7,12 +7,12 @@
 		<tbody>
 			<% @advertisers.each do |advertiser| %>
 				<tr>
-					<td><%= link_to advertiser.name, admin_advertiser_path(advertiser) %></td>
+					<td><%= link_to advertiser.name, advertiser_path(advertiser) %></td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_advertiser_path(advertiser), "data-no-turbolink" => true %>
+						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_advertiser_path(advertiser), "data-no-turbolink" => true %>
 					</td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_advertiser_path(advertiser), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), advertiser_path(advertiser), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
 					</td>
 				</tr>
 			<% end %>

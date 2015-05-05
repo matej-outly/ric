@@ -1,4 +1,4 @@
-<%= gumby_form_for(@banner, url: (@banner.id.nil? ? admin_banners_path : admin_banner_path(@banner)), html: { :multipart => true }) do |f| %>
+<%= rug_form_for(@banner, url: (@banner.id.nil? ? banners_path : banner_path(@banner)), html: { :multipart => true }) do |f| %>
 	
 	<%= f.picker_row :advertiser_id, RicAdvert.advertiser_model.all.order(name: :asc), :id, :name %>
 	<%= f.text_input_row :name, :text_field %>

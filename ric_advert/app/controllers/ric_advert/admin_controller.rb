@@ -2,17 +2,14 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Banners
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
 # * Date  : 10. 12. 2014
 # *
 # *****************************************************************************
 
-require_dependency "ric_advert/admin_controller"
-
 module RicAdvert
-	class Admin::BannersController < AdminController
-		include RicAdvert::Concerns::Controllers::Admin::BannersController
+	class AdminController < ::ApplicationController
 	end
 end

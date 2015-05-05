@@ -9,7 +9,15 @@
 # *
 # *****************************************************************************
 
-require "ric_advert/engine"
+# Engines
+require "ric_advert/admin_engine"
+require "ric_advert/observer_engine"
+require "ric_advert/public_engine"
+
+# Models
+require 'ric_advert/concerns/models/advertiser'
+require 'ric_advert/concerns/models/banner'
+require 'ric_advert/concerns/models/banner_statistic'
 
 module RicAdvert
 

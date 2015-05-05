@@ -62,7 +62,7 @@ module RicAdvert
 					def create
 						@advertiser = RicAdvert.advertiser_model.new(advertiser_params)
 						if @advertiser.save
-							redirect_to admin_advertiser_path(@advertiser), notice: I18n.t("activerecord.notices.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.create")
+							redirect_to advertiser_path(@advertiser), notice: I18n.t("activerecord.notices.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -73,7 +73,7 @@ module RicAdvert
 					#
 					def update
 						if @advertiser.update(advertiser_params)
-							redirect_to admin_advertiser_path(@advertiser), notice: I18n.t("activerecord.notices.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.update")
+							redirect_to advertiser_path(@advertiser), notice: I18n.t("activerecord.notices.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -84,7 +84,7 @@ module RicAdvert
 					#
 					def destroy
 						@advertiser.destroy
-						redirect_to admin_advertisers_path, notice: I18n.t("activerecord.notices.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.destroy")
+						redirect_to advertisers_path, notice: I18n.t("activerecord.notices.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -92,7 +92,7 @@ module RicAdvert
 					def set_advertiser
 						@advertiser = RicAdvert.advertiser_model.find_by_id(params[:id])
 						if @advertiser.nil?
-							redirect_to admin_advertisers_path, error: I18n.t("activerecord.errors.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.not_found")
+							redirect_to advertisers_path, error: I18n.t("activerecord.errors.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.not_found")
 						end
 					end
 

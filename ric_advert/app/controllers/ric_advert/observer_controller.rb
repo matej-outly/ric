@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicAdvert
-	class ApplicationController < ::ApplicationController
+	class ObserverController < ::ApplicationController
 	end
 end

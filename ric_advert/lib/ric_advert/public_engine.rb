@@ -2,17 +2,24 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Banners
+# * Engine
 # *
 # * Author: Matěj Outlý
 # * Date  : 10. 12. 2014
 # *
 # *****************************************************************************
 
-require_dependency "ric_advert/admin_controller"
-
 module RicAdvert
-	class Admin::BannersController < AdminController
-		include RicAdvert::Concerns::Controllers::Admin::BannersController
+	class PublicEngine < ::Rails::Engine
+		
+		#
+		# Controllers
+		#
+		require 'ric_advert/concerns/controllers/public/banners_controller'
+
+		#
+		# Namespace
+		#
+		isolate_namespace RicAdvert
 	end
 end

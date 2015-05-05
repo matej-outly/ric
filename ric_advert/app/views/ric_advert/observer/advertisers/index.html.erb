@@ -1,4 +1,4 @@
-<%= render layout: "layout" do %>
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<table>
 		<thead>
 			<th><%= RicAdvert.advertiser_model.human_attribute_name('name').capitalize %></th>
@@ -6,7 +6,7 @@
 		<tbody>
 			<% @advertisers.each do |advertiser| %>
 				<tr>
-					<td><%= link_to advertiser.name, observer_advertiser_path(advertiser) %></td>
+					<td><%= link_to advertiser.name, advertiser_path(advertiser) %></td>
 				</tr>
 			<% end %>
 		</tbody>

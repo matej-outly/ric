@@ -9,10 +9,10 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_advert/application_controller"
+require_dependency "ric_advert/observer_controller"
 
 module RicAdvert
-	class Observer::AdvertisersController < ApplicationController
+	class Observer::AdvertisersController < ObserverController
 		include RicAdvert::Concerns::Controllers::Observer::AdvertisersController
 	end
 end

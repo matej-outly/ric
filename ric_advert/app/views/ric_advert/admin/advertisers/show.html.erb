@@ -1,4 +1,4 @@
-<%= render layout: "layout" do %>
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<table>
 		<tbody>
 			<tr>
@@ -18,39 +18,39 @@
 			<tr><td colspan="4"><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.sofar_invalid") %></td></tr>
 			<% @advertiser.banners.sofar_invalid(@today).order(name: :asc).each do |banner| %>
 				<tr>
-					<td><%= link_to banner.name, admin_banner_path(banner) %></td>
+					<td><%= link_to banner.name, banner_path(banner) %></td>
 					<td><%= banner.kind %></td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(banner), "data-no-turbolink" => true %>
+						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_banner_path(banner), "data-no-turbolink" => true %>
 					</td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
 					</td>
 				</tr>
 			<% end %>
 			<tr><td colspan="4"><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.valid") %></td></tr>
 			<% @advertiser.banners.valid(@today).order(name: :asc).each do |banner| %>
 				<tr>
-					<td><%= link_to banner.name, admin_banner_path(banner) %></td>
+					<td><%= link_to banner.name, banner_path(banner) %></td>
 					<td><%= banner.kind %></td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(banner), "data-no-turbolink" => true %>
+						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_banner_path(banner), "data-no-turbolink" => true %>
 					</td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
 					</td>
 				</tr>
 			<% end %>
 			<tr><td colspan="4"><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.already_invalid") %></td></tr>
 			<% @advertiser.banners.already_invalid(@today).order(name: :asc).each do |banner| %>
 				<tr>
-					<td><%= link_to banner.name, admin_banner_path(banner) %></td>
+					<td><%= link_to banner.name, banner_path(banner) %></td>
 					<td><%= banner.kind %></td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_admin_banner_path(banner), "data-no-turbolink" => true %>
+						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_banner_path(banner), "data-no-turbolink" => true %>
 					</td>
 					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), admin_banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
+						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), banner_path(banner), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
 					</td>
 				</tr>
 			<% end %>

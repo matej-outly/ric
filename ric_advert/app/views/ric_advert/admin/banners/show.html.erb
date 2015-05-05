@@ -1,9 +1,9 @@
-<%= render layout: "layout" do %>
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<table>
 		<tbody>
 			<tr>
 				<td><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></td>
-				<td><%= link_to @banner.advertiser.name, admin_advertiser_path(@banner.advertiser) %></td>
+				<td><%= link_to @banner.advertiser.name, advertiser_path(@banner.advertiser) %></td>
 			</tr>
 			<tr>
 				<td><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></td>

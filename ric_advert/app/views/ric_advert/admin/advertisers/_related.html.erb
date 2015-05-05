@@ -1,0 +1,3 @@
+<%= rug_menu_for(@advertiser, name: "related") do |m| %>
+	<%= m.item t('general.action.new') + " " + t("activerecord.models.#{RicAdvert.banner_model.model_name.i18n_key}"), new_banner_path(advertiser_id: @advertiser.id), "data-no-turbolink" => true %>
+<% end %>

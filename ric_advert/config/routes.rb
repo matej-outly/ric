@@ -9,43 +9,30 @@
 # *
 # *****************************************************************************
 
-RicAdvert::Engine.routes.draw do
-
-	#
-	# Public
-	#
-	namespace :public do
+RicAdvert::AdminEngine.routes.draw do
 		
-		# Banners
-		get "banners/get/:kind", to: "banners#get", as: "banner_get"
-		get "banners/click/:id", to: "banners#click", as: "banner_click"
+	# Advertisers
+	resources :advertisers, controller: "admin/advertisers"
 
-	end
+	# Banners
+	resources :banners, controller: "admin/banners"
 
-	#
-	# Admin
-	#
-	namespace :admin do
+end
+
+RicAdvert::ObserverEngine.routes.draw do
+
+	# Advertisers
+	resources :advertisers, controller: "observer/advertisers", only: [:index, :show]
+
+	# Banners
+	resources :banners, controller: "observer/banners", only: [:show]
+
+end
+
+RicAdvert::PublicEngine.routes.draw do
 		
-		# Advertisers
-		resources :advertisers
-
-		# Banners
-		resources :banners
-	
-	end
-
-	#
-	# Observer
-	#
-	namespace :observer do
-		
-		# Advertisers
-		resources :advertisers, only: [:index, :show]
-
-		# Banners
-		resources :banners, only: [:show]
-	
-	end
+	# Banners
+	get "banners/get/:kind", to: "public/banners#get", as: "banner_get"
+	get "banners/click/:id", to: "public/banners#click", as: "banner_click"
 
 end
