@@ -9,10 +9,10 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_customer/application_controller"
+require_dependency "ric_customer/admin_controller"
 
 module RicCustomer
-	class Admin::CustomersController < ApplicationController
+	class Admin::CustomersController < AdminController
 		include RicCustomer::Concerns::Controllers::Admin::CustomersController
 	end
 end

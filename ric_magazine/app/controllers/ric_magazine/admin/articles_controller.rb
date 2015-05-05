@@ -9,10 +9,10 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_magazine/application_controller"
+require_dependency "ric_magazine/admin_controller"
 
 module RicMagazine
-	class Admin::ArticlesController < ApplicationController
+	class Admin::ArticlesController < AdminController
 		include RicMagazine::Concerns::Controllers::Admin::ArticlesController
 	end
 end

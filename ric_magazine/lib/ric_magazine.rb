@@ -9,7 +9,12 @@
 # *
 # *****************************************************************************
 
-require "ric_magazine/engine"
+# Engines
+require "ric_magazine/admin_engine"
+require "ric_magazine/public_engine"
+
+# Models
+require 'ric_magazine/concerns/models/article'
 
 module RicMagazine
 

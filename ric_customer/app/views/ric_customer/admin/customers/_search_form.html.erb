@@ -1,5 +1,5 @@
 <% if !@search_customer.class.search_columns.empty? %>
-	<%= gumby_form_for(@search_customer, url: index_search_admin_customers_path) do |f| %>
+	<%= rug_form_for(@search_customer, url: index_search_customers_path) do |f| %>
 		<% @search_customer.class.search_columns.each do |column| %>
 			<% 
 				column_spec = @search_customer.class.search_column_spec(column)

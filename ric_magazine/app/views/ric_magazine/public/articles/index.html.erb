@@ -1,5 +1,5 @@
 <% @articles.each do |article| %>
-	<h2><%= link_to article.title, public_article_path(article) %></h2>
+	<h2><%= link_to article.title, article_path(article) %></h2>
 	<%= article.perex.html_safe if article.perex %>
 	<%= article.authors %>
 <% end %>

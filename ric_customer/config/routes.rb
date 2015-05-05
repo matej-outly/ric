@@ -9,22 +9,15 @@
 # *
 # *****************************************************************************
 
-RicCustomer::Engine.routes.draw do
+RicCustomer::AdminEngine.routes.draw do
 
-	#
-	# Admin
-	#
-	namespace :admin do
-		
-		# Customers
-		resources :customers do
-			collection do
-				post "index_search"
-				get "statistic/:statistic", action: "statistic", as: "statistic"
-				post "statistic_search/:statistic", action: "statistic_search", as: "statistic_search"
-			end
+	# Customers
+	resources :customers, controller: "admin/customers" do
+		collection do
+			post "index_search"
+			get "statistic/:statistic", action: "statistic", as: "statistic"
+			post "statistic_search/:statistic", action: "statistic_search", as: "statistic_search"
 		end
-
 	end
 
 end

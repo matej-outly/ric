@@ -2,23 +2,14 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 3. 2015
+# * Date  : 10. 12. 2014
 # *
 # *****************************************************************************
 
-RicMagazine::AdminEngine.routes.draw do
-
-	# Articles
-	resources :articles, controller: "admin/articles"
-
-end
-
-RicMagazine::PublicEngine.routes.draw do
-
-	# Articles
-	resources :articles, controller: "pulic/customers", only: [:index, :show]
-
+module RicCustomer
+	class AdminController < ::ApplicationController
+	end
 end

@@ -1,5 +1,5 @@
 <% if !@statistic_columns.empty? %>
-	<%= gumby_form_for(@search_customer, url: statistic_search_admin_customers_path(@statistic)) do |f| %>
+	<%= rug_form_for(@search_customer, url: statistic_search_customers_path(@statistic)) do |f| %>
 		<% @statistic_columns.each do |column| %>
 			<% 
 				column_spec = @search_customer.class.method("#{@statistic.to_s}_column_spec").call(column)

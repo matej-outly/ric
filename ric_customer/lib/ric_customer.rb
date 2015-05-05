@@ -9,7 +9,12 @@
 # *
 # *****************************************************************************
 
-require "ric_customer/engine"
+# Engines
+require "ric_customer/admin_engine"
+
+# Models
+require "ric_customer/concerns/models/customer"
+
 
 module RicCustomer
 

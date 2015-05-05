@@ -62,7 +62,7 @@ module RicMagazine
 						@article = RicMagazine.article_model.new(article_params)
 						@article.publisher = RicMagazine.user_model.current
 						if @article.save
-							redirect_to admin_article_path(@article), notice: I18n.t("activerecord.notices.models.#{RicMagazine.article_model.model_name.i18n_key}.create")
+							redirect_to article_path(@article), notice: I18n.t("activerecord.notices.models.#{RicMagazine.article_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -73,7 +73,7 @@ module RicMagazine
 					#
 					def update
 						if @article.update(article_params)
-							redirect_to admin_article_path(@article), notice: I18n.t("activerecord.notices.models.#{RicMagazine.article_model.model_name.i18n_key}.update")
+							redirect_to article_path(@article), notice: I18n.t("activerecord.notices.models.#{RicMagazine.article_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -84,7 +84,7 @@ module RicMagazine
 					#
 					def destroy
 						@article.destroy
-						redirect_to admin_articles_path, notice: I18n.t("activerecord.notices.models.#{RicMagazine.article_model.model_name.i18n_key}.destroy")
+						redirect_to articles_path, notice: I18n.t("activerecord.notices.models.#{RicMagazine.article_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -92,7 +92,7 @@ module RicMagazine
 					def set_article
 						@article = RicMagazine.article_model.find_by_id(params[:id])
 						if @article.nil?
-							redirect_to admin_articles_path, error: I18n.t("activerecord.errors.models.#{RicMagazine.article_model.model_name.i18n_key}.not_found")
+							redirect_to articles_path, error: I18n.t("activerecord.errors.models.#{RicMagazine.article_model.model_name.i18n_key}.not_found")
 						end
 					end
 

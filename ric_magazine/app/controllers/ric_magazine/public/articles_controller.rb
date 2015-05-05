@@ -9,10 +9,10 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_magazine/application_controller"
+require_dependency "ric_magazine/public_controller"
 
 module RicMagazine
-	class Public::ArticlesController < ApplicationController
+	class Public::ArticlesController < PublicController
 		include RicMagazine::Concerns::Controllers::Public::ArticlesController
 	end
 end

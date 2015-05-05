@@ -55,7 +55,7 @@ module RicCustomer
 					#
 					def index_search
 						save_params_to_session(index_search_params)
-						redirect_to admin_customers_path
+						redirect_to customers_path
 					end
 
 					#
@@ -71,7 +71,7 @@ module RicCustomer
 					#
 					def statistic_search
 						save_params_to_session(statistic_search_params)
-						redirect_to statistic_admin_customers_path
+						redirect_to statistic_customers_path
 					end
 
 					#
@@ -99,7 +99,7 @@ module RicCustomer
 					def create
 						@customer = RicCustomer.customer_model.new(customer_params)
 						if @customer.save
-							redirect_to admin_customer_path(@customer), notice: I18n.t("activerecord.notices.models.#{RicCustomer.customer_model.model_name.i18n_key}.create")
+							redirect_to customer_path(@customer), notice: I18n.t("activerecord.notices.models.#{RicCustomer.customer_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -110,7 +110,7 @@ module RicCustomer
 					#
 					def update
 						if @customer.update(customer_params)
-							redirect_to admin_customer_path(@customer), notice: I18n.t("activerecord.notices.models.#{RicCustomer.customer_model.model_name.i18n_key}.update")
+							redirect_to customer_path(@customer), notice: I18n.t("activerecord.notices.models.#{RicCustomer.customer_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -121,7 +121,7 @@ module RicCustomer
 					#
 					def destroy
 						@customer.destroy
-						redirect_to admin_customers_path, notice: I18n.t("activerecord.notices.models.#{RicCustomer.customer_model.model_name.i18n_key}.destroy")
+						redirect_to customers_path, notice: I18n.t("activerecord.notices.models.#{RicCustomer.customer_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -133,14 +133,14 @@ module RicCustomer
 					def set_customer
 						@customer = RicCustomer.customer_model.find_by_id(params[:id])
 						if @customer.nil?
-							redirect_to admin_customers_path, error: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.not_found")
+							redirect_to customers_path, error: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					def set_statistic
 						@statistic = params[:statistic].to_sym
 						if !RicCustomer.customer_model.respond_to?(@statistic) || !RicCustomer.customer_model.respond_to?("#{@statistic.to_s}_columns".to_sym)
-							redirect_to admin_customers_path, notice: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.statistic_not_found")
+							redirect_to customers_path, notice: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.statistic_not_found")
 							return
 						end
 						@statistic_columns = RicCustomer.customer_model.send("#{@statistic.to_s}_columns".to_sym)
@@ -151,7 +151,7 @@ module RicCustomer
 					# *********************************************************************
 
 					def session_key
-						return "admin_customers"
+						return "customers"
 					end
 
 					def save_params_to_session(params)

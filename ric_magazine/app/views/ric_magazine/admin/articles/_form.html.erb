@@ -1,4 +1,4 @@
-<%= gumby_form_for(@article, url: (@article.id.nil? ? admin_articles_path : admin_article_path(@article))) do |f| %>
+<%= rug_form_for(@article, url: (@article.id.nil? ? articles_path : article_path(@article))) do |f| %>
 	
 	<%= f.text_input_row :published_at, :datetime_local_field %>
 	<%= f.text_input_row :title, :text_field %>

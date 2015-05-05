@@ -2,23 +2,21 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Engine
 # *
 # * Author: Matěj Outlý
 # * Date  : 7. 3. 2015
 # *
 # *****************************************************************************
 
-RicMagazine::AdminEngine.routes.draw do
+module RicMagazine
+	class PublicEngine < ::Rails::Engine
+		
+		#
+		# Controllers
+		#
+		require 'ric_magazine/concerns/controllers/public/articles_controller'
 
-	# Articles
-	resources :articles, controller: "admin/articles"
-
-end
-
-RicMagazine::PublicEngine.routes.draw do
-
-	# Articles
-	resources :articles, controller: "pulic/customers", only: [:index, :show]
-
+		isolate_namespace RicMagazine
+	end
 end
