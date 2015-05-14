@@ -2,26 +2,23 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 10. 12. 2014
+# * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-module RicAdvert
-	class PublicEngine < ::Rails::Engine
-		
-		engine_name "ric_advert_public"
+RicWebsite::AdminEngine.routes.draw do
 
-		#
-		# Controllers
-		#
-		require 'ric_advert/concerns/controllers/public/banners_controller'
+	# Texts
+	resources :texts, controller: "admin/texts"
 
-		#
-		# Namespace
-		#
-		isolate_namespace RicAdvert
-	end
+end
+
+RicWebsite::PublicEngine.routes.draw do
+
+	# Texts
+	resources :texts, only: [:show], controller: "public/texts"
+
 end

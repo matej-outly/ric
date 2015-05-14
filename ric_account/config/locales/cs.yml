@@ -1,0 +1,8 @@
+cs:
+
+  headers:
+
+    ric_account:
+      account:
+        user: Upravit uživatelský účet
+        password: Změnit heslo

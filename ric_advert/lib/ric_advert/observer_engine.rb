@@ -12,6 +12,8 @@
 module RicAdvert
 	class ObserverEngine < ::Rails::Engine
 		
+		engine_name "ric_advert_observer"
+
 		#
 		# Controllers
 		#

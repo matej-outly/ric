@@ -5,23 +5,18 @@
 # * Engine
 # *
 # * Author: Matěj Outlý
-# * Date  : 10. 12. 2014
+# * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-module RicAdvert
-	class PublicEngine < ::Rails::Engine
+module RicWebsite
+	class AdminEngine < ::Rails::Engine
 		
-		engine_name "ric_advert_public"
-
 		#
 		# Controllers
 		#
-		require 'ric_advert/concerns/controllers/public/banners_controller'
-
-		#
-		# Namespace
-		#
-		isolate_namespace RicAdvert
+		require 'ric_website/concerns/controllers/admin/texts_controller'
+		
+		isolate_namespace RicWebsite
 	end
 end

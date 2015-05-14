@@ -6,7 +6,7 @@
 		<tbody>
 			<% @advertisers.each do |advertiser| %>
 				<tr>
-					<td><%= link_to advertiser.name, advertiser_path(advertiser) %></td>
+					<td><%= link_to advertiser.name, ric_advert_observer.advertiser_path(advertiser) %></td>
 				</tr>
 			<% end %>
 		</tbody>

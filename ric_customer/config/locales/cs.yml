@@ -1,0 +1,30 @@
+cs:
+
+  headers:
+    ric_customer:
+      admin:
+        customers:
+          index: "Zákazníci"
+          show: "Detail zákazníka"
+          new: "Nový zákazník"
+          create: "Nový zákazník"
+          edit: "Upravit zákazníka"
+          update: "Upravit zákazníka"
+
+  activerecord:
+    attributes:
+      ric_customer/customer:
+        first_name: Křestní jméno
+        last_name: Příjmení
+        full_name: Plné jméno
+        email: E-mail
+    notices:
+      models:
+        ric_customer/customer:
+          create: Zákazník byl úspěšně vytvořen.
+          update: Zákazník byl úspěšně uložen.
+          destroy: Zákazník byl úspěšně smazán.
+    errors:
+      models:
+        ric_customer/customer:
+          not_found: Zákazník nebyl nalezen.

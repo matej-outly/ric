@@ -12,6 +12,8 @@
 module RicAdvert
 	class AdminEngine < ::Rails::Engine
 		
+		engine_name "ric_advert_admin"
+
 		#
 		# Controllers
 		#

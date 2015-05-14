@@ -3,7 +3,7 @@
 		<tbody>
 			<tr>
 				<td><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></td>
-				<td><%= link_to @banner.advertiser.name, advertiser_path(@banner.advertiser) %></td>
+				<td><%= link_to @banner.advertiser.name, ric_advert_observer.advertiser_path(@banner.advertiser) %></td>
 			</tr>
 			<tr>
 				<td><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></td>

@@ -1,0 +1,31 @@
+cs:
+
+  headers:
+
+    ric_website:
+      admin:
+        texts:
+          index: "Textové stránky"
+          show: "Detail textové stránky"
+          new: "Nová textová stránka"
+          create: "Nová textová stránka"
+          edit: "Upravit textovou stránku"
+          update: "Upravit textovou stránku"
+
+  activerecord:
+    attributes:
+      ric_website/text:
+        title: Nadpis
+        content: Obsah
+        keywords: Klíčová slova
+        description: Popis
+    notices:
+      models:
+        ric_website/text:
+          create: "Textová stránka byla úspěšně vytvořena"
+          update: "Textová stránka byla úspěšně upravena"
+          destroy: "Textová stránka byla úspěšně smazána"
+    errors:
+      models:
+        ric_website/text:
+          not_found: "Textová stránka nebyla nalezena."

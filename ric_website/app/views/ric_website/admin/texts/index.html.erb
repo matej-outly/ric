@@ -1,0 +1,10 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@texts, { 
+		title: :string
+	}, {
+		show: :text_path,
+		edit: :edit_text_path,
+		destroy: :text_path
+	} ) %>
+	<%= paginate @texts %>
+<% end %>

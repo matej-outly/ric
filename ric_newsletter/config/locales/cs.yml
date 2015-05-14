@@ -1,0 +1,44 @@
+cs:
+
+  headers:
+    ric_newsletter:
+      admin:
+        newsletters:
+          index: "Newslettery"
+          show: "Detail newsletteru"
+          new: "Nový newsletter"
+          create: "Nový newsletter"
+          edit: "Upravit newsletter"
+          update: "Upravit newsletter"
+        sent_newsletters:
+          new: "Poslat newsletter"
+          create: "Poslat newsletter"
+
+  activerecord:
+    attributes:
+      ric_newsletter/newsletter:
+        created_at: Vytvořeno
+        subject: Předmět
+        content: Obsah
+      ric_newsletter/sent_newsletter:
+        created_at: Vytvořeno
+        sent_at: Odesláno
+        done: Hotovo
+        customers: Zákazníci
+        newsletter_id: Newsletter
+    notices:
+      models:
+        ric_newsletter/newsletter:
+          create: Newsletter byl úspěšně vytvořen.
+          update: Newsletter byl úspěšně uložen.
+          destroy: Newsletter byl úspěšně smazán.
+        ric_newsletter/sent_newsletter:
+          create: Impuls k odeslání newsletteru byl úspěšně vytvořen.
+          destroy: Impuls k odeslání newsletteru byl úspěšně smazán.
+    errors:
+      models:
+        ric_newsletter/newsletter:
+          not_found: Newsletter nebyl nalezen.
+        ric_newsletter/sent_newsletter:
+          not_found: Impuls k odeslání newsletteru nebyl nalezen.
+          scope_not_found: Výběr zákazníků nebyl specifikován.

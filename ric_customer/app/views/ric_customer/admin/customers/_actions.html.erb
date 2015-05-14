@@ -1,8 +1,10 @@
 <%= rug_menu_for(@customer, name: "actions", path_base: "customers") do |m| %>
 	<%= m.index_item %>
-	<%= m.item t('general.action.export_xls'), customers_path(format: "xls"), icon: "attach" %>
 	<%= m.new_item %>
 	<%= m.show_item %>
 	<%= m.edit_item %>
 	<%= m.destroy_item %>
+	<% if action_name == "index" %>
+		<%= m.item t('general.action.export_xls').upcase_first, customers_path(format: "xls"), icon: "attach" %>
+	<% end %>
 <% end %>

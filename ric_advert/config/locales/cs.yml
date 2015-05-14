@@ -1,0 +1,67 @@
+cs:
+
+  headers:
+    ric_advert:
+      admin:
+        advertisers:
+          index: "Inzerenti"
+          show: "Detail inzerenta"
+          new: "Nový inzerent"
+          create: "Nový inzerent"
+          edit: "Upravit inzerenta"
+          update: "Upravit inzerenta"
+        banners:
+          index: "Bannery"
+          show: "Detail banneru"
+          new: "Nový banner"
+          create: "Nový banner"
+          edit: "Upravit banner"
+          update: "Upravit banner"
+      observer:
+        advertisers:
+          index: "Inzerenti"
+          show: "Detail inzerenta"
+        banners:
+          show: "Detail banneru"
+
+  activerecord:
+    attributes:
+      ric_advert/advertiser:
+        name: Jméno inzerenta
+      ric_advert/banner:
+        advertiser: Inzerent
+        advertiser_id: Inzerent
+        name: Jméno banneru
+        url: Odkaz
+        kind: Druh
+        image: Obrázek
+        valid_from: Platné od
+        valid_to: Platné do
+        priority: Priorita
+        impressions: Počet zobrazení
+        clicks: Počet kliknutí
+      ric_advert/banner_statistic:
+        ip: IP
+        impressions: Počet zobrazení
+        clicks: Počet kliknutí
+    scopes:
+      ric_advert/banner:
+        valid: Platné
+        sofar_invalid: Platné v budoucnosti
+        already_invalid: Už neplatné
+    notices:
+      models:
+        ric_advert/advertiser:
+          update: Inzerent byl úspěšně uložen.
+          create: Inzerent byl úspěšně vytvořen.
+          destroy: Inzerent byl úspěšně smazán.
+        ric_advert/banner:
+          update: Banner byl úspěšně uložen.
+          create: Banner byl úspěšně vytvořen.
+          destroy: Banner byl úspěšně smazán.
+    errors:
+      models:
+        ric_advert/advertiser:
+          not_found: Inzerent nebyl nalezen.
+        ric_advert/banner:
+          not_found: Banner nebyl nalezen.

@@ -1,0 +1,81 @@
+cs:
+
+  headers:
+    web: Web
+    actions: Akce
+    related: Související
+
+    ric_admin:
+      public:
+        public:
+        terms: "Podmínky užití"
+        accessibility: "Prohlášení o přístupnosti"
+        help: "Pomoc při potížích"
+        contact: "Kontakt"
+
+  helpers:
+    submit:
+      create: "Vytvořit"
+      update: "Uložit"
+      search: "Hledat"
+      reset: "Obnovit"
+      register: "Registrovat"
+
+  general:
+    back: "zpět"
+    bool_yes: "ano"
+    bool_no: "ne"
+    yes: "ano"
+    no: "ne"
+    not_set: "nezadáno"
+    null_option: "nic"
+    from: "od"
+    to: "do"
+    are_you_sure: "Jste si jisti?"
+    permission_denied: "Na tuto operaci nemáte dostatečná oprávnění."
+    free: zdarma
+
+    action:
+      new: "přidat"
+      create: "přidat"
+      edit: "upravit"
+      update: "upravit"
+      destroy: "smazat"
+      resend: "znovu odeslat"
+      hide: "skrýt"
+      index: "seznam"
+      show: "detail"
+      preview: "náhled"
+      deactivate: "deaktivovat"
+      next: "další"
+      prev: "předchozí"
+      bind: "přidat"
+      unbind: "odebrat"
+      reset: "obnovit"
+      export_xls: "exportovat XLS"
+      order: "objednat"
+      download: "stáhnout"
+
+    attribute:
+      address:
+        street: Ulice
+        number: Číslo
+        city: Město
+        postcode: PSČ
+
+  date:
+    formats:
+      default: "%d. %m. %Y"
+  time:
+    formats:
+      default: "%d. %m. %Y %k:%M"
+
+  number:
+     currency:
+        format:
+          unit: 'Kč'
+          delimiter: ' '
+          separator: ','
+          precision: 2
+          format: '%n %u'
+

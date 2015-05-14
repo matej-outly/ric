@@ -32,7 +32,11 @@ end
 RicAdvert::PublicEngine.routes.draw do
 		
 	# Banners
-	get "banners/get/:kind", to: "public/banners#get", as: "banner_get"
-	get "banners/click/:id", to: "public/banners#click", as: "banner_click"
+	resources :banners, controller: "public/banners", only: [] do
+		collection do
+			get "get"
+			get "click"
+		end
+	end
 
 end
