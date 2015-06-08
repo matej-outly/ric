@@ -1,4 +1,11 @@
 /*****************************************************************************/
+/* Variables                                                                 */
+/*****************************************************************************/
+
+$tablet-width: 768px;
+$mobile-width: 320px;
+
+/*****************************************************************************/
 /* Mixins                                                                    */
 /*****************************************************************************/
 
@@ -40,6 +47,48 @@
 		thead {
 			background-color: #477ea4;
 		}
+	}
+
+	@media only screen and (max-width: $tablet-width) {
+		
+		table.index_table {
+			display: block; 
+
+			thead, tbody, th, td, tr { 
+				display: block; 
+			}
+			
+			
+			thead, thead tr { 
+				display: none;
+			}
+			
+			tr { 
+				border-top: 1px solid #aaa; 
+				border-left: 1px solid #aaa; 
+				border-right: 1px solid #aaa; 
+				&:last-child { border-bottom: 1px solid #aaa; }
+			}
+			
+			td { 
+				font-weight: normal; 
+				position: relative;
+				padding-left: 45%;
+
+				&:first-child { border-top: none; } 
+			
+				span.before { 
+					position: absolute;
+					top: 6px;
+					left: 6px;
+					width: 45%; 
+					padding-right: 2px; 
+					white-space: nowrap;
+				}
+			}
+			
+		}
+
 	}
 
 	form {
@@ -113,6 +162,32 @@
 				}
 			}
 		}
+
+		@media only screen and (max-width: $tablet-width) {
+		
+			.menu {
+				li.delimiter {
+					padding: 0px 0px;
+
+					&:before {
+						content: " ";
+						display: inline-block;
+						vertical-align: middle;
+						background: #757575;
+						width: 40px;
+						height: 2px;
+					}
+				}
+
+			 	li.active > a {
+					background: none;
+					&:hover {
+						background: #868d92 none;				
+					}
+				}
+			}
+		}
+
 	}
 
 	/*************************************************************************/
@@ -140,11 +215,31 @@
 				margin-right: 10px;
 				a { margin-right: 15px;	}
 				&:after { content: "|";	}
-
 				&:last-child {
 					margin-right: 0;
 					a { margin-right: 0; }
 					&:after { content: "";}
+				}
+			}
+		}
+
+		@media only screen and (max-width: $mobile-width) {
+			
+			ul.menu {
+				padding-left: 45px;
+
+				li {
+					display: block;
+					vertical-align: top;
+					text-align: left; 
+						
+					a { margin-right: 15px;	}
+					&:after { content: none; }
+					&:last-child {
+						margin-right: 0;
+						a { margin-right: 0; }
+						&:after { content: ""; }
+					}
 				}
 			}
 		}
@@ -169,6 +264,8 @@
 		}
 
 	}
+
+
 
 	/*************************************************************************/
 	/* Content and other components                                          */
@@ -214,7 +311,7 @@
 
 	.side {
 		background: #ffffff;
-		padding: 20px 25px 25px 25px;
+		padding: 20px 25px 70px 25px;
 
 		h2 {
 			padding-bottom: 0.3em;
@@ -280,6 +377,31 @@
 				}
 			}
 		}
+
+		@media only screen and (max-width: $tablet-width) {
+			padding: 30px 45px 50px 45px;
+
+			.login-info {
+				li {
+					display: block; 
+					vertical-align: top;
+					margin-right: 10px;
+					
+					a { margin-right: 15px; }
+					&:after { content: ""; }
+				} 
+			}
+			
+			.menu {
+				li {
+					&.active {
+						background-image: none;
+						background-repeat: no-repeat;
+						background-position: left top;	
+					}
+				}
+			}
+		}
 	}
 	
 	/*************************************************************************/
@@ -301,9 +423,20 @@
 		}
 
 		.side {
-			display: table-cell;
+			display:  table-cell;	
 			vertical-align: top;
 			width: 25%;
+		}
+
+		@media only screen and (max-width: $tablet-width) {
+			.content {
+				display: block;
+			}
+
+			.side {
+				display: block;
+				width: 100%;
+			}
 		}
 
 	}
@@ -322,3 +455,19 @@
 	}
 
 }
+
+
+/*************************************************************************/
+/* Content layouts                                                       */
+/*************************************************************************/
+
+.admin {
+
+	.layout.with_right_side {
+
+
+		
+
+	}
+	
+} /* .admin */
