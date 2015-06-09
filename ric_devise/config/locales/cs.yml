@@ -1,0 +1,33 @@
+cs:
+
+  #
+  # Devise
+  #
+  devise:
+    action:
+      sign_in: "Přihlásit se"
+      sign_out: "Odhlásit se"
+      reset_password: "Obnovit heslo"
+    failure:
+      already_authenticated: ""
+      user:
+        unauthenticated: ""
+        invalid: "Toto heslo není správně."
+        not_found_in_database: "Tento uživatelský účet v aplikaci neexistuje."
+    mailer:
+      reset_password_instructions:
+        subject: "Instrukce pro obnovu hesla"
+    sessions:
+      user:
+        signed_in: "Přihlášení proběhlo v pořádku."
+        signed_out: "Odhlášení proběhlo v pořádku."
+        already_signed_out: "Odhlášení proběhlo v pořádku."
+    passwords:
+      new:
+        send_instructions: "Odeslat instrukce pro obnovu hesla"
+      edit:
+        change_password: "Změnit heslo"
+      user:
+        send_instructions: "Instrukce pro obnovu hesla byly odeslány na zadaný e-mail."
+        updated: "Heslo bylo úspěšně změněno."
+        no_token: "Tento uživatelský účet nemá zažádáno o obnovu hesla."

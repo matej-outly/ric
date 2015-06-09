@@ -1,0 +1,10 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@users, { 
+		email: :string,
+	}, {
+		show: :user_path,
+		edit: :edit_user_path,
+		destroy: :user_path
+	} ) %>
+	<%= paginate @users %>
+<% end %>

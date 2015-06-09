@@ -1,0 +1,46 @@
+cs:
+
+  headers:
+    ric_user:
+      admin:
+        users:
+          index: "Uživatelé"
+          show: "Detail uživatele"
+          new: "Nový uživatel"
+          create: "Nový uživatel"
+          edit: "Upravit uživatele"
+          update: "Upravit uživatele"
+
+  activerecord:
+    attributes:
+      ric_user/user:
+        email: E-mail
+        current_password: Současné heslo
+        password: Heslo
+        password_confirmation: Heslo (znovu pro potvrzení)
+        new_password: Nové heslo
+        new_password_confirmation: Nové heslo (znovu pro potvrzení)
+        remember_me: Zůstat přihlášen
+    notices:
+      models:
+        ric_user/user:
+          update: Uživatel byl úspěšně uložen.
+          create: Uživatel byl úspěšně vytvořen.
+          destroy: Uživatel byl úspěšně smazán.
+    errors:
+      models:
+        ric_user/user:
+          not_found: Uživatel nebyl nalezen.
+          attributes:
+            current_password:
+              blank: "Heslo musí být vyplněno."
+              invalid: "Heslo není správné."
+            email:
+              not_found: "Uživatelský účet nebyl nalezen v databázi."
+              blank: "E-mail musí být vyplněn."
+              taken: "E-mail je již používán jiným uživatelem."
+            password:
+              blank: "Heslo musí být vyplněno."
+              too_short: "Heslo musí mít minimálně 4 znaky."
+            password_confirmation:
+              confirmation: "Potvrzení není shodné s heslem."

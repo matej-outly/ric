@@ -1,0 +1,4 @@
+<%= rug_menu_for(nil, name: "actions") do |m| %>
+	<%= m.item t("devise.action.sign_in").capitalize, new_session_path(resource_name), icon: "login", active: (controller_name == 'sessions') %>
+	<%= m.item t("devise.action.reset_password").capitalize, new_password_path(resource_name), icon: "lifebuoy", active: (controller_name == 'passwords') %>
+<% end %>

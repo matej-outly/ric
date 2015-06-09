@@ -1,0 +1,109 @@
+# *****************************************************************************
+# * Copyright (c) Clockstar s.r.o. All rights reserved.
+# *****************************************************************************
+# *
+# * Users
+# *
+# * Author: Matěj Outlý
+# * Date  : 9. 6. 2015
+# *
+# *****************************************************************************
+
+module RicUser
+	module Concerns
+		module Controllers
+			module Admin
+				module UsersController extend ActiveSupport::Concern
+
+					#
+					# 'included do' causes the included code to be evaluated in the
+					# context where it is included, rather than being executed in 
+					# the module's context.
+					#
+					included do
+					
+						#
+						# Set user before some actions
+						#
+						before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+					end
+
+					#
+					# Index action
+					#
+					def index
+						@users = RicUser.user_model.all.order(email: :asc).page(params[:page])
+					end
+
+					#
+					# Show action
+					#
+					def show
+					end
+
+					#
+					# New action
+					#
+					def new
+						@user = RicUser.user_model.new
+					end
+
+					#
+					# Edit action
+					#
+					def edit
+					end
+
+					#
+					# Create action
+					#
+					def create
+						@user = RicUser.user_model.new(user_params)
+						if @user.save
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.create")
+						else
+							render "new"
+						end
+					end
+
+					#
+					# Update action
+					#
+					def update
+						if @user.update(user_params)
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
+						else
+							render "edit"
+						end
+					end
+
+					#
+					# Destroy action
+					#
+					def destroy
+						@user.destroy
+						redirect_to users_path, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.destroy")
+					end
+
+				protected
+
+					def set_user
+						@user = RicUser.user_model.find_by_id(params[:id])
+						if @user.nil?
+							redirect_to users_path, error: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.not_found")
+						end
+					end
+
+					# 
+					# Never trust parameters from the scary internet, only allow the white list through.
+					#
+					def user_params
+						params.require(:user).permit(:email)
+					end
+
+				end
+			end
+		end
+	end
+end
