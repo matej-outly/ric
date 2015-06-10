@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Install all jic gems
+# Install all RIC gems
 #
 
 # Number of arguments

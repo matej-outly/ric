@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Build all RIC gems
+# Publish all RIC gems to rubygems server
 #
 
 # Number of arguments
@@ -13,14 +13,9 @@ fi
 # Basic setting
 script_dir="`cd \"\`dirname \\\"$0\\\"\`\"; pwd`"
 root_dir="$script_dir/.."
-output_dir="$root_dir/build"
+build_dir="$root_dir/build"
 
-# Make output directory
-mkdir -p "$output_dir"
-
-# All engines
+# Install all engines
 for engine in ric_account ric_admin ric_advert ric_customer ric_devise ric_eshop ric_magazine ric_newsletter ric_rolling ric_user ric_website; do
-	cd "$root_dir/$engine"
-	gem build $engine.gemspec
-	mv *.gem "$output_dir"
+	gem inabox "$build_dir"/"$engine"-*
 done
