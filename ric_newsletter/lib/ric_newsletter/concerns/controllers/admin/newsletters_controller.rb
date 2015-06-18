@@ -95,7 +95,7 @@ module RicNewsletter
 					def set_newsletter
 						@newsletter = RicNewsletter.newsletter_model.find_by_id(params[:id])
 						if @newsletter.nil?
-							redirect_to newsletters_path, error: I18n.t("activerecord.errors.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.not_found")
+							redirect_to newsletters_path, alert: I18n.t("activerecord.errors.models.#{RicNewsletter.newsletter_model.model_name.i18n_key}.not_found")
 						end
 					end
 

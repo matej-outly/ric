@@ -10,11 +10,16 @@ cs:
           create: "Nový uživatel"
           edit: "Upravit uživatele"
           update: "Upravit uživatele"
+        user_passwords:
+          edit: "Změnit heslo"
+          update: "Změnit heslo"
+          regenerate: "Přegenerovat heslo"
 
   activerecord:
     attributes:
       ric_user/user:
         email: E-mail
+        role: Role
         current_password: Současné heslo
         password: Heslo
         password_confirmation: Heslo (znovu pro potvrzení)
@@ -31,6 +36,7 @@ cs:
       models:
         ric_user/user:
           not_found: Uživatel nebyl nalezen.
+          regenerate_password: Nebylo možné přegenerovat heslo
           attributes:
             current_password:
               blank: "Heslo musí být vyplněno."
@@ -44,3 +50,8 @@ cs:
               too_short: "Heslo musí mít minimálně 4 znaky."
             password_confirmation:
               confirmation: "Potvrzení není shodné s heslem."
+    mailers:
+      ric_user:
+        user:
+          new_password:
+            subject: "Heslo bylo změněno"

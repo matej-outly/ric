@@ -92,7 +92,7 @@ module RicAdvert
 					def set_advertiser
 						@advertiser = RicAdvert.advertiser_model.find_by_id(params[:id])
 						if @advertiser.nil?
-							redirect_to advertisers_path, error: I18n.t("activerecord.errors.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.not_found")
+							redirect_to advertisers_path, alert: I18n.t("activerecord.errors.models.#{RicAdvert.advertiser_model.model_name.i18n_key}.not_found")
 						end
 					end
 

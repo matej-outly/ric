@@ -26,7 +26,7 @@ module RicRolling
 				#
 				def create
 					if current_user.state == :hard
-						redirect_to sign_in_path, error: I18n.t("activerecord.errors.models.ric_rolling/user.already_signed_in")
+						redirect_to sign_in_path, alert: I18n.t("activerecord.errors.models.ric_rolling/user.already_signed_in")
 					end
 					@user = RicRolling.user_model.new(user_params)
 					if !RicRolling.user_model.sign_in(@user)
@@ -45,7 +45,7 @@ module RicRolling
 						RicRolling.user_model.authenticate
 						redirect_to main_app.root_path, notice: I18n.t("activerecord.notices.models.ric_rolling/user.sign_out")
 					else
-						redirect_to main_app.root_path, error: I18n.t("activerecord.errors.models.ric_rolling/user.not_signed_in")
+						redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.ric_rolling/user.not_signed_in")
 					end
 				end
 

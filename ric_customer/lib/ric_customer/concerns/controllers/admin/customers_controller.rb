@@ -133,14 +133,14 @@ module RicCustomer
 					def set_customer
 						@customer = RicCustomer.customer_model.find_by_id(params[:id])
 						if @customer.nil?
-							redirect_to customers_path, error: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.not_found")
+							redirect_to customers_path, alert: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					def set_statistic
 						@statistic = params[:statistic].to_sym
 						if !RicCustomer.customer_model.respond_to?(@statistic) || !RicCustomer.customer_model.respond_to?("#{@statistic.to_s}_columns".to_sym)
-							redirect_to customers_path, notice: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.statistic_not_found")
+							redirect_to customers_path, alert: I18n.t("activerecord.errors.models.#{RicCustomer.customer_model.model_name.i18n_key}.statistic_not_found")
 							return
 						end
 						@statistic_columns = RicCustomer.customer_model.send("#{@statistic.to_s}_columns".to_sym)

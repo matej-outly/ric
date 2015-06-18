@@ -26,7 +26,7 @@ module RicRolling
 				#
 				def create
 					if current_user.state == :hard
-						redirect_to sign_up_path, error: I18n.t("activerecord.errors.models.ric_rolling/user.already_signed_in")
+						redirect_to sign_up_path, alert: I18n.t("activerecord.errors.models.ric_rolling/user.already_signed_in")
 					end
 					@user = RicRolling.user_model.new(user_params)
 					if !RicRolling.user_model.sign_up(@user)

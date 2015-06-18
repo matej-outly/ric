@@ -15,6 +15,9 @@ require "ric_user/admin_engine"
 # Models
 require 'ric_user/concerns/models/user'
 
+# Mailers
+require 'ric_user/concerns/mailers/user_mailer'
+
 module RicUser
 
 	#

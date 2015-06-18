@@ -40,7 +40,7 @@ module RicWebsite
 					def set_text
 						@text = RicWebsite.text_model.find_by_id(params[:id])
 						if @text.nil?
-							redirect_to texts_path, error: I18n.t("activerecord.errors.models.#{RicWebsite.text_model.model_name.i18n_key}.not_found")
+							redirect_to texts_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.text_model.model_name.i18n_key}.not_found")
 						end
 					end
 

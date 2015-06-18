@@ -1,4 +1,5 @@
 <%= rug_form_for(@user, url: (@user.id.nil? ? users_path : user_path(@user))) do |f| %>
 	<%= f.text_input_row :email, :email_field %>
+	<%= f.text_input_row :role, :text_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

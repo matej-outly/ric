@@ -21,10 +21,62 @@ module RicUser
 				#
 				included do
 					
+					# *************************************************************************
+					# Devise definition
+					# *************************************************************************
+
+					#
+					# Include default devise modules. Others available are:
+					# :confirmable, :lockable, :timeoutable and :omniauthable
+					#
+					devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+
 					# *********************************************************************
 					# Structure
 					# *********************************************************************
 
+				end
+
+				# *************************************************************************
+				# Interfaces
+				# *************************************************************************
+
+				def regenerate_password
+					new_password = SecureRandom.urlsafe_base64(3) # 4 characters
+					self.password = new_password
+					result = self.save
+
+					# Deliver email
+					if result
+						RicUser::UserMailer.new_password(self, new_password).deliver_now
+					end
+
+					return result
+				end
+
+				def update_password(new_password, password_confirmation)
+					
+					# Check blank
+					if new_password.blank?
+						errors.add(:password, I18n.t("activerecord.errors.models.ric_user/user.attributes.password.blank"))
+						return false
+					end
+
+					# Check confirmation
+					if new_password != password_confirmation
+						errors.add(:password_confirmation, I18n.t("activerecord.errors.models.ric_user/user.attributes.password_confirmation.confirmation"))
+						return false
+					end
+
+					self.password = new_password
+					result = self.save
+
+					# Deliver email
+					if result
+						RicUser::UserMailer.new_password(self, new_password).deliver_now
+					end
+
+					return result
 				end
 
 			end

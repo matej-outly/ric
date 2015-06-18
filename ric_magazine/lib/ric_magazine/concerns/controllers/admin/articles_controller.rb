@@ -92,7 +92,7 @@ module RicMagazine
 					def set_article
 						@article = RicMagazine.article_model.find_by_id(params[:id])
 						if @article.nil?
-							redirect_to articles_path, error: I18n.t("activerecord.errors.models.#{RicMagazine.article_model.model_name.i18n_key}.not_found")
+							redirect_to articles_path, alert: I18n.t("activerecord.errors.models.#{RicMagazine.article_model.model_name.i18n_key}.not_found")
 						end
 					end
 

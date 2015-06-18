@@ -2,24 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * User passwords
 # *
 # * Author: Matěj Outlý
 # * Date  : 9. 6. 2015
 # *
 # *****************************************************************************
 
-RicUser::AdminEngine.routes.draw do
+require_dependency "ric_user/admin_controller"
 
-	# Users
-	resources :users, controller: "admin/users"
-
-	# User passwords
-	resources :user_passwords, controller: "admin/user_passwords", only: [:edit, :update] do
-		member do
-			get "regenerate"
-			put "regenerate"
-		end
+module RicUser
+	class Admin::UserPasswordsController < AdminController
+		include RicUser::Concerns::Controllers::Admin::UserPasswordsController
 	end
-
 end

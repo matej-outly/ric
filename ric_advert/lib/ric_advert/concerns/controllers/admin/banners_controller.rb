@@ -94,7 +94,7 @@ module RicAdvert
 					def set_banner
 						@banner = RicAdvert.banner_model.find_by_id(params[:id])
 						if @banner.nil?
-							redirect_to banners_path, notice: I18n.t("activerecord.errors.models.#{RicAdvert.banner_model.model_name.i18n_key}.not_found")
+							redirect_to banners_path, alert: I18n.t("activerecord.errors.models.#{RicAdvert.banner_model.model_name.i18n_key}.not_found")
 						end
 					end
 
