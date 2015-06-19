@@ -40,4 +40,28 @@ module RicWebsite
 		end
 	end
 
+	#
+	# Page model
+	#
+	mattr_accessor :page_model
+	def self.page_model
+		if @@page_model.nil?
+			return RicWebsite::Page
+		else
+			return @@page_model.constantize
+		end
+	end
+
+	#
+	# Menu model
+	#
+	mattr_accessor :menu_model
+	def self.menu_model
+		if @@menu_model.nil?
+			return RicWebsite::Menu
+		else
+			return @@menu_model.constantize
+		end
+	end
+
 end
