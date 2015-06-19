@@ -1,0 +1,9 @@
+<%= rug_form_for(@product, url: (@product.id.nil? ? products_path : product_path(@product))) do |f| %>
+	
+	<%= f.text_input_row :title, :text_field %>
+	<%= f.text_area_row :content %>
+	<%= f.text_input_row :keywords, :text_field %>
+	<%= f.text_input_row :description, :text_field %>
+	<%= f.primary_button_row :submit %>
+
+<% end %>

@@ -1,0 +1,10 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@products, { 
+		name: :string
+	}, {
+		show: :product_path,
+		edit: :edit_product_path,
+		destroy: :product_path
+	} ) %>
+	<%= paginate @products %>
+<% end %>

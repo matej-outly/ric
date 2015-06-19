@@ -1,0 +1,28 @@
+cs:
+
+  headers:
+
+    ric_assortment:
+      admin:
+        products:
+          index: "Produkty"
+          show: "Detail produkty"
+          new: "Nový produkt"
+          create: "Nový produkt"
+          edit: "Upravit produkt"
+          update: "Upravit produkt"
+
+  activerecord:
+    attributes:
+      ric_assortment/product:
+        name: Jméno
+    notices:
+      models:
+        ric_assortment/product:
+          create: "Produkt byl úspěšně vytvořen"
+          update: "Produkt byl úspěšně upraven"
+          destroy: "Produkt byl úspěšně smazán"
+    errors:
+      models:
+        ric_assortment/product:
+          not_found: "Produkt nebyl nalezen."
