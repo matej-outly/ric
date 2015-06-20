@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= render partial: "ric_admin/components/title" %></title>
+	<%= stylesheet_link_tag    RicAdmin.print_css_layout, media: 'all' %>
+	<script type="text/javascript">
+		window.print();
+	</script>
+</head>
+<body class="admin">
+	<%= yield %>
+</body>
+</html>

@@ -43,6 +43,10 @@ $mobile-width: 320px;
 		&:hover { color: #c03d20; }
 	}
 
+	.grey {
+		color: silver;
+	}
+
 	table {
 		thead {
 			background-color: #477ea4;
@@ -455,19 +459,3 @@ $mobile-width: 320px;
 	}
 
 }
-
-
-/*************************************************************************/
-/* Content layouts                                                       */
-/*************************************************************************/
-
-.admin {
-
-	.layout.with_right_side {
-
-
-		
-
-	}
-	
-} /* .admin */

@@ -18,7 +18,7 @@ module RicAdmin
 	# *************************************************************************
 
 	#
-	# CSS layout
+	# Screen CSS layout
 	#
 	mattr_accessor :css_layout
 	def self.css_layout
@@ -26,6 +26,18 @@ module RicAdmin
 			return "application"
 		else
 			return @@css_layout
+		end
+	end
+
+	#
+	# Print CSS layout
+	#
+	mattr_accessor :print_css_layout
+	def self.print_css_layout
+		if @@print_css_layout.nil?
+			return "print"
+		else
+			return @@print_css_layout
 		end
 	end
 
