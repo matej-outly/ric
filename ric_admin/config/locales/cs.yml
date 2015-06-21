@@ -27,13 +27,14 @@ cs:
     bool_no: "ne"
     yes: "ano"
     no: "ne"
-    not_set: "nezadáno"
+    not_set: "nevyplněno"
     null_option: "nic"
     from: "od"
     to: "do"
     are_you_sure: "Jste si jisti?"
     permission_denied: "Na tuto operaci nemáte dostatečná oprávnění."
     free: zdarma
+    shown: zobrazeno
 
     action:
       new: "přidat"
@@ -52,6 +53,7 @@ cs:
       bind: "přidat"
       unbind: "odebrat"
       reset: "obnovit"
+      print: "vytisknout"
       export_xls: "exportovat XLS"
       order: "objednat"
       download: "stáhnout"

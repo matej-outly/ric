@@ -26,9 +26,29 @@
 		color: silver;
 	}
 
+	.shown_items {
+		text-align: right;
+	}
+
 	table {
+		
 		thead {
 			background-color: #477ea4;
+		}
+	
+		&.index_table {
+
+			tr {
+				
+				&.odd_stripe {
+					/* background-color: ... */
+				}
+
+				&.even_stripe {
+					background-color: #e5e5e5;
+				}
+				
+			}
 		}
 	}
 
