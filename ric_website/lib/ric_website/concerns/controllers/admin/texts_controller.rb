@@ -33,7 +33,7 @@ module RicWebsite
 					# Index action
 					#
 					def index
-						@texts = RicWebsite.text_model.all.order(created_at: :asc).page(params[:page])
+						@texts = RicWebsite.text_model.all.order(created_at: :asc).page(params[:page]).per(50)
 					end
 
 					#

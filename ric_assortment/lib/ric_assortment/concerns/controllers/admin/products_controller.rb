@@ -33,7 +33,7 @@ module RicAssortment
 					# Index action
 					#
 					def index
-						@products = RicAssortment.product_model.all.order(created_at: :asc).page(params[:page])
+						@products = RicAssortment.product_model.all.order(created_at: :asc).page(params[:page]).per(50)
 					end
 
 					#

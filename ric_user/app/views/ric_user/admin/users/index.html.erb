@@ -2,10 +2,9 @@
 	<%= rug_index_table_for(@users, { 
 		email: :string,
 		role: :string,
-	}, {
+	}, paths: {
 		show: :user_path,
 		edit: :edit_user_path,
 		destroy: :user_path
-	} ) %>
-	<%= paginate @users %>
+	}, pagination: true, summary: true ) %>
 <% end %>

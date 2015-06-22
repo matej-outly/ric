@@ -33,7 +33,7 @@ module RicUser
 					# Index action
 					#
 					def index
-						@users = RicUser.user_model.all.order(email: :asc).page(params[:page])
+						@users = RicUser.user_model.all.order(email: :asc).page(params[:page]).per(50)
 					end
 
 					#

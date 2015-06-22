@@ -2,10 +2,9 @@
 	<%= rug_index_table_for(@newsletters, { 
 		subject: :string,
 		created_at: :datetime
-	}, {
+	}, paths: {
 		show: :newsletter_path,
 		edit: :edit_newsletter_path,
 		destroy: :newsletter_path
-	} ) %>
-	<%= paginate @newsletters %>
+	}, pagination: true, summary: true ) %>
 <% end %>

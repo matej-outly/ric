@@ -33,7 +33,7 @@ module RicNewsletter
 					# Index action
 					#
 					def index
-						@newsletters = RicNewsletter.newsletter_model.order(created_at: :desc).page(params[:page])
+						@newsletters = RicNewsletter.newsletter_model.order(created_at: :desc).page(params[:page]).per(50)
 					end
 
 					#

@@ -33,7 +33,7 @@ module RicMagazine
 					# Index action
 					#
 					def index
-						@articles = RicMagazine.article_model.all.order(published_at: :desc, created_at: :desc).page(params[:page])
+						@articles = RicMagazine.article_model.all.order(published_at: :desc, created_at: :desc).page(params[:page]).per(50)
 					end
 
 					#
