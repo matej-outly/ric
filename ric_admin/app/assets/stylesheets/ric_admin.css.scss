@@ -47,14 +47,28 @@ $mobile-width: 320px;
 		color: silver;
 	}
 
-	.shown_items {
-		text-align: right;
-	}
-
 	table {
 		
 		thead {
 			background-color: #477ea4;
+
+			th {
+				vertical-align: top;
+			}
+			
+			.sorting {
+				color: #ffb4b4;
+				font-weight: normal;
+				&:before {
+					content: "("
+				}
+				a {
+					color: #ffb4b4;
+				}
+				&:after {
+					content: ")"
+				}
+			}
 		}
 	
 		&.index_table {

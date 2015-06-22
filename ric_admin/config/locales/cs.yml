@@ -57,6 +57,7 @@ cs:
       export_xls: "exportovat XLS"
       order: "objednat"
       download: "stáhnout"
+      sort: "řadit"
 
     attribute:
       address:
