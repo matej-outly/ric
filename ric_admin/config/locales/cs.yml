@@ -35,6 +35,7 @@ cs:
     permission_denied: "Na tuto operaci nemáte dostatečná oprávnění."
     free: zdarma
     shown: zobrazeno
+    nesting: zanoření
 
     action:
       new: "přidat"

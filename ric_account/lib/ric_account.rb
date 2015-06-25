@@ -29,7 +29,7 @@ module RicAccount
 	mattr_accessor :user_model
 	def self.user_model
 		if @@user_model.nil?
-			return User
+			return RicUser::User
 		else
 			return @@user_model.constantize
 		end

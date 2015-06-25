@@ -15,6 +15,7 @@ cs:
   activerecord:
     attributes:
       ric_website/text:
+        key: Identifikující klíč
         title: Nadpis
         content: Obsah
         keywords: Klíčová slova
