@@ -59,6 +59,7 @@ cs:
       order: "objednat"
       download: "stáhnout"
       sort: "řadit"
+      save: "uložit"
 
     attribute:
       address:
