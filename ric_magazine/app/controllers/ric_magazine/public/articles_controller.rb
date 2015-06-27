@@ -12,7 +12,9 @@
 require_dependency "ric_magazine/public_controller"
 
 module RicMagazine
-	class Public::ArticlesController < PublicController
-		include RicMagazine::Concerns::Controllers::Public::ArticlesController
+	class Public
+		class ArticlesController < PublicController
+			include RicMagazine::Concerns::Controllers::Public::ArticlesController
+		end
 	end
 end

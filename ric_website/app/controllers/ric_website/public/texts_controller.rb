@@ -12,7 +12,9 @@
 require_dependency "ric_website/public_controller"
 
 module RicWebsite
-	class Public::TextsController < PublicController
-		include RicWebsite::Concerns::Controllers::Public::TextsController
+	class Public
+		class TextsController < PublicController
+			include RicWebsite::Concerns::Controllers::Public::TextsController
+		end
 	end
 end

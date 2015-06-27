@@ -12,7 +12,9 @@
 require_dependency "ric_customer/admin_controller"
 
 module RicCustomer
-	class Admin::CustomersController < AdminController
-		include RicCustomer::Concerns::Controllers::Admin::CustomersController
+	class Admin
+		class CustomersController < AdminController
+			include RicCustomer::Concerns::Controllers::Admin::CustomersController
+		end
 	end
 end

@@ -12,7 +12,9 @@
 require_dependency "ric_website/admin_controller"
 
 module RicWebsite
-	class Admin::TextsController < AdminController
-		include RicWebsite::Concerns::Controllers::Admin::TextsController
+	class Admin
+		class TextsController < AdminController
+			include RicWebsite::Concerns::Controllers::Admin::TextsController
+		end
 	end
 end

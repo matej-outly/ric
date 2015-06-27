@@ -12,7 +12,9 @@
 require_dependency "ric_advert/admin_controller"
 
 module RicAdvert
-	class Admin::BannersController < AdminController
-		include RicAdvert::Concerns::Controllers::Admin::BannersController
+	class Admin
+		class BannersController < AdminController
+			include RicAdvert::Concerns::Controllers::Admin::BannersController
+		end
 	end
 end

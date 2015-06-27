@@ -12,7 +12,9 @@
 require_dependency "ric_assortment/admin_controller"
 
 module RicAssortment
-	class Admin::ProductsController < AdminController
-		include RicAssortment::Concerns::Controllers::Admin::ProductsController
+	class Admin
+		class ProductsController < AdminController
+			include RicAssortment::Concerns::Controllers::Admin::ProductsController
+		end
 	end
 end

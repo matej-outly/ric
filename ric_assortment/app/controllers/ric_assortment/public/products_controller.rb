@@ -12,7 +12,9 @@
 require_dependency "ric_assortment/public_controller"
 
 module RicAssortment
-	class Public::ProductsController < PublicController
-		include RicAssortment::Concerns::Controllers::Public::ProductsController
+	class Public
+		class ProductsController < PublicController
+			include RicAssortment::Concerns::Controllers::Public::ProductsController
+		end
 	end
 end

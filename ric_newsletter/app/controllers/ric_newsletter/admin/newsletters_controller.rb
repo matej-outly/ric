@@ -12,7 +12,9 @@
 require_dependency "ric_newsletter/admin_controller"
 
 module RicNewsletter
-	class Admin::NewslettersController < AdminController
-		include RicNewsletter::Concerns::Controllers::Admin::NewslettersController
+	class Admin
+		class NewslettersController < AdminController
+			include RicNewsletter::Concerns::Controllers::Admin::NewslettersController
+		end
 	end
 end

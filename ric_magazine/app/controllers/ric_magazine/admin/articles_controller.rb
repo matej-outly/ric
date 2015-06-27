@@ -12,8 +12,10 @@
 require_dependency "ric_magazine/admin_controller"
 
 module RicMagazine
-	class Admin::ArticlesController < AdminController
-		include RicMagazine::Concerns::Controllers::Admin::ArticlesController
+	class Admin
+		class ArticlesController < AdminController
+			include RicMagazine::Concerns::Controllers::Admin::ArticlesController
+		end
 	end
 end
 

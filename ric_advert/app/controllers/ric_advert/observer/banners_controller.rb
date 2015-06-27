@@ -12,7 +12,9 @@
 require_dependency "ric_advert/observer_controller"
 
 module RicAdvert
-	class Observer::BannersController < ObserverController
-		include RicAdvert::Concerns::Controllers::Observer::BannersController
+	class Observer
+		class BannersController < ObserverController
+			include RicAdvert::Concerns::Controllers::Observer::BannersController
+		end
 	end
 end

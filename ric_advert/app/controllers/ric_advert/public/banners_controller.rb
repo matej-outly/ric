@@ -12,7 +12,9 @@
 require_dependency "ric_advert/public_controller"
 
 module RicAdvert
-	class Public::BannersController < PublicController
-		include RicAdvert::Concerns::Controllers::Public::BannersController
+	class Public
+		class BannersController < PublicController
+			include RicAdvert::Concerns::Controllers::Public::BannersController
+		end
 	end
 end
