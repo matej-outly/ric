@@ -2,20 +2,26 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 26. 6. 2015
 # *
 # *****************************************************************************
 
-RicDevise::Engine.routes.draw do
+module RicDevise
+	class ApplicationController < ::ApplicationController
 
-	#
-	# RIC Devise
-	#
-	#devise_for :users, controllers: { sessions: "ric_devise/sessions", passwords: "ric_devise/passwords" }
-	
-	devise_for :users, class_name: RicDevise.user_model.to_s, module: :devise
+		#
+		# Layout
+		#
+		layout "ric_admin"
+		
+	protected
 
+		def after_sign_out_path_for(resource)
+			main_app.root_path
+		end
+		
+	end
 end

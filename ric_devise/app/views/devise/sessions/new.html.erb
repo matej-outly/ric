@@ -1,4 +1,4 @@
-<%= render layout: "ric_devise/layouts/with_right_side" do %>
+<%= render layout: "devise/layouts/with_right_side" do %>
 	<h2><%= t("devise.action.sign_in") %></h2>
 	<%= rug_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 		<%= f.text_input_row :email, :email_field %>
