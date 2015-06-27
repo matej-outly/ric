@@ -12,27 +12,27 @@
 RicAdvert::AdminEngine.routes.draw do
 		
 	# Advertisers
-	resources :advertisers, controller: "admin/advertisers"
+	resources :advertisers, controller: "admin_advertisers"
 
 	# Banners
-	resources :banners, controller: "admin/banners"
+	resources :banners, controller: "admin_banners"
 
 end
 
 RicAdvert::ObserverEngine.routes.draw do
 
 	# Advertisers
-	resources :advertisers, controller: "observer/advertisers", only: [:index, :show]
+	resources :advertisers, controller: "observer_advertisers", only: [:index, :show]
 
 	# Banners
-	resources :banners, controller: "observer/banners", only: [:show]
+	resources :banners, controller: "observer_banners", only: [:show]
 
 end
 
 RicAdvert::PublicEngine.routes.draw do
 		
 	# Banners
-	resources :banners, controller: "public/banners", only: [] do
+	resources :banners, controller: "public_banners", only: [] do
 		collection do
 			get "get"
 			get "click"

@@ -12,13 +12,13 @@
 RicMagazine::AdminEngine.routes.draw do
 
 	# Articles
-	resources :articles, controller: "admin/articles"
+	resources :articles, controller: "admin_articles"
 
 end
 
 RicMagazine::PublicEngine.routes.draw do
 
 	# Articles
-	resources :articles, controller: "pulic/customers", only: [:index, :show]
+	resources :articles, controller: "pulic_customers", only: [:index, :show]
 
 end

@@ -2,17 +2,16 @@ cs:
 
   headers:
     ric_newsletter:
-      admin:
-        newsletters:
-          index: "Newslettery"
-          show: "Detail newsletteru"
-          new: "Nový newsletter"
-          create: "Nový newsletter"
-          edit: "Upravit newsletter"
-          update: "Upravit newsletter"
-        sent_newsletters:
-          new: "Poslat newsletter"
-          create: "Poslat newsletter"
+      admin_newsletters:
+        index: "Newslettery"
+        show: "Detail newsletteru"
+        new: "Nový newsletter"
+        create: "Nový newsletter"
+        edit: "Upravit newsletter"
+        update: "Upravit newsletter"
+      admin_sent_newsletters:
+        new: "Poslat newsletter"
+        create: "Poslat newsletter"
 
   activerecord:
     attributes:

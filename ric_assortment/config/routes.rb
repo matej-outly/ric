@@ -12,13 +12,13 @@
 RicAssortment::AdminEngine.routes.draw do
 
 	# Products
-	resources :products, controller: "admin/products"
+	resources :products, controller: "admin_products"
 
 end
 
 RicAssortment::PublicEngine.routes.draw do
 
 	# Products
-	resources :products, only: [:show], controller: "public/products"
+	resources :products, only: [:show], controller: "public_products"
 
 end

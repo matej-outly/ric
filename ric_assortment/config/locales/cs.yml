@@ -3,14 +3,13 @@ cs:
   headers:
 
     ric_assortment:
-      admin:
-        products:
-          index: "Produkty"
-          show: "Detail produkty"
-          new: "Nový produkt"
-          create: "Nový produkt"
-          edit: "Upravit produkt"
-          update: "Upravit produkt"
+      admin_products:
+        index: "Produkty"
+        show: "Detail produkty"
+        new: "Nový produkt"
+        create: "Nový produkt"
+        edit: "Upravit produkt"
+        update: "Upravit produkt"
 
   activerecord:
     attributes:

@@ -2,18 +2,17 @@ cs:
 
   headers:
     ric_user:
-      admin:
-        users:
-          index: "Uživatelé"
-          show: "Detail uživatele"
-          new: "Nový uživatel"
-          create: "Nový uživatel"
-          edit: "Upravit uživatele"
-          update: "Upravit uživatele"
-        user_passwords:
-          edit: "Změnit heslo"
-          update: "Změnit heslo"
-          regenerate: "Přegenerovat heslo"
+      admin_users:
+        index: "Uživatelé"
+        show: "Detail uživatele"
+        new: "Nový uživatel"
+        create: "Nový uživatel"
+        edit: "Upravit uživatele"
+        update: "Upravit uživatele"
+      admin_user_passwords:
+        edit: "Změnit heslo"
+        update: "Změnit heslo"
+        regenerate: "Přegenerovat heslo"
 
   activerecord:
     attributes:

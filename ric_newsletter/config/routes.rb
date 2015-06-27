@@ -12,10 +12,10 @@
 RicNewsletter::AdminEngine.routes.draw do
 
 	# Newsletters
-	resources :newsletters, controller: "admin/newsletters"
+	resources :newsletters, controller: "admin_newsletters"
 
 	# Sent newsletters
-	resources :sent_newsletters, controller: "admin/sent_newsletters", only: [:new, :create, :destroy] do
+	resources :sent_newsletters, controller: "admin_sent_newsletters", only: [:new, :create, :destroy] do
 		member do
 			get "resend"
 		end

@@ -2,24 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Banners
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 10. 12. 2014
 # *
 # *****************************************************************************
 
-RicUser::AdminEngine.routes.draw do
+require_dependency "ric_advert/observer_controller"
 
-	# Users
-	resources :users, controller: "admin_users"
-
-	# User passwords
-	resources :user_passwords, controller: "admin_user_passwords", only: [:edit, :update] do
-		member do
-			get "regenerate"
-			put "regenerate"
-		end
+module RicAdvert
+	class ObserverBannersController < ObserverController
+		include RicAdvert::Concerns::Controllers::Observer::BannersController
 	end
-
 end

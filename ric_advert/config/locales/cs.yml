@@ -2,27 +2,25 @@ cs:
 
   headers:
     ric_advert:
-      admin:
-        advertisers:
-          index: "Inzerenti"
-          show: "Detail inzerenta"
-          new: "Nový inzerent"
-          create: "Nový inzerent"
-          edit: "Upravit inzerenta"
-          update: "Upravit inzerenta"
-        banners:
-          index: "Bannery"
-          show: "Detail banneru"
-          new: "Nový banner"
-          create: "Nový banner"
-          edit: "Upravit banner"
-          update: "Upravit banner"
-      observer:
-        advertisers:
-          index: "Inzerenti"
-          show: "Detail inzerenta"
-        banners:
-          show: "Detail banneru"
+      admin_advertisers:
+        index: "Inzerenti"
+        show: "Detail inzerenta"
+        new: "Nový inzerent"
+        create: "Nový inzerent"
+        edit: "Upravit inzerenta"
+        update: "Upravit inzerenta"
+      admin_banners:
+        index: "Bannery"
+        show: "Detail banneru"
+        new: "Nový banner"
+        create: "Nový banner"
+        edit: "Upravit banner"
+        update: "Upravit banner"
+      observer_advertisers:
+        index: "Inzerenti"
+        show: "Detail inzerenta"
+      observer_banners:
+        show: "Detail banneru"
 
   activerecord:
     attributes:

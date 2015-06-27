@@ -3,14 +3,13 @@ cs:
   headers:
 
     ric_website:
-      admin:
-        texts:
-          index: "Textové stránky"
-          show: "Detail textové stránky"
-          new: "Nová textová stránka"
-          create: "Nová textová stránka"
-          edit: "Upravit textovou stránku"
-          update: "Upravit textovou stránku"
+      admin_texts:
+        index: "Textové stránky"
+        show: "Detail textové stránky"
+        new: "Nová textová stránka"
+        create: "Nová textová stránka"
+        edit: "Upravit textovou stránku"
+        update: "Upravit textovou stránku"
 
   activerecord:
     attributes:

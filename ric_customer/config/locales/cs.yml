@@ -2,14 +2,13 @@ cs:
 
   headers:
     ric_customer:
-      admin:
-        customers:
-          index: "Zákazníci"
-          show: "Detail zákazníka"
-          new: "Nový zákazník"
-          create: "Nový zákazník"
-          edit: "Upravit zákazníka"
-          update: "Upravit zákazníka"
+      admin_customers:
+        index: "Zákazníci"
+        show: "Detail zákazníka"
+        new: "Nový zákazník"
+        create: "Nový zákazník"
+        edit: "Upravit zákazníka"
+        update: "Upravit zákazníka"
 
   activerecord:
     attributes:

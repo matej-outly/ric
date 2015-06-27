@@ -2,24 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Sent newsletters
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 17. 2. 2015
 # *
 # *****************************************************************************
 
-RicUser::AdminEngine.routes.draw do
+require_dependency "ric_newsletter/admin_controller"
 
-	# Users
-	resources :users, controller: "admin_users"
-
-	# User passwords
-	resources :user_passwords, controller: "admin_user_passwords", only: [:edit, :update] do
-		member do
-			get "regenerate"
-			put "regenerate"
-		end
+module RicNewsletter
+	class AdminSentNewslettersController < AdminController
+		include RicNewsletter::Concerns::Controllers::Admin::SentNewslettersController
 	end
-
 end

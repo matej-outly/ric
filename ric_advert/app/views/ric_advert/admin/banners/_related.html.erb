@@ -1,7 +1,0 @@
-<%= rug_menu_for(@banner, name: "related") do |m| %>
-	
-	<% if @banner %>
-		<%= m.item t('headers.ric_advert.admin.advertisers.show').upcase_first, advertiser_path(@banner.advertiser), icon: "search" %>
-	<% end %>
-
-<% end %>

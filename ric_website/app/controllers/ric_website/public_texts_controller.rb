@@ -2,24 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Texts
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-RicUser::AdminEngine.routes.draw do
+require_dependency "ric_website/public_controller"
 
-	# Users
-	resources :users, controller: "admin_users"
-
-	# User passwords
-	resources :user_passwords, controller: "admin_user_passwords", only: [:edit, :update] do
-		member do
-			get "regenerate"
-			put "regenerate"
-		end
+module RicWebsite
+	class PublicTextsController < PublicController
+		include RicWebsite::Concerns::Controllers::Public::TextsController
 	end
-
 end

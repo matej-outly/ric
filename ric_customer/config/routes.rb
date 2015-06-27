@@ -12,7 +12,7 @@
 RicCustomer::AdminEngine.routes.draw do
 
 	# Customers
-	resources :customers, controller: "admin/customers" do
+	resources :customers, controller: "admin_customers" do
 		collection do
 			post "index_search"
 			get "statistic/:statistic", action: "statistic", as: "statistic"
