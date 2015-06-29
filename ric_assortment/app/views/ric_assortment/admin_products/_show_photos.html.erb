@@ -1,0 +1,8 @@
+<%= rug_index_table_for(@product.product_photos, { 
+	image: { type: :image, thumb_style: :thumb },
+	title: :string,
+}, paths: {
+	show: :product_photo_path,
+	edit: :edit_product_photo_path,
+	destroy: :product_photo_path
+}) %>

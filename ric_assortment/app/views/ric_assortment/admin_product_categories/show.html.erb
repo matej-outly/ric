@@ -1,0 +1,30 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@product_category, { 
+		parent: { type: :belongs_to, label: :name, path: :product_category_path },
+		name: :string
+	}) %>
+
+	<% if @product_category.children.count > 0 %>
+		<h3><%= t("headers.ric_assortment.admin_product_categories.children") %></h3>
+
+		<%= rug_index_table_for(@product_category.children.order(lft: :asc), { 
+			name: :string,
+		}, paths: {
+			show: :product_category_path,
+			edit: :edit_product_category_path,
+			destroy: :product_category_path
+		} ) %>
+	<% end %>
+
+	<% if @product_category.products.count > 0 %>
+		<h3><%= t("headers.ric_assortment.admin_product_categories.products") %></h3>
+
+		<%= rug_index_table_for(@product_category.products.order(position: :asc).page(params[:page]).per(50), { 
+			name: :string,
+			catalogue_number: :string,
+		}, paths: {
+			show: :product_path
+		}, pagination: true ) %>
+	<% end %>
+
+<% end %>

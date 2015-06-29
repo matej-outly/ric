@@ -1,0 +1,9 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_hierarchical_index_table_for(@product_categories, { 
+		name: :string,
+	}, paths: {
+		show: :product_category_path,
+		edit: :edit_product_category_path,
+		destroy: :product_category_path
+	}, summary: true ) %>
+<% end %>

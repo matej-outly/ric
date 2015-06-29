@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product
+# * Product photo
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 29. 6. 2015
 # *
 # *****************************************************************************
 
 module RicAssortment
 	module Concerns
 		module Models
-			module Product extend ActiveSupport::Concern
+			module ProductPhoto extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -25,9 +25,6 @@ module RicAssortment
 					# Structure
 					# *********************************************************************
 
-					def parts
-						[:identification, :content, :dimensions, :price, :meta]
-					end
 					
 				end
 

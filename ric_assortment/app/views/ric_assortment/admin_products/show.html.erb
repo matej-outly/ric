@@ -1,5 +1,10 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@product, { 
-		name: :string,
-	}) %>
+	<% @product.class.parts.each do |part| %>
+		<h3><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></h3>
+		<%= render partial: "show_#{part.to_s}" %>
+	<% end %>
+	<h3><%= t("headers.ric_assortment.admin_products.photos") %></h3>
+	<%= render partial: "show_photos" %>
+	<h3><%= t("headers.ric_assortment.admin_products.categories") %></h3>
+	<%= render partial: "show_categories" %>
 <% end %>

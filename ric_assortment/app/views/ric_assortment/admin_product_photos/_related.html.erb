@@ -1,0 +1,11 @@
+<%= rug_menu_for(@product_photo, name: "related") do |m| %>
+	
+	<!-- ... -->
+
+	<% if @product_photo %>
+
+		<%= m.item t("headers.ric_assortment.admin_products.show"), product_path(@product_photo.product), icon: "search" %>
+		
+	<% end %>
+
+<% end %>

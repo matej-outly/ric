@@ -16,6 +16,9 @@ module RicAssortment
 		# Controllers
 		#
 		require 'ric_assortment/concerns/controllers/admin/products_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_categories_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_category_bindings_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_photos_controller'
 		
 		isolate_namespace RicAssortment
 	end

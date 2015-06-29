@@ -7,8 +7,29 @@ class CreateRicAssortmentProducts < ActiveRecord::Migration
 			# Ordering
 			t.integer :position
 
-			# Name
+			# Identification
 			t.string :name
+			t.string :catalogue_number
+
+			# Content
+			t.text :perex
+			t.text :content
+
+			# Dimensions
+			t.integer :height
+			t.integer :width
+			t.integer :depth
+			t.integer :weight
+			t.integer :capacity
+
+			# Price
+			t.integer :price
+			t.string :unit
+
+			# Meta
+			t.string :keywords
+			t.string :description
+			
 		end
 	end
 end

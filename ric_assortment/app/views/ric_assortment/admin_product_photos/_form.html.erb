@@ -1,0 +1,8 @@
+<%= rug_form_for(@product_photo, url: (@product_photo.id.nil? ? product_photos_path : product_photo_path(@product_photo))) do |f| %>
+	
+	<%= f.hidden_field :product_id %>
+	<%= f.text_input_row :image, :file_field %>
+	<%= f.text_input_row :title, :text_field %>
+	
+	<%= f.primary_button_row :submit %>
+<% end %>

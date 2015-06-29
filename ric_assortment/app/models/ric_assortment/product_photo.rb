@@ -2,15 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product category
+# * Product photo
 # *
 # * Author: Matěj Outlý
-# * Date  : 19. 6. 2015
+# * Date  : 29. 6. 2015
 # *
 # *****************************************************************************
 
 module RicAssortment
-	class ProductCategory < ActiveRecord::Base
-		include RicAssortment::Concerns::Models::ProductCategory
+	class ProductPhoto < ActiveRecord::Base
+		include RicAssortment::Concerns::Models::ProductPhoto
 	end
 end

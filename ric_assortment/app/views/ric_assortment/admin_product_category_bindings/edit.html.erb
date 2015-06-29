@@ -1,0 +1,16 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+
+	<%= rug_form_for(@product, url: product_category_binding_path(@product)) do |f| %>
+
+		<%
+			columns = RugBuilder::TableBuilder::Columns.new(name: :string)
+			columns.add_column_by_block(:checkbox) do |product_category|
+				check_box_tag "product[product_categories][#{product_category.id.to_s}]", "1", (@product.product_category_ids.include?(product_category.id))
+			end
+		%>
+		<%= rug_hierarchical_index_table_for(@product_categories, columns) %>
+
+		<%= f.primary_button_row :submit %>
+	<% end %>
+
+<% end %>

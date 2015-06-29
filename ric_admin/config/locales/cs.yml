@@ -38,8 +38,8 @@ cs:
     nesting: zanoření
 
     action:
-      new: "přidat"
-      create: "přidat"
+      new: "nová položka"
+      create: "nová položka"
       edit: "upravit"
       update: "upravit"
       destroy: "smazat"

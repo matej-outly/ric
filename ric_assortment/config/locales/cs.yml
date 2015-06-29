@@ -5,23 +5,88 @@ cs:
     ric_assortment:
       admin_products:
         index: "Produkty"
-        show: "Detail produkty"
+        show: "Detail produktu"
         new: "Nový produkt"
         create: "Nový produkt"
         edit: "Upravit produkt"
         update: "Upravit produkt"
+        identification: Identifikace
+        content: Popis
+        dimensions: Rozměry
+        price: Cena
+        meta: Meta informace
+        photos: Fotografie
+        categories: Kategorie
+      admin_product_categories:
+        index: "Kategorie produktů"
+        show: "Detail kategorie produktů"
+        new: "Nová kategorie produktů"
+        create: "Nová kategorie produktů"
+        edit: "Upravit kategorii produktů"
+        update: "Upravit kategorii produktů"
+        children: "Podřazené kategorie"
+        products: "Obsažené produkty"
+      admin_product_category_bindings:
+        edit: "Přidat kategorii produktu"
+        update: "Přidat kategorii produktu"
+      admin_product_photos:
+        show: Detail fotografie
+        new: Nová fotografie
+        create: Nová fotografie
+        edit: Upravit fotografii
+        update: Upravit fotografii
+        destroy: Smazat fotografii
 
   activerecord:
     attributes:
       ric_assortment/product:
         name: Jméno
+        catalogue_number: Katalogové číslo
+        perex: Perex
+        content: Popis
+        height: Výška (cm)
+        width: Šířka (cm)
+        depth: Hloubka (cm)
+        weight: Váha (kg)
+        capacity: Objem (l)
+        price: Cena
+        unit: Jednotka
+        keywords: Klíčová slova
+        description: Popis
+      ric_assortment/product_category:
+        name: Jméno
+        parent: Nadřazená kategorie
+        parent_id: Nadřazená kategorie
+        checkbox: Vybrat
+      ric_assortment/product_photo:
+        product: Produkt
+        product_id: Produkt
+        image: Obrázek
+        title: Popis
     notices:
       models:
         ric_assortment/product:
           create: "Produkt byl úspěšně vytvořen"
           update: "Produkt byl úspěšně upraven"
           destroy: "Produkt byl úspěšně smazán"
+          category_bind: "Kategorie byla úspěšně přidána"
+          category_unbind: "Kategorie byla úspěšně odebrána"
+        ric_assortment/product_category:
+          create: "Kategorie produktů byla úspěšně vytvořena"
+          update: "Kategorie produktů byla úspěšně upravena"
+          destroy: "Kategorie produktů byla úspěšně smazána"
+        ric_assortment/product_photo:
+          create: "Fotografie produktu byla úspěšně vytvořena"
+          update: "Fotografie produktu byla úspěšně upravena"
+          destroy: "Fotografie produktu byla úspěšně smazána"
     errors:
       models:
         ric_assortment/product:
           not_found: "Produkt nebyl nalezen."
+        ric_assortment/product_category:
+          not_found: "Kategorie produktů nebyla nalezena."
+        ric_assortment/product_photo:
+          not_found: "Fotografie produktu nebyla nalezena."
+          attributes:
+            product_id:
+              blank: "Produkt musí být vybrán."

@@ -2,15 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product category
+# * Product categories
 # *
 # * Author: Matěj Outlý
-# * Date  : 19. 6. 2015
+# * Date  : 29. 6. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_assortment/admin_controller"
+
 module RicAssortment
-	class ProductCategory < ActiveRecord::Base
-		include RicAssortment::Concerns::Models::ProductCategory
+	class AdminProductCategoriesController < AdminController
+		include RicAssortment::Concerns::Controllers::Admin::ProductCategoriesController
 	end
 end
