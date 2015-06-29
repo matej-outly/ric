@@ -25,6 +25,16 @@ module RicAssortment
 					# Structure
 					# *********************************************************************
 
+					#
+					# Relation to products
+					#
+					has_and_belongs_to_many :products, class_name: RicAssortment.product_model.to_s
+
+					#
+					# Ordering
+					#
+					enable_hierarchical_ordering
+					
 				end
 
 			end

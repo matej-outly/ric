@@ -27,8 +27,8 @@ cs:
         children: "Podřazené kategorie"
         products: "Obsažené produkty"
       admin_product_category_bindings:
-        edit: "Přidat kategorii produktu"
-        update: "Přidat kategorii produktu"
+        edit: "Přidat kategorie produktu"
+        update: "Přidat kategorie produktu"
       admin_product_photos:
         show: Detail fotografie
         new: Nová fotografie
@@ -69,7 +69,7 @@ cs:
           create: "Produkt byl úspěšně vytvořen"
           update: "Produkt byl úspěšně upraven"
           destroy: "Produkt byl úspěšně smazán"
-          category_bind: "Kategorie byla úspěšně přidána"
+          category_bind: "Vybrané kategorie byly úspěšně přidány"
           category_unbind: "Kategorie byla úspěšně odebrána"
         ric_assortment/product_category:
           create: "Kategorie produktů byla úspěšně vytvořena"

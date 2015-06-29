@@ -25,7 +25,25 @@ module RicAssortment
 					# Structure
 					# *********************************************************************
 
-					def parts
+					#
+					# Relation to product categories
+					#
+					has_and_belongs_to_many :product_categories, class_name: RicAssortment.product_category_model.to_s
+
+					#
+					# Relation to product photos
+					#
+					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s
+
+					#
+					# Ordering
+					#
+					enable_ordering
+
+					#
+					# Parts
+					#
+					def self.parts
 						[:identification, :content, :dimensions, :price, :meta]
 					end
 					
