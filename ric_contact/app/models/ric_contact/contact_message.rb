@@ -2,23 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Contact message
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 3. 2015
+# * Date  : 30. 6. 2015
 # *
 # *****************************************************************************
 
-RicMagazine::AdminEngine.routes.draw do
-
-	# Articles
-	resources :articles, controller: "admin_articles"
-
-end
-
-RicMagazine::PublicEngine.routes.draw do
-
-	# Articles
-	resources :articles, controller: "pulic_articles", only: [:index, :show]
-
+module RicContact
+	class ContactMessage < ActiveRecord::Base
+		include RicContact::Concerns::Models::ContactMessage
+	end
 end

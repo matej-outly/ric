@@ -5,20 +5,23 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 3. 2015
+# * Date  : 30. 6. 2015
 # *
 # *****************************************************************************
 
-RicMagazine::AdminEngine.routes.draw do
+RicContact::AdminEngine.routes.draw do
 
-	# Articles
-	resources :articles, controller: "admin_articles"
+	# Branches
+	resources :branches, controller: "admin_branches"
+
+	# Contact messages
+	resources :contact_messages, controller: "admin_contact_messages"
 
 end
 
-RicMagazine::PublicEngine.routes.draw do
+RicContact::PublicEngine.routes.draw do
 
-	# Articles
-	resources :articles, controller: "pulic_articles", only: [:index, :show]
+	# Contact messages
+	resources :contact_messages, controller: "pulic_contact_messages", only: [:create]
 
 end

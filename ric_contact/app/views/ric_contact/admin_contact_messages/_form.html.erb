@@ -1,0 +1,6 @@
+<%= rug_form_for(@contact_message, url: (@contact_message.id.nil? ? contact_messages_path : contact_message_path(@contact_message))) do |f| %>
+	<%= f.text_input_row :name, :text_field %>
+	<%= f.text_input_row :email, :email_field %>
+	<%= f.text_area_row :message %>
+	<%= f.primary_button_row :submit %>
+<% end %>

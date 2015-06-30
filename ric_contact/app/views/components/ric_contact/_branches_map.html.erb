@@ -1,0 +1,43 @@
+<div class="branches_map">
+	<div id="branches_map_canvas"></div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+<script>
+	function branches_map_ready()
+	{
+		var latitude = 50.0182157; /* TODO Client position */
+		var longitude = 15.2087898;
+		var zoom = 14;
+
+		google.maps.event.addDomListener(window, 'load', function() {
+			
+			/* Map */
+			var map_canvas = document.getElementById('branches_map_canvas');
+			var map_position = new google.maps.LatLng(latitude, longitude);
+			var map_options = {
+				center: map_position,
+				scrollwheel: false,
+				zoom: zoom,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+			}
+			var map = new google.maps.Map(map_canvas, map_options);
+
+			/* Markers */ /* TODO load dynamically by AJAX according to position */
+			<% @branches_map.branches.each do |branch| %>
+				<% if !branch.latitude.blank? && !branch.longitude.blank? %>
+					new google.maps.Marker({
+						position: new google.maps.LatLng(<%= branch.latitude %>, <%= branch.longitude %>),
+						map: map,
+						title: '<%= branch.name %><%= (!branch.address.blank? ? " - " + branch.address_formated : "") %>',
+					});
+				<% end %>
+			<% end %>
+
+		});
+	}
+
+	$(document).ready(branches_map_ready);
+	$(document).on("page:load", branches_map_ready);
+</script>
