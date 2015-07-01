@@ -15,6 +15,7 @@ require "ric_contact/public_engine"
 
 # Models
 require 'ric_contact/concerns/models/branch'
+require 'ric_contact/concerns/models/contact_message'
 
 module RicContact
 
