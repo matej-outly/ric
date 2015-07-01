@@ -28,6 +28,6 @@ end
 RicAssortment::PublicEngine.routes.draw do
 
 	# Products
-	resources :products, only: [:show], controller: "public_products"
+	resources :products, only: [:index, :show], controller: "public_products"
 
 end

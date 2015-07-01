@@ -30,6 +30,16 @@ module RicAssortment
 					end
 
 					#
+					# Index action
+					#
+					def index
+						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(24)
+						if params[:product_category_id]
+							@product_category = RicAssortment.product_category_model.find_by_id(params[:product_category_id])
+						end
+					end
+
+					#
 					# Show action
 					#
 					def show

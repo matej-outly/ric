@@ -39,14 +39,30 @@ module RicAssortment
 					# Ordering
 					#
 					enable_ordering
+					
+				end
+
+				module ClassMethods
 
 					#
 					# Parts
 					#
-					def self.parts
+					def parts
 						[:identification, :content, :dimensions, :price, :meta]
 					end
 					
+					# *********************************************************************
+					# Scopes
+					# *********************************************************************
+
+					def from_category(product_category_id)
+						if product_category_id.nil?
+							all
+						else
+							joins(:product_categories).where(product_categories: { id: product_category_id })
+						end
+					end
+
 				end
 
 			end

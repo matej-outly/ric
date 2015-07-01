@@ -2,21 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Product categories submenu
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 1. 7. 2015
 # *
 # *****************************************************************************
 
-module RicContact
-	class PublicEngine < ::Rails::Engine
+class RicAssortment::ProductCategoriesSubmenuComponent < RugController::Component
 
-		#
-		# Controllers
-		#
-		require 'ric_contact/concerns/controllers/public/contact_messages_controller'
-
-		isolate_namespace RicContact
+	def control
+		@product_categories = RicAssortment.product_category_model.all.order(lft: :asc)
 	end
+
 end

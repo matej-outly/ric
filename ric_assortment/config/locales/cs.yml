@@ -36,6 +36,8 @@ cs:
         edit: Upravit fotografii
         update: Upravit fotografii
         destroy: Smazat fotografii
+      public_products:
+        index: Produkty
 
   activerecord:
     attributes:

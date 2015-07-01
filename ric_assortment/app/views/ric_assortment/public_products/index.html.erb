@@ -1,0 +1,15 @@
+<div class="products index">
+	<h1><%= @product_category ? @product_category.name : t("headers.ric_assortment.public_products.index") %></h1>
+	<% @products.each do |product| %>
+		<div class="item">
+			<%= link_to ric_assortment_public.product_path(product) do %>
+				<span class="photo">
+					<% product_photo = product.product_photos.order(position: :asc).first %>
+					<%= image_tag(product_photo.image.url(:thumb)) if product_photo && product_photo.image.exists? %>
+				</span>
+				<span class="name"><%= product.name %></span>
+				<span class="perex"><%= product.perex.html_safe if product.perex %></span>
+			<% end %>
+		</div>
+	<% end %>
+</div>
