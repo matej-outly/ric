@@ -105,6 +105,10 @@ $mobile-width: 320px;
 				
 			}
 
+			&.first_column_not_highlighted tr td:first-child {
+				font-weight: normal;
+			}
+
 			@media only screen and (max-width: $tablet-width) {
 				
 				& {
