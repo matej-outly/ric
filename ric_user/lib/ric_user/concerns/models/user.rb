@@ -42,7 +42,7 @@ module RicUser
 				# *************************************************************************
 
 				def regenerate_password
-					new_password = SecureRandom.urlsafe_base64(3) # 4 characters
+					new_password = SecureRandom.hex(2) # 4 characters
 					self.password = new_password
 					result = self.save
 

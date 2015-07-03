@@ -13,6 +13,14 @@ cs:
         help: "Pomoc při potížích"
         contact: "Kontakt"
 
+  views:
+    pagination:
+      first: "&laquo; První"
+      last: "Poslední &raquo;"
+      previous: "&lsaquo; Předchozí"
+      next: "Následující &rsaquo;"
+      truncate: "&hellip;"
+
   helpers:
     submit:
       create: "Vytvořit"
@@ -46,6 +54,7 @@ cs:
       resend: "znovu odeslat"
       hide: "skrýt"
       index: "seznam"
+      summary: "souhrn"
       show: "detail"
       preview: "náhled"
       deactivate: "deaktivovat"
@@ -70,10 +79,10 @@ cs:
 
   date:
     formats:
-      default: "%d. %m. %Y"
+      default: "%-d. %-m. %Y"
   time:
     formats:
-      default: "%d. %m. %Y %k:%M"
+      default: "%-d. %-m. %Y %k:%M"
 
   number:
      currency:
