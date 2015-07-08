@@ -1,0 +1,16 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+
+	<%= rug_form_for(@product, url: product_attachment_binding_path(@product)) do |f| %>
+
+		<%
+			columns = RugBuilder::TableBuilder::Columns.new(title: :string)
+			columns.add_column_by_block(:checkbox) do |product_attachment|
+				check_box_tag "product[product_attachments][#{product_attachment.id.to_s}]", "1", (@product.product_attachment_ids.include?(product_attachment.id))
+			end
+		%>
+		<%= rug_index_table_for(@product_attachments, columns) %>
+
+		<%= f.primary_button_row :submit %>
+	<% end %>
+
+<% end %>

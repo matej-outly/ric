@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ric_assortment (0.0.14)
+    ric_assortment (0.0.20)
       rails (~> 4.2)
 
 GEM

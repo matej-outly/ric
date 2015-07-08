@@ -15,6 +15,7 @@ require "ric_assortment/public_engine"
 
 # Models
 require 'ric_assortment/concerns/models/product'
+require 'ric_assortment/concerns/models/product_attachment'
 require 'ric_assortment/concerns/models/product_category'
 require 'ric_assortment/concerns/models/product_photo'
 
@@ -39,6 +40,18 @@ module RicAssortment
 			return RicAssortment::Product
 		else
 			return @@product_model.constantize
+		end
+	end
+
+	#
+	# Product attachment model
+	#
+	mattr_accessor :product_attachment_model
+	def self.product_attachment_model
+		if @@product_attachment_model.nil?
+			return RicAssortment::ProductAttachment
+		else
+			return @@product_attachment_model.constantize
 		end
 	end
 

@@ -16,7 +16,19 @@ cs:
         price: Cena
         meta: Meta informace
         photos: Fotografie
+        attachments: Přílohy
         categories: Kategorie
+      admin_product_attachments:
+        index: "Přílohy produktů"
+        show: "Detail přílohy produktu"
+        new: "Nová příloha produktu"
+        create: "Nová příloha produktu"
+        edit: "Upravit přílohu produktu"
+        update: "Upravit přílohu produktu"
+        products: "Navázané produkty"
+      admin_product_attachment_bindings:
+        edit: "Přidat přílohu produktu"
+        update: "Přidat přílohu produktu"
       admin_product_categories:
         index: "Kategorie produktů"
         show: "Detail kategorie produktů"
@@ -44,6 +56,7 @@ cs:
       ric_assortment/product:
         name: Jméno
         catalogue_number: Katalogové číslo
+        ean: EAN
         perex: Perex
         content: Popis
         height: Výška (cm)
@@ -55,6 +68,10 @@ cs:
         unit: Jednotka
         keywords: Klíčová slova
         description: Popis
+      ric_assortment/product_attachment:
+        file: Soubor
+        title: Popis
+        checkbox: Vybrat
       ric_assortment/product_category:
         name: Jméno
         parent: Nadřazená kategorie
@@ -71,8 +88,14 @@ cs:
           create: "Produkt byl úspěšně vytvořen"
           update: "Produkt byl úspěšně upraven"
           destroy: "Produkt byl úspěšně smazán"
+          attachment_bind: "Vybrané přílohy byly úspěšně přidány"
+          attachment_unbind: "Příloha byla úspěšně odebrána"
           category_bind: "Vybrané kategorie byly úspěšně přidány"
           category_unbind: "Kategorie byla úspěšně odebrána"
+        ric_assortment/product_attachment:
+          create: "Příloha produktu byla úspěšně vytvořena"
+          update: "Příloha produktu byla úspěšně upravena"
+          destroy: "Příloha produktu byla úspěšně smazána"
         ric_assortment/product_category:
           create: "Kategorie produktů byla úspěšně vytvořena"
           update: "Kategorie produktů byla úspěšně upravena"
@@ -85,6 +108,8 @@ cs:
       models:
         ric_assortment/product:
           not_found: "Produkt nebyl nalezen."
+        ric_assortment/product_attachment:
+          not_found: "Příloha produktu nebyla nalezena."
         ric_assortment/product_category:
           not_found: "Kategorie produktů nebyla nalezena."
         ric_assortment/product_photo:

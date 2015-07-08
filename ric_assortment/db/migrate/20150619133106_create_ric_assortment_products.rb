@@ -10,6 +10,7 @@ class CreateRicAssortmentProducts < ActiveRecord::Migration
 			# Identification
 			t.string :name
 			t.string :catalogue_number
+			t.string :ean
 
 			# Content
 			t.text :perex

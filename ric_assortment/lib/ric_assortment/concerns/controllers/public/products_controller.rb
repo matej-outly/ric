@@ -27,6 +27,11 @@ module RicAssortment
 						#
 						before_action :set_product, only: [:show]
 
+						#
+						# Set product category before some actions
+						#
+						before_action :set_product_category, only: [:index, :show]
+
 					end
 
 					#
@@ -34,9 +39,6 @@ module RicAssortment
 					#
 					def index
 						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(24)
-						if params[:product_category_id]
-							@product_category = RicAssortment.product_category_model.find_by_id(params[:product_category_id])
-						end
 					end
 
 					#
@@ -51,6 +53,12 @@ module RicAssortment
 						@product = RicAssortment.product_model.find_by_id(params[:id])
 						if @product.nil?
 							redirect_to products_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
+						end
+					end
+
+					def set_product_category
+						if params[:product_category_id]
+							@product_category = RicAssortment.product_category_model.find_by_id(params[:product_category_id])
 						end
 					end
 

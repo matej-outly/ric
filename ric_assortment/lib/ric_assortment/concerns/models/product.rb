@@ -31,6 +31,11 @@ module RicAssortment
 					has_and_belongs_to_many :product_categories, class_name: RicAssortment.product_category_model.to_s
 
 					#
+					# Relation to product attachments
+					#
+					has_and_belongs_to_many :product_attachments, class_name: RicAssortment.product_attachment_model.to_s
+
+					#
 					# Relation to product photos
 					#
 					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s

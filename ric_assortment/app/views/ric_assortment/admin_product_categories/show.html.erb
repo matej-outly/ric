@@ -22,6 +22,7 @@
 		<%= rug_index_table_for(@product_category.products.order(position: :asc).page(params[:page]).per(50), { 
 			name: :string,
 			catalogue_number: :string,
+			ean: :string
 		}, paths: {
 			show: :product_path
 		}, pagination: true ) %>
