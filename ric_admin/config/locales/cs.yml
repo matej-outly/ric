@@ -20,6 +20,38 @@ cs:
       previous: "&lsaquo; Předchozí"
       next: "Následující &rsaquo;"
       truncate: "&hellip;"
+    calendar:
+      previous_month: Předchozí měsíc
+      next_month: Následující měsíc
+      days:
+        sunday: Neděle
+        monday: Pondělí
+        tuesday: Úterý
+        wednesday: Středa
+        thursday: Čtvrtek
+        friday: Pátek
+        saturday: Sobota
+      short_days:
+        sunday: Ne
+        monday: Po
+        tuesday: Út
+        wednesday: St
+        thursday: Čt
+        friday: Pá
+        saturday: So
+      months:
+        january: Leden
+        february: Únor
+        march: Březen
+        april: Duben
+        may: Květen
+        june: Červen
+        july: Červenec
+        august: Srpen
+        september: Září
+        october: Říjen
+        november: Listopad
+        december: Prosinec
 
   helpers:
     submit:
@@ -70,6 +102,7 @@ cs:
       download: "stáhnout"
       sort: "řadit"
       save: "uložit"
+      cancel: "zrušit"
 
     attribute:
       address:
