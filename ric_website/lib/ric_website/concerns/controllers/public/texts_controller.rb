@@ -46,7 +46,7 @@ module RicWebsite
 					#
 					def inline_update
 						@text.update(text_params)
-						redirect_to text_path(@text), notice: I18n.t("activerecord.notices.models.#{RicWebsite.text_model.model_name.i18n_key}.update")
+						redirect_to ric_website_public.text_path(@text), notice: I18n.t("activerecord.notices.models.#{RicWebsite.text_model.model_name.i18n_key}.update")
 					end
 
 				protected
@@ -54,7 +54,7 @@ module RicWebsite
 					def set_text
 						@text = RicWebsite.text_model.find_by_id(params[:id])
 						if @text.nil?
-							redirect_to texts_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.text_model.model_name.i18n_key}.not_found")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.text_model.model_name.i18n_key}.not_found")
 						end
 					end
 
@@ -62,8 +62,8 @@ module RicWebsite
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def text_params
-						if params[:text] && params[:text][@text.id]
-							return params.params[:text][@text.id].permit(:title, :content)
+						if params[:text] && params[:text][@text.id.to_s]
+							return params[:text][@text.id.to_s].permit(:title, :content)
 						else
 							return {}
 						end
