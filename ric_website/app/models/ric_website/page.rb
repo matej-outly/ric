@@ -11,5 +11,6 @@
 
 module RicWebsite
 	class Page < ActiveRecord::Base
+		include RicWebsite::Concerns::Models::Page
 	end
 end

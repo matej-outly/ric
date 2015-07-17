@@ -16,6 +16,11 @@ module RicWebsite
 		# Controllers
 		#
 		require 'ric_website/concerns/controllers/admin/texts_controller'
+		require 'ric_website/concerns/controllers/admin/text_attachments_controller'
+		require 'ric_website/concerns/controllers/admin/pages_controller'
+		require 'ric_website/concerns/controllers/admin/page_dynamic_controller'
+		require 'ric_website/concerns/controllers/admin/page_menu_relations_controller'
+		require 'ric_website/concerns/controllers/admin/menus_controller'
 		
 		isolate_namespace RicWebsite
 	end

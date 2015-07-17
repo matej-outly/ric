@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ric_website (0.0.10)
+    ric_website (0.0.22)
       rails (~> 4.2)
 
 GEM
@@ -88,7 +88,7 @@ GEM
     rake (10.4.2)
     sprockets (3.2.0)
       rack (~> 1.0)
-    sprockets-rails (2.3.1)
+    sprockets-rails (2.3.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)

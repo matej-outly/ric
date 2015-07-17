@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Text
+# * Menu
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 16. 7. 2015
 # *
 # *****************************************************************************
 
 module RicWebsite
 	module Concerns
 		module Models
-			module Text extend ActiveSupport::Concern
+			module Menu extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -28,7 +28,7 @@ module RicWebsite
 					#
 					# Relation to pages
 					#
-					has_many :pages, class_name: RicWebsite.page_model.to_s, as: :model
+					has_and_belongs_to_many :pages, class_name: RicWebsite.page_model.to_s
 		
 				end
 

@@ -1,10 +1,11 @@
-<%= rug_form_for(@text, url: (@text.id.nil? ? texts_path : text_path(@text))) do |f| %>
-	
+<%= rug_form_for(@text, create_url: :texts_path, update_url: :text_path) do |f| %>
 	<%= f.text_input_row :key, :text_field %>
 	<%= f.text_input_row :title, :text_field %>
 	<%= f.text_area_row :content %>
+
+	<%= f.dropzone_many_row :text_attachments, :file, :text_attachments_path, :text_attachment_path, RicWebsite.text_attachment_model.all.order(id: :asc), RicWebsite.text_attachment_model %>
+
 	<%= f.text_input_row :keywords, :text_field %>
 	<%= f.text_input_row :description, :text_field %>
 	<%= f.primary_button_row :submit %>
-
 <% end %>

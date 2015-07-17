@@ -1,0 +1,10 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@menus, { 
+		name: :string,
+		key: :string,
+	}, paths: {
+		show: :menu_path,
+		edit: :edit_menu_path,
+		destroy: :menu_path
+	}, summary: true ) %>
+<% end %>

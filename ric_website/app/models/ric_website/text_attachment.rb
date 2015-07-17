@@ -2,15 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Menu
+# * Text attachment
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 15. 7. 2015
 # *
 # *****************************************************************************
 
 module RicWebsite
-	class Menu < ActiveRecord::Base
-		include RicWebsite::Concerns::Models::Menu
+	class TextAttachment < ActiveRecord::Base
+		include RicWebsite::Concerns::Models::TextAttachment
 	end
 end

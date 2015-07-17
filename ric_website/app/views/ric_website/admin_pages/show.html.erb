@@ -1,0 +1,27 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	
+	<%
+		columns = RugBuilder::TableBuilder::Columns.new
+		columns.add_column_by_type(:name, :string)
+		columns.add_column_by_block(:nature) do |page|
+			natures = page.config(:natures)
+			if !page.nature.blank? && natures[page.nature.to_sym]
+				natures[page.nature.to_sym][:name]
+			end
+		end
+		columns.add_column_by_type(:model, { type: :belongs_to, label: :title }) # TODO configurable title
+		columns.add_column_by_type(:url, :string)
+	%>
+	<%= rug_show_table_for(@page, columns) %>
+
+	<h3><%= t("headers.ric_website.admin_pages.menus") %></h3>
+
+	<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
+		name: :string,
+		key: :string,
+	}, paths: {
+		show: :menu_path,
+		destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
+	} ) %>
+
+<% end %>

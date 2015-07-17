@@ -1,9 +1,9 @@
 # Which natures can single page obtain
 natures:
-  home_customers:
+  home:
     name: "Domovská stránka"
     url: /
   text:
     name: "Textová stránka"
-    url: /public/texts/:id
+    url: /public/website/texts/:id
     model: RicWebsite::Text

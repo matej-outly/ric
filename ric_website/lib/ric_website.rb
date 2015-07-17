@@ -14,7 +14,10 @@ require "ric_website/admin_engine"
 require "ric_website/public_engine"
 
 # Models
+require 'ric_website/concerns/models/page'
+require 'ric_website/concerns/models/menu'
 require 'ric_website/concerns/models/text'
+require 'ric_website/concerns/models/text_attachment'
 
 module RicWebsite
 
@@ -37,6 +40,18 @@ module RicWebsite
 			return RicWebsite::Text
 		else
 			return @@text_model.constantize
+		end
+	end
+
+	#
+	# Text attachment model
+	#
+	mattr_accessor :text_attachment_model
+	def self.text_attachment_model
+		if @@text_attachment_model.nil?
+			return RicWebsite::TextAttachment
+		else
+			return @@text_attachment_model.constantize
 		end
 	end
 

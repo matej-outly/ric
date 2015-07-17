@@ -1,0 +1,34 @@
+<%= rug_form_for(@page, create_url: :pages_path, update_url: :page_path) do |f| %>
+	<%= f.text_input_row :name, :text_field %>
+	<%= f.picker_row :nature, @page.config(:natures).map { |key,value| OpenStruct.new(label: value[:name], value: key) }, :value, :label, enable_null: true %>
+	<%= f.picker_row :model_id, @page.available_models, :id, :title %>
+	
+	<% page_param_key = @page.class.model_name.param_key %>
+	<script type="text/javascript">
+		function picker_model_ready()
+		{
+			if ($("select#<%= page_param_key %>_model_id option").length == 0) {
+				$("select#<%= page_param_key %>_model_id").closest(".element").hide();
+			}
+			$("select#page_nature").change(function() {
+				$.getJSON("<%= available_models_page_dynamic_index_path %>?nature=" + $(this).val(), function(options) {
+					if (options.length > 0) {
+						html = ""
+						$.each(options, function(idx, option) {
+							html += "<option value=\"" + option.id + "\">" + option.title + "</option>"
+						});
+						$("select#<%= page_param_key %>_model_id").html(html);
+						$("select#<%= page_param_key %>_model_id").closest(".element").show();
+					} else {
+						$("select#<%= page_param_key %>_model_id").html("");
+						$("select#<%= page_param_key %>_model_id").closest(".element").hide();
+					}
+				});
+			});
+		}
+		$(document).ready(picker_model_ready);
+		$(document).on('page:load', picker_model_ready);
+	</script>
+
+	<%= f.primary_button_row :submit %>
+<% end %>

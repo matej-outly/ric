@@ -11,14 +11,41 @@
 
 RicWebsite::AdminEngine.routes.draw do
 
+	# Pages
+	resources :pages, controller: "admin_pages"
+	resources :page_dynamic, only: [], controller: "admin_page_dynamic" do
+		collection do
+			get "available_models"
+		end
+	end
+
+	# Page menu relations
+	resources :page_menu_relations, only: [:edit, :update, :destroy], controller: "admin_page_menu_relations"
+
+	# Menus
+	resources :menus, controller: "admin_menus"
+
 	# Texts
 	resources :texts, controller: "admin_texts"
+
+	# Text attachments
+	resources :text_attachments, only: [:create, :destroy], controller: "admin_text_attachments" do
+		collection do
+			get "links"
+			get "images"
+		end
+	end
 
 end
 
 RicWebsite::PublicEngine.routes.draw do
 
 	# Texts
-	resources :texts, only: [:show], controller: "public_texts"
+	resources :texts, only: [:show], controller: "public_texts" do
+		member do
+			get "inline_edit"
+			post "inline_update"
+		end
+	end
 
 end

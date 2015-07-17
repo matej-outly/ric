@@ -2,10 +2,10 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Texts
+# * Menus
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 16. 7. 2015
 # *
 # *****************************************************************************
 
@@ -13,7 +13,7 @@ module RicWebsite
 	module Concerns
 		module Controllers
 			module Admin
-				module TextsController extend ActiveSupport::Concern
+				module MenusController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -23,9 +23,9 @@ module RicWebsite
 					included do
 					
 						#
-						# Set text before some actions
+						# Set menu before some actions
 						#
-						before_action :set_text, only: [:show, :edit, :update, :destroy]
+						before_action :set_menu, only: [:show, :edit, :update, :destroy]
 
 					end
 
@@ -33,7 +33,7 @@ module RicWebsite
 					# Index action
 					#
 					def index
-						@texts = RicWebsite.text_model.all.order(created_at: :asc)
+						@menus = RicWebsite.menu_model.all.order(created_at: :asc)
 					end
 
 					#
@@ -46,7 +46,7 @@ module RicWebsite
 					# New action
 					#
 					def new
-						@text = RicWebsite.text_model.new
+						@menu = RicWebsite.menu_model.new
 					end
 
 					#
@@ -59,9 +59,9 @@ module RicWebsite
 					# Create action
 					#
 					def create
-						@text = RicWebsite.text_model.new(text_params)
-						if @text.save
-							redirect_to text_path(@text), notice: I18n.t("activerecord.notices.models.#{RicWebsite.text_model.model_name.i18n_key}.create")
+						@menu = RicWebsite.menu_model.new(menu_params)
+						if @menu.save
+							redirect_to menu_path(@menu), notice: I18n.t("activerecord.notices.models.#{RicWebsite.menu_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -71,8 +71,8 @@ module RicWebsite
 					# Update action
 					#
 					def update
-						if @text.update(text_params)
-							redirect_to text_path(@text), notice: I18n.t("activerecord.notices.models.#{RicWebsite.text_model.model_name.i18n_key}.update")
+						if @menu.update(menu_params)
+							redirect_to menu_path(@menu), notice: I18n.t("activerecord.notices.models.#{RicWebsite.menu_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -82,24 +82,24 @@ module RicWebsite
 					# Destroy action
 					#
 					def destroy
-						@text.destroy
-						redirect_to texts_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.text_model.model_name.i18n_key}.destroy")
+						@menu.destroy
+						redirect_to menus_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.menu_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
 
-					def set_text
-						@text = RicWebsite.text_model.find_by_id(params[:id])
-						if @text.nil?
-							redirect_to texts_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.text_model.model_name.i18n_key}.not_found")
+					def set_menu
+						@menu = RicWebsite.menu_model.find_by_id(params[:id])
+						if @menu.nil?
+							redirect_to menus_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.menu_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
-					def text_params
-						params.require(:text).permit(:key, :title, :content, :keywords, :description)
+					def menu_params
+						params.require(:menu).permit(:key, :name)
 					end
 
 				end

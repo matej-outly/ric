@@ -1,0 +1,5 @@
+<%= rug_form_for(@menu, create_url: :menus_path, update_url: :menu_path) do |f| %>
+	<%= f.text_input_row :key, :text_field %>
+	<%= f.text_input_row :name, :text_field %>
+	<%= f.primary_button_row :submit %>
+<% end %>

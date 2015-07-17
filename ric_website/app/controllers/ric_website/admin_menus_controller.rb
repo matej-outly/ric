@@ -2,15 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Menu
+# * Menus
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 16. 7. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_website/admin_controller"
+
 module RicWebsite
-	class Menu < ActiveRecord::Base
-		include RicWebsite::Concerns::Models::Menu
+	class AdminMenusController < AdminController
+		include RicWebsite::Concerns::Controllers::Admin::MenusController
 	end
 end

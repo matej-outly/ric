@@ -1,0 +1,9 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_hierarchical_index_table_for(@pages, { 
+		name: :string,
+	}, paths: {
+		show: :page_path,
+		edit: :edit_page_path,
+		destroy: :page_path
+	}, summary: true ) %>
+<% end %>

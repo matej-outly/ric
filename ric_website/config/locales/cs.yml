@@ -3,6 +3,25 @@ cs:
   headers:
 
     ric_website:
+      admin_pages:
+        index: "Stránky"
+        show: "Detail stránky"
+        new: "Nová stránka"
+        create: "Nová stránka"
+        edit: "Upravit stránku"
+        update: "Upravit stránku"
+        menus: "Navázaná menu"
+      admin_page_menu_relations:
+        edit: "Navázat menu"
+        update: "Navázat menu"
+      admin_menus:
+        index: "Menu"
+        show: "Detail menu"
+        new: "Nové enu"
+        create: "Nové enu"
+        edit: "Upravit menu"
+        update: "Upravit menu"
+        pages: "Navázané stránky"
       admin_texts:
         index: "Textové stránky"
         show: "Detail textové stránky"
@@ -13,19 +32,43 @@ cs:
 
   activerecord:
     attributes:
+      ric_website/page:
+        name: Jméno v menu
+        nature: Typ stránky
+        model: Navázaný záznam
+        model_id: Navázaný záznam
+        url: Odkaz
+      ric_website/menu:
+        key: Identifikující klíč
+        name: Jméno
       ric_website/text:
         key: Identifikující klíč
         title: Nadpis
         content: Obsah
         keywords: Klíčová slova
         description: Popis
+        text_attachments: Přílohy
     notices:
       models:
+        ric_website/page:
+          create: "Stránka byla úspěšně vytvořena."
+          update: "Stránka byla úspěšně upravena."
+          destroy: "Stránka byla úspěšně smazána."
+          bind_menu: "Vybraná menu byla úspěšně navázána."
+          unbind_menu: "Vybrané menu bylo úspěšně odebráno."
+        ric_website/menu:
+          create: "Menu bylo úspěšně vytvořeno."
+          update: "Menu bylo úspěšně upraveno."
+          destroy: "Menu bylo úspěšně smazáno."
         ric_website/text:
-          create: "Textová stránka byla úspěšně vytvořena"
-          update: "Textová stránka byla úspěšně upravena"
-          destroy: "Textová stránka byla úspěšně smazána"
+          create: "Textová stránka byla úspěšně vytvořena."
+          update: "Textová stránka byla úspěšně upravena."
+          destroy: "Textová stránka byla úspěšně smazána."
     errors:
       models:
+        ric_website/page:
+          not_found: "Stránka nebyla nalezena."
+        ric_website/menu:
+          not_found: "Menu nebylo nalezeno."
         ric_website/text:
           not_found: "Textová stránka nebyla nalezena."

@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Text
+# * Text attachment
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 15. 7. 2015
 # *
 # *****************************************************************************
 
 module RicWebsite
 	module Concerns
 		module Models
-			module Text extend ActiveSupport::Concern
+			module TextAttachment extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -25,11 +25,26 @@ module RicWebsite
 					# Structure
 					# *********************************************************************
 
+					# *********************************************************************
+					# Attachments
+					# *********************************************************************
+
 					#
-					# Relation to pages
+					# File
 					#
-					has_many :pages, class_name: RicWebsite.page_model.to_s, as: :model
-		
+					has_attached_file :file
+					validates_attachment_content_type :file, :content_type => /\A.*\Z/
+
+					# *********************************************************************
+					# Kind
+					# *********************************************************************
+
+					before_save do
+						if self.file_content_type.start_with?("image/")
+							self.kind = "image"
+						end
+					end
+
 				end
 
 			end

@@ -2,15 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Menu
+# * Text attachments
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 17. 7. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_website/admin_controller"
+
 module RicWebsite
-	class Menu < ActiveRecord::Base
-		include RicWebsite::Concerns::Models::Menu
+	class AdminTextAttachmentsController < AdminController
+		include RicWebsite::Concerns::Controllers::Admin::TextAttachmentsController
 	end
 end

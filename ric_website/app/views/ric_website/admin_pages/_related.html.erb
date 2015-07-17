@@ -1,0 +1,5 @@
+<%= rug_menu_for(@page, name: "related") do |m| %>
+	<% if @page && !@page.new_record? %>
+		<%= m.item t("headers.ric_website.admin_page_menu_relations.edit"), edit_page_menu_relation_path(@page), icon: "plus" %>
+	<% end %>
+<% end %>

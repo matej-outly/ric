@@ -77,6 +77,8 @@ cs:
     shown: zobrazeno
     nesting: zanoření
     drop_file_here: "Sem přetáhněte soubor nebo klikněte pro vložení souboru přes dialogové okno."
+    page: stránka
+    file: soubor
 
     action:
       new: "nová položka"
