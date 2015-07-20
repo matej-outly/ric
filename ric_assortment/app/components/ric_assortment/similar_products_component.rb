@@ -25,7 +25,7 @@ class RicAssortment::SimilarProductsComponent < RugController::Component
 		if current_product
 			@products = @products.where("products.id <> ?", current_product.id)
 		end
-		@products = @products.order("random()").limit(3)
+		@products = @products.order("random()").limit(config(:limit))
 
 	end
 
