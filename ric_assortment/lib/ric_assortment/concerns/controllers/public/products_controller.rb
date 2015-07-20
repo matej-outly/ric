@@ -38,7 +38,7 @@ module RicAssortment
 					# Index action
 					#
 					def index
-						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(24)
+						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(12)
 					end
 
 					#

@@ -1,0 +1,7 @@
+<div class="products_breadcrumb">
+	<ul>
+		<% @products_breadcrumb.items.each do |item| %>
+			<li><%= link_to item.label, item.url %></li>
+		<% end %>
+	</ul>
+</div>

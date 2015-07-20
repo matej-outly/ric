@@ -4,9 +4,7 @@
 			css_class = (item.respond_to?(:css_class) ? item.css_class : "").to_s
 			css_class += (item.respond_to?(:active_url?) && item.active_url? ? " active" : "") 
 		%>
-		<a class="<%= css_class %>" <%= (item.respond_to?(:target) ? "target=\"#{item.target}\"": "") %> href="<%= ( item.respond_to?(:path) ? item.path : item.url ) %>">
-			<%= item.name %>
-		</a>
+		<%= link_to item.name, (item.respond_to?(:path) ? item.path : item.url), class: css_class, target: (item.respond_to?(:target) ? item.target : "") %>
 	<% end %>
 </div>
 <a class="menu toggle" gumby-trigger=".menu > ul" href="#"><i class="icon-menu"></i></a>
