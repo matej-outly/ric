@@ -260,6 +260,11 @@ $mobile-width: 320px;
 				color: #ffffff;
 			}
 
+			.dropdown ul > li a {
+				color: #d04526;
+				&:hover { color: #d04526; }
+			}
+
 			li.delimiter {
 				padding: 0 15px;
 
@@ -275,10 +280,12 @@ $mobile-width: 320px;
 
 			li.active > a {
 				background: image-url("ric_admin/header_focus.png") no-repeat 50% bottom;
+				&:hover { background: #868d92 image-url("ric_admin/header_focus.png") no-repeat 50% bottom; }
+			}
 
-				&:hover {
-					background: #868d92 image-url("ric_admin/header_focus.png") no-repeat 50% bottom;				
-				}
+			.dropdown ul > li.active a {
+				background: inherit;
+				&:hover { background: #f2f2f2; }
 			}
 		}
 
