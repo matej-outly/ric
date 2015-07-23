@@ -9,15 +9,23 @@
 # *
 # *****************************************************************************
 
+# Railtie
+require 'ric_website/railtie' if defined?(Rails)
+
 # Engines
 require "ric_website/admin_engine"
 require "ric_website/public_engine"
+
+# Middlewares
+require 'ric_website/middlewares/locale'
+require 'ric_website/middlewares/slug'
 
 # Models
 require 'ric_website/concerns/models/page'
 require 'ric_website/concerns/models/menu'
 require 'ric_website/concerns/models/text'
 require 'ric_website/concerns/models/text_attachment'
+require 'ric_website/concerns/models/slug'
 
 module RicWebsite
 
@@ -76,6 +84,18 @@ module RicWebsite
 			return RicWebsite::Menu
 		else
 			return @@menu_model.constantize
+		end
+	end
+
+	#
+	# Slug model
+	#
+	mattr_accessor :slug_model
+	def self.slug_model
+		if @@slug_model.nil?
+			return RicWebsite::Slug
+		else
+			return @@slug_model.constantize
 		end
 	end
 

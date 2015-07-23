@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ric_website (0.0.22)
+    ric_website (0.0.23)
       rails (~> 4.2)
 
 GEM

@@ -45,6 +45,16 @@ module RicWebsite
 					#
 					before_save :check_model_consistency
 
+					#
+					# Genereate slugs before save
+					#
+					before_save :generate_slugs
+
+					#
+					# Destroy slugs before destroy
+					#
+					before_destroy :destroy_slugs
+
 				end
 
 				# *************************************************************
@@ -123,6 +133,47 @@ module RicWebsite
 						return model_class.where(config(:natures, self.nature.to_sym, :filters)).order(id: :asc)
 					else
 						return []
+					end
+				end
+
+				# *************************************************************
+				# Slug
+				# *************************************************************
+
+				#
+				# Genereate slugs before save
+				#
+				def generate_slugs
+					if !RicWebsite.slug_model.nil? && self.url_was != self.url && !self.url_was.blank?
+						I18n.available_locales.each do |locale|
+							RicWebsite.slug_model.remove_slug(locale, self.url_was)
+						end
+					end
+					if !RicWebsite.slug_model.nil? && !self.url.blank?
+						I18n.available_locales.each do |locale|
+							if self.respond_to?("name_#{locale.to_s}".to_sym)
+								translation = self.send("name_#{locale.to_s}".to_sym)
+							elsif self.respond_to?(:name)
+								translation = self.name
+							else
+								translation = nil
+							end
+							if !translation.blank?
+								translation = translation.to_url + ".html"
+								RicWebsite.slug_model.add_slug(locale, self.url, translation)
+							end
+						end
+					end
+				end
+
+				#
+				# Destroy slugs before destroy
+				#
+				def destroy_slugs
+					if !RicWebsite.slug_model.nil? && !self.url.blank?
+						I18n.available_locales.each do |locale|
+							RicWebsite.slug_model.remove_slug(locale, self.url)
+						end
 					end
 				end
 
