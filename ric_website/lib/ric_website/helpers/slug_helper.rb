@@ -16,19 +16,7 @@ module RicWebsite
 			def self.slugify(path)
 
 				# Match locale from path
-				match = /^\/(#{I18n.available_locales.join("|")})\//.match(path + "/")
-				if match
-					locale = match[1]
-				else
-					locale = nil
-				end
-
-				# Remove locale from path
-				if locale
-					original = path[(1+locale.length)..-1]
-				else
-					original = path
-				end
+				locale, original = RicWebsite::Helpers::LocaleHelper.disassemble(path)
 
 				# Translate from original
 				tmp_uri = URI.parse(original)
@@ -41,7 +29,8 @@ module RicWebsite
 				end
 
 				# Add locale if defined
-				translation = "/" + locale + translation if locale
+				translation = RicWebsite::Helpers::LocaleHelper.assemble(locale, translation)
+				
 				return translation
 			end
 

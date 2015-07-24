@@ -27,6 +27,10 @@ require 'ric_website/concerns/models/text'
 require 'ric_website/concerns/models/text_attachment'
 require 'ric_website/concerns/models/slug'
 
+# Helpers
+require 'ric_website/helpers/locale_helper'
+require 'ric_website/helpers/slug_helper'
+
 module RicWebsite
 
 	#

@@ -99,6 +99,8 @@ module RicWebsite
 							slug = new
 						end
 
+						# TODO duplicate translations
+
 						# Save
 						slug.slug_language = language
 						slug.original = original

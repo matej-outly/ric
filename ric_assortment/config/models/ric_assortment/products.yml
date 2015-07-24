@@ -1,0 +1,5 @@
+# Set to true if slugs should be generated. This option depends on RicWebsite engine.
+enable_slugs: false
+
+# Define URL template if slug generation enables
+url: "/assortment/products/:id"

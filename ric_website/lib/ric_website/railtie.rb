@@ -9,8 +9,6 @@
 # *
 # *****************************************************************************
 
-require 'ric_website/helpers/slug_helper'
-
 module RicWebsite
 	class Railtie < Rails::Railtie
 		initializer "ric_website.helpers" do

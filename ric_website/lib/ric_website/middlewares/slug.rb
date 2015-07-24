@@ -29,24 +29,12 @@ module RicWebsite
 				else
 					
 					# Match locale from path
-					match = /^\/(#{I18n.available_locales.join("|")})\//.match(env["PATH_INFO"] + "/")
-					if match
-						locale = match[1]
-					else
-						locale = nil
-					end
-
-					# Remove locale from path
-					if locale
-						translation = env["PATH_INFO"][(1+locale.length)..-1]
-					else
-						translation = env["PATH_INFO"]
-					end
+					locale, translation = RicWebsite::Helpers::LocaleHelper.disassemble(env["PATH_INFO"])
 
 					# Translate to original and modify request
-					original = RicWebsite.slug_model.translation_to_original(I18n.locale, translation)
+					original = RicWebsite.slug_model.translation_to_original(I18n.locale, translation) # Previously matched locale used
 					if !original.nil?
-						original = "/" + locale + original if locale
+						original = RicWebsite::Helpers::LocaleHelper.assemble(locale, original)
 						env["REQUEST_PATH"] = original
 						env["PATH_INFO"] = original
 						env["REQUEST_URI"] = original + "?" + env["QUERY_STRING"]

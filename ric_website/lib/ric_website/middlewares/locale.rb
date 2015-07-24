@@ -29,16 +29,11 @@ module RicWebsite
 				else
 					
 					# Match locale from path
-					match = /^\/(#{I18n.available_locales.join("|")})\//.match(env["PATH_INFO"] + "/")
-					if match
-						locale = match[1].to_sym
-					else
-						locale = nil
-					end
+					locale, path = RicWebsite::Helpers::LocaleHelper.disassemble(env["PATH_INFO"])
 					
 					# Set correct locale and define default locale for URLs
 					I18n.locale = locale || I18n.default_locale
-					Rails.application.routes.default_url_options[:locale] = (I18n.default_locale == I18n.locale ? nil : I18n.locale )
+					Rails.application.routes.default_url_options[:locale] = ( I18n.default_locale == I18n.locale ? nil : I18n.locale )
 					
 					return @app.call(env)
 				end

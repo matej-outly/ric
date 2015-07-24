@@ -1,5 +1,6 @@
 <ul class="languages">
+	<% current_locale, current_path = RicWebsite::Helpers::LocaleHelper.disassemble(request.fullpath) %>
 	<% I18n.available_locales.each do |locale| %>
-		<li class="<%= locale.to_s %>"><%= link_to t("views.languages.#{locale.to_s}"), locale: (locale == I18n.default_locale ? nil : locale) %></li>
+		<li class="<%= locale.to_s %>"><%= link_to(t("views.languages.#{locale.to_s}"), RicWebsite::Helpers::LocaleHelper.assemble(locale, current_path)) %></li>
 	<% end %>
 </ul>
