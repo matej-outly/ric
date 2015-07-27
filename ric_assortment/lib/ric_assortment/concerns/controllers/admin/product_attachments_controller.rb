@@ -61,9 +61,15 @@ module RicAssortment
 					def create
 						@product_attachment = RicAssortment.product_attachment_model.new(product_attachment_params)
 						if @product_attachment.save
-							redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.create")
+							respond_to do |format|
+								format.html { redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.create") }
+								format.json { render json: @product_attachment.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @product_attachment.errors }
+							end
 						end
 					end
 
@@ -72,9 +78,15 @@ module RicAssortment
 					#
 					def update
 						if @product_attachment.update(product_attachment_params)
-							redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.update") }
+								format.json { render json: @product_attachment.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @product_attachment.errors }
+							end
 						end
 					end
 
@@ -83,7 +95,10 @@ module RicAssortment
 					#
 					def destroy
 						@product_attachment.destroy
-						redirect_to product_attachments_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.destroy")
+						respond_to do |format|
+							format.html { redirect_to product_attachments_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @product_attachment.id }
+						end
 					end
 
 				protected

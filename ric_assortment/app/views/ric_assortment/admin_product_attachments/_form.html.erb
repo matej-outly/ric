@@ -1,5 +1,5 @@
-<%= rug_form_for(@product_attachment, url: (@product_attachment.id.nil? ? product_attachments_path : product_attachment_path(@product_attachment))) do |f| %>
-	<%= f.text_input_row :file, :file_field %>
+<%= rug_form_for(@product_attachment, create_url: :product_attachments_path, update_url: :product_attachment_path) do |f| %>
+	<%= f.dropzone_row :file %>
 	<%= f.text_input_row :title, :text_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

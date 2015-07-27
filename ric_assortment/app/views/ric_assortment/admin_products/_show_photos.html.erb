@@ -1,4 +1,4 @@
-<%= rug_index_table_for(@product.product_photos, { 
+<%= rug_index_table_for(@product.product_photos.order(position: :asc), { 
 	image: { type: :image, thumb_style: :thumb },
 	title: :string,
 }, paths: {

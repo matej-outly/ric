@@ -59,9 +59,15 @@ module RicAssortment
 					def create
 						@product_photo = RicAssortment.product_photo_model.new(product_photo_params)
 						if @product_photo.save
-							redirect_to product_photo_path(@product_photo), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.create")
+							respond_to do |format|
+								format.html { redirect_to product_photo_path(@product_photo), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.create") }
+								format.json { render json: @product_photo.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @product_photo.errors }
+							end
 						end
 					end
 
@@ -70,9 +76,15 @@ module RicAssortment
 					#
 					def update
 						if @product_photo.update(product_photo_params)
-							redirect_to product_photo_path(@product_photo), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to product_photo_path(@product_photo), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.update") }
+								format.json { render json: @product_photo.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @product_photo.errors }
+							end
 						end
 					end
 
@@ -81,7 +93,10 @@ module RicAssortment
 					#
 					def destroy
 						@product_photo.destroy
-						redirect_to product_path(@product_photo.product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.destroy")
+						respond_to do |format|
+							format.html { redirect_to product_path(@product_photo.product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @product_photo.id }
+						end
 					end
 
 				protected
