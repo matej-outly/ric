@@ -90,6 +90,7 @@ module RicAssortment
 				def generate_slugs
 					if config(:enable_slugs) == true && !RicWebsite.slug_model.nil?
 						url = config(:url).gsub(/:id/, self.id.to_s)
+						tmp_uri = URI.parse(url)
 						I18n.available_locales.each do |locale|
 							if self.respond_to?("name_#{locale.to_s}".to_sym)
 								translation = self.send("name_#{locale.to_s}".to_sym)
@@ -100,7 +101,7 @@ module RicAssortment
 							end
 							if !translation.blank?
 								translation = translation.to_url + ".html"
-								RicWebsite.slug_model.add_slug(locale, url, translation)
+								RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
 							end
 						end
 					end
@@ -112,8 +113,9 @@ module RicAssortment
 				def destroy_slugs
 					if config(:enable_slugs) == true && !RicWebsite.slug_model.nil?
 						url = config(:url).gsub(/:id/, self.id.to_s)
+						tmp_uri = URI.parse(url)
 						I18n.available_locales.each do |locale|
-							RicWebsite.slug_model.remove_slug(locale, url)
+							RicWebsite.slug_model.remove_slug(locale, tmp_uri.path)
 						end
 					end
 				end

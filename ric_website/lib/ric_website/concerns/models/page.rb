@@ -150,6 +150,7 @@ module RicWebsite
 						end
 					end
 					if !RicWebsite.slug_model.nil? && !self.url.blank?
+						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
 							if self.respond_to?("name_#{locale.to_s}".to_sym)
 								translation = self.send("name_#{locale.to_s}".to_sym)
@@ -160,7 +161,7 @@ module RicWebsite
 							end
 							if !translation.blank?
 								translation = translation.to_url + ".html"
-								RicWebsite.slug_model.add_slug(locale, self.url, translation)
+								RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
 							end
 						end
 					end
@@ -171,8 +172,9 @@ module RicWebsite
 				#
 				def destroy_slugs
 					if !RicWebsite.slug_model.nil? && !self.url.blank?
+						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
-							RicWebsite.slug_model.remove_slug(locale, self.url)
+							RicWebsite.slug_model.remove_slug(locale, tmp_uri.path)
 						end
 					end
 				end
