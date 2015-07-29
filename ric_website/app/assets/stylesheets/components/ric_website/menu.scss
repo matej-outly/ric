@@ -1,0 +1,28 @@
+a.menu.toggle { 
+	display: none; 
+	@media only screen and (max-width : 768px) {
+		display: block;
+	}
+}
+
+.menu {
+	li { 
+		float: left; 
+		li { float: none; } 
+	}
+	@media only screen and (max-width : 768px) {
+		li { float: none; }
+		& > ul { 
+			height: 0; 
+			max-height: 0; 
+			overflow: hidden; 
+			position: absolute; 
+			z-index: 100; 
+			&.active {
+				height: auto; 
+				max-height: 600px; 
+				transition: 1s; 
+			}
+		}
+	}
+}
