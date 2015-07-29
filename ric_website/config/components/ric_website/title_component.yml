@@ -1,0 +1,14 @@
+# Title to be displayed everytime (website name)
+main_title: Website title
+
+# Motto to be displayed if no content title found
+main_motto:
+
+# Separator between main title and subtitles
+main_separator: " | "
+
+# Separator between main title and motto
+motto_separator: " - "
+
+# Separator between single subtitles
+subtitle_separator: ", "

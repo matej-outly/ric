@@ -27,6 +27,11 @@ module RicWebsite
 						#
 						before_action :set_text, only: [:show, :inline_edit, :inline_update]
 
+						#
+						# Implement broadcast which gathers all title messages
+						#
+						implement_broadcast :title
+
 					end
 
 					#
@@ -50,6 +55,17 @@ module RicWebsite
 					end
 
 				protected
+
+					#
+					# Get title of current text model (if any)
+					#
+					def receive_title(arguments)
+						if @text && @text.respond_to?(:title)
+							return @text.title
+						else
+							return nil
+						end
+					end
 
 					def set_text
 						@text = RicWebsite.text_model.find_by_id(params[:id])
