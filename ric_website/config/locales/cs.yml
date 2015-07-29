@@ -41,6 +41,7 @@ cs:
       ric_website/menu:
         key: Identifikující klíč
         name: Jméno
+        checkbox: Vybrat
       ric_website/text:
         key: Identifikující klíč
         title: Nadpis
