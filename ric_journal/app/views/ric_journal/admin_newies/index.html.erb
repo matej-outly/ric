@@ -1,0 +1,11 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@newies, { 
+		title: :string,
+		perex: :text,
+		published_at: :datetime
+	}, paths: {
+		show: :newie_path,
+		edit: :edit_newie_path,
+		destroy: :newie_path
+	}, pagination: true, summary: true ) %>
+<% end %>

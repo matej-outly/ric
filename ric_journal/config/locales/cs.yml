@@ -1,0 +1,29 @@
+cs:
+
+  headers:
+    ric_journal:
+      admin_newies:
+        index: "Aktuality"
+        show: "Detail aktuality"
+        new: "Nová aktualita"
+        create: "Nová aktualita"
+        edit: "Upravit aktualitu"
+        update: "Upravit aktualitu"
+
+  activerecord:
+    attributes:
+      ric_journal/newie:
+        title: Nadpis
+        perex: Perex
+        content: Obsah
+        published_at: Vydáno
+    notices:
+      models:
+        ric_journal/newie:
+          create: Aktualita byla úspěšně vytvořena.
+          update: Aktualita byla úspěšně uložena.
+          destroy: Aktualita byla úspěšně smazána.
+    errors:
+      models:
+        ric_journal/newie:
+          not_found: Aktualita nebyla nalezena.
