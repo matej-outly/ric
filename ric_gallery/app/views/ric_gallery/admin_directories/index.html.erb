@@ -1,0 +1,11 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@directories, { 
+		title: :string,
+		perex: :text,
+		published_at: :datetime
+	}, paths: {
+		show: :directory_path,
+		edit: :edit_directory_path,
+		destroy: :directory_path
+	}, pagination: true, summary: true ) %>
+<% end %>

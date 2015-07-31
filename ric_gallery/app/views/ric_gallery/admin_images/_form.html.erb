@@ -1,0 +1,7 @@
+<%= rug_form_for(@image, create_url: :images_path, update_url: :image_path) do |f| %>
+	<%= f.text_input_row :title, :text_field %>
+	<%= f.text_area_row :perex %>
+	<%= f.text_area_row :content %>
+	<%= f.text_input_row :held_at, :datetime_local_field %>
+	<%= f.primary_button_row :submit %>
+<% end %>

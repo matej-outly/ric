@@ -1,0 +1,47 @@
+cs:
+
+  headers:
+    ric_gallery:
+      admin_directories:
+        index: "Aktuality"
+        show: "Detail aktuality"
+        new: "Nová aktualita"
+        create: "Nová aktualita"
+        edit: "Upravit aktualitu"
+        update: "Upravit aktualitu"
+      admin_images:
+        index: "Události"
+        show: "Detail události"
+        new: "Nová událost"
+        create: "Nová událost"
+        edit: "Upravit událost"
+        update: "Upravit událost"
+
+  activerecord:
+    attributes:
+      ric_gallery/directory:
+        title: Nadpis
+        perex: Perex
+        content: Obsah
+        published_at: Vydáno
+      ric_gallery/image:
+        title: Nadpis
+        perex: Perex
+        content: Obsah
+        held_at: Datum a čas konání
+    notices:
+      models:
+        ric_gallery/directory:
+          create: Aktualita byla úspěšně vytvořena.
+          update: Aktualita byla úspěšně uložena.
+          destroy: Aktualita byla úspěšně smazána.
+        ric_gallery/image:
+          create: Událost byla úspěšně vytvořena.
+          update: Událost byla úspěšně uložena.
+          destroy: Událost byla úspěšně smazána.
+    errors:
+      models:
+        ric_gallery/directory:
+          not_found: Aktualita nebyla nalezena.
+        ric_gallery/image:
+          not_found: Událost nebyla nalezena.
