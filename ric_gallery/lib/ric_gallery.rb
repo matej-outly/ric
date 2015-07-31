@@ -14,8 +14,8 @@ require "ric_gallery/admin_engine"
 require "ric_gallery/public_engine"
 
 # Models
-require 'ric_gallery/concerns/models/directory'
-require 'ric_gallery/concerns/models/image'
+require 'ric_gallery/concerns/models/gallery_directory'
+require 'ric_gallery/concerns/models/gallery_image'
 
 module RicGallery
 
@@ -32,24 +32,24 @@ module RicGallery
 	#
 	# Directory model
 	#
-	mattr_accessor :directory_model
-	def self.directory_model
-		if @@directory_model.nil?
-			return RicGallery::Directory
+	mattr_accessor :gallery_directory_model
+	def self.gallery_directory_model
+		if @@gallery_directory_model.nil?
+			return RicGallery::GalleryDirectory
 		else
-			return @@directory_model.constantize
+			return @@gallery_directory_model.constantize
 		end
 	end
 
 	#
 	# Image model
 	#
-	mattr_accessor :image_model
-	def self.image_model
-		if @@image_model.nil?
-			return RicGallery::Image
+	mattr_accessor :gallery_image_model
+	def self.gallery_image_model
+		if @@gallery_image_model.nil?
+			return RicGallery::GalleryImage
 		else
-			return @@image_model.constantize
+			return @@gallery_image_model.constantize
 		end
 	end
 

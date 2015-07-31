@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Directory
+# * Image
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 31. 7. 2015
 # *
 # *****************************************************************************
 
 module RicGallery
 	module Concerns
 		module Models
-			module Directory extend ActiveSupport::Concern
+			module GalleryImage extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -24,7 +24,27 @@ module RicGallery
 					# *********************************************************************
 					# Structure
 					# *********************************************************************
-	
+					
+					#
+					# Relation to gallery directory
+					#
+					belongs_to :gallery_directory, class_name: RicGallery.gallery_directory_model.to_s
+
+					#
+					# Ordering
+					#
+					enable_ordering
+
+					# *************************************************************************
+					# Attachments
+					# *************************************************************************
+
+					#
+					# Image
+					#
+					has_attached_file :image, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
+					validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+
 				end
 
 				module ClassMethods
@@ -33,6 +53,10 @@ module RicGallery
 					# Scopes
 					# *********************************************************************
 					
+					def without_directory
+						where(gallery_directory_id: nil)						
+					end
+
 				end
 
 			end

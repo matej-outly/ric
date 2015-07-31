@@ -25,7 +25,7 @@ module RicGallery
 						#
 						# Set directory before some actions
 						#
-						before_action :set_directory, only: [:show]
+						before_action :set_gallery_directory, only: [:show]
 
 					end
 
@@ -33,7 +33,7 @@ module RicGallery
 					# Index action
 					#
 					def index
-						@directories = RicGallery.directory_model.published.order(published_at: :desc).page(params[:page]).per(50)
+						@gallery_directories = RicGallery.gallery_directory_model.all.order(lft: :asc)
 					end
 
 					#
@@ -44,10 +44,10 @@ module RicGallery
 
 				protected
 
-					def set_directory
-						@directory = RicGallery.directory_model.find_by_id(params[:id])
-						if @directory.nil?
-							redirect_to directories_path, alert: I18n.t("activerecord.errors.models.#{RicGallery.directory_model.model_name.i18n_key}.not_found")
+					def set_gallery_directory
+						@gallery_directory = RicGallery.gallery_directory_model.find_by_id(params[:id])
+						if @gallery_directory.nil?
+							redirect_to directories_path, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.not_found")
 						end
 					end
 

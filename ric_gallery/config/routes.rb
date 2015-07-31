@@ -15,7 +15,7 @@ RicGallery::AdminEngine.routes.draw do
 	resources :directories, controller: "admin_directories"
 
 	# Images
-	resources :images, controller: "admin_images"
+	resources :images, controller: "admin_images", only: [:show, :new, :edit, :create, :update, :destroy]
 
 end
 

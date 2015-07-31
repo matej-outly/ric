@@ -3,45 +3,47 @@ cs:
   headers:
     ric_gallery:
       admin_directories:
-        index: "Aktuality"
-        show: "Detail aktuality"
-        new: "Nová aktualita"
-        create: "Nová aktualita"
-        edit: "Upravit aktualitu"
-        update: "Upravit aktualitu"
+        index: "Alba"
+        show: "Detail alba"
+        new: "Nové album"
+        create: "Nové album"
+        edit: "Upravit album"
+        update: "Upravit album"
+        images: "Obrázky"
+        children: "Podřazená alba"
       admin_images:
-        index: "Události"
-        show: "Detail události"
-        new: "Nová událost"
-        create: "Nová událost"
-        edit: "Upravit událost"
-        update: "Upravit událost"
+        index: "Obrázky"
+        show: "Detail obrázku"
+        new: "Nový obrázek"
+        create: "Nový obrázek"
+        edit: "Upravit obrázek"
+        update: "Upravit obrázek"
 
   activerecord:
     attributes:
-      ric_gallery/directory:
+      ric_gallery/gallery_directory:
+        name: Jméno
+        description: Popis
+        image: Reprezentační obrázek
+        parent: Nadřazené album
+      ric_gallery/gallery_image:
+        image: Soubor
         title: Nadpis
-        perex: Perex
-        content: Obsah
-        published_at: Vydáno
-      ric_gallery/image:
-        title: Nadpis
-        perex: Perex
-        content: Obsah
-        held_at: Datum a čas konání
+        gallery_directory: Album
+        gallery_directory_id: Album
     notices:
       models:
-        ric_gallery/directory:
-          create: Aktualita byla úspěšně vytvořena.
-          update: Aktualita byla úspěšně uložena.
-          destroy: Aktualita byla úspěšně smazána.
-        ric_gallery/image:
-          create: Událost byla úspěšně vytvořena.
-          update: Událost byla úspěšně uložena.
-          destroy: Událost byla úspěšně smazána.
+        ric_gallery/gallery_directory:
+          create: Album bylo úspěšně vytvořeno.
+          update: Album bylo úspěšně uloženo.
+          destroy: Album bylo úspěšně smazáno.
+        ric_gallery/gallery_image:
+          create: Obrázek byl úspěšně vytvořen.
+          update: Obrázek byl úspěšně uložen.
+          destroy: Obrázek byl úspěšně smazán.
     errors:
       models:
-        ric_gallery/directory:
-          not_found: Aktualita nebyla nalezena.
-        ric_gallery/image:
-          not_found: Událost nebyla nalezena.
+        ric_gallery/gallery_directory:
+          not_found: Album nebylo nalezeno.
+        ric_gallery/gallery_image:
+          not_found: Obrázek nebyl nalezen.

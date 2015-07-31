@@ -25,7 +25,7 @@ module RicGallery
 						#
 						# Set directory before some actions
 						#
-						before_action :set_directory, only: [:show, :edit, :update, :destroy]
+						before_action :set_gallery_directory, only: [:show, :edit, :update, :destroy]
 
 					end
 
@@ -33,7 +33,8 @@ module RicGallery
 					# Index action
 					#
 					def index
-						@directories = RicGallery.directory_model.all.order(published_at: :desc).page(params[:page]).per(50)
+						@gallery_directories = RicGallery.gallery_directory_model.all.order(lft: :asc)
+						@gallery_images = RicGallery.gallery_image_model.without_directory.order(position: :asc)
 					end
 
 					#
@@ -46,7 +47,7 @@ module RicGallery
 					# New action
 					#
 					def new
-						@directory = RicGallery.directory_model.new
+						@gallery_directory = RicGallery.gallery_directory_model.new
 					end
 
 					#
@@ -59,11 +60,17 @@ module RicGallery
 					# Create action
 					#
 					def create
-						@directory = RicGallery.directory_model.new(directory_params)
-						if @directory.save
-							redirect_to directory_path(@directory), notice: I18n.t("activerecord.notices.models.#{RicGallery.directory_model.model_name.i18n_key}.create")
+						@gallery_directory = RicGallery.gallery_directory_model.new(gallery_directory_params)
+						if @gallery_directory.save
+							respond_to do |format|
+								format.html { redirect_to directory_path(@gallery_directory), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.create") }
+								format.json { render json: @gallery_directory.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @gallery_directory.errors }
+							end
 						end
 					end
 
@@ -71,10 +78,16 @@ module RicGallery
 					# Update action
 					#
 					def update
-						if @directory.update(directory_params)
-							redirect_to directory_path(@directory), notice: I18n.t("activerecord.notices.models.#{RicGallery.directory_model.model_name.i18n_key}.update")
+						if @gallery_directory.update(gallery_directory_params)
+							respond_to do |format|
+								format.html { redirect_to directory_path(@gallery_directory), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.update") }
+								format.json { render json: @gallery_directory.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @gallery_directory.errors }
+							end
 						end
 					end
 
@@ -82,24 +95,27 @@ module RicGallery
 					# Destroy action
 					#
 					def destroy
-						@directory.destroy
-						redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicGallery.directory_model.model_name.i18n_key}.destroy")
+						@gallery_directory.destroy
+						respond_to do |format|
+							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @gallery_directory.id }
+						end
 					end
 
 				protected
 
-					def set_directory
-						@directory = RicGallery.directory_model.find_by_id(params[:id])
-						if @directory.nil?
-							redirect_to directories_path, alert: I18n.t("activerecord.errors.models.#{RicGallery.directory_model.model_name.i18n_key}.not_found")
+					def set_gallery_directory
+						@gallery_directory = RicGallery.gallery_directory_model.find_by_id(params[:id])
+						if @gallery_directory.nil?
+							redirect_to directories_path, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
-					def directory_params
-						params.require(:directory).permit(:title, :perex, :content, :published_at)
+					def gallery_directory_params
+						params.require(:gallery_directory).permit(:name, :description, :image)
 					end
 
 				end

@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Image
+# * Directory
 # *
 # * Author: Matěj Outlý
-# * Date  : 31. 7. 2015
+# * Date  : 30. 6. 2015
 # *
 # *****************************************************************************
 
 module RicGallery
 	module Concerns
 		module Models
-			module Image extend ActiveSupport::Concern
+			module GalleryDirectory extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -24,7 +24,27 @@ module RicGallery
 					# *********************************************************************
 					# Structure
 					# *********************************************************************
-	
+					
+					#
+					# Relation to gallery images
+					#
+					has_many :gallery_images, class_name: RicGallery.gallery_image_model.to_s, dependent: :destroy
+
+					#
+					# Ordering
+					#
+					enable_hierarchical_ordering
+					
+					# *************************************************************************
+					# Attachments
+					# *************************************************************************
+
+					#
+					# Image
+					#
+					has_attached_file :image, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
+					validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+					
 				end
 
 				module ClassMethods

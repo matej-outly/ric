@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ric_journal (0.0.25)
+    ric_gallery (0.0.25)
       rails (~> 4.2)
 
 GEM
@@ -101,4 +101,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ric_journal!
+  ric_gallery!

@@ -2,15 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Directory
+# * Image
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 31. 7. 2015
 # *
 # *****************************************************************************
 
 module RicGallery
-	class Directory < ActiveRecord::Base
-		include RicGallery::Concerns::Models::Directory
+	class GalleryImage < ActiveRecord::Base
+		include RicGallery::Concerns::Models::GalleryImage
 	end
 end

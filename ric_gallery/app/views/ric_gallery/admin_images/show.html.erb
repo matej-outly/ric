@@ -1,8 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@image, {
-		title: :string,
-		perex: :text,
-		content: :text,
-		held_at: :datetime
+	<%= rug_show_table_for(@gallery_image, {
+		gallery_directory: { type: :belongs_to, label: :name, path: :directory_path },
+		image: { type: :image, thumb_style: :thumb },
+		title: :string
 	}) %>
 <% end %>

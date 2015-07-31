@@ -1,7 +1,6 @@
-<%= rug_form_for(@image, create_url: :images_path, update_url: :image_path) do |f| %>
+<%= rug_form_for(@gallery_image, create_url: :images_path, update_url: :image_path) do |f| %>
+	<%= f.hidden_field :gallery_directory_id %>
+	<%= f.dropzone_row :image, append_columns: { gallery_directory_id: true }  %>
 	<%= f.text_input_row :title, :text_field %>
-	<%= f.text_area_row :perex %>
-	<%= f.text_area_row :content %>
-	<%= f.text_input_row :held_at, :datetime_local_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

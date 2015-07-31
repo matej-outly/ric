@@ -1,11 +1,24 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@directories, { 
-		title: :string,
-		perex: :text,
-		published_at: :datetime
+	<%= rug_hierarchical_index_table_for(@gallery_directories, { 
+		name: :string,
+		description: :text
 	}, paths: {
 		show: :directory_path,
 		edit: :edit_directory_path,
 		destroy: :directory_path
-	}, pagination: true, summary: true ) %>
+	}, summary: true ) %>
+
+	<% if @gallery_images.count > 0 %>
+		<h3><%= t("headers.ric_gallery.admin_directories.images") %></h3>
+
+		<%= rug_index_table_for(@gallery_images, { 
+			image: { type: :image, thumb_style: :thumb },
+			title: :string
+		}, paths: {
+			show: :image_path,
+			edit: :edit_image_path,
+			destroy: :image_path
+		} ) %>
+	<% end %>
+
 <% end %>

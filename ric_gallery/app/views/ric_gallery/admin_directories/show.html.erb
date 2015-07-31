@@ -1,8 +1,35 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@directory, {
-		title: :string,
-		perex: :text,
-		content: :text,
-		published_at: :datetime
+	<%= rug_show_table_for(@gallery_directory, {
+		parent: { type: :belongs_to, label: :name, path: :directory_path },
+		name: :string,
+		description: :text,
+		image: { type: :image, thumb_style: :thumb },
 	}) %>
+
+	<% if @gallery_directory.children.count > 0 %>
+		<h3><%= t("headers.ric_gallery.admin_directories.children") %></h3>
+
+		<%= rug_index_table_for(@gallery_directory.children.order(lft: :asc), { 
+			name: :string,
+			description: :text,
+		}, paths: {
+			show: :directory_path,
+			edit: :edit_directory_path,
+			destroy: :directory_path
+		} ) %>
+	<% end %>
+
+	<% if @gallery_directory.gallery_images.count > 0 %>
+		<h3><%= t("headers.ric_gallery.admin_directories.images") %></h3>
+
+		<%= rug_index_table_for(@gallery_directory.gallery_images.order(position: :asc), { 
+			image: { type: :image, thumb_style: :thumb },
+			title: :string
+		}, paths: {
+			show: :image_path,
+			edit: :edit_image_path,
+			destroy: :image_path
+		} ) %>
+	<% end %>
+
 <% end %>
