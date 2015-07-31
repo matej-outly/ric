@@ -15,6 +15,7 @@ require "ric_journal/public_engine"
 
 # Models
 require 'ric_journal/concerns/models/newie'
+require 'ric_journal/concerns/models/event'
 
 module RicJournal
 
@@ -37,6 +38,18 @@ module RicJournal
 			return RicJournal::Newie
 		else
 			return @@newie_model.constantize
+		end
+	end
+
+	#
+	# Event model
+	#
+	mattr_accessor :event_model
+	def self.event_model
+		if @@event_model.nil?
+			return RicJournal::Event
+		else
+			return @@event_model.constantize
 		end
 	end
 

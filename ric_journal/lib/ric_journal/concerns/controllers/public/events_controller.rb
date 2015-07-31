@@ -2,10 +2,10 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Newies
+# * Events
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 31. 7. 2015
 # *
 # *****************************************************************************
 
@@ -13,7 +13,7 @@ module RicJournal
 	module Concerns
 		module Controllers
 			module Public
-				module NewiesController extend ActiveSupport::Concern
+				module EventsController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -23,9 +23,9 @@ module RicJournal
 					included do
 
 						#
-						# Set newie before some actions
+						# Set event before some actions
 						#
-						before_action :set_newie, only: [:show]
+						before_action :set_event, only: [:show]
 
 					end
 
@@ -33,7 +33,7 @@ module RicJournal
 					# Index action
 					#
 					def index
-						@newies = RicJournal.newie_model.published.order(published_at: :desc).page(params[:page]).per(50)
+						@events = RicJournal.event_model.published.order(held_at: :desc).page(params[:page]).per(50)
 					end
 
 					#
@@ -44,10 +44,10 @@ module RicJournal
 
 				protected
 
-					def set_newie
-						@newie = RicJournal.newie_model.find_by_id(params[:id])
-						if @newie.nil?
-							redirect_to newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_model.model_name.i18n_key}.not_found")
+					def set_event
+						@event = RicJournal.event_model.find_by_id(params[:id])
+						if @event.nil?
+							redirect_to events_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.event_model.model_name.i18n_key}.not_found")
 						end
 					end
 

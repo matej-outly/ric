@@ -19,6 +19,6 @@ end
 RicMagazine::PublicEngine.routes.draw do
 
 	# Articles
-	resources :articles, controller: "pulic_articles", only: [:index, :show]
+	resources :articles, controller: "public_articles", only: [:index, :show]
 
 end

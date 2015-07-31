@@ -1,0 +1,11 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@events, { 
+		title: :string,
+		perex: :text,
+		held_at: :datetime
+	}, paths: {
+		show: :event_path,
+		edit: :edit_event_path,
+		destroy: :event_path
+	}, pagination: true, summary: true ) %>
+<% end %>

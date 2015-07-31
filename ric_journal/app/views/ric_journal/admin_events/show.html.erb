@@ -1,0 +1,8 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@event, {
+		title: :string,
+		perex: :text,
+		content: :text,
+		held_at: :datetime
+	}) %>
+<% end %>

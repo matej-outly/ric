@@ -9,6 +9,13 @@ cs:
         create: "Nová aktualita"
         edit: "Upravit aktualitu"
         update: "Upravit aktualitu"
+      admin_events:
+        index: "Události"
+        show: "Detail události"
+        new: "Nová událost"
+        create: "Nová událost"
+        edit: "Upravit událost"
+        update: "Upravit událost"
 
   activerecord:
     attributes:
@@ -17,13 +24,24 @@ cs:
         perex: Perex
         content: Obsah
         published_at: Vydáno
+      ric_journal/event:
+        title: Nadpis
+        perex: Perex
+        content: Obsah
+        held_at: Datum a čas konání
     notices:
       models:
         ric_journal/newie:
           create: Aktualita byla úspěšně vytvořena.
           update: Aktualita byla úspěšně uložena.
           destroy: Aktualita byla úspěšně smazána.
+        ric_journal/event:
+          create: Událost byla úspěšně vytvořena.
+          update: Událost byla úspěšně uložena.
+          destroy: Událost byla úspěšně smazána.
     errors:
       models:
         ric_journal/newie:
           not_found: Aktualita nebyla nalezena.
+        ric_journal/event:
+          not_found: Událost nebyla nalezena.

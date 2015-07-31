@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Newie
+# * Event
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 31. 7. 2015
 # *
 # *****************************************************************************
 
 module RicJournal
 	module Concerns
 		module Models
-			module Newie extend ActiveSupport::Concern
+			module Event extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -24,8 +24,6 @@ module RicJournal
 					# *********************************************************************
 					# Structure
 					# *********************************************************************
-
-					
 	
 				end
 
@@ -35,8 +33,8 @@ module RicJournal
 					# Scopes
 					# *********************************************************************
 
-					def published
-						where("published_at IS NOT NULL").where("published_at < :now", now: Time.current)
+					def held(date_from, date_to)
+						where("held_at >= :date_from AND held_at < :date_to", date_from: date_from, date_to: date_to)
 					end
 					
 				end

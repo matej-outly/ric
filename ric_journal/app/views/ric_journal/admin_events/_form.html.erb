@@ -1,7 +1,7 @@
-<%= rug_form_for(@newie, create_url: :newies_path, update_url: :newie_path) do |f| %>
+<%= rug_form_for(@event, create_url: :events_path, update_url: :event_path) do |f| %>
 	<%= f.text_input_row :title, :text_field %>
 	<%= f.text_area_row :perex %>
 	<%= f.text_area_row :content %>
-	<%= f.text_input_row :published_at, :datetime_local_field %>
+	<%= f.text_input_row :held_at, :datetime_local_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

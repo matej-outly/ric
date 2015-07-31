@@ -16,6 +16,7 @@ module RicJournal
 		# Controllers
 		#
 		require 'ric_journal/concerns/controllers/admin/newies_controller'
+		require 'ric_journal/concerns/controllers/admin/events_controller'
 
 		isolate_namespace RicJournal
 	end
