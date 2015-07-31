@@ -3,7 +3,7 @@
 		parent: { type: :belongs_to, label: :name, path: :directory_path },
 		name: :string,
 		description: :text,
-		image: { type: :image, thumb_style: :thumb },
+		picture: { type: :picture, thumb_style: :thumb },
 	}) %>
 
 	<% if @gallery_directory.children.count > 0 %>
@@ -19,16 +19,16 @@
 		} ) %>
 	<% end %>
 
-	<% if @gallery_directory.gallery_images.count > 0 %>
-		<h3><%= t("headers.ric_gallery.admin_directories.images") %></h3>
+	<% if @gallery_directory.gallery_pictures.count > 0 %>
+		<h3><%= t("headers.ric_gallery.admin_directories.pictures") %></h3>
 
-		<%= rug_index_table_for(@gallery_directory.gallery_images.order(position: :asc), { 
-			image: { type: :image, thumb_style: :thumb },
+		<%= rug_index_table_for(@gallery_directory.gallery_pictures.order(position: :asc), { 
+			picture: { type: :picture, thumb_style: :thumb },
 			title: :string
 		}, paths: {
-			show: :image_path,
-			edit: :edit_image_path,
-			destroy: :image_path
+			show: :picture_path,
+			edit: :edit_picture_path,
+			destroy: :picture_path
 		} ) %>
 	<% end %>
 

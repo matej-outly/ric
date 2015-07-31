@@ -2,15 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Image
+# * Pictures
 # *
 # * Author: Matěj Outlý
 # * Date  : 31. 7. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_gallery/admin_controller"
+
 module RicGallery
-	class GalleryImage < ActiveRecord::Base
-		include RicGallery::Concerns::Models::GalleryImage
+	class AdminPicturesController < AdminController
+		include RicGallery::Concerns::Controllers::Admin::PicturesController
 	end
 end

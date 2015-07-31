@@ -1,6 +1,6 @@
-class CreateRicGalleryGalleryImages < ActiveRecord::Migration
+class CreateRicGalleryGalleryPictures < ActiveRecord::Migration
 	def change
-		create_table :gallery_images do |t|
+		create_table :gallery_pictures do |t|
 
 			t.timestamps null: true
 
@@ -11,7 +11,7 @@ class CreateRicGalleryGalleryImages < ActiveRecord::Migration
 			t.integer :gallery_directory_id
 
 			# Data
-			t.attachment :image
+			t.attachment :picture
 			t.string :title
 
 		end

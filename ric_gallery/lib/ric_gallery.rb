@@ -15,7 +15,7 @@ require "ric_gallery/public_engine"
 
 # Models
 require 'ric_gallery/concerns/models/gallery_directory'
-require 'ric_gallery/concerns/models/gallery_image'
+require 'ric_gallery/concerns/models/gallery_picture'
 
 module RicGallery
 
@@ -42,14 +42,14 @@ module RicGallery
 	end
 
 	#
-	# Image model
+	# Picture model
 	#
-	mattr_accessor :gallery_image_model
-	def self.gallery_image_model
-		if @@gallery_image_model.nil?
-			return RicGallery::GalleryImage
+	mattr_accessor :gallery_picture_model
+	def self.gallery_picture_model
+		if @@gallery_picture_model.nil?
+			return RicGallery::GalleryPicture
 		else
-			return @@gallery_image_model.constantize
+			return @@gallery_picture_model.constantize
 		end
 	end
 

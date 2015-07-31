@@ -34,7 +34,7 @@ module RicGallery
 					#
 					def index
 						@gallery_directories = RicGallery.gallery_directory_model.all.order(lft: :asc)
-						@gallery_images = RicGallery.gallery_image_model.without_directory.order(position: :asc)
+						@gallery_pictures = RicGallery.gallery_picture_model.without_directory.order(position: :asc)
 					end
 
 					#
@@ -115,7 +115,7 @@ module RicGallery
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def gallery_directory_params
-						params.require(:gallery_directory).permit(:name, :description, :image)
+						params.require(:gallery_directory).permit(:name, :description, :picture)
 					end
 
 				end

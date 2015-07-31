@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Image
+# * Picture
 # *
 # * Author: Matěj Outlý
 # * Date  : 31. 7. 2015
@@ -12,7 +12,7 @@
 module RicGallery
 	module Concerns
 		module Models
-			module GalleryImage extend ActiveSupport::Concern
+			module GalleryPicture extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -40,10 +40,10 @@ module RicGallery
 					# *************************************************************************
 
 					#
-					# Image
+					# Picture
 					#
-					has_attached_file :image, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
-					validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+					has_attached_file :picture, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
+					validates_attachment_content_type :picture, :content_type => /\Apicture\/.*\Z/
 
 				end
 

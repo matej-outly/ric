@@ -13,7 +13,7 @@ class CreateRicGalleryGalleryDirectories < ActiveRecord::Migration
 			# Data
 			t.string :name
 			t.text :description
-			t.attachment :image
+			t.attachment :picture
 
 		end
 	end
