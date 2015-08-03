@@ -40,8 +40,12 @@ module RicWebsite
 					# *********************************************************************
 
 					before_save do
-						if self.file_content_type.start_with?("image/")
-							self.kind = "image"
+						if self.file_content_type
+							if self.file_content_type.start_with?("image/")
+								self.kind = "image"
+							else
+								self.kind = nil
+							end
 						end
 					end
 
