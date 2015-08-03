@@ -20,7 +20,7 @@ module RicUser
 				def new_password(user, new_password)
 					@user = user
 					@password = new_password
-					mail(to: user.email, subject: I18n.t("activerecord.mailers.ric_user.user.new_password.subject"))
+					mail(from: RicUser.mailer_sender, to: user.email, subject: I18n.t("activerecord.mailers.ric_user.user.new_password.subject"))
 				end
 
 			end
