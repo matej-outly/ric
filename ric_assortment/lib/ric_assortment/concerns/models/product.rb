@@ -38,7 +38,7 @@ module RicAssortment
 					#
 					# Relation to product photos
 					#
-					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s
+					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s, dependent: :destroy
 
 					#
 					# Ordering

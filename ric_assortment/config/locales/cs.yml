@@ -85,25 +85,25 @@ cs:
     notices:
       models:
         ric_assortment/product:
-          create: "Produkt byl úspěšně vytvořen"
-          update: "Produkt byl úspěšně upraven"
-          destroy: "Produkt byl úspěšně smazán"
-          attachment_bind: "Vybrané přílohy byly úspěšně přidány"
-          attachment_unbind: "Příloha byla úspěšně odebrána"
-          category_bind: "Vybrané kategorie byly úspěšně přidány"
-          category_unbind: "Kategorie byla úspěšně odebrána"
+          create: "Produkt byl úspěšně vytvořen."
+          update: "Produkt byl úspěšně upraven."
+          destroy: "Produkt byl úspěšně smazán."
+          attachment_bind: "Vybrané přílohy byly úspěšně přidány."
+          attachment_unbind: "Příloha byla úspěšně odebrána."
+          category_bind: "Vybrané kategorie byly úspěšně přidány."
+          category_unbind: "Kategorie byla úspěšně odebrána."
         ric_assortment/product_attachment:
-          create: "Příloha produktu byla úspěšně vytvořena"
-          update: "Příloha produktu byla úspěšně upravena"
-          destroy: "Příloha produktu byla úspěšně smazána"
+          create: "Příloha produktu byla úspěšně vytvořena."
+          update: "Příloha produktu byla úspěšně upravena."
+          destroy: "Příloha produktu byla úspěšně smazána."
         ric_assortment/product_category:
-          create: "Kategorie produktů byla úspěšně vytvořena"
-          update: "Kategorie produktů byla úspěšně upravena"
-          destroy: "Kategorie produktů byla úspěšně smazána"
+          create: "Kategorie produktů byla úspěšně vytvořena."
+          update: "Kategorie produktů byla úspěšně upravena."
+          destroy: "Kategorie produktů byla úspěšně smazána."
         ric_assortment/product_photo:
-          create: "Fotografie produktu byla úspěšně vytvořena"
-          update: "Fotografie produktu byla úspěšně upravena"
-          destroy: "Fotografie produktu byla úspěšně smazána"
+          create: "Fotografie produktu byla úspěšně vytvořena."
+          update: "Fotografie produktu byla úspěšně upravena."
+          destroy: "Fotografie produktu byla úspěšně smazána."
     errors:
       models:
         ric_assortment/product:

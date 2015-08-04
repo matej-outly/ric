@@ -11,6 +11,7 @@ cs:
         edit: "Upravit stránku"
         update: "Upravit stránku"
         menus: "Navázaná menu"
+        children: "Podřazené stránky"
       admin_page_menu_relations:
         edit: "Navázat menu"
         update: "Navázat menu"
@@ -22,6 +23,9 @@ cs:
         edit: "Upravit menu"
         update: "Upravit menu"
         pages: "Navázané stránky"
+      admin_menu_page_relations:
+        edit: "Navázat stránky"
+        update: "Navázat stránky"
       admin_texts:
         index: "Textové stránky"
         show: "Detail textové stránky"
@@ -34,10 +38,13 @@ cs:
     attributes:
       ric_website/page:
         name: Jméno v menu
+        parent: Nadřazená stránka
+        parent_id: Nadřazená stránka
         nature: Typ stránky
         model: Navázaný záznam
         model_id: Navázaný záznam
         url: Odkaz
+        checkbox: Vybrat
       ric_website/menu:
         key: Identifikující klíč
         name: Jméno
@@ -61,6 +68,8 @@ cs:
           create: "Menu bylo úspěšně vytvořeno."
           update: "Menu bylo úspěšně upraveno."
           destroy: "Menu bylo úspěšně smazáno."
+          bind_page: "Vybrané stránky byly úspěšně navázány."
+          unbind_page: "Vybrané stránky byly úspěšně odebrány."
         ric_website/text:
           create: "Textová stránka byla úspěšně vytvořena."
           update: "Textová stránka byla úspěšně upravena."

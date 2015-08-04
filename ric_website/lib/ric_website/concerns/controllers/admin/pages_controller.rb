@@ -104,7 +104,7 @@ module RicWebsite
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def page_params
-						params.require(:page).permit(:name, :nature, :model_id)
+						params.require(:page).permit(:name, :parent_id, :nature, :model_id)
 					end
 
 				end

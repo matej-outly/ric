@@ -3,6 +3,7 @@
 	<%
 		columns = RugBuilder::TableBuilder::Columns.new
 		columns.add_column_by_type(:name, :string)
+		columns.add_column_by_type(:parent, { type: :belongs_to, label: :name, path: :page_path })
 		columns.add_column_by_block(:nature) do |page|
 			natures = page.config(:natures)
 			if !page.nature.blank? && natures[page.nature.to_sym]
@@ -14,14 +15,29 @@
 	%>
 	<%= rug_show_table_for(@page, columns) %>
 
-	<h3><%= t("headers.ric_website.admin_pages.menus") %></h3>
+	<% if @page.children.count > 0 %>
+		<h3><%= t("headers.ric_website.admin_pages.children") %></h3>
 
-	<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
-		name: :string,
-		key: :string,
-	}, paths: {
-		show: :menu_path,
-		destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
-	} ) %>
+		<%= rug_index_table_for(@page.children.order(lft: :asc), { 
+			name: :string,
+			url: :string,
+		}, paths: {
+			show: :page_path,
+			edit: :edit_page_path,
+			destroy: :page_path
+		} ) %>
+	<% end %>
+
+	<% if @page.menus.count > 0 %>
+		<h3><%= t("headers.ric_website.admin_pages.menus") %></h3>
+
+		<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
+			name: :string,
+			key: :string,
+		}, paths: {
+			show: :menu_path,
+			destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
+		} ) %>
+	<% end %>
 
 <% end %>

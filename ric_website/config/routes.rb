@@ -25,6 +25,9 @@ RicWebsite::AdminEngine.routes.draw do
 	# Menus
 	resources :menus, controller: "admin_menus"
 
+	# Menu page relations
+	resources :menu_page_relations, only: [:edit, :update, :destroy], controller: "admin_menu_page_relations"
+
 	# Texts
 	resources :texts, controller: "admin_texts"
 

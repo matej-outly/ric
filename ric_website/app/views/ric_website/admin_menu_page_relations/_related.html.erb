@@ -1,0 +1,5 @@
+<%= rug_menu_for(@menu, name: "related") do |m| %>
+	<% if @menu && !@menu.new_record? %>
+		<%= m.item t("headers.ric_website.admin_menus.show"), page_path(@menu), icon: "search" %>
+	<% end %>
+<% end %>
