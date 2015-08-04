@@ -13,7 +13,7 @@ class RicWebsite::MenuComponent < RugController::Component
 
 	def control
 		
-		# Menu and page model classes
+		# Page model classes
 		page_model = RicWebsite.menu_model.reflect_on_association(:pages).class_name.constantize
 
 		# Menu object

@@ -33,7 +33,7 @@ module RicJournal
 					# Index action
 					#
 					def index
-						@events = RicJournal.event_model.published.order(held_at: :desc).page(params[:page]).per(50)
+						@events = RicJournal.event_model.order(held_at: :desc).page(params[:page]).per(50)
 					end
 
 					#

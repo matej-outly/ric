@@ -102,8 +102,14 @@ module RicWebsite
 				#
 				# Check if page active in the given request
 				#
-				def active_url?
-					return false
+				def active_url?(request)
+					return false if !request || !self.url
+					current_locale, current_path = RicWebsite::Helpers::LocaleHelper.disassemble(request.fullpath)
+					if self.url == "/"
+						return current_path == "/"
+					else
+						return current_path.start_with?(self.url)
+					end
 				end
 
 				#
