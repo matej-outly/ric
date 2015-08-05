@@ -40,7 +40,7 @@ cs:
         name: Jméno v menu
         parent: Nadřazená stránka
         parent_id: Nadřazená stránka
-        nature: Typ stránky
+        nature: Obsah stránky
         model: Navázaný záznam
         model_id: Navázaný záznam
         url: Odkaz
