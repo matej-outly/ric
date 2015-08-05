@@ -1,0 +1,8 @@
+<div class="gallery_directories_sidemenu clearfix">
+	<%= nested_ul(@gallery_directories_sidemenu.gallery_directories) do |gallery_directory| %>
+		<% 
+			css_class = (@gallery_directory && @gallery_directory.id == gallery_directory.id ? " active" : "") 
+		%>
+		<%= link_to gallery_directory.name, ric_gallery_public.directory_path(gallery_directory), class: css_class %>
+	<% end %>
+</div>

@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Directories
+# * Sidemenu component
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 5. 8. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_gallery/public_controller"
+class RicGallery::GalleryDirectoriesSidemenuComponent < RugController::Component
 
-module RicGallery
-	class PublicDirectoriesController < PublicController
-		include RicGallery::Concerns::Controllers::Public::DirectoriesController
+	def control
+		@gallery_directories = RicGallery.gallery_directory_model.all.order(lft: :asc)
 	end
+
 end
