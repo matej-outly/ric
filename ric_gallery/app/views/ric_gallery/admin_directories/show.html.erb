@@ -1,9 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@gallery_directory, {
-		parent: { type: :belongs_to, label: :name, path: :directory_path },
 		name: :string,
+		parent: { type: :belongs_to, label: :name, path: :directory_path },
 		description: :text,
-		picture: { type: :picture, thumb_style: :thumb },
+		picture: { type: :image, thumb_style: :thumb },
 	}) %>
 
 	<% if @gallery_directory.children.count > 0 %>
@@ -23,7 +23,7 @@
 		<h3><%= t("headers.ric_gallery.admin_directories.pictures") %></h3>
 
 		<%= rug_index_table_for(@gallery_directory.gallery_pictures.order(position: :asc), { 
-			picture: { type: :picture, thumb_style: :thumb },
+			picture: { type: :image, thumb_style: :thumb },
 			title: :string
 		}, paths: {
 			show: :picture_path,

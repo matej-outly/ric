@@ -43,7 +43,7 @@ module RicGallery
 					# Picture
 					#
 					has_attached_file :picture, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
-					validates_attachment_content_type :picture, :content_type => /\Apicture\/.*\Z/
+					validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 					
 				end
 
@@ -53,6 +53,22 @@ module RicGallery
 					# Scopes
 					# *********************************************************************
 					
+				end
+
+				# *************************************************************
+				# Name with depth
+				# *************************************************************
+
+				def name_with_depth
+					return (" - " * self.depth.to_i) + self.name.to_s
+				end
+
+				# *************************************************************
+				# Parent
+				# *************************************************************
+
+				def available_parents
+					RicGallery.gallery_directory_model.all.order(lft: :asc)
 				end
 
 			end

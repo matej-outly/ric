@@ -33,7 +33,8 @@ module RicGallery
 					# Index action
 					#
 					def index
-						@gallery_directories = RicGallery.gallery_directory_model.all.order(lft: :asc)
+						@gallery_directories = RicGallery.gallery_directory_model.roots.order(lft: :asc)
+						@gallery_pictures = RicGallery.gallery_picture_model.without_directory.order(position: :asc)
 					end
 
 					#

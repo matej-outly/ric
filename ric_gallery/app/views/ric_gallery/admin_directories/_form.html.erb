@@ -1,5 +1,6 @@
 <%= rug_form_for(@gallery_directory, create_url: :directories_path, update_url: :directory_path) do |f| %>
 	<%= f.text_input_row :name, :text_field %>
+	<%= f.picker_row :parent_id, @gallery_directory.available_parents, :id, :name_with_depth, enable_null: true %>
 	<%= f.text_area_row :description %>
 	<%= f.dropzone_row :picture %>
 	<%= f.primary_button_row :submit %>

@@ -26,6 +26,7 @@ cs:
         description: Popis
         picture: Reprezentační obrázek
         parent: Nadřazené album
+        parent_id: Nadřazené album
       ric_gallery/gallery_picture:
         picture: Soubor
         title: Nadpis
