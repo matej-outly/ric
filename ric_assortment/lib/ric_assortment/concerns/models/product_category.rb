@@ -35,6 +35,73 @@ module RicAssortment
 					#
 					enable_hierarchical_ordering
 					
+					#
+					# Genereate slugs after save
+					#
+					after_save :generate_slugs
+
+					#
+					# Destroy slugs before destroy
+					#
+					before_destroy :destroy_slugs, prepend: true
+
+				end
+
+				# *************************************************************
+				# Slug
+				# *************************************************************
+
+				#
+				# Genereate slugs after save
+				#
+				def generate_slugs(options = {})
+					
+					# Generate slug in this model
+					if config(:enable_slugs) == true && !RicWebsite.slug_model.nil?
+						url = config(:url).gsub(/:id/, self.id.to_s)
+						tmp_uri = URI.parse(url)
+						I18n.available_locales.each do |locale|
+							translation = RicWebsite.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :name, is_category: true)
+							RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
+						end
+					end
+
+					# Propagate to other models
+					if options[:disable_propagation] != true
+						
+						# Propagate to descendants
+						self.descendants.each do |descendant|
+							descendant.generate_slugs(disable_propagation: true)
+						end
+
+					end
+
+				end
+
+				#
+				# Destroy slugs before destroy
+				#
+				def destroy_slugs(options = {})
+
+					# Destroy slug of this model
+					if config(:enable_slugs) == true && !RicWebsite.slug_model.nil?
+						url = config(:url).gsub(/:id/, self.id.to_s)
+						tmp_uri = URI.parse(url)
+						I18n.available_locales.each do |locale|
+							RicWebsite.slug_model.remove_slug(locale, tmp_uri.path)
+						end
+					end
+
+					# Propagate to other models
+					if options[:disable_propagation] != true
+						
+						# Propagate to descendants
+						self.descendants.each do |descendant|
+							descendant.destroy_slugs(disable_propagation: true)
+						end
+
+					end
+
 				end
 
 			end

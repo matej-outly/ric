@@ -30,7 +30,12 @@ module RicAssortment
 						#
 						# Set product category before some actions
 						#
-						before_action :set_product_category, only: [:index, :show]
+						before_action :set_product_category, only: [:index, :from_category, :show]
+
+						#
+						# Set products before some actions
+						#
+						before_action :set_products, only: [:index, :from_category]
 
 					end
 
@@ -38,7 +43,13 @@ module RicAssortment
 					# Index action
 					#
 					def index
-						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(12)
+					end
+
+					#
+					# From category action
+					#
+					def from_category
+						render "index"
 					end
 
 					#
@@ -59,7 +70,13 @@ module RicAssortment
 					def set_product_category
 						if params[:product_category_id]
 							@product_category = RicAssortment.product_category_model.find_by_id(params[:product_category_id])
+						elsif @product
+							@product_category = @product.default_product_category
 						end
+					end
+
+					def set_products
+						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(12)
 					end
 
 				end

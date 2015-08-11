@@ -9,31 +9,41 @@
 # *
 # *****************************************************************************
 
-RicAssortment::AdminEngine.routes.draw do
+# Hack ensuring that routes are loaded just once
+#if !$ric_assortment_routes_loaded
+#$ric_assortment_routes_loaded = true
 
-	# Products
-	resources :products, controller: "admin_products"
+	RicAssortment::AdminEngine.routes.draw do
 
-	# Product attachments
-	resources :product_attachments, controller: "admin_product_attachments"
+		# Products
+		resources :products, controller: "admin_products"
 
-	# Product attachment bindings
-	resources :product_attachment_bindings, only: [:edit, :update, :destroy], controller: "admin_product_attachment_bindings"
+		# Product attachments
+		resources :product_attachments, controller: "admin_product_attachments"
 
-	# Product categories
-	resources :product_categories, controller: "admin_product_categories"
+		# Product attachment bindings
+		resources :product_attachment_bindings, only: [:edit, :update, :destroy], controller: "admin_product_attachment_bindings"
 
-	# Product category bindings
-	resources :product_category_bindings, only: [:edit, :update, :destroy], controller: "admin_product_category_bindings"
+		# Product categories
+		resources :product_categories, controller: "admin_product_categories"
 
-	# Product photos
-	resources :product_photos, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_photos"
+		# Product category bindings
+		resources :product_category_bindings, only: [:edit, :update, :destroy], controller: "admin_product_category_bindings"
 
-end
+		# Product photos
+		resources :product_photos, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_photos"
 
-RicAssortment::PublicEngine.routes.draw do
+	end
 
-	# Products
-	resources :products, only: [:index, :show], controller: "public_products"
+	RicAssortment::PublicEngine.routes.draw do
 
-end
+		# Products
+		resources :products, only: [:index, :show], controller: "public_products" do
+			collection do
+				#get "from_category/:product_category_id", to: "public_products#from_category", as: "from_category"
+			end
+		end
+
+	end
+
+#end
