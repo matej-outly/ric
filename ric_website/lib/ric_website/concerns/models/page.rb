@@ -46,14 +46,19 @@ module RicWebsite
 					before_save :check_model_consistency
 
 					#
-					# Genereate slugs before save
+					# Genereate slugs after save
 					#
-					before_save :generate_slugs
+					after_save :generate_slugs
 
 					#
 					# Destroy slugs before destroy
 					#
-					before_destroy :destroy_slugs
+					before_destroy :destroy_slugs_before, prepend: true
+
+					#
+					# Destroy slugs after destroy
+					#
+					after_destroy :destroy_slugs_after
 
 				end
 
@@ -61,8 +66,8 @@ module RicWebsite
 				# Name with depth
 				# *************************************************************
 
-				def name_with_depth
-					return (" - " * self.depth.to_i) + self.name.to_s
+				def name_with_depth(delimiter = " - ")
+					return (delimiter * self.depth.to_i) + self.name.to_s
 				end
 
 				# *************************************************************
@@ -112,13 +117,6 @@ module RicWebsite
 					end
 				end
 
-				#
-				# Compose path 
-				#
-				def path
-					return self.url
-				end
-
 				# *************************************************************
 				# Model
 				# *************************************************************
@@ -163,9 +161,11 @@ module RicWebsite
 				# *************************************************************
 
 				#
-				# Genereate slugs before save
+				# Genereate slugs after save
 				#
-				def generate_slugs
+				def generate_slugs(options = {})
+					
+					# Generate slug in this model
 					if !RicWebsite.slug_model.nil? && self.url_was != self.url && !self.url_was.blank?
 						I18n.available_locales.each do |locale|
 							RicWebsite.slug_model.remove_slug(locale, self.url_was)
@@ -174,31 +174,64 @@ module RicWebsite
 					if !RicWebsite.slug_model.nil? && !self.url.blank?
 						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
-							if self.respond_to?("name_#{locale.to_s}".to_sym)
-								translation = self.send("name_#{locale.to_s}".to_sym)
-							elsif self.respond_to?(:name)
-								translation = self.name
-							else
-								translation = nil
-							end
-							if !translation.blank?
-								translation = translation.to_url + ".html"
-								RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
-							end
+							translation = RicWebsite.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :name)
+							RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
 						end
 					end
+
+					# Propagate to other models
+					if options[:disable_propagation] != true
+						
+						# Propagate to parent
+						self.parent.generate_slugs(disable_propagation: true) if self.parent
+
+						# Propagate to descendants
+						self.descendants.each do |descendant|
+							descendant.generate_slugs(disable_propagation: true)
+						end
+
+					end
+
 				end
 
 				#
 				# Destroy slugs before destroy
 				#
-				def destroy_slugs
+				def destroy_slugs_before(options = {})
+
+					# Destroy slug of this model
 					if !RicWebsite.slug_model.nil? && !self.url.blank?
 						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
 							RicWebsite.slug_model.remove_slug(locale, tmp_uri.path)
 						end
 					end
+
+					# Propagate to other models
+					if options[:disable_propagation] != true
+						
+						# Propagate to descendants
+						self.descendants.each do |descendant|
+							descendant.destroy_slugs_before(disable_propagation: true)
+						end
+
+					end
+
+				end
+
+				#
+				# Destroy slugs after destroy
+				#
+				def destroy_slugs_after(options = {})
+
+					# Propagate to other models
+					if options[:disable_propagation] != true
+						
+						# Propagate to parent
+						self.parent.generate_slugs(disable_propagation: true) if self.parent
+
+					end
+
 				end
 
 			end

@@ -85,6 +85,9 @@ module RicWebsite
 					#
 					def add_slug(language, original, translation)
 						
+						# Do not process blank
+						return if translation.blank? || original.blank?
+
 						# Prepare
 						language = language.to_s
 						original = "/" + original.to_s.trim("/")
@@ -130,6 +133,70 @@ module RicWebsite
 						# Clear cache
 						clear_cache
 
+					end
+
+					#
+					# Compose translation from various models
+					#
+					def compose_translation(language, models)
+
+						# Convert to array
+						if !models.is_a? Array
+							models = [ models ]
+						end
+
+						# Result
+						result = ""
+						last_model = nil
+						last_model_is_category = false
+
+						models.each do |section_options|
+							
+							# Input check
+							if !section_options.is_a? Hash
+								raise "Incorrect input, expecting hash with :label and :models or :model items."
+							end
+							if section_options[:models].nil? && !section_options[:model].nil?
+								section_options[:models] = [ section_options[:model] ]
+							end
+							if section_options[:models].nil? || section_options[:label].nil?
+								raise "Incorrect input, expecting hash with :label and :models or :model items."
+							end
+
+							# "Is category" option
+							last_model_is_category = section_options[:is_category] == true
+
+							section_options[:models].each do |model|
+
+								# Get part
+								if model.respond_to?("#{section_options[:label].to_s}_#{language.to_s}".to_sym)
+									part = model.send("#{section_options[:label].to_s}_#{language.to_s}".to_sym)
+								elsif model.respond_to?(section_options[:label].to_sym)
+									part = model.send(section_options[:label].to_sym)
+								else
+									part = nil
+								end
+
+								# Add part to result
+								result += "/" + part.to_url if part
+
+								# Save last model
+								last_model = model
+
+							end
+
+						end
+
+						# Truncate correctly
+						if !result.blank?
+							if last_model_is_category || (last_model.hierarchically_ordered? && !last_model.leaf?)
+								result += "/"
+							else
+								result += ".html"
+							end	
+						end
+
+						return result						
 					end
 
 				end
