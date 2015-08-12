@@ -9,7 +9,13 @@
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special initializers defined in the engines. Check files
-# *_routes.rb ror routes definition.
+RicAssortment::PublicEngine.routes.draw do
+
+	# Products
+	resources :products, only: [:index, :show], controller: "public_products" do
+		collection do
+			get "from_category/:product_category_id", to: "public_products#from_category", as: "from_category"
+		end
+	end
+
+end
