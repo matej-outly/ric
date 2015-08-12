@@ -9,6 +9,7 @@ cs:
         create: "Nové album"
         edit: "Upravit album"
         update: "Upravit album"
+        destroy: "Smazat album"
         pictures: "Obrázky"
         children: "Podřazená alba"
       admin_pictures:
@@ -18,6 +19,7 @@ cs:
         create: "Nový obrázek"
         edit: "Upravit obrázek"
         update: "Upravit obrázek"
+        destroy: "Smazat obrázek"
 
   activerecord:
     attributes:

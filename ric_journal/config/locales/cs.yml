@@ -9,6 +9,7 @@ cs:
         create: "Nová aktualita"
         edit: "Upravit aktualitu"
         update: "Upravit aktualitu"
+        destroy: "Smazat aktualitu"
       admin_events:
         index: "Události"
         show: "Detail události"
@@ -16,6 +17,7 @@ cs:
         create: "Nová událost"
         edit: "Upravit událost"
         update: "Upravit událost"
+        destroy: "Smazat událost"
 
   activerecord:
     attributes:

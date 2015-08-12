@@ -9,6 +9,7 @@ cs:
         create: "Nová pobočka"
         edit: "Upravit pobočku"
         update: "Upravit pobočku"
+        destroy: "Smazat pobočku"
       admin_contact_messages:
         index: "Kontaktní zprávy"
         show: "Detail zprávy"
@@ -16,6 +17,7 @@ cs:
         create: "Nová zpráva"
         edit: "Upravit zprávu"
         update: "Upravit zprávu"
+        destroy: "Smazat zprávu"
 
   activerecord:
     attributes:

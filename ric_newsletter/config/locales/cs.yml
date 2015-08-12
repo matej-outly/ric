@@ -9,6 +9,7 @@ cs:
         create: "Nový newsletter"
         edit: "Upravit newsletter"
         update: "Upravit newsletter"
+        destroy: "Smazat newsletter"
       admin_sent_newsletters:
         new: "Poslat newsletter"
         create: "Poslat newsletter"

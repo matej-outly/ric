@@ -10,11 +10,13 @@ cs:
         create: "Nová stránka"
         edit: "Upravit stránku"
         update: "Upravit stránku"
+        destroy: "Smazat stránku"
         menus: "Navázaná menu"
         children: "Podřazené stránky"
       admin_page_menu_relations:
         edit: "Navázat menu"
         update: "Navázat menu"
+        destroy: "Odebrat menu"
       admin_menus:
         index: "Menu"
         show: "Detail menu"
@@ -22,10 +24,12 @@ cs:
         create: "Nové enu"
         edit: "Upravit menu"
         update: "Upravit menu"
+        destroy: "Smazat menu"
         pages: "Navázané stránky"
       admin_menu_page_relations:
         edit: "Navázat stránky"
         update: "Navázat stránky"
+        destroy: "Odebrat stránku"
       admin_texts:
         index: "Textové stránky"
         show: "Detail textové stránky"
@@ -33,6 +37,7 @@ cs:
         create: "Nová textová stránka"
         edit: "Upravit textovou stránku"
         update: "Upravit textovou stránku"
+        destroy: "Smazat textovou stránku"
 
   activerecord:
     attributes:

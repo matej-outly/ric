@@ -10,6 +10,7 @@ cs:
         create: "Nový produkt"
         edit: "Upravit produkt"
         update: "Upravit produkt"
+        destroy: "Smazat produkt"
         identification: Identifikace
         content: Popis
         dimensions: Rozměry
@@ -25,10 +26,12 @@ cs:
         create: "Nová příloha produktu"
         edit: "Upravit přílohu produktu"
         update: "Upravit přílohu produktu"
+        destroy: "Smazat přílohu produktu"
         products: "Navázané produkty"
       admin_product_attachment_relations:
         edit: "Přidat přílohu produktu"
         update: "Přidat přílohu produktu"
+        destroy: "Odebrat přílohu produktu"
       admin_product_categories:
         index: "Kategorie produktů"
         show: "Detail kategorie produktů"
@@ -36,11 +39,13 @@ cs:
         create: "Nová kategorie produktů"
         edit: "Upravit kategorii produktů"
         update: "Upravit kategorii produktů"
+        destroy: "Smazat kategorii produktů"
         children: "Podřazené kategorie"
         products: "Obsažené produkty"
       admin_product_category_relations:
         edit: "Přidat kategorie produktu"
         update: "Přidat kategorie produktu"
+        destroy: "Odebrat kategorii produktu"
       admin_product_photos:
         show: Detail fotografie
         new: Nová fotografie
@@ -55,10 +60,12 @@ cs:
         create: "Nová upoutávka produktů"
         edit: "Upravit upoutávku produktů"
         update: "Upravit upoutávku produktů"
+        destroy: "Smazat upoutávku produktů"
         products: "Obsažené produkty"
       admin_product_ticker_relations:
         edit: "Přidat produkt k upoutávce"
         update: "Přidat produkt k upoutávce"
+        destroy: "Odebrat produkt od upoutávky"
       public_products:
         index: Produkty
 

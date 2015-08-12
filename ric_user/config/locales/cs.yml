@@ -9,6 +9,7 @@ cs:
         create: "Nový uživatel"
         edit: "Upravit uživatele"
         update: "Upravit uživatele"
+        destroy: "Smazat uživatele"
       admin_user_passwords:
         edit: "Změnit heslo"
         update: "Změnit heslo"

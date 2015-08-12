@@ -9,6 +9,7 @@ cs:
         create: "Nový inzerent"
         edit: "Upravit inzerenta"
         update: "Upravit inzerenta"
+        destroy: "Smazat inzerenta"
       admin_banners:
         index: "Bannery"
         show: "Detail banneru"
@@ -16,6 +17,7 @@ cs:
         create: "Nový banner"
         edit: "Upravit banner"
         update: "Upravit banner"
+        destroy: "Smazat banner"
       observer_advertisers:
         index: "Inzerenti"
         show: "Detail inzerenta"

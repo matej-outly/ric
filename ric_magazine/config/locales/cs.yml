@@ -9,6 +9,7 @@ cs:
         create: "Nový článek"
         edit: "Upravit článek"
         update: "Upravit článek"
+        destroy: "Smazat článek"
 
   activerecord:
     attributes:

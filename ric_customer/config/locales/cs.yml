@@ -9,6 +9,7 @@ cs:
         create: "Nový zákazník"
         edit: "Upravit zákazníka"
         update: "Upravit zákazníka"
+        destroy: "Smazat zákazníka"
 
   activerecord:
     attributes:
