@@ -68,6 +68,7 @@ cs:
         unit: Jednotka
         keywords: Klíčová slova
         description: Popis
+        checkbox: Vybrat
       ric_assortment/product_attachment:
         file: Soubor
         title: Popis
