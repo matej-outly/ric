@@ -1,2 +1,5 @@
 # Number of displayed products
 limit: 3
+
+# Identification of displayed ticker
+key: main

@@ -17,10 +17,12 @@ module RicAssortment
 		#
 		require 'ric_assortment/concerns/controllers/admin/products_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_attachments_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_attachment_bindings_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_attachment_relations_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_categories_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_category_bindings_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_category_relations_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_photos_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_tickers_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_ticker_relations_controller'
 		
 		isolate_namespace RicAssortment
 

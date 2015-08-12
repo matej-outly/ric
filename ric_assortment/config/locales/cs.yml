@@ -26,7 +26,7 @@ cs:
         edit: "Upravit přílohu produktu"
         update: "Upravit přílohu produktu"
         products: "Navázané produkty"
-      admin_product_attachment_bindings:
+      admin_product_attachment_relations:
         edit: "Přidat přílohu produktu"
         update: "Přidat přílohu produktu"
       admin_product_categories:
@@ -38,7 +38,7 @@ cs:
         update: "Upravit kategorii produktů"
         children: "Podřazené kategorie"
         products: "Obsažené produkty"
-      admin_product_category_bindings:
+      admin_product_category_relations:
         edit: "Přidat kategorie produktu"
         update: "Přidat kategorie produktu"
       admin_product_photos:
@@ -48,6 +48,17 @@ cs:
         edit: Upravit fotografii
         update: Upravit fotografii
         destroy: Smazat fotografii
+      admin_product_tickers:
+        index: "Upoutávky produktů"
+        show: "Detail upoutávky produktů"
+        new: "Nová upoutávka produktů"
+        create: "Nová upoutávka produktů"
+        edit: "Upravit upoutávku produktů"
+        update: "Upravit upoutávku produktů"
+        products: "Obsažené produkty"
+      admin_product_ticker_relations:
+        edit: "Přidat produkt k upoutávce"
+        update: "Přidat produkt k upoutávce"
       public_products:
         index: Produkty
 
@@ -83,6 +94,9 @@ cs:
         product_id: Produkt
         image: Obrázek
         title: Popis
+      ric_assortment/product_ticker:
+        name: Jméno
+        key: Identifikující klíč
     notices:
       models:
         ric_assortment/product:
@@ -105,6 +119,12 @@ cs:
           create: "Fotografie produktu byla úspěšně vytvořena."
           update: "Fotografie produktu byla úspěšně upravena."
           destroy: "Fotografie produktu byla úspěšně smazána."
+        ric_assortment/product_ticker:
+          create: "Upoutávka produktů byla úspěšně vytvořena."
+          update: "Upoutávka produktů byla úspěšně upravena."
+          destroy: "Upoutávka produktů byla úspěšně smazána."
+          product_bind: "Vybrané produkty byly úspěšně přidány."
+          product_unbind: "Produkt byl úspěšně odebrán."
     errors:
       models:
         ric_assortment/product:
@@ -118,3 +138,5 @@ cs:
           attributes:
             product_id:
               blank: "Produkt musí být vybrán."
+        ric_assortment/product_ticker:
+          not_found: "Upoutávka produktů nebyla nalezena."

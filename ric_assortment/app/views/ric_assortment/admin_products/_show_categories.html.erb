@@ -2,5 +2,5 @@
 	name: :string,
 }, paths: {
 	show: :product_category_path,
-	destroy: lambda { |product_category| product_category_binding_path(id: @product.id, product_category_id: product_category.id) }
+	destroy: lambda { |product_category| product_category_relation_path(id: @product.id, product_category_id: product_category.id) }
 }) %>

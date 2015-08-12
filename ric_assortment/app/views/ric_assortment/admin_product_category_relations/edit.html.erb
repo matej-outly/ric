@@ -1,6 +1,6 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 
-	<%= rug_form_for(@product, url: product_category_binding_path(@product)) do |f| %>
+	<%= rug_form_for(@product, url: product_category_relation_path(@product)) do |f| %>
 
 		<%
 			columns = RugBuilder::TableBuilder::Columns.new(name: :string)

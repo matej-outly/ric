@@ -18,6 +18,7 @@ require 'ric_assortment/concerns/models/product'
 require 'ric_assortment/concerns/models/product_attachment'
 require 'ric_assortment/concerns/models/product_category'
 require 'ric_assortment/concerns/models/product_photo'
+require 'ric_assortment/concerns/models/product_ticker'
 
 module RicAssortment
 
@@ -76,6 +77,18 @@ module RicAssortment
 			return RicAssortment::ProductPhoto
 		else
 			return @@product_photo_model.constantize
+		end
+	end
+
+	#
+	# Product ticker model
+	#
+	mattr_accessor :product_ticker_model
+	def self.product_ticker_model
+		if @@product_ticker_model.nil?
+			return RicAssortment::ProductTicker
+		else
+			return @@product_ticker_model.constantize
 		end
 	end
 

@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product attachment bindings
+# * Product attachment relations
 # *
 # * Author: Matěj Outlý
 # * Date  : 8. 7. 2015
@@ -13,7 +13,7 @@ module RicAssortment
 	module Concerns
 		module Controllers
 			module Admin
-				module ProductAttachmentBindingsController extend ActiveSupport::Concern
+				module ProductAttachmentRelationsController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the

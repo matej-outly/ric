@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product category bindings
+# * Product category relations
 # *
 # * Author: Matěj Outlý
 # * Date  : 29. 6. 2015
@@ -13,7 +13,7 @@ module RicAssortment
 	module Concerns
 		module Controllers
 			module Admin
-				module ProductCategoryBindingsController extend ActiveSupport::Concern
+				module ProductCategoryRelationsController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the

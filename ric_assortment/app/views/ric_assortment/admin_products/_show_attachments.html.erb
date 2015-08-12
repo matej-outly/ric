@@ -3,5 +3,5 @@
 	file: :file
 }, paths: {
 	show: :product_attachment_path,
-	destroy: lambda { |product_attachment| product_attachment_binding_path(id: @product.id, product_attachment_id: product_attachment.id) }
+	destroy: lambda { |product_attachment| product_attachment_relation_path(id: @product.id, product_attachment_id: product_attachment.id) }
 }) %>

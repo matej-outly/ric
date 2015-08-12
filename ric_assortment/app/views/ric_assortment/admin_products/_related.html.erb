@@ -5,8 +5,8 @@
 	<% if @product && !@product.new_record? %>
 
 		<%= m.item t("headers.ric_assortment.admin_product_photos.new"), new_product_photo_path(product_id: @product.id), icon: "plus" %>
-		<%= m.item t("headers.ric_assortment.admin_product_attachment_bindings.edit"), edit_product_attachment_binding_path(@product), icon: "plus" %>
-		<%= m.item t("headers.ric_assortment.admin_product_category_bindings.edit"), edit_product_category_binding_path(@product), icon: "plus" %>
+		<%= m.item t("headers.ric_assortment.admin_product_attachment_relations.edit"), edit_product_attachment_relation_path(@product), icon: "plus" %>
+		<%= m.item t("headers.ric_assortment.admin_product_category_relations.edit"), edit_product_category_relation_path(@product), icon: "plus" %>
 		
 	<% end %>
 

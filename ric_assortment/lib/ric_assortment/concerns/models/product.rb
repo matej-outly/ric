@@ -46,6 +46,11 @@ module RicAssortment
 					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s, dependent: :destroy
 
 					#
+					# Relation to product tickers
+					#
+					has_and_belongs_to_many :product_tickers, class_name: RicAssortment.product_ticker_model.to_s
+
+					#
 					# Ordering
 					#
 					enable_ordering
