@@ -11,5 +11,5 @@
 
 # This file is loaded more than once due to multiple engines in this gem 
 # causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special initializers defined in the engines. Check files
-# *_routes.rb ror routes definition.
+# are loaded by special routine defined in the engines. Check files *_routes.rb
+# for routes definition.

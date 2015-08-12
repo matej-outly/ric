@@ -27,9 +27,9 @@ module RicAssortment
 		#
 		# Load admin specific routes
 		#
-		initializer :set_ric_assortment_admin_routes, after: :set_routes_reloader_hook do
+		def reload_routes
 			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			require config_path + "/admin_routes.rb"
+			load(config_path + "/admin_routes.rb")
 		end
 
 	end

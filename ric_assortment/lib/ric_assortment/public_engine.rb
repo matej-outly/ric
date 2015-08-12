@@ -22,9 +22,9 @@ module RicAssortment
 		#
 		# Load public specific routes
 		#
-		initializer :set_ric_assortment_public_routes, after: :set_routes_reloader_hook do
+		def reload_routes
 			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			require config_path + "/public_routes.rb"
+			load(config_path + "/public_routes.rb")
 		end
 
 	end
