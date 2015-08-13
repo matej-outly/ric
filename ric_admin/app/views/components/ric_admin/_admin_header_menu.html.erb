@@ -4,7 +4,7 @@
 		result = ""
 		
 		if item[:type] == "delimiter"
-			result += "<li class=\"delimiter\"></li>"
+			result += "<li class=\"delimiter\"></li>\n"
 		else
 
 			# Get URL
@@ -32,7 +32,7 @@
 			result += "<li class=\"#{(item[:icon] ? "icon-left icon-" + item[:icon] : "")} #{(active ? "active" : "")}\">"
 			result += link_to(label, url)
 			result += dropdown
-			result += "</li>"
+			result += "</li>\n"
 		end
 		
 		return result.html_safe
@@ -45,11 +45,11 @@
 		<% @admin_header_menu.config(:items).each do |item| %>
 			<% dropdown = "" %>
 			<% if item[:dropdown] %>
-				<% dropdown += "<div class=\"dropdown\"><ul>" %>
+				<% dropdown += "<div class=\"dropdown\"><ul>\n" %>
 				<% item[:dropdown].each do |dropdown_item| %>
 					<% dropdown += render_item(self, dropdown_item) %>
 				<% end %>
-				<% dropdown += "</ul></div>" %>
+				<% dropdown += "</ul></div>\n" %>
 			<% end %>
 			<%= render_item(self, item, dropdown) %>
 		<% end %>

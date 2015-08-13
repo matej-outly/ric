@@ -1,0 +1,16 @@
+<% 
+	client_year = @admin_footer_copy.config(:client, :year).to_i
+	developer_year = @admin_footer_copy.config(:developer, :year).to_i
+%>
+<ul class="copy">
+	<li class="client">
+		<%= link_to image_tag(image_url(@admin_footer_copy.config(:client, :image))), @admin_footer_copy.config(:client, :url) %><br>
+		<%= @admin_footer_copy.config(:client, :name) %><br>
+		&copy; <%= (Date.today.year.to_i == client_year ? client_year.to_s : "#{client_year.to_s}-#{Date.today.year}") %>
+	</li>
+	<li class="developer">
+		<%= link_to image_tag(image_url(@admin_footer_copy.config(:developer, :image))), @admin_footer_copy.config(:developer, :url) %><br>
+		<%= @admin_footer_copy.config(:developer, :name) %><br>
+		&copy; <%= (Date.today.year.to_i == developer_year ? developer_year.to_s : "#{developer_year.to_s}-#{Date.today.year}") %>
+	</li>
+</ul>

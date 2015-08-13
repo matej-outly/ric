@@ -2,8 +2,8 @@
 	<div class="content">
 
 		<div class="clearfix">
-			<%= render partial: "ric_admin/components/flash" %>
-			<%= render partial: "ric_admin/components/login_info" %>
+			<%= render partial: "ric_admin/shared/flash" %>
+			<%= render partial: "ric_admin/shared/login_info" %>
 		</div>
 
 		<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>

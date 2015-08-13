@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title><%= render partial: "ric_admin/components/title" %></title>
+	<title><%= render_component @admin_title %></title>
 	<%= stylesheet_link_tag    RicAdmin.css_layout, media: 'all', 'data-turbolinks-track' => true %>
 	<%= javascript_include_tag RicAdmin.js_layout, 'data-turbolinks-track' => true, 'gumby-touch' => '/assets/gumby/js/libs' %>
 	<%= csrf_meta_tags %>
@@ -11,7 +11,7 @@
 	
 	<div class="navbar" id="header">
 		<a class="toggle" gumby-trigger="#header .menu ul" href="#"><i class="icon-menu"></i></a>
-		<%= render partial: "ric_admin/components/header_logo" %>
+		<%= render_component @admin_header_logo %>
 		<%= render_component @admin_header_menu %>
 	</div>
 	
@@ -20,8 +20,8 @@
 	</div>
 
 	<div class="footer">
-		<%= render partial: "ric_admin/components/footer_menu" %>
-		<%= render partial: "ric_admin/components/footer_copy" %>
+		<%= render_component @admin_footer_menu %>
+		<%= render_component @admin_footer_copy %>
 	</div>
 
 </body>

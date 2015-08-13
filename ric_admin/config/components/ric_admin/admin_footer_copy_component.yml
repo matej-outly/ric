@@ -1,0 +1,13 @@
+# Settings for client copyright
+client:
+  name: Klient
+  year: 2015
+  url: http://www.klient.cz
+  image: ric_admin/footer_logo_client.png
+
+# Settings for developer copyright
+developer:
+  name: Clockstar s.r.o.
+  year: 2012
+  url: http://www.clockstar.cz
+  image: ric_admin/footer_logo_clockstar.png
