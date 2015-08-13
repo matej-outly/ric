@@ -21,7 +21,7 @@ cs:
         index: "Menu"
         show: "Detail menu"
         new: "Nové enu"
-        create: "Nové enu"
+        create: "Nové menu"
         edit: "Upravit menu"
         update: "Upravit menu"
         destroy: "Smazat menu"

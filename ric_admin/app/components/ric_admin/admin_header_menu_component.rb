@@ -12,7 +12,6 @@
 class RicAdmin::AdminHeaderMenuComponent < RugController::Component
 
 	def control
-
 	end
 
 end

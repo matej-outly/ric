@@ -20,7 +20,7 @@ items:
         active_if: "controller_name == 'admin_texts'"
   -
     label: headers.ric_user.admin_users.index
-    url: main_app.root_path
+    url: ric_user_admin.users_path
     icon: user
     active_if: "controller_name == 'admin_users'"
   -
