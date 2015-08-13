@@ -17,6 +17,21 @@ module RicDevise
 		#
 		layout "ric_admin"
 		
+		#
+		# Title component
+		#
+		component RicAdmin::AdminTitleComponent
+
+		#
+		# Header logo component
+		#
+		component RicAdmin::AdminHeaderLogoComponent
+
+		#
+		# Footer copy component
+		#
+		component RicAdmin::AdminFooterCopyComponent
+
 	protected
 
 		def after_sign_out_path_for(resource)

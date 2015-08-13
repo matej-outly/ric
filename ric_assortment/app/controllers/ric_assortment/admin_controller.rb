@@ -10,7 +10,7 @@
 # *****************************************************************************
 
 module RicAssortment
-	class AdminController < ::ApplicationController
+	class AdminController < RicAdmin::ApplicationController
 	end
 end
 

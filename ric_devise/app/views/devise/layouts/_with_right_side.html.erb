@@ -1,13 +1,13 @@
 <div class="layout with_right_side">
 	<div class="content">
 
-		<%= render partial: "ric_admin/components/flash" %>
+		<%= render partial: "ric_admin/shared/flash" %>
 		<%= yield %>
 
 	</div>
 	<div class="side">
 		
-		<%= render partial: "ric_admin/components/login_info" %>
+		<%= render partial: "ric_admin/shared/login_info" %>
 
 		<h2><%= t("headers.actions") %></h2>
 		<%= render partial: "devise/shared/actions" %>

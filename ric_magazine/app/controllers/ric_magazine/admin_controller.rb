@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicMagazine
-	class AdminController < ::ApplicationController
+	class AdminController < RicAdmin::ApplicationController
 	end
 end

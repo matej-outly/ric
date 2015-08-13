@@ -10,7 +10,7 @@
 # *****************************************************************************
 
 module RicWebsite
-	class AdminController < ::ApplicationController
+	class AdminController < RicAdmin::ApplicationController
 	end
 end
 

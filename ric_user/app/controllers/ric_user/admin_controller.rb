@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicUser
-	class AdminController < ::ApplicationController
+	class AdminController < RicAdmin::ApplicationController
 	end
 end
