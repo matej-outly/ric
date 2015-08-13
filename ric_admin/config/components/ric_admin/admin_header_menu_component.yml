@@ -1,0 +1,31 @@
+items:
+  -
+    label: headers.ric_website.admin_pages.index
+    url: ric_website_admin.pages_path
+    dropdown:
+      - 
+        label: headers.ric_website.admin_pages.index
+        url: ric_website_admin.pages_path
+        icon: flow-tree
+        active_if: "controller_name == 'admin_pages'"
+      -
+        label: headers.ric_website.admin_menus.index
+        url: ric_website_admin.menus_path
+        icon: menu
+        active_if: "controller_name == 'admin_menus'"
+      - 
+        label: headers.ric_website.admin_texts.index
+        url: ric_website_admin.texts_path
+        icon: docs
+        active_if: "controller_name == 'admin_texts'"
+  -
+    label: headers.ric_user.admin_users.index
+    url: main_app.root_path
+    icon: user
+    active_if: "controller_name == 'admin_users'"
+  -
+    type: delimiter
+  -
+    label: headers.web
+    url: main_app.root_path
+    icon: globe

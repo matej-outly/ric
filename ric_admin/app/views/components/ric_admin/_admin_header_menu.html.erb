@@ -1,0 +1,34 @@
+<%
+
+	def render_item(t, item, dropdown = "")
+		result = ""
+		
+		if item[:type] == "delimiter"
+			result += "<li class=\"delimiter\"></li>"
+		else
+			result += "<li class=\"#{(item[:icon] ? "icon-left icon-" + item[:icon] : "")}\">"
+			result += t.link_to(I18n.t(item[:label], default: item[:label]), t.main_app.root_path)
+			result += dropdown
+			result += "</li>"
+		end
+		
+		return result.html_safe
+	end
+
+%>
+
+<div class="menu">
+	<ul>
+		<% @admin_header_menu.config(:items).each do |item| %>
+			<% dropdown = "" %>
+			<% if item[:dropdown] %>
+				<% dropdown += "<div class=\"dropdown\"><ul>" %>
+				<% item[:dropdown].each do |dropdown_item| %>
+					<% dropdown += render_item(self, dropdown_item) %>
+				<% end %>
+				<% dropdown += "</ul></div>" %>
+			<% end %>
+			<%= render_item(self, item, dropdown) %>
+		<% end %>
+	</ul>
+</div>
