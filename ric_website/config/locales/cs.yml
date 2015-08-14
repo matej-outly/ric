@@ -20,7 +20,7 @@ cs:
       admin_menus:
         index: "Menu"
         show: "Detail menu"
-        new: "Nové enu"
+        new: "Nové menu"
         create: "Nové menu"
         edit: "Upravit menu"
         update: "Upravit menu"
