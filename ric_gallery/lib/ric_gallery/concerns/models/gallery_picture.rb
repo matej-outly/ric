@@ -42,7 +42,7 @@ module RicGallery
 					#
 					# Picture
 					#
-					has_attached_file :picture, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
+					has_attached_file :picture, :styles => { :thumb => config(:picture_crop, :thumb), :full => config(:picture_crop, :full) }
 					validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
 				end
