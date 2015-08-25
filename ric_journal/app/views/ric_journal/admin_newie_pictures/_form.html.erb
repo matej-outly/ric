@@ -1,0 +1,6 @@
+<%= rug_form_for(@newie_picture, create_url: :newie_pictures_path, update_url: :newie_picture_path) do |f| %>
+	<%= f.hidden_field :newie_id %>
+	<%= f.dropzone_row :picture, append_columns: { newie_id: true }  %>
+	<%= f.text_input_row :title, :text_field %>
+	<%= f.primary_button_row :submit %>
+<% end %>

@@ -24,5 +24,14 @@ module RicWebsite
 		require 'ric_website/concerns/controllers/admin/menu_page_relations_controller'
 		
 		isolate_namespace RicWebsite
+
+		#
+		# Load admin specific routes
+		#
+		def reload_routes
+			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
+			load(config_path + "/admin_routes.rb")
+		end
+
 	end
 end

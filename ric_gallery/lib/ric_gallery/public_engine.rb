@@ -18,5 +18,14 @@ module RicGallery
 		require 'ric_gallery/concerns/controllers/public/directories_controller'
 
 		isolate_namespace RicGallery
+
+		#
+		# Load public specific routes
+		#
+		def reload_routes
+			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
+			load(config_path + "/public_routes.rb")
+		end
+
 	end
 end

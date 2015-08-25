@@ -24,7 +24,12 @@ module RicJournal
 					# *********************************************************************
 					# Structure
 					# *********************************************************************
-	
+					
+					#
+					# Relation to newie pictures
+					#
+					has_many :newie_pictures, dependent: :destroy, class_name: RicJournal.newie_picture_model.to_s
+
 				end
 
 				module ClassMethods

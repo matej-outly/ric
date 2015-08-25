@@ -1,4 +1,5 @@
 <%= rug_menu_for(@product_photo, name: "actions", path_base: "product_photo") do |m| %>
+	<%= m.new_item nil, new_product_photo_path(product_id: @product_photo.product_id) %>
 	<%= m.show_item %>
 	<%= m.edit_item %>
 	<%= m.destroy_item %>

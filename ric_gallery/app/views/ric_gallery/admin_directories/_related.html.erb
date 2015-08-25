@@ -1,11 +1,7 @@
 <%= rug_menu_for(@gallery_directory, name: "related") do |m| %>
-	
-	<!-- ... -->
-
 	<% if @gallery_directory && !@gallery_directory.new_record? %>
 		<%= m.item t("headers.ric_gallery.admin_pictures.new"), new_picture_path(gallery_directory_id: @gallery_directory.id), icon: "plus" %>
 	<% else %>
 		<%= m.item t("headers.ric_gallery.admin_pictures.new"), new_picture_path, icon: "plus" %>
 	<% end %>
-
 <% end %>

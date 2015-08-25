@@ -1,0 +1,7 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@newie_picture, {
+		newie: { type: :belongs_to, label: :title, path: :newie_path },
+		picture: { type: :picture, thumb_style: :thumb },
+		title: :string
+	}) %>
+<% end %>

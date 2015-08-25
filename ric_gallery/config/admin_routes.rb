@@ -9,7 +9,12 @@
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicGallery::AdminEngine.routes.draw do
+
+	# Directories
+	resources :directories, controller: "admin_directories"
+
+	# Pictures
+	resources :pictures, controller: "admin_pictures", only: [:show, :new, :edit, :create, :update, :destroy]
+
+end

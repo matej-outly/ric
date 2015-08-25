@@ -5,4 +5,13 @@
 		content: :text,
 		published_at: :datetime
 	}) %>
+	<h3><%= t("headers.ric_journal.admin_newies.pictures") %></h3>
+	<%= rug_index_table_for(@newie.newie_pictures.order(position: :asc), { 
+		picture: { type: :picture, thumb_style: :thumb },
+		title: :string,
+	}, paths: {
+		show: :newie_picture_path,
+		edit: :edit_newie_picture_path,
+		destroy: :newie_picture_path
+	}) %>
 <% end %>

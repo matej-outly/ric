@@ -43,7 +43,7 @@ module RicAssortment
 						if params[:product_id]
 							@product_photo.product_id = params[:product_id] 
 						else
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.specimen_photo.attributes.product_id.blank")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_photo_model.model_name.i18n_key}.attributes.product_id.blank")
 						end
 					end
 

@@ -10,6 +10,15 @@ cs:
         edit: "Upravit aktualitu"
         update: "Upravit aktualitu"
         destroy: "Smazat aktualitu"
+        pictures: "Obrázky"
+      admin_newie_pictures:
+        index: "Obrázky aktualit"
+        show: "Detail obrázku"
+        new: "Nový obrázek"
+        create: "Nový obrázek"
+        edit: "Upravit obrázek"
+        update: "Upravit obrázek"
+        destroy: "Smazat obrázek"
       admin_events:
         index: "Události"
         show: "Detail události"
@@ -26,6 +35,11 @@ cs:
         perex: Perex
         content: Obsah
         published_at: Vydáno
+      ric_journal/newie_picture:
+        title: Nadpis
+        picture: Obrázek
+        newie: Aktualita
+        newie_id: Aktualita
       ric_journal/event:
         title: Nadpis
         perex: Perex
@@ -37,6 +51,10 @@ cs:
           create: Aktualita byla úspěšně vytvořena.
           update: Aktualita byla úspěšně uložena.
           destroy: Aktualita byla úspěšně smazána.
+        ric_journal/newie_picture:
+          create: Obrázek aktuality byl úspěšně vytvořen.
+          update: Obrázek aktuality byl úspěšně uložen.
+          destroy: Obrázek aktuality byl úspěšně smazán.
         ric_journal/event:
           create: Událost byla úspěšně vytvořena.
           update: Událost byla úspěšně uložena.
@@ -45,5 +63,10 @@ cs:
       models:
         ric_journal/newie:
           not_found: Aktualita nebyla nalezena.
+        ric_journal/newie_picture:
+          not_found: Obrázek aktuality nebyl nalezena.
+          attributes:
+            newie_id:
+              blank: Aktualita musí být vybrána.
         ric_journal/event:
           not_found: Událost nebyla nalezena.

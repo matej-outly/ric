@@ -33,6 +33,10 @@ module RicGallery
 					# Show action
 					#
 					def show
+						respond_to do |format|
+							format.html { render "show" }
+							format.json { render json: @gallery_picture.to_json }
+						end
 					end
 
 					#

@@ -1,0 +1,5 @@
+<%= rug_menu_for(@newie_picture, name: "related") do |m| %>
+	<% if @newie_picture %>
+		<%= m.item t("headers.ric_journal.admin_newies.show"), newie_path(@newie_picture.newie_id), icon: "search" %>
+	<% end %>
+<% end %>

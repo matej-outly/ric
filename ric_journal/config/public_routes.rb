@@ -9,7 +9,12 @@
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicJournal::PublicEngine.routes.draw do
+
+	# Newies
+	resources :newies, controller: "public_newies", only: [:index, :show]
+
+	# Events
+	resources :events, controller: "public_events", only: [:index, :show]
+
+end

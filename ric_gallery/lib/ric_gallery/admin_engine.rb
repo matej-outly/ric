@@ -19,5 +19,14 @@ module RicGallery
 		require 'ric_gallery/concerns/controllers/admin/pictures_controller'
 
 		isolate_namespace RicGallery
+
+		#
+		# Load admin specific routes
+		#
+		def reload_routes
+			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
+			load(config_path + "/admin_routes.rb")
+		end
+		
 	end
 end

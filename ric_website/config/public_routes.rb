@@ -5,11 +5,18 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicWebsite::PublicEngine.routes.draw do
+
+	# Texts
+	resources :texts, only: [:show], controller: "public_texts" do
+		member do
+			get "inline_edit"
+			post "inline_update"
+		end
+	end
+
+end

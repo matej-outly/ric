@@ -1,0 +1,6 @@
+<%= rug_menu_for(@newie_picture, name: "actions", path_base: "newie_pictures") do |m| %>
+	<%= m.new_item nil, new_newie_picture_path(newie_id: @newie_picture.newie_id) %>
+	<%= m.show_item %>
+	<%= m.edit_item %>
+	<%= m.destroy_item %>
+<% end %>

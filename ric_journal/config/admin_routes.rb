@@ -9,7 +9,15 @@
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicJournal::AdminEngine.routes.draw do
+
+	# Newies
+	resources :newies, controller: "admin_newies"
+
+	# Newies
+	resources :newie_pictures, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_newie_pictures"
+
+	# Events
+	resources :events, controller: "admin_events"
+
+end

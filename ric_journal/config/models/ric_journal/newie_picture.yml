@@ -1,0 +1,4 @@
+# Picture crop settings
+picture_crop:
+  thumb: "300x300#"
+  full: "1000x1000>"

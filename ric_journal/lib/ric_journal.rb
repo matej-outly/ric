@@ -15,6 +15,7 @@ require "ric_journal/public_engine"
 
 # Models
 require 'ric_journal/concerns/models/newie'
+require 'ric_journal/concerns/models/newie_picture'
 require 'ric_journal/concerns/models/event'
 
 module RicJournal
@@ -38,6 +39,18 @@ module RicJournal
 			return RicJournal::Newie
 		else
 			return @@newie_model.constantize
+		end
+	end
+
+	#
+	# Newie picture model
+	#
+	mattr_accessor :newie_picture_model
+	def self.newie_picture_model
+		if @@newie_picture_model.nil?
+			return RicJournal::NewiePicture
+		else
+			return @@newie_picture_model.constantize
 		end
 	end
 
