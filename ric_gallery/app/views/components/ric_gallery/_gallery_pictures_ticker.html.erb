@@ -1,0 +1,5 @@
+<div id="gallery pictures ticker">
+	<% @gallery_pictures_ticker.gallery_pictures.each do |gallery_picture|%>
+		<%= image_tag(gallery_picture.picture.url(:thumb)) if gallery_picture.picture.exists? %>
+	<% end %>
+</div>
