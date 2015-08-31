@@ -94,7 +94,7 @@ module RicGallery
 					def destroy
 						@gallery_picture.destroy
 						respond_to do |format|
-							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to (gallery_picture.gallery_directory_id ? directory_path(gallery_picture.gallery_directory_id) : directories_path), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @gallery_picture.id }
 						end
 					end
