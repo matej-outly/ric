@@ -47,6 +47,7 @@ module RicAssortment
 					#
 					def new
 						@product_attachment = RicAssortment.product_attachment_model.new
+						@product_attachment.product_ids = [ params[:product_id] ] if params[:product_id]
 					end
 
 					#
@@ -61,6 +62,7 @@ module RicAssortment
 					def create
 						@product_attachment = RicAssortment.product_attachment_model.new(product_attachment_params)
 						if @product_attachment.save
+							@product_attachment.product_ids = product_ids_from_params
 							respond_to do |format|
 								format.html { redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.create") }
 								format.json { render json: @product_attachment.id }
@@ -78,6 +80,7 @@ module RicAssortment
 					#
 					def update
 						if @product_attachment.update(product_attachment_params)
+							@product_attachment.product_ids = product_ids_from_params
 							respond_to do |format|
 								format.html { redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.update") }
 								format.json { render json: @product_attachment.id }
@@ -115,6 +118,18 @@ module RicAssortment
 					#
 					def product_attachment_params
 						params.require(:product_attachment).permit(:title, :file)
+					end
+
+					# 
+					# Never trust parameters from the scary internet, only allow the white list through.
+					#
+					def product_ids_from_params
+						params.require(:product_attachment).permit(:product_ids)
+						if params[:product_attachment] && params[:product_attachment][:product_ids]
+							return params[:product_attachment][:product_ids].split(" ")
+						else
+							return []
+						end
 					end
 
 				end

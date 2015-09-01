@@ -45,8 +45,7 @@ module RicAssortment
 					# Create action
 					#
 					def update
-						param_product_attachments = product_params[:product_attachments]
-						@product.product_attachment_ids = ((!param_product_attachments.nil? && param_product_attachments.is_a?(Hash)) ? param_product_attachments.keys : [])
+						@product.product_attachment_ids = product_attachment_ids_from_params
 						redirect_to product_path(@product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.attachment_bind")
 					end
 
@@ -77,13 +76,11 @@ module RicAssortment
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
-					def product_params
-						if params[:product]
-							params[:product].tap do |white_listed|
-								white_listed[:product_attachments] = params[:product][:product_attachments] if params[:product] && params[:product][:product_attachments]
-							end
+					def product_attachment_ids_from_params
+						if params[:product] && params[:product][:product_attachments] && params[:product][:product_attachments].is_a?(Hash)
+							return params[:product][:product_attachments].keys
 						else
-							return {}
+							return []
 						end
 					end
 

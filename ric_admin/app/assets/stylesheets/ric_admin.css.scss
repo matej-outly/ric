@@ -230,6 +230,14 @@ $mobile-width: 320px;
 	.btn.pretty.primary a, .pretty .primary.btn a, .pretty .primary.skiplink a, .btn.pretty.primary input, .pretty .primary.btn input, .pretty .primary.skiplink input, .btn.pretty.primary button, .pretty .primary.btn button, .pretty .primary.skiplink button, .skiplink.pretty.primary a, .skiplink.pretty.primary input, .skiplink.pretty.primary button { text-shadow: 0 1px 1px #1a5186; }
 
 	/*************************************************************************/
+	/* Tabs                                                                  */
+	/*************************************************************************/
+
+	.tab-content {
+		padding: 20px 0;
+	}
+
+	/*************************************************************************/
 	/* Header                                                                */
 	/*************************************************************************/
 
