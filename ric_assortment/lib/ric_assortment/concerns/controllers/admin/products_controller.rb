@@ -107,7 +107,7 @@ module RicAssortment
 					end
 
 					def product_identification_params
-						[:name, :catalogue_number]
+						[:name, :catalogue_number, :ean]
 					end
 
 					def product_content_params

@@ -107,6 +107,8 @@ cs:
       sort: "řadit"
       save: "uložit"
       cancel: "zrušit"
+      add: "přidat"
+      remove: "odebrat"
 
     attribute:
       address:
