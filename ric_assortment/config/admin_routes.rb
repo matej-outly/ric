@@ -12,7 +12,11 @@
 RicAssortment::AdminEngine.routes.draw do
 
 	# Products
-	resources :products, controller: "admin_products"
+	resources :products, controller: "admin_products" do
+		member do
+			post "duplicate"
+		end
+	end
 
 	# Product attachments
 	resources :product_attachments, controller: "admin_product_attachments"

@@ -91,6 +91,39 @@ module RicAssortment
 				end
 
 				# *************************************************************
+				# Duplicate
+				# *************************************************************
+
+				def duplicate
+					
+					# Base duplication
+					new_record = self.dup
+
+					ActiveRecord::Base.transaction do
+
+						# Base save
+						new_record.save
+
+						# Categories
+						new_record.product_categories = self.product_categories
+
+						# Attachments
+						new_record.product_attachments = self.product_attachments
+
+						# Tickers
+						new_record.product_tickers = self.product_tickers
+
+						# Photos
+						self.product_photos.each do |product_photo|
+							new_record.product_photos << product_photo.duplicate
+						end
+
+					end
+
+					return new_record
+				end
+
+				# *************************************************************
 				# Slug
 				# *************************************************************
 

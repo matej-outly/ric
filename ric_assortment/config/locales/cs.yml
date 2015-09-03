@@ -10,6 +10,7 @@ cs:
         create: "Nový produkt"
         edit: "Upravit produkt"
         update: "Upravit produkt"
+        duplicate: "Duplikovat produkt"
         destroy: "Smazat produkt"
         identification: Identifikace
         content: Popis
@@ -90,6 +91,7 @@ cs:
       ric_assortment/product_attachment:
         file: Soubor
         title: Popis
+        products: Produkty
         checkbox: Vybrat
       ric_assortment/product_category:
         name: Jméno
@@ -104,12 +106,14 @@ cs:
       ric_assortment/product_ticker:
         name: Jméno
         key: Identifikující klíč
+        products: Produkty
     notices:
       models:
         ric_assortment/product:
           create: "Produkt byl úspěšně vytvořen."
           update: "Produkt byl úspěšně upraven."
           destroy: "Produkt byl úspěšně smazán."
+          duplicate: "Produkt byl úspěšně zduplikován."
           attachment_bind: "Vybrané přílohy byly úspěšně přidány."
           attachment_unbind: "Příloha byla úspěšně odebrána."
           category_bind: "Vybrané kategorie byly úspěšně přidány."

@@ -25,7 +25,7 @@ module RicAssortment
 						#
 						# Set product before some actions
 						#
-						before_action :set_product, only: [:show, :edit, :update, :destroy]
+						before_action :set_product, only: [:show, :edit, :update, :duplicate, :destroy]
 
 					end
 
@@ -76,6 +76,14 @@ module RicAssortment
 						else
 							render "edit"
 						end
+					end
+
+					#
+					# Duplicate action
+					#
+					def duplicate
+						new_product = @product.duplicate
+						redirect_to product_path(new_product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.duplicate")
 					end
 
 					#

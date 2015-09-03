@@ -56,6 +56,24 @@ module RicAssortment
 
 				end
 
+				# *************************************************************
+				# Duplicate
+				# *************************************************************
+
+				def duplicate
+					
+					# Base duplication
+					new_record = self.class.new(title: self.title, product_id: self.product_id) # Dup cannot be used because of attachment
+					
+					# Image
+					new_record.image = self.image
+					
+					# Save
+					new_record.save
+
+					return new_record
+				end
+
 			end
 		end
 	end

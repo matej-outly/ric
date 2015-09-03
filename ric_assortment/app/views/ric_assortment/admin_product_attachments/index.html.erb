@@ -1,10 +1,11 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@product_attachments, { 
 		title: :string,
-		file: :file
+		file: :file,
+		products: { type: :has_many, label: :name }
 	}, paths: {
 		show: :product_attachment_path,
 		edit: :edit_product_attachment_path,
 		destroy: :product_attachment_path
-	}, summary: true ) %>
+	}, pagination: true, summary: true ) %>
 <% end %>
