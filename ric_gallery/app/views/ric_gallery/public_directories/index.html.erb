@@ -14,7 +14,7 @@
 	<div class="gallery pictures">
 		<% @gallery_pictures.each do |gallery_picture| %>
 			<% if gallery_picture.picture.exists? %>
-				<a class="fancybox" rel="gallery_images" href="<%= gallery_picture.picture.url(:full) %>">
+				<a class="fancybox" rel="gallery_pictures" href="<%= gallery_picture.picture.url(:full) %>">
 					<img src="<%= gallery_picture.picture.url(:thumb) %>">
 					<span><%= gallery_picture.title %></span>
 				</a>

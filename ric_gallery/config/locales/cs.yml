@@ -3,7 +3,7 @@ cs:
   headers:
     ric_gallery:
       admin_directories:
-        index: "Alba"
+        index: "Alba fotogalerie"
         show: "Detail alba"
         new: "Nové album"
         create: "Nové album"
@@ -13,7 +13,7 @@ cs:
         pictures: "Obrázky"
         children: "Podřazená alba"
       admin_pictures:
-        index: "Obrázky"
+        index: "Obrázky fotogalerie"
         show: "Detail obrázku"
         new: "Nový obrázek"
         create: "Nový obrázek"

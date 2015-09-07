@@ -30,6 +30,13 @@ module RicGallery
 					end
 
 					#
+					# Index action
+					#
+					def index
+						@gallery_pictures = RicGallery.gallery_picture_model.all.order(position: :asc)
+					end
+
+					#
 					# Show action
 					#
 					def show
