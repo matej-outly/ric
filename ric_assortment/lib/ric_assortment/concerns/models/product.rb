@@ -75,6 +75,41 @@ module RicAssortment
 					def parts
 						[:identification, :content, :dimensions, :price, :meta]
 					end
+
+					#
+					# Columns
+					#	
+					def identification_part_columns
+						[:name, :catalogue_number, :ean]
+					end
+
+					#
+					# Columns
+					#	
+					def content_part_columns
+						[:perex, :content]
+					end
+
+					#
+					# Columns
+					#
+					def dimensions_part_columns
+						[:height, :width, :depth, :weight]
+					end
+
+					#
+					# Columns
+					#
+					def price_part_columns
+						[:price, :unit]
+					end
+
+					#
+					# Columns
+					#
+					def meta_part_columns
+						[:description, :keywords]
+					end
 					
 					# *********************************************************
 					# Scopes

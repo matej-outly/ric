@@ -109,29 +109,9 @@ module RicAssortment
 					def product_params
 						permitted_params = []
 						RicAssortment.product_model.parts.each do |part|
-							permitted_params.concat(self.method("product_#{part.to_s}_params".to_sym).call)
+							permitted_params.concat(RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call)
 						end
 						params.require(:product).permit(permitted_params)
-					end
-
-					def product_identification_params
-						[:name, :catalogue_number, :ean]
-					end
-
-					def product_content_params
-						[:perex, :content]
-					end
-
-					def product_dimensions_params
-						[:height, :width, :depth, :weight]
-					end
-
-					def product_price_params
-						[:price, :unit]
-					end
-
-					def product_meta_params
-						[:description, :keywords]
 					end
 
 				end
