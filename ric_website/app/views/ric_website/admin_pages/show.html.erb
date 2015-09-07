@@ -1,19 +1,21 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	
-	<%
-		columns = RugBuilder::TableBuilder::Columns.new
-		columns.add_column_by_type(:name, :string)
-		columns.add_column_by_type(:parent, { type: :belongs_to, label: :name, path: :page_path })
-		columns.add_column_by_block(:nature) do |page|
-			natures = page.config(:natures)
-			if !page.nature.blank? && natures[page.nature.to_sym]
-				natures[page.nature.to_sym][:name]
-			end
-		end
-		columns.add_column_by_type(:model, { type: :belongs_to, label: :title }) # TODO configurable title
-		columns.add_column_by_type(:url, :string)
-	%>
-	<%= rug_show_table_for(@page, columns) %>
+	<section class="tabs pill">
+
+		<ul class="tab-nav">
+			<% @page.class.parts.each do |part| %>
+				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
+			<% end %>
+		</ul>
+
+		<% @page.class.parts.each do |part| %>
+			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
+				<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
+				<%= render partial: "show_#{part.to_s}" %>
+			</div>
+		<% end %>
+
+	</section>
 
 	<% if @page.children.count > 0 %>
 		<h3><%= t("headers.ric_website.admin_pages.children") %></h3>

@@ -63,9 +63,15 @@ module RicWebsite
 						@page.check_model_consistency
 						@page.generate_url
 						if @page.save
-							redirect_to page_path(@page), notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.create")
+							respond_to do |format|
+								format.html { redirect_to page_path(@page), notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.create") }
+								format.json { render json: @page.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @page.errors }
+							end
 						end
 					end
 
@@ -77,9 +83,15 @@ module RicWebsite
 						@page.check_model_consistency
 						@page.generate_url
 						if @page.save
-							redirect_to page_path(@page), notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to page_path(@page), notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.update") }
+								format.json { render json: @page.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @page.errors }
+							end
 						end
 					end
 
@@ -88,7 +100,10 @@ module RicWebsite
 					#
 					def destroy
 						@page.destroy
-						redirect_to pages_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.destroy")
+						respond_to do |format|
+							format.html { redirect_to pages_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @page.id }
+						end
 					end
 
 				protected
@@ -104,7 +119,11 @@ module RicWebsite
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def page_params
-						params.require(:page).permit(:name, :parent_id, :nature, :model_id)
+						permitted_params = []
+						RicWebsite.page_model.parts.each do |part|
+							permitted_params.concat(RicWebsite.page_model.method("#{part.to_s}_part_columns".to_sym).call)
+						end
+						params.require(:page).permit(permitted_params)
 					end
 
 				end

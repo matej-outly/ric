@@ -7,3 +7,12 @@ natures:
     name: "Textová stránka"
     url: /public/website/texts/:id
     model: RicWebsite::Text
+
+# Which layouts can single page obtain
+layouts:
+  - default
+
+# Background crop settings
+background_crop:
+  thumb: "300x300#"
+  full: "1920x1920>"

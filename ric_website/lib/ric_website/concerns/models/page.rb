@@ -60,6 +60,41 @@ module RicWebsite
 					#
 					after_destroy :destroy_slugs_after
 
+					# *************************************************************************
+					# Attachments
+					# *************************************************************************
+
+					#
+					# Background
+					#
+					has_attached_file :background, :styles => { :thumb => config(:background_crop, :thumb), :full => config(:background_crop, :full) }
+					validates_attachment_content_type :background, :content_type => /\Aimage\/.*\Z/
+
+				end
+
+				module ClassMethods
+
+					#
+					# Parts
+					#
+					def parts
+						[:basic, :design]
+					end
+
+					#
+					# Columns
+					#
+					def basic_part_columns
+						[:name, :parent_id, :nature, :model_id]
+					end
+
+					#
+					# Columns
+					#
+					def design_part_columns
+						[:layout, :background]
+					end
+
 				end
 
 				# *************************************************************

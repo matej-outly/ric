@@ -1,0 +1,14 @@
+<%
+	columns = RugBuilder::TableBuilder::Columns.new
+	columns.add_column_by_type(:name, :string)
+	columns.add_column_by_type(:parent, { type: :belongs_to, label: :name, path: :page_path })
+	columns.add_column_by_block(:nature) do |page|
+		natures = page.config(:natures)
+		if !page.nature.blank? && natures[page.nature.to_sym]
+			natures[page.nature.to_sym][:name]
+		end
+	end
+	columns.add_column_by_type(:model, { type: :belongs_to, label: :title }) # TODO configurable title and path
+	columns.add_column_by_type(:url, :string)
+%>
+<%= rug_show_table_for(@page, columns) %>

@@ -11,6 +11,8 @@ cs:
         edit: "Upravit stránku"
         update: "Upravit stránku"
         destroy: "Smazat stránku"
+        basic: "Základ stránky"
+        design: "Vzhled stránky"
         menus: "Navázaná menu"
         children: "Podřazené stránky"
       admin_page_menu_relations:
@@ -49,6 +51,8 @@ cs:
         model: Navázaný záznam
         model_id: Navázaný záznam
         url: Odkaz
+        background: Pozadí
+        layout: Šablona
         checkbox: Vybrat
       ric_website/menu:
         key: Identifikující klíč
