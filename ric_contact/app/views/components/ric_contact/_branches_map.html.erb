@@ -26,20 +26,19 @@ var map;
 			map = new google.maps.Map(map_canvas, map_options);
 
 			/* Markers */ /* TODO load dynamically by AJAX according to position */
-			var marker;
-			var info;
+			
 			<% @branches_map.branches.each do |branch| %>
 				<% if !branch.latitude.blank? && !branch.longitude.blank? %>
-					marker = new google.maps.Marker({
+					var marker_<%= branch.id %> = new google.maps.Marker({
 						position: new google.maps.LatLng(<%= branch.latitude %>, <%= branch.longitude %>),
 						map: map,
 						title: '<%= branch.name %>',
 					});
-					info = new google.maps.InfoWindow({
+					var info_<%= branch.id %> = new google.maps.InfoWindow({
 						content: '<h3><%= branch.name %></h3><p><%= (!branch.address.blank? ? branch.address_formated : "") %></p>',
 					});
-					marker.addListener('click', function() {
-						info.open(map, marker);
+					marker_<%= branch.id %>.addListener('click', function() {
+						info_<%= branch.id %>.open(map, marker_<%= branch.id %>);
 					});
 				<% end %>
 			<% end %>
@@ -50,9 +49,6 @@ var map;
 			});
 
 		});
-
-
-		
 	}
 
 	$(document).ready(branches_map_ready);
