@@ -42,7 +42,7 @@ module RicAssortment
 					#
 					# Photo
 					#
-					has_attached_file :image, :styles => { :thumb => "300x300>", :full => "1000x1000>" } # TODO configurable
+					has_attached_file :image, :styles => { :thumb => config(:picture_crop, :thumb), :full => config(:picture_crop, :full) }
 					validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
 					# *************************************************************************
