@@ -60,6 +60,7 @@ module RicUser
 					#
 					def create
 						@user = RicUser.user_model.new(user_params)
+						@user.regenerate_password(disable_email: true)
 						if @user.save
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.create")
 						else

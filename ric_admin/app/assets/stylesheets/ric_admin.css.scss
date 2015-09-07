@@ -563,6 +563,7 @@ $mobile-width: 320px;
 	.layout.with_right_side {
 		display: table;
 		width: 100%;
+		height: 700px; /* must be set for display:table elements, work as min-height */
 
 		.content {
 			display: table-cell;
