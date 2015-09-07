@@ -5,47 +5,53 @@
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 
 <script>
+var map;
 	function branches_map_ready()
 	{
-		$.getJSON("http://freegeoip.net/json/", function (data) {
-			var latitude = data.latitude;
-			var longitude = data.longitude;
+		google.maps.event.addDomListener(window, 'load', function() {
+			
+			var latitude = 50.0596696; /* Prague */
+			var longitude = 14.4656239;
 			var zoom = 9;
 
-			google.maps.event.addDomListener(window, 'load', function() {
-				
-				/* Map */
-				var map_canvas = document.getElementById('branches_map_canvas');
-				var map_position = new google.maps.LatLng(latitude, longitude);
-				var map_options = {
-					center: map_position,
-					scrollwheel: false,
-					zoom: zoom,
-					mapTypeId: google.maps.MapTypeId.ROADMAP,
-				}
-				var map = new google.maps.Map(map_canvas, map_options);
+			/* Map */
+			var map_canvas = document.getElementById('branches_map_canvas');
+			var map_position = new google.maps.LatLng(latitude, longitude);
+			var map_options = {
+				center: map_position,
+				scrollwheel: false,
+				zoom: zoom,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+			}
+			map = new google.maps.Map(map_canvas, map_options);
 
-				/* Markers */ /* TODO load dynamically by AJAX according to position */
-				var marker;
-				var info;
-				<% @branches_map.branches.each do |branch| %>
-					<% if !branch.latitude.blank? && !branch.longitude.blank? %>
-						marker = new google.maps.Marker({
-							position: new google.maps.LatLng(<%= branch.latitude %>, <%= branch.longitude %>),
-							map: map,
-							title: '<%= branch.name %>',
-						});
-						info = new google.maps.InfoWindow({
-							content: '<h3><%= branch.name %></h3><p><%= (!branch.address.blank? ? branch.address_formated : "") %></p>',
-						});
-						marker.addListener('click', function() {
-							info.open(map, marker);
-						});
-					<% end %>
+			/* Markers */ /* TODO load dynamically by AJAX according to position */
+			var marker;
+			var info;
+			<% @branches_map.branches.each do |branch| %>
+				<% if !branch.latitude.blank? && !branch.longitude.blank? %>
+					marker = new google.maps.Marker({
+						position: new google.maps.LatLng(<%= branch.latitude %>, <%= branch.longitude %>),
+						map: map,
+						title: '<%= branch.name %>',
+					});
+					info = new google.maps.InfoWindow({
+						content: '<h3><%= branch.name %></h3><p><%= (!branch.address.blank? ? branch.address_formated : "") %></p>',
+					});
+					marker.addListener('click', function() {
+						info.open(map, marker);
+					});
 				<% end %>
+			<% end %>
 
+			/* Geolocation */
+			$.getJSON("http://www.telize.com/geoip", function (data) {
+				map.setCenter(new google.maps.LatLng(data.latitude, data.longitude));
 			});
+
 		});
+
+
 		
 	}
 
