@@ -49,7 +49,47 @@ $mobile-width: 320px;
 
 	.alert {
 		font-family: "Open Sans";
-	}	
+	}
+
+	/*************************************************************************/
+	/* Row                                                                   */
+	/*************************************************************************/
+
+	.row {
+		max-width: none;
+		min-width: 0;
+		padding-left: 0;
+		padding-right: 0;
+		.column, .columns { 
+			overflow: hidden;
+		}
+	}
+
+	/*************************************************************************/
+	/* Alignment                                                             */
+	/*************************************************************************/
+	
+	.center { text-align: center; }
+	.right { text-align: right; }
+	.left { text-align: left; }
+	.justify { text-align: justify; }
+
+	.center_on_pc { 
+		text-align: center; 
+		@media only screen and (max-width: $tablet-width) { text-align: left; }
+	}
+	.left_on_pc { 
+		text-align: left; 
+		@media only screen and (max-width: $tablet-width) { text-align: left; }
+	}
+	.right_on_pc { 
+		text-align: right; 
+		@media only screen and (max-width: $tablet-width) { text-align: left; }
+	}
+	.justify_on_pc { 
+		text-align: justify; 
+		@media only screen and (max-width: $tablet-width) { text-align: left; }
+	}
 	
 	/*************************************************************************/
 	/* Tables                                                                */

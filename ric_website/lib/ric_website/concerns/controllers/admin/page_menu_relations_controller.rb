@@ -45,8 +45,7 @@ module RicWebsite
 					# Update action
 					#
 					def update
-						param_menus = page_params[:menus]
-						@page.menu_ids = ((!param_menus.nil? && param_menus.is_a?(Hash)) ? param_menus.keys : [])
+						@page.menu_ids = menu_ids_from_params
 						redirect_to page_path(@page), notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.bind_menu")
 					end
 
@@ -77,13 +76,11 @@ module RicWebsite
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
-					def page_params
-						if params[:page]
-							params[:page].tap do |white_listed|
-								white_listed[:menus] = params[:page][:menus] if params[:page] && params[:page][:menus]
-							end
+					def menu_ids_from_params
+						if params[:page] && params[:page][:menus] && params[:page][:menus].is_a?(Hash)
+							return params[:page][:menus].keys
 						else
-							return {}
+							return []
 						end
 					end
 
