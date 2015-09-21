@@ -212,12 +212,12 @@ $mobile-width: 320px;
 						width: 40px; 
 						background-repeat: 
 						no-repeat; 
-						background-position: 0 50%; 
+						background-position: 0 -8px; 
 					}
 					&.nesting:first-child { 
 						padding-left: 20px; 
 						width: 60px; 
-						background-position: 20px 50%; 
+						background-position: 20px -8px; 
 					}
 					&.leaf { 
 						/*padding-left: 20px;*/
