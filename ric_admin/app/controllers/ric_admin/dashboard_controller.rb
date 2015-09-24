@@ -2,27 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Public pages
+# * Dashboard
 # *
 # * Author: Matěj Outlý
-# * Date  : 27. 4. 2015
+# * Date  : 24. 9. 2015
 # *
 # *****************************************************************************
 
 require_dependency "ric_admin/application_controller"
 
 module RicAdmin
-	class PublicController < ApplicationController
-		def terms
-		end
-		
-		def accessibility
-		end
-		
-		def help
-		end
-		
-		def contact
-		end
+	class DashboardController < ApplicationController
+		include RicAdmin::Concerns::Controllers::DashboardController
 	end
 end

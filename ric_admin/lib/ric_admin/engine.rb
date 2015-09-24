@@ -13,6 +13,11 @@ module RicAdmin
 	class Engine < ::Rails::Engine
 
 		#
+		# Controllers
+		#
+		require 'ric_admin/concerns/controllers/dashboard_controller'
+
+		#
 		# Namespace
 		#
 		isolate_namespace RicAdmin

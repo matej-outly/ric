@@ -6,6 +6,8 @@ cs:
     related: Související
 
     ric_admin:
+      dashboard:
+        index: "Dashboard"
       public:
         public:
         terms: "Podmínky užití"
