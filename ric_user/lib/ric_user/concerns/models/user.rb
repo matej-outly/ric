@@ -43,6 +43,8 @@ module RicUser
 
 				def regenerate_password(options = {})
 					new_password = SecureRandom.hex(2) # 4 characters
+					
+					# Save
 					self.password = new_password
 					result = self.save
 
@@ -54,7 +56,7 @@ module RicUser
 					return result
 				end
 
-				def update_password(new_password, password_confirmation)
+				def update_password(new_password, password_confirmation, options = {})
 					
 					# Check blank
 					if new_password.blank?
@@ -68,11 +70,12 @@ module RicUser
 						return false
 					end
 
+					# Save
 					self.password = new_password
 					result = self.save
 
 					# Deliver email
-					if result
+					if result && options[:disable_email] != true
 						RicUser::UserMailer.new_password(self, new_password).deliver_now
 					end
 
