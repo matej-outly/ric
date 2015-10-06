@@ -1,0 +1,29 @@
+cs:
+
+  headers:
+    ric_partnership:
+      admin_partners:
+        index: "Partneři"
+        show: "Detail partnera"
+        new: "Nový partner"
+        create: "Nový partner"
+        edit: "Upravit partnera"
+        update: "Upravit partnera"
+        destroy: "Smazat partnera"
+
+  activerecord:
+    attributes:
+      ric_partnership/partner:
+        name: Jméno
+        url: URL
+        logo: Logo
+    notices:
+      models:
+        ric_partnership/partner:
+          create: Partner byl úspěšně vytvořen.
+          update: Partner byl úspěšně uložen.
+          destroy: Partner byl úspěšně smazán.
+    errors:
+      models:
+        ric_partnership/partner:
+          not_found: Partner nebyl nalezen.

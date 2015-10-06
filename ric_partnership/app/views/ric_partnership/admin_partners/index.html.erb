@@ -1,0 +1,10 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@partners, { 
+		name: :string,
+		url: :string
+	}, paths: {
+		show: :partner_path,
+		edit: :edit_partner_path,
+		destroy: :partner_path
+	}, pagination: true, summary: true ) %>
+<% end %>

@@ -1,0 +1,15 @@
+<div id="partners ticker">
+	<% @partners_ticker.partners.each do |partner|%>
+		<div class="item">
+			<% if partner.url.blank? %>
+				<%= image_tag(partner.logo.url(:full)) if partner.logo.exists? %>
+				<%= partner.name %>
+			<% else %>
+				<%= link_to partner.url do %>
+					<%= image_tag(partner.logo.url(:full)) if partner.logo.exists? %>
+					<%= partner.name %>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+</div>
