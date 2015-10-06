@@ -1,7 +1,7 @@
 <div class="layout default">
 	<div class="content">
 
-		<%= breadcrumbs %>
+		<%= breadcrumbs if defined? breadcrumbs %>
 		
 		<div class="clearfix">
 			<%= render partial: "ric_admin/shared/flash" %>

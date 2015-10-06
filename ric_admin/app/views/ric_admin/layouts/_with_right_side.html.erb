@@ -3,7 +3,7 @@
 <div class="layout with_right_side">
 	<div class="content">
 
-		<%= breadcrumbs %>
+		<%= breadcrumbs if defined? breadcrumbs %>
 
 		<%= render partial: "ric_admin/shared/flash" %>
 		
