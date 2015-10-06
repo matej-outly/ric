@@ -18,5 +18,14 @@ module RicMagazine
 		require 'ric_magazine/concerns/controllers/public/articles_controller'
 
 		isolate_namespace RicMagazine
+
+		#
+		# Load public specific routes
+		#
+		def reload_routes
+			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
+			load(config_path + "/public_routes.rb")
+		end
+		
 	end
 end
