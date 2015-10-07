@@ -39,4 +39,10 @@ RicWebsite::AdminEngine.routes.draw do
 		end
 	end
 
+	# Settings
+	get "settings", to: "admin_settings#show"
+	get "settings/edit", to: "admin_settings#edit"
+	patch "settings", to: "admin_settings#update"
+	put "settings", to: "admin_settings#update"
+
 end

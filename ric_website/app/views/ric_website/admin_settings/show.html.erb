@@ -1,0 +1,18 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<section class="tabs pill">
+		<ul class="tab-nav">
+			<% @setting_categories.each_with_index do |(category, settings), index| %>
+				<li class="<%= (index == 0 ? "active" : "") %>"><a href="#"><%= t("activerecord.attributes.ric_website/setting.category_values.#{category}") %></a></li>
+			<% end %>
+		</ul>
+		<% @setting_categories.each_with_index do |(category, settings), index| %>
+			<div class="tab-content <%= (index == 0 ? "active" : "") %>">
+				<table class="show_table">
+					<% settings.each do |setting| %>
+						<tr><td><%= t("activerecord.attributes.ric_website/setting.key_values.#{setting.key}") %></td><td><%= setting.value %></td></tr>
+					<% end %>
+				</table>
+			</div>
+		<% end %>
+	</section>
+<% end %>

@@ -22,6 +22,7 @@ module RicWebsite
 		require 'ric_website/concerns/controllers/admin/page_menu_relations_controller'
 		require 'ric_website/concerns/controllers/admin/menus_controller'
 		require 'ric_website/concerns/controllers/admin/menu_page_relations_controller'
+		require 'ric_website/concerns/controllers/admin/settings_controller'
 		
 		isolate_namespace RicWebsite
 

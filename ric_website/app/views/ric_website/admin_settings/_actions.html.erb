@@ -1,0 +1,4 @@
+<%= rug_menu_for(nil, name: "actions") do |m| %>
+	<%= m.item t("headers.ric_website.admin_settings.show"), settings_path, icon: "cog", active: (action_name == "show") %>
+	<%= m.item t("headers.ric_website.admin_settings.edit"), settings_edit_path, icon: "pencil", active: (action_name == "edit" || action_name == "update") %>
+<% end %>

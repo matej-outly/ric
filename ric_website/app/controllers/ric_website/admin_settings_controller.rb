@@ -2,18 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Railtie for view helpers integration
+# * Settings
 # *
 # * Author: Matěj Outlý
-# * Date  : 22. 7. 2015
+# * Date  : 7. 10. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_website/admin_controller"
+
 module RicWebsite
-	class Railtie < Rails::Railtie
-		initializer "ric_website.helpers" do
-			ActionView::Base.send :include, Helpers::SlugHelper
-			ActionView::Base.send :include, Helpers::SettingHelper
-		end
+	class AdminSettingsController < AdminController
+		include RicWebsite::Concerns::Controllers::Admin::SettingsController
 	end
 end

@@ -26,10 +26,12 @@ require 'ric_website/concerns/models/menu'
 require 'ric_website/concerns/models/text'
 require 'ric_website/concerns/models/text_attachment'
 require 'ric_website/concerns/models/slug'
+require 'ric_website/concerns/models/setting'
 
 # Helpers
 require 'ric_website/helpers/locale_helper'
 require 'ric_website/helpers/slug_helper'
+require 'ric_website/helpers/setting_helper'
 
 module RicWebsite
 
@@ -100,6 +102,18 @@ module RicWebsite
 			return RicWebsite::Slug
 		else
 			return @@slug_model.constantize
+		end
+	end
+
+	#
+	# Setting model
+	#
+	mattr_accessor :setting_model
+	def self.setting_model
+		if @@setting_model.nil?
+			return RicWebsite::Setting
+		else
+			return @@setting_model.constantize
 		end
 	end
 
