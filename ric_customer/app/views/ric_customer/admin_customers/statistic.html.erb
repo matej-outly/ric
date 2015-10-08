@@ -1,24 +1,11 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= render partial: "statistic_form" %>
-	<table>
-		<thead>
-			<th><%= RicCustomer.customer_model.human_attribute_name('full_name').capitalize %></th>
-			<th><%= RicCustomer.customer_model.human_attribute_name('email').capitalize %></th>
-			<th colspan="2"></th>
-		</thead>
-		<tbody>
-			<% @customers.each do |customer| %>
-				<tr>
-					<td><%= link_to customer.full_name, customer_path(customer) %></td>
-					<td><%= customer.email %></td>
-					<td class="action">
-						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_customer_path(customer), "data-no-turbolink" => true %>
-					</td>
-					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), customer_path(customer), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+	<%= rug_index_table_for(@customers, { 
+		full_name: :string,
+		email: :string
+	}, paths: {
+		show: :customer_path,
+		edit: :edit_customer_path,
+		destroy: :customer_path
+	}, pagination: true, summary: true ) %>
 <% end %>

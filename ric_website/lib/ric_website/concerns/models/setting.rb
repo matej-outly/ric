@@ -44,7 +44,7 @@ module RicWebsite
 					# *************************************************************************
 
 					#
-					# key must be present
+					# Key must be present
 					#
 					validates_presence_of :key
 

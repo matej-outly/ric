@@ -1,18 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<table>
-		<tbody>
-			<tr>
-				<td><%= RicCustomer.customer_model.human_attribute_name('full_name').capitalize %></td>
-				<td><%= @customer.full_name %></td>
-			</tr>
-			<tr>
-				<td><%= RicCustomer.customer_model.human_attribute_name('email').capitalize %></td>
-				<td><%= @customer.email %></td>
-			</tr>
-			<tr>
-				<td><%= RicCustomer.customer_model.human_attribute_name('phone').capitalize %></td>
-				<td><%= @customer.phone %></td>
-			</tr>
-		</tbody>
-	</table>
+	<%= rug_show_table_for(@customer, {
+		full_name: :string,
+		email: :string,
+		phone: :string,
+	}) %>
 <% end %>
