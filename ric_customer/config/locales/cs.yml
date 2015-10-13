@@ -18,6 +18,7 @@ cs:
         last_name: Příjmení
         full_name: Plné jméno
         email: E-mail
+        phone: Telefon
     notices:
       models:
         ric_customer/customer:

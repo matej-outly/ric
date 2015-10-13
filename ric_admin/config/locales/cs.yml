@@ -121,6 +121,9 @@ cs:
         number: Číslo
         city: Město
         postcode: PSČ
+      geolocation:
+        longitude: Zem. délka
+        latitude: Zem. šířka
 
   date:
     formats:
