@@ -121,9 +121,17 @@ cs:
         number: Číslo
         city: Město
         postcode: PSČ
+      range:
+        min: Minimálně
+        max: Maximálně
       geolocation:
         longitude: Zem. délka
         latitude: Zem. šířka
+      georectangle:
+        top: Horní zem. šířka
+        bottom: Dolní zem. šířka
+        left: Levá zem. délka
+        right: Pravá zem. délka
 
   date:
     formats:
