@@ -1,20 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<table>
-		<tbody>
-			<tr>
-				<td><%= RicNewsletter.newsletter_model.human_attribute_name('created_at').capitalize %></td>
-				<td><%= l(@newsletter.created_at) if @newsletter.created_at %></td>
-			</tr>
-			<tr>
-				<td><%= RicNewsletter.newsletter_model.human_attribute_name('subject').capitalize %></td>
-				<td><%= @newsletter.subject %></td>
-			</tr>
-			<tr>
-				<td><%= RicNewsletter.newsletter_model.human_attribute_name('content').capitalize %></td>
-				<td><%= @newsletter.content.html_safe if @newsletter.content %></td>
-			</tr>
-		</tbody>
-	</table>
+	<%= rug_show_table_for(@newsletter, {
+		created_at: :datetime,
+		subject: :string,
+		content: :text,
+	}) %>
 
 	<table>
 		<thead>
