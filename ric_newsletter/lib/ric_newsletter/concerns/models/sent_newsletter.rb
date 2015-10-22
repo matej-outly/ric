@@ -75,6 +75,9 @@ module RicNewsletter
 							return nil
 						end
 
+						# Filter out customers with disabled newsletters
+						customers = customers.newsletter_enabled
+
 						# Destroy all associated customer bindings
 						sent_newsletter.sent_newsletter_customers.clear
 
