@@ -2,14 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Customers
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 22. 10. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+require_dependency "ric_newsletter/public_controller"
+
+module RicNewsletter
+	class PublicCustomersController < PublicController
+		include RicNewsletter::Concerns::Controllers::Public::CustomersController
+	end
+end

@@ -29,3 +29,15 @@ cs:
       models:
         ric_customer/customer:
           not_found: Zákazník nebyl nalezen.
+          attributes:
+            first_name:
+              blank: Vyplňte křestní jméno.
+            last_name:
+              blank: Vyplňte příjmení.
+            full_name:
+              blank: Vyplňte plné jméno.
+            email:
+              blank: Vyplňte e-mail.
+              taken: Tento e-mail je již používán.
+            phone:
+              blank: Vyplňte telefon.

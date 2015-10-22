@@ -42,7 +42,7 @@ module RicUser
 				# *************************************************************************
 
 				def regenerate_password(options = {})
-					new_password = SecureRandom.hex(2) # 4 characters
+					new_password = RugSupport::Util::String.random(4)
 					
 					# Save
 					self.password = new_password

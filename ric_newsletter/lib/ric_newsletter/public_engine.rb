@@ -10,13 +10,12 @@
 # *****************************************************************************
 
 module RicNewsletter
-	class AdminEngine < ::Rails::Engine
+	class PublicEngine < ::Rails::Engine
 		
 		#
 		# Controllers
 		#
-		require 'ric_newsletter/concerns/controllers/admin/newsletters_controller'
-		require 'ric_newsletter/concerns/controllers/admin/sent_newsletters_controller'
+		require 'ric_newsletter/concerns/controllers/public/customers_controller'
 		
 		#
 		# Namespace
@@ -24,12 +23,12 @@ module RicNewsletter
 		isolate_namespace RicNewsletter
 
 		#
-		# Load admin specific routes
+		# Load public specific routes
 		#
 		def reload_routes
 			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/admin_routes.rb")
+			load(config_path + "/public_routes.rb")
 		end
-		
+
 	end
 end

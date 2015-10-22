@@ -26,6 +26,9 @@ cs:
         done: Hotovo
         customers: Zákazníci
         newsletter_id: Newsletter
+      ric_newsletter/customer:
+        newsletter_footer: Patička newsletteru
+        newsletter_footer_value: "<p><small>Pokud nechcete nadále odebírat novinky, klikněte na <a href=\"%{sign_out_url}\">tento odkaz</a>.</small></p>"
     notices:
       models:
         ric_newsletter/newsletter:
@@ -35,6 +38,9 @@ cs:
         ric_newsletter/sent_newsletter:
           create: Impuls k odeslání newsletteru byl úspěšně vytvořen.
           destroy: Impuls k odeslání newsletteru byl úspěšně smazán.
+        ric_customer/customer:
+          newsletter_sign_up: Byl jste úspěšně přihlášen k odběru novinek.
+          newsletter_sign_out: Byl jste úspěšně odhlášen z odběru novinek.
     errors:
       models:
         ric_newsletter/newsletter:
@@ -42,3 +48,6 @@ cs:
         ric_newsletter/sent_newsletter:
           not_found: Impuls k odeslání newsletteru nebyl nalezen.
           scope_not_found: Výběr zákazníků nebyl specifikován.
+        ric_customer/customer:
+          newsletter_sign_up: Přihlášení k odběru novinek se nezdařilo.
+          newsletter_sign_out: Odhlášení z odběru novinek se nezdařilo.

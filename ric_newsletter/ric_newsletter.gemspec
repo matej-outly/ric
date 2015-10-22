@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
   s.summary     = "RIC engine for newsletter management"
-  s.description = "Newsletter composition and sending."
+  s.description = "Newsletter composition and sending, customer sign up for newsletters."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

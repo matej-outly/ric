@@ -10,7 +10,7 @@
 # *****************************************************************************
 
 module RicNewsletter
-	class NewsletterMailer < ActionMailer::Base
+	class NewsletterMailer < ::ApplicationMailer
 		include RicNewsletter::Concerns::Mailers::NewsletterMailer
 
 	end

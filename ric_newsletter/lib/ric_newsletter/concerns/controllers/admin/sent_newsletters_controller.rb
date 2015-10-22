@@ -25,7 +25,7 @@ module RicNewsletter
 						#
 						# Set newsletter before some actions
 						#
-						before_action :set_sent_newsletter, only: [:destroy, :send]
+						before_action :set_sent_newsletter, only: [:destroy, :resend]
 
 						#
 						# Set customers and customers scope before some actions
@@ -57,6 +57,7 @@ module RicNewsletter
 
 					def resend
 						@sent_newsletter.enqueue
+						redirect_to newsletter_path(@sent_newsletter.newsletter), notice: I18n.t("activerecord.notices.models.#{RicNewsletter.sent_newsletter_model.model_name.i18n_key}.create")
 					end
 
 				protected

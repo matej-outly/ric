@@ -5,11 +5,20 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 16. 2. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicNewsletter::AdminEngine.routes.draw do
+
+	# Newsletters
+	resources :newsletters, controller: "admin_newsletters"
+
+	# Sent newsletters
+	resources :sent_newsletters, controller: "admin_sent_newsletters", only: [:new, :create, :destroy] do
+		member do
+			get "resend"
+		end
+	end
+
+end

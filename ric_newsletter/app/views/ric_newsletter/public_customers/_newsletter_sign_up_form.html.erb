@@ -1,0 +1,50 @@
+<%= rug_form_for(RicNewsletter.customer_model.new, url: ric_newsletter_public.newsletter_sign_up_customers_path, html: { class: "newsletter-sign-up" }) do |f| %>
+	<div class="flash_canvas"></div>
+	<%= f.text_input_row :email, :email_field %>
+	<%= f.primary_button_row :submit, label: t("helpers.submit.register") %>
+	<%= javascript_tag do %>
+		function newsletter_sign_up_ready()
+		{
+			$("form.newsletter-sign-up").each(function() {
+				var form = $(this);
+
+				form.find("input[type='submit']").on("click", function(e) {
+					e.preventDefault();
+
+					// URL
+					var url = form.attr("action");
+
+					// Request
+					$.ajax({
+						url: url,
+						dataType: "json",
+						type: "POST",
+						data: form.serialize(),
+
+						// Success data fetch
+						success: function(callback) 
+						{
+							form.find(".field").removeClass("danger");
+							form.find(".flash_canvas").html("");
+							if (callback === true) {
+								form.find(".field input").val("");
+								form.find(".flash_canvas").html("<div class=\"success alert\"><%= I18n.t("activerecord.notices.models.#{RicNewsletter.customer_model.model_name.i18n_key}.newsletter_sign_up") %></div>");
+							} else {
+								form.find(".field").addClass("danger");
+								form.find(".flash_canvas").html("<div class=\"danger alert\"><%= I18n.t("activerecord.errors.models.#{RicNewsletter.customer_model.model_name.i18n_key}.newsletter_sign_up") %></div>");
+							}
+						},
+						
+						// Error data fetch
+						error: function(callback) 
+						{
+						}
+					});
+
+				});
+			});
+		}
+		$(document).ready(newsletter_sign_up_ready);
+		$(document).on("page:load", newsletter_sign_up_ready);
+	<% end -%>
+<% end %>

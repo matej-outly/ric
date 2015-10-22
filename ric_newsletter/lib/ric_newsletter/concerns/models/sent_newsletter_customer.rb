@@ -37,10 +37,9 @@ module RicNewsletter
 
 				end
 
-				module ClassMethods
-
-				end
-
+				#
+				# Send given newsletter
+				#
 				def send_newsletter(newsletter)
 
 					if newsletter.nil?
@@ -48,7 +47,7 @@ module RicNewsletter
 					end
 
 					# Send email to customer
-					RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer_email).deliver
+					RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer).deliver
 
 					# Mark as sent
 					self.sent_at = Time.current

@@ -5,11 +5,19 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 30. 6. 2015
+# * Date  : 16. 2. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicNewsletter::PublicEngine.routes.draw do
+
+	# Customers
+	resources :customers, controller: "public_customers", only: [:index] do
+		collection do
+			get "newsletter_sign_up"
+			post "newsletter_sign_up"
+			get "newsletter_sign_out"
+		end
+	end
+
+end

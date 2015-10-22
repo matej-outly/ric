@@ -11,8 +11,10 @@
 
 # Engines
 require "ric_newsletter/admin_engine"
+require "ric_newsletter/public_engine"
 
 # Models
+require 'ric_newsletter/concerns/models/customer'
 require 'ric_newsletter/concerns/models/newsletter'
 require 'ric_newsletter/concerns/models/sent_newsletter'
 require 'ric_newsletter/concerns/models/sent_newsletter_customer'

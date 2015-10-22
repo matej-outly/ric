@@ -31,9 +31,10 @@ module RicNewsletter
 					belongs_to :newsletter, class_name: RicNewsletter.newsletter_model.to_s
 
 					#
-					# Relation to sent newsletters
+					# Relation to customers
 					#
 					has_many :sent_newsletter_customers, class_name: RicNewsletter.sent_newsletter_customer_model.to_s, dependent: :destroy
+					has_many :customers, class_name: RicNewsletter.customer_model.to_s, through: :sent_newsletter_customers
 
 				end
 

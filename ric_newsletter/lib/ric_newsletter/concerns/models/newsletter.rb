@@ -32,10 +32,6 @@ module RicNewsletter
 
 				end
 
-				module ClassMethods
-
-				end
-
 				def identifying_name
 					return I18n.l(self.created_at) + " - " + self.subject
 				end
