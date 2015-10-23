@@ -1,4 +1,4 @@
-<%= rug_form_for(@branch, url: (@branch.id.nil? ? branches_path : branch_path(@branch))) do |f| %>
+<%= rug_form_for(@branch, create_url: :branches_path, update_url: :branch_path) do |f| %>
 	<%= f.text_input_row :name, :text_field %>
 	<%= f.address_row :address %>
 	<%= f.text_input_row :url, :text_field %>
