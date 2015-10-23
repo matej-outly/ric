@@ -82,4 +82,16 @@ module RicNewsletter
 		end
 	end
 
+	#
+	# Mailer sender
+	#
+	mattr_accessor :mailer_sender
+	def self.mailer_sender
+		if @@mailer_sender.nil?
+			return "no-reply@clockstar.cz"
+		else
+			return @@mailer_sender
+		end
+	end
+
 end

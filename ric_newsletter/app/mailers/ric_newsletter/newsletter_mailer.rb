@@ -12,6 +12,5 @@
 module RicNewsletter
 	class NewsletterMailer < ::ApplicationMailer
 		include RicNewsletter::Concerns::Mailers::NewsletterMailer
-
 	end
 end

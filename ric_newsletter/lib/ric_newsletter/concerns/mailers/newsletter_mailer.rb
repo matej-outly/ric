@@ -18,7 +18,7 @@ module RicNewsletter
 				# Main function for sending newsletters to customers
 				#
 				def to_customer(newsletter, customer)
-					mail(to: customer.email, subject: newsletter.subject) do |format|
+					mail(from: RicNewsletter.mailer_sender, to: customer.email, subject: newsletter.subject) do |format|
 						format.html { render text: (newsletter.content + customer.newsletter_footer) }
 					end
 				end

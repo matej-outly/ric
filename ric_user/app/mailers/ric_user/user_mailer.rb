@@ -10,7 +10,7 @@
 # *****************************************************************************
 
 module RicUser
-	class UserMailer < ActionMailer::Base
+	class UserMailer < ::ApplicationMailer
 		include RicUser::Concerns::Mailers::UserMailer
 	end
 end
