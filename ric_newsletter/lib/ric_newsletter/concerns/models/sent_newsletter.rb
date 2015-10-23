@@ -176,6 +176,17 @@ module RicNewsletter
 					self.class.enqueue(self.id)
 				end
 
+				#
+				# Done progress
+				#
+				def done
+					if self.sent_count && self.customers_count
+						return self.sent_count.to_s + "/" + self.customers_count.to_s
+					else
+						return nil
+					end
+				end
+
 			end
 		end
 	end

@@ -1,31 +1,26 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@newsletter, {
-		created_at: :datetime,
-		subject: :string,
-		content: { type: :text, truncate: false },
-	}) %>
-
-	<table>
-		<thead>
-			<th><%= RicNewsletter.sent_newsletter_model.human_attribute_name('created_at').capitalize %></th>
-			<th><%= RicNewsletter.sent_newsletter_model.human_attribute_name('sent_at').capitalize %></th>
-			<th><%= RicNewsletter.sent_newsletter_model.human_attribute_name('done').capitalize %></th>
-			<th colspan="2"></th>
-		</thead>
-		<tbody>
-			<% @newsletter.sent_newsletters.order(created_at: :desc).each do |sent_newsletter| %>
-				<tr>
-					<td><%= l(sent_newsletter.created_at) if sent_newsletter.created_at %></td>
-					<td><%= l(sent_newsletter.sent_at) if sent_newsletter.sent_at %></td>
-					<td><%= (sent_newsletter.sent_count.to_s + "/" + sent_newsletter.customers_count.to_s) if sent_newsletter.sent_count && sent_newsletter.customers_count %></td>
-					<td class="action">
-						<%= link_to "<i class=\"icon-mail\"></i>".html_safe + t('general.action.resend'), resend_sent_newsletter_path(sent_newsletter), data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
-					</td>
-					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), sent_newsletter_path(sent_newsletter), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+	<section class="tabs pill">
+		<ul class="tab-nav">
+			<li class="active"><a href="#"><%= t("headers.ric_newsletter.admin_newsletters.content") %></a></li>
+			<li><a href="#"><%= t("headers.ric_newsletter.admin_newsletters.sent_newsletters") %></a></li>
+		</ul>
+		<div class="tab-content active">
+			<%= rug_show_table_for(@newsletter, {
+				created_at: :datetime,
+				subject: :string,
+				content: { type: :text, truncate: false },
+			}) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_index_table_for(@newsletter.sent_newsletters.order(created_at: :desc), { 
+				created_at: :datetime,
+				sent_at: :datetime,
+				done: :string,
+			}, actions: {
+				resend: { path: :resend_sent_newsletter_path, label: t('general.action.resend'), icon: "mail" }
+			}, paths: {
+				destroy: :sent_newsletter_path
+			}, summary: true ) %>
+		</div>
+	</section>
 <% end %>

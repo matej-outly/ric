@@ -10,6 +10,8 @@ cs:
         edit: "Upravit newsletter"
         update: "Upravit newsletter"
         destroy: "Smazat newsletter"
+        content: "Obsah"
+        sent_newsletters: "Odesláno"
       admin_sent_newsletters:
         new: "Poslat newsletter"
         create: "Poslat newsletter"
@@ -26,7 +28,9 @@ cs:
         done: Hotovo
         customers: Zákazníci
         newsletter_id: Newsletter
-      ric_newsletter/customer:
+      ric_customer/customer:
+        enable_newsletter: Newsletter povolen
+        newsletter_token: Validační token newsletteru
         newsletter_footer: Patička newsletteru
         newsletter_footer_value: "<p><small>Pokud nechcete nadále odebírat novinky, klikněte na <a href=\"%{sign_out_url}\">tento odkaz</a>.</small></p>"
     notices:

@@ -109,7 +109,7 @@ module RicNewsletter
 				#
 				def newsletter_footer
 					sign_out_url = RicNewsletter::PublicEngine.routes.url_helpers.newsletter_sign_out_customers_url(host: Rails.application.config.action_mailer.default_url_options[:host], email: self.email, token: self.newsletter_token)
-					return I18n.t("activerecord.attributes.ric_newsletter/customer.newsletter_footer_value", sign_out_url: sign_out_url)
+					return I18n.t("activerecord.attributes.ric_customer/customer.newsletter_footer_value", sign_out_url: sign_out_url)
 				end
 
 			end
