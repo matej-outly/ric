@@ -24,5 +24,14 @@ module RicAdvert
 		# Namespace
 		#
 		isolate_namespace RicAdvert
+
+		#
+		# Load admin specific routes
+		#
+		def reload_routes
+			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
+			load(config_path + "/observer_routes.rb")
+		end
+
 	end
 end
