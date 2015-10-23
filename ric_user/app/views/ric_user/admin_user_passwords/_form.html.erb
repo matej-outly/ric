@@ -1,4 +1,4 @@
-<%= rug_form_for(@user, url: user_password_path(@user)) do |f| %>
+<%= rug_form_for(@user, update_url: :user_password_path) do |f| %>
 	<%= f.text_input_row :password, :password_field %>
 	<%= f.text_input_row :password_confirmation, :password_field %>
 	<%= f.primary_button_row :submit %>
