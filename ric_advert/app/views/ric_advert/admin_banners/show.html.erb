@@ -1,38 +1,12 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<table>
-		<tbody>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('advertiser').capitalize %></td>
-				<td><%= link_to @banner.advertiser.name, advertiser_path(@banner.advertiser) %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('name').capitalize %></td>
-				<td><%= @banner.name %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('url').capitalize %></td>
-				<td><%= @banner.url %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('kind').capitalize %></td>
-				<td><%= @banner.kind %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('image').capitalize %></td>
-				<td><%= (@banner.image.exists? ? image_tag(@banner.image.url(:thumbnail)) : "" ) %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('valid_from').capitalize %></td>
-				<td><%= l(@banner.valid_from) if @banner.valid_from %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('valid_to').capitalize %></td>
-				<td><%= l(@banner.valid_to) if @banner.valid_to %></td>
-			</tr>
-			<tr>
-				<td><%= RicAdvert.banner_model.human_attribute_name('priority').capitalize %></td>
-				<td><%= @banner.priority %></td>
-			</tr>
-		</tbody>
-	</table>
+	<%= rug_show_table_for(@advertiser, { 
+		name: :string,
+		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
+		url: :string,
+		kind: :string,
+		image: { type: :picture, thumb_style: :thumb },
+		valid_from: :date,
+		valid_to: :date,
+		priority: :integer
+	}) %>
 <% end %>

@@ -51,7 +51,7 @@ module RicAdvert
 					#
 					# Image
 					#
-					has_attached_file :image, styles: { thumbnail: "200x200#" }
+					has_attached_file :image, styles: { thumb: "200x200#" }
 					validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
 
 				end

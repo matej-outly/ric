@@ -1,21 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<table>
-		<thead>
-			<th><%= RicAdvert.advertiser_model.human_attribute_name('name').capitalize %></th>
-			<th colspan="2"></th>
-		</thead>
-		<tbody>
-			<% @advertisers.each do |advertiser| %>
-				<tr>
-					<td><%= link_to advertiser.name, advertiser_path(advertiser) %></td>
-					<td class="action">
-						<%= link_to "<i class=\"icon-pencil\"></i>".html_safe + t('general.action.edit'), edit_advertiser_path(advertiser), "data-no-turbolink" => true %>
-					</td>
-					<td class="action">
-						<%= link_to "<i class=\"icon-trash\"></i>".html_safe + t('general.action.destroy'), advertiser_path(advertiser), method: :delete, data: { confirm: t('general.are_you_sure', default: "Are you sure?") } %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+	<%= rug_index_table_for(@advertisers, { 
+		name: :string,
+	}, paths: {
+		show: "ric_advert_admin.advertiser_path",
+		edit: "ric_advert_admin.edit_advertiser_path",
+		destroy: "ric_advert_admin.advertiser_path"
+	}, pagination: true, summary: true ) %>
 <% end %>

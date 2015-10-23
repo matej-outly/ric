@@ -1,14 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<table>
-		<thead>
-			<th><%= RicAdvert.advertiser_model.human_attribute_name('name').capitalize %></th>
-		</thead>
-		<tbody>
-			<% @advertisers.each do |advertiser| %>
-				<tr>
-					<td><%= link_to advertiser.name, ric_advert_observer.advertiser_path(advertiser) %></td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+	<%= rug_index_table_for(@advertisers, { 
+		name: :string,
+	}, paths: {
+		show: "ric_advert_observer.advertiser_path"
+	}, pagination: true, summary: true ) %>
 <% end %>
