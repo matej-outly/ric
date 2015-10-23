@@ -1,21 +1,16 @@
 <%= rug_form_for(@page, create_url: :pages_path, update_url: :page_path) do |f| %>
-	
 	<section class="tabs pill">
-
 		<ul class="tab-nav">
 			<% @page.class.parts.each do |part| %>
 				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
 			<% end %>
 		</ul>
-
 		<% @page.class.parts.each do |part| %>
 			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
 				<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
 				<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
 			</div>
 		<% end %>
-
 	</section>
-
 	<%= f.primary_button_row :submit %>
 <% end %>

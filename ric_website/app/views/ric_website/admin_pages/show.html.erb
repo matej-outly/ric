@@ -1,25 +1,19 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	
 	<section class="tabs pill">
-
 		<ul class="tab-nav">
 			<% @page.class.parts.each do |part| %>
 				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
 			<% end %>
 		</ul>
-
 		<% @page.class.parts.each do |part| %>
 			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
 				<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
 				<%= render partial: "show_#{part.to_s}" %>
 			</div>
 		<% end %>
-
 	</section>
-
 	<% if @page.children.count > 0 %>
 		<h3><%= t("headers.ric_website.admin_pages.children") %></h3>
-
 		<%= rug_index_table_for(@page.children.order(lft: :asc), { 
 			name: :string,
 			url: :string,
@@ -29,10 +23,8 @@
 			destroy: :page_path
 		} ) %>
 	<% end %>
-
 	<% if @page.menus.count > 0 %>
 		<h3><%= t("headers.ric_website.admin_pages.menus") %></h3>
-
 		<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
 			name: :string,
 			key: :string,
@@ -41,5 +33,4 @@
 			destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
 		} ) %>
 	<% end %>
-
 <% end %>
