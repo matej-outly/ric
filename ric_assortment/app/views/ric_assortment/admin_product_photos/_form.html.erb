@@ -1,8 +1,6 @@
 <%= rug_form_for(@product_photo, create_url: :product_photos_path, update_url: :product_photo_path) do |f| %>
-	
 	<%= f.hidden_field :product_id %>
 	<%= f.dropzone_row :image, append_columns: { product_id: true } %>
 	<%= f.text_input_row :title, :text_field %>
-	
 	<%= f.primary_button_row :submit %>
 <% end %>
