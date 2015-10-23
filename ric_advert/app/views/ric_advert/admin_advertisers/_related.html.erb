@@ -1,7 +1,5 @@
 <%= rug_menu_for(@advertiser, name: "related") do |m| %>
-	
-	<% if action_name == "show" %>
-		<%= m.item (t('general.action.new') + " " + t("activerecord.models.#{RicAdvert.banner_model.model_name.i18n_key}")).upcase_first, new_banner_path(advertiser_id: @advertiser.id), icon: "plus", "data-no-turbolink" => true %>
+	<% if @advertiser && !@advertiser.new_record? %>
+		<%= m.item t("headers.ric_advert.admin_banners.new").upcase_first, new_banner_path(advertiser_id: @advertiser.id), icon: "plus" %>
 	<% end %>
-
 <% end %>
