@@ -8,8 +8,10 @@
 			<%= render partial: "ric_admin/shared/login_info" %>
 		</div>
 
-		<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
-		
+		<% if !(defined? disable_header) || (disable_header != true) %>
+			<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
+		<% end %>
+
 		<%= yield %>
 
 	</div>
