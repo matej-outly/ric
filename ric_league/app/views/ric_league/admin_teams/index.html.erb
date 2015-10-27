@@ -1,0 +1,10 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@teams, { 
+		name: :string,
+		key: :string
+	}, paths: {
+		show: :team_path,
+		edit: :edit_team_path,
+		destroy: :team_path
+	}, pagination: true, summary: true ) %>
+<% end %>

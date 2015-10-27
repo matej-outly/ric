@@ -1,0 +1,110 @@
+cs:
+
+  headers:
+    ric_league:
+      admin_leagues:
+        index: "Liga"
+      admin_league_seasons:
+        index: "Sezóny"
+        show: "Detail sezóny"
+        new: "Nová sezóna"
+        create: "Nová sezóna"
+        edit: "Upravit sezónu"
+        update: "Upravit sezónu"
+        destroy: "Smazat sezónu"
+        matches: "Zápasy"
+      admin_league_matches:
+        index: "Zápasy"
+        show: "Detail zápasu"
+        new: "Nový zápas"
+        create: "Nový zápas"
+        edit: "Upravit zápas"
+        update: "Upravit zápas"
+        destroy: "Smazat zápas"
+      admin_teams:
+        index: "Týmy"
+        show: "Detail týmu"
+        new: "Nový tým"
+        create: "Nový tým"
+        edit: "Upravit tým"
+        update: "Upravit tým"
+        destroy: "Smazat tým"
+        team_members: "Členové týmu"
+      admin_team_members:
+        show: "Detail člena týmu"
+        new: "Nový člen týmu"
+        create: "Nový člen týmu"
+        edit: "Upravit člena týmu"
+        update: "Upravit člena týmu"
+        destroy: "Smazat člena týmu"
+
+  activerecord:
+    attributes:
+      ric_league/league_season:
+        name: Jméno
+        started_at: Od
+        finished_at: Do
+      ric_league/league_match:
+        played_at: Datum a čas
+        league_season: Sezóna
+        league_season_id: Sezóna
+        overtime: Rozhodnuto v prodloužení
+        team1: Tým 1
+        team1_id: Tým 1
+        team2: Tým 2
+        team2_id: Tým 2
+        result1: Výsledek týmu 1
+        result2: Výsledek týmu 2
+        points1: Bodový zisk týmu 1
+        points2: Bodový zisk týmu 2
+        teams: Týmy
+        result: Výsledek
+      ric_league/team:
+        name: Jméno
+        key: Klíč
+        description: Popis
+        logo: Logo
+        photo: Fotografie
+        photo_crop: Ořez fotografie
+      ric_league/team_member:
+        team: Tým
+        team_id: Tým
+        name: Jméno
+        kind: Typ člena
+        kind_values:
+          player: Hráč
+          stuff: Personál
+        role: Role
+        classification: Hráčská klasifikace
+        dress_number: Číslo dresu
+        photo: Fotografie
+        photo_crop: Ořez fotografie
+        description: Podrobný popis
+    notices:
+      models:
+        ric_league/league_season:
+          create: "Sezóna byla úspěšně vytvořena."
+          update: "Sezóna byla úspěšně upravena."
+          destroy: "Sezóna byla úspěšně smazána."
+        ric_league/league_match:
+          create: "Zápas byl úspěšně vytvořen."
+          update: "Zápas byl úspěšně upraven."
+          destroy: "Zápas byl úspěšně smazán."
+        ric_league/team:
+          create: "Tým byl úspěšně vytvořen."
+          update: "Tým byl úspěšně upraven."
+          destroy: "Tým byl úspěšně smazán."
+        ric_league/team_member:
+          create: "Člen týmu byl úspěšně vytvořen."
+          update: "Člen týmu byl úspěšně upraven."
+          destroy: "Člen týmu byl úspěšně smazán."
+    errors:
+      models:
+        ric_league/league_season:
+          not_found: "Sezóna nebyla nalezena."
+        ric_league/league_match:
+          not_found: "Zápas nebyl nalezen."
+        ric_league/team:
+          not_found: Tým nebyl nalezen.
+        ric_league/team_member:
+          not_found: "Člen týmu nebyl nalezen."

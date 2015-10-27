@@ -1,0 +1,19 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@team, { 
+		name: :string,
+		key: :string,
+		description: :text,
+		logo: { type: :picture, thumb_style: :thumb }
+		photo: { type: :picture, thumb_style: :big }
+	}) %>
+	<h3><%= t("headers.ric_league.admin_teams.team_members") %></h3>
+	<%= rug_index_table_for(@team.team_members.order(position: :asc), { 
+		name: :string,
+		kind: :enum,
+		role: :string
+	}, paths: {
+		show: :team_member_path, 
+		edit: :edit_team_member_path, 
+		destroy: :team_member_path
+	}, summary: true ) %>
+<% end %>
