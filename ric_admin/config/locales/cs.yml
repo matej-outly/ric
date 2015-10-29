@@ -58,6 +58,10 @@ cs:
         december: Prosinec
     index_table:
       empty: "Tabulka neobsahuje žádný záznam."
+    autocomplete:
+      hint: "Začněte psát hledaný výraz"
+      no_results: "Žádné výsledky"
+      search_in_progress: "Probíhá vyhledávání..."
 
   helpers:
     submit:
