@@ -1,0 +1,12 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@league_matches, { 
+		played_at: :datetime,
+		league_season: { type: :belongs_to, label: :name, path: :league_season_path },
+		teams: :string,
+		result: :string,
+	}, paths: {
+		show: :league_match_path, 
+		edit: :edit_league_match_path, 
+		destroy: :league_match_path
+	}, pagination: true, summary: true ) %>
+<% end %>

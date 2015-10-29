@@ -1,0 +1,21 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@league_match, { 
+		played_at: :datetime,
+		league_season: { type: :belongs_to, label: :name, path: :league_season_path },
+		overtime: :boolean,
+		teams: :string,
+		result: :string,
+	}) %>
+	<h3><%= t("activerecord.attributes.ric_league/league_match.team1") %></h3>
+	<%= rug_show_table_for(@league_match, { 
+		team1: { type: :belongs_to, label: :name, path: :team_path },
+		result1: :integer,
+		points1: :integer,
+	}) %>
+	<h3><%= t("activerecord.attributes.ric_league/league_match.team2") %></h3>
+	<%= rug_show_table_for(@league_match, { 
+		team2: { type: :belongs_to, label: :name, path: :team_path },
+		result2: :integer,
+		points2: :integer,
+	}) %>
+<% end %>

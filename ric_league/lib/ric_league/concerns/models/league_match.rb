@@ -40,6 +40,37 @@ module RicLeague
 					#
 					belongs_to :team2, class_name: RicLeague.team_model.to_s
 
+					# *************************************************************************
+					# Validators
+					# *************************************************************************
+
+					validates_presence_of :team1_id, :team2_id
+
+				end
+
+				module ClassMethods
+
+					# *************************************************************************
+					# Scopes
+					# *************************************************************************
+
+					def already_played
+						now = Time.current
+						where("played_at <= :now", now: now)
+					end
+
+				end
+
+				# *************************************************************************
+				# Virtual attributes
+				# *************************************************************************
+
+				def teams
+					return (self.team1 && self.team1.key ? self.team1.key.upcase : "") + config(:teams_delimiter) + (self.team2 && self.team2.key ? self.team2.key.upcase : "")
+				end
+
+				def result
+					return self.result1.to_s + config(:result_delimiter) + self.result2.to_s
 				end
 
 			end

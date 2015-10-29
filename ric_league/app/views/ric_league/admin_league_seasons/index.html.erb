@@ -1,0 +1,11 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@league_seasons, { 
+		name: :string,
+		started_at: :datetime,
+		finished_at: :datetime,
+	}, paths: {
+		show: :league_season_path, 
+		edit: :edit_league_season_path, 
+		destroy: :league_season_path
+	}, pagination: true, summary: true ) %>
+<% end %>

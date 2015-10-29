@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Teams
+# * League seasons
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 3. 2015
+# * Date  : 29. 10. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_league/public_controller"
+require_dependency "ric_league/admin_controller"
 
 module RicLeague
-	class PublicTeamsController < PublicController
-		include RicLeague::Concerns::Controllers::Public::TeamsController
+	class AdminLeagueSeasonsController < AdminController
+		include RicLeague::Concerns::Controllers::Admin::LeagueSeasonsController
 	end
 end

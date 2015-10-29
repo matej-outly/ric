@@ -1,0 +1,12 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@team_member, { 
+		team: { type: :belongs_to, label: :name, path: :team_path },
+		name: :string,
+		kind: :enum,
+		role: :string,
+		classification: :string,
+		dress_number: :integer,
+		photo: { type: :picture, thumb_style: :thumb },
+		description: :text
+	}) %>
+<% end %>

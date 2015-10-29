@@ -37,6 +37,21 @@ module RicLeague
 
 				end
 
+				module ClassMethods
+					
+					# *********************************************************************
+					# Scopes
+					# *********************************************************************
+
+					#
+					# Get current season
+					#
+					def self.current
+						return RicLeague.league_season_model.order(started_at: :desc).first
+					end
+
+				end
+
 			end
 		end
 	end

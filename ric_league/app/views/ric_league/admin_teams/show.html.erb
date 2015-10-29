@@ -3,8 +3,8 @@
 		name: :string,
 		key: :string,
 		description: :text,
-		logo: { type: :picture, thumb_style: :thumb }
-		photo: { type: :picture, thumb_style: :big }
+		logo: { type: :picture, thumb_style: :full },
+		photo: { type: :picture, thumb_style: :thumb }
 	}) %>
 	<h3><%= t("headers.ric_league.admin_teams.team_members") %></h3>
 	<%= rug_index_table_for(@team.team_members.order(position: :asc), { 

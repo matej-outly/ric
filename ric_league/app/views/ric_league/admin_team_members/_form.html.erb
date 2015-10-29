@@ -1,0 +1,12 @@
+<%= rug_form_for(@team_member, create_url: :team_members_path, update_url: :team_member_path) do |f| %>
+	<%= f.picker_row :team_id, RicLeague.team_model.all.order(position: :asc), :id, :name %>
+	<%= f.text_input_row :name %>
+	<%= f.picker_row :kind %>
+	<%= f.text_input_row :role %>
+	<%= f.text_input_row :classification %>
+	<%= f.text_input_row :dress_number, :number_field %>
+	<%= f.dropzone_row :photo, append_columns: { team_id: true }, crop: true %>
+	<%= f.crop_row :photo %>
+	<%= f.text_area_row :description %>
+	<%= f.primary_button_row :submit %>
+<% end %>

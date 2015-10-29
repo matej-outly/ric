@@ -14,4 +14,13 @@ RicLeague::AdminEngine.routes.draw do
 	# Teams
 	resources :teams, controller: "admin_teams"
 
+	# Team members
+	resources :team_members, controller: "admin_team_members", except: [:index]
+
+	# League seasons
+	resources :league_seasons, controller: "admin_league_seasons"
+
+	# League matches
+	resources :league_matches, controller: "admin_league_matches"
+
 end

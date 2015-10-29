@@ -13,6 +13,7 @@ cs:
         update: "Upravit sezónu"
         destroy: "Smazat sezónu"
         matches: "Zápasy"
+        teams: "Týmy"
       admin_league_matches:
         index: "Zápasy"
         show: "Detail zápasu"

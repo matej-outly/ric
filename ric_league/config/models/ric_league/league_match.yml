@@ -1,0 +1,5 @@
+# Which delimiter should be used between teams
+teams_delimiter: " vs "
+
+# Which delimiter should be used between results
+result_delimiter: " : "

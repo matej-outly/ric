@@ -2,30 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Team members
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 3. 2015
+# * Date  : 29. 10. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_league/admin_controller"
+
 module RicLeague
-	class PublicEngine < ::Rails::Engine
-		
-		#
-		# Controllers
-		#
-		
-
-		isolate_namespace RicLeague
-
-		#
-		# Load public specific routes
-		#
-		def reload_routes
-			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/public_routes.rb")
-		end
-		
+	class AdminTeamMembersController < AdminController
+		include RicLeague::Concerns::Controllers::Admin::TeamMembersController
 	end
 end

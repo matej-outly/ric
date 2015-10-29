@@ -40,6 +40,10 @@ module RicLeague
 					# Show action
 					#
 					def show
+						respond_to do |format|
+							format.html { render "show" }
+							format.json { render json: @team.to_json(methods: :photo_url) }
+						end
 					end
 
 					#
@@ -61,9 +65,15 @@ module RicLeague
 					def create
 						@team = RicLeague.team_model.new(team_params)
 						if @team.save
-							redirect_to team_path(@team), notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.create")
+							respond_to do |format|
+								format.html { redirect_to team_path(@team), notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.create") }
+								format.json { render json: @team.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @team.errors }
+							end
 						end
 					end
 
@@ -72,9 +82,15 @@ module RicLeague
 					#
 					def update
 						if @team.update(team_params)
-							redirect_to team_path(@team), notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to team_path(@team), notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.update") }
+								format.json { render json: @team.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @team.errors }
+							end
 						end
 					end
 
@@ -83,7 +99,10 @@ module RicLeague
 					#
 					def destroy
 						@team.destroy
-						redirect_to teams_path, notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.destroy")
+						respond_to do |format|
+							format.html { redirect_to teams_path, notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @team.id }
+						end
 					end
 
 				protected
