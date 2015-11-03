@@ -12,8 +12,13 @@ cs:
         edit: "Upravit sezónu"
         update: "Upravit sezónu"
         destroy: "Smazat sezónu"
+        identification: "Základní informace"
         matches: "Zápasy"
         teams: "Týmy"
+      admin_league_season_team_relations:
+        edit: "Navázat týmy"
+        update: "Navázat týmy"
+        destroy: "Odebrat tým"
       admin_league_matches:
         index: "Zápasy"
         show: "Detail zápasu"
@@ -87,6 +92,8 @@ cs:
           create: "Sezóna byla úspěšně vytvořena."
           update: "Sezóna byla úspěšně upravena."
           destroy: "Sezóna byla úspěšně smazána."
+          bind_team: "Vybrané týmy byly úspěšně navázány."
+          unbind_team: "Vybrané týmy byly úspěšně odebrány."
         ric_league/league_match:
           create: "Zápas byl úspěšně vytvořen."
           update: "Zápas byl úspěšně upraven."

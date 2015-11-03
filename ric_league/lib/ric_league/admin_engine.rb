@@ -18,6 +18,7 @@ module RicLeague
 		require 'ric_league/concerns/controllers/admin/teams_controller'
 		require 'ric_league/concerns/controllers/admin/team_members_controller'
 		require 'ric_league/concerns/controllers/admin/league_seasons_controller'
+		require 'ric_league/concerns/controllers/admin/league_season_team_relations_controller'
 		require 'ric_league/concerns/controllers/admin/league_matches_controller'
 		
 		isolate_namespace RicLeague

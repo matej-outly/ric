@@ -20,6 +20,9 @@ RicLeague::AdminEngine.routes.draw do
 	# League seasons
 	resources :league_seasons, controller: "admin_league_seasons"
 
+	# League season team relations
+	resources :league_season_team_relations, only: [:edit, :update, :destroy], controller: "admin_league_season_team_relations"
+
 	# League matches
 	resources :league_matches, controller: "admin_league_matches"
 
