@@ -232,7 +232,51 @@ $mobile-width: 320px;
 				}
 			}
 		}
+	}
 
+	/* Picture index table */
+	.picture.index_table {
+		@include clearfix();
+
+		.item {
+			width: 32%;
+			float: left;
+			margin-right: 1%;
+			margin-bottom: 1%;
+			background-color: #ffffff;
+			transition: background-color 0.3s;
+			padding: 1%;
+
+			.picture {
+				height: 300px;
+				margin-bottom: 1%;
+				a {
+					display: block;
+					text-align: center;
+				}
+			}
+			.description {
+				height: 100px;
+				overflow: hidden;
+			}
+
+			&:hover {
+				background-color: #ffb4b4;
+			}
+		}
+
+		@media only screen and (max-width: $tablet-width) {
+			.item {
+				width: 49%;
+			}
+		}
+
+		@media only screen and (max-width: $mobile-width) {
+			.item {
+				width: 100%;
+				float: none;
+			}
+		}
 	}
 
 	/*************************************************************************/
