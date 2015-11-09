@@ -49,6 +49,9 @@ cs:
       models:
         ric_newsletter/newsletter:
           not_found: Newsletter nebyl nalezen.
+          attributes:
+            subject:
+              blank: "Předmět musí být vyplněn."
         ric_newsletter/sent_newsletter:
           not_found: Impuls k odeslání newsletteru nebyl nalezen.
           scope_not_found: Výběr zákazníků nebyl specifikován.

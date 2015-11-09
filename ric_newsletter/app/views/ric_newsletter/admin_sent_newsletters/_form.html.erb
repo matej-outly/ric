@@ -1,10 +1,15 @@
 <%= rug_form_for(@sent_newsletter, url: sent_newsletters_path(customers_scope: params[:customers_scope], customers_scope_params: params[:customers_scope_params])) do |f| %>
 	<% 
-		customers_content = ""	
+		labels = []
 		@customers.limit(10).each do |customer| 
-			customers_content += customer.full_name + ", "
+			if !customer.full_name.blank?
+				label = "#{customer.full_name} (#{customer.email})"
+			else
+				label = customer.email
+			end
+			labels << label
 		end
-		customers_content += "..." 
+		customers_content = labels.join(", ") + (@customers.count > 10 ? " " + t("general.and_more") : "") 
 	%>
 	<%= f.read_only_row :customers, customers_content %>
 	<%= f.picker_row :newsletter_id, RicNewsletter.newsletter_model.order(created_at: :desc), :id, :identifying_name %>

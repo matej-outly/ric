@@ -30,6 +30,15 @@ module RicNewsletter
 					#
 					has_many :sent_newsletters, class_name: RicNewsletter.sent_newsletter_model.to_s
 
+					# *********************************************************************
+					# Validators
+					# *********************************************************************
+
+					#
+					# Subject must be set
+					#
+					validates :subject, presence: true
+
 				end
 
 				def identifying_name
