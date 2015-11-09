@@ -91,6 +91,7 @@ module RicNewsletter
 							else
 								@customers = RicNewsletter.customer_model.method(@customers_scope.to_sym).call
 							end
+							@customers = @customers.newsletter_enabled
 						end
 					end
 
