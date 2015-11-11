@@ -126,6 +126,14 @@ $mobile-width: 320px;
 				
 				td {
 					transition: background-color 0.3s;
+					min-height: 40px;
+					&.action {
+						text-align: right;
+						width: 1px; /* Minimal width */
+						@media only screen and (max-width: $tablet-width) {
+							width: auto;
+						}
+					}
 				}
 				&:hover td {
 					background-color: #ffb4b4;
@@ -637,7 +645,7 @@ $mobile-width: 320px;
 			min-height: 36px;
 		}
 
-		.menu {
+		ul.menu {
 			margin-left: -25px;
 			margin-right: -25px;
 
@@ -653,22 +661,16 @@ $mobile-width: 320px;
 			}
 
 			li {
-				padding: 0 25px;
+				padding: 0;
 				transition: 0.1s;
 
 				a {
+					position: relative;
 					display: block;
 					min-height: 40px;
 					padding: 6px 0;
-					border-top: 1px solid #dddddd;
-				}
-
-				&:first-child a {
-					border-top: 1px solid transparent;
-				}
-
-				&:last-child a {
-					border-bottom: 1px solid #dddddd;	
+					margin-right: 25px;
+					border-bottom: 1px solid #dddddd;
 				}
 
 				&.active {
@@ -677,21 +679,29 @@ $mobile-width: 320px;
 					background-position: left top;
 				}
 
+
 				&:hover {
 					background-color: #626262;
-					
-					a {
-						border-top: none;
-						border-bottom: none;
+
+					> a {
+						border-bottom: 1px solid transparent;
 						color: #f7ae9e;
 						text-shadow: 0 1px 2px #191a1b, 0 1px 0 #191a1b;
 					}
-				
-					+ li a {
-						border-top: 1px solid transparent;
-					}
 				}
+				
 			}
+
+			ul {
+				margin: 0;
+				background-color: white;
+			}
+
+			/* Item left margin */
+			a { margin-left: 25px; }
+			ul a { margin-left: 50px; }
+			ul ul a { margin-left: 75px; }
+			ul ul ul a { margin-left: 100px; }
 		}
 
 		@media only screen and (max-width: $tablet-width) {

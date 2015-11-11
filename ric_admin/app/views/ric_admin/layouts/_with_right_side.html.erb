@@ -18,6 +18,11 @@
 		
 		<%= render partial: "ric_admin/shared/login_info" %>
 
+		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
+			<h2><%= t("headers.filters") %></h2>
+			<%= render partial: "#{controller_path}/filters" %>
+		<% end %>
+
 		<% if lookup_context.find_all("#{controller_path}/_actions").any? %>
 			<h2><%= t("headers.actions") %></h2>
 			<%= render partial: "#{controller_path}/actions" %>

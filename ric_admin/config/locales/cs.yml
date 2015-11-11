@@ -2,6 +2,7 @@ cs:
 
   headers:
     web: Web
+    filters: Filtry
     actions: Akce
     related: Související
 
