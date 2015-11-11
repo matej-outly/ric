@@ -377,8 +377,25 @@ $mobile-width: 320px;
 	/* Tabs                                                                  */
 	/*************************************************************************/
 
-	.tab-content {
-		padding: 20px 0;
+	.tabs {
+		
+		.tab-content {
+			padding: 20px 0;
+		}
+
+		&.minimal {
+			position: relative;
+			.tab-nav {
+				width: auto;
+				display: inline-block;
+				position: absolute;
+				right: 0;
+				top: -38px;
+			}
+			.tab-content {
+				padding: 10px 0 0 0;
+			}
+		}
 	}
 
 	/*************************************************************************/
