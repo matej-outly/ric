@@ -104,6 +104,14 @@ module RicAssortment
 
 				end
 
+				# *************************************************************
+				# Name with depth
+				# *************************************************************
+
+				def name_with_depth(delimiter = " - ")
+					return (delimiter * self.depth.to_i) + self.name.to_s
+				end
+
 			end
 		end
 	end

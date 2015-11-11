@@ -10,20 +10,16 @@
 		</ul>
 		<% @product.class.parts.each do |part| %>
 			<div class="tab-content <%= (part == :identification ? "active" : "") %>">
-				<h3><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></h3>
 				<%= render partial: "show_#{part.to_s}" %>
 			</div>
 		<% end %>
 		<div class="tab-content">
-			<h3><%= t("headers.ric_assortment.admin_products.photos") %></h3>
 			<%= render partial: "show_photos" %>
 		</div>
 		<div class="tab-content">
-			<h3><%= t("headers.ric_assortment.admin_products.attachments") %></h3>
 			<%= render partial: "show_attachments" %>
 		</div>
 		<div class="tab-content">
-			<h3><%= t("headers.ric_assortment.admin_products.categories") %></h3>
 			<%= render partial: "show_categories" %>
 		</div>
 	</section>

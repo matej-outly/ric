@@ -1,0 +1,3 @@
+<%= nested_ul(RicAssortment.product_category_model.all.order(lft: :asc), class: "menu") do |product_category| %>
+	<%= link_to product_category.name, ric_assortment_admin.from_category_products_path(product_category_id: product_category.id), class: (@product_category && product_category.id == @product_category.id ? "active" : "") %>
+<% end %>

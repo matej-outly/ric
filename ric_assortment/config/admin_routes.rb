@@ -16,6 +16,9 @@ RicAssortment::AdminEngine.routes.draw do
 		member do
 			post "duplicate"
 		end
+		collection do
+			get "from_category/:product_category_id", to: "admin_products#from_category", as: "from_category"
+		end
 	end
 
 	# Product attachments

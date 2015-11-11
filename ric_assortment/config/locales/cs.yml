@@ -5,6 +5,7 @@ cs:
     ric_assortment:
       admin_products:
         index: "Produkty"
+        from_category: "Produkty"
         show: "Detail produktu"
         new: "Nový produkt"
         create: "Nový produkt"
