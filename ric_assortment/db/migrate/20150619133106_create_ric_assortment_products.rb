@@ -25,7 +25,10 @@ class CreateRicAssortmentProducts < ActiveRecord::Migration
 
 			# Price
 			t.integer :price
-			t.string :unit
+			t.string :currency
+
+			# Product category
+			t.integer :default_product_category_id
 
 			# Meta
 			t.string :keywords

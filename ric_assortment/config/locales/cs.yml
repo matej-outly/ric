@@ -85,7 +85,9 @@ cs:
         weight: Váha (kg)
         capacity: Objem (l)
         price: Cena
-        unit: Jednotka
+        currency: Měna
+        currency_values:
+          czk: "Kč"
         keywords: Klíčová slova
         description: Popis
         checkbox: Vybrat

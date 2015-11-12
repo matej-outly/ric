@@ -50,10 +50,27 @@ module RicAssortment
 					#
 					has_and_belongs_to_many :product_tickers, class_name: RicAssortment.product_ticker_model.to_s
 
+					# *********************************************************
+					# Enums
+					# *********************************************************
+
+					#
+					# Currency
+					#
+					enum_column :currency, config(:currencies)
+
+					# *********************************************************
+					# Ordering
+					# *********************************************************
+
 					#
 					# Ordering
 					#
 					enable_ordering
+
+					# *********************************************************
+					# Callbacks
+					# *********************************************************
 
 					#
 					# Genereate slugs after save

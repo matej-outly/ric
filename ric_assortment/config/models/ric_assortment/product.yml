@@ -3,3 +3,7 @@ enable_slugs: false
 
 # Define URL template if slug generation enables
 url: "/assortment/products/:id"
+
+# Available currencies
+currencies:
+  - czk
