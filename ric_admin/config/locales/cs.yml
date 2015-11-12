@@ -71,6 +71,7 @@ cs:
       search: "Hledat"
       reset: "Obnovit"
       register: "Registrovat"
+      order: "Dokončit objednávku"
 
   general:
     back: "zpět"
