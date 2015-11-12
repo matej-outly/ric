@@ -1,0 +1,23 @@
+<%= rug_form_for(@order, update_url: :order_path) do |f| %>
+	<section class="tabs pill">
+		<ul class="tab-nav">
+			<li class="active"><a href="#"><%= t("headers.ric_eshop.admin_orders.identification") %></a></li>
+			<li><a href="#"><%= t("headers.ric_eshop.admin_orders.customer") %></a></li>
+		</ul>
+		<div class="tab-content active">
+			<h3><%= t("headers.ric_eshop.admin_orders.payment") %></h3>
+			<%= f.picker_row :currency %>
+			<%= f.picker_row :payment_type %>
+			<h3><%= t("headers.ric_eshop.admin_orders.delivery") %></h3>
+		</div>
+		<div class="tab-content">
+			<%= f.text_input_row :customer_name %>
+			<%= f.text_input_row :customer_email %>
+			<%= f.text_input_row :customer_phone %>
+			<h3><%= t("headers.ric_eshop.admin_orders.billing") %></h3>
+			<%= f.text_input_row :billing_name %>
+			<%= f.address_row :billing_address %>
+		</div>
+	</section>
+	<%= f.primary_button_row :submit %>
+<% end %>

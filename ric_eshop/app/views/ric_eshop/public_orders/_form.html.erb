@@ -1,0 +1,15 @@
+<%= rug_form_for(@order, create_url: "ric_eshop_public.orders_path") do |f| %>
+	<%= f.hidden_field :session_id %>
+
+	<%= f.text_input_row :customer_name %>
+	<%= f.text_input_row :customer_email %>
+	<%= f.text_input_row :customer_phone %>
+
+	<%= f.text_input_row :billing_name %>
+	<%= f.address_row :billing_address %>
+	
+	<%= f.radios_row :payment_type %>
+
+	<%= f.checkbox_row :accept_terms %>
+	<%= f.primary_button_row :submit, label: t("helpers.submit.order") %>
+<% end %>

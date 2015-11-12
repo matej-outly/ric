@@ -1,0 +1,93 @@
+cs:
+
+  headers:
+    ric_eshop:
+      admin_orders:
+        index: "Objednávky"
+        show: "Detail objednávky"
+        edit: "Upravit objednávku"
+        update: "Upravit objednávku"
+        destroy: "Smazat objednávku"
+        identification: "Základní informace"
+        payment: "Platba"
+        delivery: "Doprava"
+        customer: "Zákazník"
+        billing: "Fakturace"
+        products: "Obsah objednávky"
+
+  activerecord:
+    attributes:
+      ric_eshop/order:
+        created_at: Vytvořeno
+        customer: Zákazník
+        customer_id: Zákazník
+        customer_name: Zákazníkovo jméno
+        customer_email: Zákazníkův e-mail
+        customer_phone: Zákazníkův telefon
+        billing_name: Fakturační jméno
+        billing_address: Fakturační adresa
+        payment_type: Typ platby
+        payment_type_values:
+          cash: Hotově
+          cart: Kartou
+          bank: Bankovním převodem
+        payment_state: Stav platby
+        payment_state_values:
+          not_paid: Nezaplaceno
+          in_progress: Platba probíhá
+          paid: Zaplaceno
+        paid_at: Čas zaplacení
+        price: Cena
+        currency: Měna
+        currency_values:
+          czk: "Kč"
+        accept_terms: "Souhlas s obchodními podmínkami"
+      ric_eshop/order_item:
+        product_name: Jméno produktu
+        product_price: Cena jednoho kusu
+        product_currency: Měna
+        product_currency_values:
+          czk: "Kč"
+        price: Cena dohromady
+        amount: Množství
+      ric_eshop/cart_item:
+        product_name: Jméno produktu
+        product_price: Cena jednoho kusu
+        product_currency: Měna
+        product_currency_values:
+          czk: "Kč"
+        price: Cena dohromady
+        amount: Množství
+    notices:
+      models:
+        ric_eshop/order:
+          create: Objednávka byla úspěšně vytvořena.
+          update: Objednávka byla úspěšně uložena.
+          destroy: Objednávka byla úspěšně smazána.
+        ric_eshop/order_item:
+          create: Položka objednávky byla úspěšně vytvořena.
+          update: Položka objednávky byla úspěšně uložena.
+          destroy: Položka objednávky byla úspěšně smazána.
+        ric_eshop/cart:
+          add: "Položka byla úspěšně přidána do nákupníko košíku."
+          remove: "Položka byla úspěšně odebrána z nákupníko košíku."
+          clear: "Nákupní košík byl úspěšně smazán."
+        ric_eshop/cart_item:
+          create: Položka v košíku byla úspěšně vytvořena.
+          update: Položka v košíku byla úspěšně uložena.
+          destroy: Položka v košíku byla úspěšně smazána.
+    errors:
+      models:
+        ric_eshop/order:
+          not_found: "Objednávka nebyla nalezena."
+          locked: "Objednávka je zamčena a nemůže být tedy změněna nebo smazána."
+          cart_empty: "Objednávka nemůže být vytvořena, protože nákupní košík je prázdný."
+          attributes:
+            payment_type:
+              blank: Musí být zvolen typ platby.
+            accept_terms:
+              not_true: Musíte souhlasit s obchodními podmínkami.
+        ric_eshop/order_item:
+          not_found: "Položka objednávky nebyla nalezena."
+        ric_eshop/cart_item:
+          not_found: "Položka v košíku nebyla nalezena."

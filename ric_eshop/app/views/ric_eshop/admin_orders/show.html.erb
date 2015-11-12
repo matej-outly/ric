@@ -1,0 +1,45 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<section class="tabs pill">
+		<ul class="tab-nav">
+			<li class="active"><a href="#"><%= t("headers.ric_eshop.admin_orders.identification") %></a></li>
+			<li><a href="#"><%= t("headers.ric_eshop.admin_orders.customer") %></a></li>
+			<li><a href="#"><%= t("headers.ric_eshop.admin_orders.products") %></a></li>
+		</ul>
+		<div class="tab-content active">
+			<%= rug_show_table_for(@order, {
+				created_at: :datetime,
+			}) %>
+			<h3><%= t("headers.ric_eshop.admin_orders.payment") %></h3>
+			<%= rug_show_table_for(@order, {
+				price: :integer,
+				currency: :enum,
+				paid_at: :datetime,
+				payment_type: :enum,
+				payment_state: :enum
+			}) %>
+			<h3><%= t("headers.ric_eshop.admin_orders.delivery") %></h3>
+		</div>
+		<div class="tab-content">
+			<%= rug_show_table_for(@order, {
+				customer_name: :string,
+				customer_email: :string,
+				customer_phone: :string
+			}) %>
+			<h3><%= t("headers.ric_eshop.admin_orders.billing") %></h3>
+			<%= rug_show_table_for(@order, {
+				billing_name: :string,
+				billing_address: :address
+			}) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_index_table_for(@order.order_items.order(created_at: :asc), { 
+				product_name: :string,
+				product_currency: :enum,
+				product_price: :integer,
+				amount: :integer,
+				price: :integer
+			}, paths: {
+			}, summary: true ) %>
+		</div>
+	</section>
+<% end %>
