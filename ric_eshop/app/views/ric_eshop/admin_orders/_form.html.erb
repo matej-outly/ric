@@ -5,10 +5,12 @@
 			<li><a href="#"><%= t("headers.ric_eshop.admin_orders.customer") %></a></li>
 		</ul>
 		<div class="tab-content active">
+			<%= f.text_area_row :note %>
 			<h3><%= t("headers.ric_eshop.admin_orders.payment") %></h3>
 			<%= f.picker_row :currency %>
 			<%= f.picker_row :payment_type %>
 			<h3><%= t("headers.ric_eshop.admin_orders.delivery") %></h3>
+			<%= f.picker_row :delivery_type %>
 		</div>
 		<div class="tab-content">
 			<%= f.text_input_row :customer_name %>

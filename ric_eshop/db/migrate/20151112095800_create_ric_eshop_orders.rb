@@ -27,6 +27,12 @@ class CreateRicEshopOrders < ActiveRecord::Migration
       t.datetime :paid_at
       t.string :currency
 
+      # Delivery
+      t.string :delivery_type
+
+      # Note
+      t.text :note
+
     end
   end
 end

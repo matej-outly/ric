@@ -1,8 +1,0 @@
-<%= rug_index_table_for(@cart.cart_items, { 
-	product_name: :string,
-	product_price: :currency,
-	amount: :integer,
-	price: :currency
-}, actions: {
-	remove: { label: "", icon: "cancel", path: lambda { |cart_item| ric_eshop_public.cart_remove_path(cart_item.product_id) } }
-}) %>

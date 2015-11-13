@@ -37,12 +37,17 @@ module RicEshop
 					#
 					# Payment type
 					#
-					enum_column :payment_type, [:cash, :cart, :bank]
+					enum_column :payment_type, config(:payment_types)
 
 					#
-					# Payment type
+					# Payment state
 					#
 					enum_column :payment_state, [:paid, :in_progress, :not_paid]
+
+					#
+					# Delivery type
+					#
+					enum_column :delivery_type, config(:delivery_types)
 
 					#
 					# Currency
@@ -78,6 +83,11 @@ module RicEshop
 					# *********************************************************
 					# Validators
 					# *********************************************************
+
+					#
+					# Payment and delivery type
+					#
+					validates_presence_of :payment_type, :delivery_type
 
 					#
 					# Apply custom validator

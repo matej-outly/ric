@@ -1,0 +1,15 @@
+<table class="cart-items">
+	<% @cart.cart_items.each do |cart_item| %>
+		<tr>
+			<td class="product"><%= cart_item.product_name %></td>
+			<td class="amount"><%= cart_item.amount %> ks</td>
+			<td class="price"><%= number_to_currency(cart_item.price, locale: :cs) %></td>
+			<td class="action"><%= link_to "<i class=\"icon-plus\"></i>".html_safe, ric_eshop_public.cart_add_path(cart_item.product_id) %></td>
+			<td class="action"><%= link_to "<i class=\"icon-cancel\"></i>".html_safe, ric_eshop_public.cart_remove_path(cart_item.product_id) %></td>
+		</tr>
+	<% end %>
+	<tr class="total">
+		<td colspan="2" class="product">Celkem</td>
+		<td colspan="3" class="price"><%= number_to_currency(@cart.price, locale: :cs) %></td>
+	</tr>
+</table>

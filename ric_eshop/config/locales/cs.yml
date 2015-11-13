@@ -41,6 +41,11 @@ cs:
         currency: Měna
         currency_values:
           czk: "Kč"
+        delivery_type: Typ dopravy
+        delivery_type_values:
+          in_person: Osobní odběr
+          delivery_service: Rozvozová služba 
+        note: Poznámka
         accept_terms: "Souhlas s obchodními podmínkami"
       ric_eshop/order_item:
         product_name: Jméno produktu
@@ -85,6 +90,8 @@ cs:
           attributes:
             payment_type:
               blank: Musí být zvolen typ platby.
+            delivery_type:
+              blank: Musí být zvolen typ dopravy.
             accept_terms:
               not_true: Musíte souhlasit s obchodními podmínkami.
         ric_eshop/order_item:

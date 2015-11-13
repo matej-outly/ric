@@ -95,7 +95,7 @@ module RicEshop
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def order_params
-						params.require(:order).permit(:customer_id, :customer_name, :customer_email, :customer_phone, :billing_name, :currency, :payment_type, :billing_address => [:street, :number, :postcode, :city])
+						params.require(:order).permit(:customer_id, :customer_name, :customer_email, :customer_phone, :billing_name, :currency, :payment_type, :delivery_type, :note, :billing_address => [:street, :number, :postcode, :city])
 					end
 
 				end

@@ -9,6 +9,9 @@
 	<%= f.address_row :billing_address %>
 	
 	<%= f.radios_row :payment_type %>
+	<%= f.radios_row :delivery_type %>
+
+	<%= f.text_area_row :note %>
 
 	<%= f.checkbox_row :accept_terms %>
 	<%= f.primary_button_row :submit, label: t("helpers.submit.order") %>
