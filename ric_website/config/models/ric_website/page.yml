@@ -5,7 +5,7 @@ natures:
     url: /
   text:
     name: "Textová stránka"
-    url: /public/website/texts/:id
+    url: /website/texts/:id
     model: RicWebsite::Text
 
 # Which layouts can single page obtain
