@@ -1,6 +1,6 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@user, { 
 		email: :string,
-		role: :string,
+		role: :enum,
 	}) %>
 <% end %>

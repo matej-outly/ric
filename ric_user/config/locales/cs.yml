@@ -20,6 +20,8 @@ cs:
       ric_user/user:
         email: E-mail
         role: Role
+        role_values:
+          admin: Administrátor
         current_password: Současné heslo
         password: Heslo
         password_confirmation: Heslo (znovu pro potvrzení)

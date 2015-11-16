@@ -32,8 +32,13 @@ module RicUser
 					devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
 					# *********************************************************************
-					# Structure
+					# Enums
 					# *********************************************************************
+
+					#
+					# Role
+					#
+					enum_column :role, config(:roles)
 
 				end
 
