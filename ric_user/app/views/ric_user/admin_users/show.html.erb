@@ -2,5 +2,7 @@
 	<%= rug_show_table_for(@user, { 
 		email: :string,
 		role: :enum,
+		sign_in_count: :integer,
+		current_sign_in_at: :datetime,
 	}) %>
 <% end %>

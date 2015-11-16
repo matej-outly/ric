@@ -22,6 +22,8 @@ cs:
         role: Role
         role_values:
           admin: Administrátor
+        sign_in_count: Počet přihlášení
+        current_sign_in_at: Čas posledního přihlášení
         current_password: Současné heslo
         password: Heslo
         password_confirmation: Heslo (znovu pro potvrzení)
