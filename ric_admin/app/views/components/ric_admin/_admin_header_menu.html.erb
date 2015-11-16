@@ -3,36 +3,45 @@
 	def render_item(t, item, dropdown = "")
 		result = ""
 		
-		if item[:type] == "delimiter"
-			result += "<li class=\"delimiter\"></li>\n"
+		# Show?
+		if item[:show_if]
+			show = eval("(#{item[:show_if]}) == true")
 		else
+			show = true
+		end
 
-			# Get URL
-			if item[:url]
-				url = eval("(#{item[:url]}).to_s")
+		if show
+			if item[:type] == "delimiter"
+				result += "<li class=\"delimiter\"></li>\n"
 			else
-				url = "#"
-			end
 
-			# Get label
-			label = I18n.t(item[:label], default: item[:label])
-
-			# Active?
-			if item[:active_if]
-				active = eval("(#{item[:active_if]}) == true")
-			elsif item[:dropdown]
-				active = false
-				item[:dropdown].each do |dropdown_item|
-					active ||= eval("(#{dropdown_item[:active_if]}) == true")
+				# Get URL
+				if item[:url]
+					url = eval("(#{item[:url]}).to_s")
+				else
+					url = "#"
 				end
-			else
-				active = false
-			end
 
-			result += "<li class=\"#{(item[:icon] ? "icon-left icon-" + item[:icon] : "")} #{(active ? "active" : "")}\">"
-			result += link_to(label, url)
-			result += dropdown
-			result += "</li>\n"
+				# Get label
+				label = I18n.t(item[:label], default: item[:label])
+
+				# Active?
+				if item[:active_if]
+					active = eval("(#{item[:active_if]}) == true")
+				elsif item[:dropdown]
+					active = false
+					item[:dropdown].each do |dropdown_item|
+						active ||= eval("(#{dropdown_item[:active_if]}) == true")
+					end
+				else
+					active = false
+				end
+
+				result += "<li class=\"#{(item[:icon] ? "icon-left icon-" + item[:icon] : "")} #{(active ? "active" : "")}\">"
+				result += link_to(label, url)
+				result += dropdown
+				result += "</li>\n"
+			end
 		end
 		
 		return result.html_safe
