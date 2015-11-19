@@ -287,6 +287,22 @@ $mobile-width: 320px;
 		}
 	}
 
+	/*body.dragging, body.dragging * {
+		cursor: move !important;
+	}*/
+
+	tr.placeholder {
+		td {
+			background: #ffb4b4;
+		}
+	}
+
+	.dragged {
+		position: absolute;
+		opacity: 0.5;
+		z-index: 2000;
+	}
+
 	/*************************************************************************/
 	/* Forms                                                                 */
 	/*************************************************************************/
