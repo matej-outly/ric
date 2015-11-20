@@ -50,6 +50,7 @@ cs:
         name: Jméno
         started_at: Od
         finished_at: Do
+        active: Aktivní
       ric_league/league_match:
         played_at: Datum a čas
         league_season: Sezóna

@@ -10,6 +10,9 @@ class CreateRicLeagueLeagueSeasons < ActiveRecord::Migration
 			t.date :started_at
 			t.date :finished_at
 
+			# Activity
+			t.boolean :active
+
 		end
 		create_table :league_seasons_teams, id: false do |t|
 

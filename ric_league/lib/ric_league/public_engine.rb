@@ -15,7 +15,8 @@ module RicLeague
 		#
 		# Controllers
 		#
-		
+		require 'ric_league/concerns/controllers/public/active_teams_controller'
+		require 'ric_league/concerns/controllers/public/active_league_controller'
 
 		isolate_namespace RicLeague
 

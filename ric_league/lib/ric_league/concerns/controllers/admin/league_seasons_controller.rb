@@ -117,7 +117,7 @@ module RicLeague
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def league_season_params
-						params.require(:league_season).permit(:name, :started_at, :finished_at)
+						params.require(:league_season).permit(:name, :started_at, :finished_at, :active)
 					end
 
 				end

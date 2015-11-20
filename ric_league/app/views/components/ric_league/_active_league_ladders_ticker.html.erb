@@ -1,0 +1,29 @@
+<div class="active-league-ladders">
+	<% @active_league_ladders_ticker.league_seasons.each_with_index do |league_season, index| %>
+		<% league_ladder = @active_league_ladders_ticker.league_ladders[index] %>
+		<%= league_season.name %>
+		<table>
+			<thead>
+				<tr>
+					<th><%= t("activerecord.attributes.#{RicLeague.team_model.model_name.i18n_key}.name") %></th>
+					<th><%= t("activerecord.attributes.#{RicLeague.team_model.model_name.i18n_key}.key") %></th>
+					<th><%= t("activerecord.attributes.#{RicLeague.team_model.model_name.i18n_key}.matches_count") %></th>
+					<th><%= t("activerecord.attributes.#{RicLeague.team_model.model_name.i18n_key}.wins_count") %></th>
+					<th><%= t("activerecord.attributes.#{RicLeague.team_model.model_name.i18n_key}.defeats_count") %></th>
+					<th class="right"><%= t("activerecord.attributes.#{RicLeague.team_model.model_name.i18n_key}.league_points") %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% league_ladder.reverse.each do |team| %>
+					<tr>
+						<td><%= link_to team.name, ric_league_public.active_team_path(id: team) %></td>
+						<td><%= team.key %></td>
+						<td><%= team.matches_count(league_season) %></td>
+						<td><%= team.wins_count(league_season) %></td>
+						<td><%= team.defeats_count(league_season) %></td>
+						<td class="right"><strong><%= team.league_points(league_season) %></strong></td></tr>
+				<% end %>
+			</tbody>
+		</table>
+	<% end %>
+</div>

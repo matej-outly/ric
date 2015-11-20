@@ -94,7 +94,7 @@ module RicLeague
 					def destroy
 						@team_member.destroy
 						respond_to do |format|
-							format.html { redirect_to team_members_path, notice: I18n.t("activerecord.notices.models.#{RicLeague.team_member_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to team_path(@team_member.team_id), notice: I18n.t("activerecord.notices.models.#{RicLeague.team_member_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @team_member.id }
 						end
 					end

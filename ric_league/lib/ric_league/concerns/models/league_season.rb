@@ -46,7 +46,7 @@ module RicLeague
 					#
 					# Get current season
 					#
-					def self.current
+					def current
 						return RicLeague.league_season_model.order(started_at: :desc).first
 					end
 
