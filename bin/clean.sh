@@ -17,3 +17,4 @@ output_dir="$root_dir/build"
 
 # Remove output directory
 rm -rf "$output_dir"
+

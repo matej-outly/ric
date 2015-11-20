@@ -24,3 +24,4 @@ for engine in ric_account ric_admin ric_advert ric_assortment ric_contact ric_cu
 	gem build $engine.gemspec
 	mv *.gem "$output_dir"
 done
+
