@@ -33,7 +33,7 @@ module RicAdvert
 					# Index action
 					#
 					def index
-						@advertisers = RicAdvert.advertiser_model.all.order(name: :asc)
+						@advertisers = RicAdvert.advertiser_model.all.order(name: :asc).page(params[:page])
 					end
 
 					#

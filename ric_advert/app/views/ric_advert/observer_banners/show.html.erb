@@ -1,5 +1,5 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@advertiser, { 
+	<%= rug_show_table_for(@banner, { 
 		name: :string,
 		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_observer.advertiser_path" },
 		url: :string,
@@ -16,5 +16,7 @@
 		ip: :string,
 		impressions: :integer,
 		clicks: :integer,
-	}, pagination: true, summary: true ) %>
+	}, 
+	#pagination: true, TODO not working
+	summary: true ) %>
 <% end %>

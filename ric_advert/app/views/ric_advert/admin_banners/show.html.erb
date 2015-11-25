@@ -1,5 +1,5 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@advertiser, { 
+	<%= rug_show_table_for(@banner, { 
 		name: :string,
 		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
 		url: :string,
