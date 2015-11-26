@@ -1,7 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@product_photo, { 
 		product: { type: :belongs_to, label: :name, path: :product_path },
-		image: { type: :picture, thumb_style: :thumb },
+		picture: { type: :picture, thumb_style: :thumb },
 		title: :string
 	}) %>
 <% end %>

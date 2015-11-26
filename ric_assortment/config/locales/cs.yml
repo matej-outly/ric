@@ -104,7 +104,7 @@ cs:
       ric_assortment/product_photo:
         product: Produkt
         product_id: Produkt
-        image: Obrázek
+        picture: Obrázek
         title: Popis
       ric_assortment/product_ticker:
         name: Jméno

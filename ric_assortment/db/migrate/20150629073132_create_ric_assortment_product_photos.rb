@@ -13,8 +13,8 @@ class CreateRicAssortmentProductPhotos < ActiveRecord::Migration
 			# Title
 			t.string :title
 
-			# Image
-			t.attachment :image
+			# Picture
+			t.attachment :picture
 
 		end
 	end

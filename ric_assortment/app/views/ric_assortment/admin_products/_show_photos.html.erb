@@ -1,5 +1,5 @@
-<%= rug_index_table_for(@product.product_photos.order(position: :asc), { 
-	image: { type: :picture, thumb_style: :thumb },
+<%= rug_picture_index_table_for(@product.product_photos.order(position: :asc), { 
+	picture: { type: :picture, thumb_style: :thumb },
 	title: :string,
 }, paths: {
 	show: :product_photo_path,

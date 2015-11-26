@@ -42,8 +42,8 @@ module RicAssortment
 					#
 					# Photo
 					#
-					has_attached_file :image, :styles => { :thumb => config(:picture_crop, :thumb), :full => config(:picture_crop, :full) }
-					validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+					has_attached_file :picture, :styles => { :thumb => config(:picture_crop, :thumb), :full => config(:picture_crop, :full) }
+					validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
 					# *************************************************************************
 					# Validators
@@ -65,8 +65,8 @@ module RicAssortment
 					# Base duplication
 					new_record = self.class.new(title: self.title, product_id: self.product_id) # Dup cannot be used because of attachment
 					
-					# Image
-					new_record.image = self.image
+					# Picture
+					new_record.picture = self.picture
 					
 					# Save
 					new_record.save
