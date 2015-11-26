@@ -36,6 +36,8 @@ cs:
           update: Uživatel byl úspěšně uložen.
           create: Uživatel byl úspěšně vytvořen.
           destroy: Uživatel byl úspěšně smazán.
+        ric_user/session:
+          update: Informace o uživateli byly úspěšně uloženy.
     errors:
       models:
         ric_user/user:

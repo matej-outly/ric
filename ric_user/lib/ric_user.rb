@@ -11,9 +11,11 @@
 
 # Engines
 require "ric_user/admin_engine"
+require "ric_user/public_engine"
 
 # Models
 require 'ric_user/concerns/models/user'
+require 'ric_user/concerns/models/session'
 
 # Mailers
 require 'ric_user/concerns/mailers/user_mailer'
@@ -39,6 +41,18 @@ module RicUser
 			return RicUser::User
 		else
 			return @@user_model.constantize
+		end
+	end
+
+	#
+	# Session model
+	#
+	mattr_accessor :session_model
+	def self.session_model
+		if @@session_model.nil?
+			return RicUser::Session
+		else
+			return @@session_model.constantize
 		end
 	end
 

@@ -5,11 +5,21 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 26. 11. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicUser::AdminEngine.routes.draw do
+
+	# Users
+	resources :users, controller: "admin_users"
+
+	# User passwords
+	resources :user_passwords, controller: "admin_user_passwords", only: [:edit, :update] do
+		member do
+			get "regenerate"
+			put "regenerate"
+		end
+	end
+
+end

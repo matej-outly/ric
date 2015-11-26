@@ -10,13 +10,12 @@
 # *****************************************************************************
 
 module RicUser
-	class AdminEngine < ::Rails::Engine
+	class PublicEngine < ::Rails::Engine
 		
 		#
 		# Controllers
 		#
-		require 'ric_user/concerns/controllers/admin/users_controller'
-		require 'ric_user/concerns/controllers/admin/user_passwords_controller'
+		require 'ric_user/concerns/controllers/public/session_controller'
 		
 		isolate_namespace RicUser
 
@@ -25,8 +24,8 @@ module RicUser
 		#
 		def reload_routes
 			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/admin_routes.rb")
+			load(config_path + "/public_routes.rb")
 		end
-		
+
 	end
 end
