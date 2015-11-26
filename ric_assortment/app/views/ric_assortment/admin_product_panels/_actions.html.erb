@@ -1,0 +1,6 @@
+<%= rug_menu_for(@product_panel, name: "actions", path_base: "product_panel") do |m| %>
+	<%= m.new_item nil, new_product_panel_path(product_id: @product_panel.product_id) %>
+	<%= m.show_item %>
+	<%= m.edit_item %>
+	<%= m.destroy_item %>
+<% end %>

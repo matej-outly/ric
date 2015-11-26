@@ -17,8 +17,9 @@ cs:
         content: Popis
         dimensions: Rozměry
         price: Cena
-        meta: Meta informace
+        meta: Meta info.
         photos: Fotografie
+        panels: Modifikační panely
         attachments: Přílohy
         categories: Kategorie
       admin_product_attachments:
@@ -55,6 +56,17 @@ cs:
         edit: Upravit fotografii
         update: Upravit fotografii
         destroy: Smazat fotografii
+      admin_product_panels:
+        show: Detail panelu
+        new: Nový panel
+        create: Nový panel
+        edit: Upravit panel
+        update: Upravit panel
+        destroy: Smazat panel
+      admin_product_panel_sub_product_relations:
+        edit: "Přidat produkt do výběru"
+        update: "Přidat produkt do výběru"
+        destroy: "Odebrat produkt z výběru"
       admin_product_tickers:
         index: "Upoutávky produktů"
         show: "Detail upoutávky produktů"
@@ -110,6 +122,15 @@ cs:
         name: Jméno
         key: Identifikující klíč
         products: Produkty
+      ric_assortment/product_panel:
+        product: Produkt
+        product_id: Produkt
+        name: Jméno
+        required: Povinné vyplnění
+        operator: Operátor
+        operator_values:
+          xor: XOR
+        sub_products: Produkty ve výběru
     notices:
       models:
         ric_assortment/product:
@@ -139,6 +160,12 @@ cs:
           destroy: "Upoutávka produktů byla úspěšně smazána."
           product_bind: "Vybrané produkty byly úspěšně přidány."
           product_unbind: "Produkt byl úspěšně odebrán."
+        ric_assortment/product_panel:
+          create: "Panel produktu byl úspěšně vytvořen."
+          update: "Panel produktu byl úspěšně upraven."
+          destroy: "Panel produktu byl úspěšně smazán."
+          sub_product_bind: "Vybrané produkty byly úspěšně přidány."
+          sub_product_unbind: "Produkt byl úspěšně odebrán."
     errors:
       models:
         ric_assortment/product:
@@ -154,3 +181,8 @@ cs:
               blank: "Produkt musí být vybrán."
         ric_assortment/product_ticker:
           not_found: "Upoutávka produktů nebyla nalezena."
+        ric_assortment/product_panel:
+          not_found: "Panel produktu nebyl nalezen."
+          attributes:
+            product_id:
+              blank: "Produkt musí být vybrán."

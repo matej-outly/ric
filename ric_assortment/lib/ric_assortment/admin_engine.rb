@@ -20,6 +20,8 @@ module RicAssortment
 		require 'ric_assortment/concerns/controllers/admin/product_attachment_relations_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_categories_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_category_relations_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_panels_controller'
+		require 'ric_assortment/concerns/controllers/admin/product_panel_sub_product_relations_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_photos_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_tickers_controller'
 		require 'ric_assortment/concerns/controllers/admin/product_ticker_relations_controller'

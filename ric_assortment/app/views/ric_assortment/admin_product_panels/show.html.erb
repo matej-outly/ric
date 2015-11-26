@@ -1,0 +1,9 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@product_panel, { 
+		product: { type: :belongs_to, label: :name, path: :product_path },
+		name: :string,
+		required: :boolean,
+		operator: :enum,
+		sub_products: { type: :has_many, label: :name }
+	}) %>
+<% end %>

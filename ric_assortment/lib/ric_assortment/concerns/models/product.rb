@@ -46,6 +46,11 @@ module RicAssortment
 					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s, dependent: :destroy
 
 					#
+					# Relation to product panels
+					#
+					has_many :product_panels, class_name: RicAssortment.product_panel_model.to_s, dependent: :destroy
+
+					#
 					# Relation to product tickers
 					#
 					has_and_belongs_to_many :product_tickers, class_name: RicAssortment.product_ticker_model.to_s
@@ -168,6 +173,11 @@ module RicAssortment
 						# Photos
 						self.product_photos.each do |product_photo|
 							new_record.product_photos << product_photo.duplicate
+						end
+
+						# Panels
+						self.product_panels.each do |product_panel|
+							new_record.product_panels << product_panel.duplicate
 						end
 
 					end

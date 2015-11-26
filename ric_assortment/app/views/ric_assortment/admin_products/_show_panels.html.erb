@@ -1,0 +1,10 @@
+<%= rug_index_table_for(@product.product_panels.order(position: :asc), { 
+	name: :string,
+	required: :boolean,
+	operator: :enum,
+	sub_products: { type: :has_many, label: :name }
+}, paths: {
+	show: :product_panel_path,
+	edit: :edit_product_panel_path,
+	destroy: :product_panel_path
+}) %>

@@ -36,6 +36,12 @@ RicAssortment::AdminEngine.routes.draw do
 	# Product photos
 	resources :product_photos, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_photos"
 
+	# Product panels
+	resources :product_panels, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_panels"
+
+	# Product product panel / sub product relations
+	resources :product_panel_sub_product_relations, only: [:edit, :update, :destroy], controller: "admin_product_panel_sub_product_relations"
+
 	# Product tickers
 	resources :product_tickers, controller: "admin_product_tickers"
 

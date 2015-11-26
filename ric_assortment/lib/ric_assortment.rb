@@ -19,6 +19,7 @@ require 'ric_assortment/concerns/models/product_attachment'
 require 'ric_assortment/concerns/models/product_category'
 require 'ric_assortment/concerns/models/product_photo'
 require 'ric_assortment/concerns/models/product_ticker'
+require 'ric_assortment/concerns/models/product_panel'
 
 module RicAssortment
 
@@ -89,6 +90,18 @@ module RicAssortment
 			return RicAssortment::ProductTicker
 		else
 			return @@product_ticker_model.constantize
+		end
+	end
+
+	#
+	# Product panel model
+	#
+	mattr_accessor :product_panel_model
+	def self.product_panel_model
+		if @@product_panel_model.nil?
+			return RicAssortment::ProductPanel
+		else
+			return @@product_panel_model.constantize
 		end
 	end
 

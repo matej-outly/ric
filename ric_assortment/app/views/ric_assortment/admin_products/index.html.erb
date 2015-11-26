@@ -2,7 +2,8 @@
 	<%= rug_index_table_for(@products, { 
 		name: :string,
 		catalogue_number: :string,
-		ean: :string
+		ean: :string,
+		price: :integer
 	}, paths: {
 		show: :product_path,
 		edit: :edit_product_path,
