@@ -193,7 +193,7 @@ module RicEshop
 					if !self.session_id.blank?
 						cart = RicEshop.cart_model.find(self.session_id)
 						cart.cart_items.each do |cart_item|
-							self.order_items.create(product_id: cart_item.product_id, amount: cart_item.amount)
+							self.order_items.create(product_id: cart_item.product_id, sub_product_ids: cart_item.sub_product_ids, amount: cart_item.amount)
 						end
 						cart.clear
 					end

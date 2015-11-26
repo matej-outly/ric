@@ -68,18 +68,35 @@ module RicEshop
 				#
 				# Add new product (if not already added)
 				#
-				def add(product_id)
+				def add(product_id, sub_product_ids = nil)
 					if !product_id.nil?
-						cart_item = RicEshop.cart_item_model.where(session_id: @session_id, product_id: product_id).first
-						if cart_item.nil?
-							product = RicEshop.product_model.find_by_id(product_id)
-							if product
-								delete_cache
-								cart_item = RicEshop.cart_item_model.new(session_id: @session_id, product_id: product_id, amount: 1)
-								return cart_item.save
-							else
-								return false
+
+						# Prepare subproducts
+						if !sub_product_ids.nil?
+							sub_product_ids = sub_product_ids.sort
+							if sub_product_ids.empty?
+								sub_product_ids = nil
 							end
+						end
+						if sub_product_ids.nil?
+							sub_product_ids_as_json = nil
+						else
+							sub_product_ids_as_json = sub_product_ids.to_json
+						end
+
+						# Try to find cart item with given product and sub products
+						cart_item = RicEshop.cart_item_model.where(session_id: @session_id, product_id: product_id, sub_product_ids: sub_product_ids_as_json).first
+						
+						if cart_item.nil?
+							return false if !check_valid_product(product_id)
+							if sub_product_ids
+								sub_product_ids.each do |sub_product_id|
+									return false if !check_valid_product(sub_product_id)
+								end
+							end
+							delete_cache
+							cart_item = RicEshop.cart_item_model.new(session_id: @session_id, product_id: product_id, sub_product_ids: sub_product_ids_as_json, amount: 1)
+							return cart_item.save
 						else
 							delete_cache
 							cart_item.amount += 1
@@ -93,9 +110,25 @@ module RicEshop
 				#
 				# Remove product (if added)
 				#
-				def remove(product_id)
+				def remove(product_id, sub_product_ids = nil)
 					if !product_id.nil?
-						cart_item = RicEshop.cart_item_model.where(session_id: @session_id, product_id: product_id).first
+
+						# Prepare subproducts
+						if !sub_product_ids.nil?
+							sub_product_ids = sub_product_ids.sort
+							if sub_product_ids.empty?
+								sub_product_ids = nil
+							end
+						end
+						if sub_product_ids.nil?
+							sub_product_ids_as_json = nil
+						else
+							sub_product_ids_as_json = sub_product_ids.to_json
+						end
+
+						# Try to find cart item with given product and sub products
+						cart_item = RicEshop.cart_item_model.where(session_id: @session_id, product_id: product_id, sub_product_ids: sub_product_ids_as_json).first
+						
 						if !cart_item.nil?
 							if cart_item.amount > 1
 								delete_cache
@@ -127,7 +160,7 @@ module RicEshop
 				#
 				def cart_items
 					if @cart_items.nil?
-						@cart_items = RicEshop.cart_item_model.where(session_id: @session_id)
+						@cart_items = RicEshop.cart_item_model.where(session_id: @session_id).order(created_at: :asc)
 					end
 					return @cart_items
 				end
@@ -202,6 +235,13 @@ module RicEshop
 					result << '}'
 
 					return result
+				end
+
+			protected
+
+				def check_valid_product(product_id)
+					product = RicEshop.product_model.find_by_id(product_id)
+					return !product.nil?
 				end
 
 			end

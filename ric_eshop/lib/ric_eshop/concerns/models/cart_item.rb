@@ -21,9 +21,9 @@ module RicEshop
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# One-to-many relation with product
@@ -39,11 +39,11 @@ module RicEshop
 					#
 					enum_column :product_currency, config(:currencies)
 
-					# *********************************************************************
+					# *********************************************************
 					# Callbacks
-					# *********************************************************************
+					# *********************************************************
 
-					before_create :synchronize_product
+					before_create :synchronize_products
 
 					# *********************************************************
 					# JSON
@@ -54,6 +54,15 @@ module RicEshop
 					#
 					add_methods_to_json [:price]
 					
+					# *********************************************************
+					# Sub products
+					# *********************************************************
+
+					array_column :sub_product_ids
+					array_column :sub_product_names
+					array_column :sub_product_prices
+					array_column :sub_product_currencies
+
 				end
 
 				module ClassMethods
@@ -69,7 +78,13 @@ module RicEshop
 				#
 				def price
 					if !self.product_price.blank? && !self.amount.blank?
-						return self.product_price * self.amount
+						result = self.product_price
+						if !self.sub_product_prices.blank?
+							self.sub_product_prices.each do |sub_product_price|
+								result += sub_product_price
+							end
+						end
+						return result * self.amount
 					else
 						return 0
 					end
@@ -80,11 +95,35 @@ module RicEshop
 				#
 				# Copy relevant items from binded product to order item
 				#
-				def synchronize_product
+				def synchronize_products
 					if !self.product_id.blank?
 						self.product_name = self.product.name
 						self.product_price = self.product.price
 						self.product_currency = self.product.currency
+					else
+						self.product_name = nil
+						self.product_price = nil
+						self.product_currency = nil
+					end
+					if !self.sub_product_ids.blank?
+						names = []
+						prices = []
+						currencies = []
+						self.sub_product_ids.each do |sub_product_id|
+							sub_product = RicEshop.product_model.find_by_id(sub_product_id)
+							if sub_product
+								names << sub_product.name
+								prices << sub_product.price
+								currencies << sub_product.currency
+							end
+						end
+						self.sub_product_names = names
+						self.sub_product_prices = prices
+						self.sub_product_currencies = currencies
+					else
+						self.sub_product_names = nil
+						self.sub_product_prices = nil
+						self.sub_product_currencies = nil
 					end
 				end
 				

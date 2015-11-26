@@ -37,7 +37,13 @@ module RicEshop
 					# Add product to cart
 					#
 					def add
-						result = @cart.add(params[:id])
+						product_id = params[:product_id]
+						if params[:sub_product_ids]
+							sub_product_ids = params[:sub_product_ids].split(",")
+						else
+							sub_product_ids = nil
+						end
+						result = @cart.add(product_id, sub_product_ids)
 						respond_to do |format|
 							format.html { 
 								flash[:notice] = I18n.t("activerecord.notices.models.ric_eshop/cart.add")
@@ -56,7 +62,13 @@ module RicEshop
 					# Remove product from cart
 					#
 					def remove
-						result = @cart.remove(params[:id])
+						product_id = params[:product_id]
+						if params[:sub_product_ids]
+							sub_product_ids = params[:sub_product_ids].split(",")
+						else
+							sub_product_ids = nil
+						end
+						result = @cart.remove(product_id, sub_product_ids)
 						respond_to do |format|
 							format.html { 
 								flash[:notice] = I18n.t("activerecord.notices.models.ric_eshop/cart.remove")
