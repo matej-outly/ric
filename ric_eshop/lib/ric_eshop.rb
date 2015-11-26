@@ -80,6 +80,18 @@ module RicEshop
 	end
 
 	#
+	# Session model
+	#
+	mattr_accessor :session_model
+	def self.session_model
+		if @@session_model.nil?
+			return RicUser::Session
+		else
+			return @@session_model.constantize
+		end
+	end
+
+	#
 	# Product model
 	#
 	mattr_accessor :product_model

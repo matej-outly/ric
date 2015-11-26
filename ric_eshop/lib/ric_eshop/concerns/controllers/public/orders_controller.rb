@@ -22,14 +22,15 @@ module RicEshop
 					#
 					included do
 
+						before_action :set_cart, only: [:new, :create]
+
 					end
 
 					#
 					# New action
 					#
 					def new
-						@cart = RicEshop.cart_model.find(session_id)
-						@order = RicEshop.order_model.new(session_id: session_id)
+						@order = RicEshop.order_model.new(session_id: @cart.session_id)
 						if @cart.empty?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicEshop.order_model.model_name.i18n_key}.cart_empty")
 						end
@@ -39,7 +40,6 @@ module RicEshop
 					# Create action
 					#
 					def create
-						@cart = RicEshop.cart_model.find(session_id)
 						@order = RicEshop.order_model.new(order_params)
 						if @order.save
 							redirect_to order_created_path, notice: I18n.t("activerecord.notices.models.#{RicEshop.order_model.model_name.i18n_key}.create")
@@ -49,6 +49,13 @@ module RicEshop
 					end
 
 				protected
+
+					#
+					# Find model according to parameter
+					#
+					def set_cart
+						@cart = RicEshop.cart_model.find(RicEshop.session_model.current_id(session))
+					end
 
 					#
 					# Get path which should be followed after order is succesfully created

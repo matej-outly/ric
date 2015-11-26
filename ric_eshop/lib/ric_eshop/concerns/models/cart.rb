@@ -50,6 +50,16 @@ module RicEshop
 					@session_id = session_id
 				end
 
+				#
+				# Get session id
+				#
+				def session_id
+					return @session_id
+				end
+
+				#
+				# Delete object cache
+				#
 				def delete_cache
 					@cart_items = nil
 					@products = nil

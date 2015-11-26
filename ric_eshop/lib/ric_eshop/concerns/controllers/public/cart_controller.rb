@@ -94,7 +94,7 @@ module RicEshop
 					# Find model according to parameter
 					#
 					def set_cart
-						@cart = RicEshop.cart_model.find(session_id)
+						@cart = RicEshop.cart_model.find(RicEshop.session_model.current_id(session))
 					end
 
 				end
