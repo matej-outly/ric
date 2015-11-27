@@ -1,7 +1,7 @@
 <%= rug_form_for(@league_match, create_url: :league_matches_path, update_url: :league_match_path) do |f| %>
 	<%= f.text_input_row :played_at, :datetime_local_field %>
 	<%= f.picker_row :league_season_id, RicLeague.league_season_model.all.order(started_at: :desc), :id, :name, enable_null: true %>
-	<%= f.checkbox_row :overtime %>
+	<%= f.text_input_row :court %>
 	
 	<h3><%= t("activerecord.attributes.ric_league/league_match.team1") %></h3>
 
@@ -14,6 +14,7 @@
 	<%= f.picker_row :team2_id, RicLeague.team_model.order(position: :asc), :id, :name %>
 	<%= f.text_input_row :result2, :number_field %>
 	<%= f.text_input_row :points2, :number_field %>
+	<%= f.checkbox_row :overtime %>
 
 	<%= f.primary_button_row :submit %>
 <% end %>

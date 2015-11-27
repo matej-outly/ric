@@ -65,12 +65,28 @@ module RicLeague
 				# Virtual attributes
 				# *************************************************************************
 
-				def teams
-					return (self.team1 && self.team1.key ? self.team1.key.upcase : "") + config(:teams_delimiter) + (self.team2 && self.team2.key ? self.team2.key.upcase : "")
+				def team_names
+					if self.team1 && self.team2
+						return team1.name + config(:teams_delimiter) + self.team2.name
+					else
+						return nil
+					end
+				end
+
+				def team_keys
+					if self.team1 && self.team2
+						return team1.key.upcase + config(:teams_delimiter) + self.team2.key.upcase
+					else
+						return nil
+					end
 				end
 
 				def result
-					return self.result1.to_s + config(:result_delimiter) + self.result2.to_s
+					if self.result1 && self.result2
+						return self.result1.to_s + config(:result_delimiter) + self.result2.to_s
+					else
+						return nil
+					end
 				end
 
 			end

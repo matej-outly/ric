@@ -55,6 +55,7 @@ cs:
         played_at: Datum a čas
         league_season: Sezóna
         league_season_id: Sezóna
+        court: Hřiště
         overtime: Rozhodnuto v prodloužení
         team1: Tým 1
         team1_id: Tým 1
@@ -64,7 +65,8 @@ cs:
         result2: Výsledek týmu 2
         points1: Bodový zisk týmu 1
         points2: Bodový zisk týmu 2
-        teams: Týmy
+        team_keys: Týmy
+        team_names: Týmy
         result: Výsledek
       ric_league/team:
         name: Jméno
