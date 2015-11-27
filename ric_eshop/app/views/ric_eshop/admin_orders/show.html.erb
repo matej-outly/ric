@@ -36,14 +36,18 @@
 			}) %>
 		</div>
 		<div class="tab-content">
-			<%= rug_index_table_for(@order.order_items.order(created_at: :asc), { 
-				product_name: :string,
-				product_currency: :enum,
-				product_price: :integer,
-				amount: :integer,
-				price: :integer
-			}, paths: {
-			}, summary: true ) %>
+			<% 
+				columns = RugBuilder::TableBuilder::Columns.new 
+				columns.add_column_by_block(:product_name) do |order_item|
+					order_item.product_name + (order_item.sub_product_names ? " + " + order_item.sub_product_names.join(", ") : "")
+				end
+				columns.add_column_by_block(:product_price) do |order_item|
+					number_to_currency(order_item.product_price + (order_item.sub_product_prices ? order_item.sub_product_prices.inject(0, :+) : 0), locale: :cs)
+				end
+				columns.add_column_by_type(:amount, :integer)
+				columns.add_column_by_type(:price, :currency)
+			%>
+			<%= rug_index_table_for(@order.order_items.order(created_at: :asc), columns, summary: true ) %>
 		</div>
 	</section>
 <% end %>
