@@ -502,21 +502,23 @@ $mobile-width: 320px;
 			.menu {
 				li.delimiter {
 					padding: 0px 0px;
+					height: auto;
+					min-height: 0;
 
 					&:before {
 						content: " ";
-						display: inline-block;
-						vertical-align: middle;
+						display: block;
+						margin: 5px auto;
 						background: #757575;
-						width: 40px;
-						height: 2px;
+						width: 50%;
+						height: 1px;
 					}
 				}
 
 			 	li.active > a {
 					background: none;
 					&:hover {
-						background: #868d92 none;				
+						background: #868d92 none;
 					}
 				}
 			}

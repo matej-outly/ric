@@ -128,6 +128,10 @@ cs:
         number: Číslo
         city: Město
         postcode: PSČ
+      name:
+        title: Titul
+        firstname: Křestní jméno
+        lastname: Příjmení
       range:
         min: Minimálně
         max: Maximálně
