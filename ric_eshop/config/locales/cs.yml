@@ -40,7 +40,7 @@ cs:
         price: Cena
         currency: Měna
         currency_values:
-          czk: "Kč"
+          cs: "Kč"
         delivery_type: Typ dopravy
         delivery_type_values:
           in_person: Osobní odběr
