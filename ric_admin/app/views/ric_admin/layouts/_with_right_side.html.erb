@@ -19,8 +19,10 @@
 		<%= render partial: "ric_admin/shared/login_info" %>
 
 		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
-			<h2><%= t("headers.filters") %></h2>
-			<%= render partial: "#{controller_path}/filters" %>
+			<h2><a href="#" class="toggle" gumby-trigger=".layout .side .filters"><%= t("headers.filters") %></a></h2>
+			<div class="filters togglable">
+				<%= render partial: "#{controller_path}/filters" %>
+			</div>
 		<% end %>
 
 		<% if lookup_context.find_all("#{controller_path}/_actions").any? %>

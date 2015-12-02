@@ -31,6 +31,10 @@ $mobile-width: 320px;
 
 	h1, h2, h3, h4, h5, h6 {
 		font-family: "Open Sans";
+		a {
+			color: inherit;
+			&:hover { color: inherit; }
+		}
 	}
 
 	h2 {
@@ -602,6 +606,40 @@ $mobile-width: 320px;
 	}
 
 	/*************************************************************************/
+	/* Togglable                                                             */
+	/*************************************************************************/
+
+	.toggle {
+		&:after {
+			content: "";
+			font-family: entypo;
+		}
+		&.active {
+			&:after {
+				content: "";
+			}
+		}
+	}
+	h1, h2, h3, h4, h5, h6 {
+		.toggle {
+			&:after {
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 20px;
+				font-size: 70%;
+			}
+		}
+	}
+
+	.togglable {
+		height: 0;
+		overflow: hidden;
+		&.active {
+			height: auto;
+		}
+	}
+
+	/*************************************************************************/
 	/* Login info                                                            */
 	/*************************************************************************/
 
@@ -661,6 +699,15 @@ $mobile-width: 320px;
 
 		.login-info { 
 			min-height: 36px;
+		}
+
+		.togglable {
+			margin-left: -25px;
+			margin-right: -25px;
+			ul.menu {
+				margin-left: 0;
+				margin-right: 0;
+			}
 		}
 
 		ul.menu {
