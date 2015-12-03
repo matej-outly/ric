@@ -99,7 +99,7 @@ cs:
         price: Cena
         currency: Měna
         currency_values:
-          czk: "Kč"
+          cs: "Kč"
         keywords: Klíčová slova
         description: Popis
         checkbox: Vybrat

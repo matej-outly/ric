@@ -6,4 +6,4 @@ url: "/assortment/products/:id"
 
 # Available currencies
 currencies:
-  - czk
+  - cs
