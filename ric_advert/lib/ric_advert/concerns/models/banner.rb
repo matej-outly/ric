@@ -21,9 +21,9 @@ module RicAdvert
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Relation to advertiser
@@ -35,32 +35,61 @@ module RicAdvert
 					#
 					has_many :banner_statistics, class_name: RicAdvert.banner_statistic_model.to_s
 
-					# *********************************************************************
+					# *********************************************************
 					# Validators
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Form/to consistency
 					# 
 					validate :validate_from_to_consistency
 
-					# *********************************************************************
-					# Attributes
-					# *********************************************************************
+					#
+					# Kind must be present
+					#
+					validates_presence_of :kind
+
+					# *********************************************************
+					# File
+					# *********************************************************
 
 					#
-					# Image
+					# Attachment
 					#
-					has_attached_file :image, styles: { thumb: "200x200#" }
-					validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
+					has_attached_file :file
+					validates_attachment_content_type :file, :content_type => /\A.*\Z/
+
+					#
+					# Resolve file kind before save
+					#
+					before_save :resolve_file_kind
+
+					#
+					# Available file kinds
+					#
+					enum_column :file_kind, ["image", "flash"]
+
+					#
+					# Add file url method to json
+					#
+					add_methods_to_json :file_url
+
+					# *********************************************************
+					# Kind
+					# *********************************************************
+
+					#
+					# Kind
+					#
+					enum_column :kind, config(:kinds)
 
 				end
 
 				module ClassMethods
 
-					# *********************************************************************
+					# *********************************************************
 					# Scopes
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Scope for valid banners
@@ -83,9 +112,9 @@ module RicAdvert
 						where(":date < valid_from", date: date)
 					end
 
-					# *********************************************************************
+					# *********************************************************
 					# Search mechanism
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Find random banner of given kind valid for given date
@@ -101,9 +130,9 @@ module RicAdvert
 
 				end
 
-				# *************************************************************************
+				# *************************************************************
 				# Statistics
-				# *************************************************************************
+				# *************************************************************
 				
 				#
 				# Banner is clicked
@@ -133,16 +162,16 @@ module RicAdvert
 					return RicAdvert.banner_statistic_model.where(banner_id: self.id).sum(:clicks)
 				end
 
-				# *************************************************************************
-				# Image
-				# *************************************************************************
+				# *************************************************************
+				# File
+				# *************************************************************
 
 				#
 				# Get URL of image original
 				#
-				def image_url
-					if image.exists?
-						return image.url(:original)
+				def file_url
+					if file.exists?
+						return file.url(:original)
 					else
 						return nil
 					end
@@ -176,6 +205,21 @@ module RicAdvert
 						errors.add(:to, I18n.t('activerecord.errors.models.banner.attributes.valid_to.before_valid_from'))
 					end
 
+				end
+
+				#
+				# Resolve file kind
+				#
+				def resolve_file_kind
+					if self.file_content_type
+						if self.file_content_type.start_with?("image/")
+							self.file_kind = "image"
+						elsif self.file_content_type == "application/x-shockwave-flash"
+							self.file_kind = "flash"
+						else
+							self.file_kind = nil
+						end
+					end
 				end
 
 			end

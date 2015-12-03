@@ -3,7 +3,7 @@ class CreateRicAdvertBanners < ActiveRecord::Migration
     create_table :banners do |t|
       
       # Timestamps
-      t.timestamps null: false
+      t.timestamps null: true
 
       # Relation to advertisers
       t.integer :advertiser_id
@@ -16,7 +16,8 @@ class CreateRicAdvertBanners < ActiveRecord::Migration
       
       # Content
       t.string :kind
-      t.attachment :image
+      t.attachment :file
+      t.string :file_kind
       
       # Validity
       t.date :valid_from

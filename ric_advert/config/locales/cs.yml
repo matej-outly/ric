@@ -18,6 +18,10 @@ cs:
         edit: "Upravit banner"
         update: "Upravit banner"
         destroy: "Smazat banner"
+        valid_banners: Platné
+        invalid_banners: Neplatné
+        sofar_invalid_banners: Platné v budoucnosti
+        already_invalid_banners: Už neplatné
       observer_advertisers:
         index: "Inzerenti"
         show: "Detail inzerenta"
@@ -34,7 +38,22 @@ cs:
         name: Jméno banneru
         url: Odkaz
         kind: Druh
-        image: Obrázek
+        kind_values:
+          leaderboard: Leaderboard (728x90)
+          standard_banner: Standard banner (468x60)
+          skyscraper: Skyscraper (120x600)
+          wide_skyscraper: Wide skyscraper (160x600)
+          square: Square (125x125)
+          button_1: Button 1 (120x90)
+          button_2: Button 2 (120x60)
+          vertical_banner: Vertical banner (120x240)
+          half_banner: Half banner (234x60)
+          micro_button: Micro button (88x31)
+        file: Soubor
+        file_kind: Typ souboru
+        file_kind_values:
+          image: Obrázek
+          flash: Flash
         valid_from: Platné od
         valid_to: Platné do
         priority: Priorita
@@ -44,11 +63,6 @@ cs:
         ip: IP
         impressions: Počet zobrazení
         clicks: Počet kliknutí
-    scopes:
-      ric_advert/banner:
-        valid: Platné
-        sofar_invalid: Platné v budoucnosti
-        already_invalid: Už neplatné
     notices:
       models:
         ric_advert/advertiser:
@@ -65,3 +79,6 @@ cs:
           not_found: Inzerent nebyl nalezen.
         ric_advert/banner:
           not_found: Banner nebyl nalezen.
+          attributes:
+            kind:
+              blank: Druh banneru musí být vybrán.

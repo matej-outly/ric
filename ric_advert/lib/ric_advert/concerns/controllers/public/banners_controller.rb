@@ -37,7 +37,7 @@ module RicAdvert
 						if banner
 							banner.impressed(request.remote_ip)
 						end
-						render :json => banner.to_json(methods: [:image_url])
+						render :json => banner.to_json
 					end
 
 					#

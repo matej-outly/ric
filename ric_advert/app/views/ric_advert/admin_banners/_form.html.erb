@@ -2,10 +2,10 @@
 	<%= f.picker_row :advertiser_id, RicAdvert.advertiser_model.all.order(name: :asc), :id, :name %>
 	<%= f.text_input_row :name, :text_field %>
 	<%= f.text_input_row :url, :text_field %>
-	<%= f.text_input_row :kind, :text_field %>
-	<%= f.text_input_row :image, :file_field %>
-	<%= f.text_input_row :valid_from, :date_field %>
-	<%= f.text_input_row :valid_to, :date_field %>
+	<%= f.picker_row :kind %>
+	<%= f.dropzone_row :file %>
+	<%= f.datepicker_row :valid_from %>
+	<%= f.datepicker_row :valid_to %>
 	<%= f.text_input_row :priority, :number_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

@@ -64,9 +64,15 @@ module RicAdvert
 					def create
 						@banner = RicAdvert.banner_model.new(banner_params)
 						if @banner.save
-							redirect_to banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.create")
+							respond_to do |format|
+								format.html { redirect_to banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.create") }
+								format.json { render json: @banner.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @banner.errors }
+							end
 						end
 					end
 
@@ -75,9 +81,15 @@ module RicAdvert
 					#
 					def update
 						if @banner.update(banner_params)
-							redirect_to banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to banner_path(@banner), notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.update") }
+								format.json { render json: @banner.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @banner.errors }
+							end
 						end
 					end
 
@@ -86,7 +98,10 @@ module RicAdvert
 					#
 					def destroy
 						@banner.destroy
-						redirect_to banners_path, notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.destroy")
+						respond_to do |format|
+							format.html { redirect_to banners_path, notice: I18n.t("activerecord.notices.models.#{RicAdvert.banner_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @banner.id }
+						end
 					end
 
 				protected
@@ -102,7 +117,7 @@ module RicAdvert
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def banner_params
-						params.require(:banner).permit(:advertiser_id, :name, :url, :kind, :image, :valid_from, :valid_to, :priority)
+						params.require(:banner).permit(:advertiser_id, :name, :url, :kind, :file, :valid_from, :valid_to, :priority)
 					end
 
 					# 

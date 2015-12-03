@@ -3,7 +3,7 @@ class CreateRicAdvertAdvertisers < ActiveRecord::Migration
     create_table :advertisers do |t|
       
       # Timestamps
-      t.timestamps null: false
+      t.timestamps null: true
 
       # Identification
       t.string :name

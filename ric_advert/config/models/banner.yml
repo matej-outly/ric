@@ -1,0 +1,11 @@
+kinds:
+  - leaderboard
+  - standard_banner
+  - skyscraper
+  - wide_skyscraper
+  - square
+  - button_1
+  - button_2
+  - vertical_banner
+  - half_banner
+  - micro_button
