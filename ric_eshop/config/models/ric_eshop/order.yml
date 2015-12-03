@@ -1,6 +1,6 @@
 # Available currencies
 currencies:
-  - czk
+  - cs
 
 # Availabele payment types
 payment_types:

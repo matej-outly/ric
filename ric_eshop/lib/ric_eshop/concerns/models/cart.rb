@@ -41,6 +41,21 @@ module RicEshop
 						RicEshop.cart_item_model.delete_all(["updated_at < ?", (now - 1.day)])
 					end
 
+					# 
+					# Define virtual item
+					#
+					def virtual_item(&block)
+						@virtual_items_blocks = [] if @virtual_items_blocks.nil?
+						@virtual_items_blocks << block
+					end
+
+					#
+					# Get virtual item definitions
+					#
+					def virtual_items_blocks
+						@virtual_items_blocks
+					end
+
 				end
 
 				#
@@ -62,6 +77,7 @@ module RicEshop
 				#
 				def delete_cache
 					@cart_items = nil
+					@virtual_items = nil
 					@products = nil
 				end
 
@@ -166,6 +182,20 @@ module RicEshop
 				end
 
 				#
+				# All virtual products
+				#
+				def virtual_items
+					if @virtual_items.nil?
+						@virtual_items = []
+						self.class.virtual_items_blocks.each do |virtual_item_block|
+							virtual_item = virtual_item_block.call(self)
+							@virtual_items << virtual_item if virtual_item
+						end
+					end
+					return @virtual_items
+				end
+
+				#
 				# Total price
 				#
 				def price
@@ -173,6 +203,9 @@ module RicEshop
 						@price = 0
 						self.cart_items.each do |cart_item|
 							@price += cart_item.price
+						end
+						self.virtual_items.each do |virtual_item|
+							@price += virtual_item.price
 						end
 					end
 					return @price

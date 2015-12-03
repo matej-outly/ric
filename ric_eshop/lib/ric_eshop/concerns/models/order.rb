@@ -195,6 +195,9 @@ module RicEshop
 						cart.cart_items.each do |cart_item|
 							self.order_items.create(product_id: cart_item.product_id, sub_product_ids: cart_item.sub_product_ids, amount: cart_item.amount)
 						end
+						cart.virtual_items.each do |virtual_item|
+							self.order_items.create(product_name: virtual_item.name, product_price: virtual_item.price, product_currency: virtual_item.currency, amount: 1)
+						end
 						cart.clear
 					end
 				end

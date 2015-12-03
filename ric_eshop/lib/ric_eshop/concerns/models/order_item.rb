@@ -109,10 +109,10 @@ module RicEshop
 						self.product_name = self.product.name
 						self.product_price = self.product.price
 						self.product_currency = self.product.currency
-					else
-						self.product_name = nil
-						self.product_price = nil
-						self.product_currency = nil
+					#else
+					#	self.product_name = nil
+					#	self.product_price = nil
+					#	self.product_currency = nil
 					end
 					if !self.sub_product_ids.blank?
 						names = []
@@ -129,10 +129,10 @@ module RicEshop
 						self.sub_product_names = names
 						self.sub_product_prices = prices
 						self.sub_product_currencies = currencies
-					else
-						self.sub_product_names = nil
-						self.sub_product_prices = nil
-						self.sub_product_currencies = nil
+					#else
+					#	self.sub_product_names = nil
+					#	self.sub_product_prices = nil
+					#	self.sub_product_currencies = nil
 					end
 				end
 

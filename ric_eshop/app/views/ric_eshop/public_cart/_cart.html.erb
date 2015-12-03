@@ -16,6 +16,13 @@
 			<% end %>
 		<% end %>
 	<% end %>
+	<% @cart.virtual_items.each do |virtual_item| %>
+		<tr class="product">
+			<td class="name" colspan="2"><%= virtual_item.name %></td>
+			<td class="price"><%= number_to_currency(virtual_item.price, locale: :cs) %></td>
+			<td colspan="2"></td>
+		</tr>
+	<% end %>
 	<tr class="total">
 		<td colspan="2" class="">Celkem</td>
 		<td colspan="3" class="price"><%= number_to_currency(@cart.price, locale: :cs) %></td>
