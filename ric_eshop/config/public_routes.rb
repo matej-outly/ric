@@ -12,7 +12,11 @@
 RicEshop::PublicEngine.routes.draw do
 
 	# Orders
-	resources :orders, controller: "public_orders", only: [:new, :create]
+	resources :orders, controller: "public_orders", only: [:new, :create] do
+		member do
+			get "finalize"
+		end
+	end
 
 	# Cart
 	get "cart/get", to: "public_cart#get"

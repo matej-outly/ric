@@ -23,6 +23,7 @@ module RicEshop
 					included do
 
 						before_action :set_cart, only: [:new, :create]
+						before_action :set_order, only: [:finalize]
 
 					end
 
@@ -41,11 +42,18 @@ module RicEshop
 					#
 					def create
 						@order = RicEshop.order_model.new(order_params)
+						@order.cart_price = @cart.price # In order to validate minimal price conditions 
 						if @order.save
 							redirect_to order_created_path, notice: I18n.t("activerecord.notices.models.#{RicEshop.order_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
+					end
+
+					#
+					# Finalize action
+					#
+					def finalize
 					end
 
 				protected
@@ -58,10 +66,20 @@ module RicEshop
 					end
 
 					#
+					# Find model according to parameter
+					#
+					def set_order
+						@order = Order.find_by_id(params[:id])
+						if @order.nil?
+							redirect_to main_app.root_path, error: I18n.t("activerecord.errors.models.#{RicEshop.order_model.model_name.i18n_key}.not_found")
+						end
+					end
+
+					#
 					# Get path which should be followed after order is succesfully created
 					#
 					def order_created_path
-						main_app.root_path
+						ric_eshop_public.finalize_order_path(@order)
 					end
 
 					# 
