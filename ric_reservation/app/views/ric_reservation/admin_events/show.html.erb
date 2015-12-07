@@ -1,0 +1,47 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+
+	<%= rug_show_table_for(@event, { 
+		resource: { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" },
+		name: :string,
+		formatted_time: :string,
+		period: :enum,
+		capacity: :integer,
+		time_window_soon: :integer,
+		time_window_deadline: :integer,
+	}) %>
+
+	<h3><%= t("headers.ric_reservation.admin_events.scheduled_events") %></h3>
+	<%
+		columns = RugBuilder::TableBuilder::Columns.new({ 
+			schedule_date: :date,
+			schedule_time: :string
+		})
+		columns.add_column_by_block(:capacity) do |scheduled_event|
+			if !scheduled_event.tmp_canceled?
+				"#{scheduled_event.reservations.above_line.count}/#{ scheduled_event.capacity}"
+			else
+				t("general.canceled")
+			end
+		end
+	%>
+	<%= rug_index_table_for(@scheduled_events, 
+		columns, 
+		paths: {
+			show: lambda {|scheduled_event| ric_reservation_admin.event_reservations_path(id: scheduled_event.id, schedule_date: scheduled_event.schedule_date) }
+		},
+		model_class: "RicReservation::Event"
+	) %>
+	<%= 
+		render partial: "ric_reservation/shared/timetable_pagination", locals: {
+			page: @page,
+			page_bottom: 1,
+			page_top: 4,
+			from: @from,
+			to: @to,
+			next_label: t("general.action.prev_" + (@event.month_scope_period? ? "month" : "week")),
+			prev_label: t("general.action.next_" + (@event.month_scope_period? ? "month" : "week")),
+			path_callback: lambda { |params| ric_reservation_admin.event_path(@event, params) }
+		} 
+	%>
+
+<% end %>

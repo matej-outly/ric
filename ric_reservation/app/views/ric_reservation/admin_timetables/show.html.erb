@@ -1,0 +1,17 @@
+<%= render layout: "ric_admin/layouts/default", locals: { disable_header: true } do %>	
+	<h2><%= t("headers.ric_reservation.admin_timetables.show", name: @resource.name.downcase) %></h2>
+	<%= 
+		render partial: "ric_reservation/shared/timetable_pagination", locals: {
+			page: @page,
+			page_bottom: -1,
+			page_top: 10,
+			from: @from,
+			to: @to,
+			next_label: t("general.action.next_week"),
+			prev_label: t("general.action.prev_week"),
+			path_callback: lambda { |params| ric_reservation_admin.timetable_path(@resource, params) }
+		} 
+	%>
+	<% items, days, hours = week_timetable_items(@from, @events, lambda { |event| ric_reservation_admin.event_reservations_path(id: event.id, schedule_date: event.schedule_date) }, 2, 8, 16 ) %>
+	<%= render partial: "ric_reservation/shared/week_timetable", locals: { hours: hours, days: days, items: items } %>
+<% end %>

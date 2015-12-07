@@ -1,0 +1,23 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+
+	<%
+		columns = RugBuilder::TableBuilder::Columns.new({ 
+			schedule_date: :date,
+			schedule_time: :string,
+			name: :string
+		})
+	%>
+	<%= rug_show_table_for(@event, columns) %>
+
+	<%= rug_form_for(@reservation, url: ric_reservation_admin.create_event_reservation_path(id: @event.id, schedule_date: @event.schedule_date)) do |f| %>
+		<%= f.hidden_field :owner_id %>
+		<%= f.text_input_row :owner_name %>
+		<% if @event.at_capacity? %>
+			<div class="warning alert"><%= t("activerecord.notices.models.ric_reservation/reservation.at_capacity") %></div>
+			<%= f.primary_button_row :submit, label: t("helpers.submit.reserve_below_line") %>
+		<% else %>
+			<%= f.primary_button_row :submit, label: t("helpers.submit.reserve") %>
+		<% end %>
+	<% end %>
+
+<% end %>

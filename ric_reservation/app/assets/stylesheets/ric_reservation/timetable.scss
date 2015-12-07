@@ -1,0 +1,87 @@
+table.timetable {
+	
+	/**
+	 * Gumby reset
+	 */
+	tr td { 
+		border-top: 0; 
+		&:first-child { font-weight: normal; }
+	}
+
+	/**
+	 * Font
+	 */
+	td { font-size: 80%; }
+
+	/**
+	 * Borders
+	 */
+	td {
+		&.bottom-solid { border-bottom: 1px solid #e5e5e5; }
+		&.bottom-invisible { border-bottom: 0; }
+		&.right-solid { border-right: 1px solid #e5e5e5; }
+		&.right-dotted { border-right: 1px dotted #e5e5e5; }
+	}
+
+	/**
+	 * Header
+	 */
+	tr td.header {
+		background: #f6f6f6;
+		.day-of-week { font-weight: bold; }
+	}
+
+	/**
+	 * Item
+	 */
+	td.item {
+		border: 1px solid #e5e5e5;
+		&.state-closed, &.at-capacity { color: #aaaaaa; }
+		.trainer { font-weight: bold; }
+		i { margin: 0; }
+	} 
+	
+	/* Links */
+	td.item { 
+		padding: 0; 
+		cursor: default; 
+		&.state-closed a, &.at-capacity a { color: #aaaaaa; }
+		a { display: block; width: 100%; height: 100%; padding: 10px; color: #555555; }
+		.padding { padding: 10px; }
+	}
+
+	/* Backgrounds */
+	td.item { 
+		&.color-yellow { background: #fff178; }
+		&.color-yellow.state-closed, &.color-yellow.at-capacity { background: #faf3b7; }
+		&.color-turquoise { background: #71e8ac; }
+		&.color-turquoise.state-closed, &.color-turquoise.at-capacity { background: #b5eed1; }
+		&.color-blue { background: #a2e1f1; }
+		&.color-blue.state-closed, &.color-blue.at-capacity { background: #ceeff7; }
+		&.color-pink { background: #ff79a9; }
+		&.color-pink.state-closed, &.color-pink.at-capacity { background: #fda8c6; }
+		&.color-violet { background: #bdb0ff; }
+		&.color-violet.state-closed, &.color-violet.at-capacity { background: #d7d0f6; }
+		&.color-orange { background: #f89d7a; }
+		&.color-orange.state-closed, &.color-orange.at-capacity { background: #f4baa4; }
+		&.color-red { background: #fa7c7c; }
+		&.color-red.state-closed, &.color-red.at-capacity { background: #f9b8b8; }
+		&.color-green { background: #c2f39a; }
+		&.color-green.state-closed, &.color-green.at-capacity { background: #e0f7cd; }
+	}
+
+}
+
+/**
+ * Pagination
+ */
+.timetable-pagination { 
+	display: table; 
+	width: 100%; 
+	margin: 10px 0; 
+
+	> div { display: table-cell; width: 33%; }
+	.prev { text-align: left; }
+	.title { text-align: center; }
+	.next { text-align: right; }
+}

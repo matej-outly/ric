@@ -1,0 +1,23 @@
+<div class="timetable-pagination">
+	<div class="prev">
+		<% if page > page_bottom %>
+			<% if page == 2 %>
+				<%= link_to "<i class=\"icon-left-open-big\"></i>".html_safe + prev_label.capitalize, path_callback.call({}) %>
+			<% else %>
+				<%= link_to "<i class=\"icon-left-open-big\"></i>".html_safe + prev_label.capitalize, path_callback.call(page: page-1) %>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="title">
+		<%= l(from) %> - <%= l(to - 1.day) %>
+	</div>
+	<div class="next">
+		<% if page < page_top %>
+			<% if page == 0 %>
+				<%= link_to (next_label.capitalize + "<i class=\"icon-right-open-big\"></i>").html_safe, path_callback.call({}) %>
+			<% else %>
+				<%= link_to (next_label.capitalize + "<i class=\"icon-right-open-big\"></i>").html_safe, path_callback.call(page: page+1) %>
+			<% end %>
+		<% end %>
+	</div>
+</div>

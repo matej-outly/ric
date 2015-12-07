@@ -1,0 +1,59 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<section class="tabs pill">
+		<ul class="tab-nav">
+			<li class="active"><a href="#"><%= t("headers.ric_reservation.admin_resources.valid_events") %></a></li>
+			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.yet_invalid_events") %></a></li>
+			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.already_invalid_events") %></a></li>
+			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.show") %></a></li>
+		</ul>
+		<div class="tab-content active">
+			<%= rug_index_table_for(@valid_other_events, { 
+				name: :string,
+				formatted_time: :string,
+				period: :enum
+			}, paths: {
+				show: "ric_reservation_admin.event_path",
+				edit: "ric_reservation_admin.edit_event_path",
+				destroy: "ric_reservation_admin.event_path"
+			}, summary: true ) %>
+			<h3><%= t("headers.ric_reservation.admin_resources.valid_once_events") %></h3>
+			<%= rug_index_table_for(@valid_once_events, { 
+				name: :string,
+				formatted_time: :string,
+				period: :enum
+			}, paths: {
+				show: "ric_reservation_admin.event_path",
+				edit: "ric_reservation_admin.edit_event_path",
+				destroy: "ric_reservation_admin.event_path"
+			}, summary: true ) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_index_table_for(@yet_invalid_events, { 
+				name: :string,
+				formatted_time: :string,
+				period: :enum,
+				valid_from: :date
+			}, paths: {
+				show: "ric_reservation_admin.event_path",
+				edit: "ric_reservation_admin.edit_event_path"
+			}, summary: true ) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_index_table_for(@already_invalid_events, { 
+				name: :string,
+				formatted_time: :string,
+				period: :enum,
+				valid_to: :date
+			}, paths: {
+				show: "ric_reservation_admin.event_path"
+			}, summary: true ) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_show_table_for(@resource, { 
+				name: :string,
+				time_window_soon: :integer,
+				time_window_deadline: :integer,
+			}) %>
+		</div>
+	</section>
+<% end %>

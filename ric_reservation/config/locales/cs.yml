@@ -1,0 +1,145 @@
+cs:
+
+  headers:
+    ric_reservation:
+      admin_resources:
+        index: Rozvrhové tabulky
+        show: Detail rozvrhové tabulky
+        new: Nová rozvrhová tabulka
+        create: Nová rozvrhová tabulka
+        edit: Upravit rozvrhovou tabulku
+        update: Upravit rozvrhovou tabulku
+        destroy: Smazat rozvrhovou tabulku
+        yet_invalid_events: "Naplánované události"
+        already_invalid_events: "Smazané události"
+        valid_events: "Platné události"
+        valid_once_events: "Jednorázové"
+      admin_events:
+        index: Události
+        show: Detail události
+        new: Nová událost
+        create: Nová událost
+        edit: Upravit událost
+        update: Upravit událost
+        destroy: Smazat událost
+        scheduled_events: Termíny
+      admin_event_reservations:
+        index: Rezervace na událost
+        new: Nová rezervace
+        create_anonymous: Nová anonymní rezervace
+        destroy: "Zrušit&nbsp;rezervaci"
+        present: "Změnit&nbsp;stav na&nbsp;&bdquo;přišel&ldquo;"
+        not_present: "Změnit&nbsp;stav na&nbsp;&bdquo;nepřišel&ldquo;"
+      admin_event_modifiers:
+        create_canceled: Jednorázově zrušit událost
+      admin_timetables:
+        index: "Rezervace"
+        show: "Rozvrhová tabulka pro %{name}"
+
+  activerecord:
+    attributes:
+      ric_reservation/resource:
+        name: Jméno
+        time_window_soon: Kolik minut před začátkem považovat rezervaci za brzkou
+        time_window_deadline: Kolik minut před začátkem uzavřít rezervaci
+      ric_reservation/event:
+        resource_id: Rozvrhová tabulka
+        resource: Rozvrhová tabulka
+        name: Jméno
+        schedule_date: Datum
+        schedule_time: Čas
+        time: Čas
+        formatted_time: Čas
+        from: Začátek
+        to: Konec
+        capacity: Kapacita
+        period: Perioda
+        period_values:
+          day: Den
+          workday: Pracovní den
+          weekendday: Víkendový den
+          week: Týden
+          odd_week: Lichý týden
+          even_week: Sudý týden
+          month: Měsíc
+          once: Jednorázově
+        day_values:
+          monday: Pondělí
+          tuesday: Úterý
+          wednesday: Středa
+          thursday: Čtvrtek
+          friday: Pátek
+          saturday: Sobota
+          sunday: Neděle
+          odd_monday: Liché pondělí
+          odd_tuesday: Liché úterý
+          odd_wednesday: Lichá středa
+          odd_thursday: Lichý čtvrtek
+          odd_friday: Lichý pátek
+          odd_saturday: Lichá sobota
+          odd_sunday: Lichá neděle
+          even_monday: Sudé pondělí
+          even_tuesday: Sudé úterý
+          even_wednesday: Sudá středa
+          even_thursday: Sudý čtvrtek
+          even_friday: Sudý pátek
+          even_saturday: Sudá sobota
+          even_sunday: Sudá neděle
+        tmp_canceled: Jednorázově zrušeno
+        valid_from: Platné od
+        valid_to: Smazané od
+        time_window_soon: Kolik minut před začátkem považovat rezervaci za brzkou
+        time_window_deadline: Kolik minut před začátkem uzavřít rezervaci
+      ric_reservation/reservation:
+        schedule_date: Datum
+        schedule_time: Čas
+        event: Událost
+        owner_id: Osoba
+        owner_name: Osoba
+        owner_name_anonymous: "(neznámý)"
+    notices:
+      models:
+        ric_reservation/resource:
+          create: Rozvrhová tabulka byla úspěšně vytvořena.
+          update: Rozvrhová tabulka byla úspěšně uložena.
+          move: Rozvrhová tabulka byla úspěšně přesunuta.
+          destroy: Rozvrhová tabulka byla úspěšně smazána.
+        ric_reservation/event:
+          create: Událost byla úspěšně vytvořena.
+          update: Událost byla úspěšně uložena.
+          destroy: Událost byla úspěšně smazána.
+        ric_reservation/event_modifier:
+          create: Jednorázová změna události byla úspěšně vytvořena.
+          destroy: Jednorázová změna události byla úspěšně smazána.
+        ric_reservation/reservation:
+          at_capacity_my: "Vybraná událost je již plně obsazena. Můžete se ale rezervovat pod čarou. Pokud se termín uvolní, informujeme Vás e-mailem."
+          at_capacity: "Vybraná událost je již plně obsazena. Můžete se ale rezervovat pod čarou."
+          create: Rezervace byla úspěšně vytvořena.
+          create_below_line: "Rezervace pod čarou byla úspěšně vytvořena. Událost je už sice plně obsazena, ale pokud někdo zruší svou rezervaci, budeme s Vámi počítat. Pokud se termín uvolní, informujeme Vás e-mailem."
+          destroy: Rezervace byla úspěšně zrušena.
+    errors:
+      models:
+        ric_reservation/resource:
+          not_found: Rozvrhová tabulka nebyla nalezena.
+        ric_reservation/event:
+          not_found: Událost nebyla nalezena.
+        ric_reservation/reservation:
+          not_found: Rezervace nebyla nalezena.
+          create_closed: "Rezervace nebyla vytvořena, vybraná událost je už uzavřena pro další rezervace."
+          destroy_closed: "Rezervace nebyla zrušena, vybraná událost je už uzavřena pro další změny."
+        ric_reservation/event_modifier:
+          not_found: Jednorázová změna události nebyla nalezena.
+          create_unknown_type: "Jednorázová změna události nebyla vytvořena, neznámý typ změny."
+          create_unknown: Jednorázová změna události nebyla vytvořena.
+
+  helpers:
+    submit:
+      reserve: "Rezervovat"
+      reserve_below_line: "Rezervovat pod čarou"
+
+  general:
+    action:
+      next_week: "následující týden"
+      prev_week: "předchozí týden"
+      next_month: "následující měsíc"
+      prev_month: "předchozí měsíc"

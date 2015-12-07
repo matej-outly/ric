@@ -1,0 +1,9 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@resources, { 
+		name: :string
+	}, paths: {
+		show: "ric_reservation_admin.resource_path",
+		edit: "ric_reservation_admin.edit_resource_path",
+		move: "ric_reservation_admin.move_resource_path"
+	}, moving: true, summary: true ) %>
+<% end %>
