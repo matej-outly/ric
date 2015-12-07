@@ -16,7 +16,7 @@ root_dir="$script_dir/.."
 build_dir="$root_dir/build"
 
 # Install all engines
-for engine in ric_account ric_admin ric_advert ric_assortment ric_contact ric_customer ric_devise ric_eshop ric_gallery ric_journal ric_league ric_magazine ric_newsletter ric_partnership ric_user ric_website; do
+for engine in ric_account ric_admin ric_advert ric_assortment ric_contact ric_customer ric_devise ric_eshop ric_gallery ric_journal ric_league ric_magazine ric_newsletter ric_partnership ric_reservation ric_user ric_website; do
 	gem inabox "$build_dir"/"$engine"-*
 done
 
