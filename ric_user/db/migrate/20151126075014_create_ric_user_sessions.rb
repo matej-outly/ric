@@ -1,12 +1,12 @@
 class CreateRicUserSessions < ActiveRecord::Migration
 	def change
 		create_table :sessions, id: false do |t|
+			
+			# ID
+			t.string :id, null: false
 
 			# Timestamps
 			t.timestamps null: true
-
-			# ID
-			t.string :id, null: false
 
 		end
 

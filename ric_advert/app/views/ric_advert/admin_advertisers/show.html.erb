@@ -1,36 +1,44 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@advertiser, { 
-		name: :string
-	}) %>
-
-	<h3><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.sofar_invalid") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :string,
-	}, paths: {
-		show: "ric_advert_admin.banner_path",
-		edit: "ric_advert_admin.edit_banner_path",
-		destroy: "ric_advert_admin.banner_path"
-	}, summary: true ) %>
-
-	<h3><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.valid") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.valid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :string,
-	}, paths: {
-		show: "ric_advert_admin.banner_path",
-		edit: "ric_advert_admin.edit_banner_path",
-		destroy: "ric_advert_admin.banner_path"
-	}, summary: true ) %>
-
-	<h3><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.already_invalid") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.already_invalid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :string,
-	}, paths: {
-		show: "ric_advert_admin.banner_path",
-		edit: "ric_advert_admin.edit_banner_path",
-		destroy: "ric_advert_admin.banner_path"
-	}, summary: true ) %>
-
+	<section class="tabs pill">
+		<ul class="tab-nav">
+			<li class="active"><a href="#"><%= t("headers.ric_advert.admin_advertisers.identification") %></a></li>
+			<li><a href="#"><%= t("headers.ric_advert.admin_advertisers.valid_banners") %></a></li>
+			<li><a href="#"><%= t("headers.ric_advert.admin_advertisers.invalid_banners") %></a></li>
+		</ul>
+		<div class="tab-content active">
+			<%= rug_show_table_for(@advertiser, { 
+				name: :string
+			}) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_index_table_for(@advertiser.banners.valid(@today).order(name: :asc), { 
+				name: :string,
+				kind: :enum,
+			}, paths: {
+				show: "ric_advert_admin.banner_path",
+				edit: "ric_advert_admin.edit_banner_path",
+				destroy: "ric_advert_admin.banner_path"
+			}, summary: true ) %>
+		</div>
+		<div class="tab-content">
+			<h3><%= t("headers.ric_advert.admin_advertisers.sofar_invalid_banners") %></h3>
+			<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
+				name: :string,
+				kind: :enum,
+			}, paths: {
+				show: "ric_advert_admin.banner_path",
+				edit: "ric_advert_admin.edit_banner_path",
+				destroy: "ric_advert_admin.banner_path"
+			}, summary: true ) %>
+			<h3><%= t("headers.ric_advert.admin_advertisers.already_invalid_banners") %></h3>
+			<%= rug_index_table_for(@advertiser.banners.already_invalid(@today), { 
+				name: :string,
+				kind: :enum,
+			}, paths: {
+				show: "ric_advert_admin.banner_path",
+				edit: "ric_advert_admin.edit_banner_path",
+				destroy: "ric_advert_admin.banner_path"
+			}, summary: true ) %>
+		</div>
+	</section>
 <% end %>

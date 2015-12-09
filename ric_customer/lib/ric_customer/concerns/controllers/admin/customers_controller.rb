@@ -30,7 +30,7 @@ module RicCustomer
 						#
 						# Set statistic before some actions
 						#
-						before_action :set_statistic, only: [:statistic, :statistic_search]
+						before_action :set_statistic, only: [:statistic, :statistic_filter]
 
 					end
 
@@ -38,8 +38,8 @@ module RicCustomer
 					# Index action
 					#
 					def index
-						@search_customer = RicCustomer.customer_model.new(load_params_from_session)
-						@customers = RicCustomer.customer_model.search(load_params_from_session.symbolize_keys).order(last_name: :asc, first_name: :asc)
+						@filter_customer = RicCustomer.customer_model.new(load_params_from_session)
+						@customers = RicCustomer.customer_model.filter(load_params_from_session.symbolize_keys).order(last_name: :asc, first_name: :asc)
 						if request.format.to_sym == :html
 							@customers = @customers.page(params[:page])
 						end
@@ -51,26 +51,26 @@ module RicCustomer
 					end
 
 					#
-					# Index/search action
+					# Index/filter action
 					#
-					def index_search
-						save_params_to_session(index_search_params)
+					def index_filter
+						save_params_to_session(index_filter_params)
 						redirect_to customers_path
 					end
 
 					#
-					# Scope/search action
+					# Scope/filter action
 					#
 					def statistic
-						@search_customer = RicCustomer.customer_model.new(load_params_from_session)
+						@filter_customer = RicCustomer.customer_model.new(load_params_from_session)
 						@customers = RicCustomer.customer_model.send(@statistic, load_params_from_session.symbolize_keys)
 					end
 
 					#
-					# Scope/search action
+					# Scope/filter action
 					#
-					def statistic_search
-						save_params_to_session(statistic_search_params)
+					def statistic_filter
+						save_params_to_session(statistic_filter_params)
 						redirect_to statistic_customers_path
 					end
 
@@ -160,7 +160,9 @@ module RicCustomer
 						end
 						if !params.nil?
 							session[session_key]["params"] = params
-						end		
+						end
+						puts "PARAMS SAVED TO SESSION"
+						puts session[session_key]["params"].inspect
 					end
 
 					def load_params_from_session
@@ -182,12 +184,12 @@ module RicCustomer
 						params.require(:customer).permit(:first_name, :last_name, :email, :phone)
 					end
 
-					def statistic_search_params
-						return params[:customer].permit(@statistic_columns)
+					def statistic_filter_params
+						return params[:customer].permit(@statistic_columns.keys)
 					end
 
-					def index_search_params
-						return params[:customer].permit(RicCustomer.customer_model.search_columns)
+					def index_filter_params
+						return params[:customer].permit(RicCustomer.customer_model.filter_columns.keys)
 					end
 
 				end

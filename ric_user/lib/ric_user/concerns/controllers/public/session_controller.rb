@@ -25,7 +25,8 @@ module RicUser
 						#
 						# Set user before some actions
 						#
-						before_action :set_session, only: [:show, :edit, :update]
+						before_action :set_session_soft, only: [:show]
+						before_action :set_session_hard, only: [:edit, :update]
 
 					end
 
@@ -33,6 +34,10 @@ module RicUser
 					# Show action
 					#
 					def show
+						respond_to do |format|
+							format.html { render "show" }
+							format.json { render json: @session.to_json }
+						end
 					end
 
 					#
@@ -46,9 +51,15 @@ module RicUser
 					#
 					def update
 						if @session.update(session_params)
-							redirect_to session_updated_path, notice: I18n.t("activerecord.notices.models.#{RicUser.session_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to redirect_to session_updated_path, notice: I18n.t("activerecord.notices.models.#{RicUser.session_model.model_name.i18n_key}.update") }
+								format.json { render json: @session.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @session.errors }
+							end
 						end
 					end
 
@@ -57,7 +68,14 @@ module RicUser
 					#
 					# Set model
 					#
-					def set_session
+					def set_session_soft
+						@session = RicUser.session_model.find(RicUser.session_model.current_id(session))
+					end
+
+					#
+					# Set model
+					#
+					def set_session_hard
 						@session = RicUser.session_model.find_or_create(RicUser.session_model.current_id(session))
 					end
 

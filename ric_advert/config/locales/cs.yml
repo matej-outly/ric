@@ -10,6 +10,11 @@ cs:
         edit: "Upravit inzerenta"
         update: "Upravit inzerenta"
         destroy: "Smazat inzerenta"
+        identification: Základní informace
+        valid_banners: Platné bannery
+        invalid_banners: Neplatné bannery
+        sofar_invalid_banners: Platné v budoucnosti
+        already_invalid_banners: Už neplatné
       admin_banners:
         index: "Bannery"
         show: "Detail banneru"

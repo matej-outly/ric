@@ -21,25 +21,25 @@ module RicCustomer
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 
 				end
 
 				module ClassMethods
 
-					# *********************************************************************
-					# Search scope
-					# *********************************************************************
+					# *********************************************************
+					# Filter scope
+					# *********************************************************
 
 					#
 					# Scope definition
 					#
-					def search(params = {})
+					def filter(params = {})
 						
 						# Init
-						@search_columns_specs = {} if !defined?(@search_columns_specs)
+						@filter_columns = {} if !defined?(@filter_columns)
 
 						# Symbolize all param keys
 						params.symbolize_keys!
@@ -49,11 +49,11 @@ module RicCustomer
 						where_string = ""
 						first = true
 
-						@search_columns_specs.each do |column, spec|
+						@filter_columns.each do |column, spec|
 
 							if !params[column].blank? # Column found in params and not blank
 
-								# Get column (search) type
+								# Get column (filter) type
 								type = spec[:type]
 								
 								# Get and validate used operator, use default if not valid
@@ -63,8 +63,8 @@ module RicCustomer
 								operator = spec[:operators].first if operator.nil?
 
 								# Get where sting part
-								part_method = method("search_type_#{type.to_sym}".to_sym)
-								part = part_method.call(column, operator) if !part_method.nil?
+								part_method = method("filter_type_#{type.to_sym}".to_sym)
+								part = part_method.call(column, operator, params[column]) if !part_method.nil?
 
 								# Save its value and compose string if part is valid
 								if !part.nil?
@@ -83,7 +83,7 @@ module RicCustomer
 					#
 					# Compose where part for string
 					#
-					def search_type_string(column, operator)
+					def filter_type_string(column, operator, unused_value)
 						return case operator
 							when :like then "lower(unaccent(#{column.to_s})) LIKE ('%' || lower(unaccent(trim(:#{column.to_s}))) || '%')"
 							when :llike then "lower(unaccent(#{column.to_s})) LIKE ('%' || lower(unaccent(trim(:#{column.to_s}))) )"
@@ -93,32 +93,49 @@ module RicCustomer
 					end
 
 					#
+					# Compose where part for integer
+					#
+					def filter_type_integer(column, operator, unused_value)
+						return case operator
+							when :eq then "#{column.to_s} = :#{column.to_s}"
+							when :lt then "#{column.to_s} < :#{column.to_s}"
+							when :le then "#{column.to_s} <= :#{column.to_s}"
+							when :gt then "#{column.to_s} > :#{column.to_s}"
+							when :ge then "#{column.to_s} >= :#{column.to_s}"
+							else nil
+						end
+					end
+
+					#
+					# Compose where part for boolean
+					#
+					def filter_type_boolean(column, operator, value)
+						return case operator
+							when :eq then "#{column.to_s} = :#{column.to_s}" + (value == "0" ? " OR #{column.to_s} IS NULL" : "")
+							else nil
+						end
+					end
+
+					#
 					# Get all columns (array)
 					#
-					def search_columns
-						return @search_columns_specs.keys
+					def filter_columns
+						return @filter_columns
 					end
 
 					#
-					# Get specification of single column
+					# Define a column with filter ability
 					#
-					def search_column_spec(column)
-						return @search_columns_specs[column.to_sym]
+					def define_filter_column(column, type, operators, options = {})
+						@filter_columns = {} if !defined?(@filter_columns)
+						@filter_columns[column.to_sym] = options
+						@filter_columns[column.to_sym][:type] = type
+						@filter_columns[column.to_sym][:operators] = operators
 					end
 
-					#
-					# Define a column with search ability
-					#
-					def define_search_column(column, type, operators, options = {})
-						@search_columns_specs = {} if !defined?(@search_columns_specs)
-						@search_columns_specs[column.to_sym] = options
-						@search_columns_specs[column.to_sym][:type] = type
-						@search_columns_specs[column.to_sym][:operators] = operators
-					end
-
-					# *********************************************************************
+					# *********************************************************
 					# Statistic scope
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Define statistic
@@ -126,8 +143,8 @@ module RicCustomer
 					def define_statistic(statistic, columns, &block)
 
 						# Internal structures
-						@statistic_columns_specs = {} if !defined?(@statistic_columns_specs)
-						@statistic_columns_specs[statistic.to_sym] = columns
+						@statistic_columns = {} if !defined?(@statistic_columns)
+						@statistic_columns[statistic.to_sym] = columns
 
 						# Accessors
 						columns.each do |column, spec| 
@@ -137,7 +154,7 @@ module RicCustomer
 						# Scope
 						define_singleton_method(statistic.to_sym) do |params = {}|
 							blank = false
-							@statistic_columns_specs[statistic.to_sym].each do |column, spec| 
+							@statistic_columns[statistic.to_sym].each do |column, spec| 
 								blank = true if params[column].blank?
 							end
 							if blank
@@ -148,22 +165,18 @@ module RicCustomer
 						end
 
 						# Getter
-						define_singleton_method("#{statistic.to_s}_columns".to_sym) do
-							@statistic_columns_specs[statistic.to_sym].keys
-						end
-
-						# Getter
-						define_singleton_method("#{statistic.to_s}_column_spec".to_sym) do |column|
-							@statistic_columns_specs[statistic.to_sym][column]
+						define_singleton_method("#{statistic.to_s}_columns".to_sym) do |column|
+							@statistic_columns[statistic.to_sym]
 						end
 
 					end
 
 				end
 
-				#
+				# *************************************************************
 				# Full name
-				#
+				# *************************************************************
+
 				def full_name
 					if last_name.blank? || last_name.nil?
 						return ( (first_name.blank? || first_name.nil?) ? "" : first_name)

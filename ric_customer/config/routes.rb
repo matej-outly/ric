@@ -14,9 +14,9 @@ RicCustomer::AdminEngine.routes.draw do
 	# Customers
 	resources :customers, controller: "admin_customers" do
 		collection do
-			post "index_search"
+			post "index_filter"
 			get "statistic/:statistic", action: "statistic", as: "statistic"
-			post "statistic_search/:statistic", action: "statistic_search", as: "statistic_search"
+			post "statistic_filter/:statistic", action: "statistic_filter", as: "statistic_filter"
 		end
 	end
 
