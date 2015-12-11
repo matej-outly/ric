@@ -161,8 +161,6 @@ module RicCustomer
 						if !params.nil?
 							session[session_key]["params"] = params
 						end
-						puts "PARAMS SAVED TO SESSION"
-						puts session[session_key]["params"].inspect
 					end
 
 					def load_params_from_session

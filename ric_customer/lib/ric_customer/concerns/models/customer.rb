@@ -45,9 +45,7 @@ module RicCustomer
 						params.symbolize_keys!
 
 						# Preset
-						where_values = {}
-						where_string = ""
-						first = true
+						result = all
 
 						@filter_columns.each do |column, spec|
 
@@ -62,22 +60,31 @@ module RicCustomer
 								operator = nil if !operator.nil? && !spec[:operators].include?(operator)
 								operator = spec[:operators].first if operator.nil?
 
-								# Get where sting part
-								part_method = method("filter_type_#{type.to_sym}".to_sym)
-								part = part_method.call(column, operator, params[column]) if !part_method.nil?
+								# Check available methods
+								where_composer_method = "filter_type_#{type.to_sym}".to_sym
+								scope_method = "#{column.to_s}_#{operator.to_s}".to_sym
+								
+								if respond_to?(where_composer_method) # Get where string if composer found
+								
+									# Compose where string
+									where_string = send(where_composer_method, column, operator, params[column])
 
-								# Save its value and compose string if part is valid
-								if !part.nil?
-									where_string = where_string + (first ? "" : " AND ") + "(" + part + ")"
-									where_values[column] = params[column]
-									first = false
+									# Make where
+									if !where_string.nil?
+										result = where(where_string, {column => params[column]})
+									end
+
+								elsif respond_to?(scope_method) # Or call scope
+
+									# Call scope
+									result = send(scope_method, params[column])
+								
+								else
+									raise "No way to filter #{column} found."
 								end
-
 							end
-
 						end
-
-						where(where_string, where_values)
+						result
 					end
 
 					#

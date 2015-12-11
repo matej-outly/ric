@@ -1,4 +1,3 @@
-<% puts @filter_customer.inspect %>
 <% if !@filter_customer.class.filter_columns.empty? %>
 	<%= rug_form_for(@filter_customer, url: index_filter_customers_path) do |f| %>
 		<% @filter_customer.class.filter_columns.each do |column, spec| %>
