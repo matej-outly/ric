@@ -19,20 +19,29 @@
 		<%= render partial: "ric_admin/shared/login_info" %>
 
 		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
-			<h2><a href="#" class="toggle" gumby-trigger=".layout .side .filters"><%= t("headers.filters") %></a></h2>
-			<div class="filters togglable">
-				<%= render partial: "#{controller_path}/filters" %>
-			</div>
+			<% partial = render(partial: "#{controller_path}/filters") %>
+			<% if !strip_tags(partial).trim(" \t\n").blank? %>
+				<h2><a href="#" class="toggle" gumby-trigger=".layout .side .filters"><%= t("headers.filters") %></a></h2>
+				<div class="filters togglable">
+					<%= partial %>
+				</div>
+			<% end %>	
 		<% end %>
 
 		<% if lookup_context.find_all("#{controller_path}/_actions").any? %>
-			<h2><%= t("headers.actions") %></h2>
-			<%= render partial: "#{controller_path}/actions" %>
+			<% partial = render(partial: "#{controller_path}/actions") %>
+			<% if !strip_tags(partial).trim(" \t\n").blank? %>
+				<h2><%= t("headers.actions") %></h2>
+				<%= partial %>
+			<% end %>
 		<% end %>
 
 		<% if lookup_context.find_all("#{controller_path}/_related").any? %>
-			<h2><%= t("headers.related") %></h2>
-			<%= render partial: "#{controller_path}/related" %>
+			<% partial = render(partial: "#{controller_path}/related") %>
+			<% if !strip_tags(partial).trim(" \t\n").blank? %>
+				<h2><%= t("headers.related") %></h2>
+				<%= partial %>
+			<% end %>
 		<% end %>
 
 	</div>
