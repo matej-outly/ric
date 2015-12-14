@@ -1,5 +1,5 @@
 <%= rug_form_for(@article, create_url: :articles_path, update_url: :article_path) do |f| %>
-	<%= f.text_input_row :published_at, :datetime_local_field %>
+	<%= f.datetime_picker_row :published_at %>
 	<%= f.text_input_row :title, :text_field %>
 	<%= f.text_area_row :perex %>
 	<%= f.text_area_row :content %>

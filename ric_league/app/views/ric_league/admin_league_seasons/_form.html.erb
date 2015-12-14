@@ -1,7 +1,7 @@
 <%= rug_form_for(@league_season, create_url: :league_seasons_path, update_url: :league_season_path) do |f| %>
 	<%= f.text_input_row :name %>
-	<%= f.datepicker_row :started_at %>
-	<%= f.datepicker_row :finished_at %>
+	<%= f.date_picker_row :started_at %>
+	<%= f.date_picker_row :finished_at %>
 	<%= f.checkbox_row :active %>
 	<%= f.primary_button_row :submit %>
 <% end %>
