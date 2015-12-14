@@ -135,6 +135,9 @@ cs:
       range:
         min: Minimálně
         max: Maximálně
+      datetime:
+        date: Datum
+        time: Čas
       geolocation:
         longitude: Zem. délka
         latitude: Zem. šířka
