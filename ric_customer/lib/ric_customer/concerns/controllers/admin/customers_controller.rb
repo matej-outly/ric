@@ -144,6 +144,7 @@ module RicCustomer
 							return
 						end
 						@statistic_columns = RicCustomer.customer_model.send("#{@statistic.to_s}_columns".to_sym)
+						@statistic_params = RicCustomer.customer_model.send("#{@statistic.to_s}_params".to_sym)
 					end
 
 					# *********************************************************************
@@ -183,11 +184,11 @@ module RicCustomer
 					end
 
 					def statistic_filter_params
-						return params[:customer].permit(@statistic_columns.keys)
+						return params[:customer].permit(@statistic_params)
 					end
 
 					def index_filter_params
-						return params[:customer].permit(RicCustomer.customer_model.filter_columns.keys)
+						return params[:customer].permit(RicCustomer.customer_model.filter_params)
 					end
 
 				end

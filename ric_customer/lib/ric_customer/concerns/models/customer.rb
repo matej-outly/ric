@@ -49,7 +49,7 @@ module RicCustomer
 
 						@filter_columns.each do |column, spec|
 
-							if !params[column].blank? # Column found in params and not blank
+							if !params[column].blank? && !(params[column].is_a?(::Array) && params[column].length == 1 && params[column][0].blank?) # Column found in params and not blank
 
 								# Get column (filter) type
 								type = spec[:type]
@@ -124,10 +124,25 @@ module RicCustomer
 					end
 
 					#
-					# Get all columns (array)
+					# Get all columns
 					#
 					def filter_columns
 						return @filter_columns
+					end
+
+					#
+					# Get all columns formated for strong params
+					#
+					def filter_params
+						result = []
+						@filter_columns.each do |column, spec|
+							if spec[:type] == :string_array
+								result << { column => [] }
+							else
+								result << column
+							end
+						end
+						return result
 					end
 
 					#
@@ -172,8 +187,21 @@ module RicCustomer
 						end
 
 						# Getter
-						define_singleton_method("#{statistic.to_s}_columns".to_sym) do |column|
+						define_singleton_method("#{statistic.to_s}_columns".to_sym) do
 							@statistic_columns[statistic.to_sym]
+						end
+
+						# Getter
+						define_singleton_method("#{statistic.to_s}_params".to_sym) do
+							result = []
+							@statistic_columns[statistic.to_sym].each do |column, spec|
+								if spec[:type] == :string_array
+									result << { column => [] }
+								else
+									result << column
+								end
+							end
+							return result
 						end
 
 					end
