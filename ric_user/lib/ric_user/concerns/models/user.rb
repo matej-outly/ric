@@ -21,9 +21,9 @@ module RicUser
 				#
 				included do
 					
-					# *************************************************************************
+					# *********************************************************
 					# Devise definition
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Include default devise modules. Others available are:
@@ -31,9 +31,18 @@ module RicUser
 					#
 					devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-					# *********************************************************************
+					# *********************************************************
+					# Structure
+					# *********************************************************
+
+					#
+					# One-to-many relation with persons
+					#
+					belongs_to :person, polymorphic: true
+
+					# *********************************************************
 					# Enums
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Role
@@ -42,9 +51,9 @@ module RicUser
 
 				end
 
-				# *************************************************************************
+				# *************************************************************
 				# Interfaces
-				# *************************************************************************
+				# *************************************************************
 
 				def regenerate_password(options = {})
 					new_password = RugSupport::Util::String.random(4)
@@ -55,7 +64,10 @@ module RicUser
 
 					# Deliver email
 					if result && options[:disable_email] != true
-						RicUser::UserMailer.new_password(self, new_password).deliver_now
+						begin 
+							RicUser::UserMailer.new_password(self, new_password).deliver_now
+						rescue Net::SMTPFatalError
+						end
 					end
 
 					return result
@@ -81,7 +93,10 @@ module RicUser
 
 					# Deliver email
 					if result && options[:disable_email] != true
-						RicUser::UserMailer.new_password(self, new_password).deliver_now
+						begin 
+							RicUser::UserMailer.new_password(self, new_password).deliver_now
+						rescue Net::SMTPFatalError
+						end
 					end
 
 					return result
