@@ -136,6 +136,7 @@ cs:
         ric_assortment/product:
           create: "Produkt byl úspěšně vytvořen."
           update: "Produkt byl úspěšně upraven."
+          move: "Produkt byl úspěšně přesunut."
           destroy: "Produkt byl úspěšně smazán."
           duplicate: "Produkt byl úspěšně zduplikován."
           attachment_bind: "Vybrané přílohy byly úspěšně přidány."
@@ -170,6 +171,7 @@ cs:
       models:
         ric_assortment/product:
           not_found: "Produkt nebyl nalezen."
+          move: "Produkt nebyl přesunut."
         ric_assortment/product_attachment:
           not_found: "Příloha produktu nebyla nalezena."
         ric_assortment/product_category:
