@@ -27,6 +27,7 @@ require 'ric_website/concerns/models/text'
 require 'ric_website/concerns/models/text_attachment'
 require 'ric_website/concerns/models/slug'
 require 'ric_website/concerns/models/setting'
+require 'ric_website/concerns/models/settings_collection'
 
 # Helpers
 require 'ric_website/helpers/locale_helper'
@@ -114,6 +115,18 @@ module RicWebsite
 			return RicWebsite::Setting
 		else
 			return @@setting_model.constantize
+		end
+	end
+
+	#
+	# Settings collection model
+	#
+	mattr_accessor :settings_collection_model
+	def self.settings_collection_model
+		if @@settings_collection_model.nil?
+			return RicWebsite::SettingsCollection
+		else
+			return @@settings_collection_model.constantize
 		end
 	end
 

@@ -25,7 +25,7 @@ module RicWebsite
 						#
 						# Set text before some actions
 						#
-						before_action :set_settings, only: [:show, :edit, :update]
+						before_action :set_settings_collection, only: [:show, :edit, :update]
 
 					end
 
@@ -45,37 +45,26 @@ module RicWebsite
 					# Update action
 					#
 					def update
-						settings_params_to_save = settings_params
-						@settings.each do |setting|
-							if settings_params_to_save[setting.key]
-								setting.value = settings_params_to_save[setting.key]
-								setting.save
-							end
-						end
-						redirect_to settings_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.setting_model.model_name.i18n_key}.update")
+						@settings_collection.assign_attributes(settings_collection_params)
+						if @settings_collection.save
+							redirect_to settings_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.setting_model.model_name.i18n_key}.update")
+						else
+							format.html { render "edit" }
+						end						
 					end
 
 				protected
 
-					def set_settings
-						@settings = RicWebsite.setting_model.all.order(position: :asc)
-						@setting_categories = {}
-						@settings.each do |setting|
-							if setting.category
-								if @setting_categories[setting.category].nil?
-									@setting_categories[setting.category] = []
-								end
-								@setting_categories[setting.category] << setting
-							end
-						end
+					def set_settings_collection
+						@settings_collection = RicWebsite.settings_collection_model.new
 					end
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
-					def settings_params
-						permitted_params = @settings.map { |setting| setting.key.to_sym }
-						params.require(:settings).permit(permitted_params)
+					def settings_collection_params
+						permitted_params = @settings_collection.settings.keys
+						params.require(:settings_collection).permit(permitted_params)
 					end
 
 				end

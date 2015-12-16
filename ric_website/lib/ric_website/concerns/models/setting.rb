@@ -37,7 +37,7 @@ module RicWebsite
 					#
 					# Kind
 					#
-					enum_column :kind, [ "string", "integer" ]
+					enum_column :kind, [ "string", "integer", "enum" ]
 
 					# *************************************************************************
 					# Validators
