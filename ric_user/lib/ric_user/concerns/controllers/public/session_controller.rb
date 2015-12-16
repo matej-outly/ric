@@ -52,7 +52,7 @@ module RicUser
 					def update
 						if @session.update(session_params)
 							respond_to do |format|
-								format.html { redirect_to redirect_to session_updated_path, notice: I18n.t("activerecord.notices.models.#{RicUser.session_model.model_name.i18n_key}.update") }
+								format.html { redirect_to session_updated_path, notice: I18n.t("activerecord.notices.models.#{RicUser.session_model.model_name.i18n_key}.update") }
 								format.json { render json: @session.id }
 							end
 						else
