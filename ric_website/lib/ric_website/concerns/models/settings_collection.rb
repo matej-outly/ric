@@ -137,6 +137,8 @@ module RicWebsite
 				def set(key, value)
 					object = RicWebsite.setting_model.find_or_create_by(key: key.to_s)
 					object.value = value
+					object.kind = self.settings[key.to_sym][:kind]
+					object.category = self.settings[key.to_sym][:category]
 					return object.save
 				end
 
