@@ -28,6 +28,8 @@ cs:
     calendar:
       previous_month: Předchozí měsíc
       next_month: Následující měsíc
+      previous_week: Předchozí týden
+      next_week: Následující týden
       days:
         sunday: Neděle
         monday: Pondělí
@@ -57,6 +59,7 @@ cs:
         october: Říjen
         november: Listopad
         december: Prosinec
+      week: "Týden %{week}"
     index_table:
       empty: "Tabulka neobsahuje žádný záznam."
     autocomplete:

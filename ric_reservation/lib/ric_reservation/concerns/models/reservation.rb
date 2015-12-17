@@ -142,7 +142,7 @@ module RicReservation
 				#
 				# Schedule time
 				#
-				def schedule_time
+				def schedule_formatted_time
 					return self.schedule_from.strftime("%k:%M") + " - " + self.schedule_to.strftime("%k:%M")
 				end
 

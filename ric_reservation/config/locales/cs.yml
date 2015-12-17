@@ -46,12 +46,14 @@ cs:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
         name: Jméno
-        schedule_date: Datum
-        schedule_time: Čas
-        time: Čas
-        formatted_time: Čas
         from: Začátek
         to: Konec
+        date: Datum
+        time_from: Začátek
+        time_to: Konec
+        formatted_time: Čas
+        schedule_date: Datum
+        schedule_formatted_time: Čas
         capacity: Kapacita
         period: Perioda
         period_values:
@@ -92,7 +94,7 @@ cs:
         time_window_deadline: Kolik minut před začátkem uzavřít rezervaci
       ric_reservation/reservation:
         schedule_date: Datum
-        schedule_time: Čas
+        schedule_formatted_time: Čas
         event: Událost
         owner_id: Osoba
         owner_name: Osoba
@@ -123,6 +125,17 @@ cs:
           not_found: Rozvrhová tabulka nebyla nalezena.
         ric_reservation/event:
           not_found: Událost nebyla nalezena.
+          attributes:
+            name:
+              blank: Vyplňte jméno události.
+            period:
+              blank: Vyplňte periodu události.
+            from:
+              blank: Vyplňte začátek události.
+            to:
+              blank: Vyplňte konec události.
+            capacity:
+              blank: Vyplňte kapacitu události.
         ric_reservation/reservation:
           not_found: Rezervace nebyla nalezena.
           create_closed: "Rezervace nebyla vytvořena, vybraná událost je už uzavřena pro další rezervace."

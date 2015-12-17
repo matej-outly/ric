@@ -48,10 +48,11 @@ module RicReservation
 		#
 		# Prepare timetable days
 		#
-		def week_timetable_days(date)
+		def week_timetable_days(monday)
+			date = monday
 			result = []
 			["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
-				label = "<div class=\"day-of-week\">" + I18n.t("activerecord.attributes.ric_reservation/event.day_values.#{day}") + "</div>"
+				label = "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
 				label += "<div class=\"date\">#{I18n.l(date)}</div>"
 				result << {
 					label: label.html_safe,
@@ -66,6 +67,9 @@ module RicReservation
 		# Prepare timetable items
 		#
 		def week_timetable_items(date, events, path_callback, cols_in_hour = 2, min_hour = 24, max_hour = 0)
+
+			# Get monday
+			monday = date.week_monday
 
 			# Items
 			items = []
@@ -146,7 +150,7 @@ module RicReservation
 			end
 
 			# Days
-			days = week_timetable_days(date)
+			days = week_timetable_days(monday)
 
 			# Timetable item to rows
 			days.each_with_index do |day, day_idx|

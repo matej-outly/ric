@@ -59,7 +59,7 @@
 									<% rest_item_width = item[:width] - 1 %>
 								<% else %>
 									<!-- Empty -->
-									<td class="<%= (col == (hour[:cols]-1) ? "right-solid" : "right-dotted") %> <%= (row == (day[:rows]-1) ? "bottom-solid" : "bottom-invisible") %>"></td>
+									<td class="empty <%= (col == (hour[:cols]-1) ? "right-solid" : "right-dotted") %> <%= (row == (day[:rows]-1) ? "bottom-solid" : "bottom-invisible") %>"></td>
 								<% end %>
 
 							<% end %>

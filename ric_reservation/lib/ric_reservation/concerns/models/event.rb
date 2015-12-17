@@ -73,6 +73,22 @@ module RicReservation
 					#
 					enum_column :period, ["day", "workday", "weekendday", "week", "odd_week", "even_week", "once"]
 
+					# *************************************************************
+					# Time
+					# *************************************************************
+
+					#
+					# Virtual attributes
+					#
+					attr_writer :date
+					attr_writer :time_from
+					attr_writer :time_to
+
+					#
+					# Correct from/to must be set before save
+					#
+					before_validation :set_from_to_before_validation
+
 					# *********************************************************
 					# Schedule
 					# *********************************************************
@@ -414,6 +430,46 @@ module RicReservation
 				end
 
 				# *************************************************************
+				# Time
+				# *************************************************************
+
+				def date
+					return self.from.to_date
+				end
+
+				def time_from
+					return self.from
+				end
+
+				def time_to
+					return self.to
+				end
+
+				#
+				# From / to time translated to human language according to period
+				#
+				def formatted_time
+					result = ""
+					days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+					if self.period == "week"
+						day = days[self.from.to_datetime.cwday - 1]
+						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.#{day}") + " "
+					elsif self.period == "odd_week"
+						day = days[self.from.to_datetime.cwday - 1]
+						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.odd_#{day}") + " "
+					elsif self.period == "even_week"
+						day = days[self.from.to_datetime.cwday - 1]
+						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.even_#{day}") + " "
+					elsif self.period == "month"
+						result += self.from.strftime("%-d. ")
+					elsif self.period == "once"
+						result += self.from.strftime("%-d. %-m. %Y ")
+					end
+					result += self.from.strftime("%k:%M") + " - " + self.to.strftime("%k:%M")
+					return result
+				end
+
+				# *************************************************************
 				# Schedule
 				# *************************************************************
 
@@ -474,35 +530,11 @@ module RicReservation
 				#
 				# Schedule time
 				#
-				def schedule_time
+				def schedule_formatted_time
 					if !scheduled?
 						raise "Schedule event to specific date first."
 					end
 					return self.schedule_from.strftime("%k:%M") + " - " + self.schedule_to.strftime("%k:%M")
-				end
-
-				#
-				# From / to time translated to human language according to period
-				#
-				def formatted_time
-					result = ""
-					days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-					if self.period == "week"
-						day = days[self.from.to_datetime.cwday - 1]
-						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.#{day}") + " "
-					elsif self.period == "odd_week"
-						day = days[self.from.to_datetime.cwday - 1]
-						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.odd_#{day}") + " "
-					elsif self.period == "even_week"
-						day = days[self.from.to_datetime.cwday - 1]
-						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.even_#{day}") + " "
-					elsif self.period == "month"
-						result += self.from.strftime("%-d. ")
-					elsif self.period == "once"
-						result += self.from.strftime("%-d. %-m. %Y ")
-					end
-					result += self.from.strftime("%k:%M") + " - " + self.to.strftime("%k:%M")
-					return result
 				end
 
 				# *************************************************************
@@ -703,6 +735,70 @@ module RicReservation
 				#
 				def set_valid_from_before_save
 					self.valid_from = self.from.to_date
+				end
+
+				# *************************************************************
+				# Time callback
+				# *************************************************************
+
+				#
+				# Set correct from/to if virtual date, time_from and time_to attributes set
+				#
+				def set_from_to_before_validation
+					
+					# Date
+					if @date.nil?
+						date = nil
+					elsif @date.is_a?(::String)
+						date = Date.parse(@date)
+					else
+						date = @date
+					end
+
+					# From
+					if @time_from.nil?
+						time_from = nil
+					elsif @time_from.is_a?(::String)
+						time_from = DateTime.parse(@time_from)
+					else
+						time_from = @time_from
+					end
+
+					# To
+					if @time_to.nil?
+						time_to = nil
+					elsif @time_to.is_a?(::String)
+						time_to = DateTime.parse(@time_to)
+					else
+						time_to = @time_to
+					end
+
+					# Compose
+					if !date.nil?
+						if !time_from.nil?
+							self.from = DateTime.new(
+								date.year, 
+								date.month, 
+								date.mday, 
+								time_from.utc.strftime("%k").to_i, # hour
+								time_from.utc.strftime("%M").to_i, # minute
+								time_from.utc.strftime("%S").to_i # second
+							).in_time_zone(Time.zone)
+							self.from += (time_from.strftime("%:z").to_i - self.from.strftime("%:z").to_i).hours
+						end
+						if !time_to.nil?
+							self.to = DateTime.new(
+								date.year, 
+								date.month, 
+								date.mday, 
+								time_to.utc.strftime("%k").to_i, # hour
+								time_to.utc.strftime("%M").to_i, # minute
+								time_to.utc.strftime("%S").to_i # second
+							).in_time_zone(Time.zone)
+							self.to += (time_to.strftime("%:z").to_i - self.to.strftime("%:z").to_i).hours
+						end
+					end
+
 				end
 
 			end

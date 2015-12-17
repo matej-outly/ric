@@ -14,7 +14,7 @@
 	<%
 		columns = RugBuilder::TableBuilder::Columns.new({ 
 			schedule_date: :date,
-			schedule_time: :string
+			schedule_formatted_time: :string
 		})
 		columns.add_column_by_block(:capacity) do |scheduled_event|
 			if !scheduled_event.tmp_canceled?
