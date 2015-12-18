@@ -63,7 +63,7 @@ module RicReservation
 		#
 		# Prepare timetable items
 		#
-		def month_timetable_items(date, events, path_callback)
+		def month_timetable_items(date, events)
 			
 			# Get monday
 			first_this_month = date.beginning_of_month
@@ -87,9 +87,6 @@ module RicReservation
 					tags << "state-#{event.state.to_s}" 
 					tags << "at-capacity" if event.at_capacity?
 
-					# Path
-					path = path_callback.call(event)
-
 					# Tooltip
 					tooltip = "#{I18n.l(event.schedule_date)} #{event.schedule_from.strftime("%k:%M")} - #{event.schedule_to.strftime("%k:%M")}"
 
@@ -98,8 +95,8 @@ module RicReservation
 						day: event.schedule_from.cwday - 1,
 						label: label.html_safe,
 						tags: tags.join(" "),
-						path: path,
 						tooltip: tooltip,
+						object: event
 					}
 
 				end

@@ -3,20 +3,22 @@
 	# Draw month timetable table
 	#
 	# Params:
-	#  - days         ... Array of day descriptors. Day descriptor is map with keys: 
-	#                      - label ... Day label.
-	#  - weeks        ... Array of week descriptors. Week descriptor is map with keys:
-	#                      - label ... Week label.
-	#                      - rows  ... Number of columns in the week.
-	#                      - date  ... First day in week
-	#  - items        ... Array of data items. Each item is map consisting of keys:
-	#                      - week    ... Vertical item position.
-	#                      - day     ... Horizontal item position.
-	#                      - row     ... Vertical item position.
-	#                      - label   ... Item label.
-	#                      - tags    ... Tags interpreted as CSS classes.
-	#                      - path    ... Path for item click.
-	#                      - tooltip ... Optional tooltip.
+	#  - days                ... Array of day descriptors. Day descriptor is map with keys: 
+	#                             - label ... Day label.
+	#  - weeks               ... Array of week descriptors. Week descriptor is map with keys:
+	#                             - label ... Week label.
+	#                             - rows  ... Number of columns in the week.
+	#                             - date  ... First day in week
+	#  - items               ... Array of data items. Each item is map consisting of keys:
+	#                             - week    ... Vertical item position.
+	#                             - day     ... Horizontal item position.
+	#                             - row     ... Vertical item position.
+	#                             - label   ... Item label.
+	#                             - tags    ... Tags interpreted as CSS classes.
+	#                             - path    ... Path for item click.
+	#                             - tooltip ... Optional tooltip.
+	#  - item_path_callback  ... Path composer for items
+	#  - empty_path_callback ... Path composer for empty spaces
 	#
 %>
 
@@ -49,17 +51,24 @@
 									<div class="title"><%= date.strftime("%-d") + "." %></div>
 								<% end %>
 
-								<% if !item[:path].nil? %>
-									<a href="<%= item[:path] %>"><%= item[:label] %></a>
+								<% if !item_path_callback.nil? %>
+									<a href="<%= item_path_callback.call(item[:object]) %>"><%= item[:label] %></a>
 								<% else %>
 									<div class="padding"><%= item[:label] %></div>
 								<% end %>
+
 							</td>
 						<% else %>
 							<!-- Empty -->
 							<td class="empty right-solid <%= (row == (week[:rows]-1) ? "bottom-solid" : "bottom-invisible") %>">
 								<% if row == 0 %>
-									<div class="title"><%= date.strftime("%-d") + "." %></div>
+									<% if !empty_path_callback.nil? %>
+										<a class="title" href="<%= empty_path_callback.call(date) %>"><%= date.strftime("%-d") + "." %><i class="icon-plus"></i></a>
+									<% else %>
+										<div class="title"><%= date.strftime("%-d") + "." %></div>
+									<% end %>
+								<% else %>
+									<div class="padding"></div>
 								<% end %>
 							</td>
 						<% end %>

@@ -434,15 +434,27 @@ module RicReservation
 				# *************************************************************
 
 				def date
-					return self.from.to_date
+					if self.from
+						return self.from.to_date
+					else
+						return @date
+					end
 				end
 
 				def time_from
-					return self.from
+					if self.from
+						return self.from
+					else
+						return @time_from
+					end
 				end
 
 				def time_to
-					return self.to
+					if self.to
+						return self.to
+					else
+						return @time_to
+					end
 				end
 
 				#
@@ -747,7 +759,7 @@ module RicReservation
 				def set_from_to_before_validation
 					
 					# Date
-					if @date.nil?
+					if @date.blank?
 						date = nil
 					elsif @date.is_a?(::String)
 						date = Date.parse(@date)
@@ -756,7 +768,7 @@ module RicReservation
 					end
 
 					# From
-					if @time_from.nil?
+					if @time_from.blank?
 						time_from = nil
 					elsif @time_from.is_a?(::String)
 						time_from = DateTime.parse(@time_from)
@@ -765,7 +777,7 @@ module RicReservation
 					end
 
 					# To
-					if @time_to.nil?
+					if @time_to.blank?
 						time_to = nil
 					elsif @time_to.is_a?(::String)
 						time_to = DateTime.parse(@time_to)

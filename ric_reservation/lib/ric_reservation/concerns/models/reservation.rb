@@ -35,16 +35,6 @@ module RicReservation
 					#
 					belongs_to :subject, polymorphic: true
 
-					#
-					# One-to-many relation with resources
-					#
-					#belongs_to :resource, class_name: RicReservation.resource_model.to_s
-
-					#
-					# One-to-many relation with events
-					#
-					#belongs_to :event, class_name: RicReservation.event_model.to_s
-
 					# *********************************************************
 					# Validators
 					# *********************************************************
@@ -54,18 +44,6 @@ module RicReservation
 					#
 					validates_presence_of :kind, :schedule_from, :schedule_to
 
-					#
-					# Some columns must be present if kind is event
-					#
-					validates :event_id, presence: true, if: :kind_event?
-					validates :schedule_date, presence: true, if: :kind_event?
-					validates :size, presence: true, if: :kind_event?
-
-					#
-					# Some columns must be present if kind is resource
-					#
-					validates :resource_id, presence: true, if: :kind_resource?
-
 					# *********************************************************
 					# Kind
 					# *********************************************************
@@ -74,28 +52,6 @@ module RicReservation
 					# Kind
 					#
 					enum_column :kind, ["event", "resource"]
-
-				end
-
-				module ClassMethods
-
-					# *********************************************************
-					# Line
-					# *********************************************************
-
-					#
-					# Scope for reservations above line
-					#
-					def above_line
-						where("below_line = false OR below_line IS NULL")
-					end
-
-					#
-					# Scope for reservations below line
-					#
-					def below_line
-						where("below_line = true")
-					end
 
 				end
 
@@ -115,24 +71,6 @@ module RicReservation
 				#
 				def kind_resource?
 					self.kind == "resource"
-				end
-
-				# *************************************************************
-				# Line
-				# *************************************************************
-
-				#
-				# Is reservation above line?
-				#
-				def above_line?
-					return (self.below_line.nil? || self.below_line == false)
-				end
-
-				#
-				# Is reservation below line?
-				#
-				def below_line?
-					return (self.below_line == true)
 				end
 
 				# *************************************************************
@@ -181,53 +119,7 @@ module RicReservation
 					end
 					return @state
 				end
-
-				# *************************************************************
-				# Event
-				# *************************************************************
-
-				#
-				# Get (scheduled) event
-				#
-				def event
-					if @event.nil?
-						@event = RicReservation.event_model.find_by_id(self.event_id)
-						if @event
-							@event.schedule(self.schedule_date)
-						else
-							@event = false
-						end
-					end
-					return @event
-				end
-
-				#
-				# Get (scheduled) event valid for schedule date of false if not any
-				#
-				def valid_event
-					if @valid_event.nil?
-						@valid_event = RicReservation.event_model.valid(self.schedule_date).where(id: self.event_id).first
-						if @valid_event
-							@valid_event.schedule(self.schedule_date)
-						else
-							@valid_event = false
-						end
-					end
-					return @valid_event
-				end
-
-				# *************************************************************
-				# Resource
-				# *************************************************************
-
-				# TODO
 				
-				# *************************************************************
-				# Below line
-				# *************************************************************
-
-				# TODO
-
 			protected
 
 			end

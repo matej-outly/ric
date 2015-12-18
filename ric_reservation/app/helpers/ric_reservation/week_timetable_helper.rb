@@ -56,6 +56,7 @@ module RicReservation
 				label += "<div class=\"date\">#{I18n.l(date)}</div>"
 				result << {
 					label: label.html_safe,
+					date: date,
 					rows: 0
 				}
 				date = date + 1.day
@@ -66,7 +67,7 @@ module RicReservation
 		#
 		# Prepare timetable items
 		#
-		def week_timetable_items(date, events, path_callback, cols_in_hour = 2, min_hour = 24, max_hour = 0)
+		def week_timetable_items(date, events, cols_in_hour = 2, min_hour = 24, max_hour = 0)
 
 			# Get monday
 			monday = date.week_monday
@@ -113,9 +114,6 @@ module RicReservation
 					tags << "state-#{event.state.to_s}" 
 					tags << "at-capacity" if event.at_capacity?
 
-					# Path
-					path = path_callback.call(event)
-
 					# Tooltip
 					tooltip = "#{I18n.l(event.schedule_date)} #{event.schedule_from.strftime("%k:%M")} - #{event.schedule_to.strftime("%k:%M")}"
 
@@ -126,8 +124,8 @@ module RicReservation
 						width: width,
 						label: label.html_safe,
 						tags: tags.join(" "),
-						path: path,
 						tooltip: tooltip,
+						object: event
 					}
 
 				end

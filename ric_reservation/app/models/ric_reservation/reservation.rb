@@ -12,5 +12,7 @@
 module RicReservation
 	class Reservation < ActiveRecord::Base
 		include RicReservation::Concerns::Models::Reservation
+		include RicReservation::Concerns::Models::EventReservation
+		include RicReservation::Concerns::Models::ResourceReservation
 	end
 end
