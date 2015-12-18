@@ -12,6 +12,10 @@
 RicPartnership::AdminEngine.routes.draw do
 
 	# Partners
-	resources :partners, controller: "admin_partners"
+	resources :partners, controller: "admin_partners" do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+	end
 
 end

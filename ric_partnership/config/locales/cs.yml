@@ -22,8 +22,10 @@ cs:
         ric_partnership/partner:
           create: Partner byl úspěšně vytvořen.
           update: Partner byl úspěšně uložen.
+          move: Partner byl úspěšně přesunut.
           destroy: Partner byl úspěšně smazán.
     errors:
       models:
         ric_partnership/partner:
           not_found: Partner nebyl nalezen.
+          move: Partner nebyl přesunut.

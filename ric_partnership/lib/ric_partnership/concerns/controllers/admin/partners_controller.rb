@@ -95,6 +95,23 @@ module RicPartnership
 					end
 
 					#
+					# Move action
+					#
+					def move
+						if RicPartnership.partner_model.move(params[:id], params[:relation], params[:destination_id])
+							respond_to do |format|
+								format.html { redirect_to ric_reservation_admin.resources_path, notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.move") }
+								format.json { render json: true }
+							end
+						else
+							respond_to do |format|
+								format.html { redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.move") }
+								format.json { render json: false }
+							end
+						end
+					end
+					
+					#
 					# Destroy action
 					#
 					def destroy
