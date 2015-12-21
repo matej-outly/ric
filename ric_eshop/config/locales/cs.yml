@@ -83,6 +83,9 @@ cs:
           destroy: Položka v košíku byla úspěšně smazána.
     errors:
       models:
+        ric_eshop/cart:
+          add: "Položka nebyla přidána do nákupníko košíku."
+          remove: "Položka nebyla odebrána z nákupníko košíku."
         ric_eshop/order:
           not_found: "Objednávka nebyla nalezena."
           locked: "Objednávka je zamčena a nemůže být tedy změněna nebo smazána."

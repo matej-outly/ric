@@ -37,48 +37,67 @@ module RicEshop
 					# Add product to cart
 					#
 					def add
-						product_id = params[:product_id]
-						if params[:sub_product_ids]
-							sub_product_ids = params[:sub_product_ids].split(",")
-						else
-							sub_product_ids = nil
+						my_params = cart_item_params
+						if my_params[:sub_product_ids]
+							my_params[:sub_product_ids] = my_params[:sub_product_ids].split(",")
 						end
-						result = @cart.add(product_id, sub_product_ids)
+						puts my_params.inspect
+						@cart.add(my_params)
+						result = @cart.save
 						respond_to do |format|
-							format.html { 
-								flash[:notice] = I18n.t("activerecord.notices.models.ric_eshop/cart.add")
+							format.html do 
+								if result
+									flash[:notice] = I18n.t("activerecord.notices.models.#{RicEshop.cart_model.model_name.i18n_key}.add")
+								else
+									flash[:alert] = I18n.t("activerecord.errors.models.#{RicEshop.cart_model.model_name.i18n_key}.add")
+								end
 								if request.referer 
 									redirect_to request.referer
 								else
 									redirect_to main_app.root_path
 								end
-							}
-							format.json { render :json => result }
+							end
+							format.json do 
+								if result
+									render :json => true
+								else
+									render :json => @cart.errors
+								end
+							end
 						end
-						
 					end
 
 					#
 					# Remove product from cart
 					#
 					def remove
-						product_id = params[:product_id]
-						if params[:sub_product_ids]
-							sub_product_ids = params[:sub_product_ids].split(",")
-						else
-							sub_product_ids = nil
+						my_params = cart_item_params
+						if my_params[:sub_product_ids]
+							my_params[:sub_product_ids] = my_params[:sub_product_ids].split(",")
 						end
-						result = @cart.remove(product_id, sub_product_ids)
+						puts my_params.inspect
+						@cart.remove(my_params)
+						result = @cart.save
 						respond_to do |format|
-							format.html { 
-								flash[:notice] = I18n.t("activerecord.notices.models.ric_eshop/cart.remove")
+							format.html do 
+								if result
+									flash[:notice] = I18n.t("activerecord.notices.models.#{RicEshop.cart_model.model_name.i18n_key}.remove")
+								else
+									flash[:alert] = I18n.t("activerecord.errors.models.#{RicEshop.cart_model.model_name.i18n_key}.remove")
+								end
 								if request.referer 
 									redirect_to request.referer
 								else
 									redirect_to main_app.root_path
 								end
-							}
-							format.json { render :json => result }
+							end
+							format.json do 
+								if result
+									render :json => true
+								else
+									render :json => @cart.errors
+								end
+							end
 						end
 					end
 
@@ -86,17 +105,17 @@ module RicEshop
 					# Clear entire cart
 					#
 					def clear
-						result = @cart.clear
+						@cart.clear
 						respond_to do |format|
-							format.html { 
-								flash[:notice] = I18n.t("activerecord.notices.models.ric_eshop/cart.clear")
+							format.html do
+								flash[:notice] = I18n.t("activerecord.notices.models.#{RicEshop.cart_model.model_name.i18n_key}.clear")
 								if request.referer 
 									redirect_to request.referer
 								else
 									redirect_to main_app.root_path
 								end
-							}
-							format.json { render :json => result }
+							end
+							format.json { render :json => true }
 						end
 					end
 
@@ -107,6 +126,13 @@ module RicEshop
 					#
 					def set_cart
 						@cart = RicEshop.cart_model.find(RicEshop.session_model.current_id(session))
+					end
+
+					# 
+					# Never trust parameters from the scary internet, only allow the white list through.
+					#
+					def cart_item_params
+						params.permit(:product_id, :sub_product_ids)
 					end
 
 				end

@@ -21,6 +21,15 @@ module RicEshop
 				#
 				included do
 					
+					#
+					# Tableless
+					#
+					has_no_table
+
+					#
+					# Validate if added products exists
+					#
+					validate :validate_added_items
 
 				end
 
@@ -38,8 +47,19 @@ module RicEshop
 					#
 					def cleanup
 						now = Time.current
-						RicEshop.cart_item_model.delete_all(["updated_at < ?", (now - 1.day)])
+						RicEshop.cart_item_model.delete_all(["updated_at < ?", (now - self.cleanup_timeout)])
 					end
+
+					#
+					# Get cleanup timeout
+					#
+					def cleanup_timeout
+						return 1.day
+					end
+
+					# *********************************************************
+					# Virtual items
+					# *********************************************************
 
 					# 
 					# Define virtual item
@@ -66,7 +86,7 @@ module RicEshop
 				end
 
 				#
-				# Get session id
+				# Get session ID
 				#
 				def session_id
 					return @session_id
@@ -78,101 +98,18 @@ module RicEshop
 				def delete_cache
 					@cart_items = nil
 					@virtual_items = nil
-					@products = nil
+					@cart_items_to_add = nil
+					@cart_items_to_remove = nil
+					@price = nil
+					@amount = nil
 				end
 
-				#
-				# Add new product (if not already added)
-				#
-				def add(product_id, sub_product_ids = nil)
-					if !product_id.nil?
-
-						# Prepare subproducts
-						if !sub_product_ids.nil?
-							sub_product_ids = sub_product_ids.sort
-							if sub_product_ids.empty?
-								sub_product_ids = nil
-							end
-						end
-						if sub_product_ids.nil?
-							sub_product_ids_as_json = nil
-						else
-							sub_product_ids_as_json = sub_product_ids.to_json
-						end
-
-						# Try to find cart item with given product and sub products
-						cart_item = RicEshop.cart_item_model.where(session_id: @session_id, product_id: product_id, sub_product_ids: sub_product_ids_as_json).first
-						
-						if cart_item.nil?
-							return false if !check_valid_product(product_id)
-							if sub_product_ids
-								sub_product_ids.each do |sub_product_id|
-									return false if !check_valid_product(sub_product_id)
-								end
-							end
-							delete_cache
-							cart_item = RicEshop.cart_item_model.new(session_id: @session_id, product_id: product_id, sub_product_ids: sub_product_ids_as_json, amount: 1)
-							return cart_item.save
-						else
-							delete_cache
-							cart_item.amount += 1
-							return cart_item.save
-						end
-					else
-						return false
-					end
-				end
+				# *************************************************************
+				# Cart items
+				# *************************************************************
 
 				#
-				# Remove product (if added)
-				#
-				def remove(product_id, sub_product_ids = nil)
-					if !product_id.nil?
-
-						# Prepare subproducts
-						if !sub_product_ids.nil?
-							sub_product_ids = sub_product_ids.sort
-							if sub_product_ids.empty?
-								sub_product_ids = nil
-							end
-						end
-						if sub_product_ids.nil?
-							sub_product_ids_as_json = nil
-						else
-							sub_product_ids_as_json = sub_product_ids.to_json
-						end
-
-						# Try to find cart item with given product and sub products
-						cart_item = RicEshop.cart_item_model.where(session_id: @session_id, product_id: product_id, sub_product_ids: sub_product_ids_as_json).first
-						
-						if !cart_item.nil?
-							if cart_item.amount > 1
-								delete_cache
-								cart_item.amount -= 1
-								return cart_item.save
-							else
-								delete_cache
-								return cart_item.destroy
-							end
-						else
-							return true
-						end
-					else
-						return false
-					end
-				end
-
-				#
-				# Remove all products
-				#
-				def clear
-					delete_cache
-					RicEshop.cart_item_model.delete_all(session_id: @session_id)
-					return true
-				end
-
-				#
-				# All binded products
+				# All binded items
 				#
 				def cart_items
 					if @cart_items.nil?
@@ -182,7 +119,94 @@ module RicEshop
 				end
 
 				#
-				# All virtual products
+				# Add new cart item (if not already added)
+				#
+				def add(params = {})
+					@cart_items_to_add = [] if @cart_items_to_add.nil?
+					@cart_items_to_add << params
+				end
+
+				#
+				# Remove cart item (if added)
+				#
+				def remove(params = {})
+					@cart_items_to_remove = [] if @cart_items_to_remove.nil?
+					@cart_items_to_remove << params
+				end
+
+				#
+				# Validate and save all added items to DB
+				#
+				def save
+
+					# Validation
+					if !self.validate
+						return false
+					end
+
+					# Add
+					if @cart_items_to_add
+						@cart_items_to_add.each do |params|
+							cart_item_params = cart_item_params(params)
+							cart_item = RicEshop.cart_item_model.where(session_id: @session_id).where(cart_item_params).first
+							if cart_item.nil?
+								cart_item = RicEshop.cart_item_model.create(cart_item_params.merge({session_id: @session_id, amount: 1}))
+							else
+								cart_item.amount += 1
+								cart_item.save
+							end
+						end
+					end
+
+					# Remove
+					if @cart_items_to_remove
+						@cart_items_to_remove.each do |params|
+							cart_item_params = cart_item_params(params)
+							cart_item = RicEshop.cart_item_model.where(session_id: @session_id).where(cart_item_params).first
+							if !cart_item.nil?
+								if cart_item.amount > 1
+									cart_item.amount -= 1
+									cart_item.save
+								else
+									cart_item.destroy
+								end
+							end
+						end
+					end
+
+					# Delete cache
+					self.delete_cache
+
+					return true
+				end
+
+				#
+				# Remove all products
+				#
+				def clear
+					
+					# Delete all
+					RicEshop.cart_item_model.delete_all(session_id: @session_id)
+					
+					# Delete cache
+					self.delete_cache
+
+					return true
+				end
+
+				#
+				# Is cart empty?
+				#
+				def empty?
+					return (self.cart_items.count == 0)
+				end
+
+				# *************************************************************
+				# Virtual items
+				# *************************************************************
+
+				#
+				# All virtual items
 				#
 				def virtual_items
 					if @virtual_items.nil?
@@ -195,9 +219,10 @@ module RicEshop
 					return @virtual_items
 				end
 
-				#
+				# *************************************************************
 				# Total price
-				#
+				# *************************************************************
+				
 				def price
 					if @price.nil?
 						@price = 0
@@ -211,9 +236,10 @@ module RicEshop
 					return @price
 				end
 
-				#
+				# *************************************************************
 				# Total amount of items in the cart
-				#
+				# *************************************************************
+
 				def amount
 					if @amount.nil?
 						@amount = 0
@@ -224,33 +250,17 @@ module RicEshop
 					return @amount
 				end
 
-				#
-				# Is cart empty?
-				#
-				def empty?
-					return (cart_items.count == 0)
-				end
+				# *************************************************************
+				# JSON
+				# *************************************************************
 
 				#
 				# Convert cart object to JSON
 				#
 				def to_json(options = nil)
 
-					# Call parent method
-					hash = as_json(options)
-					hash.delete("cart_items")
-					hash.delete("price")
-					hash.delete("amount")
-
 					result = '{'
 					
-					# Common attributes
-					result << hash.map do |key, value|
-						"#{ActiveSupport::JSON.encode(key.to_s)}:#{ActiveSupport::JSON.encode(value)}"
-					end * ','
-
-					result << ","
-
 					# Cart items
 					encoded_cart_items = "["
 					encoded_cart_items << self.cart_items.map do |cart_item|
@@ -272,9 +282,65 @@ module RicEshop
 
 			protected
 
-				def check_valid_product(product_id)
+				def validate_added_items
+					if @cart_items_to_add
+						@cart_items_to_add.each do |params|
+							if params[:product_id]
+								if !validate_product(params[:product_id])
+									errors.add(:cart_items, I18n.t("activerecord.errors.models.#{RicEshop.order_model.model_name.i18n_key}.attributes.cart_items.invalid_product"))
+								end
+							end
+							if params[:sub_product_ids]
+								params[:sub_product_ids].each do |sub_product_id|
+									if !validate_product(sub_product_id)
+										errors.add(:cart_items, I18n.t("activerecord.errors.models.#{RicEshop.order_model.model_name.i18n_key}.attributes.cart_items.invalid_sub_product"))
+									end
+								end
+							end
+						end
+					end
+				end
+
+				def validate_product(product_id)
 					product = RicEshop.product_model.find_by_id(product_id)
 					return !product.nil?
+				end
+
+				#
+				# Get all permitted params
+				#
+				def cart_item_permitted_params
+					[:product_id, :sub_product_ids]
+				end
+
+				# 
+				# Compose params object
+				#
+				def cart_item_params(params)
+
+					result = {}
+					
+					# Filter allowed params (and fill up nil if not defined)
+					self.cart_item_permitted_params.each do |permitted_param|
+						result[permitted_param] = params[permitted_param]
+					end 
+
+					# Subproducts
+					sub_product_ids = params[:sub_product_ids]
+					if sub_product_ids
+						sub_product_ids = sub_product_ids.sort
+						if sub_product_ids.empty?
+							sub_product_ids = nil
+						end
+					end
+					if sub_product_ids.nil?
+						sub_product_ids_as_json = nil
+					else
+						sub_product_ids_as_json = sub_product_ids.to_json
+					end
+					result[:sub_product_ids] = sub_product_ids_as_json
+
+					return result
 				end
 
 			end
