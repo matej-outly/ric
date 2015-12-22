@@ -22,8 +22,10 @@
 			catalogue_number: :string,
 			ean: :string
 		}, paths: {
-			show: :product_path
-		}, pagination: true ) %>
+			show: :product_path,
+			edit: :edit_product_path,
+			move: :move_product_path,
+		}, moving: true, pagination: true ) %>
 	<% end %>
 
 <% end %>
