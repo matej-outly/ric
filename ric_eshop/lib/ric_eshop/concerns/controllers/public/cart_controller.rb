@@ -41,7 +41,6 @@ module RicEshop
 						if my_params[:sub_product_ids]
 							my_params[:sub_product_ids] = my_params[:sub_product_ids].split(",")
 						end
-						puts my_params.inspect
 						@cart.add(my_params)
 						result = @cart.save
 						respond_to do |format|
@@ -75,7 +74,6 @@ module RicEshop
 						if my_params[:sub_product_ids]
 							my_params[:sub_product_ids] = my_params[:sub_product_ids].split(",")
 						end
-						puts my_params.inspect
 						@cart.remove(my_params)
 						result = @cart.save
 						respond_to do |format|

@@ -169,6 +169,20 @@ module RicEshop
 					self.accept_terms = true
 				end
 
+				# *************************************************************
+				# Cart
+				# *************************************************************
+
+				#
+				# Get cart object
+				#
+				def cart
+					if @cart.nil?
+						@cart = RicEshop.cart_model.find(self.session_id)
+					end
+					return @cart
+				end
+				
 			protected
 
 				# *************************************************************
@@ -191,14 +205,13 @@ module RicEshop
 				#
 				def synchronize_items
 					if !self.session_id.blank?
-						cart = RicEshop.cart_model.find(self.session_id)
-						cart.cart_items.each do |cart_item|
+						self.cart.cart_items.each do |cart_item|
 							self.order_items.create(product_id: cart_item.product_id, sub_product_ids: cart_item.sub_product_ids, amount: cart_item.amount)
 						end
-						cart.virtual_items.each do |virtual_item|
+						self.cart.virtual_items.each do |virtual_item|
 							self.order_items.create(product_name: virtual_item.name, product_price: virtual_item.price, product_currency: virtual_item.currency, amount: 1)
 						end
-						cart.clear
+						self.cart.clear
 					end
 				end
 
