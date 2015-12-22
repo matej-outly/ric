@@ -22,6 +22,7 @@ cs:
         panels: Modifikační panely
         attachments: Přílohy
         categories: Kategorie
+        tickers: Upoutávky
       admin_product_attachments:
         index: "Přílohy produktů"
         show: "Detail přílohy produktu"

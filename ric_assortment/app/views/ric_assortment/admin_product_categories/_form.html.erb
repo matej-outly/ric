@@ -1,5 +1,5 @@
 <%= rug_form_for(@product_category, create_url: :product_categories_path, update_url: :product_category_path) do |f| %>
-	<%= f.picker_row :parent_id, @product_category.available_parents, :id, :name_with_depth, enable_null: true %>
 	<%= f.text_input_row :name %>
+	<%= f.picker_row :parent_id, @product_category.available_parents, :id, :name_with_depth, enable_null: true %>
 	<%= f.primary_button_row :submit %>
 <% end %>
