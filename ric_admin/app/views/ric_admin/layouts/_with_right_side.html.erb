@@ -20,7 +20,7 @@
 
 		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
 			<% partial = render(partial: "#{controller_path}/filters") %>
-			<% if !strip_tags(partial).trim(" \t\n").blank? %>
+			<% if !strip_tags(partial).trim(" \t\n").blank? || (defined? enforce_filters && enforce_filters == true) %>
 				<h2><a href="#" class="toggle" gumby-trigger=".layout .side .filters"><%= t("headers.filters") %></a></h2>
 				<div class="filters togglable">
 					<%= partial %>
@@ -30,7 +30,7 @@
 
 		<% if lookup_context.find_all("#{controller_path}/_actions").any? %>
 			<% partial = render(partial: "#{controller_path}/actions") %>
-			<% if !strip_tags(partial).trim(" \t\n").blank? %>
+			<% if !strip_tags(partial).trim(" \t\n").blank? || (defined? enforce_actions && enforce_actions == true) %>
 				<h2><%= t("headers.actions") %></h2>
 				<%= partial %>
 			<% end %>
@@ -38,7 +38,7 @@
 
 		<% if lookup_context.find_all("#{controller_path}/_related").any? %>
 			<% partial = render(partial: "#{controller_path}/related") %>
-			<% if !strip_tags(partial).trim(" \t\n").blank? %>
+			<% if !strip_tags(partial).trim(" \t\n").blank? || (defined? enforce_related && enforce_related == true) %>
 				<h2><%= t("headers.related") %></h2>
 				<%= partial %>
 			<% end %>
