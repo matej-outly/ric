@@ -6,7 +6,7 @@ class CreateRicEshopCartItems < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# Link to session
-			t.integer :session_id
+			t.string :session_id
 
 			# Amount
 			t.integer :amount
