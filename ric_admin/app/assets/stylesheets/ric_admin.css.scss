@@ -326,13 +326,80 @@ $mobile-width: 320px;
 		}
 	}
 
-	.field {
+	.field, .field-no-gumby {
+		margin-bottom: 10px;
 		.field-item {
 			padding-bottom: 5px;
 		}
 		.right, .right_on_pc {
 			text-align: left;
 		}
+	}
+
+	/*************************************************************************/
+	/* Checkbox / radiobutton                                                */
+	/*************************************************************************/
+
+	.field-no-gumby {
+		label input[type=checkbox] {
+			display: none;
+		}
+		label input[type=checkbox] + span {
+			height: 18px;
+			width: 18px;
+			border: 1px solid #d8d8d8;
+			background: white;
+			-moz-border-radius: 2px;
+			-webkit-border-radius: 2px;
+			border-radius: 2px;
+			display: inline-block;
+			vertical-align: top;
+			position: relative;
+			top: 3px;
+		}
+		[type=checkbox]:checked + span:before {
+			display: block;
+			text-align: center;
+			content: "✓";
+			font-family: entypo;
+			line-height: 16px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		label input[type=radio] {
+			display: none;
+		}
+		label input[type=radio] + span {
+			height: 18px;
+			width: 18px;
+			border: 1px solid #d8d8d8;
+			background: white;
+			-moz-border-radius: 50%;
+			-webkit-border-radius: 50%;
+			border-radius: 50%;
+			display: inline-block;
+			vertical-align: top;
+			position: relative;
+			top: 3px;
+		}
+		[type=radio]:checked + span:before {
+			display: block;
+			text-align: center;
+			content: "";
+			font-family: entypo;
+			font-size: 150%;
+			line-height: 18px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
 	}
 
 	/*************************************************************************/
