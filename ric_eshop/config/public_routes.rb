@@ -20,8 +20,9 @@ RicEshop::PublicEngine.routes.draw do
 
 	# Cart
 	get "cart/get", to: "public_cart#get"
-	get "cart/add/:product_id(/:sub_product_ids)", to: "public_cart#add", as: "cart_add"
-	get "cart/remove/:product_id(/:sub_product_ids)", to: "public_cart#remove", as: "cart_remove"
+	get "cart/add", to: "public_cart#add"
+	post "cart/add", to: "public_cart#add"
+	get "cart/remove", to: "public_cart#remove"
 	get "cart/clear", to: "public_cart#clear"
 
 end
