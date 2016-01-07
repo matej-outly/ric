@@ -41,6 +41,34 @@ module RicReservation
 
 				end
 
+				module ClassMethods
+
+					# *********************************************************
+					# Kind
+					# *********************************************************
+
+					#
+					# Scope for resource reservations
+					#
+					def resource(resource = nil)
+						where(kind: "resource")
+						where(resource_id: resource.id) if resource
+					end
+
+					# *********************************************************
+					# Schedule
+					# *********************************************************
+
+					#
+					# Scope for reservarions in some schedule
+					#
+					def schedule(date_from, date_to = nil)
+						date_to = date_from + 1.day if date_to.nil?
+						where(":date_from < schedule_date AND schedule_date < :date_to", date_from: date_from, date_to: date_to)
+					end
+
+				end
+
 			end
 		end
 	end

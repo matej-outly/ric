@@ -9,7 +9,7 @@ table.timetable {
 	}
 
 	td {
-		font-size: 80%;
+		font-size: 90%;
 		height: 1px;
 
 		/* Borders */
@@ -24,15 +24,17 @@ table.timetable {
 			.week-of-year { font-weight: bold; }
 		}
 
-		.padding { padding: 10px; }
-		.title { padding: 5px 10px; font-weight: bold; }
-		.title + * {
-			border-top: 1px solid #e5e5e5;
+		&.empty, &.item {
+			.padding { padding: 10px; }
+			.title, a.title { padding: 5px 10px; font-weight: bold; color: inherit; }
+			.title + * {
+				border-top: 1px solid #e5e5e5;
+			}
 		}
 
 		&.empty {
 			padding: 0;
-			a { display: block; width: 100%; height: 100%; padding: 10px; }
+			a { display: block; width: 100%; padding: 10px; }
 		}
 
 		&.item {
@@ -44,7 +46,7 @@ table.timetable {
 			}
 			i { margin: 0; }
 			cursor: default; 
-			a { display: block; width: 100%; height: 100%; padding: 10px; color: #555555; }
+			a { display: block; width: 100%; padding: 10px; color: #555555; }
 			
 			/* Backgrounds */
 			&.color-yellow { background: #fff178; }
@@ -96,4 +98,8 @@ table.timetable {
 	.prev { text-align: left; }
 	.title { text-align: center; }
 	.next { text-align: right; }
+
+	a.active {
+		font-weight: bold;
+	}
 }

@@ -46,6 +46,18 @@ module RicReservation
 				module ClassMethods
 
 					# *********************************************************
+					# Kind
+					# *********************************************************
+
+					#
+					# Scope for event reservations
+					#
+					def event(event = nil)
+						where(kind: "event")
+						where(event_id: event.id) if event
+					end
+
+					# *********************************************************
 					# Line
 					# *********************************************************
 

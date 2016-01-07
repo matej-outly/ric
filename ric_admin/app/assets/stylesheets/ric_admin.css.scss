@@ -148,6 +148,16 @@ html {
 			}
 		}
 
+		&.timetable {
+			tbody {
+				tr {
+					td {
+						font-size: 90%;
+					}
+				}
+			}
+		}
+
 		&.show-table {
 			border: 1px solid #dddddd;
 			background-color: #ffffff;
@@ -392,7 +402,7 @@ html {
 		.field-item {
 			padding-bottom: 5px;
 		}
-		.right, .right_on_pc {
+		.right, .right-on-pc {
 			text-align: left;
 		}
 	}

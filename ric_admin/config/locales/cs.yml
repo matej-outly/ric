@@ -26,6 +26,9 @@ cs:
     pagination_more:
       more: "Načíst další"
     calendar:
+      period:
+        week: Týden
+        month: Měsíc
       previous_month: Předchozí měsíc
       next_month: Následující měsíc
       previous_week: Předchozí týden

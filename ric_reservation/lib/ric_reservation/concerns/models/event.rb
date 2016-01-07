@@ -165,11 +165,16 @@ module RicReservation
 					#
 					def schedule_paginate(date, period, page, reverse = false)
 						 
-						# Pagination
+						# Correct page
 						if !page.nil?
 							page = page.to_i
 						else
 							page = 1
+						end
+
+						# Correct period
+						if period.nil?
+							period = "week"
 						end
 
 						if period == "week"
@@ -204,7 +209,7 @@ module RicReservation
 
 						 end
 
-						 return [from, to, page]
+						 return [from, to, period, page]
 					end
 
 					#
