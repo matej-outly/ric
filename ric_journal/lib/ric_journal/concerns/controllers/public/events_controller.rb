@@ -47,7 +47,7 @@ module RicJournal
 					def set_event
 						@event = RicJournal.event_model.find_by_id(params[:id])
 						if @event.nil?
-							redirect_to events_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.event_model.model_name.i18n_key}.not_found")
+							redirect_to ric_journal_public.events_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.event_model.model_name.i18n_key}.not_found")
 						end
 					end
 

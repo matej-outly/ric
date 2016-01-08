@@ -1,5 +1,5 @@
 <%= rug_menu_for(@newie, name: "related") do |m| %>
 	<% if @newie && !@newie.new_record? %>
-		<%= m.item t("headers.ric_journal.admin_newie_pictures.new"), new_newie_picture_path(newie_id: @newie.id), icon: "plus" %>
+		<%= m.item t("headers.ric_journal.admin_newie_pictures.new"), ric_journal_admin.new_newie_picture_path(newie_id: @newie.id), icon: "plus" %>
 	<% end %>
 <% end %>

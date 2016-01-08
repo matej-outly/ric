@@ -61,7 +61,7 @@ module RicJournal
 					def create
 						@event = RicJournal.event_model.new(event_params)
 						if @event.save
-							redirect_to event_path(@event), notice: I18n.t("activerecord.notices.models.#{RicJournal.event_model.model_name.i18n_key}.create")
+							redirect_to ric_journal_admin.event_path(@event), notice: I18n.t("activerecord.notices.models.#{RicJournal.event_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -72,7 +72,7 @@ module RicJournal
 					#
 					def update
 						if @event.update(event_params)
-							redirect_to event_path(@event), notice: I18n.t("activerecord.notices.models.#{RicJournal.event_model.model_name.i18n_key}.update")
+							redirect_to ric_journal_admin.event_path(@event), notice: I18n.t("activerecord.notices.models.#{RicJournal.event_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -83,7 +83,7 @@ module RicJournal
 					#
 					def destroy
 						@event.destroy
-						redirect_to events_path, notice: I18n.t("activerecord.notices.models.#{RicJournal.event_model.model_name.i18n_key}.destroy")
+						redirect_to ric_journal_admin.events_path, notice: I18n.t("activerecord.notices.models.#{RicJournal.event_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -91,7 +91,7 @@ module RicJournal
 					def set_event
 						@event = RicJournal.event_model.find_by_id(params[:id])
 						if @event.nil?
-							redirect_to events_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.event_model.model_name.i18n_key}.not_found")
+							redirect_to ric_journal_admin.events_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.event_model.model_name.i18n_key}.not_found")
 						end
 					end
 

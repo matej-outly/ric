@@ -4,8 +4,8 @@
 		perex: :text,
 		held_at: :datetime
 	}, paths: {
-		show: :event_path,
-		edit: :edit_event_path,
-		destroy: :event_path
+		show: "ric_journal_admin.event_path",
+		edit: "ric_journal_admin.edit_event_path",
+		destroy: "ric_journal_admin.event_path"
 	}, pagination: true, summary: true ) %>
 <% end %>

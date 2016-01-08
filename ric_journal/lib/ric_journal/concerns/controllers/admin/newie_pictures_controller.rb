@@ -47,7 +47,7 @@ module RicJournal
 						if params[:newie_id]
 							@newie_picture.newie_id = params[:newie_id] 
 						else
-							redirect_to newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.attributes.newie_id.blank")
+							redirect_to ric_journal_admin.newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.attributes.newie_id.blank")
 						end
 					end
 
@@ -64,7 +64,7 @@ module RicJournal
 						@newie_picture = RicJournal.newie_picture_model.new(newie_picture_params)
 						if @newie_picture.save
 							respond_to do |format|
-								format.html { redirect_to newie_picture_path(@newie_picture), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.create") }
+								format.html { redirect_to ric_journal_admin.newie_picture_path(@newie_picture), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.create") }
 								format.json { render json: @newie_picture.id }
 							end
 						else
@@ -81,7 +81,7 @@ module RicJournal
 					def update
 						if @newie_picture.update(newie_picture_params)
 							respond_to do |format|
-								format.html { redirect_to newie_picture_path(@newie_picture), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.update") }
+								format.html { redirect_to ric_journal_admin.newie_picture_path(@newie_picture), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.update") }
 								format.json { render json: @newie_picture.id }
 							end
 						else
@@ -98,7 +98,7 @@ module RicJournal
 					def destroy
 						@newie_picture.destroy
 						respond_to do |format|
-							format.html { redirect_to newie_path(@newie_picture.newie_id), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to ric_journal_admin.newie_path(@newie_picture.newie_id), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @newie_picture.id }
 						end
 					end
@@ -108,7 +108,7 @@ module RicJournal
 					def set_newie_picture
 						@newie_picture = RicJournal.newie_picture_model.find_by_id(params[:id])
 						if @newie_picture.nil?
-							redirect_to newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.not_found")
+							redirect_to ric_journal_admin.newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_picture_model.model_name.i18n_key}.not_found")
 						end
 					end
 

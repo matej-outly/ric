@@ -61,7 +61,7 @@ module RicJournal
 					def create
 						@newie = RicJournal.newie_model.new(newie_params)
 						if @newie.save
-							redirect_to newie_path(@newie), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_model.model_name.i18n_key}.create")
+							redirect_to ric_journal_admin.newie_path(@newie), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -72,7 +72,7 @@ module RicJournal
 					#
 					def update
 						if @newie.update(newie_params)
-							redirect_to newie_path(@newie), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_model.model_name.i18n_key}.update")
+							redirect_to ric_journal_admin.newie_path(@newie), notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -83,7 +83,7 @@ module RicJournal
 					#
 					def destroy
 						@newie.destroy
-						redirect_to newies_path, notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_model.model_name.i18n_key}.destroy")
+						redirect_to ric_journal_admin.newies_path, notice: I18n.t("activerecord.notices.models.#{RicJournal.newie_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
@@ -91,7 +91,7 @@ module RicJournal
 					def set_newie
 						@newie = RicJournal.newie_model.find_by_id(params[:id])
 						if @newie.nil?
-							redirect_to newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_model.model_name.i18n_key}.not_found")
+							redirect_to ric_journal_admin.newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_model.model_name.i18n_key}.not_found")
 						end
 					end
 

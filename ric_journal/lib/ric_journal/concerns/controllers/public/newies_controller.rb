@@ -47,7 +47,7 @@ module RicJournal
 					def set_newie
 						@newie = RicJournal.newie_model.find_by_id(params[:id])
 						if @newie.nil?
-							redirect_to newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_model.model_name.i18n_key}.not_found")
+							redirect_to ric_journal_public.newies_path, alert: I18n.t("activerecord.errors.models.#{RicJournal.newie_model.model_name.i18n_key}.not_found")
 						end
 					end
 
