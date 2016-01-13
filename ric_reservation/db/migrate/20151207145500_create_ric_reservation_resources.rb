@@ -24,8 +24,8 @@ class CreateRicReservationResources < ActiveRecord::Migration
 			t.string :name
 
 			# Time window
-			t.integer :time_window_soon
-			t.integer :time_window_deadline
+			t.time :time_window_soon
+			t.time :time_window_deadline
 
 		end
 	end

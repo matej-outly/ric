@@ -40,8 +40,8 @@ cs:
     attributes:
       ric_reservation/resource:
         name: Jméno
-        time_window_soon: Kolik minut před začátkem považovat rezervaci za brzkou
-        time_window_deadline: Kolik minut před začátkem uzavřít rezervaci
+        time_window_soon: Jak dlouho před začátkem považovat rezervaci za brzkou
+        time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
       ric_reservation/event:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
@@ -90,8 +90,18 @@ cs:
         tmp_canceled: Jednorázově zrušeno
         valid_from: Platné od
         valid_to: Smazané od
-        time_window_soon: Kolik minut před začátkem považovat rezervaci za brzkou
-        time_window_deadline: Kolik minut před začátkem uzavřít rezervaci
+        time_window_soon: Jak dlouho před začátkem považovat rezervaci za brzkou
+        time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
+        color: Barva v rozvrhové tabulce
+        color_values:
+          yellow: Žlutá
+          turquoise: Tyrkysová
+          blue: Modrá
+          pink: Růžová
+          violet: Fialová
+          orange: Oranžová
+          red: Červená
+          green: Zelená
       ric_reservation/reservation:
         schedule_date: Datum
         schedule_formatted_time: Čas

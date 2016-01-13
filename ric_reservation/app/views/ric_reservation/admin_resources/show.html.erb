@@ -51,8 +51,8 @@
 		<div class="tab-content">
 			<%= rug_show_table_for(@resource, { 
 				name: :string,
-				time_window_soon: :integer,
-				time_window_deadline: :integer,
+				time_window_soon: :time,
+				time_window_deadline: :time,
 			}) %>
 		</div>
 	</section>

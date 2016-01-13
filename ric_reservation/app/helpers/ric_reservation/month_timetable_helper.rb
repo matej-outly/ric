@@ -68,7 +68,8 @@ module RicReservation
 					
 					# Tags
 					tags = []
-					tags << "state-#{item.state.to_s}" 
+					tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
+					tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
 					tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?
 
 					items << {

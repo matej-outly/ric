@@ -53,6 +53,15 @@ module RicReservation
 					#
 					enum_column :kind, ["event", "resource"]
 
+					# *********************************************************
+					# Color
+					# *********************************************************
+
+					#
+					# Period
+					#
+					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green"], default: "yellow"
+
 				end
 
 				module ClassMethods
@@ -102,11 +111,21 @@ module RicReservation
 						
 						# Break points
 						if self.kind_event?
-							deadline = self.schedule_from - self.event.time_window_deadline
-							soon = deadline - self.event.time_window_soon
+							time_window_deadline = self.event.time_window_deadline
+							time_window_soon = self.event.time_window_soon
 						else # if self.kind_resource?
-							deadline = self.schedule_from - self.resource.time_window_deadline
-							soon = deadline - self.resource.time_window_soon
+							time_window_deadline = self.resource.time_window_deadline
+							time_window_soon = self.resource.time_window_soon
+						end
+						if time_window_deadline
+							deadline = self.schedule_from - time_window_deadline.seconds_since_midnight.seconds
+						else
+							deadline = self.schedule_from
+						end
+						if time_window_soon
+							soon = deadline - time_window_soon.seconds_since_midnight.seconds
+						else
+							soon = deadline
 						end
 
 						# State recognititon

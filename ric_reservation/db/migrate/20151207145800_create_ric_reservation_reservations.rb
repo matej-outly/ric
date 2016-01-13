@@ -36,6 +36,9 @@ class CreateRicReservationReservations < ActiveRecord::Migration
 			t.integer :subject_id
 			t.string :subject_type
 
+			# Color
+			t.string :color
+			
 		end
 	end
 end

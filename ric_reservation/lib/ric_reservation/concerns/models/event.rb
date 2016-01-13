@@ -113,6 +113,24 @@ module RicReservation
 						end
 					end
 
+					# *********************************************************
+					# Reservations
+					# *********************************************************
+
+					#
+					# All existing reservations must be synchronizied wih the data update
+					#
+					before_save :synchronize_reservations_before_save
+
+					# *********************************************************
+					# Color
+					# *********************************************************
+
+					#
+					# Period
+					#
+					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green"], default: "yellow"
+
 				end
 
 				module ClassMethods
@@ -414,9 +432,6 @@ module RicReservation
 					if value.nil? && self.resource
 						value = self.resource.time_window_soon
 					end
-					if value.nil?
-						value = 0
-					end
 					return value
 				end
 
@@ -427,9 +442,6 @@ module RicReservation
 					value = read_attribute(:time_window_deadline)
 					if value.nil? && self.resource
 						value = self.resource.time_window_deadline
-					end
-					if value.nil?
-						value = 0
 					end
 					return value
 				end
@@ -497,7 +509,7 @@ module RicReservation
 				#
 				def schedule(date)
 					
-					_schedule(date)
+					return _schedule(date)
 
 				end
 
@@ -535,6 +547,7 @@ module RicReservation
 					).in_time_zone(Time.zone)
 					self.schedule_to += (self.to.strftime("%:z").to_i - self.schedule_to.strftime("%:z").to_i).hours
 
+					return self
 				end
 
 				#
@@ -569,8 +582,16 @@ module RicReservation
 						now = Time.current
 						
 						# Break points
-						deadline = self.schedule_from - self.time_window_deadline.minutes
-						soon = deadline - self.time_window_soon.minutes
+						if self.time_window_deadline
+							deadline = self.schedule_from - self.time_window_deadline.seconds_since_midnight.seconds
+						else
+							deadline = self.schedule_from
+						end
+						if self.time_window_soon
+							soon = deadline - self.time_window_soon.seconds_since_midnight.seconds
+						else
+							soon = deadline
+						end
 
 						# State recognititon
 						if now < soon
@@ -744,7 +765,7 @@ module RicReservation
 				end
 
 				# *************************************************************
-				# Validity callback
+				# Validity callbacks
 				# *************************************************************
 
 				#
@@ -755,7 +776,7 @@ module RicReservation
 				end
 
 				# *************************************************************
-				# Time callback
+				# Time callbacks
 				# *************************************************************
 
 				#
@@ -816,6 +837,28 @@ module RicReservation
 						end
 					end
 
+				end
+
+				# *************************************************************
+				# Reservations callbacks
+				# *************************************************************
+
+				#
+				# All existing reservations must be synchronizied wih the data update
+				#
+				def synchronize_reservations_before_save
+					if self.period_was == "once"
+						self.schedule(self.from_was.to_date)
+						self.reservations.each do |reservation|
+							self.schedule(self.from.to_date)
+							reservation.schedule_date = self.schedule_date
+							reservation.schedule_from = self.schedule_from
+							reservation.schedule_to = self.schedule_to
+							reservation.save
+						end
+					else
+						# TODO
+					end	
 				end
 
 			end
