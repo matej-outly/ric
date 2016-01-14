@@ -1,6 +1,7 @@
 <%= rug_form_for(@team_member, create_url: :team_members_path, update_url: :team_member_path) do |f| %>
-	<%= f.picker_row :team_id, RicLeague.team_model.all.order(position: :asc), :id, :name %>
 	<%= f.text_input_row :name %>
+	<%= f.picker_row :team_id, RicLeague.team_model.all.order(position: :asc), :id, :name %>
+	<%= f.picker_row :league_category_id, RicLeague.league_category_model.all.order(position: :asc), :id, :name, enable_null: true %>
 	<%= f.picker_row :kind %>
 	<%= f.text_input_row :role %>
 	<%= f.text_input_row :classification %>
