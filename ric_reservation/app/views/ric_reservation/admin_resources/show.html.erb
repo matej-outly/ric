@@ -1,45 +1,48 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<section class="tabs pill">
 		<ul class="tab-nav">
-			<li class="active"><a href="#"><%= t("headers.ric_reservation.admin_resources.valid_events") %></a></li>
-			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.yet_invalid_events") %></a></li>
-			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.already_invalid_events") %></a></li>
+			<li class="active"><a href="#"><%= t("headers.ric_reservation.admin_resources.valid") %></a></li>
+			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.invalid_events") %></a></li>
 			<li><a href="#"><%= t("headers.ric_reservation.admin_resources.show") %></a></li>
 		</ul>
-		<div class="tab-content active">
-			<%= rug_index_table_for(@valid_other_events, { 
-				name: :string,
-				formatted_time: :string,
-				period: :enum
-			}, paths: {
-				show: "ric_reservation_admin.event_path",
-				edit: "ric_reservation_admin.edit_event_path",
-				destroy: "ric_reservation_admin.event_path"
-			}, summary: true ) %>
-			<h3><%= t("headers.ric_reservation.admin_resources.valid_once_events") %></h3>
-			<%= rug_index_table_for(@valid_once_events, { 
-				name: :string,
-				formatted_time: :string,
-				period: :enum
-			}, paths: {
-				show: "ric_reservation_admin.event_path",
-				edit: "ric_reservation_admin.edit_event_path",
-				destroy: "ric_reservation_admin.event_path"
-			}, summary: true ) %>
+		<div class="tab-content active">			
+			<%=	timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_admin.resource_path(@resource, params) }) %>
+			<% if @period == "week" %>
+				<%= 
+					week_timetable(@from, [
+						[ @valid_events, {
+							label_callback: lambda { |event| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+							item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
+						} ],
+						[ @valid_reservations, {
+							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
+							item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
+						} ],
+					], {
+						min_hour: 8, 
+						max_hour: 16,
+						empty_path_callback: lambda { |date, time_from| ric_reservation_admin.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) }
+					})
+				%>
+			<% else %>
+				<%= 
+					month_timetable(@from, [
+						[ @valid_events, {
+							label_callback: lambda { |event| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+							item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
+						} ],
+						[ @valid_reservations, {
+							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
+							item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
+						} ],
+					], {
+						empty_path_callback: lambda { |date| ric_reservation_admin.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) }
+					})
+				%>
+			<% end %>
 		</div>
 		<div class="tab-content">
-			<%= rug_index_table_for(@yet_invalid_events, { 
-				name: :string,
-				formatted_time: :string,
-				period: :enum,
-				valid_from: :date
-			}, paths: {
-				show: "ric_reservation_admin.event_path",
-				edit: "ric_reservation_admin.edit_event_path"
-			}, summary: true ) %>
-		</div>
-		<div class="tab-content">
-			<%= rug_index_table_for(@already_invalid_events, { 
+			<%= rug_index_table_for(@invalid_events, { 
 				name: :string,
 				formatted_time: :string,
 				period: :enum,
@@ -56,4 +59,5 @@
 			}) %>
 		</div>
 	</section>
+
 <% end %>

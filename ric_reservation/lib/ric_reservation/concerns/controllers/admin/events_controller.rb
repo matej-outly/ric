@@ -96,7 +96,7 @@ module RicReservation
 					# *********************************************************
 
 					def set_type 
-						@type = RicReservation.event_model.types.include?(params[:type]) ? params[:type] : RicReservation.event_model.to_s 
+						@type = RicReservation.event_model.types && RicReservation.event_model.types.include?(params[:type]) ? params[:type] : RicReservation.event_model.to_s 
 					end
 					
 					def type_model

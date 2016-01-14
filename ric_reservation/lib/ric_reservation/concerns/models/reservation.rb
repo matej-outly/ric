@@ -62,6 +62,21 @@ module RicReservation
 					#
 					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green"], default: "yellow"
 
+					# *************************************************************
+					# Time
+					# *************************************************************
+
+					#
+					# Virtual attributes
+					#
+					attr_writer :time_from
+					attr_writer :time_to
+
+					#
+					# Correct from/to must be set before save
+					#
+					before_validation :set_from_to_before_validation
+
 				end
 
 				module ClassMethods
@@ -87,14 +102,30 @@ module RicReservation
 				end
 
 				# *************************************************************
-				# Schedule time
+				# Time
 				# *************************************************************
 
+				def time_from
+					if self.schedule_from
+						return self.schedule_from
+					else
+						return @time_from
+					end
+				end
+
+				def time_to
+					if self.schedule_to
+						return self.schedule_to
+					else
+						return @time_to
+					end
+				end
+
 				#
-				# Schedule time
+				# Human readable time
 				#
-				def schedule_formatted_time
-					return self.schedule_from.strftime("%k:%M") + " - " + self.schedule_to.strftime("%k:%M")
+				def formatted_time
+					return self.schedule_from.strftime("%-d. %-m. %Y %k:%M") + " - " + self.schedule_to.strftime("%k:%M")
 				end
 
 				# *************************************************************
@@ -142,8 +173,72 @@ module RicReservation
 					end
 					return @state
 				end
-				
+
 			protected
+
+				# *************************************************************
+				# Time
+				# *************************************************************
+
+				#
+				# Set correct from/to if virtual time_from and time_to attributes set
+				#
+				def set_from_to_before_validation
+					
+					# Date
+					if self.schedule_date.blank?
+						date = nil
+					elsif self.schedule_date.is_a?(::String)
+						date = Date.parse(self.schedule_date)
+					else
+						date = self.schedule_date
+					end
+
+					# From
+					if @time_from.blank?
+						time_from = nil
+					elsif @time_from.is_a?(::String)
+						time_from = DateTime.parse(@time_from)
+					else
+						time_from = @time_from
+					end
+
+					# To
+					if @time_to.blank?
+						time_to = nil
+					elsif @time_to.is_a?(::String)
+						time_to = DateTime.parse(@time_to)
+					else
+						time_to = @time_to
+					end
+
+					# Compose
+					if !date.nil?
+						if !time_from.nil?
+							self.schedule_from = DateTime.new(
+								date.year, 
+								date.month, 
+								date.mday, 
+								time_from.utc.strftime("%k").to_i, # hour
+								time_from.utc.strftime("%M").to_i, # minute
+								time_from.utc.strftime("%S").to_i # second
+							).in_time_zone(Time.zone)
+							self.schedule_from += (time_from.strftime("%:z").to_i - self.schedule_from.strftime("%:z").to_i).hours
+						end
+						if !time_to.nil?
+							self.schedule_to = DateTime.new(
+								date.year, 
+								date.month, 
+								date.mday, 
+								time_to.utc.strftime("%k").to_i, # hour
+								time_to.utc.strftime("%M").to_i, # minute
+								time_to.utc.strftime("%S").to_i # second
+							).in_time_zone(Time.zone)
+							self.schedule_to += (time_to.strftime("%:z").to_i - self.schedule_to.strftime("%:z").to_i).hours
+						end
+					end
+
+				end
 
 			end
 		end

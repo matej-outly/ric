@@ -1,0 +1,9 @@
+<%= rug_form_for(@reservation, create_url: "ric_reservation_admin.resource_reservations_path", update_url: "ric_reservation_admin.resource_reservation_path") do |f| %>
+	<%= f.hidden_field :resource_id %>
+	<%= f.token_input_row :owner_id, ric_user_public.users_path, as: :owner, value_attr: :id, label_attr: :email, limit: 1 %>
+	<%= f.date_picker_row :schedule_date %>
+	<%= f.time_picker_row :time_from %>
+	<%= f.time_picker_row :time_to %>
+	<%= f.text_input_row :name %>
+	<%= f.primary_button_row :submit, label: (@reservation.new_record? ? t("helpers.submit.reserve") : nil) %>
+<% end %>

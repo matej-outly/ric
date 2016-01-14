@@ -1,0 +1,8 @@
+<%= render layout: "ric_portal/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@reservation, { 
+		resource: { type: :belongs_to, label: :name, path: "ric_reservation_public.timetable_path" },
+		owner: { type: :belongs_to, label: :name },
+		formatted_time: :string,
+		name: :string,
+	}) %>
+<% end %>

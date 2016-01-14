@@ -2,19 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Resource reservations
 # *
 # * Author: Matěj Outlý
-# * Date  : 12. 11. 2015
+# * Date  : 7. 12. 2015
 # *
 # *****************************************************************************
 
-RicReservation::PublicEngine.routes.draw do
+require_dependency "ric_reservation/public_controller"
 
-	# Timetables
-	resources :timetables, only: [:index, :show], controller: "public_timetables"
-
-	# Resource reservations
-	resources :resource_reservations, except: [:index], controller: "public_resource_reservations"
-
+module RicReservation
+	class PublicResourceReservationsController < PublicController
+		include RicReservation::Concerns::Controllers::Public::ResourceReservationsController
+	end
 end

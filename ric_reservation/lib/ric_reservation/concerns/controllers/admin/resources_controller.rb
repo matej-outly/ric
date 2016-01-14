@@ -38,11 +38,19 @@ module RicReservation
 					# Show action
 					#
 					def show
-						today = Date.today
-						@valid_once_events = @resource.events.valid(today).where(period: "once").order(from: :asc)
-						@valid_other_events = @resource.events.valid(today).where("period <> ?", "once").order(from: :asc)
-						@yet_invalid_events = @resource.events.yet_invalid(today).order(from: :asc)
-						@already_invalid_events = @resource.events.already_invalid(today).order(from: :asc)
+						@today = Date.today
+
+						# Valid events pagination
+						@from, @to, @period, @page = RicReservation.event_model.schedule_paginate(@today, params[:period], params[:page])
+
+						# Load valid events
+						@valid_events = RicReservation.event_model.schedule_events(@from, @to, @resource.events.valid(@from, @to))
+
+						# Load already invalid events
+						@invalid_events = @resource.events.already_invalid(@from).order(from: :asc)
+
+						# Load valid reservations
+						@valid_reservations = RicReservation.reservation_model.resource(@resource).schedule(@from, @to)
 					end
 
 					#
@@ -105,7 +113,7 @@ module RicReservation
 					# *********************************************************
 
 					def set_type 
-						@type = RicReservation.resource_model.types.include?(params[:type]) ? params[:type] : RicReservation.resource_model.to_s 
+						@type = RicReservation.resource_model.types && RicReservation.resource_model.types.include?(params[:type]) ? params[:type] : RicReservation.resource_model.to_s 
 					end
 					
 					def type_model

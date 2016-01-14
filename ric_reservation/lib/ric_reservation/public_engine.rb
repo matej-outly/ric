@@ -15,7 +15,9 @@ module RicReservation
 		#
 		# Controllers
 		#
-		
+		require 'ric_reservation/concerns/controllers/public/timetables_controller'
+		require 'ric_reservation/concerns/controllers/public/resource_reservations_controller'
+
 		#
 		# Namespace
 		#

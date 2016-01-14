@@ -51,7 +51,7 @@ module RicReservation
 						if !reservation.nil?
 							redirect_to ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), notice: I18n.t("activerecord.notices.models.ric_reservation/reservation.create")
 						else
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/reservation.create_at_capacity_or_closed")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.create_at_capacity_or_closed")
 						end
 					end
 
@@ -64,7 +64,7 @@ module RicReservation
 							reservation.save
 							redirect_to ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), notice: I18n.t("activerecord.notices.models.ric_reservation/reservation.create")
 						else
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/reservation.create_at_capacity_or_closed")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.create_at_capacity_or_closed")
 						end
 					end
 
@@ -87,26 +87,26 @@ module RicReservation
 							@owner = OpenStruct.new(name: reservation_params["owner_name"])
 						end
 						if @owner.nil?
-							@owner = OpenStruct.new(name: I18n.t("activerecord.attributes.ric_reservation/reservation.owner_name_anonymous"))
+							@owner = OpenStruct.new(name: I18n.t("activerecord.attributes.#{RicReservation.reservation_model.model_name.i18n_key}.owner_name_anonymous"))
 						end
 					end
 
 					def set_event
 						if params[:schedule_date].nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/event.not_found")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.event_model.model_name.i18n_key}.not_found")
 						end
 						schedule_date = Date.parse(params[:schedule_date])
 						@event = RicReservation.event_model.find_by_id(params[:id])
 						if @event.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/event.not_found")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.event_model.model_name.i18n_key}.not_found")
 						end
 						@event.schedule(schedule_date)
 					end
 
 					def set_reservation
-						@reservation = RicReservation.reservation_model.find_by_id(params[:id])
+						@reservation = RicReservation.reservation_model.where(id: params[:id], kind: "event").first
 						if @reservation.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/reservation.not_found")
+							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.not_found")
 						end
 					end
 

@@ -30,19 +30,8 @@
 		paths: {
 			show: lambda {|scheduled_event| ric_reservation_admin.event_reservations_path(id: scheduled_event.id, schedule_date: scheduled_event.schedule_date) }
 		},
-		model_class: "RicReservation::Event"
+		model_class: RicReservation.event_model.to_s
 	) %>
-	<%= 
-		render partial: "ric_reservation/shared/timetable_pagination", locals: {
-			page: @page,
-			page_bottom: 1,
-			page_top: 4,
-			from: @from,
-			to: @to,
-			next_label: t("general.action.prev_" + (@event.month_scope_period? ? "month" : "week")),
-			prev_label: t("general.action.next_" + (@event.month_scope_period? ? "month" : "week")),
-			path_callback: lambda { |params| ric_reservation_admin.event_path(@event, params) }
-		} 
-	%>
+	<%=	timetable_pagination(Date.today, (@event.month_scope_period? ? "month" : "week"), @page, lambda { |params| ric_reservation_admin.event_path(@event, params) }) %>
 
 <% end %>

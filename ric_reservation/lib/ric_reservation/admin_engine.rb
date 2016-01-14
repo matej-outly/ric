@@ -19,6 +19,7 @@ module RicReservation
 		require 'ric_reservation/concerns/controllers/admin/events_controller'
 		require 'ric_reservation/concerns/controllers/admin/event_modifiers_controller'
 		require 'ric_reservation/concerns/controllers/admin/event_reservations_controller'
+		require 'ric_reservation/concerns/controllers/admin/resource_reservations_controller'
 		require 'ric_reservation/concerns/controllers/admin/timetables_controller'
 		
 		#

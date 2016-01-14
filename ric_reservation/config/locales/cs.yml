@@ -10,10 +10,8 @@ cs:
         edit: Upravit rozvrhovou tabulku
         update: Upravit rozvrhovou tabulku
         destroy: Smazat rozvrhovou tabulku
-        yet_invalid_events: "Naplánované události"
-        already_invalid_events: "Smazané události"
-        valid_events: "Platné události"
-        valid_once_events: "Jednorázové"
+        invalid_events: "Smazané události"
+        valid: "Platný rozvrh"
       admin_events:
         index: Události
         show: Detail události
@@ -25,16 +23,35 @@ cs:
         scheduled_events: Termíny
       admin_event_reservations:
         index: Rezervace na událost
-        new: Nová rezervace
-        create_anonymous: Nová anonymní rezervace
+        new: Rezervovat
+        create_anonymous: Rezervovat anonymně
         destroy: "Zrušit&nbsp;rezervaci"
         present: "Změnit&nbsp;stav na&nbsp;&bdquo;přišel&ldquo;"
         not_present: "Změnit&nbsp;stav na&nbsp;&bdquo;nepřišel&ldquo;"
+      admin_resource_reservations:
+        show: Detail rezervace
+        new: Rezervovat
+        create: Rezervovat
+        edit: Upravit rezervaci
+        update: Upravit rezervaci
+        destroy: Zrušit rezervaci
       admin_event_modifiers:
         create_canceled: Jednorázově zrušit událost
       admin_timetables:
         index: "Rezervace"
-        show: "Rozvrhová tabulka pro %{name}"
+        show: "Rozvrhová tabulka"
+        show_named: "Rozvrhová tabulka pro %{resource_name}"
+      public_timetables:
+        index: "Rezervace"
+        show: "Rozvrhová tabulka"
+        show_named: "Rozvrhová tabulka pro %{resource_name}"
+      public_resource_reservations:
+        show: Detail rezervace
+        new: Rezervovat
+        create: Rezervovat
+        edit: Upravit rezervaci
+        update: Upravit rezervaci
+        destroy: Zrušit rezervaci
 
   activerecord:
     attributes:
@@ -103,9 +120,25 @@ cs:
           red: Červená
           green: Zelená
       ric_reservation/reservation:
+        resource_id: Rozvrhová tabulka
+        resource: Rozvrhová tabulka
+        name: Poznámka k rezervaci
+        color: Barva v rozvrhové tabulce
+        color_values:
+          yellow: Žlutá
+          turquoise: Tyrkysová
+          blue: Modrá
+          pink: Růžová
+          violet: Fialová
+          orange: Oranžová
+          red: Červená
+          green: Zelená
         schedule_date: Datum
-        schedule_formatted_time: Čas
+        time_from: Začátek
+        time_to: Konec
+        formatted_time: Čas
         event: Událost
+        owner: Osoba
         owner_id: Osoba
         owner_name: Osoba
         owner_name_anonymous: "(neznámý)"
@@ -129,6 +162,7 @@ cs:
           create: Rezervace byla úspěšně vytvořena.
           create_below_line: "Rezervace pod čarou byla úspěšně vytvořena. Událost je už sice plně obsazena, ale pokud někdo zruší svou rezervaci, budeme s Vámi počítat. Pokud se termín uvolní, informujeme Vás e-mailem."
           destroy: Rezervace byla úspěšně zrušena.
+          update: Rezervace byla úspěšně uložena.
     errors:
       models:
         ric_reservation/resource:
@@ -159,10 +193,3 @@ cs:
     submit:
       reserve: "Rezervovat"
       reserve_below_line: "Rezervovat pod čarou"
-
-  general:
-    action:
-      next_week: "následující týden"
-      prev_week: "předchozí týden"
-      next_month: "následující měsíc"
-      prev_month: "předchozí měsíc"
