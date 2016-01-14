@@ -100,12 +100,12 @@ module RicAssortment
 					def move
 						if RicAssortment.product_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to admin_restaurants_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
+								format.html { redirect_to products_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
 								format.json { render json: true }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to admin_restaurants_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
+								format.html { redirect_to products_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
 								format.json { render json: false }
 							end
 						end
