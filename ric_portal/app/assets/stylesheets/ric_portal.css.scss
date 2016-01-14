@@ -11,14 +11,6 @@ $base-line-height: 1.5em;
 $tablet-width: 768px;
 $mobile-width: 320px;
 
-/* Colors */
-/*$brown: #583410;
-$light-brown: #7a5836;
-$yellow: rgb(251, 222, 49);
-$light-yellow: rgb(253, 222, 139);
-$ochre: #9c7d5f;
-$light-ochre: #c3ae9a;*/
-
 /*****************************************************************************/
 /* Mixins                                                                    */
 /*****************************************************************************/
@@ -45,6 +37,10 @@ html {
 /*****************************************************************************/
 /* Layout                                                                    */
 /*****************************************************************************/
+
+body {
+	background: #F6F6F6;
+}
 
 .portal {
 
@@ -140,12 +136,6 @@ html {
 					padding: 0 15px;
 					color: #ffffff;
 				}
-
-				&:hover, &.active {
-					> a {
-						//background: $ochre;
-					}
-				}
 			}
 
 			li.delimiter {
@@ -155,7 +145,6 @@ html {
 					content: " ";
 					display: inline-block;
 					vertical-align: middle;
-					//background: $light-ochre;
 					width: 1px;
 					height: 40px;
 				}
@@ -163,25 +152,9 @@ html {
 
 		}
 
-		a.toggle {
-			//background: $ochre;
-		}
-
 		@media only screen and (max-width: $tablet-width) {
 		
 			.menu {
-
-				ul {
-					//background: $ochre;
-				}
-
-				li {
-					&:hover {
-						a {
-							//background: $light-ochre;
-						}
-					}
-				}
 
 				li.delimiter {
 					padding: 0px 0px;
@@ -192,7 +165,6 @@ html {
 						content: " ";
 						display: block;
 						margin: 5px auto;
-						//background: $light-ochre;
 						width: 50%;
 						height: 1px;
 					}
@@ -337,6 +309,14 @@ html {
 		padding: 15px;
 		background: #f6f6f6;
 		margin-bottom: 2%;
+	}
+
+	/*************************************************************************/
+	/* Full width row                                                        */
+	/*************************************************************************/
+
+	.full-width-row {
+		margin: 0 20px;
 	}
 
 	/*************************************************************************/
@@ -514,7 +494,7 @@ html {
 		}
 	}
 
-	a.active {
+	a.active, .active a {
 		font-weight: bold;
 	}
 
