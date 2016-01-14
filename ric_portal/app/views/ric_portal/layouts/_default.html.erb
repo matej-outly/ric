@@ -1,0 +1,23 @@
+<div class="layout default">
+	<div class="row">
+	
+		<div class="six columns">
+			<%= render partial: "ric_portal/shared/flash" %>
+		</div>
+		
+		<div class="six columns right-on-pc">
+			<%= render partial: "ric_portal/shared/login_info" %>
+		</div>
+	
+	</div>
+
+	<div class="row">	
+
+		<% if !(defined? disable_header) || (disable_header != true) %>
+			<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
+		<% end %>
+
+		<%= yield %>
+
+	</div>
+</div>

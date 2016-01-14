@@ -1,0 +1,51 @@
+<% controller_path = controller.class.name.to_snake[0..-12] %>
+
+<div class="layout with-right-side">
+	<div class="row">
+		
+		<div class="eight columns">
+
+			<%= render partial: "ric_portal/shared/flash" %>
+			
+			<% if !(defined? disable_header) || (disable_header != true) %>
+				<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
+			<% end %>
+
+			<%= yield %>
+
+		</div>
+
+		<div class="four columns side">
+			
+			<div class="right-on-pc">
+				<%= render partial: "ric_portal/shared/login_info" %>
+			</div>
+			
+			<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
+				<% partial = render(partial: "#{controller_path}/filters") %>
+				<% if !strip_tags(partial).trim(" \t\n").blank? %>
+					<h2><%= t("headers.filters") %></h2>
+					<%= partial %>
+				<% end %>
+			<% end %>
+
+			<% if lookup_context.find_all("#{controller_path}/_actions").any? %>
+				<% partial = render(partial: "#{controller_path}/actions") %>
+				<% if !strip_tags(partial).trim(" \t\n").blank? %>
+					<h2><%= t("headers.actions") %></h2>
+					<%= partial %>
+				<% end %>
+			<% end %>
+
+			<% if lookup_context.find_all("#{controller_path}/_related").any? %>
+				<% partial = render(partial: "#{controller_path}/related") %>
+				<% if !strip_tags(partial).trim(" \t\n").blank? %>
+					<h2><%= t("headers.related") %></h2>
+					<%= partial %>
+				<% end %>
+			<% end %>
+
+		</div>
+		
+	</div>
+</div>

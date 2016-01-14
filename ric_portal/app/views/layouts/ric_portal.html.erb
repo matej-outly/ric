@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title><%= render_component @portal_title %></title>
+	<%= stylesheet_link_tag    RicPortal.css_layout, media: 'all' %>
+	<%= javascript_include_tag RicPortal.js_layout, 'gumby-touch' => '/assets/gumby/js/libs' %>
+	<%= csrf_meta_tags %>
+</head>
+<body class="portal">
+	
+	<div class="navbar" id="header">
+		<a class="toggle" gumby-trigger="#header .menu ul" href="#"><i class="icon-menu"></i></a>
+		<%= render_component @portal_header_logo %>
+		<%= render_component @admin_header_menu %>
+	</div>
+	
+	<div class="pretty">
+		<%= yield %>
+	</div>
+
+	<div class="footer">
+		<%= render_component @portal_footer %>
+	</div>
+
+</body>
+</html>

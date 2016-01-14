@@ -1,0 +1,30 @@
+<% 
+	client_year = @portal_footer.config(:client, :year).to_i
+%>
+
+<div class="row">
+	<div class="six columns">
+		<%= (Date.today.year.to_i == client_year ? client_year.to_s : "#{client_year.to_s}-#{Date.today.year}") %> &copy; <a target="_blank" href="<%= @portal_footer.config(:client, :url) %>"><%= @portal_footer.config(:client, :name) %></a>
+	</div>
+	<div class="six columns right-on-pc">
+
+		<ul class="menu">
+			<% @portal_footer.config(:menu_items).each do |item| %>
+				<%
+					# Get URL
+					if item[:url]
+						url = eval("(#{item[:url]}).to_s")
+					else
+						url = "#"
+					end
+
+					# Get label
+					label = I18n.t(item[:label], default: item[:label])
+				%>
+				<li><%= link_to label, url %></li>
+			<% end %>
+			<li><%= t("general.developed_by") %> <a target="_blank" href="<%= @portal_footer.config(:developer, :url) %>"><%= @portal_footer.config(:developer, :name) %></a></li>
+		</ul>
+
+	</div>
+</div>
