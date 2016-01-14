@@ -31,6 +31,11 @@ module RicLeague
 					belongs_to :league_season, class_name: RicLeague.league_season_model.to_s
 
 					#
+					# Relation to league categories
+					#
+					belongs_to :league_category, class_name: RicLeague.league_category_model.to_s
+
+					#
 					# Relation to teams
 					#
 					belongs_to :team1, class_name: RicLeague.team_model.to_s

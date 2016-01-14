@@ -12,10 +12,18 @@
 RicLeague::AdminEngine.routes.draw do
 
 	# Teams
-	resources :teams, controller: "admin_teams"
+	resources :teams, controller: "admin_teams" do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+	end
 
 	# Team members
-	resources :team_members, controller: "admin_team_members", except: [:index]
+	resources :team_members, controller: "admin_team_members", except: [:index] do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+	end
 
 	# League seasons
 	resources :league_seasons, controller: "admin_league_seasons"
@@ -25,5 +33,12 @@ RicLeague::AdminEngine.routes.draw do
 
 	# League matches
 	resources :league_matches, controller: "admin_league_matches"
+
+	# League categories
+	resources :league_categories, controller: "admin_league_categories" do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+	end
 
 end

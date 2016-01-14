@@ -118,7 +118,7 @@ module RicLeague
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def league_match_params
-						params.require(:league_match).permit(:league_season_id, :played_at, :court, :overtime, :team1_id, :team2_id, :result1, :result2, :points1, :points2)
+						params.require(:league_match).permit(:league_season_id, :league_category_id, :played_at, :court, :overtime, :team1_id, :team2_id, :result1, :result2, :points1, :points2)
 					end
 
 				end

@@ -31,6 +31,11 @@ module RicLeague
 					belongs_to :team, class_name: RicLeague.team_model.to_s
 
 					#
+					# Relation to league categories
+					#
+					belongs_to :league_category, class_name: RicLeague.league_category_model.to_s
+
+					#
 					# Ordering
 					#
 					enable_ordering

@@ -7,6 +7,7 @@ class CreateRicLeagueLeagueMatches < ActiveRecord::Migration
 
 			# Relation to season
 			t.integer :league_season_id
+			t.integer :league_category_id
 			
 			# Identification
 			t.datetime :played_at

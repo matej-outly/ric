@@ -10,6 +10,7 @@ class CreateRicLeagueTeamMembers < ActiveRecord::Migration
 			
 			# Relation to team
 			t.integer :team_id
+			t.integer :league_category_id
 			
 			# Identification
 			t.string :name

@@ -4,6 +4,14 @@ cs:
     ric_league:
       admin_leagues:
         index: "Liga"
+      admin_league_categories:
+        index: "Kategorie"
+        show: "Detail kategorie"
+        new: "Nová kategorie"
+        create: "Nová kategorie"
+        edit: "Upravit kategorii"
+        update: "Upravit kategorii"
+        destroy: "Smazat kategorii"
       admin_league_seasons:
         index: "Sezóny"
         show: "Detail sezóny"
@@ -36,6 +44,7 @@ cs:
         update: "Upravit tým"
         destroy: "Smazat tým"
         team_members: "Členové týmu"
+        team_members_no_category: "Bez kategorie"
       admin_team_members:
         show: "Detail člena týmu"
         new: "Nový člen týmu"
@@ -46,6 +55,8 @@ cs:
 
   activerecord:
     attributes:
+      ric_league/league_category:
+        name: Jméno
       ric_league/league_season:
         name: Jméno
         started_at: Od
@@ -55,6 +66,8 @@ cs:
         played_at: Datum a čas
         league_season: Sezóna
         league_season_id: Sezóna
+        league_category: Kategorie
+        league_category_id: Kategorie
         court: Hřiště
         overtime: Rozhodnuto v prodloužení
         team1: Tým 1
@@ -78,6 +91,8 @@ cs:
       ric_league/team_member:
         team: Tým
         team_id: Tým
+        league_category: Kategorie
+        league_category_id: Kategorie
         name: Jméno
         kind: Typ člena
         kind_values:
@@ -91,6 +106,11 @@ cs:
         description: Podrobný popis
     notices:
       models:
+        ric_league/league_category:
+          create: "Kategorie byla úspěšně vytvořena."
+          update: "Kategorie byla úspěšně upravena."
+          move: "Kategorie byla úspěšně přesunuta."
+          destroy: "Kategorie byla úspěšně smazána."
         ric_league/league_season:
           create: "Sezóna byla úspěšně vytvořena."
           update: "Sezóna byla úspěšně upravena."
@@ -104,13 +124,17 @@ cs:
         ric_league/team:
           create: "Tým byl úspěšně vytvořen."
           update: "Tým byl úspěšně upraven."
+          move: "Tým byl úspěšně přesunut."
           destroy: "Tým byl úspěšně smazán."
         ric_league/team_member:
           create: "Člen týmu byl úspěšně vytvořen."
           update: "Člen týmu byl úspěšně upraven."
+          move: "Člen týmu byl úspěšně přesunut."
           destroy: "Člen týmu byl úspěšně smazán."
     errors:
       models:
+        ric_league/league_category:
+          not_found: "Kategorie nebyla nalezena."
         ric_league/league_season:
           not_found: "Sezóna nebyla nalezena."
         ric_league/league_match:

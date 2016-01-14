@@ -14,6 +14,7 @@ require "ric_league/admin_engine"
 require "ric_league/public_engine"
 
 # Models
+require 'ric_league/concerns/models/league_category'
 require 'ric_league/concerns/models/league_season'
 require 'ric_league/concerns/models/league_match'
 require 'ric_league/concerns/models/team'
@@ -30,6 +31,18 @@ module RicLeague
 	# *************************************************************************
 	# Configuration
 	# *************************************************************************
+
+	#
+	# League category model
+	#
+	mattr_accessor :league_category_model
+	def self.league_category_model
+		if @@league_category_model.nil?
+			return RicLeague::LeagueCategory
+		else
+			return @@league_category_model.constantize
+		end
+	end
 
 	#
 	# League season model

@@ -25,7 +25,7 @@ module RicLeague
 						#
 						# Set team member before some actions
 						#
-						before_action :set_team_member, only: [:show, :edit, :update, :destroy]
+						before_action :set_team_member, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
@@ -89,6 +89,23 @@ module RicLeague
 					end
 
 					#
+					# Move action
+					#
+					def move
+						if RicLeague.team_member_model.move(params[:id], params[:relation], params[:destination_id])
+							respond_to do |format|
+								format.html { redirect_to team_path(@team_member.team_id), notice: I18n.t("activerecord.notices.models.#{RicLeague.team_member_model.model_name.i18n_key}.move") }
+								format.json { render json: true }
+							end
+						else
+							respond_to do |format|
+								format.html { redirect_to team_path(@team_member.team_id), alert: I18n.t("activerecord.errors.models.#{RicLeague.team_member_model.model_name.i18n_key}.move") }
+								format.json { render json: false }
+							end
+						end
+					end
+
+					#
 					# Destroy action
 					#
 					def destroy
@@ -112,7 +129,7 @@ module RicLeague
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def team_member_params
-						params.require(:team_member).permit(:team_id, :name, :kind, :role, :classification, :dress_number, :photo, :photo_crop_x, :photo_crop_y, :photo_crop_w, :photo_crop_h, :description)
+						params.require(:team_member).permit(:team_id, :league_category_id, :name, :kind, :role, :classification, :dress_number, :photo, :photo_crop_x, :photo_crop_y, :photo_crop_w, :photo_crop_h, :description)
 					end
 
 				end

@@ -2,6 +2,7 @@
 	<%= rug_index_table_for(@league_matches, { 
 		played_at: :datetime,
 		league_season: { type: :belongs_to, label: :name, path: :league_season_path },
+		league_category: { type: :belongs_to, label: :name, path: :league_category_path },
 		team_names: :string,
 		court: :string,
 		result: :string,

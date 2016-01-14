@@ -95,6 +95,23 @@ module RicLeague
 					end
 
 					#
+					# Move action
+					#
+					def move
+						if RicLeague.team_model.move(params[:id], params[:relation], params[:destination_id])
+							respond_to do |format|
+								format.html { redirect_to teams_path, notice: I18n.t("activerecord.notices.models.#{RicLeague.team_model.model_name.i18n_key}.move") }
+								format.json { render json: true }
+							end
+						else
+							respond_to do |format|
+								format.html { redirect_to teams_path, alert: I18n.t("activerecord.errors.models.#{RicLeague.team_model.model_name.i18n_key}.move") }
+								format.json { render json: false }
+							end
+						end
+					end
+
+					#
 					# Destroy action
 					#
 					def destroy
