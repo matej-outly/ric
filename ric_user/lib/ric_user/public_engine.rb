@@ -15,6 +15,7 @@ module RicUser
 		#
 		# Controllers
 		#
+		require 'ric_user/concerns/controllers/public/users_controller'
 		require 'ric_user/concerns/controllers/public/session_controller'
 		
 		isolate_namespace RicUser

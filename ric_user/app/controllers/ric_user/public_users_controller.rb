@@ -2,19 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Users
 # *
 # * Author: Matěj Outlý
-# * Date  : 26. 11. 2015
+# * Date  : 9. 6. 2015
 # *
 # *****************************************************************************
 
-RicUser::PublicEngine.routes.draw do
+require_dependency "ric_user/public_controller"
 
-	# Users
-	resources :users, controller: "public_users", only: [:index, :show]
-
-	# Session
-	resource :session, controller: "public_session", only: [:show, :edit, :update]
-
+module RicUser
+	class PublicUsersController < PublicController
+		include RicUser::Concerns::Controllers::Public::UsersController
+	end
 end

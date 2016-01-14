@@ -51,6 +51,35 @@ module RicUser
 
 				end
 
+				module ClassMethods
+
+					# *********************************************************
+					# Scopes
+					# *********************************************************
+
+					def search(query)
+						if query.blank?
+							all
+						else
+							#where("(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
+							where("(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
+						end
+					end
+
+				end
+
+				# *************************************************************
+				# Name
+				# *************************************************************
+
+				def name
+					return self.email
+				end
+
+				def name_formatted
+					return self.name
+				end
+
 				# *************************************************************
 				# Interfaces
 				# *************************************************************
