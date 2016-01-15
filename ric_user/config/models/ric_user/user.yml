@@ -1,3 +1,16 @@
 # Available roles
 roles:
   - admin
+
+# Active devise features
+devise:
+  - database_authenticatable
+  - recoverable
+  - rememberable
+  - trackable
+  - validatable
+#  - registerable
+#  - confirmable
+#  - lockable
+#  - timeoutable
+#  - omniauthable

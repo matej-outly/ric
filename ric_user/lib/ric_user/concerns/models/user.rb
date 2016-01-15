@@ -29,7 +29,7 @@ module RicUser
 					# Include default devise modules. Others available are:
 					# :confirmable, :lockable, :timeoutable and :omniauthable
 					#
-					devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+					devise *(config(:devise).map { |feature| feature.to_sym })
 
 					# *********************************************************
 					# Structure
@@ -66,18 +66,6 @@ module RicUser
 						end
 					end
 
-				end
-
-				# *************************************************************
-				# Name
-				# *************************************************************
-
-				def name
-					return self.email
-				end
-
-				def name_formatted
-					return self.name
 				end
 
 				# *************************************************************

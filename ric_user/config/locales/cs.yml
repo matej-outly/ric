@@ -51,6 +51,7 @@ cs:
               not_found: "Uživatelský účet nebyl nalezen v databázi."
               blank: "E-mail musí být vyplněn."
               taken: "E-mail je již používán jiným uživatelem."
+              invalid: "Toto není platná e-mailová adresa."
             password:
               blank: "Heslo musí být vyplněno."
               too_short: "Heslo musí mít minimálně 4 znaky."
