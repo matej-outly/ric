@@ -7,6 +7,7 @@ cs:
     action:
       sign_in: "Přihlásit se"
       sign_out: "Odhlásit se"
+      sign_up: "Zaregistrovat se"
       reset_password: "Obnovit heslo"
     failure:
       already_authenticated: ""
@@ -17,6 +18,10 @@ cs:
     mailer:
       reset_password_instructions:
         subject: "Instrukce pro obnovu hesla"
+    registrations:
+      user:
+        signed_up: "Vytvoření účtu proběhlo v pořádku."
+        updated: "Účet byl úspěšně upraven."
     sessions:
       user:
         signed_in: "Přihlášení proběhlo v pořádku."
