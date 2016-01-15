@@ -37,7 +37,7 @@ module RicReservation
 					#
 					def new
 						if !params[:resource_id]
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.attributes.resource_id.blank")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.attributes.resource_id.blank")
 							return
 						end
 						@reservation = RicReservation.reservation_model.new(resource_id: params[:resource_id])
@@ -113,7 +113,7 @@ module RicReservation
 					def set_reservation
 						@reservation = RicReservation.reservation_model.where(id: params[:id], kind: "resource").first
 						if @reservation.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.not_found")
 						end
 					end
 

@@ -100,7 +100,7 @@ module RicReservation
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.move") }
+								format.html { redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.move") }
 								format.json { render json: false }
 							end
 						end
@@ -127,7 +127,7 @@ module RicReservation
 					def set_resource
 						@resource = type_model.find_by_id(params[:id])
 						if @resource.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.not_found")
 						end
 					end
 

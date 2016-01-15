@@ -32,7 +32,7 @@ module RicReservation
 					def index
 						@resource = RicReservation.resource_model.order(position: :asc).first
 						if @resource.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.resource_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.resource_model.model_name.i18n_key}.not_found")
 							return
 						end
 						show
@@ -60,7 +60,7 @@ module RicReservation
 					def set_resource
 						@resource = RicReservation.resource_model.find_by_id(params[:id])
 						if @resource.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.resource_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.resource_model.model_name.i18n_key}.not_found")
 						end
 					end
 

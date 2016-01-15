@@ -110,7 +110,7 @@ module RicReservation
 					def set_event
 						@event = RicReservation.event_model.find_by_id(params[:id])
 						if @event.nil?
-							redirect_to root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/event.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.ric_reservation/event.not_found")
 						end
 					end
 
