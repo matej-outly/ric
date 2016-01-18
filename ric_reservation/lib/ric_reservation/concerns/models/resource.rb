@@ -85,18 +85,7 @@ module RicReservation
 				def create_reservation(schedule_date, schedule_from, schedule_to, owner = nil)
 					
 					# Create reservation
-					reservation = RicReservation.reservation_model.new
-					reservation.kind = "resource"
-					reservation.resource_id = self.id
-					reservation.schedule_date = schedule_date
-					reservation.schedule_from = schedule_from
-					reservation.schedule_to = schedule_to
-					
-					# Bind owner
-					if !owner.nil?
-						reservation.owner_id = owner.id if !owner.id.nil?
-						reservation.owner_name = owner.name if !owner.name.nil?
-					end
+					reservation = _create_reservation(schedule_date, schedule_from, schedule_to, owner)
 
 					# Store
 					reservation.save
@@ -109,6 +98,23 @@ module RicReservation
 				#
 				def validate_reservation(schedule_date, schedule_from, schedule_to, owner = nil)
 
+					# Create reservation
+					reservation = _create_reservation(schedule_date, schedule_from, schedule_to, owner)
+
+					# Validate
+					reservation.valid?
+
+					return reservation
+				end	
+
+			protected
+
+				# *************************************************************
+				# Reservations
+				# *************************************************************
+
+				def _create_reservation(schedule_date, schedule_from, schedule_to, owner = nil)
+					
 					# Create reservation
 					reservation = RicReservation.reservation_model.new
 					reservation.kind = "resource"
@@ -123,13 +129,8 @@ module RicReservation
 						reservation.owner_name = owner.name if !owner.name.nil?
 					end
 
-					# Validate
-					reservation.valid?
-
 					return reservation
-				end	
-
-			protected
+				end
 
 				# *************************************************************
 				# Callbacks

@@ -191,6 +191,7 @@ cs:
         ric_reservation/reservation:
           not_found: Rezervace nebyla nalezena.
           overlapping: "Rezervace se časově kryje s jinou rezervací či událostí."
+          capacity_overdraw: "Rezervace je nad kapacitu události."
           attributes:
             kind:
               blank: Vyplňte typ rezervace.

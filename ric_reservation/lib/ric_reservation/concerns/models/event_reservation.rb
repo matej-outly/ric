@@ -57,9 +57,10 @@ module RicReservation
 					#
 					# Scope for event reservations
 					#
-					def event(event = nil)
+					def event(event = nil, schedule_date = nil)
 						result = where(kind: "event")
 						result = result.where(event_id: event.id) if event
+						result = result.where(schedule_date: schedule_date) if schedule_date
 						return result
 					end
 
@@ -139,11 +140,22 @@ module RicReservation
 
 			protected
 
+				#
+				# Event capacity can't be overdrawn
+				#
 				def validate_capacity
 					return if !self.kind_event?
 
-					# With other event reservations
+					if self.new_record?
+						size_diff = self.size
+					else
+						size_diff = self.size - self.size_was
+					end
 
+					# Check event size
+					if self.event.size + size_diff > self.event.capacity
+						errors.add(:size, "activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.capacity_overdraw")
+					end
 
 				end
 

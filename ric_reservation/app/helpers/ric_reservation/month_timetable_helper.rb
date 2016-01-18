@@ -251,6 +251,7 @@ module RicReservation
 				end
 				items.concat(month_timetable_items(date, data, data_options))
 			end
+			items.sort! { |item_1, item_2| item_1[:object].schedule_from <=> item_2[:object].schedule_from }
 
 			# Days
 			days = month_timetable_days(date, items, global_options)

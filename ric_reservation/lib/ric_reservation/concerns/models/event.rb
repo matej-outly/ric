@@ -653,41 +653,24 @@ module RicReservation
 					if !scheduled?
 						raise "Schedule event to specific date first."
 					end
-					return RicReservation.reservation_model.where(kind: "event", event_id: self.id, schedule_date: self.schedule_date)
+					return RicReservation.reservation_model.event(self, self.schedule_date)
 				end
 
 				#
 				# Create new reservation for given owner
 				#
-				def create_reservation(owner = nil, size = 1, force_state = false)
+				def create_reservation(size = 1, owner = nil, force_state = false)
 					if !scheduled?
 						raise "Schedule event to specific date first."
 					end
 
 					# State check
-					if force_state != true && state == :closed
-						return nil
-					end
+					#if force_state != true && state == :closed
+					#	return nil
+					#end
 					
 					# Create reservation
-					reservation = RicReservation.reservation_model.new
-					reservation.kind = "event"
-					reservation.event_id = self.id
-					reservation.schedule_date = self.schedule_date
-					reservation.schedule_from = self.schedule_from
-					reservation.schedule_to = self.schedule_to
-					reservation.size = size
-
-					# Capacity check
-					if at_capacity?
-						reservation.below_line = true
-					end
-					
-					# Bind owner
-					if !owner.nil?
-						reservation.owner_id = owner.id if !owner.id.nil?
-						reservation.owner_name = owner.name if !owner.name.nil?
-					end
+					reservation = _create_resevation(size, owner)
 
 					# Store
 					reservation.save
@@ -696,17 +679,56 @@ module RicReservation
 				end
 
 				#
-				# Event is at capacity and no other reservations can be created
+				# Validate new reservation for given owner
 				#
-				def at_capacity?
-					if @at_capacity.nil?
-						size = 0
+				def validate_reservation(size = 1, owner = nil, force_state = false)
+					if !scheduled?
+						raise "Schedule event to specific date first."
+					end
+
+					# State check
+					#if force_state != true && state == :closed
+					#	return nil
+					#end
+					
+					# Create reservation
+					reservation = _create_resevation(size, owner)
+
+					# Validate
+					reservation.valid?
+
+					return reservation
+				end
+
+				#
+				# Get current (scheduled) event size
+				#
+				def size
+					if !scheduled?
+						raise "Schedule event to specific date first."
+					end
+
+					if @size.nil?
+						@size = 0
 						self.reservations.each do |reservation|
 							if reservation.above_line?
-								size += reservation.size
+								@size += reservation.size
 							end
 						end
-						@at_capacity = (size >= self.capacity)
+					end
+					return @size
+				end
+
+				#
+				# (Scheduled) event is at capacity and no other reservations can be created
+				#
+				def at_capacity?
+					if !scheduled?
+						raise "Schedule event to specific date first."
+					end
+
+					if @at_capacity.nil?
+						@at_capacity = (self.size >= self.capacity)
 					end
 					return @at_capacity
 				end
@@ -773,6 +795,53 @@ module RicReservation
 			protected
 
 				# *************************************************************
+				# Reservations
+				# *************************************************************
+
+				def _create_resevation(size = 1, owner = nil)
+					
+					# Create reservation
+					reservation = RicReservation.reservation_model.new
+					reservation.kind = "event"
+					reservation.event_id = self.id
+					reservation.schedule_date = self.schedule_date
+					reservation.schedule_from = self.schedule_from
+					reservation.schedule_to = self.schedule_to
+					reservation.size = size
+
+					# Capacity check
+					if at_capacity?
+						reservation.below_line = true
+					end
+					
+					# Bind owner
+					if !owner.nil?
+						reservation.owner_id = owner.id if !owner.id.nil?
+						reservation.owner_name = owner.name if !owner.name.nil?
+					end
+
+					return reservation
+				end
+
+				#
+				# All existing reservations must be synchronizied wih the data update
+				#
+				def synchronize_reservations_before_save
+					if self.period_was == "once"
+						self.schedule(self.from_was.to_date)
+						self.reservations.each do |reservation|
+							self.schedule(self.from.to_date)
+							reservation.schedule_date = self.schedule_date
+							reservation.schedule_from = self.schedule_from
+							reservation.schedule_to = self.schedule_to
+							reservation.save
+						end
+					else
+						# TODO Other period than ONCE
+					end	
+				end
+
+				# *************************************************************
 				# Validators
 				# *************************************************************
 
@@ -798,7 +867,7 @@ module RicReservation
 				end
 
 				# *************************************************************
-				# Validity callbacks
+				# Validity
 				# *************************************************************
 
 				#
@@ -809,7 +878,7 @@ module RicReservation
 				end
 
 				# *************************************************************
-				# Time callbacks
+				# Time
 				# *************************************************************
 
 				#
@@ -878,28 +947,6 @@ module RicReservation
 				def copy_from_to_errors_after_validation
 					errors[:from].each { |message| errors.add(:time_from, message) }
 					errors[:to].each { |message| errors.add(:time_to, message) }
-				end
-
-				# *************************************************************
-				# Reservations callbacks
-				# *************************************************************
-
-				#
-				# All existing reservations must be synchronizied wih the data update
-				#
-				def synchronize_reservations_before_save
-					if self.period_was == "once"
-						self.schedule(self.from_was.to_date)
-						self.reservations.each do |reservation|
-							self.schedule(self.from.to_date)
-							reservation.schedule_date = self.schedule_date
-							reservation.schedule_from = self.schedule_from
-							reservation.schedule_to = self.schedule_to
-							reservation.save
-						end
-					else
-						# TODO Otehr period than ONCE
-					end	
 				end
 
 			end
