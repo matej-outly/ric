@@ -63,6 +63,16 @@ cs:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
         name: Jméno
+        color: Barva v rozvrhové tabulce
+        color_values:
+          yellow: Žlutá
+          turquoise: Tyrkysová
+          blue: Modrá
+          pink: Růžová
+          violet: Fialová
+          orange: Oranžová
+          red: Červená
+          green: Zelená
         from: Začátek
         to: Konec
         date: Datum
@@ -109,16 +119,6 @@ cs:
         valid_to: Smazané od
         time_window_soon: Jak dlouho před začátkem považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
-        color: Barva v rozvrhové tabulce
-        color_values:
-          yellow: Žlutá
-          turquoise: Tyrkysová
-          blue: Modrá
-          pink: Růžová
-          violet: Fialová
-          orange: Oranžová
-          red: Červená
-          green: Zelená
       ric_reservation/reservation:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka

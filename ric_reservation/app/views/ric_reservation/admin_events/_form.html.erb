@@ -1,12 +1,12 @@
 <%= rug_form_for(@event, create_url: "ric_reservation_admin.events_path", update_url: "ric_reservation_admin.event_path") do |f| %>
 	<%= f.picker_row :resource_id, RicReservation.resource_model.order(position: :asc), :id, :name %>
 	<%= f.text_input_row :name, :text_field %>
+	<%= f.picker_row :color %>
 	<%= f.datetime_picker_row :from %>
 	<%= f.datetime_picker_row :to %>
 	<%= f.picker_row :period %>
 	<%= f.text_input_row :capacity, :number_field %>
 	<%= f.time_picker_row :time_window_soon %>
 	<%= f.time_picker_row :time_window_deadline %>
-	<%= f.picker_row :color %>
 	<%= f.primary_button_row :submit %>
 <% end %>

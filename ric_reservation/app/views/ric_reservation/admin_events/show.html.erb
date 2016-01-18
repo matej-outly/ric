@@ -3,12 +3,12 @@
 	<%= rug_show_table_for(@event, { 
 		resource: { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" },
 		name: :string,
+		color: :enum,
 		formatted_time: :string,
 		period: :enum,
 		capacity: :integer,
 		time_window_soon: :time,
 		time_window_deadline: :time,
-		color: :enum,
 	}) %>
 
 	<h3><%= t("headers.ric_reservation.admin_events.scheduled_events") %></h3>

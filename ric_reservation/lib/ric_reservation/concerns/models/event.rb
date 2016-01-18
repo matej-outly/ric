@@ -603,7 +603,6 @@ module RicReservation
 						else
 							@state = :closed
 						end
-
 					end
 					return @state
 				end
