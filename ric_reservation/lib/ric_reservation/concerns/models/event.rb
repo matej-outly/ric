@@ -46,14 +46,14 @@ module RicReservation
 					# *********************************************************
 					
 					#
-					# From / to times must be consistent
-					#
-					validate :validate_from_to_consistency
-
-					#
 					# Some columns must be present
 					#
 					validates_presence_of :name, :resource_id, :capacity, :from, :to, :period
+
+					#
+					# From / to times must be consistent
+					#
+					validate :validate_from_to_consistency
 
 					# *********************************************************
 					# Validity
@@ -88,6 +88,11 @@ module RicReservation
 					# Correct from/to must be set before save
 					#
 					before_validation :set_from_to_before_validation
+
+					#
+					# Copy validation errors
+					#
+					after_validation :copy_from_to_errors_after_validation
 
 					# *********************************************************
 					# Schedule
@@ -393,6 +398,36 @@ module RicReservation
 						end
 
 						return result
+					end
+
+					# *********************************************************
+					# Overlapping TODO: Other events than ONCe
+					# *********************************************************
+
+					def overlaps_with_resource_reservation(resource_reservation)
+						where(
+							"
+								(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
+								(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
+								(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
+							", 
+							from: resource_reservation.schedule_from, 
+							to: resource_reservation.schedule_to, 
+							period_once: "once"
+						)
+					end
+
+					def overlaps_with_event(event)
+						where(
+							"
+								(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
+								(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
+								(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
+							", 
+							from: event.from, 
+							to: event.to, 
+							period_once: "once"
+						)
 					end
 
 				end
@@ -737,7 +772,6 @@ module RicReservation
 
 			protected
 
-				
 				# *************************************************************
 				# Validators
 				# *************************************************************
@@ -753,12 +787,12 @@ module RicReservation
 
 					# Same day
 					if self.from.to_date != self.to.to_date
-						errors.add(:to, I18n.t('activerecord.errors.models.event.attributes.to.different_day_than_from'))
+						errors.add(:to, I18n.t("activerecord.errors.models.#{RicReservation.event_model.model_name.i18n_key}.attributes.to.different_day_than_from"))
 					end
 
 					# Causality
 					if self.from >= self.to
-						errors.add(:to, I18n.t('activerecord.errors.models.event.attributes.to.before_from'))
+						errors.add(:to, I18n.t("activerecord.errors.models.#{RicReservation.event_model.model_name.i18n_key}.attributes.to.before_from"))
 					end
 
 				end
@@ -838,6 +872,14 @@ module RicReservation
 
 				end
 
+				#
+				# Copy validation errors
+				#
+				def copy_from_to_errors_after_validation
+					errors[:from].each { |message| errors.add(:time_from, message) }
+					errors[:to].each { |message| errors.add(:time_to, message) }
+				end
+
 				# *************************************************************
 				# Reservations callbacks
 				# *************************************************************
@@ -856,7 +898,7 @@ module RicReservation
 							reservation.save
 						end
 					else
-						# TODO
+						# TODO Otehr period than ONCE
 					end	
 				end
 

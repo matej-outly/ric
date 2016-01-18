@@ -41,6 +41,11 @@ module RicReservation
 					validates :schedule_date, presence: true, if: :kind_event?
 					validates :size, presence: true, if: :kind_event?
 
+					#
+					# Reservation can't be over capacity
+					#
+					validate :validate_capacity
+
 				end
 
 				module ClassMethods
@@ -53,8 +58,9 @@ module RicReservation
 					# Scope for event reservations
 					#
 					def event(event = nil)
-						where(kind: "event")
-						where(event_id: event.id) if event
+						result = where(kind: "event")
+						result = result.where(event_id: event.id) if event
+						return result
 					end
 
 					# *********************************************************
@@ -130,6 +136,16 @@ module RicReservation
 				end
 
 				# TODO
+
+			protected
+
+				def validate_capacity
+					return if !self.kind_event?
+
+					# With other event reservations
+
+
+				end
 
 			end
 		end

@@ -43,6 +43,11 @@ module RicReservation
 					# Some columns must be present (always)
 					#
 					validates_presence_of :kind, :schedule_from, :schedule_to
+					
+					#
+					# From / to times must be consistent
+					#
+					validate :validate_from_to_consistency
 
 					# *********************************************************
 					# Kind
@@ -76,6 +81,11 @@ module RicReservation
 					# Correct from/to must be set before save
 					#
 					before_validation :set_from_to_before_validation
+
+					#
+					# Copy validation errors
+					#
+					after_validation :copy_from_to_errors_after_validation
 
 				end
 
@@ -177,6 +187,31 @@ module RicReservation
 			protected
 
 				# *************************************************************
+				# Validators
+				# *************************************************************
+
+				#
+				# "From" and "to" must be same day, "from" must be before "to" (causality)
+				#
+				def validate_from_to_consistency
+
+					if self.schedule_from.nil? || self.schedule_to.nil?
+						return
+					end
+
+					# Same day
+					if self.schedule_from.to_date != self.schedule_to.to_date
+						errors.add(:schedule_to, I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.attributes.schedule_to.different_day_than_from"))
+					end
+
+					# Causality
+					if self.schedule_from >= self.schedule_to
+						errors.add(:schedule_to, I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.attributes.schedule_to.before_from"))
+					end
+
+				end
+
+				# *************************************************************
 				# Time
 				# *************************************************************
 
@@ -238,6 +273,14 @@ module RicReservation
 						end
 					end
 
+				end
+
+				#
+				# Copy validation errors
+				#
+				def copy_from_to_errors_after_validation
+					errors[:schedule_from].each { |message| errors.add(:time_from, message) }
+					errors[:schedule_to].each { |message| errors.add(:time_to, message) }
 				end
 
 			end

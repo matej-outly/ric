@@ -133,11 +133,15 @@ cs:
           orange: Oranžová
           red: Červená
           green: Zelená
+        size: Velikost
         schedule_date: Datum
+        schedule_from: Začátek
+        schedule_to: Konec
         time_from: Začátek
         time_to: Konec
         formatted_time: Čas
         event: Událost
+        event_id: Událost
         owner: Osoba
         owner_id: Osoba
         owner_name: Osoba
@@ -172,18 +176,38 @@ cs:
           attributes:
             name:
               blank: Vyplňte jméno události.
+            resource_id:
+              blank: Vyberte rozvrhovou tabulku.
             period:
               blank: Vyplňte periodu události.
             from:
               blank: Vyplňte začátek události.
             to:
               blank: Vyplňte konec události.
+              before_from: Konec události nemůže být před jejím začátkem.
+              different_day_than_from: Konec události nemůže být v jiný den než její začátek.
             capacity:
               blank: Vyplňte kapacitu události.
         ric_reservation/reservation:
           not_found: Rezervace nebyla nalezena.
-          create_closed: "Rezervace nebyla vytvořena, vybraná událost je už uzavřena pro další rezervace."
-          destroy_closed: "Rezervace nebyla zrušena, vybraná událost je už uzavřena pro další změny."
+          overlapping: "Rezervace se časově kryje s jinou rezervací či událostí."
+          attributes:
+            kind:
+              blank: Vyplňte typ rezervace.
+            schedule_from:
+              blank: Vyplňte začátek rezervace.
+            schedule_to:
+              blank: Vyplňte konec rezervace.
+              before_from: Konec rezervace nemůže být před jejím začátkem.
+              different_day_than_from: Konec rezervace nemůže být v jiný den než její začátek.
+            schedule_date:
+              blank: Vyplňte datum rezervace.
+            size:
+              blank: Vyplňte velikost rezervace.
+            event_id:
+              blank: Vyberte událost.
+            resource_id:
+              blank: Vyberte rozvrhovou tabulku.
         ric_reservation/event_modifier:
           not_found: Jednorázová změna události nebyla nalezena.
           create_unknown_type: "Jednorázová změna události nebyla vytvořena, neznámý typ změny."
