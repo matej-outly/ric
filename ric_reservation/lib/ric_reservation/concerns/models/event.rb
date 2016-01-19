@@ -434,11 +434,11 @@ module RicReservation
 					# Reservation
 					# *********************************************************
 
-					def with_reservation_by(owner_id)
-						if owner_id.nil?
+					def with_reservation_by(owner)
+						if owner.nil?
 							all
 						else
-							joins("LEFT OUTER JOIN reservations ON reservations.event_id = events.id").where(reservations: { owner_id: owner_id }).group("events.id")
+							joins("LEFT OUTER JOIN reservations ON reservations.event_id = events.id").where(reservations: { owner_id: owner.id }).group("events.id")
 						end
 					end
 
