@@ -24,7 +24,7 @@ module RicReservation
 
 						before_action :set_owner, only: [:create, :create_anonymous]
 						before_action :set_event, only: [:index, :new, :create, :create_anonymous]
-						before_action :set_reservation, only: [:destroy]
+						before_action :set_reservation, only: [:destroy, :put_above_line, :put_below_line]
 
 					end
 
@@ -32,8 +32,8 @@ module RicReservation
 					# Index action
 					#
 					def index
-						@reservations_above_line = RicReservation.reservation_model.where(event_id: @event.id, schedule_date: @event.schedule_date).above_line.order(created_at: :asc)
-						@reservations_below_line = RicReservation.reservation_model.where(event_id: @event.id, schedule_date: @event.schedule_date).below_line.order(created_at: :asc)
+						@reservations_above_line = RicReservation.reservation_model.event(@event, @event.schedule_date).above_line.order(created_at: :asc)
+						@reservations_below_line = RicReservation.reservation_model.event(@event, @event.schedule_date).below_line.order(created_at: :asc)
 					end
 
 					#
@@ -47,9 +47,9 @@ module RicReservation
 					# Create action
 					#
 					def create
-						reservation = @event.create_reservation(@owner, 1, true)
+						reservation = @event.create_reservation(nil, @owner, true)
 						if !reservation.nil?
-							redirect_to ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), notice: I18n.t("activerecord.notices.models.ric_reservation/reservation.create")
+							redirect_to ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), notice: I18n.t("activerecord.notices.models.#{RicReservation.event_model.model_name.i18n_key}.create")
 						else
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.create_at_capacity_or_closed")
 						end
@@ -59,10 +59,10 @@ module RicReservation
 					# Create anonymous action
 					#
 					def create_anonymous
-						reservation = @event.create_reservation(@owner, 1, true)
+						reservation = @event.create_reservation(nil, @owner, true)
 						if !reservation.nil?
 							reservation.save
-							redirect_to ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), notice: I18n.t("activerecord.notices.models.ric_reservation/reservation.create")
+							redirect_to ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), notice: I18n.t("activerecord.notices.models.#{RicReservation.event_model.model_name.i18n_key}.create")
 						else
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.create_at_capacity_or_closed")
 						end
@@ -73,7 +73,27 @@ module RicReservation
 					#
 					def destroy
 						@reservation.destroy
-						redirect_to ric_reservation_admin.event_reservations_path(id: @reservation.event_id, schedule_date: @reservation.schedule_date), notice: I18n.t("activerecord.notices.models.ric_reservation/reservation.destroy")
+						redirect_to ric_reservation_admin.event_reservations_path(id: @reservation.event_id, schedule_date: @reservation.schedule_date), notice: I18n.t("activerecord.notices.models.#{RicReservation.event_model.model_name.i18n_key}.destroy")
+					end
+
+					#
+					# Put above line action
+					#
+					def put_above_line
+						if @reservation.check_above_line
+							@reservation.put_above_line
+							redirect_to ric_reservation_admin.event_reservations_path(id: @reservation.event_id, schedule_date: @reservation.schedule_date), notice: I18n.t("activerecord.notices.models.#{RicReservation.event_model.model_name.i18n_key}.put_above_line")
+						else
+							redirect_to ric_reservation_admin.event_reservations_path(id: @reservation.event_id, schedule_date: @reservation.schedule_date), alert: I18n.t("activerecord.errors.models.#{RicReservation.event_model.model_name.i18n_key}.put_above_line")
+						end
+					end
+
+					#
+					# Put below line action
+					#
+					def put_below_line
+						@reservation.put_below_line
+						redirect_to ric_reservation_admin.event_reservations_path(id: @reservation.event_id, schedule_date: @reservation.schedule_date), notice: I18n.t("activerecord.notices.models.#{RicReservation.event_model.model_name.i18n_key}.put_below_line")
 					end
 
 				private
@@ -81,7 +101,7 @@ module RicReservation
 					def set_owner
 						@owner = nil
 						if !reservation_params["owner_id"].blank?
-							@owner = Teacher.find_by_id(reservation_params["owner_id"])
+							@owner = RicReservation.owner_model.find_by_id(reservation_params["owner_id"])
 						end
 						if @owner.nil? && !reservation_params["owner_name"].blank?
 							@owner = OpenStruct.new(name: reservation_params["owner_name"])

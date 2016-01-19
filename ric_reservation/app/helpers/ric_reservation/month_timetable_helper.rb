@@ -191,14 +191,16 @@ module RicReservation
 							# Item
 							result += "			<td class=\"item #{item[:tags]}\" colspan=\"1\">\n"
 							if row == 0
-								if options[:empty_path_callback]
-									result += "				<a class=\"title\" href=\"#{options[:empty_path_callback].call(date)}\">#{date.strftime("%-d") + "."}<i class=\"icon-plus\"></i></a>\n"
+								url = (options[:empty_path_callback] ? options[:empty_path_callback].call(date) : nil)
+								if url
+									result += "				<a class=\"title\" href=\"#{url}\">#{date.strftime("%-d") + "."}<i class=\"icon-plus\"></i></a>\n"
 								else
 									result += "				<div class=\"title\">#{date.strftime("%-d") + "."}</div>\n"
 								end
 							end
-							if item[:path_callback]
-								result += "				<a class=\"#{(!item[:tooltip].nil? ? "ttip" : "")}\" href=\"#{item[:path_callback].call(item[:object])}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe}>#{item[:label]}</a>\n"
+							url = item[:path_callback] ? item[:path_callback].call(item[:object]) : nil
+							if url
+								result += "				<a class=\"#{(!item[:tooltip].nil? ? "ttip" : "")}\" href=\"#{url}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe}>#{item[:label]}</a>\n"
 							else
 								result += "				<div class=\"padding #{(!item[:tooltip].nil? ? "ttip" : "")}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe}>#{item[:label]}</div>\n"
 							end
@@ -207,8 +209,9 @@ module RicReservation
 							# Empty
 							result += "			<td class=\"empty right-solid #{(row == (week[:rows]-1) ? "bottom-solid" : "bottom-invisible")}\">\n"
 							if row == 0
-								if options[:empty_path_callback]
-									result += "				<a class=\"title\" href=\"#{options[:empty_path_callback].call(date)}\">#{date.strftime("%-d") + "."}<i class=\"icon-plus\"></i></a>\n"
+								url = (options[:empty_path_callback] ? options[:empty_path_callback].call(date) : nil)
+								if url
+									result += "				<a class=\"title\" href=\"#{url}\">#{date.strftime("%-d") + "."}<i class=\"icon-plus\"></i></a>\n"
 								else
 									result += "				<div class=\"title\">#{date.strftime("%-d") + "."}</div>\n"
 								end

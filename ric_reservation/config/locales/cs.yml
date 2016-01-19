@@ -163,12 +163,12 @@ cs:
           create: Jednorázová změna události byla úspěšně vytvořena.
           destroy: Jednorázová změna události byla úspěšně smazána.
         ric_reservation/reservation:
-          at_capacity_my: "Vybraná událost je již plně obsazena. Můžete se ale rezervovat pod čarou. Pokud se termín uvolní, informujeme Vás e-mailem."
-          at_capacity: "Vybraná událost je již plně obsazena. Můžete se ale rezervovat pod čarou."
           create: Rezervace byla úspěšně vytvořena.
           create_below_line: "Rezervace pod čarou byla úspěšně vytvořena. Událost je už sice plně obsazena, ale pokud někdo zruší svou rezervaci, budeme s Vámi počítat. Pokud se termín uvolní, informujeme Vás e-mailem."
           destroy: Rezervace byla úspěšně zrušena.
           update: Rezervace byla úspěšně uložena.
+          put_above_line: Rezervace byla úspěšně posunuta nad čáru.
+          put_below_line: Rezervace byla úspěšně posunuta pod čáru.
     errors:
       models:
         ric_reservation/resource:
@@ -195,6 +195,7 @@ cs:
           overlapping: "Rezervace se časově kryje s jinou rezervací či událostí."
           capacity_overdraw: "Rezervace je nad kapacitu události."
           owner_reservation_limit_overdraw: "Maximální počet rezervací od jednoho uživatele je vyčerpán."
+          put_above_line: Rezervaci není možné posunout nad čáru.
           attributes:
             kind:
               blank: Vyplňte typ rezervace.

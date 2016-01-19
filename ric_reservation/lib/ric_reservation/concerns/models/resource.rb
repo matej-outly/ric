@@ -107,6 +107,44 @@ module RicReservation
 					return reservation
 				end	
 
+				# *************************************************************
+				# State
+				# *************************************************************
+
+				#
+				# Get state according to datetime
+				#
+				def state(datetime)
+					
+					# Now
+					now = Time.current
+					
+					# Break points
+					if self.time_window_deadline
+						deadline = datetime - self.time_window_deadline.seconds_since_midnight.seconds
+					else
+						deadline = datetime
+					end
+					if self.time_window_soon
+						soon = deadline - self.time_window_soon.seconds_since_midnight.seconds
+					else
+						soon = deadline
+					end
+
+					# State recognititon
+					if now < soon
+						state = :open
+					elsif now < deadline
+						state = :soon
+					elsif now < datetime
+						state = :deadline
+					else
+						state = :closed
+					end
+					
+					return state
+				end
+
 			protected
 
 				# *************************************************************

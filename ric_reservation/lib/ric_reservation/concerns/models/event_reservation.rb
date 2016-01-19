@@ -143,22 +143,93 @@ module RicReservation
 
 				# TODO
 
+				#
+				# Put reservation above line manually
+				#
+				def put_above_line
+					self.below_line = nil
+					self.save
+					#self.inform_above_line
+				end
+
+				#
+				# Put reservation below line manually
+				#
+				def put_below_line
+					self.below_line = true
+					self.save
+					#self.inform_below_line
+				end
+
+				# *************************************************************
+				# Conditions
+				# *************************************************************
+
+				#
+				# Check if capacity condition valid => returns true if OK
+				#
+				def check_capacity
+					if self.new_record? || self.below_line?
+						size_diff = self.size
+					else
+						size_diff = self.size - self.size_was
+					end
+					return self.event.size + size_diff <= self.event.capacity
+				end
+
+				#
+				# Check if owner reservation limit condition valid => returns true if OK
+				#
+				def check_owner_reservation_limit
+					
+					# No limit
+					return true if self.event.owner_reservation_limit.nil?
+
+					# No owner
+					return true if self.owner_id.nil?
+
+					# Limit is equal or overdrawn => No other reservation can be created
+					if self.id
+						return (RicReservation.reservation_model
+							.event(self.event, self.schedule_date)
+							.above_line
+							.where("id <> :id", id: self.id)
+							.where(owner_id: self.owner_id).count < self.event.owner_reservation_limit)
+					else
+						return (RicReservation.reservation_model
+							.event(self.event, self.schedule_date)
+							.above_line
+							.where(owner_id: self.owner_id).count < self.event.owner_reservation_limit)
+					end
+				end
+
+				#
+				# Check if reservation can be put above line
+				#
+				def check_above_line
+					result = true
+
+					# Check capacity
+					result &= check_capacity
+
+					# Check owner reservation limit
+					result &= check_owner_reservation_limit
+
+					return result
+				end
+
 			protected
+
+				# *************************************************************
+				# Validators
+				# *************************************************************
 
 				#
 				# Event capacity can't be overdrawn
 				#
 				def validate_capacity
 					return if !self.kind_event?
-
-					if self.new_record?
-						size_diff = self.size
-					else
-						size_diff = self.size - self.size_was
-					end
-
-					# Check event size
-					if self.event.size + size_diff > self.event.capacity
+					if !check_capacity
 						if RicReservation.event_model.config(:enable_below_line) == true
 							self.below_line = true
 						else
@@ -173,37 +244,13 @@ module RicReservation
 				#
 				def validate_owner_reservation_limit
 					return if !self.kind_event?
-
-					# No limit
-					return if self.event.owner_reservation_limit.nil?
-
-					# No owner
-					return if self.owner_id.nil?
-
-					# Limit is equal or overdrawn => No other reservation can be created
-					if 	(
-							self.id && 
-							RicReservation.reservation_model
-								.event(self.event, self.schedule_date)
-								.above_line
-								.where("id <> :id", id: self.id)
-								.where(owner_id: self.owner_id).count >= self.event.owner_reservation_limit
-						) ||
-						(
-							!self.id && 
-							RicReservation.reservation_model
-								.event(self.event, self.schedule_date)
-								.above_line
-								.where(owner_id: self.owner_id).count >= self.event.owner_reservation_limit
-						)
-					
+					if !check_owner_reservation_limit
 						if RicReservation.event_model.config(:enable_below_line) == true
 							self.below_line = true
 						else
 							errors.add(:owner_id, I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.owner_reservation_limit_overdraw"))
 						end
 					end
-
 				end
 
 			end

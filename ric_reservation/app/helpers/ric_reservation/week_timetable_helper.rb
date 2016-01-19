@@ -258,8 +258,9 @@ module RicReservation
 								if !item.nil?
 									# Item
 									result += "			<td class=\"item #{item[:tags]} #{(!item[:tooltip].nil? ? "ttip" : "")}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe} colspan=\"#{item[:width]}\">\n"
-									if item[:path_callback]
-										result += "				<a href=\"#{item[:path_callback].call(item[:object])}\">#{item[:label]}</a>\n"
+									url = item[:path_callback] ? item[:path_callback].call(item[:object]) : nil
+									if url
+										result += "				<a href=\"#{url}\">#{item[:label]}</a>\n"
 									else
 										result += "				<div class=\"padding\">#{item[:label]}</div>\n"
 									end
@@ -269,8 +270,9 @@ module RicReservation
 									# Empty
 									result += "			<td class=\"empty #{(col == (hour[:cols]-1) ? "right-solid" : "right-dotted")} #{(row == (day[:rows]-1) ? "bottom-solid" : "bottom-invisible")}\">\n"
 									if row == 0
-										if options[:empty_path_callback]
-											result += "				<a href=\"#{options[:empty_path_callback].call(day[:date], "#{hour[:hour]}:#{((60/hour[:cols]).to_i * col).to_s.rjust(2, "0")}")}\"><i class=\"icon-plus\"></i></a>\n"
+										url = (options[:empty_path_callback] ? options[:empty_path_callback].call(day[:date], "#{hour[:hour]}:#{((60/hour[:cols]).to_i * col).to_s.rjust(2, "0")}") : nil)
+										if url
+											result += "				<a href=\"#{url}\"><i class=\"icon-plus\"></i></a>\n"
 										else
 											result += "				<div class=\"padding\"></div>\n"
 										end

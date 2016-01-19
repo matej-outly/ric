@@ -32,8 +32,8 @@ RicReservation::AdminEngine.routes.draw do
 	put "event_reservations/:id/:schedule_date/anonymous", to: "admin_event_reservations#create_anonymous", as: "create_anonymous_event_reservation"
 	resources :event_reservations, only: [:destroy], controller: "admin_event_reservations" do
 		member do
-			put "present"
-			put "not_present"
+			put "put_above_line"
+			put "put_below_line"
 		end
 	end
 

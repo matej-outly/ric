@@ -70,7 +70,7 @@ module RicReservation
 					#
 					def schedule(date_from, date_to = nil)
 						date_to = date_from + 1.day if date_to.nil?
-						where(":date_from < schedule_date AND schedule_date < :date_to", date_from: date_from, date_to: date_to)
+						where(":date_from <= schedule_date AND schedule_date < :date_to", date_from: date_from, date_to: date_to)
 					end
 
 					# *********************************************************
@@ -104,31 +104,34 @@ module RicReservation
 			protected
 
 				# *************************************************************
+				# Conditions
+				# *************************************************************
+
+				def check_overlapping
+					result = true
+					if self.id
+						result &= (RicReservation.reservation_model
+							.resource(self.resource)
+							.where("id <> :id", id: self.id)
+							.overlaps_with_resource_reservation(self).count == 0) # With other resource reservations
+					else
+						result &= (RicReservation.reservation_model
+							.resource(self.resource)
+							.overlaps_with_resource_reservation(self).count == 0) # With other resource reservations
+					end
+					result &= (RicReservation.event_model
+						.where(resource_id: self.resource_id)
+						.overlaps_with_resource_reservation(self).count == 0) # With other events in the same resource
+					return result
+				end
+
+				# *************************************************************
 				# Validators
 				# *************************************************************
 
 				def validate_overlapping
 					return if !self.kind_resource?
-
-					if	(
-							self.id && 
-							RicReservation.reservation_model
-								.resource(self.resource)
-								.where("id <> :id", id: self.id)
-								.overlaps_with_resource_reservation(self).count > 0
-						) || # With other resource reservations
-						(
-							!self.id && 
-							RicReservation.reservation_model
-								.resource(self.resource)
-								.overlaps_with_resource_reservation(self).count > 0
-						) || # With other resource reservations
-						(
-							RicReservation.event_model
-								.where(resource_id: self.resource_id)
-								.overlaps_with_resource_reservation(self).count > 0
-						) # With other events in the same resource
-
+					if !check_overlapping
 						message = I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.overlapping")
 						errors.add(:schedule_date, message)
 						errors.add(:schedule_from, message)
