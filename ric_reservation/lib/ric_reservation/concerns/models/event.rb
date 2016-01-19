@@ -401,7 +401,7 @@ module RicReservation
 					end
 
 					# *********************************************************
-					# Overlapping TODO: Other events than ONCe
+					# Overlapping TODO: Other periods than ONCE
 					# *********************************************************
 
 					def overlaps_with_resource_reservation(resource_reservation)
@@ -417,17 +417,29 @@ module RicReservation
 						)
 					end
 
-					def overlaps_with_event(event)
-						where(
-							"
-								(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
-								(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
-								(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
-							", 
-							from: event.from, 
-							to: event.to, 
-							period_once: "once"
-						)
+					#def overlaps_with_event(event)
+					#	where(
+					#		"
+					#			(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
+					#			(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
+					#			(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
+					#		", 
+					#		from: event.from, 
+					#		to: event.to, 
+					#		period_once: "once"
+					#	)
+					#end
+
+					# *********************************************************
+					# Reservation
+					# *********************************************************
+
+					def with_reservation_by(owner_id)
+						if owner_id.nil?
+							all
+						else
+							joins("LEFT OUTER JOIN reservations ON reservations.event_id = events.id").where(reservations: { owner_id: owner_id }).group("events.id")
+						end
 					end
 
 				end
@@ -477,6 +489,21 @@ module RicReservation
 					value = read_attribute(:time_window_deadline)
 					if value.nil? && self.resource
 						value = self.resource.time_window_deadline
+					end
+					return value
+				end
+
+				# *************************************************************
+				# Owner reservation limit
+				# *************************************************************
+
+				#
+				# Get owner reservation limit
+				#
+				def owner_reservation_limit
+					value = read_attribute(:owner_reservation_limit)
+					if value.nil? && self.resource
+						value = self.resource.owner_reservation_limit
 					end
 					return value
 				end
@@ -659,7 +686,7 @@ module RicReservation
 				#
 				# Create new reservation for given owner
 				#
-				def create_reservation(size = 1, owner = nil, force_state = false)
+				def create_reservation(subject, owner = nil, force_state = false)
 					if !scheduled?
 						raise "Schedule event to specific date first."
 					end
@@ -670,7 +697,7 @@ module RicReservation
 					#end
 					
 					# Create reservation
-					reservation = _create_resevation(size, owner)
+					reservation = _create_resevation(subject, owner)
 
 					# Store
 					reservation.save
@@ -681,7 +708,7 @@ module RicReservation
 				#
 				# Validate new reservation for given owner
 				#
-				def validate_reservation(size = 1, owner = nil, force_state = false)
+				def validate_reservation(subject, owner = nil, force_state = false)
 					if !scheduled?
 						raise "Schedule event to specific date first."
 					end
@@ -692,7 +719,7 @@ module RicReservation
 					#end
 					
 					# Create reservation
-					reservation = _create_resevation(size, owner)
+					reservation = _create_resevation(subject, owner)
 
 					# Validate
 					reservation.valid?
@@ -798,7 +825,10 @@ module RicReservation
 				# Reservations
 				# *************************************************************
 
-				def _create_resevation(size = 1, owner = nil)
+				#
+				# Create new reservation object according to subject and owner
+				#
+				def _create_resevation(subject, owner = nil)
 					
 					# Create reservation
 					reservation = RicReservation.reservation_model.new
@@ -807,12 +837,10 @@ module RicReservation
 					reservation.schedule_date = self.schedule_date
 					reservation.schedule_from = self.schedule_from
 					reservation.schedule_to = self.schedule_to
-					reservation.size = size
 
-					# Capacity check
-					if at_capacity?
-						reservation.below_line = true
-					end
+					# Bind subject
+					reservation.size = subject.size
+					reservation.subject = subject
 					
 					# Bind owner
 					if !owner.nil?

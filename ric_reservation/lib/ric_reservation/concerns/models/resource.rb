@@ -82,10 +82,10 @@ module RicReservation
 				#
 				# Create new reservation for given schedule and owner
 				#
-				def create_reservation(schedule_date, schedule_from, schedule_to, owner = nil)
+				def create_reservation(subject, owner = nil)
 					
 					# Create reservation
-					reservation = _create_reservation(schedule_date, schedule_from, schedule_to, owner)
+					reservation = _create_reservation(subject, owner)
 
 					# Store
 					reservation.save
@@ -96,10 +96,10 @@ module RicReservation
 				#
 				# Validate new reservation for given schedule and owner
 				#
-				def validate_reservation(schedule_date, schedule_from, schedule_to, owner = nil)
+				def validate_reservation(subject, owner = nil)
 
 					# Create reservation
-					reservation = _create_reservation(schedule_date, schedule_from, schedule_to, owner)
+					reservation = _create_reservation(subject, owner)
 
 					# Validate
 					reservation.valid?
@@ -113,15 +113,21 @@ module RicReservation
 				# Reservations
 				# *************************************************************
 
-				def _create_reservation(schedule_date, schedule_from, schedule_to, owner = nil)
+				#
+				# Create new reservation object according to subject and owner
+				#
+				def _create_reservation(subject, owner = nil)
 					
 					# Create reservation
 					reservation = RicReservation.reservation_model.new
 					reservation.kind = "resource"
 					reservation.resource_id = self.id
-					reservation.schedule_date = schedule_date
-					reservation.schedule_from = schedule_from
-					reservation.schedule_to = schedule_to
+
+					# Bind subject
+					reservation.schedule_date = subject.date
+					reservation.schedule_from = subject.from
+					reservation.schedule_to = subject.to
+					reservation.subject = subject
 					
 					# Bind owner
 					if !owner.nil?

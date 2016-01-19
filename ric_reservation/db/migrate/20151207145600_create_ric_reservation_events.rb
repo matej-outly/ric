@@ -22,6 +22,7 @@ class CreateRicReservationEvents < ActiveRecord::Migration
 
 			# Identification
 			t.string :name
+			t.string :color
 
 			# Schedule
 			t.datetime :from
@@ -39,8 +40,8 @@ class CreateRicReservationEvents < ActiveRecord::Migration
 			t.time :time_window_soon
 			t.time :time_window_deadline
 
-			# Color
-			t.string :color
+			# Limit number of reservations by single owner
+			t.integer :owner_reservation_limit
 
 		end
 	end

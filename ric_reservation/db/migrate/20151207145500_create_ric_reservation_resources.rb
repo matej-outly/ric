@@ -27,6 +27,9 @@ class CreateRicReservationResources < ActiveRecord::Migration
 			t.time :time_window_soon
 			t.time :time_window_deadline
 
+			# Limit number of reservations by single owner
+			t.integer :owner_reservation_limit
+
 		end
 	end
 end

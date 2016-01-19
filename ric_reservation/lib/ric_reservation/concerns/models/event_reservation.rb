@@ -42,9 +42,14 @@ module RicReservation
 					validates :size, presence: true, if: :kind_event?
 
 					#
-					# Reservation can't be over capacity
+					# Event can't be over capacity
 					#
 					validate :validate_capacity
+
+					#
+					# Event reservation limit can't be overdrawn
+					#
+					validate :validate_owner_reservation_limit
 
 				end
 
@@ -154,7 +159,49 @@ module RicReservation
 
 					# Check event size
 					if self.event.size + size_diff > self.event.capacity
-						errors.add(:size, "activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.capacity_overdraw")
+						if RicReservation.event_model.config(:enable_below_line) == true
+							self.below_line = true
+						else
+							errors.add(:size, "activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.capacity_overdraw")
+						end
+					end
+
+				end
+
+				#
+				# Event reservation limit can't be overdrawn
+				#
+				def validate_owner_reservation_limit
+					return if !self.kind_event?
+
+					# No limit
+					return if self.event.owner_reservation_limit.nil?
+
+					# No owner
+					return if self.owner_id.nil?
+
+					# Limit is equal or overdrawn => No other reservation can be created
+					if 	(
+							self.id && 
+							RicReservation.reservation_model
+								.event(self.event, self.schedule_date)
+								.above_line
+								.where("id <> :id", id: self.id)
+								.where(owner_id: self.owner_id).count >= self.event.owner_reservation_limit
+						) ||
+						(
+							!self.id && 
+							RicReservation.reservation_model
+								.event(self.event, self.schedule_date)
+								.above_line
+								.where(owner_id: self.owner_id).count >= self.event.owner_reservation_limit
+						)
+					
+						if RicReservation.event_model.config(:enable_below_line) == true
+							self.below_line = true
+						else
+							errors.add(:owner_id, I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.owner_reservation_limit_overdraw"))
+						end
 					end
 
 				end
