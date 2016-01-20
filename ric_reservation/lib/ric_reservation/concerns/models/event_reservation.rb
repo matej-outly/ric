@@ -141,8 +141,6 @@ module RicReservation
 					return (self.below_line == true)
 				end
 
-				# TODO
-
 				#
 				# Put reservation above line manually
 				#
@@ -159,6 +157,13 @@ module RicReservation
 					self.below_line = true
 					self.save
 					#self.inform_below_line
+				end
+
+				#
+				# TODO
+				#
+				def process_above_line(event_id, schedule_date)
+					
 				end
 
 				# *************************************************************
