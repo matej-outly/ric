@@ -1,0 +1,33 @@
+cs:
+
+  headers:
+    ric_notification:
+      admin_notifications:
+        index: "Zprávy"
+        show: "Detail zprávy"
+        new: "Nová zpráva"
+        create: "Nová zpráva"
+        edit: "Upravit zprávu"
+        update: "Upravit zprávu"
+        destroy: "Smazat zprávu"
+
+  activerecord:
+    attributes:
+      ric_notification/notification:
+        content: Obsah
+    notices:
+      models:
+        ric_notification/notification:
+          update: Zpráva byla úspěšně uložena.
+          create: Zpráva byla úspěšně vytvořena.
+          destroy: Zpráva byla úspěšně smazána.
+    errors:
+      models:
+        ric_notification/notification:
+          not_found: Zpráva nebyla nalezena.
+          attributes:
+    mailers:
+      ric_notification:
+        notification:
+          new_password:
+            subject: "Heslo bylo změněno"

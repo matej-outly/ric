@@ -1,0 +1,9 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@notifications, { 
+		id: :integer,
+	}, paths: {
+		show: :notification_path,
+		edit: :edit_notification_path,
+		destroy: :notification_path
+	}, pagination: true, summary: true ) %>
+<% end %>
