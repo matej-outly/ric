@@ -51,6 +51,12 @@ module RicReservation
 					#
 					validate :validate_owner_reservation_limit
 
+					# *********************************************************
+					# Line
+					# *********************************************************
+
+					after_destroy :enqueue_for_process_above_line
+
 				end
 
 				module ClassMethods
@@ -85,6 +91,34 @@ module RicReservation
 					#
 					def below_line
 						where("below_line = true")
+					end
+
+					#
+					# Process above line possibility
+					#
+					def process_above_line(event_id, schedule_date)
+							
+						# Check valid event
+						event = RicReservation.event_model.find_by_id(event_id)
+						if event.nil?
+							return false
+						end
+					
+						RicReservation.reservation_model.transaction do 
+
+							# Get all reservations below line
+							reservations = event(event, schedule_date).below_line.order(created_at: :asc)
+							
+							# Check all reservations for possibility to put above line
+							reservations.each do |reservation|
+								if reservation.check_above_line
+									reservation.put_above_line
+								end
+							end
+
+						end
+
+						return true
 					end
 
 				end
@@ -124,7 +158,7 @@ module RicReservation
 				end
 
 				# *************************************************************
-				# Below line
+				# Line
 				# *************************************************************
 
 				#
@@ -159,12 +193,6 @@ module RicReservation
 					self.notify(:reservation_below_line)
 				end
 
-				#
-				# TODO
-				#
-				def process_above_line(event_id, schedule_date)
-					
-				end
 
 				# *************************************************************
 				# Conditions
@@ -224,6 +252,17 @@ module RicReservation
 				end
 
 			protected
+
+				# *************************************************************
+				# Line
+				# *************************************************************
+
+				def enqueue_for_process_above_line
+					return if !self.kind_event?
+					if RicReservation.event_model.config(:enable_below_line) == true
+						QC.enqueue("#{RicReservation.reservation_model.to_s}.process_above_line", self.event_id, self.schedule_date)
+					end
+				end
 
 				# *************************************************************
 				# Validators
