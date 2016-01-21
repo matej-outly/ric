@@ -3,23 +3,45 @@ cs:
   headers:
     ric_notification:
       admin_notifications:
-        index: "Zprávy"
-        show: "Detail zprávy"
-        new: "Nová zpráva"
-        create: "Nová zpráva"
-        edit: "Upravit zprávu"
-        update: "Upravit zprávu"
-        destroy: "Smazat zprávu"
+        index: "Systémové zprávy"
+        show: "Detail systémové zprávy"
+        new: "Nová systémová zpráva"
+        create: "Nová systémová zpráva"
+        edit: "Upravit systémovou zprávu"
+        update: "Upravit systémovou zprávu"
+        deliver: "Odeslat systémovou zprávu"
+        destroy: "Smazat systémovou zprávu"
+        receivers: "Příjemci"
 
   activerecord:
     attributes:
       ric_notification/notification:
-        content: Obsah
+        message: Obsah
+        url: URL
+        kind: Typ zprávy
+        kind_values:
+          notice: Informace
+          alert: Chyba
+          warning: Varování
+        author: Autor
+        author_id: Autor
+      ric_notification/notification_receiver:
+        user: Uživatel
+        state: Stav
+        state_values:
+          created: Vytvořeno
+          sent: Odesláno
+          received: Doručeno
+          accepted: Akceptováno
+        created_at: Vytvořeno
+        sent_at: Odesláno
+        received_at: Doručeno
     notices:
       models:
         ric_notification/notification:
           update: Zpráva byla úspěšně uložena.
           create: Zpráva byla úspěšně vytvořena.
+          enqueue_for_delivery: Zpráva byla úspěšně zařazena k odeslání.
           destroy: Zpráva byla úspěšně smazána.
     errors:
       models:
@@ -29,5 +51,11 @@ cs:
     mailers:
       ric_notification:
         notification:
-          new_password:
-            subject: "Heslo bylo změněno"
+          notify:
+            subject: "%{url}: Nová systémová zpráva"
+
+  notifications:
+    automatic_messages:
+      create: "Objekt byl vytvořen."
+      update: "Objekt byl upraven."
+      destroy: "Objekt byl smazán."

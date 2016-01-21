@@ -11,7 +11,4 @@
 
 RicNotification::PublicEngine.routes.draw do
 
-	# Notifications
-	resources :notifications, controller: "public_notifications", only: [:index, :show]
-
 end

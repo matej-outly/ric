@@ -2,17 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Notifications
+# * Notification receiver
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 21. 1. 2016
 # *
 # *****************************************************************************
 
-require_dependency "ric_notification/public_controller"
-
 module RicNotification
-	class PublicNotificationsController < PublicController
-		include RicNotification::Concerns::Controllers::Public::NotificationsController
+	class NotificationReceiver < ActiveRecord::Base
+		include RicNotification::Concerns::Models::NotificationReceiver
 	end
 end

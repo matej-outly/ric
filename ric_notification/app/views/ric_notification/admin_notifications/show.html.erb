@@ -1,5 +1,16 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@notification, { 
-		id: :integer,
+		message: :string,
+		kind: :enum,
+		url: :string,
+		author: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
 	}) %>
+	<h3><%= t("headers.ric_notification.admin_notifications.receivers") %></h3>
+	<%= rug_index_table_for(@notification.notification_receivers, { 
+		user: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
+		state: :enum,
+		created_at: :datetime,
+		sent_at: :datetime,
+		received_at: :datetime,
+	}, summary: true ) %>
 <% end %>

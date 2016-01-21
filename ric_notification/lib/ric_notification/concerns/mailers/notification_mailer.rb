@@ -5,7 +5,7 @@
 # * Notification mailer
 # *
 # * Author: Matěj Outlý
-# * Date  : 18. 6. 2015
+# * Date  : 21. 1. 2016
 # *
 # *****************************************************************************
 
@@ -17,10 +17,10 @@ module RicNotification
 				#
 				# New password
 				#
-				def new_password(notification, new_password)
+				def notify(notification, receiver)
 					@notification = notification
-					@password = new_password
-					mail(from: RicNotification.mailer_sender, to: notification.email, subject: I18n.t("activerecord.mailers.ric_notification.notification.new_password.subject"))
+					@receiver = receiver
+					mail(from: RicNotification.mailer_sender, to: receiver.email, subject: I18n.t("activerecord.mailers.ric_notification.notification.notify.subject", url: main_app.root_url))
 				end
 
 			end

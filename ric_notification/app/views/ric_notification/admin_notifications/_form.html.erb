@@ -1,3 +1,7 @@
 <%= rug_form_for(@notification, create_url: :notifications_path, update_url: :notification_path) do |f| %>
+	<%= f.text_input_row :message %>
+	<%= f.picker_row :kind %>
+	<%= f.text_input_row :url %>
+	<%= f.token_input_row :receiver_id, ric_user_admin.search_users_path, as: :receiver, value_attr: :id, label_attr: :email, limit: 1 %>
 	<%= f.primary_button_row :submit %>
 <% end %>

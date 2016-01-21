@@ -1,0 +1,5 @@
+Zpráva: <%= @notification.message %>
+Typ zprávy <%= @notification.kind_obj.label %>
+<% if !@notification.url.blank? %>
+Odkaz: <%= @notification.url %>
+<% end %>

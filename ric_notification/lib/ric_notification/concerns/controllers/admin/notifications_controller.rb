@@ -25,7 +25,7 @@ module RicNotification
 						#
 						# Set notification before some actions
 						#
-						before_action :set_notification, only: [:show, :edit, :update, :destroy]
+						before_action :set_notification, only: [:show, :edit, :update, :deliver, :destroy]
 
 					end
 
@@ -33,7 +33,7 @@ module RicNotification
 					# Index action
 					#
 					def index
-						@notifications = RicNotification.notification_model.all.order(email: :asc).page(params[:page]).per(50)
+						@notifications = RicNotification.notification_model.all.order(created_at: :desc).page(params[:page]).per(50)
 					end
 
 					#
@@ -60,7 +60,7 @@ module RicNotification
 					#
 					def create
 						@notification = RicNotification.notification_model.new(notification_params)
-						@notification.regenerate_password(disable_email: true)
+						@notification.author = current_user
 						if @notification.save
 							redirect_to notification_path(@notification), notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_model.model_name.i18n_key}.create")
 						else
@@ -77,6 +77,14 @@ module RicNotification
 						else
 							render "edit"
 						end
+					end
+
+					#
+					# Deliver action
+					#
+					def deliver
+						@notification.enqueue_for_delivery
+						redirect_to notification_path(@notification), notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_model.model_name.i18n_key}.enqueue_for_delivery")
 					end
 
 					#
@@ -100,7 +108,7 @@ module RicNotification
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def notification_params
-						params.require(:notification).permit(:email, :role)
+						params.require(:notification).permit(:message, :kind, :url, :receiver_id)
 					end
 
 				end

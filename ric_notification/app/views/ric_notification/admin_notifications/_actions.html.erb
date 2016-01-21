@@ -3,5 +3,8 @@
 	<%= m.new_item %>
 	<%= m.show_item %>
 	<%= m.edit_item %>
+	<% if @notification && !@notification.new_record? %>
+		<%= m.item t("headers.ric_notification.admin_notifications.deliver"), deliver_notification_path(@notification), method: :put, icon: "download" %>
+	<% end %>
 	<%= m.destroy_item %>
 <% end %>

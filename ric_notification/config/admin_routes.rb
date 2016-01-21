@@ -12,6 +12,10 @@
 RicNotification::AdminEngine.routes.draw do
 
 	# Notifications
-	resources :notifications, controller: "admin_notifications"
+	resources :notifications, controller: "admin_notifications" do
+		member do 
+			put "deliver"
+		end
+	end
 
 end
