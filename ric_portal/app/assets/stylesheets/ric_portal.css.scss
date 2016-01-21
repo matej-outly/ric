@@ -307,7 +307,7 @@ body {
 		-moz-border-radius: 5px;
 		border-radius: 5px;
 		padding: 15px;
-		background: #f6f6f6;
+		background: white;
 		margin-bottom: 2%;
 	}
 
@@ -346,6 +346,22 @@ body {
 				tr {
 					td {
 						font-size: 90%;
+					}
+				}
+			}
+		}
+
+
+		&.show-table {
+			border: 1px solid #dddddd;
+			background-color: #ffffff;
+
+			tr {
+				td:first-child {
+					width: 30%;
+					font-weight: normal;
+					& + td {
+						font-weight: bold;
 					}
 				}
 			}
@@ -465,6 +481,52 @@ body {
 		/* Only icon */
 		&.icon-left a:empty {
 			padding-left: 12px;
+		}
+	}
+
+	/*************************************************************************/
+	/* Tabs                                                                  */
+	/*************************************************************************/
+
+	.tabs {
+		
+		.tab-content {
+			padding: 20px 0;
+		}
+
+	}
+
+	.pill, .tabs.pill {
+		.tab-nav {
+			width: 100%;
+			display: table;
+			overflow: hidden;
+			border: 1px solid #e5e5e5;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
+			> li {
+				display: table-cell;
+				margin: 0;
+				margin-left: -4px;
+				text-align: center;
+				top: 0;
+				&:first-child {
+					margin-left: 0;
+				}
+				> a {
+					border: none;
+					border-right: 1px solid #e5e5e5;
+					-moz-border-radius: 0;
+					-webkit-border-radius: 0;
+					border-radius: 0;
+					height: 42px;
+					line-height: 40px;
+				}
+				&:last-child > a {
+					border-right:none;
+				}
+			}
 		}
 	}
 
