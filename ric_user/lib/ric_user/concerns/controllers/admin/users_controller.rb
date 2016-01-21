@@ -37,6 +37,17 @@ module RicUser
 					end
 
 					#
+					# Search action
+					#
+					def search
+						@users = RicUser.user_model.search(params[:q]).order(email: :asc)
+						respond_to do |format|
+							format.html { render "index" }
+							format.json { render json: @users.to_json }
+						end
+					end
+
+					#
 					# Show action
 					#
 					def show

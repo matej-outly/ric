@@ -33,6 +33,13 @@ module RicUser
 					# Index action
 					#
 					def index
+						@users = RicUser.user_model.all.order(email: :asc).page(params[:page]).per(50)
+					end
+
+					#
+					# Search action
+					#
+					def search
 						@users = RicUser.user_model.search(params[:q]).order(email: :asc)
 						respond_to do |format|
 							format.html { render "index" }

@@ -12,7 +12,11 @@
 RicUser::AdminEngine.routes.draw do
 
 	# Users
-	resources :users, controller: "admin_users"
+	resources :users, controller: "admin_users" do
+		collection do
+			get "search"
+		end
+	end
 
 	# User passwords
 	resources :user_passwords, controller: "admin_user_passwords", only: [:edit, :update] do
