@@ -131,7 +131,7 @@ module RicNewsletter
 					end
 
 					def enqueue(id)
-						QC.enqueue("RicNewsletter::SentNewsletter.init_send_and_enqueue", id)
+						QC.enqueue("#{RicNewsletter.sent_newsletter_model.to_s}.init_send_and_enqueue", id)
 					end
 
 					def init_send_and_enqueue(id)
@@ -144,7 +144,7 @@ module RicNewsletter
 
 						# If still some customers remaining, enqueue next batch
 						if remaining > 0
-							QC.enqueue("RicNewsletter::SentNewsletter.send_batch_and_enqueue", id)
+							QC.enqueue("#{RicNewsletter.sent_newsletter_model.to_s}.send_batch_and_enqueue", id)
 							return false
 						else
 							return true
@@ -162,7 +162,7 @@ module RicNewsletter
 
 						# If still some customers remaining, enqueue next batch
 						if remaining > 0
-							QC.enqueue("RicNewsletter::SentNewsletter.send_batch_and_enqueue", id, batch_size)
+							QC.enqueue("#{RicNewsletter.sent_newsletter_model.to_s}.send_batch_and_enqueue", id, batch_size)
 							return false
 						else
 							return true
