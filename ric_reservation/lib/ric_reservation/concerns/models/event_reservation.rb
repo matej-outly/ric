@@ -147,7 +147,7 @@ module RicReservation
 				def put_above_line
 					self.below_line = nil
 					self.save
-					#self.inform_above_line
+					self.notify(:reservation_above_line)
 				end
 
 				#
@@ -156,7 +156,7 @@ module RicReservation
 				def put_below_line
 					self.below_line = true
 					self.save
-					#self.inform_below_line
+					self.notify(:reservation_below_line)
 				end
 
 				#
@@ -256,6 +256,25 @@ module RicReservation
 							errors.add(:owner_id, I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.owner_reservation_limit_overdraw"))
 						end
 					end
+				end
+
+				# *************************************************************
+				# Notification
+				# *************************************************************
+
+				def notify(message)
+					return if defined?(RicNotification).nil?
+					return if self.owner.nil?
+
+					# Get receiver object
+					if RicReservation.owner_model == RicNotification.user_model
+						receiver = self.owner
+					else
+						receiver = self.owner.user
+					end
+
+					# Notify receiver
+					RicNotification.notify([message, self], receiver)
 				end
 
 			end

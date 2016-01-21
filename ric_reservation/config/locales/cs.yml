@@ -222,3 +222,8 @@ cs:
     submit:
       reserve: "Rezervovat"
       reserve_below_line: "Rezervovat pod čarou"
+
+  notifications:
+    automatic_messages:
+      reservation_above_line: Rezervace byla posunuta nad čáru.
+      reservation_below_line: Rezervace byla posunuta pod čáru.
