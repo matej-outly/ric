@@ -307,7 +307,7 @@ module RicReservation
 		#
 		# Prepare week timetable table for drawing
 		#
-		def week_timetable_raw(date, data_sources, global_options = {})
+		def week_timetable_prepare(date, data_sources, global_options = {})
 			
 			# Normalize data sources
 			data_sources = [data_sources] if !data_sources.is_a?(Array)
@@ -341,31 +341,9 @@ module RicReservation
 		# Draw week timetable table
 		#
 		def week_timetable(date, data_sources, global_options = {})
-			
-			# Normalize data sources
-			data_sources = [data_sources] if !data_sources.is_a?(Array)
 
-			# Items
-			items = []
-			data_sources.each do |data_source|
-				if data_source.is_a?(Array)
-					if data_source.length != 2
-						raise "Array containing data and data_options expected."
-					end
-					data = data_source[0]
-					data_options = global_options.merge(data_source[1])
-				else
-					data = data_source
-					data_options = global_options
-				end
-				items.concat(week_timetable_items(date, data, data_options))
-			end
-
-			# Hours
-			hours, min_hour, max_hour = week_timetable_hours(date, items, global_options)
-
-			# Days
-			days = week_timetable_days(date, items, hours, min_hour, max_hour, global_options)
+			# Prepare
+			items, hours, days, global_options = week_timetable_prepare(date, data_sources, global_options)
 
 			# Render
 			return week_timetable_render(items, hours, days, global_options)

@@ -46,6 +46,17 @@ module RicReservation
 			return "#{I18n.l(item.schedule_date)} #{item.schedule_from.strftime("%k:%M")} - #{item.schedule_to.strftime("%k:%M")}"
 		end
 
+		def month_timetable_day_label(day)
+			return "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
+		end
+
+		def month_timetable_week_label(date)
+			result = ""
+			result += "<div class=\"week-of-year\">" + I18n.t("views.calendar.week", week: date.cweek) + "</div>"
+			result += "<div class=\"date\">#{I18n.l(date)} - #{I18n.l(date + 1.week - 1.day)}</div>"
+			return result
+		end
+
 		#
 		# Prepare timetable items
 		#
@@ -93,11 +104,16 @@ module RicReservation
 		# Prepare timetable days
 		#
 		def month_timetable_days(date, items, options = {})
+			
+			# Options
+			label_callback = options[:day_label_callback] ? options[:day_label_callback] : method(:month_timetable_day_label)
+			
+			# Days
 			days = []
 			["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
 				label = "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
 				days << {
-					label: label.html_safe,
+					label: label_callback.call(day).html_safe,
 				}
 			end
 			return days
@@ -108,6 +124,9 @@ module RicReservation
 		#
 		def month_timetable_weeks(date, items, days, options = {})
 
+			# Options
+			label_callback = options[:week_label_callback] ? options[:week_label_callback] : method(:month_timetable_week_label)
+
 			# Dates
 			first_this_month = date.beginning_of_month
 			first_monday = first_this_month.week_monday
@@ -117,10 +136,8 @@ module RicReservation
 			tmp_date = first_monday
 			weeks = []
 			while tmp_date < first_next_month do
-				label = "<div class=\"week-of-year\">" + I18n.t("views.calendar.week", week: tmp_date.cweek) + "</div>"
-				label += "<div class=\"date\">#{I18n.l(tmp_date)} - #{I18n.l(tmp_date + 1.week - 1.day)}</div>"
 				weeks << {
-					label: label.html_safe,
+					label: label_callback.call(tmp_date).html_safe,
 					date: tmp_date
 				}
 				tmp_date = tmp_date + 1.week
@@ -232,9 +249,9 @@ module RicReservation
 		end
 
 		#
-		# Draw month timetable table
+		# Prepare month timetable for drawing
 		#
-		def month_timetable(date, data_sources, global_options = {})
+		def month_timetable_prepare(date, data_sources, global_options = {})
 			
 			# Normalize data sources
 			data_sources = [data_sources] if !data_sources.is_a?(Array)
@@ -261,6 +278,18 @@ module RicReservation
 
 			# Weeks
 			weeks = month_timetable_weeks(date, items, days, global_options)
+
+			# Render
+			return [items, days, weeks, global_options]
+		end
+
+		#
+		# Draw month timetable table
+		#
+		def month_timetable(date, data_sources, global_options = {})
+
+			# Prepare
+			items, days, weeks, global_options = month_timetable_prepare(date, data_sources, global_options)
 
 			# Render
 			return month_timetable_render(items, days, weeks, global_options)
