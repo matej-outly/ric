@@ -59,6 +59,16 @@ module RicReservation
 		end
 
 		#
+		# Get day label
+		#
+		def week_timetable_day_label(day, date)
+			result = ""
+			result += "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
+			result += "<div class=\"date\">#{I18n.l(tmp_date)}</div>"
+			return result
+		end
+
+		#
 		# Get item tooltip
 		#
 		def week_timetable_item_tooltip(item)
@@ -164,14 +174,15 @@ module RicReservation
 		#
 		def week_timetable_days(date, items, hours, min_hour, max_hour, options = {})
 			
+			# Options
+			label_callback = options[:day_label_callback] ? options[:day_label_callback] : method(:week_timetable_day_label)
+
 			# Days
 			tmp_date = date.week_monday
 			days = []
 			["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
-				label = "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
-				label += "<div class=\"date\">#{I18n.l(tmp_date)}</div>"
 				days << {
-					label: label.html_safe,
+					label: label_callback.call(day, tmp_date).html_safe,
 					date: tmp_date,
 					rows: 0
 				}
@@ -291,6 +302,39 @@ module RicReservation
 			result += "</table>\n"
 
 			return result.html_safe
+		end
+
+		#
+		# Prepare week timetable table for drawing
+		#
+		def week_timetable_raw(date, data_sources, global_options = {})
+			
+			# Normalize data sources
+			data_sources = [data_sources] if !data_sources.is_a?(Array)
+
+			# Items
+			items = []
+			data_sources.each do |data_source|
+				if data_source.is_a?(Array)
+					if data_source.length != 2
+						raise "Array containing data and data_options expected."
+					end
+					data = data_source[0]
+					data_options = global_options.merge(data_source[1])
+				else
+					data = data_source
+					data_options = global_options
+				end
+				items.concat(week_timetable_items(date, data, data_options))
+			end
+
+			# Hours
+			hours, min_hour, max_hour = week_timetable_hours(date, items, global_options)
+
+			# Days
+			days = week_timetable_days(date, items, hours, min_hour, max_hour, global_options)
+
+			return [items, hours, days, global_options]
 		end
 
 		#

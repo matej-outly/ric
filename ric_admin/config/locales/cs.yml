@@ -144,6 +144,11 @@ cs:
       datetime:
         date: Datum
         time: Čas
+      duration:
+        days: Dní
+        hours: Hodin
+        minutes: Minut
+        seconds: Sekund
       geolocation:
         longitude: Zem. délka
         latitude: Zem. šířka

@@ -1,7 +1,7 @@
 <%= rug_form_for(@resource, create_url: "ric_reservation_admin.resources_path", update_url: "ric_reservation_admin.resource_path") do |f| %>
 	<%= f.text_input_row :name, :text_field %>
-	<%= f.time_picker_row :time_window_soon %>
-	<%= f.time_picker_row :time_window_deadline %>
+	<%= f.duration_row :time_window_deadline %>
+	<%= f.duration_row :time_window_soon %>
 	<%= f.text_input_row :owner_reservation_limit, :number_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

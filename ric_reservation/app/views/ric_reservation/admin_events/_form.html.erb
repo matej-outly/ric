@@ -5,9 +5,9 @@
 	<%= f.datetime_picker_row :from %>
 	<%= f.datetime_picker_row :to %>
 	<%= f.picker_row :period %>
-	<%= f.text_input_row :capacity, :number_field %>
-	<%= f.time_picker_row :time_window_soon %>
-	<%= f.time_picker_row :time_window_deadline %>
+	<%= f.text_input_row :capacity, :number_field, min: 0 %>
+	<%= f.duration_row :time_window_deadline %>
+	<%= f.duration_row :time_window_soon %>
 	<%= f.text_input_row :owner_reservation_limit, :number_field %>
 	<%= f.primary_button_row :submit %>
 <% end %>

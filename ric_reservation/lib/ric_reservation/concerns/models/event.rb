@@ -645,12 +645,12 @@ module RicReservation
 						
 						# Break points
 						if self.time_window_deadline
-							deadline = self.schedule_from - self.time_window_deadline.seconds_since_midnight.seconds
+							deadline = self.schedule_from - self.time_window_deadline.days_since_new_year.days - self.time_window_deadline.seconds_since_midnight.seconds
 						else
 							deadline = self.schedule_from
 						end
 						if self.time_window_soon
-							soon = deadline - self.time_window_soon.seconds_since_midnight.seconds
+							soon = deadline - self.time_window_soon.days_since_new_year.days - self.time_window_soon.seconds_since_midnight.seconds
 						else
 							soon = deadline
 						end

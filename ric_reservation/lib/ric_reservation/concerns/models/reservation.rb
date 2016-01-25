@@ -171,12 +171,12 @@ module RicReservation
 							time_window_soon = self.resource.time_window_soon
 						end
 						if time_window_deadline
-							deadline = self.schedule_from - time_window_deadline.seconds_since_midnight.seconds
+							deadline = self.schedule_from - time_window_deadline.days_since_new_year.days - time_window_deadline.seconds_since_midnight.seconds
 						else
 							deadline = self.schedule_from
 						end
 						if time_window_soon
-							soon = deadline - time_window_soon.seconds_since_midnight.seconds
+							soon = deadline - time_window_soon.days_since_new_year.days - time_window_soon.seconds_since_midnight.seconds
 						else
 							soon = deadline
 						end
