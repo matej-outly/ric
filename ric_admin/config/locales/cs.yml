@@ -78,6 +78,7 @@ cs:
       reset: "Obnovit"
       register: "Registrovat"
       order: "Dokončit objednávku"
+      send: "Odeslat"
 
   general:
     back: "zpět"
