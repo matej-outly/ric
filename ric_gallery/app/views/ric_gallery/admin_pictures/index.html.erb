@@ -1,5 +1,5 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@gallery_pictures, { 
+	<%= rug_picture_index_table_for(@gallery_pictures, { 
 		picture: { type: :picture, thumb_style: :thumb },
 		title: :string
 	}, paths: {

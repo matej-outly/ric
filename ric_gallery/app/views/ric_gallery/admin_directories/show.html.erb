@@ -22,7 +22,7 @@
 	<% if @gallery_directory.gallery_pictures.count > 0 %>
 		<h3><%= t("headers.ric_gallery.admin_directories.pictures") %></h3>
 
-		<%= rug_index_table_for(@gallery_directory.gallery_pictures.order(position: :asc), { 
+		<%= rug_picture_index_table_for(@gallery_directory.gallery_pictures.order(position: :asc), { 
 			picture: { type: :picture, thumb_style: :thumb },
 			title: :string
 		}, paths: {
