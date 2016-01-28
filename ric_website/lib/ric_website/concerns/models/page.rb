@@ -36,6 +36,11 @@ module RicWebsite
 					belongs_to :model, polymorphic: true
 
 					#
+					# Relation to page blocks
+					#
+					has_many :page_blocks, class_name: RicWebsite.page_block_model.to_s
+
+					#
 					# Ordering
 					#
 					enable_hierarchical_ordering
@@ -78,14 +83,14 @@ module RicWebsite
 					# Parts
 					#
 					def parts
-						[:basic, :design]
+						[:basic, :design, :meta]
 					end
 
 					#
 					# Columns
 					#
 					def basic_part_columns
-						[:name, :parent_id, :nature, :model_id]
+						[:title, :parent_id, :nature, :model_id]
 					end
 
 					#
@@ -95,14 +100,21 @@ module RicWebsite
 						[:layout, :background]
 					end
 
+					#
+					# Columns
+					#
+					def meta_part_columns
+						[:keywords, :description]
+					end
+
 				end
 
 				# *************************************************************
-				# Name with depth
+				# Title with depth
 				# *************************************************************
 
-				def name_with_depth(delimiter = " - ")
-					return (delimiter * self.depth.to_i) + self.name.to_s
+				def title_with_depth(delimiter = " - ")
+					return (delimiter * self.depth.to_i) + self.title.to_s
 				end
 
 				# *************************************************************
@@ -116,13 +128,16 @@ module RicWebsite
 					if !self.nature.blank?
 						url_template = config(:natures, self.nature.to_sym, :url).to_s
 
+						# Binded page
+						url_template = url_template.gsub(/:page_id/, self.id.to_s)
+
 						# Binded model
 						if !self.model.nil?
 							if self.model.respond_to?(:id)
-								url_template = url_template.gsub(/:id/, self.model.id.to_s)
+								url_template = url_template.gsub(/:model_id/, self.model.id.to_s)
 							end
 							if self.model.respond_to?(:key)
-								url_template = url_template.gsub(/:key/, self.model.key.to_s)
+								url_template = url_template.gsub(/:model_key/, self.model.key.to_s)
 							end
 						end
 
@@ -201,7 +216,7 @@ module RicWebsite
 					if !RicWebsite.slug_model.nil? && !self.url.blank?
 						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
-							translation = RicWebsite.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :name)
+							translation = RicWebsite.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :title)
 							RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
 						end
 					end

@@ -1,6 +1,0 @@
-<%= form_tag(ric_website_public.inline_update_text_path(@text), class: "inline-edit") do %>
-	<h1 id="<%= @text.class.model_name.param_key %>[<%= @text.id %>][title]" class="tinymce inline-edit string"><%= @text.title %></h1>
-	<div id="<%= @text.class.model_name.param_key %>[<%= @text.id %>][content]" class="tinymce inline-edit text">
-		<%= @text.content.html_safe if @text.content %>
-	</div>
-<% end %>

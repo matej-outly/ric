@@ -1,0 +1,6 @@
+<%= rug_menu_for(@page_block, name: "actions", path_base: "ric_website_admin.page_blocks") do |m| %>
+	<%= m.new_item nil, ric_website_admin.new_page_block_path(page_id: @page_block.page_id) %>
+	<%= m.show_item %>
+	<%= m.edit_item %>
+	<%= m.destroy_item %>
+<% end %>

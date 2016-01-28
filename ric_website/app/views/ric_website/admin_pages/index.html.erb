@@ -1,6 +1,6 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_hierarchical_index_table_for(@pages, { 
-		name: :string,
+		title: :string,
 		url: :string,
 	}, paths: {
 		show: :page_path,

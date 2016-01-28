@@ -13,8 +13,17 @@ cs:
         destroy: "Smazat stránku"
         basic: "Základ stránky"
         design: "Vzhled stránky"
+        meta: "Meta informace"
+        page_blocks: "Textové bloky"
         menus: "Navázaná menu"
         children: "Podřazené stránky"
+      admin_page_blocks:
+        show: "Detail textového bloku"
+        new: "Nový textový blok"
+        create: "Nový textový blok"
+        edit: "Upravit textový blok"
+        update: "Upravit textový blok"
+        destroy: "Smazat textový blok"
       admin_page_menu_relations:
         edit: "Navázat menu"
         update: "Navázat menu"
@@ -48,7 +57,7 @@ cs:
   activerecord:
     attributes:
       ric_website/page:
-        name: Jméno v menu
+        title: Nadpis
         parent: Nadřazená stránka
         parent_id: Nadřazená stránka
         nature: Obsah stránky
@@ -58,6 +67,16 @@ cs:
         background: Pozadí
         layout: Šablona
         checkbox: Vybrat
+        keywords: Klíčová slova
+        description: Popis
+      ric_website/page_block:
+        page_id: Stránka
+        page: Stránka
+        subject: Navázaný záznam
+        subject_id: Navázaný záznam
+        title: Nadpis
+        content: Obsah
+        text_attachments: Přílohy
       ric_website/menu:
         key: Identifikující klíč
         name: Jméno
@@ -66,8 +85,6 @@ cs:
         key: Identifikující klíč
         title: Nadpis
         content: Obsah
-        keywords: Klíčová slova
-        description: Popis
         text_attachments: Přílohy
       ric_website/setting:
         key: Identifikující klíč
@@ -85,6 +102,10 @@ cs:
           destroy: "Stránka byla úspěšně smazána."
           bind_menu: "Vybraná menu byla úspěšně navázána."
           unbind_menu: "Vybrané menu bylo úspěšně odebráno."
+        ric_website/page_block:
+          create: "Blok byl úspěšně vytvořen."
+          update: "Blok byl úspěšně upraven."
+          destroy: "Blok byl úspěšně smazán."
         ric_website/menu:
           create: "Menu bylo úspěšně vytvořeno."
           update: "Menu bylo úspěšně upraveno."
@@ -101,6 +122,11 @@ cs:
       models:
         ric_website/page:
           not_found: "Stránka nebyla nalezena."
+        ric_website/page_block:
+          not_found: "Blok nebyl nalezen."
+          attributes:
+            page_id:
+              blank: "Vyberte stránku."
         ric_website/menu:
           not_found: "Menu nebylo nalezeno."
         ric_website/text:

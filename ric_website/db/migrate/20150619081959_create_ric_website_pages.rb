@@ -10,14 +10,18 @@ class CreateRicWebsitePages < ActiveRecord::Migration
 			t.integer :rgt, null: false, index: true
 			t.integer :depth, null: false, default: 0
 
-			# Name
-			t.string :name
+			# Title
+			t.string :title
 			
 			# URL
 			t.string :nature
 			t.integer :model_id
 			t.string :model_type
 			t.string :url
+
+			# Meta
+			t.string :keywords
+			t.string  :description
 
 		end
 	end

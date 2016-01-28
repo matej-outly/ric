@@ -26,10 +26,10 @@ module RicWebsite
 					# *********************************************************************
 
 					#
-					# Relation to pages
+					# Relation to page blocks
 					#
-					has_many :pages, class_name: RicWebsite.page_model.to_s, as: :model
-		
+					has_many :page_blocks, class_name: RicWebsite.page_block_model.to_s, as: :subject
+
 				end
 
 			end

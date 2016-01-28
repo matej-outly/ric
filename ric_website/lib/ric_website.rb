@@ -22,6 +22,7 @@ require 'ric_website/middlewares/slug'
 
 # Models
 require 'ric_website/concerns/models/page'
+require 'ric_website/concerns/models/page_block'
 require 'ric_website/concerns/models/menu'
 require 'ric_website/concerns/models/text'
 require 'ric_website/concerns/models/text_attachment'
@@ -79,6 +80,18 @@ module RicWebsite
 			return RicWebsite::Page
 		else
 			return @@page_model.constantize
+		end
+	end
+
+	#
+	# Page block model
+	#
+	mattr_accessor :page_block_model
+	def self.page_block_model
+		if @@page_block_model.nil?
+			return RicWebsite::PageBlock
+		else
+			return @@page_block_model.constantize
 		end
 	end
 

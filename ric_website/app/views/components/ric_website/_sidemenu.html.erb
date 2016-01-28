@@ -6,6 +6,6 @@
 			url = item.url
 			url = "#" if url.blank?
 		%>
-		<%= link_to item.name, url, class: css_class, target: (item.respond_to?(:target) ? item.target : "") %>
+		<%= link_to item.title, url, class: css_class, target: (item.respond_to?(:target) ? item.target : "") %>
 	<% end %>
 </div>

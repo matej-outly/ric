@@ -3,10 +3,9 @@ natures:
   home:
     name: "Domovská stránka"
     url: /
-  text:
-    name: "Textová stránka"
-    url: /website/texts/:id
-    model: RicWebsite::Text
+  page:
+    name: "Běžná stránka"
+    url: /website/pages/:page_id
 
 # Which layouts can single page obtain
 layouts:

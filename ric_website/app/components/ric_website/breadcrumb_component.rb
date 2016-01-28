@@ -72,7 +72,7 @@ class RicWebsite::BreadcrumbComponent < RugController::Component
 				url = item.url
 				url = "#" if url.blank?
 				@items << OpenStruct.new( 
-					label: item.name,
+					label: item.title,
 					url: url
 				)
 			end
@@ -81,7 +81,7 @@ class RicWebsite::BreadcrumbComponent < RugController::Component
 			url = active_item.url
 			url = "#" if url.blank?
 			@items << OpenStruct.new( 
-				label: active_item.name,
+				label: active_item.title,
 				url: url
 			)
 		end

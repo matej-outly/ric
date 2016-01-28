@@ -2,16 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Page blocks
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 16. 7. 2015
 # *
 # *****************************************************************************
 
-RicWebsite::PublicEngine.routes.draw do
+require_dependency "ric_website/admin_controller"
 
-	# Texts
-	resources :pages, only: [:show], controller: "public_pages"
-
+module RicWebsite
+	class AdminPageBlocksController < AdminController
+		include RicWebsite::Concerns::Controllers::Admin::PageBlocksController
+	end
 end

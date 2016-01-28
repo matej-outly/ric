@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Texts
+# * Pages
 # *
 # * Author: Matěj Outlý
 # * Date  : 13. 5. 2015
@@ -12,7 +12,7 @@
 require_dependency "ric_website/public_controller"
 
 module RicWebsite
-	class PublicTextsController < PublicController
-		include RicWebsite::Concerns::Controllers::Public::TextsController
+	class PublicPagesController < PublicController
+		include RicWebsite::Concerns::Controllers::Public::PagesController
 	end
 end

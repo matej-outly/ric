@@ -19,6 +19,12 @@ RicWebsite::AdminEngine.routes.draw do
 		end
 	end
 
+	resources :page_blocks, except: [:index], controller: "admin_page_blocks" do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+	end
+
 	# Page menu relations
 	resources :page_menu_relations, only: [:edit, :update, :destroy], controller: "admin_page_menu_relations"
 

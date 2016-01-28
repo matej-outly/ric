@@ -1,7 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_form_for(@menu, url: menu_page_relation_path(@menu)) do |f| %>
 		<%
-			columns = RugBuilder::TableBuilder::Columns.new(name: :string, url: :string)
+			columns = RugBuilder::TableBuilder::Columns.new(title: :string, url: :string)
 			columns.add_column_by_block(:checkbox) do |page|
 				check_box_tag "#{@menu.class.model_name.param_key}[pages][#{page.id.to_s}]", "1", (@menu.page_ids.include?(page.id))
 			end

@@ -4,33 +4,50 @@
 			<% @page.class.parts.each do |part| %>
 				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
 			<% end %>
+			<li><a href="#"><%= t("headers.ric_website.admin_pages.children") %></a></li>
+			<li><a href="#"><%= t("headers.ric_website.admin_pages.menus") %></a></li>
 		</ul>
 		<% @page.class.parts.each do |part| %>
 			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
-				<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
-				<%= render partial: "show_#{part.to_s}" %>
+				<% if part == :basic %>
+					<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
+					<%= render partial: "show_#{part.to_s}" %>
+					<% if @page.page_blocks.count > 0 %>
+						<h3><%= t("headers.ric_website.admin_pages.page_blocks") %></h3>
+						<%= rug_index_table_for(@page.page_blocks.order(position: :asc), { 
+							title: :string,
+							content: :text,
+						}, paths: {
+							show: :page_block_path,
+							edit: :edit_page_block_path,
+							move: :move_page_block_path,
+							destroy: :page_block_path
+						}, moving: true ) %>
+					<% end %>
+				<% else %>
+					<%= render partial: "show_#{part.to_s}" %>
+				<% end %>
 			</div>
 		<% end %>
+		<div class="tab-content">
+			<%= rug_index_table_for(@page.children.order(lft: :asc), { 
+				title: :string,
+				url: :string,
+			}, paths: {
+				show: :page_path,
+				edit: :edit_page_path,
+				destroy: :page_path
+			} ) %>
+		</div>
+		<div class="tab-content">
+			<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
+				name: :string,
+				key: :string,
+			}, paths: {
+				show: :menu_path,
+				destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
+			} ) %>
+		</div>
 	</section>
-	<% if @page.children.count > 0 %>
-		<h3><%= t("headers.ric_website.admin_pages.children") %></h3>
-		<%= rug_index_table_for(@page.children.order(lft: :asc), { 
-			name: :string,
-			url: :string,
-		}, paths: {
-			show: :page_path,
-			edit: :edit_page_path,
-			destroy: :page_path
-		} ) %>
-	<% end %>
-	<% if @page.menus.count > 0 %>
-		<h3><%= t("headers.ric_website.admin_pages.menus") %></h3>
-		<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
-			name: :string,
-			key: :string,
-		}, paths: {
-			show: :menu_path,
-			destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
-		} ) %>
-	<% end %>
+
 <% end %>

@@ -99,7 +99,7 @@ module RicWebsite
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def text_params
-						params.require(:text).permit(:key, :title, :content, :keywords, :description)
+						params.require(:text).permit(:key, :title, :content)
 					end
 
 				end
