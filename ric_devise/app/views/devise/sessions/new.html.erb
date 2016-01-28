@@ -1,11 +1,4 @@
 <%= render layout: "devise/layouts/with_right_side" do %>
 	<h2><%= t("devise.action.sign_in") %></h2>
-	<%= rug_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-		<%= f.text_input_row :email, :email_field %>
-		<%= f.text_input_row :password, :password_field %>
-		<% if devise_mapping.rememberable? -%>
-			<%= f.checkbox_row :remember_me %>
-		<% end -%>
-		<%= f.primary_button_row :submit, label: t("devise.action.sign_in") %>
-	<% end %>
+	<%= render partial: "form" %>
 <% end %>

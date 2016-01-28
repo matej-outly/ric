@@ -1,0 +1,6 @@
+<%= rug_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+	<%= f.text_input_row :email, :email_field %>
+	<%= f.text_input_row :password, :password_field %>
+	<%= f.text_input_row :password_confirmation, :password_field %>
+	<%= f.primary_button_row :submit, label: t("devise.action.sign_up") %>
+<% end %>
