@@ -60,6 +60,7 @@ module RicWebsite
 					#
 					def create
 						@page = RicWebsite.page_model.new(page_params)
+						@page.save # Page ID must be known
 						@page.check_model_consistency
 						@page.generate_url
 						if @page.save

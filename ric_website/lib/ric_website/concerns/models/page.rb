@@ -107,6 +107,13 @@ module RicWebsite
 						[:keywords, :description]
 					end
 
+					#
+					# Get homepage
+					#
+					def homepage
+						where(nature: "home").first
+					end
+
 				end
 
 				# *************************************************************

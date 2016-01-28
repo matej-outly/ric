@@ -2,6 +2,7 @@
 	<%= rug_hierarchical_index_table_for(@pages, { 
 		title: :string,
 		url: :string,
+		menus: { type: :has_many, label: :name, path: "ric_website_admin.menu_path" }
 	}, paths: {
 		show: :page_path,
 		edit: :edit_page_path,

@@ -69,6 +69,7 @@ cs:
         checkbox: Vybrat
         keywords: Klíčová slova
         description: Popis
+        menus: Navázaná menu
       ric_website/page_block:
         page_id: Stránka
         page: Stránka
