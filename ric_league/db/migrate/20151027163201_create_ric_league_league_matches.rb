@@ -11,7 +11,7 @@ class CreateRicLeagueLeagueMatches < ActiveRecord::Migration
 			
 			# Identification
 			t.datetime :played_at
-			t.string :court
+			t.string :place
 			t.integer :team1_id
 			t.integer :team2_id
 			

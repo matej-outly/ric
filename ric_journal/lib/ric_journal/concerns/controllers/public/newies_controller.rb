@@ -33,7 +33,7 @@ module RicJournal
 					# Index action
 					#
 					def index
-						@newies = RicJournal.newie_model.published.order(published_at: :desc).page(params[:page]).per(50)
+						@newies = RicJournal.newie_model.published.order(published_at: :desc).page(params[:page]).per(2)
 					end
 
 					#

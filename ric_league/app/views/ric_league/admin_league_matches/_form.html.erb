@@ -3,7 +3,7 @@
 	<%= f.picker_row :league_season_id, RicLeague.league_season_model.all.order(started_at: :desc), :id, :name, enable_null: true %>
 	<%= f.picker_row :league_category_id, RicLeague.league_category_model.all.order(position: :asc), :id, :name, enable_null: true %>
 	
-	<%= f.text_input_row :court %>
+	<%= f.text_input_row :place %>
 	
 	<h3><%= t("activerecord.attributes.ric_league/league_match.team1") %></h3>
 

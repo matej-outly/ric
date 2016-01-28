@@ -1,7 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@teams, { 
 		name: :string,
-		key: :string
+		key: :string,
+		league_category: { type: :belongs_to, label: :name, path: :league_category_path },
+		home: :boolean,
 	}, paths: {
 		show: :team_path,
 		edit: :edit_team_path,

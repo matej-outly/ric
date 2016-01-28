@@ -68,7 +68,7 @@ cs:
         league_season_id: Sezóna
         league_category: Kategorie
         league_category_id: Kategorie
-        court: Hřiště
+        place: Míslo
         overtime: Rozhodnuto v prodloužení
         team1: Tým 1
         team1_id: Tým 1
@@ -84,10 +84,22 @@ cs:
       ric_league/team:
         name: Jméno
         key: Klíč
+        league_category: Kategorie
+        league_category_id: Kategorie
         description: Popis
+        home: Domácí tým
         logo: Logo
         photo: Fotografie
         photo_crop: Ořez fotografie
+        matches_count: Zápasů
+        wins_count: Vítězství
+        defeats_count: Porážek
+        wins_in_overtime_count: Vítězství v prodloužení
+        defeats_in_overtime_count: Porážek v prodloužení
+        given_goals_count: Góly
+        taken_goals_count: Inkasované góly
+        league_points: Body
+        league_position: Pozice
       ric_league/team_member:
         team: Tým
         team_id: Tým

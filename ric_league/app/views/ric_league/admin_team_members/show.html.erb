@@ -2,7 +2,7 @@
 	<%= rug_show_table_for(@team_member, { 
 		name: :string,
 		team: { type: :belongs_to, label: :name, path: :team_path },
-		league_category: { type: :belongs_to, label: :name, path: :league_category_path },
+		#league_category: { type: :belongs_to, label: :name, path: :league_category_path },
 		kind: :enum,
 		role: :string,
 		classification: :string,

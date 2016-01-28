@@ -2,43 +2,21 @@
 	<%= rug_show_table_for(@team, { 
 		name: :string,
 		key: :string,
+		league_category: { type: :belongs_to, label: :name, path: :league_category_path },
 		description: :text,
+		home: :boolean,
 		logo: { type: :picture, thumb_style: :full },
 		photo: { type: :picture, thumb_style: :thumb }
 	}) %>
 	<h3><%= t("headers.ric_league.admin_teams.team_members") %></h3>
-	<section class="tabs pill">
-		<ul class="tab-nav">
-			<li class="active"><a href="#"><%= t("headers.ric_league.admin_teams.team_members_no_category") %></a></li>
-			<% RicLeague.league_category_model.all.order(position: :asc).each do |league_category| %>
-				<li><a href="#"><%= league_category.name %></a></li>
-			<% end %>
-		</ul>
-		<div class="tab-content">
-			<%= rug_index_table_for(@team.team_members.where(league_category_id: nil).order(position: :asc), { 
-				name: :string,
-				kind: :enum,
-				role: :string
-			}, paths: {
-				show: :team_member_path, 
-				edit: :edit_team_member_path, 
-				move: :move_team_member_path, 
-				destroy: :team_member_path
-			}, moving: true, summary: true ) %>
-		</div>
-		<% RicLeague.league_category_model.all.order(position: :asc).each do |league_category| %>
-			<div class="tab-content">
-				<%= rug_index_table_for(@team.team_members.where(league_category_id: league_category.id).order(position: :asc), { 
-					name: :string,
-					kind: :enum,
-					role: :string
-				}, paths: {
-					show: :team_member_path, 
-					edit: :edit_team_member_path, 
-					move: :move_team_member_path, 
-					destroy: :team_member_path
-				}, moving: true, summary: true ) %>
-			</div>
-		<% end %>
-	</section>
+	<%= rug_index_table_for(@team.team_members.order(position: :asc), { 
+		name: :string,
+		kind: :enum,
+		role: :string
+	}, paths: {
+		show: :team_member_path, 
+		edit: :edit_team_member_path, 
+		move: :move_team_member_path, 
+		destroy: :team_member_path
+	}, moving: true, summary: true ) %>
 <% end %>

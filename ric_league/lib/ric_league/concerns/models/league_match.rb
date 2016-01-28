@@ -64,6 +64,14 @@ module RicLeague
 						where("played_at <= :now", now: now)
 					end
 
+					def played_by_team(team)
+						if team.nil?
+							all
+						else
+							where("team1_id = :team_id OR team2_id = :team_id", team_id: team.id)
+						end
+					end
+
 				end
 
 				# *************************************************************************

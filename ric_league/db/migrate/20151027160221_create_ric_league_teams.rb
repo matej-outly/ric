@@ -11,6 +11,8 @@ class CreateRicLeagueTeams < ActiveRecord::Migration
 			# Identification
 			t.string :key
 			t.string :name
+			t.boolean :home
+			t.integer :league_category_id
 
 			# Description
 			t.text :description

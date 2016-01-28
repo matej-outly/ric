@@ -36,6 +36,11 @@ module RicLeague
 					has_and_belongs_to_many :league_seasons, class_name: RicLeague.league_season_model.to_s
 
 					#
+					# Relation to league categories
+					#
+					belongs_to :league_category, class_name: RicLeague.league_category_model.to_s
+					
+					#
 					# Ordering
 					#
 					enable_ordering
@@ -59,10 +64,10 @@ module RicLeague
 
 				module ClassMethods
 
-					def league_ladder(league_season = nil)
+					def league_ladder(league_season = nil, league_category = nil)
 						league_season ||= RicLeague.league_season_model.current
-						result = league_season.teams
-						result = result.sort { |team1, team2| team1.league_points(league_season) <=> team2.league_points(league_season) }
+						result = league_season.teams.where(league_category_id: league_category ? league_category.id : nil)
+						result = result.sort { |team1, team2| team1.league_points(league_season, league_category) <=> team2.league_points(league_season, league_category) }
 						return result
 					end
 
@@ -84,49 +89,49 @@ module RicLeague
 				# Virtual attributes related to league
 				# *************************************************************************
 
-				def matches_count(league_season = nil)
+				def matches_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where("team1_id = :id OR team2_id = :id", id: self.id).count
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where("team1_id = :id OR team2_id = :id", id: self.id).count
 				end
 
-				def wins_count(league_season = nil)
+				def wins_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where("(team1_id = :id AND result1 > result2) OR (team2_id = :id AND result2 > result1)", id: self.id).count
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where("(team1_id = :id AND result1 > result2) OR (team2_id = :id AND result2 > result1)", id: self.id).count
 				end
 
-				def defeats_count(league_season = nil)
+				def defeats_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where("(team1_id = :id AND result1 < result2) OR (team2_id = :id AND result2 < result1)", id: self.id).count
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where("(team1_id = :id AND result1 < result2) OR (team2_id = :id AND result2 < result1)", id: self.id).count
 				end
 
-				def wins_in_overtime_count(league_season = nil)
+				def wins_in_overtime_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where(overtime: true).where("(team1_id = :id AND result1 > result2) OR (team2_id = :id AND result2 > result1)", id: self.id).count
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where(overtime: true).where("(team1_id = :id AND result1 > result2) OR (team2_id = :id AND result2 > result1)", id: self.id).count
 				end
 
-				def defeats_in_overtime_count(league_season = nil)
+				def defeats_in_overtime_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where(overtime: true).where("(team1_id = :id AND result1 < result2) OR (team2_id = :id AND result2 < result1)", id: self.id).count
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where(overtime: true).where("(team1_id = :id AND result1 < result2) OR (team2_id = :id AND result2 < result1)", id: self.id).count
 				end
 
-				def given_goals_count(league_season = nil)
+				def given_goals_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where(team1_id: self.id).sum(:result1).to_i + league_season.league_matches.where(team2_id: self.id).sum(:result2).to_i
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where(team1_id: self.id).sum(:result1).to_i + league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).where(team2_id: self.id).sum(:result2).to_i
 				end
 
-				def taken_goals_count(league_season = nil)
+				def taken_goals_count(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where(team1_id: self.id).sum(:result2).to_i + league_season.league_matches.where(team2_id: self.id).sum(:result1).to_i
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where(team1_id: self.id).sum(:result2).to_i + league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).where(team2_id: self.id).sum(:result1).to_i
 				end
 
-				def league_points(league_season = nil)
+				def league_points(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					return league_season.league_matches.already_played.where(team1_id: self.id).sum(:points1).to_i + league_season.league_matches.where(team2_id: self.id).sum(:points2).to_i
+					return league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).already_played.where(team1_id: self.id).sum(:points1).to_i + league_season.league_matches.where(league_category_id: league_category ? league_category.id : nil).where(team2_id: self.id).sum(:points2).to_i
 				end
 
-				def league_position(league_season = nil)
+				def league_position(league_season = nil, league_category = nil)
 					league_season ||= RicLeague.league_season_model.current
-					ladder = self.class.league_ladder(league_season)
+					ladder = self.class.league_ladder(league_season, league_category)
 					idx = ladder.index(self)
 					return idx ? (ladder.length - idx) : nil
 				end

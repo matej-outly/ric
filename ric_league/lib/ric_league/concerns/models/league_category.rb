@@ -35,6 +35,11 @@ module RicLeague
 					#
 					has_many :team_members, class_name: RicLeague.team_member_model.to_s, dependent: :nullify
 
+					#
+					# Relation to teams
+					#
+					has_many :teams, class_name: RicLeague.team_model.to_s, dependent: :nullify
+
 				end
 
 				module ClassMethods

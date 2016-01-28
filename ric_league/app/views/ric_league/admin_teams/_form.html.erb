@@ -1,7 +1,9 @@
 <%= rug_form_for(@team, create_url: :teams_path, update_url: :team_path) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.text_input_row :key %>
+	<%= f.picker_row :league_category_id, RicLeague.league_category_model.all.order(position: :asc), :id, :name, enable_null: true %>
 	<%= f.text_area_row :description %>
+	<%= f.checkbox_row :home %>
 	<%= f.dropzone_row :logo %>
 	<%= f.dropzone_row :photo, crop: true %>
 	<%= f.crop_row :photo %>
