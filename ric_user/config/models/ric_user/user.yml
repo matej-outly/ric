@@ -2,6 +2,9 @@
 roles:
   - admin
 
+# Default role
+#default_role: admin
+
 # Active devise features
 devise:
   - database_authenticatable

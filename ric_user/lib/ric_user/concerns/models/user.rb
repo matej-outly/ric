@@ -47,7 +47,7 @@ module RicUser
 					#
 					# Role
 					#
-					enum_column :role, config(:roles)
+					enum_column :role, config(:roles), default: config(:default_role)
 
 				end
 
