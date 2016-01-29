@@ -25,6 +25,12 @@ module RicCustomer
 					# Structure
 					# *********************************************************
 
+					# *********************************************************
+					# Name
+					# *********************************************************
+
+					name_column :name
+
 				end
 
 				module ClassMethods
@@ -206,20 +212,6 @@ module RicCustomer
 
 					end
 
-				end
-
-				# *************************************************************
-				# Full name
-				# *************************************************************
-
-				def full_name
-					if last_name.blank? || last_name.nil?
-						return ( (first_name.blank? || first_name.nil?) ? "" : first_name)
-					elsif first_name.blank? || first_name.nil?
-						return ( (last_name.blank? || last_name.nil?) ? "" : last_name)
-					else
-						return first_name + " " + last_name
-					end
 				end
 
 			end

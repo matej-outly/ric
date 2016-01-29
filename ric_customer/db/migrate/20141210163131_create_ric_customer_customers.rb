@@ -6,8 +6,8 @@ class CreateRicCustomerCustomers < ActiveRecord::Migration
       t.timestamps null: true
 
       # Identification
-      t.string :first_name
-      t.string :last_name
+      t.string :name_firstname
+      t.string :name_lastname
 
       # Contact information
       t.string :email

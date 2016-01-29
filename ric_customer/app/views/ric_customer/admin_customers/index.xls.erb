@@ -7,12 +7,14 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell><Data ss:Type="String"><%= RicCustomer.customer_model.human_attribute_name('full_name').capitalize %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= RicCustomer.customer_model.human_attribute_name('name_lastname').capitalize %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= RicCustomer.customer_model.human_attribute_name('name_firstname').capitalize %></Data></Cell>
         <Cell><Data ss:Type="String"><%= RicCustomer.customer_model.human_attribute_name('email').capitalize %></Data></Cell>
       </Row>
     <% @customers.each do |customer| %>
       <Row>
-        <Cell><Data ss:Type="String"><%= customer.full_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= customer.name_lastname %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= customer.name_firstname %></Data></Cell>
         <Cell><Data ss:Type="String"><%= customer.email %></Data></Cell>
       </Row>
     <% end %>

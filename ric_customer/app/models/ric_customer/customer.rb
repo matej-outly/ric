@@ -17,7 +17,7 @@ module RicCustomer
 		# Filter
 		# *********************************************************************
 
-		#define_filter_column :first_name, :string, [:like, :llike, :rlike]
+		#define_filter_column :name_first, :string, [:like, :llike, :rlike]
 
 		# *********************************************************************
 		# Statistics

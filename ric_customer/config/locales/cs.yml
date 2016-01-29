@@ -14,9 +14,9 @@ cs:
   activerecord:
     attributes:
       ric_customer/customer:
-        first_name: Křestní jméno
-        last_name: Příjmení
-        full_name: Plné jméno
+        name: Jméno
+        name_firstname: Křestní jméno
+        name_lastname: Příjmení
         email: E-mail
         phone: Telefon
     notices:
@@ -30,12 +30,8 @@ cs:
         ric_customer/customer:
           not_found: Zákazník nebyl nalezen.
           attributes:
-            first_name:
-              blank: Vyplňte křestní jméno.
-            last_name:
-              blank: Vyplňte příjmení.
-            full_name:
-              blank: Vyplňte plné jméno.
+            name:
+              blank: Vyplňte jméno.
             email:
               blank: Vyplňte e-mail.
               taken: Tento e-mail je již používán.

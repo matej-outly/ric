@@ -1,6 +1,6 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@customer, {
-		full_name: :string,
+		name: :name,
 		email: :string,
 		phone: :string,
 	}) %>

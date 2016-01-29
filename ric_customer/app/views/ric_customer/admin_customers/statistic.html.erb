@@ -1,6 +1,6 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@customers, { 
-		full_name: :string,
+		name: :name,
 		email: :string
 	}, paths: {
 		show: :customer_path,

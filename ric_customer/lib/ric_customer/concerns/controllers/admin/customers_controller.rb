@@ -39,7 +39,7 @@ module RicCustomer
 					#
 					def index
 						@filter_customer = RicCustomer.customer_model.new(load_params_from_session)
-						@customers = RicCustomer.customer_model.filter(load_params_from_session.symbolize_keys).order(last_name: :asc, first_name: :asc)
+						@customers = RicCustomer.customer_model.filter(load_params_from_session.symbolize_keys).order(name_lastname: :asc, name_firstname: :asc)
 						if request.format.to_sym == :html
 							@customers = @customers.page(params[:page])
 						end
@@ -180,7 +180,7 @@ module RicCustomer
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def customer_params
-						params.require(:customer).permit(:first_name, :last_name, :email, :phone)
+						params.require(:customer).permit(:email, :phone, :name => [:firstname, :lastname])
 					end
 
 					def statistic_filter_params
