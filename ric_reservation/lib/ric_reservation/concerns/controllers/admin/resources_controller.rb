@@ -23,7 +23,7 @@ module RicReservation
 					included do
 						
 						before_action :set_type
-						before_action :set_resource, only: [:show, :edit, :update]
+						before_action :set_resource, only: [:show, :edit, :update, :destroy]
 
 					end
 
@@ -104,6 +104,14 @@ module RicReservation
 								format.json { render json: false }
 							end
 						end
+					end
+
+					#
+					# Destroy action
+					#
+					def destroy
+						@resource.destroy
+						redirect_to ric_reservation_admin.resources_path, notice: I18n.t("activerecord.notices.models.#{type_model.model_name.i18n_key}.destroy")
 					end
 
 				private
