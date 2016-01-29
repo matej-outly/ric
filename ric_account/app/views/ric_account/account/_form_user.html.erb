@@ -1,4 +1,5 @@
 <%= rug_form_for(@user, url: account_user_path) do |f| %>
+	<%= f.name_row :name %>
 	<%= f.text_input_row :email, :email_field %>
 	<%= f.primary_button_row :submit, label: t("helpers.submit.update") %>
 <% end %>
