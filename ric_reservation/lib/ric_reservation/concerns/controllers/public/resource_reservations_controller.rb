@@ -115,6 +115,9 @@ module RicReservation
 						if @reservation.nil?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.not_found")
 						end
+						if @reservation.owner.nil? || @reservation.owner.id != current_user.id
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.not_found")
+						end
 					end
 
 					# *********************************************************

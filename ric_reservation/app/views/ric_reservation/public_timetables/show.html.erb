@@ -18,7 +18,7 @@
 					} ],
 					[ @reservations, {
 						label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
-						item_path_callback: lambda { |reservation| ric_reservation_public.resource_reservation_path(reservation) }
+						item_path_callback: lambda { |reservation| reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 					} ],
 				], {
 					min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
@@ -41,7 +41,7 @@
 					} ],
 					[ @reservations, {
 						label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
-						item_path_callback: lambda { |reservation| ric_reservation_public.resource_reservation_path(reservation) }
+						item_path_callback: lambda { |reservation| reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 					} ],
 				], {
 					empty_path_callback: lambda { |date| ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) }
