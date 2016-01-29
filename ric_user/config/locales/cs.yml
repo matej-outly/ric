@@ -18,6 +18,9 @@ cs:
   activerecord:
     attributes:
       ric_user/user:
+        name: Jméno
+        name_firstname: Křestní jméno
+        name_lastname: Příjmení
         email: E-mail
         role: Role
         role_values:

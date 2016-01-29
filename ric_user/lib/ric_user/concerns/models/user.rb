@@ -41,13 +41,25 @@ module RicUser
 					belongs_to :person, polymorphic: true
 
 					# *********************************************************
-					# Enums
+					# Role
+					# *********************************************************
+
+					enum_column :role, config(:roles), default: config(:default_role)
+
+					# *********************************************************
+					# Name
+					# *********************************************************
+
+					name_column :name
+
+					# *********************************************************
+					# Validators
 					# *********************************************************
 
 					#
-					# Role
+					# E-mail must be set
 					#
-					enum_column :role, config(:roles), default: config(:default_role)
+					validates_presence_of :email
 
 				end
 
@@ -61,8 +73,7 @@ module RicUser
 						if query.blank?
 							all
 						else
-							#where("(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
-							where("(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
+							where("(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
 						end
 					end
 

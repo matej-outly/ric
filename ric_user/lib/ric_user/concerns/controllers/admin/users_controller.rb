@@ -33,7 +33,7 @@ module RicUser
 					# Index action
 					#
 					def index
-						@users = RicUser.user_model.all.order(email: :asc).page(params[:page]).per(50)
+						@users = RicUser.user_model.all.sorting(params[:sort], "email").page(params[:page]).per(50)
 					end
 
 					#
@@ -111,7 +111,7 @@ module RicUser
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def user_params
-						params.require(:user).permit(:email, :role)
+						params.require(:user).permit(:email, :role, :name => [:firstname, :lastname])
 					end
 
 				end

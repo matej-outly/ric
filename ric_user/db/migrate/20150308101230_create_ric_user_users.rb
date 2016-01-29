@@ -36,8 +36,16 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			# t.string   :unlock_token # Only if unlock strategy is :email or :both
 			# t.datetime :locked_at
 
+			# Name
+			t.string :name_firstname
+			t.string :name_lastname
+
 			# Authorization
 			t.string :role
+
+			# Person
+			t.integer :person_id
+			t.string :person_type
 
 		end
 	end

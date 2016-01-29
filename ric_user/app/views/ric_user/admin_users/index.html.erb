@@ -1,10 +1,12 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@users, { 
 		email: :string,
+		name_lastname: :string,
+		name_firstname: :string,
 		role: :enum,
 	}, paths: {
 		show: :user_path,
 		edit: :edit_user_path,
 		destroy: :user_path
-	}, pagination: true, summary: true ) %>
+	}, sorting: true, pagination: true, summary: true ) %>
 <% end %>
