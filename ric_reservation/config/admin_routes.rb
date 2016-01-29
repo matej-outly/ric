@@ -40,7 +40,4 @@ RicReservation::AdminEngine.routes.draw do
 	# Resource reservations
 	resources :resource_reservations, except: [:index], controller: "admin_resource_reservations"
 
-	# Timetables
-	resources :timetables, only: [:index, :show], controller: "admin_timetables"
-
 end

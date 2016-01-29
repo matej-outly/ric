@@ -30,6 +30,10 @@ class CreateRicReservationResources < ActiveRecord::Migration
 			# Limit number of reservations by single owner
 			t.integer :owner_reservation_limit
 
+			# Opening hours
+			t.integer :opening_hours_min
+			t.integer :opening_hours_max
+
 		end
 	end
 end

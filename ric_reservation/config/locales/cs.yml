@@ -60,6 +60,7 @@ cs:
         time_window_soon: Jak dlouho před uzavřením považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
+        opening_hours: Otevírací hodiny
       ric_reservation/event:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka

@@ -1,7 +1,0 @@
-<%= render layout: "ric_admin/layouts/default" do %>
-	<%= rug_index_table_for(@resources, { 
-		name: :string
-	}, paths: {
-		show: "ric_reservation_admin.timetable_path",
-	}, summary: true ) %>
-<% end %>
