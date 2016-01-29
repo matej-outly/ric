@@ -62,7 +62,7 @@ module RicUser
 	mattr_accessor :mailer_sender
 	def self.mailer_sender
 		if @@mailer_sender.nil?
-			return "no-reply@clockstar.cz"
+			return "no-reply@clockapp.cz"
 		else
 			return @@mailer_sender
 		end
