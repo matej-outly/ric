@@ -31,25 +31,26 @@ class RicWebsite::SidemenuComponent < RugController::Component
 		# Find active item and path
 		active_path = [nil]
 		active_item = nil
+		path = [nil]
 		all_items.each do |item|
 			
 			# Construct path
-			if item.parent_id != active_path.last
+			if item.parent_id != path.last
 				# We are on a new level, did we descend or ascend?
-				if active_path.include?(item.parent_id)
+				if path.include?(item.parent_id)
 					# Remove the wrong trailing path elements
-					while active_path.last != item.parent_id
-						active_path.pop
+					while path.last != item.parent_id
+						path.pop
 					end
 				else
-					active_path << item.parent_id
+					path << item.parent_id
 				end
 			end
 
 			# Break if active found
 			if item.active_url?(controller.request)
 				active_item = item
-				break
+				active_path = path.dup
 			end
 		end
 
