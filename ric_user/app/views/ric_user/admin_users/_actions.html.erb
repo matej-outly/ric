@@ -5,7 +5,12 @@
 	<%= m.edit_item nil, nil, active: (controller_name == "users" && (action_name == "edit" || action_name == "update")) %>
 	<% if @user && !@user.new_record? %>
 		<%= m.item t("headers.ric_user.admin_user_passwords.edit"), edit_user_password_path(@user), icon: "lock", active: (controller_name == "user_passwords" && (action_name == "edit" || action_name == "update")) %>
-		<%= m.item t("headers.ric_user.admin_user_passwords.regenerate"), regenerate_user_password_path(@user), icon: "lock" %>
+		<%= m.item t("headers.ric_user.admin_user_passwords.regenerate"), regenerate_user_password_path(@user), icon: "lock", method: :put %>
+		<% if @user.locked? %>
+			<%= m.item t("headers.ric_user.admin_users.unlock"), unlock_user_path(@user), icon: "thumbs-up", method: :put %>
+		<% else %>
+			<%= m.item t("headers.ric_user.admin_users.lock"), lock_user_path(@user), icon: "thumbs-down", method: :put %>
+		<% end %>
 	<% end %>
 	<%= m.destroy_item %>
 <% end %>

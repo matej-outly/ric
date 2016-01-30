@@ -61,6 +61,14 @@ module RicUser
 					#
 					validates_presence_of :email
 
+					# *********************************************************
+					# Locking
+					# *********************************************************
+					
+					define_method :active_for_authentication? do
+						return !locked?
+					end
+
 				end
 
 				module ClassMethods
@@ -80,7 +88,7 @@ module RicUser
 				end
 
 				# *************************************************************
-				# Interfaces
+				# Password
 				# *************************************************************
 
 				def regenerate_password(options = {})
@@ -128,6 +136,24 @@ module RicUser
 					end
 
 					return result
+				end
+
+				# *************************************************************
+				# Locking
+				# *************************************************************
+
+				def locked?
+					return !self.locked_at.nil?	
+				end
+
+				def lock
+					self.locked_at = Time.current
+					self.save
+				end
+
+				def unlock
+					self.locked_at = nil
+					self.save
 				end
 
 			end

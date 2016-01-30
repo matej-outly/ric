@@ -16,6 +16,12 @@ RicUser::AdminEngine.routes.draw do
 		collection do
 			get "search"
 		end
+		member do
+			get "lock"
+			put "lock"
+			get "unlock"
+			put "unlock"
+		end
 	end
 
 	# User passwords

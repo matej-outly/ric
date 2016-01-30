@@ -25,7 +25,7 @@ module RicUser
 						#
 						# Set user before some actions
 						#
-						before_action :set_user, only: [:show, :edit, :update, :destroy]
+						before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :destroy]
 
 					end
 
@@ -87,6 +87,31 @@ module RicUser
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
 						else
 							render "edit"
+						end
+					end
+
+					#
+					# Lock action
+					#
+					def lock
+						if !@user.locked?
+							@user.lock
+							#sign_out(@user) Signs out current user also
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.lock")
+						else
+							redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.lock")
+						end
+					end
+
+					#
+					# Unlock action
+					#
+					def unlock
+						if @user.locked?
+							@user.unlock
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
+						else
+							redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
 						end
 					end
 

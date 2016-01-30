@@ -9,6 +9,8 @@ cs:
         create: "Nový uživatel"
         edit: "Upravit uživatele"
         update: "Upravit uživatele"
+        lock: "Zablokovat uživatele"
+        unlock: "Oblokovat uživatele"
         destroy: "Smazat uživatele"
       admin_user_passwords:
         edit: "Změnit heslo"
@@ -33,19 +35,24 @@ cs:
         new_password: Nové heslo
         new_password_confirmation: Nové heslo (znovu pro potvrzení)
         remember_me: Zůstat přihlášen
+        locked?: "Zablokován"
     notices:
       models:
         ric_user/user:
           update: Uživatel byl úspěšně uložen.
           create: Uživatel byl úspěšně vytvořen.
           destroy: Uživatel byl úspěšně smazán.
+          lock: Uživatel byl úspěšně zablokován.
+          unlock: Uživatel byl úspěšně odblokován.
         ric_user/session:
           update: Informace o uživateli byly úspěšně uloženy.
     errors:
       models:
         ric_user/user:
           not_found: Uživatel nebyl nalezen.
-          regenerate_password: Nebylo možné přegenerovat heslo
+          regenerate_password: Nebylo možné přegenerovat heslo.
+          lock: Nebylo možné zablokovat uživatele.
+          unlock: Nebylo možné odblokovat uživatele.
           attributes:
             current_password:
               blank: "Heslo musí být vyplněno."
