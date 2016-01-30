@@ -9,12 +9,15 @@ cs:
       sign_out: "Odhlásit se"
       sign_up: "Zaregistrovat se"
       reset_password: "Obnovit heslo"
+      confirm: "Aktivovat účet"
     failure:
       already_authenticated: ""
       user:
         unauthenticated: ""
         invalid: "Toto heslo není správně."
         not_found_in_database: "Tento uživatelský účet v aplikaci neexistuje."
+        inactive: "Tento uživatelský účet je momentálně zablokovaný."
+        unconfirmed: "Tento uživatelský účet zatím není aktivován."
     mailer:
       reset_password_instructions:
         subject: "Instrukce pro obnovu hesla"
@@ -27,6 +30,9 @@ cs:
         signed_in: "Přihlášení proběhlo v pořádku."
         signed_out: "Odhlášení proběhlo v pořádku."
         already_signed_out: "Odhlášení proběhlo v pořádku."
+    confirmations:
+      user:
+        confirmed: "Uživatelský účet byl úspěšně aktivován."
     passwords:
       new:
         send_instructions: "Odeslat instrukce pro obnovu hesla"
