@@ -15,7 +15,7 @@
 							item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
 						} ],
 						[ @valid_reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
+							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
 							item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
 						} ],
 					], {
@@ -32,7 +32,7 @@
 							item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
 						} ],
 						[ @valid_reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
+							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
 							item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
 						} ],
 					], {

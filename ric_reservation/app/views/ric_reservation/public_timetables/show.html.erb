@@ -18,8 +18,8 @@
 							#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
 						} ],
 						[ @reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
-							item_path_callback: lambda { |reservation| reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
+							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+							item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 						} ],
 					], {
 						min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
@@ -41,8 +41,8 @@
 							#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
 						} ],
 						[ @reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{reservation.owner.name_formatted}</div>" },
-							item_path_callback: lambda { |reservation| reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
+							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+							item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 						} ],
 					], {
 						empty_path_callback: lambda { |date| state = @resource.state(date + 1.day); state != :deadline && state != :closed ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) : nil }
