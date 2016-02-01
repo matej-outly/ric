@@ -62,11 +62,18 @@ module RicUser
 					validates_presence_of :email
 
 					# *********************************************************
-					# Locking
+					# Locking & confirmation
 					# *********************************************************
 					
 					define_method :active_for_authentication? do
-						return !locked?
+						return false if self.class.confirmable? && !confirmed?
+						return false if locked?
+						return true
+					end
+
+					define_method :inactive_message do
+						return :unconfirmed if self.class.confirmable? && !confirmed?
+						return :inactive # if locked?
 					end
 
 				end
@@ -83,6 +90,50 @@ module RicUser
 						else
 							where("(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
 						end
+					end
+
+					# *********************************************************
+					# Features
+					# *********************************************************
+
+					def database_authenticatable?
+						config(:devise).include?("database_authenticatable")
+					end
+
+					def recoverable?
+						config(:devise).include?("recoverable")
+					end
+
+					def rememberable?
+						config(:devise).include?("rememberable")
+					end
+
+					def trackable?
+						config(:devise).include?("trackable")
+					end
+
+					def validatable?
+						config(:devise).include?("validatable")
+					end
+
+					def registerable?
+						config(:devise).include?("registerable")
+					end
+
+					def confirmable?
+						config(:devise).include?("confirmable")
+					end
+
+					def lockable?
+						config(:devise).include?("lockable")
+					end
+
+					def timeoutable?
+						config(:devise).include?("timeoutable")
+					end
+
+					def omniauthable?
+						config(:devise).include?("omniauthable")
 					end
 
 				end

@@ -21,6 +21,8 @@ RicUser::AdminEngine.routes.draw do
 			put "lock"
 			get "unlock"
 			put "unlock"
+			get "confirm"
+			put "confirm"
 		end
 	end
 

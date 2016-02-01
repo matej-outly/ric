@@ -25,7 +25,7 @@ module RicUser
 						#
 						# Set user before some actions
 						#
-						before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :destroy]
+						before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :confirm, :destroy]
 
 					end
 
@@ -112,6 +112,18 @@ module RicUser
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
 						else
 							redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
+						end
+					end
+
+					#
+					# Confirm action
+					#
+					def confirm
+						if !@user.confirmed?
+							@user.confirm
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
+						else
+							redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
 						end
 					end
 
