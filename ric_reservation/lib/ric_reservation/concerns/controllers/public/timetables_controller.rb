@@ -31,10 +31,6 @@ module RicReservation
 					#
 					def index
 						@resource = RicReservation.resource_model.order(position: :asc).first
-						if @resource.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.resource_model.model_name.i18n_key}.not_found")
-							return
-						end
 						show
 						render "show"
 					end
@@ -43,25 +39,24 @@ module RicReservation
 					# Show action
 					#
 					def show
-						@today = Date.today
+						if @resource
+							@today = Date.today
 
-						# Valid events pagination
-						@from, @to, @period, @page = RicReservation.event_model.schedule_paginate(@today, params[:period], params[:page])
+							# Valid events pagination
+							@from, @to, @period, @page = RicReservation.event_model.schedule_paginate(@today, params[:period], params[:page])
 
-						# Load valid events
-						@events = RicReservation.event_model.schedule_events(@from, @to, @resource.events.valid(@from, @to))
+							# Load valid events
+							@events = RicReservation.event_model.schedule_events(@from, @to, @resource.events.valid(@from, @to))
 
-						# Load valid reservations
-						@reservations = RicReservation.reservation_model.resource(@resource).schedule(@from, @to)
+							# Load valid reservations
+							@reservations = RicReservation.reservation_model.resource(@resource).schedule(@from, @to)
+						end
 					end
 
 				private
 	
 					def set_resource
 						@resource = RicReservation.resource_model.find_by_id(params[:id])
-						if @resource.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicReservation.resource_model.model_name.i18n_key}.not_found")
-						end
 					end
 
 				end
