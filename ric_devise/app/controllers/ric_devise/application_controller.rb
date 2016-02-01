@@ -33,10 +33,6 @@ module RicDevise
 		component RicAdmin::AdminFooterCopyComponent
 
 	protected
-
-		def after_sign_out_path_for(resource)
-			main_app.root_path
-		end
 		
 	end
 end

@@ -11,6 +11,8 @@
 
 RicDevise::Engine.routes.draw do
 
+	root "root#index"
+
 	#
 	# RIC Devise
 	#
