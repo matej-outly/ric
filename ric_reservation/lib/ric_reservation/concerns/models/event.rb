@@ -583,32 +583,12 @@ module RicReservation
 					# Save
 					self.schedule_date = date
 
-					# Convert from/to to DateTime
-					from_utc = self.from.utc
-					to_utc = self.to.utc
+					# Schedule to exact time in given date
+					self.schedule_from = DateTime.compose(date, self.from)
 					
 					# Schedule to exact time in given date
-					self.schedule_from = DateTime.new(
-						date.year, 
-						date.month, 
-						date.mday, 
-						from_utc.strftime("%k").to_i, # hour
-						from_utc.strftime("%M").to_i, # minute
-						from_utc.strftime("%S").to_i # second
-					).in_time_zone(Time.zone)
-					self.schedule_from += (self.from.strftime("%:z").to_i - self.schedule_from.strftime("%:z").to_i).hours
+					self.schedule_to = DateTime.compose(date, self.to)
 					
-					# Schedule to exact time in given date
-					self.schedule_to = DateTime.new(
-						date.year, 
-						date.month, 
-						date.mday, 
-						to_utc.strftime("%k").to_i, # hour
-						to_utc.strftime("%M").to_i, # minute
-						to_utc.strftime("%S").to_i # second
-					).in_time_zone(Time.zone)
-					self.schedule_to += (self.to.strftime("%:z").to_i - self.schedule_to.strftime("%:z").to_i).hours
-
 					return self
 				end
 
@@ -944,26 +924,10 @@ module RicReservation
 					# Compose
 					if !date.nil?
 						if !time_from.nil?
-							self.from = DateTime.new(
-								date.year, 
-								date.month, 
-								date.mday, 
-								time_from.utc.strftime("%k").to_i, # hour
-								time_from.utc.strftime("%M").to_i, # minute
-								time_from.utc.strftime("%S").to_i # second
-							).in_time_zone(Time.zone)
-							self.from += (time_from.strftime("%:z").to_i - self.from.strftime("%:z").to_i).hours
+							self.from = DateTime.compose(date, time_from)
 						end
 						if !time_to.nil?
-							self.to = DateTime.new(
-								date.year, 
-								date.month, 
-								date.mday, 
-								time_to.utc.strftime("%k").to_i, # hour
-								time_to.utc.strftime("%M").to_i, # minute
-								time_to.utc.strftime("%S").to_i # second
-							).in_time_zone(Time.zone)
-							self.to += (time_to.strftime("%:z").to_i - self.to.strftime("%:z").to_i).hours
+							self.to = DateTime.compose(date, time_to)
 						end
 					end
 

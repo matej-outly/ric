@@ -262,26 +262,10 @@ module RicReservation
 					# Compose
 					if !date.nil?
 						if !time_from.nil?
-							self.schedule_from = DateTime.new(
-								date.year, 
-								date.month, 
-								date.mday, 
-								time_from.utc.strftime("%k").to_i, # hour
-								time_from.utc.strftime("%M").to_i, # minute
-								time_from.utc.strftime("%S").to_i # second
-							).in_time_zone(Time.zone)
-							self.schedule_from += (time_from.strftime("%:z").to_i - self.schedule_from.strftime("%:z").to_i).hours
+							self.schedule_from = DateTime.compose(date, time_from)
 						end
 						if !time_to.nil?
-							self.schedule_to = DateTime.new(
-								date.year, 
-								date.month, 
-								date.mday, 
-								time_to.utc.strftime("%k").to_i, # hour
-								time_to.utc.strftime("%M").to_i, # minute
-								time_to.utc.strftime("%S").to_i # second
-							).in_time_zone(Time.zone)
-							self.schedule_to += (time_to.strftime("%:z").to_i - self.schedule_to.strftime("%:z").to_i).hours
+							self.schedule_to = DateTime.compose(date, time_to)
 						end
 					end
 

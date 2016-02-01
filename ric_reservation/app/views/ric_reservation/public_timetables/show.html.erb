@@ -24,7 +24,7 @@
 					], {
 						min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
 						max_hour: @resource.opening_hours ? @resource.opening_hours[:max] : 16,
-						empty_path_callback: lambda { |date, time_from| ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) }
+						empty_path_callback: lambda { |date, time_from| state = @resource.state(DateTime.compose(date, time_from)); state != :deadline && state != :closed ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) : nil }
 					})
 				%>
 			<% else %>
@@ -45,7 +45,7 @@
 							item_path_callback: lambda { |reservation| reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 						} ],
 					], {
-						empty_path_callback: lambda { |date| ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) }
+						empty_path_callback: lambda { |date| state = @resource.state(date + 1.day); state != :deadline && state != :closed ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) : nil }
 					})
 				%>
 			<% end %>
