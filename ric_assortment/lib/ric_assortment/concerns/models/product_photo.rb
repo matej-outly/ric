@@ -42,9 +42,13 @@ module RicAssortment
 					#
 					# Photo
 					#
-					has_attached_file :picture, :styles => { :thumb => config(:picture_crop, :thumb), :full => config(:picture_crop, :full) }
-					validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
-
+					if config(:picture_croppable) == true
+						croppable_picture_column :picture, styles: { thumb: config(:picture_crop, :thumb), full: config(:picture_crop, :full) }
+					else
+						has_attached_file :picture, :styles => { thumb: config(:picture_crop, :thumb), full: config(:picture_crop, :full) }
+						validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
+					end
+					
 					# *********************************************************
 					# Validators
 					# *********************************************************

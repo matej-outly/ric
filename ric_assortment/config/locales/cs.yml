@@ -118,6 +118,7 @@ cs:
         product: Produkt
         product_id: Produkt
         picture: Obrázek
+        picture_crop: Ořez obrázku
         title: Popis
       ric_assortment/product_ticker:
         name: Jméno

@@ -2,3 +2,6 @@
 picture_crop:
   thumb: "300x300#"
   full: "1000x1000>"
+
+# Is picture manually croppable?
+picture_croppable: false
