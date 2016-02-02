@@ -4,8 +4,13 @@ class CreateRicWebsiteTexts < ActiveRecord::Migration
 
 			t.timestamps null: true
 			
+			# Identification
+			t.string :key
+
+			# Content
 			t.string :title
 			t.text :content
+
 		end
 	end
 end

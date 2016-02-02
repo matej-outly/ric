@@ -23,6 +23,10 @@ class CreateRicWebsitePages < ActiveRecord::Migration
 			t.string :keywords
 			t.string  :description
 
+			# Design
+			t.attachment :background
+			t.string :layout
+
 		end
 	end
 end

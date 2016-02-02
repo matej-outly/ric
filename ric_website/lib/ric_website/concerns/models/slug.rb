@@ -192,7 +192,8 @@ module RicWebsite
 							if last_model_is_category || (last_model.hierarchically_ordered? && !last_model.leaf?)
 								result += "/"
 							else
-								result += ".html"
+								#result += ".html"
+								result += ""
 							end	
 						end
 

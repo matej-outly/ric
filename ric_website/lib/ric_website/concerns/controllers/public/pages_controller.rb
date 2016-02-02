@@ -23,7 +23,7 @@ module RicWebsite
 					included do
 					
 						#
-						# Set page before somse actions
+						# Set page before some actions
 						#
 						before_action :set_page, only: [:show]
 

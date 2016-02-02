@@ -1,5 +1,7 @@
 <h1><%= @page.title %></h1>
 <% @page.page_blocks.order(position: :asc).each do |page_block| %>
-	<h2><%= page_block.title %></h2>
+	<% if !page_block.title.blank? %>
+		<h2><%= page_block.title %></h2>
+	<% end %>
 	<%= page_block.content.html_safe if page_block.content %>
 <% end %>
