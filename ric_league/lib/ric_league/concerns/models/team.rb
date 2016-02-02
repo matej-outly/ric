@@ -52,7 +52,12 @@ module RicLeague
 					#
 					# Photo
 					#
-					croppable_picture_column :photo, styles: { thumb: config(:photo_crop, :thumb), full: config(:photo_crop, :full) }
+					if config(:photo_croppable) == true
+						croppable_picture_column :photo, styles: { thumb: config(:photo_crop, :thumb), full: config(:photo_crop, :full) }
+					else
+						has_attached_file :photo, :styles => { thumb: config(:photo_crop, :thumb), full: config(:photo_crop, :full) }
+						validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
+					end
 
 					#
 					# Logo
