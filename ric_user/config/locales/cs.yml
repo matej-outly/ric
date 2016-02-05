@@ -66,6 +66,7 @@ cs:
               blank: "E-mail musí být vyplněn."
               taken: "E-mail je již používán jiným uživatelem."
               invalid: "Toto není platná e-mailová adresa."
+              already_confirmed: "Tento uživatelský účet už byl ověřen."
             password:
               blank: "Heslo musí být vyplněno."
               too_short: "Heslo musí mít minimálně 4 znaky."
