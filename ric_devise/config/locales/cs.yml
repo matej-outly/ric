@@ -36,6 +36,7 @@ cs:
     confirmations:
       user:
         confirmed: "Uživatelský účet byl úspěšně ověřen."
+        send_instructions: "Instrukce pro ověření uživatelského účtu byly odeslány na zadaný e-mail."
     passwords:
       new:
         send_instructions: "Odeslat instrukce pro obnovu hesla"
