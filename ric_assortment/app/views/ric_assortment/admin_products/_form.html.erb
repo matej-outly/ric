@@ -2,14 +2,17 @@
 	<section class="tabs pill">
 		<ul class="tab-nav">
 			<% @product.class.parts.each do |part| %>
-				<li class="<%= (part == :identification ? "active" : "") %>"><a href="#"><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></a></li>
+				<% if !RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
+					<li class="<%= (part == :identification ? "active" : "") %>"><a href="#"><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></a></li>
+				<% end %>
 			<% end %>
 		</ul>
 		<% @product.class.parts.each do |part| %>
-			<div class="tab-content <%= (part == :identification ? "active" : "") %>">
-				<h3><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></h3>
-				<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
-			</div>
+			<% if !RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
+				<div class="tab-content <%= (part == :identification ? "active" : "") %>">
+					<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
+				</div>
+			<% end %>
 		<% end %>
 	</section>
 	<%= f.primary_button_row :submit %>

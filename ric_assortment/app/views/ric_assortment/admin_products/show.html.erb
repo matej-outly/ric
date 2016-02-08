@@ -4,27 +4,11 @@
 			<% @product.class.parts.each do |part| %>
 				<li class="<%= (part == :identification ? "active" : "") %>"><a href="#"><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></a></li>
 			<% end %>
-			<li><a href="#"><%= t("headers.ric_assortment.admin_products.photos") %></a></li>
-			<li><a href="#"><%= t("headers.ric_assortment.admin_products.panels") %></a></li>
-			<li><a href="#"><%= t("headers.ric_assortment.admin_products.attachments") %></a></li>
-			<li><a href="#"><%= t("headers.ric_assortment.admin_products.categories") %></a></li>
 		</ul>
 		<% @product.class.parts.each do |part| %>
 			<div class="tab-content <%= (part == :identification ? "active" : "") %>">
 				<%= render partial: "show_#{part.to_s}" %>
 			</div>
 		<% end %>
-		<div class="tab-content">
-			<%= render partial: "show_photos" %>
-		</div>
-		<div class="tab-content">
-			<%= render partial: "show_panels" %>
-		</div>
-		<div class="tab-content">
-			<%= render partial: "show_attachments" %>
-		</div>
-		<div class="tab-content">
-			<%= render partial: "show_categories" %>
-		</div>
 	</section>
 <% end %>

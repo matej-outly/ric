@@ -95,7 +95,7 @@ module RicAssortment
 					# Parts
 					#
 					def parts
-						[:identification, :content, :dimensions, :price, :meta]
+						[:identification, :content, :dimensions, :price, :meta, :categories, :panels, :photos, :attachments]
 					end
 
 					#
@@ -123,7 +123,7 @@ module RicAssortment
 					# Columns
 					#
 					def price_part_columns
-						[:price, :unit]
+						[:price, :currency]
 					end
 
 					#
@@ -131,6 +131,34 @@ module RicAssortment
 					#
 					def meta_part_columns
 						[:description, :keywords]
+					end
+
+					#
+					# Columns
+					#
+					def categories_part_columns
+						[]
+					end
+
+					#
+					# Columns
+					#
+					def panels_part_columns
+						[]
+					end
+
+					#
+					# Columns
+					#
+					def photos_part_columns
+						[]
+					end
+
+					#
+					# Columns
+					#
+					def attachemnts_part_columns
+						[]
 					end
 					
 					# *********************************************************
