@@ -47,8 +47,11 @@ module RicNewsletter
 					end
 
 					# Send email to customer
-					RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer).deliver
-
+					begin 
+						RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer).deliver
+					rescue Net::SMTPFatalError
+					end
+				
 					# Mark as sent
 					self.sent_at = Time.current
 
