@@ -2,8 +2,8 @@
 	<% 
 		labels = []
 		@customers.limit(10).each do |customer| 
-			if !customer.full_name.blank?
-				label = "#{customer.full_name} (#{customer.email})"
+			if !customer.name_formatted.blank?
+				label = "#{customer.name_formatted} (#{customer.email})"
 			else
 				label = customer.email
 			end

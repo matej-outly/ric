@@ -48,7 +48,7 @@ module RicNewsletter
 
 					# Send email to customer
 					begin 
-						RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer).deliver
+						RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer).deliver_now
 					rescue Net::SMTPFatalError
 					end
 				
