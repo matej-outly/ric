@@ -57,10 +57,18 @@ cs:
     attributes:
       ric_reservation/resource:
         name: Jméno
+        time_window_open: Jak dlouho před brzkou považovat rezervaci za otevřenou
         time_window_soon: Jak dlouho před uzavřením považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
         opening_hours: Otevírací hodiny
+        state: Stav
+        state_values:
+          yet_closed: Zatím uzavřený
+          open: Otevřený
+          soon: Brzký
+          deadline: Po deadline
+          closed: Již uzavřený
       ric_reservation/event:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
@@ -119,9 +127,17 @@ cs:
         tmp_canceled: Jednorázově zrušeno
         valid_from: Platné od
         valid_to: Smazané od
+        time_window_open: Jak dlouho před brzkou považovat rezervaci za otevřenou
         time_window_soon: Jak dlouho před začátkem považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
+        state: Stav
+        state_values:
+          yet_closed: Zatím uzavřený
+          open: Otevřený
+          soon: Brzký
+          deadline: Po deadline
+          closed: Již uzavřený
       ric_reservation/reservation:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
@@ -149,6 +165,13 @@ cs:
         owner_id: Osoba
         owner_name: Osoba
         owner_name_anonymous: "(neznámý)"
+        state: Stav
+        state_values:
+          yet_closed: Zatím uzavřený
+          open: Otevřený
+          soon: Brzký
+          deadline: Po deadline
+          closed: Již uzavřený
     notices:
       models:
         ric_reservation/resource:

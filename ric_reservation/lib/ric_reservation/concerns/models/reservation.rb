@@ -155,45 +155,61 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# State
+				#
+				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+
+				#
 				# Get state according to current date and time
 				#
 				def state
-					
 					if @state.nil?
 						now = Time.current
 						
-						# Break points
-						if self.kind_event?
-							time_window_deadline = self.event.time_window_deadline
-							time_window_soon = self.event.time_window_soon
-						else # if self.kind_resource?
-							time_window_deadline = self.resource.time_window_deadline
-							time_window_soon = self.resource.time_window_soon
-						end
-						if time_window_deadline
-							deadline = self.schedule_from - time_window_deadline.days_since_new_year.days - time_window_deadline.seconds_since_midnight.seconds
-						else
-							deadline = self.schedule_from
-						end
-						if time_window_soon
-							soon = deadline - time_window_soon.days_since_new_year.days - time_window_soon.seconds_since_midnight.seconds
-						else
-							soon = deadline
-						end
+						# States
+						states = config(:states)
 
+						# Break times
+						break_times = [self.schedule_from]
+						states.reverse_each_with_index do |state_spec, index|
+							if index != 0 && index != (states.length - 1) # Do not consider first and last state
+								state_name = state_spec[:name]
+								if self.kind_event?
+									time_window = self.event.send("time_window_#{state_name}")
+								else # if self.kind_resource?
+									time_window = self.resource.send("time_window_#{state_name}")
+								end
+								break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+							end
+						end
+						
 						# State recognititon
-						if now < soon
-							@state = :open
-						elsif now < deadline
-							@state = :soon
-						elsif now < self.schedule_from
-							@state = :deadline
-						else
-							@state = :closed
+						states.each_with_index do |state_spec, index|
+							if index < states.length - 1
+								if now < break_times[states.length - 2 - index]
+									@state = state_spec[:name].to_sym
+									@state_behavior = state_spec[:behavior].to_sym
+									break
+								end
+							else # Last fallback state
+								@state = state_spec[:name].to_sym
+								@state_behavior = state_spec[:behavior].to_sym
+								break
+							end
 						end
 
 					end
 					return @state
+				end
+
+				#
+				# Get state behavior according to current date and time
+				#
+				def state_behavior
+					if @state_behavior.nil?
+						self.state
+					end
+					return @state_behavior
 				end
 
 			protected
