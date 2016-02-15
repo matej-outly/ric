@@ -120,7 +120,7 @@ module RicReservation
 				#
 				# State
 				#
-				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 				
 				#
 				# Get state according to datetime
@@ -139,42 +139,48 @@ module RicReservation
 						if index != 0 && index != (states.length - 1) # Do not consider first and last state
 							state_name = state_spec[:name]
 							time_window = self.send("time_window_#{state_name}")
-							break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+							if time_window
+								break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+							else
+								break_times << break_times.last
+							end
 						end
 					end
-					
+
 					# State recognititon
+					result_state = nil
+					result_state_behavior = nil
 					states.each_with_index do |state_spec, index|
 						if index < states.length - 1
 							if now < break_times[states.length - 2 - index]
-								state = state_spec[:name].to_sym
-								state_behavior = state_spec[:behavior].to_sym
+								result_state = state_spec[:name].to_sym
+								result_state_behavior = state_spec[:behavior].to_sym
 								break
 							end
 						else # Last fallback state
-							state = state_spec[:name].to_sym
-							state_behavior = state_spec[:behavior].to_sym
+							result_state = state_spec[:name].to_sym
+							result_state_behavior = state_spec[:behavior].to_sym
 							break
 						end
 					end
 					
-					return [state, state_behavior]
+					return [result_state, result_state_behavior]
 				end
 
 				#
 				# Get state according to datetime
 				#
 				def state(datetime)
-					state, state_behavior = _state(datetime)
-					return state
+					result_state, result_state_behavior = _state(datetime)
+					return result_state
 				end
 
 				#
 				# Get state behavior according to datetime
 				#
 				def state_behavior(datetime)
-					state, state_behavior = _state(datetime)
-					return state_behavior
+					result_state, result_state_behavior = _state(datetime)
+					return result_state_behavior
 				end
 
 			protected

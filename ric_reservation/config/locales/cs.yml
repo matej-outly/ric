@@ -83,6 +83,7 @@ cs:
           orange: Oranžová
           red: Červená
           green: Zelená
+          grey: Šedá
         from: Začátek
         to: Konec
         date: Datum
@@ -152,6 +153,7 @@ cs:
           orange: Oranžová
           red: Červená
           green: Zelená
+          grey: Šedá
         size: Velikost
         schedule_date: Datum
         schedule_from: Začátek

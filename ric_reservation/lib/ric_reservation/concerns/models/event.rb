@@ -134,7 +134,7 @@ module RicReservation
 					#
 					# Period
 					#
-					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green"], default: "yellow"
+					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green", "grey"], default: "yellow"
 
 				end
 
@@ -627,7 +627,7 @@ module RicReservation
 				#
 				# State
 				#
-				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 				#
 				# Get state according to date
@@ -648,7 +648,11 @@ module RicReservation
 							if index != 0 && index != (states.length - 1) # Do not consider first and last state
 								state_name = state_spec[:name]
 								time_window = self.send("time_window_#{state_name}")
-								break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+								if time_window
+									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+								else
+									break_times << break_times.last
+								end
 							end
 						end
 						

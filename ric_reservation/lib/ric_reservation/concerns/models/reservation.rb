@@ -157,7 +157,7 @@ module RicReservation
 				#
 				# State
 				#
-				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 				#
 				# Get state according to current date and time
@@ -179,7 +179,11 @@ module RicReservation
 								else # if self.kind_resource?
 									time_window = self.resource.send("time_window_#{state_name}")
 								end
-								break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+								if time_window
+									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+								else
+									break_times << break_times.last
+								end
 							end
 						end
 						
