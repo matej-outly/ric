@@ -82,10 +82,6 @@ cs:
 
   general:
     back: "zpět"
-    bool_yes: "ano"
-    bool_no: "ne"
-    yes: "ano"
-    no: "ne"
     not_set: "nevyplněno"
     null_option: "nic"
     from: "od"
@@ -130,6 +126,15 @@ cs:
       remove: "odebrat"
 
     attribute:
+      boolean:
+        bool_yes: Ano
+        bool_no: Ne
+      boolean_colors:
+        bool_yes: green
+        bool_no: red
+      boolean_icons:
+        bool_yes: check
+        bool_no: cancel
       address:
         street: Ulice
         number: Číslo
