@@ -118,37 +118,69 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# State
+				#
+				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				
+				#
 				# Get state according to datetime
 				#
-				def state(datetime)
+				def _state(datetime)
 					
 					# Now
 					now = Time.current
 					
-					# Break points
-					if self.time_window_deadline
-						deadline = datetime - self.time_window_deadline.days_since_new_year.days - self.time_window_deadline.seconds_since_midnight.seconds
-					else
-						deadline = datetime
-					end
-					if self.time_window_soon
-						soon = deadline - self.time_window_soon.days_since_new_year.days - self.time_window_soon.seconds_since_midnight.seconds
-					else
-						soon = deadline
+					# States
+					states = config(:states)
+
+					# Break times
+					break_times = [datetime]
+					states.reverse_each_with_index do |state_spec, index|
+						if index != 0 && index != (states.length - 1) # Do not consider first and last state
+							state_name = state_spec[:name]
+							time_window = self.send("time_window_#{state_name}")
+							if time_window
+								break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+							else
+								break_times << break_times.last
+							end
+						end
 					end
 
 					# State recognititon
-					if now < soon
-						state = :open
-					elsif now < deadline
-						state = :soon
-					elsif now < datetime
-						state = :deadline
-					else
-						state = :closed
+					result_state = nil
+					result_state_behavior = nil
+					states.each_with_index do |state_spec, index|
+						if index < states.length - 1
+							if now < break_times[states.length - 2 - index]
+								result_state = state_spec[:name].to_sym
+								result_state_behavior = state_spec[:behavior].to_sym
+								break
+							end
+						else # Last fallback state
+							result_state = state_spec[:name].to_sym
+							result_state_behavior = state_spec[:behavior].to_sym
+							break
+						end
 					end
 					
-					return state
+					return [result_state, result_state_behavior]
+				end
+
+				#
+				# Get state according to datetime
+				#
+				def state(datetime)
+					result_state, result_state_behavior = _state(datetime)
+					return result_state
+				end
+
+				#
+				# Get state behavior according to datetime
+				#
+				def state_behavior(datetime)
+					result_state, result_state_behavior = _state(datetime)
+					return result_state_behavior
 				end
 
 			protected

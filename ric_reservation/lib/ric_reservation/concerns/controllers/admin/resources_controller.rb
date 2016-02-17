@@ -147,7 +147,7 @@ module RicReservation
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def resource_params
-						params.require(:resource).permit(:name, :time_window_soon, :time_window_deadline, :owner_reservation_limit, :opening_hours => [:min, :max])
+						params.require(:resource).permit(:name, :time_window_open, :time_window_soon, :time_window_deadline, :owner_reservation_limit, :opening_hours => [:min, :max])
 					end
 
 				end

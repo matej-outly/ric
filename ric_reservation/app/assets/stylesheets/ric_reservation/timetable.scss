@@ -1,5 +1,8 @@
 table.timetable {
 	
+	border: 1px solid #e5e5e5 !important;
+	background-color: #ffffff !important;
+
 	/**
 	 * Gumby reset
 	 */
@@ -65,6 +68,8 @@ table.timetable {
 			&.color-red.state-closed, &.color-red.at-capacity { background: #f9b8b8; }
 			&.color-green { background: #c2f39a; }
 			&.color-green.state-closed, &.color-green.at-capacity { background: #e0f7cd; }
+			&.color-grey { background: #eeeeee; }
+			&.color-grey.state-closed, &.color-grey.at-capacity { background: #eeeeee; }
 		}
 	}
 
@@ -102,4 +107,12 @@ table.timetable {
 	a.active {
 		font-weight: bold;
 	}
+}
+
+/**
+ * Line
+ */
+
+hr.reservation-line {
+	border-top: 3px solid #4a4d50 !important;
 }

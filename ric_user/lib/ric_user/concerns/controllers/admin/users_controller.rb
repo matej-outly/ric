@@ -148,7 +148,7 @@ module RicUser
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def user_params
-						params.require(:user).permit(:email, :role, :name => [:firstname, :lastname])
+						params.require(:user).permit(:email, :role, :name => [:title, :firstname, :lastname])
 					end
 
 				end

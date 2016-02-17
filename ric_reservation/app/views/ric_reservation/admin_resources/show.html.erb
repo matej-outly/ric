@@ -52,13 +52,17 @@
 			}, summary: true ) %>
 		</div>
 		<div class="tab-content">
-			<%= rug_show_table_for(@resource, { 
-				name: :string,
-				time_window_deadline: :time,
-				time_window_soon: :time,
-				owner_reservation_limit: :integer,
-				opening_hours: :range,
-			}) %>
+			<%
+				columns = RugBuilder::TableBuilder::Columns.new({ 
+					name: :string,
+					owner_reservation_limit: :integer,
+					opening_hours: :range,
+				})
+				@resource.config(:states).reverse_each_with_index do |state_spec, index|
+					columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :time) if index != 0 && index != @resource.config(:states).length
+				end
+			%>
+			<%= rug_show_table_for(@resource, columns) %>
 		</div>
 	</section>
 

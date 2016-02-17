@@ -1,16 +1,20 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-
-	<%= rug_show_table_for(@event, { 
-		resource: { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" },
-		name: :string,
-		color: :enum,
-		formatted_time: :string,
-		period: :enum,
-		capacity: :integer,
-		time_window_deadline: :time,
-		time_window_soon: :time,
-		owner_reservation_limit: :integer,
-	}) %>
+	
+	<%
+		columns = RugBuilder::TableBuilder::Columns.new({ 
+			resource: { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" },
+			name: :string,
+			color: :enum,
+			formatted_time: :string,
+			period: :enum,
+			capacity: :integer,
+			owner_reservation_limit: :integer,
+		})
+		@event.config(:states).reverse_each_with_index do |state_spec, index|
+			columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :time) if index != 0 && index != @event.config(:states).length
+		end
+	%>
+	<%= rug_show_table_for(@event, columns) %>
 
 	<h3><%= t("headers.ric_reservation.admin_events.scheduled_events") %></h3>
 	<%

@@ -261,7 +261,9 @@ cs:
   time:
     formats:
       default: "%-d. %-m. %Y %k:%M"
-      raw: "%k:%M"
+      hour_min: "%k:%M"
+      min_sec: "%M:%S"
+      hour_min_sec: "%k:%M:%S"
 
   number:
      currency:

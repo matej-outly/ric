@@ -134,7 +134,7 @@ module RicReservation
 					#
 					# Period
 					#
-					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green"], default: "yellow"
+					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green", "grey"], default: "yellow"
 
 				end
 
@@ -472,6 +472,17 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# Get time window open
+				#
+				def time_window_open
+					value = read_attribute(:time_window_open)
+					if value.nil? && self.resource
+						value = self.resource.time_window_open
+					end
+					return value
+				end
+
+				#
 				# Get time window soon
 				#
 				def time_window_soon
@@ -614,6 +625,11 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# State
+				#
+				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+
+				#
 				# Get state according to date
 				#
 				def state
@@ -623,30 +639,49 @@ module RicReservation
 					if @state.nil?
 						now = Time.current
 						
-						# Break points
-						if self.time_window_deadline
-							deadline = self.schedule_from - self.time_window_deadline.days_since_new_year.days - self.time_window_deadline.seconds_since_midnight.seconds
-						else
-							deadline = self.schedule_from
-						end
-						if self.time_window_soon
-							soon = deadline - self.time_window_soon.days_since_new_year.days - self.time_window_soon.seconds_since_midnight.seconds
-						else
-							soon = deadline
-						end
+						# States
+						states = config(:states)
 
+						# Break times
+						break_times = [self.schedule_from]
+						states.reverse_each_with_index do |state_spec, index|
+							if index != 0 && index != (states.length - 1) # Do not consider first and last state
+								state_name = state_spec[:name]
+								time_window = self.send("time_window_#{state_name}")
+								if time_window
+									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+								else
+									break_times << break_times.last
+								end
+							end
+						end
+						
 						# State recognititon
-						if now < soon
-							@state = :open
-						elsif now < deadline
-							@state = :soon
-						elsif now < self.schedule_from
-							@state = :deadline
-						else
-							@state = :closed
+						states.each_with_index do |state_spec, index|
+							if index < states.length - 1
+								if now < break_times[states.length - 2 - index]
+									@state = state_spec[:name].to_sym
+									@state_behavior = state_spec[:behavior].to_sym
+									break
+								end
+							else # Last fallback state
+								@state = state_spec[:name].to_sym
+								@state_behavior = state_spec[:behavior].to_sym
+								break
+							end
 						end
 					end
 					return @state
+				end
+
+				#
+				# Get state behavior according to current date and time
+				#
+				def state_behavior
+					if @state_behavior.nil?
+						self.state
+					end
+					return @state_behavior
 				end
 
 				# *************************************************************

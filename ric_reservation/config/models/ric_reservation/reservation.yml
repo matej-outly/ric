@@ -1,12 +1,4 @@
-# Available STI types
-#types:
-#  - Event1
-#  - Event2
-
-# Enable reservation below line
-enable_below_line: false
-
-# Avalilable event states and designated behavior
+# Avalilable reservation states and designated behavior
 states:
   - 
     name: yet_closed

@@ -37,6 +37,7 @@ class CreateRicReservationEvents < ActiveRecord::Migration
 			t.integer :capacity
 
 			# Time window
+			t.datetime :time_window_open
 			t.datetime :time_window_soon
 			t.datetime :time_window_deadline
 

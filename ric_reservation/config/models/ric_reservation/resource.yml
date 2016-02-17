@@ -2,3 +2,21 @@
 #types:
 #  - Resource1
 #  - Resource2
+
+# Avalilable resource states and designated behavior
+states:
+  - 
+    name: yet_closed
+    behavior: closed
+  - 
+    name: open
+    behavior: open
+  -
+    name: soon
+    behavior: open
+  - 
+    name: deadline
+    behavior: closed
+  - 
+    name: already_closed
+    behavior: closed
