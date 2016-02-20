@@ -18,27 +18,26 @@ module RicPortal
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Screen CSS layout
 	#
 	mattr_accessor :css_layout
-	def self.css_layout
-		if @@css_layout.nil?
-			return "application"
-		else
-			return @@css_layout
-		end
-	end
+	@@css_layout = "application"
 
 	#
 	# JS layout
 	#
 	mattr_accessor :js_layout
-	def self.js_layout
-		if @@js_layout.nil?
-			return "application"
-		else
-			return @@js_layout
-		end
-	end
+	@@js_layout = "application"
 
 end

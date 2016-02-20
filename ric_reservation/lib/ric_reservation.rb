@@ -34,63 +34,59 @@ module RicReservation
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Resource model
 	#
 	mattr_accessor :resource_model
-	def self.resource_model
-		if @@resource_model.nil?
-			return RicReservation::Resource
-		else
-			return @@resource_model.constantize
-		end
+	def self.order_model
+		return @@order_model.constantize
 	end
+	@@resource_model = "RicReservation::Resource"
 
 	#
 	# Event model
 	#
 	mattr_accessor :event_model
 	def self.event_model
-		if @@event_model.nil?
-			return RicReservation::Event
-		else
-			return @@event_model.constantize
-		end
+		return @@event_model.constantize
 	end
+	@@event_model = "RicReservation::Event"
 
 	#
 	# Event modifier model
 	#
 	mattr_accessor :event_modifier_model
 	def self.event_modifier_model
-		if @@event_modifier_model.nil?
-			return RicReservation::EventModifier
-		else
-			return @@event_modifier_model.constantize
-		end
+		return @@event_modifier_model.constantize
 	end
+	@@event_modifier_model = "RicReservation::EventModifier"
 
 	#
 	# Reservation model
 	#
 	mattr_accessor :reservation_model
 	def self.reservation_model
-		if @@reservation_model.nil?
-			return RicReservation::Reservation
-		else
-			return @@reservation_model.constantize
-		end
+		return @@reservation_model.constantize
 	end
+	@@reservation_model = "RicReservation::Reservation"
 
 	#
 	# Owner model
 	#
 	mattr_accessor :owner_model
 	def self.owner_model
-		if @@owner_model.nil?
-			return RicUser::User
-		else
-			return @@owner_model.constantize
-		end
+		return @@owner_model.constantize
 	end
+	@@owner_model = "RicUser::User"
 
 end

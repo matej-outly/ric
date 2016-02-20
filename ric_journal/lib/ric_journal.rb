@@ -31,39 +31,41 @@ module RicJournal
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Newie model
 	#
 	mattr_accessor :newie_model
 	def self.newie_model
-		if @@newie_model.nil?
-			return RicJournal::Newie
-		else
-			return @@newie_model.constantize
-		end
+		return @@newie_model.constantize
 	end
+	@@newie_model = "RicJournal::Newie"
 
 	#
 	# Newie picture model
 	#
 	mattr_accessor :newie_picture_model
 	def self.newie_picture_model
-		if @@newie_picture_model.nil?
-			return RicJournal::NewiePicture
-		else
-			return @@newie_picture_model.constantize
-		end
+		return @@newie_picture_model.constantize
 	end
+	@@newie_picture_model = "RicJournal::NewiePicture"
 
 	#
 	# Event model
 	#
 	mattr_accessor :event_model
 	def self.event_model
-		if @@event_model.nil?
-			return RicJournal::Event
-		else
-			return @@event_model.constantize
-		end
+		return @@event_model.constantize
 	end
+	@@event_model = "RicJournal::Event"
 
 end

@@ -30,27 +30,32 @@ module RicGallery
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Directory model
 	#
 	mattr_accessor :gallery_directory_model
 	def self.gallery_directory_model
-		if @@gallery_directory_model.nil?
-			return RicGallery::GalleryDirectory
-		else
-			return @@gallery_directory_model.constantize
-		end
+		return @@gallery_directory_model.constantize
 	end
+	@@gallery_directory_model = "RicGallery::GalleryDirectory"
 
 	#
 	# Picture model
 	#
 	mattr_accessor :gallery_picture_model
 	def self.gallery_picture_model
-		if @@gallery_picture_model.nil?
-			return RicGallery::GalleryPicture
-		else
-			return @@gallery_picture_model.constantize
-		end
+		return @@gallery_picture_model.constantize
 	end
+	@@gallery_picture_model = "RicGallery::GalleryPicture"
 
 end

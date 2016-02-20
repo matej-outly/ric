@@ -29,27 +29,32 @@ module RicMagazine
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Magazine model
 	#
 	mattr_accessor :article_model
 	def self.article_model
-		if @@article_model.nil?
-			return RicMagazine::Article
-		else
-			return @@article_model.constantize
-		end
+		return @@article_model.constantize
 	end
+	@@article_model = "RicMagazine::Article"
 
 	#
 	# User model
 	#
 	mattr_accessor :user_model
 	def self.user_model
-		if @@user_model.nil?
-			raise 'Please define user model'
-		else
-			return @@user_model.constantize
-		end
+		return @@user_model.constantize
 	end
+	@@user_model = "RicUser::User"
 
 end

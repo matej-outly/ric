@@ -33,63 +33,59 @@ module RicLeague
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# League category model
 	#
 	mattr_accessor :league_category_model
 	def self.league_category_model
-		if @@league_category_model.nil?
-			return RicLeague::LeagueCategory
-		else
-			return @@league_category_model.constantize
-		end
+		return @@league_category_model.constantize
 	end
+	@@league_category_model = "RicLeague::LeagueCategory"
 
 	#
 	# League season model
 	#
 	mattr_accessor :league_season_model
 	def self.league_season_model
-		if @@league_season_model.nil?
-			return RicLeague::LeagueSeason
-		else
-			return @@league_season_model.constantize
-		end
+		return @@league_season_model.constantize
 	end
+	@@league_season_model = "RicLeague::LeagueSeason"
 
 	#
 	# League match model
 	#
 	mattr_accessor :league_match_model
 	def self.league_match_model
-		if @@league_match_model.nil?
-			return RicLeague::LeagueMatch
-		else
-			return @@league_match_model.constantize
-		end
+		return @@league_match_model.constantize
 	end
+	@@league_match_model = "RicLeague::LeagueMatch"
 
 	#
 	# Team model
 	#
 	mattr_accessor :team_model
 	def self.team_model
-		if @@team_model.nil?
-			return RicLeague::Team
-		else
-			return @@team_model.constantize
-		end
+		return @@team_model.constantize
 	end
+	@@team_model = "RicLeague::Team"
 
 	#
 	# Team member model
 	#
 	mattr_accessor :team_member_model
 	def self.team_member_model
-		if @@team_member_model.nil?
-			return RicLeague::TeamMember
-		else
-			return @@team_member_model.constantize
-		end
+		return @@team_member_model.constantize
 	end
+	@@team_member_model = "RicLeague::TeamMember"
 
 end

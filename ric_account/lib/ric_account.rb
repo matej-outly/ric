@@ -24,15 +24,23 @@ module RicAccount
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# User model
 	#
 	mattr_accessor :user_model
 	def self.user_model
-		if @@user_model.nil?
-			return RicUser::User
-		else
-			return @@user_model.constantize
-		end
+		return @@user_model.constantize
 	end
+	@@user_model = "RicUser::User"
 
 end

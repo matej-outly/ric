@@ -44,51 +44,47 @@ module RicNotification
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Notification model
 	#
 	mattr_accessor :notification_model
 	def self.notification_model
-		if @@notification_model.nil?
-			return RicNotification::Notification
-		else
-			return @@notification_model.constantize
-		end
+		return @@notification_model.constantize
 	end
+	@@notification_model = "RicNotification::Notification"
 
 	#
 	# Notification receiver model
 	#
 	mattr_accessor :notification_receiver_model
 	def self.notification_receiver_model
-		if @@notification_receiver_model.nil?
-			return RicNotification::NotificationReceiver
-		else
-			return @@notification_receiver_model.constantize
-		end
+		return @@notification_receiver_model.constantize
 	end
+	@@notification_receiver_model = "RicNotification::NotificationReceiver"
 
 	#
 	# User model
 	#
 	mattr_accessor :user_model
 	def self.user_model
-		if @@user_model.nil?
-			return RicUser::User
-		else
-			return @@user_model.constantize
-		end
+		return @@user_model.constantize
 	end
+	@@user_model = "RicUser::User"
 
 	#
 	# Mailer sender
 	#
 	mattr_accessor :mailer_sender
-	def self.mailer_sender
-		if @@mailer_sender.nil?
-			return "no-reply@clockstar.cz"
-		else
-			return @@mailer_sender
-		end
-	end
+	@@mailer_sender = "no-reply@clockapp.cz"
 
 end

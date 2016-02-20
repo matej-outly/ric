@@ -29,15 +29,23 @@ module RicPartnership
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Partnership model
 	#
 	mattr_accessor :partner_model
 	def self.partner_model
-		if @@partner_model.nil?
-			return RicPartnership::Partner
-		else
-			return @@partner_model.constantize
-		end
+		return @@partner_model.constantize
 	end
+	@@partner_model = "RicPartnership::Partner"
 
 end

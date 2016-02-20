@@ -18,39 +18,32 @@ module RicAdmin
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Screen CSS layout
 	#
 	mattr_accessor :css_layout
-	def self.css_layout
-		if @@css_layout.nil?
-			return "application"
-		else
-			return @@css_layout
-		end
-	end
+	@@css_layout = "application"
 
 	#
 	# Print CSS layout
 	#
 	mattr_accessor :print_css_layout
-	def self.print_css_layout
-		if @@print_css_layout.nil?
-			return "print"
-		else
-			return @@print_css_layout
-		end
-	end
+	@@print_css_layout = "print"
 
 	#
 	# JS layout
 	#
 	mattr_accessor :js_layout
-	def self.js_layout
-		if @@js_layout.nil?
-			return "application"
-		else
-			return @@js_layout
-		end
-	end
+	@@js_layout = "application"
 
 end

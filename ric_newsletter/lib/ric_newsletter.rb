@@ -35,63 +35,56 @@ module RicNewsletter
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Newsletter model
 	#
 	mattr_accessor :newsletter_model
 	def self.newsletter_model
-		if @@newsletter_model.nil?
-			return RicNewsletter::Newsletter
-		else
-			return @@newsletter_model.constantize
-		end
+		return @@newsletter_model.constantize
 	end
+	@@newsletter_model = "RicNewsletter::Newsletter"
 
 	#
 	# Sent newsletter model
 	#
 	mattr_accessor :sent_newsletter_model
 	def self.sent_newsletter_model
-		if @@sent_newsletter_model.nil?
-			return RicNewsletter::SentNewsletter
-		else
-			return @@sent_newsletter_model.constantize
-		end
+		return @@sent_newsletter_model.constantize
 	end
+	@@sent_newsletter_model = "RicNewsletter::SentNewsletter"
 
 	#
 	# Sent newsletter customer model
 	#
 	mattr_accessor :sent_newsletter_customer_model
 	def self.sent_newsletter_customer_model
-		if @@sent_newsletter_customer_model.nil?
-			return RicNewsletter::SentNewsletterCustomer
-		else
-			return @@sent_newsletter_customer_model.constantize
-		end
+		return @@sent_newsletter_customer_model.constantize
 	end
+	@@sent_newsletter_customer_model = "RicNewsletter::SentNewsletterCustomer"
 
 	#
 	# Customer model
 	#
 	mattr_accessor :customer_model
 	def self.customer_model
-		if @@customer_model.nil?
-			return RicCustomer::Customer
-		else
-			return @@customer_model.constantize
-		end
+		return @@customer_model.constantize
 	end
+	@@customer_model = "RicCustomer::Customer"
 
 	#
 	# Mailer sender
 	#
 	mattr_accessor :mailer_sender
-	def self.mailer_sender
-		if @@mailer_sender.nil?
-			return "no-reply@clockapp.cz"
-		else
-			return @@mailer_sender
-		end
-	end
+	@@mailer_sender = "no-reply@clockapp.cz"
 
 end

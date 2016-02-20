@@ -30,27 +30,32 @@ module RicContact
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Branch model
 	#
 	mattr_accessor :branch_model
 	def self.branch_model
-		if @@branch_model.nil?
-			return RicContact::Branch
-		else
-			return @@branch_model.constantize
-		end
+		return @@branch_model.constantize
 	end
+	@@branch_model = "RicContact::Branch"
 
 	#
 	# Contact message model
 	#
 	mattr_accessor :contact_message_model
 	def self.contact_message_model
-		if @@contact_message_model.nil?
-			return RicContact::ContactMessage
-		else
-			return @@contact_message_model.constantize
-		end
+		return @@contact_message_model.constantize
 	end
+	@@contact_message_model = "RicContact::ContactMessage"
 
 end

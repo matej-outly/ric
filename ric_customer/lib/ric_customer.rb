@@ -29,15 +29,23 @@ module RicCustomer
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Customer model
 	#
 	mattr_accessor :customer_model
 	def self.customer_model
-		if @@customer_model.nil?
-			return RicCustomer::Customer
-		else
-			return @@customer_model.constantize
-		end
+		return @@customer_model.constantize
 	end
+	@@customer_model = "RicCustomer::Customer"
 
 end

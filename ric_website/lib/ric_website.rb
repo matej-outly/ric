@@ -48,99 +48,86 @@ module RicWebsite
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Text model
 	#
 	mattr_accessor :text_model
 	def self.text_model
-		if @@text_model.nil?
-			return RicWebsite::Text
-		else
-			return @@text_model.constantize
-		end
+		return @@text_model.constantize
 	end
+	@@text_model = "RicWebsite::Text"
 
 	#
 	# Text attachment model
 	#
 	mattr_accessor :text_attachment_model
 	def self.text_attachment_model
-		if @@text_attachment_model.nil?
-			return RicWebsite::TextAttachment
-		else
-			return @@text_attachment_model.constantize
-		end
+		return @@text_attachment_model.constantize
 	end
+	@@text_attachment_model = "RicWebsite::TextAttachment"
 
 	#
 	# Page model
 	#
 	mattr_accessor :page_model
 	def self.page_model
-		if @@page_model.nil?
-			return RicWebsite::Page
-		else
-			return @@page_model.constantize
-		end
+		return @@page_model.constantize
 	end
+	@@page_model = "RicWebsite::Page"
 
 	#
 	# Page block model
 	#
 	mattr_accessor :page_block_model
 	def self.page_block_model
-		if @@page_block_model.nil?
-			return RicWebsite::PageBlock
-		else
-			return @@page_block_model.constantize
-		end
+		return @@page_block_model.constantize
 	end
+	@@page_block_model = "RicWebsite::PageBlock"
 
 	#
 	# Menu model
 	#
 	mattr_accessor :menu_model
 	def self.menu_model
-		if @@menu_model.nil?
-			return RicWebsite::Menu
-		else
-			return @@menu_model.constantize
-		end
+		return @@menu_model.constantize
 	end
+	@@menu_model = "RicWebsite::Menu"
 
 	#
 	# Slug model
 	#
 	mattr_accessor :slug_model
 	def self.slug_model
-		if @@slug_model.nil?
-			return RicWebsite::Slug
-		else
-			return @@slug_model.constantize
-		end
+		return @@slug_model.constantize
 	end
+	@@slug_model = "RicWebsite::Slug"
 
 	#
 	# Setting model
 	#
 	mattr_accessor :setting_model
 	def self.setting_model
-		if @@setting_model.nil?
-			return RicWebsite::Setting
-		else
-			return @@setting_model.constantize
-		end
+		return @@setting_model.constantize
 	end
+	@@setting_model = "RicWebsite::Setting"
 
 	#
 	# Settings collection model
 	#
 	mattr_accessor :settings_collection_model
 	def self.settings_collection_model
-		if @@settings_collection_model.nil?
-			return RicWebsite::SettingsCollection
-		else
-			return @@settings_collection_model.constantize
-		end
+		return @@settings_collection_model.constantize
 	end
+	@@settings_collection_model = "RicWebsite::SettingsCollection"
 
 end

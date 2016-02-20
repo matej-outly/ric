@@ -34,75 +34,68 @@ module RicAssortment
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# Product model
 	#
 	mattr_accessor :product_model
 	def self.product_model
-		if @@product_model.nil?
-			return RicAssortment::Product
-		else
-			return @@product_model.constantize
-		end
+		return @@product_model.constantize
 	end
+	@@product_model = "RicAssortment::Product"
 
 	#
 	# Product attachment model
 	#
 	mattr_accessor :product_attachment_model
 	def self.product_attachment_model
-		if @@product_attachment_model.nil?
-			return RicAssortment::ProductAttachment
-		else
-			return @@product_attachment_model.constantize
-		end
+		return @@product_attachment_model.constantize
 	end
+	@@product_attachment_model = "RicAssortment::ProductAttachment"
 
 	#
 	# Product category model
 	#
 	mattr_accessor :product_category_model
 	def self.product_category_model
-		if @@product_category_model.nil?
-			return RicAssortment::ProductCategory
-		else
-			return @@product_category_model.constantize
-		end
+		return @@product_category_model.constantize
 	end
+	@@product_category_model = "RicAssortment::ProductCategory"
 
 	#
 	# Product photo model
 	#
 	mattr_accessor :product_photo_model
 	def self.product_photo_model
-		if @@product_photo_model.nil?
-			return RicAssortment::ProductPhoto
-		else
-			return @@product_photo_model.constantize
-		end
+		return @@product_photo_model.constantize
 	end
+	@@product_photo_model = "RicAssortment::ProductPhoto"
 
 	#
 	# Product ticker model
 	#
 	mattr_accessor :product_ticker_model
 	def self.product_ticker_model
-		if @@product_ticker_model.nil?
-			return RicAssortment::ProductTicker
-		else
-			return @@product_ticker_model.constantize
-		end
+		return @@product_ticker_model.constantize
 	end
+	@@product_ticker_model = "RicAssortment::ProductTicker"
 
 	#
 	# Product panel model
 	#
 	mattr_accessor :product_panel_model
 	def self.product_panel_model
-		if @@product_panel_model.nil?
-			return RicAssortment::ProductPanel
-		else
-			return @@product_panel_model.constantize
-		end
+		return @@product_panel_model.constantize
 	end
+	@@product_panel_model = "RicAssortment::ProductPanel"
 
 end

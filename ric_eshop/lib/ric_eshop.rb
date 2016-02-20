@@ -32,75 +32,68 @@ module RicEshop
 	# *************************************************************************
 
 	#
-	# Order model
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
+	# Resource model
 	#
 	mattr_accessor :order_model
 	def self.order_model
-		if @@order_model.nil?
-			return RicEshop::Order
-		else
-			return @@order_model.constantize
-		end
+		return @@order_model.constantize
 	end
+	@@order_model = "RicEshop::Order"
 
 	#
 	# Order item model
 	#
 	mattr_accessor :order_item_model
 	def self.order_item_model
-		if @@order_item_model.nil?
-			return RicEshop::OrderItem
-		else
-			return @@order_item_model.constantize
-		end
+		return @@order_item_model.constantize
 	end
+	@@order_item_model = "RicEshop::Order"
 
 	#
 	# Cart model
 	#
 	mattr_accessor :cart_model
 	def self.cart_model
-		if @@cart_model.nil?
-			return RicEshop::Cart
-		else
-			return @@cart_model.constantize
-		end
+		return @@cart_model.constantize
 	end
+	@@cart_model = "RicEshop::Cart"
 
 	#
 	# Cart item model
 	#
 	mattr_accessor :cart_item_model
 	def self.cart_item_model
-		if @@cart_item_model.nil?
-			return RicEshop::CartItem
-		else
-			return @@cart_item_model.constantize
-		end
+		return @@cart_item_model.constantize
 	end
+	@@cart_item_model = "RicEshop::CartItem"
 
 	#
 	# Session model
 	#
 	mattr_accessor :session_model
 	def self.session_model
-		if @@session_model.nil?
-			return RicUser::Session
-		else
-			return @@session_model.constantize
-		end
+		return @@session_model.constantize
 	end
+	@@session_model = "RicUser::Session"
 
 	#
 	# Product model
 	#
 	mattr_accessor :product_model
 	def self.product_model
-		if @@product_model.nil?
-			return RicAssortment::Product
-		else
-			return @@product_model.constantize
-		end
+		return @@product_model.constantize
 	end
+	@@product_model = "RicAssortment::Product"
 
 end

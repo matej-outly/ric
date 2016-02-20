@@ -33,39 +33,38 @@ module RicUser
 	# *************************************************************************
 
 	#
+	# Default way to setup module
+	#
+	def self.setup
+		yield self
+	end
+
+	# *************************************************************************
+	# Config options
+	# *************************************************************************
+
+	#
 	# User model
 	#
 	mattr_accessor :user_model
 	def self.user_model
-		if @@user_model.nil?
-			return RicUser::User
-		else
-			return @@user_model.constantize
-		end
+		return @@user_model.constantize
 	end
+	@@user_model = "RicUser::User"
 
 	#
 	# Session model
 	#
 	mattr_accessor :session_model
 	def self.session_model
-		if @@session_model.nil?
-			return RicUser::Session
-		else
-			return @@session_model.constantize
-		end
+		return @@session_model.constantize
 	end
+	@@session_model = "RicUser::Session"
 
 	#
 	# Mailer sender
 	#
 	mattr_accessor :mailer_sender
-	def self.mailer_sender
-		if @@mailer_sender.nil?
-			return "no-reply@clockapp.cz"
-		else
-			return @@mailer_sender
-		end
-	end
+	@@mailer_sender = "no-reply@clockapp.cz"
 
 end
