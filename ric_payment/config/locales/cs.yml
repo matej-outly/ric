@@ -1,0 +1,22 @@
+cs:
+
+  headers:
+    ric_payment:
+      public_payments:
+        new: "Přesměrování na platební bránu"
+
+  activerecord:
+    notices:
+      models:
+        ric_payment/payment:
+          success: Platba byla úspěšně provedena.
+          success_not_finished: "Platba byla úspěšně založena. Údaje, nutné pro provedení platby, byly zaslány na zadanou e-mailovou adresu." 
+    errors:
+      models:
+        ric_payment/payment:
+          paid: "Objednávka je již zaplacena."
+          in_progress: "Momentálně čekáme na vyřízení platby. Pokud nedojde k jejímu zaplacení, platba se za pár dní automaticky zruší."
+          bad_type: "Špatně zvolený způsob platby."
+          failed: "Platbu se nepodařilo uskutečnit."
+          canceled: "Platba byla zrušena."
+          timeout: "Vypršela životnost platby."
