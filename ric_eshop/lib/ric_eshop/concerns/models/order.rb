@@ -40,11 +40,6 @@ module RicEshop
 					enum_column :payment_type, config(:payment_types)
 
 					#
-					# Payment state
-					#
-					enum_column :payment_state, [:paid, :in_progress, :not_paid]
-
-					#
 					# Delivery type
 					#
 					enum_column :delivery_type, config(:delivery_types)
@@ -116,36 +111,6 @@ module RicEshop
 				# *************************************************************
 				# Payment
 				# *************************************************************
-
-				#
-				# Is order already paid?
-				#
-				def paid?
-					return !self.paid_at.nil?
-				end
-
-				#
-				# Is some payment in progress?
-				#
-				def payment_in_progress?
-					return !self.payment_session_id.nil?
-				end
-
-				#
-				# Is order locked for editing?
-				#
-				def locked?
-					return payment_in_progress? || paid?
-				end
-
-				#
-				# Payment state
-				#
-				def payment_state
-					return "paid" if paid?
-					return "in_progress" if payment_in_progress?
-					return "not_paid"
-				end
 
 				#
 				# Total price
