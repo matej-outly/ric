@@ -39,10 +39,9 @@ module RicPayment
 					#
 					def new
 
-						# Already paid
+						# Already paid or in progress => exit
 						if @payment_subject.payment_in_progress?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.ric_payment/payment.in_progress")
-						
 						elsif @payment_subject.paid?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.ric_payment/payment.paid")
 						end
@@ -54,51 +53,43 @@ module RicPayment
 					#
 					def create
 						
-						# Payment channel
-						payment_channel = @backend.payment_channel(@payment_subject.payment_type)
-						
-						if !payment_channel.nil?
-
-							if @payment_subject.payment_in_progress?
+						if @payment_subject.payment_in_progress?
 								
-								# Message
-								flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.in_progress")
+							# Message
+							flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.in_progress")
 
-								# Response
-								render :json => false
+							# Response
+							render :json => false
 
-							elsif @payment_subject.paid?
-								
+						elsif @payment_subject.paid?
+							
+							# Message
+							flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.paid")
+
+							# Response
+							render :json => false
+
+						else
+
+							# Create payment
+							@payment = @backend.create_payment(@payment_subject)
+							if @payment.nil?
+
 								# Message
-								flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.paid")
+								flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.bad_type")
 
 								# Response
 								render :json => false
 
 							else
 
-								# Create payment
-								payment_session_id = @backend.create_payment(@payment_subject.id, @payment_subject.payment_label, @payment_subject.customer, payment_channel)
-
-								# Save payment session id to payment
-								@payment_subject.initiate_payment(payment_session_id)
-
-								# Create session info
-								@info = @backend.create_session_info(payment_session_id)
+								# Save payment id to payment subject
+								@payment_subject.initiate_payment(payment.id)
 
 								# Response
-								render :json => @info
+								render :json => @payment
 
 							end
-
-						else
-
-							# Message
-							flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.bad_type")
-
-							# Response
-							render :json => false
-
 						end
 
 					end
@@ -108,22 +99,19 @@ module RicPayment
 					#
 					def success
 
-						# Create identity
-						identity = @backend.create_identity(params)
+						# Create payment
+						payment = @backend.parse(params)
 					
-						# Read status
-						status = @backend.read_status(identity, @payment_subject.id, @payment_subject.payment_label)
-
-						if @backend.state_paid?(status) # Payment sucessfully established and finished
+						if payment.status == :paid # Payment sucessfully established and finished
 							flash[:notice] = I18n.t("activerecord.notices.models.ric_payment/payment.success")
 
-						elsif @backend.state_payment_method_chosen?(status) # Payment sucessfully established but not finished yet (superCASH, bank account) 
+						elsif payment.status == :payment_method_chosen # Payment sucessfully established but not finished yet (superCASH, bank account) 
 							flash[:notice] = I18n.t("activerecord.notices.models.ric_payment/payment.success_not_finished")
 
-						elsif @backend.state_canceled?(status) # Payment canceled
+						elsif payment.status == :canceled # Payment canceled
 							flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.canceled")
 
-						elsif @backend.state_timeouted?(status) # Payment timeouted
+						elsif payment.status == :timeouted # Payment timeouted
 							flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.timeout")
 
 						else # Unknown error

@@ -96,7 +96,7 @@ module RicEshop
 					#
 					# Define additional methods to JSON export
 					#
-					add_methods_to_json [:price, :payment_state]
+					add_methods_to_json [:price]
 
 				end
 

@@ -34,11 +34,11 @@ module RicPayment
 					#
 					def notify
 						
-						# Create identity
-						identity = @backend.create_identity(params)
+						# Create payment
+						payment = @backend.parse(params)
 
 						# Get order based on order id
-						payment_subject = RicPayment.payment_subject_model.where(id: identity.order_number, payment_session_id: identity.payment_session_id).first
+						payment_subject = RicPayment.payment_subject_model.payment(payment).first
 
 						if !payment_subject.nil?
 
@@ -47,7 +47,7 @@ module RicPayment
 								# Read status
 								status = @backend.read_status(identity, payment_subject.id, payment_subject.payment_label)
 
-								if @backend.state_paid?(status) # Payment sucessfully finished
+								if payment.status == :paid # Payment sucessfully finished
 
 									# In transaction
 									payment_subject.transaction do
@@ -60,7 +60,7 @@ module RicPayment
 										
 									end
 
-								elsif @backend.state_canceled?(status) || @backend.state_timeouted?(status) || @backend.state_refunded?(status) # Payment canceled, timeouted or refunded
+								elsif payment.status == :canceled || payment.status == :timeouted || payment.status == :refunded # Payment canceled, timeouted or refunded
 
 									# Cancel payment
 									payment_subject.cancel_payment

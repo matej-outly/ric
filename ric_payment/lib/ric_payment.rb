@@ -18,7 +18,8 @@ require "ric_payment/gateway_engine"
 require 'ric_payment/concerns/model/payment_subject'
 
 # Backends
-require 'ric_payment/backends/dummy_api'
+require 'ric_payment/backends/dummy'
+require 'ric_payment/backends/gopay'
 
 module RicPayment
 
@@ -50,15 +51,24 @@ module RicPayment
 	def self.backend
 		return @@backend.constantize
 	end
-	@@backend = "RicPayment::Backends::DummyAPI"
+	@@backend = "RicPayment::Backends::Dummy"
 
 	#
-	# Payment model
+	# Payment subject model
 	#
 	mattr_accessor :payment_subject_model
 	def self.payment_subject_model
 		return @@payment_subject_model.constantize
 	end
 	@@payment_subject_model = "RicEshop::Order"
+
+	#
+	# Payment subject mailer
+	#
+	mattr_accessor :payment_subject_mailer
+	def self.payment_subject_mailer
+		return @@payment_subject_mailer.constantize
+	end
+	@@payment_subject_mailer = "RicEshop::OrderMailer"
 
 end
