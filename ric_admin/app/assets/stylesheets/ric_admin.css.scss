@@ -206,7 +206,6 @@ body {
 					min-height: 40px;
 					&.action {
 						text-align: right;
-						width: 1px; /* Minimal width */
 						@media only screen and (max-width: $tablet-width) {
 							width: auto;
 						}
@@ -215,6 +214,9 @@ body {
 							@media only screen and (max-width: $tablet-width) {
 								padding-left: 45%;
 							}
+						}
+						&.standard {
+							width: 1px; /* Minimal width */
 						}
 					}
 
@@ -544,7 +546,7 @@ body {
 		/* Only icon */
 		&.icon-left a:empty {
 			padding-left: 13px;
-			min-height: 36px;
+			min-height: 34px;
 		}
 	}
 
