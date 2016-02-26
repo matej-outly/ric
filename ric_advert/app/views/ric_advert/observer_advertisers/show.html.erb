@@ -3,26 +3,26 @@
 		name: :string
 	}) %>
 
-	<h3><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.sofar_invalid") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :string,
-	}, paths: {
-		show: "ric_advert_observer.banner_path"
-	}, summary: true ) %>
-
-	<h3><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.valid") %></h3>
+	<h3><%= t("headers.ric_advert.observer_advertisers.valid_banners") %></h3>
 	<%= rug_index_table_for(@advertiser.banners.valid(@today).order(name: :asc), { 
 		name: :string,
-		kind: :string,
+		kind: :enum,
 	}, paths: {
 		show: "ric_advert_observer.banner_path"
 	}, summary: true ) %>
 
-	<h3><%= t("activerecord.scopes.#{RicAdvert.banner_model.model_name.i18n_key}.already_invalid") %></h3>
+	<h3><%= t("headers.ric_advert.observer_advertisers.sofar_invalid_banners") %></h3>
+	<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
+		name: :string,
+		kind: :enum,
+	}, paths: {
+		show: "ric_advert_observer.banner_path"
+	}, summary: true ) %>
+
+	<h3><%= t("headers.ric_advert.observer_advertisers.already_invalid_banners") %></h3>
 	<%= rug_index_table_for(@advertiser.banners.already_invalid(@today).order(name: :asc), { 
 		name: :string,
-		kind: :string,
+		kind: :enum,
 	}, paths: {
 		show: "ric_advert_observer.banner_path"
 	}, summary: true ) %>

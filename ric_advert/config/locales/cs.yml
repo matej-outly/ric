@@ -23,13 +23,13 @@ cs:
         edit: "Upravit banner"
         update: "Upravit banner"
         destroy: "Smazat banner"
-        valid_banners: Platné
-        invalid_banners: Neplatné
-        sofar_invalid_banners: Platné v budoucnosti
-        already_invalid_banners: Už neplatné
       observer_advertisers:
         index: "Inzerenti"
         show: "Detail inzerenta"
+        valid_banners: Platné bannery
+        invalid_banners: Neplatné bannery
+        sofar_invalid_banners: Platné v budoucnosti
+        already_invalid_banners: Už neplatné
       observer_banners:
         show: "Detail banneru"
 
