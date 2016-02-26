@@ -67,8 +67,8 @@ cs:
         background: Pozadí
         layout: Šablona
         checkbox: Vybrat
-        keywords: Klíčová slova
-        description: Popis
+        meta_title: Nadpis (meta)
+        meta_description: Popis (meta)
         menus: Navázaná menu
       ric_website/page_block:
         page_id: Stránka

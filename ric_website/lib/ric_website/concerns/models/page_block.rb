@@ -97,6 +97,14 @@ module RicWebsite
 					return value
 				end
 
+				def content_formatted
+					if self.subject
+						return self.subject.content_formatted
+					else
+						return ""
+					end
+				end
+
 			protected
 
 				def bind_subject_before_create

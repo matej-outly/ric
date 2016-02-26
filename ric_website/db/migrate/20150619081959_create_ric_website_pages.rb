@@ -20,8 +20,8 @@ class CreateRicWebsitePages < ActiveRecord::Migration
 			t.string :url
 
 			# Meta
-			t.string :keywords
-			t.string  :description
+			t.string :meta_title
+			t.string :meta_description
 
 			# Design
 			t.attachment :background

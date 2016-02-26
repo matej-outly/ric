@@ -83,6 +83,7 @@ module RicWebsite
 					# Get all defined settings
 					#
 					def settings
+						@settings = {} if @settings.nil?
 						@settings
 					end
 
@@ -91,7 +92,7 @@ module RicWebsite
 					#
 					def categories
 						result = {}
-						@settings.each do |setting_key, setting_options|
+						self.settings.each do |setting_key, setting_options|
 							if setting_options[:category]
 								if result[setting_options[:category]].nil?
 									result[setting_options[:category]] = []

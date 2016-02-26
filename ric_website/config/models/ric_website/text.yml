@@ -1,0 +1,4 @@
+# Partials which should be rendered and substitued in formatted content
+#partials:
+#  partial1: "shared/partial1"
+#  partial2: "shared/partial2"

@@ -104,7 +104,7 @@ module RicWebsite
 					# Columns
 					#
 					def meta_part_columns
-						[:keywords, :description]
+						[:meta_title, :meta_description]
 					end
 
 					#

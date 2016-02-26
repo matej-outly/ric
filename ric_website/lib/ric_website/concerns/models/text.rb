@@ -32,6 +32,32 @@ module RicWebsite
 
 				end
 
+				#
+				# Get content formatted for public
+				#
+				def content_formatted
+					result = self.content
+					if config(:partials)
+						config(:partials).each do |key, partial|
+							result = result.gsub("{" + key.to_s + "}", render_partial(partial))
+						end
+					end
+					return result
+				end
+
+			protected
+
+				#
+				# Render partial view
+				#
+				def render_partial(partial)
+					return ActionView::Base.new(Rails.configuration.paths["app/views"]).render(
+						partial: partial, 
+						formats: [:html],
+						handlers: [:erb]
+					)
+				end
+
 			end
 		end
 	end

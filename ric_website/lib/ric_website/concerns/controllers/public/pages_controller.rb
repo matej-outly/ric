@@ -32,6 +32,11 @@ module RicWebsite
 						#
 						implement_broadcast :title
 
+						#
+						# Implement broadcast which gathers all description messages
+						#
+						implement_broadcast :description
+
 					end
 
 					#
@@ -46,8 +51,21 @@ module RicWebsite
 					# Get title of current page model (if any)
 					#
 					def receive_title(arguments)
-						if @page && @page.respond_to?(:title)
-							return @page.title
+						if @page
+							return @page.meta_title if @page.respond_to?(:meta_title) && !@page.meta_title.blank?
+							return @page.title if @page.respond_to?(:title) && !@page.title.blank?
+							return nil
+						else
+							return nil
+						end
+					end
+
+					#
+					# Get description of current page model (if any)
+					#
+					def receive_description(arguments)
+						if @page && @page.respond_to?(:meta_description) && !@page.meta_description.blank?
+							return @page.meta_description
 						else
 							return nil
 						end
