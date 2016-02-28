@@ -75,6 +75,17 @@ module RicCustomer
 					end
 
 					#
+					# Search action
+					#
+					def search
+						@customers = RicCustomer.customer_model.search(params[:q]).order(name_lastname: :asc, name_firstname: :asc, email: :asc)
+						respond_to do |format|
+							format.html { render "index" }
+							format.json { render json: @customers.to_json }
+						end
+					end
+
+					#
 					# Show action
 					#
 					def show

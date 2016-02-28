@@ -31,9 +31,26 @@ module RicCustomer
 
 					name_column :name
 
+					#
+					# Add formatted name to JSON output
+					#
+					add_methods_to_json :name_formatted
+
 				end
 
 				module ClassMethods
+
+					# *********************************************************
+					# Search scope
+					# *********************************************************
+
+					def search(query)
+						if query.blank?
+							all
+						else
+							where("(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query)
+						end
+					end
 
 					# *********************************************************
 					# Filter scope

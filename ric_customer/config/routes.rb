@@ -17,6 +17,7 @@ RicCustomer::AdminEngine.routes.draw do
 			post "index_filter"
 			get "statistic/:statistic", action: "statistic", as: "statistic"
 			post "statistic_filter/:statistic", action: "statistic_filter", as: "statistic_filter"
+			get "search"
 		end
 	end
 
