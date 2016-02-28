@@ -52,6 +52,11 @@ module RicUser
 
 					name_column :name
 
+					#
+					# Add formatted name to JSON output
+					#
+					add_methods_to_json :name_formatted
+
 					# *********************************************************
 					# Validators
 					# *********************************************************
