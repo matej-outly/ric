@@ -16,7 +16,7 @@ root_dir="$script_dir/.."
 build_dir="$root_dir/build"
 
 # Install all engines
-cat modules.conf | while read module; do
+cat "$script_dir/modules.conf" | while read module; do
 	gem install "$build_dir"/"$module"-*
 done
 
