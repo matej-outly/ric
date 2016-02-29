@@ -41,9 +41,8 @@ module RicCustomer
 						@filter_customer = RicCustomer.customer_model.new(load_params_from_session)
 						@customers = RicCustomer.customer_model.filter(load_params_from_session.symbolize_keys).order(name_lastname: :asc, name_firstname: :asc)
 						if request.format.to_sym == :html
-							@customers = @customers.page(params[:page])
+							@customers = @customers.page(params[:page]).per(50)
 						end
-
 						respond_to do |format|
 							format.html
 							format.xls

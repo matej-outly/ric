@@ -3,6 +3,6 @@
 		<% @statistic_columns.each do |column, spec| %>
 			<%= f.generic_row column, spec[:type], enable_null: true %>
 		<% end %>
-		<%= f.primary_button_row :submit, label: t("helpers.submit.search") %>
+		<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
 	<% end %>
 <% end %>
