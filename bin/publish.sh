@@ -17,6 +17,7 @@ build_dir="$root_dir/build"
 
 # Install all engines
 cat "$script_dir/modules.conf" | while read module; do
+	module="$(echo -e "${module}" | tr -d '[[:space:]]')"
 	gem inabox "$build_dir"/"$module"-*
 done
 
