@@ -1,15 +1,25 @@
 <div class="layout default">
 	<div class="content">
 
-		<%= breadcrumbs if defined? breadcrumbs %>
+		<%= breadcrumbs if defined?(breadcrumbs) %>
 		
 		<div class="clearfix">
 			<%= render partial: "ric_admin/shared/flash" %>
 			<%= render partial: "ric_admin/shared/login_info" %>
 		</div>
 
-		<% if !(defined? disable_header) || (disable_header != true) %>
+		<% if !(defined?(disable_header)) || (disable_header != true) %>
 			<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
+		<% end %>
+
+		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
+			<% partial = render(partial: "#{controller_path}/filters") %>
+			<% if !partial.trim(" \t\n").blank? || (defined?(enforce_filters) && enforce_filters == true) %>
+				<div class="filters">
+					<!--<h3><%= t("headers.filters") %></h3>-->
+					<%= partial %>
+				</div>
+			<% end %>
 		<% end %>
 
 		<%= yield %>

@@ -661,6 +661,37 @@ body {
 
 	.label {
 		margin-bottom: 10px;
+
+		&.default {
+			&.color-yellow { background: $yellow; border-color: $yellow-dark; }
+			&.color-turquoise { background: $turquoise; border-color: $turquoise-dark; }
+			&.color-blue { background: $blue; border-color: $blue-dark; }
+			&.color-pink { background: $pink; border-color: $pink-dark; }
+			&.color-violet { background: $violet; border-color: $violet-dark; }
+			&.color-orange { background: $orange; border-color: $orange-dark; }
+			&.color-red { background: $red; border-color: $red-dark; color: white; }
+			&.color-green { background: $green; border-color: $green-dark; color: white; }
+		}
+	}
+
+	/*****************************************************************************/
+	/* Filters                                                                   */
+	/*****************************************************************************/
+
+	.filters {
+		background: white;
+		border: 1px solid #dddddd;
+		padding: 10px 10px 5px 10px;
+		margin-bottom: 10px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		> form {
+			margin: 0;
+			.field {
+				margin: 0;
+			}
+		}
 	}
 
 	/*****************************************************************************/
@@ -671,32 +702,6 @@ body {
 		&:before {
 			display: none;
 		}
-	}
-
-	/*************************************************************************/
-	/* States                                                                */
-	/*************************************************************************/
-
-	.state {
-		height: 20px;
-		min-width: 20px;
-		-webkit-border-radius: 10px;
-		-moz-border-radius: 10px;
-		border-radius: 10px;
-		border-style: solid;
-		border-width: 1px;
-		background: #eeeeee;
-		display: inline-block;
-
-		/* Backgrounds */
-		&.color-yellow { background: $yellow; border-color: $yellow-dark; }
-		&.color-turquoise { background: $turquoise; border-color: $turquoise-dark; }
-		&.color-blue { background: $blue; border-color: $blue-dark; }
-		&.color-pink { background: $pink; border-color: $pink-dark; }
-		&.color-violet { background: $violet; border-color: $violet-dark; }
-		&.color-orange { background: $orange; border-color: $orange-dark; }
-		&.color-red { background: $red; border-color: $red-dark; }
-		&.color-green { background: $green; border-color: $green-dark; }
 	}
 
 	/*************************************************************************/
@@ -868,40 +873,6 @@ body {
 			}
 		}
 
-	}
-
-	/*************************************************************************/
-	/* Togglable                                                             */
-	/*************************************************************************/
-
-	.toggle {
-		&:after {
-			content: "";
-			font-family: entypo;
-		}
-		&.active {
-			&:after {
-				content: "";
-			}
-		}
-	}
-	h1, h2, h3, h4, h5, h6 {
-		.toggle {
-			&:after {
-				display: inline-block;
-				vertical-align: middle;
-				margin-left: 20px;
-				font-size: 70%;
-			}
-		}
-	}
-
-	.togglable {
-		height: 0;
-		overflow: hidden;
-		&.active {
-			height: auto;
-		}
 	}
 
 	/*************************************************************************/

@@ -75,6 +75,7 @@ cs:
       create: "Vytvořit"
       update: "Uložit"
       search: "Hledat"
+      filter: "Filtrovat"
       reset: "Obnovit"
       register: "Registrovat"
       order: "Dokončit objednávku"
