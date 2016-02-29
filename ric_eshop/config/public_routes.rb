@@ -16,6 +16,9 @@ RicEshop::PublicEngine.routes.draw do
 		member do
 			get "finalize"
 		end
+		collection do
+			post "preserve"
+		end
 	end
 
 	# Cart

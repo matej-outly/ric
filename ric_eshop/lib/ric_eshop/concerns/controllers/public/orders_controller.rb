@@ -31,9 +31,22 @@ module RicEshop
 					# New action
 					#
 					def new
-						@order = RicEshop.order_model.new(session_id: @cart.session_id)
+						order_params = load_params_from_session
+						order_params[:session_id] = @cart.session_id
+						@order = RicEshop.order_model.new(order_params)
 						if @cart.empty?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicEshop.order_model.model_name.i18n_key}.cart_empty")
+						end
+					end
+
+					#
+					# Preserve action
+					#
+					def preserve
+						save_params_to_session(order_params)
+						respond_to do |format|
+							format.html { redirect_to ric_eshop_public.new_order_path }
+							format.json { render json: true }
 						end
 					end
 
@@ -44,6 +57,7 @@ module RicEshop
 						@order = RicEshop.order_model.new(order_params)
 						@order.cart_price = @cart.price # In order to validate minimal price conditions 
 						if @order.save
+							clear_params_from_session
 							redirect_to order_created_path, notice: I18n.t("activerecord.notices.models.#{RicEshop.order_model.model_name.i18n_key}.create")
 						else
 							render "new"
@@ -57,6 +71,10 @@ module RicEshop
 					end
 
 				protected
+
+					# *********************************************************************
+					# Model setters
+					# *********************************************************************
 
 					#
 					# Find model according to parameter
@@ -75,12 +93,51 @@ module RicEshop
 						end
 					end
 
+					# *********************************************************************
+					# Path resolvers
+					# *********************************************************************
+
 					#
 					# Get path which should be followed after order is succesfully created
 					#
 					def order_created_path
 						ric_eshop_public.finalize_order_path(@order)
 					end
+
+					# *********************************************************************
+					# Session
+					# *********************************************************************
+
+					def session_key
+						return "orders"
+					end
+
+					def save_params_to_session(params)
+						if session[session_key].nil?
+							session[session_key] = {}
+						end
+						if !params.nil?
+							session[session_key]["params"] = params
+						end
+					end
+
+					def load_params_from_session
+						if !session[session_key].nil? && !session[session_key]["params"].nil?
+							return session[session_key]["params"]
+						else
+							return {}
+						end
+					end
+
+					def clear_params_from_session
+						if !session[session_key].nil? && !session[session_key]["params"].nil?
+							session[session_key].delete("params")
+						end
+					end
+
+					# *********************************************************************
+					# Param filters
+					# *********************************************************************
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
