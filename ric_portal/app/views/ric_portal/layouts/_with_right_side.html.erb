@@ -5,7 +5,7 @@
 		
 		<div class="eight columns">
 			<%= render partial: "ric_portal/shared/flash" %>
-			<% if !(defined? disable_header) || (disable_header != true) %>
+			<% if !(defined?(disable_header)) || (disable_header != true) %>
 				<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
 			<% end %>
 			<%= yield %>
