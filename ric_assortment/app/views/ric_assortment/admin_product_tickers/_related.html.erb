@@ -1,5 +1,0 @@
-<%= rug_menu_for(@product_ticker, name: "related") do |m| %>
-	<% if @product_ticker && !@product_ticker.new_record? %>
-		<%= m.item t("headers.ric_assortment.admin_product_ticker_relations.edit"), edit_product_ticker_relation_path(@product_ticker), icon: "plus" %>
-	<% end %>
-<% end %>

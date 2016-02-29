@@ -19,6 +19,7 @@ RicAssortment::AdminEngine.routes.draw do
 		end
 		collection do
 			get "from_category/:product_category_id", to: "admin_products#from_category", as: "from_category"
+			get "search"
 		end
 	end
 
@@ -29,7 +30,11 @@ RicAssortment::AdminEngine.routes.draw do
 	resources :product_attachment_relations, only: [:edit, :update, :destroy], controller: "admin_product_attachment_relations"
 
 	# Product categories
-	resources :product_categories, controller: "admin_product_categories"
+	resources :product_categories, controller: "admin_product_categories" do
+		collection do 
+			get "search"
+		end
+	end
 
 	# Product category relations
 	resources :product_category_relations, only: [:edit, :update, :destroy], controller: "admin_product_category_relations"
@@ -37,16 +42,17 @@ RicAssortment::AdminEngine.routes.draw do
 	# Product photos
 	resources :product_photos, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_photos"
 
-	# Product panels
-	resources :product_panels, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_panels"
-
-	# Product product panel / sub product relations
-	resources :product_panel_sub_product_relations, only: [:edit, :update, :destroy], controller: "admin_product_panel_sub_product_relations"
+	# Product variants
+	resources :product_variants, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_variants"
 
 	# Product tickers
-	resources :product_tickers, controller: "admin_product_tickers"
-
-	# Product ticker relations
-	resources :product_ticker_relations, only: [:edit, :update, :destroy], controller: "admin_product_ticker_relations"
+	resources :product_tickers, controller: "admin_product_tickers" do
+		member do 
+			delete "unbind_product"
+		end
+		collection do 
+			get "search"
+		end
+	end
 
 end

@@ -19,7 +19,7 @@ require 'ric_assortment/concerns/models/product_attachment'
 require 'ric_assortment/concerns/models/product_category'
 require 'ric_assortment/concerns/models/product_photo'
 require 'ric_assortment/concerns/models/product_ticker'
-require 'ric_assortment/concerns/models/product_panel'
+require 'ric_assortment/concerns/models/product_variant'
 
 module RicAssortment
 
@@ -54,22 +54,10 @@ module RicAssortment
 	@@product_model = "RicAssortment::Product"
 
 	#
-	# Product attachment model
+	# Enable photos subsystem
 	#
-	mattr_accessor :product_attachment_model
-	def self.product_attachment_model
-		return @@product_attachment_model.constantize
-	end
-	@@product_attachment_model = "RicAssortment::ProductAttachment"
-
-	#
-	# Product category model
-	#
-	mattr_accessor :product_category_model
-	def self.product_category_model
-		return @@product_category_model.constantize
-	end
-	@@product_category_model = "RicAssortment::ProductCategory"
+	mattr_accessor :enable_photos
+	@@enable_photos = false
 
 	#
 	# Product photo model
@@ -81,6 +69,42 @@ module RicAssortment
 	@@product_photo_model = "RicAssortment::ProductPhoto"
 
 	#
+	# Enable attachments subsystem
+	#
+	mattr_accessor :enable_attachments
+	@@enable_attachments = false
+
+	#
+	# Product attachment model
+	#
+	mattr_accessor :product_attachment_model
+	def self.product_attachment_model
+		return @@product_attachment_model.constantize
+	end
+	@@product_attachment_model = "RicAssortment::ProductAttachment"
+
+	#
+	# Enable categories subsystem
+	#
+	mattr_accessor :enable_categories
+	@@enable_categories = false
+
+	#
+	# Product category model
+	#
+	mattr_accessor :product_category_model
+	def self.product_category_model
+		return @@product_category_model.constantize
+	end
+	@@product_category_model = "RicAssortment::ProductCategory"
+
+	#
+	# Enable tickers subsystem
+	#
+	mattr_accessor :enable_tickers
+	@@enable_tickers = false
+
+	#
 	# Product ticker model
 	#
 	mattr_accessor :product_ticker_model
@@ -90,12 +114,20 @@ module RicAssortment
 	@@product_ticker_model = "RicAssortment::ProductTicker"
 
 	#
-	# Product panel model
+	# Enable variants subsystem
 	#
-	mattr_accessor :product_panel_model
-	def self.product_panel_model
-		return @@product_panel_model.constantize
+	mattr_accessor :enable_variants
+	@@enable_variants = false
+
+	#
+	# Product variant model
+	#
+	mattr_accessor :product_variant_model
+	def self.product_variant_model
+		return @@product_variant_model.constantize
 	end
-	@@product_panel_model = "RicAssortment::ProductPanel"
+	@@product_variant_model = "RicAssortment::ProductVariant"
+
+
 
 end

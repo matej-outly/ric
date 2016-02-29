@@ -2,17 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product ticker relations
+# * Product variant
 # *
 # * Author: Matěj Outlý
-# * Date  : 12. 8. 2015
+# * Date  : 26. 11. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_assortment/admin_controller"
-
 module RicAssortment
-	class AdminProductTickerRelationsController < AdminController
-		include RicAssortment::Concerns::Controllers::Admin::ProductTickerRelationsController
+	class ProductVariant < ActiveRecord::Base
+		include RicAssortment::Concerns::Models::ProductVariant
 	end
 end

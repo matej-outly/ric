@@ -1,8 +1,0 @@
-<%= rug_menu_for(@product_panel, name: "related") do |m| %>
-	<% if @product_panel %>
-		<%= m.item t("headers.ric_assortment.admin_products.show"), product_path(@product_panel.product), icon: "search" %>
-	<% end %>
-	<% if @product_panel && !@product_panel.new_record? %>
-		<%= m.item t("headers.ric_assortment.admin_product_panel_sub_product_relations.edit"), edit_product_panel_sub_product_relation_path(@product_panel), icon: "plus" %>
-	<% end %>
-<% end %>

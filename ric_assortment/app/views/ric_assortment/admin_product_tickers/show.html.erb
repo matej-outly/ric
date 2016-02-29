@@ -7,14 +7,14 @@
 	<% if @product_ticker.products.count > 0 %>
 		<h3><%= t("headers.ric_assortment.admin_product_tickers.products") %></h3>
 
-		<%= rug_index_table_for(@product_ticker.products.order(position: :asc).page(params[:page]).per(50), { 
+		<%= rug_index_table_for(@product_ticker.products.order(position: :asc), { 
 			name: :string,
 			catalogue_number: :string,
 			ean: :string
 		}, paths: {
 			show: :product_path,
-			destroy: lambda { |product| product_ticker_relation_path(id: @product_ticker.id, product_id: product.id) }
-		}, pagination: true ) %>
+			destroy: lambda { |product| unbind_product_product_ticker_path(id: @product_ticker.id, product_id: product.id) }
+		}) %>
 	<% end %>
 
 <% end %>

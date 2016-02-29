@@ -46,9 +46,9 @@ module RicAssortment
 					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s, dependent: :destroy
 
 					#
-					# Relation to product panels
+					# Relation to product variants
 					#
-					has_many :product_panels, class_name: RicAssortment.product_panel_model.to_s, dependent: :destroy
+					has_many :product_variants, class_name: RicAssortment.product_variant_model.to_s, dependent: :destroy
 
 					#
 					# Relation to product tickers
@@ -87,6 +87,15 @@ module RicAssortment
 					#
 					before_destroy :destroy_slugs, prepend: true
 
+					# *********************************************************
+					# JSON
+					# *********************************************************
+
+					#
+					# Add name with category to JSON output
+					#
+					add_methods_to_json :name_with_category
+
 				end
 
 				module ClassMethods
@@ -95,7 +104,7 @@ module RicAssortment
 					# Parts
 					#
 					def parts
-						[:identification, :content, :dimensions, :price, :meta, :categories, :panels, :photos, :attachments]
+						[:identification, :content, :dimensions, :price, :meta, :categories, :variants, :photos, :attachments]
 					end
 
 					#
@@ -137,13 +146,13 @@ module RicAssortment
 					# Columns
 					#
 					def categories_part_columns
-						[]
+						[:product_category_ids, :product_ticker_ids]
 					end
 
 					#
 					# Columns
 					#
-					def panels_part_columns
+					def variants_part_columns
 						[]
 					end
 
@@ -157,13 +166,23 @@ module RicAssortment
 					#
 					# Columns
 					#
-					def attachemnts_part_columns
+					def attachments_part_columns
 						[]
 					end
 					
 					# *********************************************************
 					# Scopes
 					# *********************************************************
+
+					def search(query)
+						if query.blank?
+							all
+						else
+							where("
+								(lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
+							", query: query)
+						end
+					end
 
 					def from_category(product_category_id)
 						if product_category_id.nil?
@@ -204,8 +223,8 @@ module RicAssortment
 						end
 
 						# Panels
-						self.product_panels.each do |product_panel|
-							new_record.product_panels << product_panel.duplicate
+						self.product_variants.each do |product_variant|
+							new_record.product_variants << product_variant.duplicate
 						end
 
 					end
@@ -276,6 +295,15 @@ module RicAssortment
 					default_product_category = associate_default_product_category
 					self.save
 					return default_product_category
+				end
+
+				#
+				# Get name with default product category name combined
+				#
+				def name_with_category
+					result = self.name
+					result += " - " + self.default_product_category.name if self.default_product_category
+					return result
 				end
 
 			end

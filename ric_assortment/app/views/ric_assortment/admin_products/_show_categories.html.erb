@@ -11,5 +11,5 @@
 	key: :string
 }, paths: {
 	show: :product_ticker_path,
-	destroy: lambda { |product_ticker| product_ticker_relation_path(id: product_ticker.id, product_id: @product.id) }
+	destroy: lambda { |product_ticker| unbind_product_product_ticker_path(id: product_ticker.id, product_id: @product.id) }
 }) %>

@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Matej Outly (Clockstar s.r.o.)"]
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
-  s.summary     = "RIC engine for basic assortment management"
+  s.summary     = "RIC engine for assortment management"
   s.description = "Products, categories and other product associated data."
   s.license     = "MIT"
 

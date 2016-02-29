@@ -1,7 +1,0 @@
-<%= rug_form_for(@product_panel, create_url: :product_panels_path, update_url: :product_panel_path) do |f| %>
-	<%= f.hidden_field :product_id %>
-	<%= f.text_input_row :name %>
-	<%= f.checkbox_row :required %>
-	<%= f.picker_row :operator %>
-	<%= f.primary_button_row :submit %>
-<% end %>

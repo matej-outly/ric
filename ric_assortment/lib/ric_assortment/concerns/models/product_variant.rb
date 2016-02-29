@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product panel
+# * Product variant
 # *
 # * Author: Matěj Outlý
 # * Date  : 26. 11. 2015
@@ -12,7 +12,7 @@
 module RicAssortment
 	module Concerns
 		module Models
-			module ProductPanel extend ActiveSupport::Concern
+			module ProductVariant extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the

@@ -37,6 +37,17 @@ module RicAssortment
 					end
 
 					#
+					# Search action
+					#
+					def search
+						@product_categories = RicAssortment.product_category_model.search(params[:q]).order(lft: :asc)
+						respond_to do |format|
+							format.html { render "index" }
+							format.json { render json: @product_categories.to_json }
+						end
+					end
+
+					#
 					# Show action
 					#
 					def show

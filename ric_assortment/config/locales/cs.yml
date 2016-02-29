@@ -19,7 +19,7 @@ cs:
         price: Cena
         meta: Meta info.
         photos: Fotografie
-        panels: Modifikační panely
+        variants: Varianty produktu
         attachments: Přílohy
         categories: Kategorie
         tickers: Upoutávky
@@ -57,17 +57,13 @@ cs:
         edit: Upravit fotografii
         update: Upravit fotografii
         destroy: Smazat fotografii
-      admin_product_panels:
-        show: Detail panelu
-        new: Nový panel
-        create: Nový panel
-        edit: Upravit panel
-        update: Upravit panel
-        destroy: Smazat panel
-      admin_product_panel_sub_product_relations:
-        edit: "Přidat produkt do výběru"
-        update: "Přidat produkt do výběru"
-        destroy: "Odebrat produkt z výběru"
+      admin_product_variants:
+        show: Detail varianty
+        new: Nová varianta
+        create: Nová varianta
+        edit: Upravit variantu
+        update: Upravit variantu
+        destroy: Smazat variantu
       admin_product_tickers:
         index: "Upoutávky produktů"
         show: "Detail upoutávky produktů"
@@ -77,10 +73,6 @@ cs:
         update: "Upravit upoutávku produktů"
         destroy: "Smazat upoutávku produktů"
         products: "Obsažené produkty"
-      admin_product_ticker_relations:
-        edit: "Přidat produkt k upoutávce"
-        update: "Přidat produkt k upoutávce"
-        destroy: "Odebrat produkt od upoutávky"
       public_products:
         index: Produkty
 
@@ -104,6 +96,10 @@ cs:
         keywords: Klíčová slova
         description: Popis
         checkbox: Vybrat
+        product_category_ids: Kategorie
+        product_categories: Kategorie
+        product_ticker_ids: Upoutávky
+        product_tickers: Upoutávky
       ric_assortment/product_attachment:
         file: Soubor
         title: Popis
@@ -124,7 +120,8 @@ cs:
         name: Jméno
         key: Identifikující klíč
         products: Produkty
-      ric_assortment/product_panel:
+        product_ids: Produkty
+      ric_assortment/product_variant:
         product: Produkt
         product_id: Produkt
         name: Jméno
@@ -133,6 +130,7 @@ cs:
         operator_values:
           xor: XOR
         sub_products: Produkty ve výběru
+        sub_product_ids: Produkty ve výběru
     notices:
       models:
         ric_assortment/product:
@@ -163,7 +161,7 @@ cs:
           destroy: "Upoutávka produktů byla úspěšně smazána."
           product_bind: "Vybrané produkty byly úspěšně přidány."
           product_unbind: "Produkt byl úspěšně odebrán."
-        ric_assortment/product_panel:
+        ric_assortment/product_variant:
           create: "Panel produktu byl úspěšně vytvořen."
           update: "Panel produktu byl úspěšně upraven."
           destroy: "Panel produktu byl úspěšně smazán."
@@ -185,7 +183,7 @@ cs:
               blank: "Produkt musí být vybrán."
         ric_assortment/product_ticker:
           not_found: "Upoutávka produktů nebyla nalezena."
-        ric_assortment/product_panel:
+        ric_assortment/product_variant:
           not_found: "Panel produktu nebyl nalezen."
           attributes:
             product_id:

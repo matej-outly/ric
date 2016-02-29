@@ -2,7 +2,7 @@
 	<%= rug_index_table_for(@product_tickers, { 
 		name: :string,
 		key: :string,
-		products: { type: :has_many, label: :name }
+		products: { type: :has_many, label: :name_with_category }
 	}, paths: {
 		show: :product_ticker_path,
 		edit: :edit_product_ticker_path,

@@ -53,6 +53,17 @@ module RicAssortment
 					end
 
 					#
+					# Search action
+					#
+					def search
+						@products = RicAssortment.product_model.search(params[:q]).order(default_product_category_id: :asc, position: :asc)
+						respond_to do |format|
+							format.html { render "index" }
+							format.json { render json: @products.to_json }
+						end
+					end
+
+					#
 					# Show action
 					#
 					def show
@@ -145,7 +156,7 @@ module RicAssortment
 					end
 
 					def set_products
-						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(position: :asc).page(params[:page]).per(50)
+						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(default_product_category_id: :asc, position: :asc).page(params[:page]).per(50)
 					end
 
 					# 
@@ -156,7 +167,10 @@ module RicAssortment
 						RicAssortment.product_model.parts.each do |part|
 							permitted_params.concat(RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call)
 						end
-						params.require(:product).permit(permitted_params)
+						result = params.require(:product).permit(permitted_params)
+						result[:product_category_ids] = result[:product_category_ids].split(",") if !result[:product_category_ids].blank?
+						result[:product_ticker_ids] = result[:product_ticker_ids].split(",") if !result[:product_ticker_ids].blank?
+						return result
 					end
 
 				end
