@@ -18,7 +18,7 @@ RicAssortment::AdminEngine.routes.draw do
 			put "move/:relation/:destination_id", action: "move", as: "move"
 		end
 		collection do
-			get "from_category/:product_category_id", to: "admin_products#from_category", as: "from_category"
+			post "filter"
 			get "search"
 		end
 	end

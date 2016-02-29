@@ -96,10 +96,15 @@ cs:
         keywords: Klíčová slova
         description: Popis
         checkbox: Vybrat
+        default_product_category_id: Kategorie
+        default_product_category: Kategorie
+        product_category_id: Kategorie
+        product_category: Kategorie
         product_category_ids: Kategorie
         product_categories: Kategorie
         product_ticker_ids: Upoutávky
         product_tickers: Upoutávky
+        all_product_categories: Všechny kategorie
       ric_assortment/product_attachment:
         file: Soubor
         title: Popis

@@ -1,3 +1,12 @@
-<%= nested_ul(RicAssortment.product_category_model.all.order(lft: :asc), class: "menu") do |product_category| %>
-	<%= link_to product_category.name, ric_assortment_admin.from_category_products_path(product_category_id: product_category.id), class: (@product_category && product_category.id == @product_category.id ? "active" : "") %>
+<% if action_name == "index" %>
+	<%= rug_form_for(@filter_product, url: ric_assortment_admin.filter_products_path) do |f| %>
+		<div class="row">
+			<div class="six columns">
+				<%= f.picker_row :product_category_id, RicAssortment.product_category_model.all.order(lft: :asc), :id, :name_with_depth, enable_null: t("activerecord.attributes.#{RicAssortment.product_model.model_name.i18n_key}.all_product_categories"), label: false %>
+			</div>
+			<div class="six columns right-on-pc">
+				<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
+			</div>
+		</div>
+	<% end %>
 <% end %>

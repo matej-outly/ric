@@ -96,6 +96,15 @@ module RicAssortment
 					#
 					add_methods_to_json :name_with_category
 
+					# *********************************************************
+					# Filter
+					# *********************************************************
+
+					#
+					# For filtering by product category
+					#
+					attr_accessor :product_category_id
+
 				end
 
 				module ClassMethods
@@ -185,11 +194,26 @@ module RicAssortment
 					end
 
 					def from_category(product_category_id)
-						if product_category_id.nil?
+						if product_category_id.blank?
 							all
 						else
 							joins(:product_categories).where(product_categories: { id: product_category_id })
 						end
+					end
+
+					def filter(params = {})
+						
+						# Preset
+						result = all
+
+						# Process known filters
+						params.each do |column, value|
+							if column == :product_category_id
+								result = from_category(value)
+							end
+						end
+
+						result
 					end
 
 				end

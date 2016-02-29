@@ -27,29 +27,29 @@ module RicAssortment
 						#
 						before_action :set_product, only: [:show, :edit, :update, :duplicate, :destroy]
 
-						#
-						# Set product category before some actions
-						#
-						before_action :set_product_category, only: [:index, :from_category, :show]
-
-						#
-						# Set products before some actions
-						#
-						before_action :set_products, only: [:index, :from_category]
-
 					end
 
 					#
 					# Index action
 					#
 					def index
+						@filter_product = RicAssortment.product_model.new(load_params_from_session)
+						@products = RicAssortment.product_model.filter(load_params_from_session.symbolize_keys).order(default_product_category_id: :asc, position: :asc)
+						if request.format.to_sym == :html
+							@products = @products.page(params[:page]).per(50)
+						end
+						respond_to do |format|
+							format.html
+							#format.xls
+						end
 					end
 
 					#
-					# From category action
+					# Filter action
 					#
-					def from_category
-						render "index"
+					def filter
+						save_params_to_session(filter_params)
+						redirect_to ric_assortment_admin.products_path
 					end
 
 					#
@@ -140,6 +140,10 @@ module RicAssortment
 
 				protected
 
+					# *********************************************************************
+					# Model setters
+					# *********************************************************************
+
 					def set_product
 						@product = RicAssortment.product_model.find_by_id(params[:id])
 						if @product.nil?
@@ -147,17 +151,34 @@ module RicAssortment
 						end
 					end
 
-					def set_product_category
-						if params[:product_category_id]
-							@product_category = RicAssortment.product_category_model.find_by_id(params[:product_category_id])
-						elsif @product
-							@product_category = @product.default_product_category
+					# *********************************************************************
+					# Session
+					# *********************************************************************
+
+					def session_key
+						return "products"
+					end
+
+					def save_params_to_session(params)
+						if session[session_key].nil?
+							session[session_key] = {}
+						end
+						if !params.nil?
+							session[session_key]["params"] = params
 						end
 					end
 
-					def set_products
-						@products = RicAssortment.product_model.from_category(params[:product_category_id]).order(default_product_category_id: :asc, position: :asc).page(params[:page]).per(50)
+					def load_params_from_session
+						if !session[session_key].nil? && !session[session_key]["params"].nil?
+							return session[session_key]["params"]
+						else
+							return {}
+						end
 					end
+
+					# *********************************************************************
+					# Param filters
+					# *********************************************************************
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
@@ -171,6 +192,10 @@ module RicAssortment
 						result[:product_category_ids] = result[:product_category_ids].split(",") if !result[:product_category_ids].blank?
 						result[:product_ticker_ids] = result[:product_ticker_ids].split(",") if !result[:product_ticker_ids].blank?
 						return result
+					end
+
+					def filter_params
+						return params[:product].permit(:product_category_id)
 					end
 
 				end
