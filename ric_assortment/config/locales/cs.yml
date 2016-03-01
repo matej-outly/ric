@@ -95,7 +95,6 @@ cs:
           cs: "Kč"
         keywords: Klíčová slova
         description: Popis
-        checkbox: Vybrat
         default_product_category_id: Kategorie
         default_product_category: Kategorie
         product_category_id: Kategorie
@@ -109,12 +108,10 @@ cs:
         file: Soubor
         title: Popis
         products: Produkty
-        checkbox: Vybrat
       ric_assortment/product_category:
         name: Jméno
         parent: Nadřazená kategorie
         parent_id: Nadřazená kategorie
-        checkbox: Vybrat
       ric_assortment/product_photo:
         product: Produkt
         product_id: Produkt

@@ -4,7 +4,7 @@
 
 		<%
 			columns = RugBuilder::TableBuilder::Columns.new(name: :string)
-			columns.add_column_by_block(:checkbox) do |product_category|
+			columns.add_column_by_block(:checkbox, column_label: false) do |product_category|
 				check_box_tag "product[product_categories][#{product_category.id.to_s}]", "1", (@product.product_category_ids.include?(product_category.id))
 			end
 		%>

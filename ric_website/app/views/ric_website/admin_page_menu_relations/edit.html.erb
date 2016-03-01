@@ -2,7 +2,7 @@
 	<%= rug_form_for(@page, url: page_menu_relation_path(@page)) do |f| %>
 		<%
 			columns = RugBuilder::TableBuilder::Columns.new(name: :string, key: :string)
-			columns.add_column_by_block(:checkbox) do |menu|
+			columns.add_column_by_block(:checkbox, column_label: false) do |menu|
 				check_box_tag "#{@page.class.model_name.param_key}[menus][#{menu.id.to_s}]", "1", (@page.menu_ids.include?(menu.id))
 			end
 		%>

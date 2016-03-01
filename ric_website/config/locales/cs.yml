@@ -16,6 +16,7 @@ cs:
         meta: "Meta informace"
         page_blocks: "Textové bloky"
         menus: "Navázaná menu"
+        structure: "Struktura okolních stránek"
         children: "Podřazené stránky"
       admin_page_blocks:
         show: "Detail textového bloku"
@@ -66,7 +67,6 @@ cs:
         url: Odkaz
         background: Pozadí
         layout: Šablona
-        checkbox: Vybrat
         meta_title: Nadpis (meta)
         meta_description: Popis (meta)
         menus: Navázaná menu
@@ -81,7 +81,6 @@ cs:
       ric_website/menu:
         key: Identifikující klíč
         name: Jméno
-        checkbox: Vybrat
       ric_website/text:
         key: Identifikující klíč
         title: Nadpis
