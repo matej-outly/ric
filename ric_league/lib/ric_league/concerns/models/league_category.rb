@@ -40,12 +40,15 @@ module RicLeague
 					#
 					has_many :teams, class_name: RicLeague.team_model.to_s, dependent: :nullify
 
+					#
+					# Ordering
+					#
+					enable_ordering
+
 				end
 
 				module ClassMethods
 					
-					
-
 				end
 
 			end

@@ -26,7 +26,7 @@
 				played_at: :datetime,
 				team_names: :string,
 				league_category: { type: :belongs_to, label: :name, path: :league_category_path },
-				court: :string,
+				place: :string,
 				result: :string,
 			}, paths: {
 				show: :league_match_path, 
