@@ -30,6 +30,11 @@ module RicAssortment
 					#
 					has_and_belongs_to_many :products, class_name: RicAssortment.product_model.to_s
 
+					#
+					# Keys
+					#
+					enum_column :key, config(:keys)
+
 				end
 
 				module ClassMethods

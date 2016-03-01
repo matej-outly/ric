@@ -1,6 +1,6 @@
 <%= rug_form_for(@product_ticker, create_url: :product_tickers_path, update_url: :product_ticker_path) do |f| %>
-	<%= f.text_input_row :name, :text_field %>
-	<%= f.text_input_row :key, :text_field %>
+	<%= f.text_input_row :name %>
+	<%= f.picker_row :key %>
 	<%= f.token_input_row :product_ids, ric_assortment_admin.search_products_path, as: :products, value_attr: :id, label_attr: :name_with_category %>
 	<%= f.primary_button_row :submit %>
 <% end %>

@@ -123,6 +123,8 @@ cs:
         key: Identifikující klíč
         products: Produkty
         product_ids: Produkty
+        key_values:
+          homepage: Upoutávka na homepage
       ric_assortment/product_variant:
         product: Produkt
         product_id: Produkt

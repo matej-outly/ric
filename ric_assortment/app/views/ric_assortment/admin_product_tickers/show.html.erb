@@ -1,12 +1,11 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@product_ticker, { 
 		name: :string,
-		key: :string
+		key: :enum
 	}) %>
 
 	<% if @product_ticker.products.count > 0 %>
 		<h3><%= t("headers.ric_assortment.admin_product_tickers.products") %></h3>
-
 		<%= rug_index_table_for(@product_ticker.products.order(position: :asc), { 
 			name: :string,
 			catalogue_number: :string,

@@ -1,7 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@product_tickers, { 
 		name: :string,
-		key: :string,
+		key: :enum,
 		products: { type: :has_many, label: :name_with_category }
 	}, paths: {
 		show: :product_ticker_path,
