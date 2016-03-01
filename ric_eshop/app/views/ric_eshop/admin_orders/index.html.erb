@@ -1,8 +1,10 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@orders, { 
 		created_at: :datetime,
-		paid_at: :datetime,
+		price: :currency,
 		payment_type: :enum,
+		delivery_type: :enum,
+		paid_at: :datetime,
 	}, paths: {
 		show: :order_path,
 		edit: :edit_order_path,

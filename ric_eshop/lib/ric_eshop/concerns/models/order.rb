@@ -113,6 +113,13 @@ module RicEshop
 				# *************************************************************
 
 				#
+				# Locked for update?
+				#
+				def locked?
+					return false	
+				end
+
+				#
 				# Total price
 				#
 				def price

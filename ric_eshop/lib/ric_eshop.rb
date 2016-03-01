@@ -58,7 +58,7 @@ module RicEshop
 	def self.order_item_model
 		return @@order_item_model.constantize
 	end
-	@@order_item_model = "RicEshop::Order"
+	@@order_item_model = "RicEshop::OrderItem"
 
 	#
 	# Cart model
