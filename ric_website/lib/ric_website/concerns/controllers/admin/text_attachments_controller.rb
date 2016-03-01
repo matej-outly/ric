@@ -38,14 +38,14 @@ module RicWebsite
 						# Pages
 						@pages = RicWebsite.page_model.all.order(lft: :asc)
 						@pages.each do |page|
-							result << { title: I18n.t("general.page").upcase_first + " - " + page.name, value: page.url }
+							result << { title: I18n.t("general.page").upcase_first + " | " + page.title_with_depth, value: page.url }
 						end
 
 						# Text attachments
 						@text_attachments = RicWebsite.text_attachment_model.all.order(id: :asc)
 						@text_attachments.each do |text_attachment|
 							if text_attachment.file.exists?
-								result << { title: I18n.t("general.file").upcase_first + " - " + text_attachment.file_file_name, value: text_attachment.file.url }
+								result << { title: I18n.t("general.file").upcase_first + " | " + text_attachment.file_file_name, value: text_attachment.file.url }
 							end
 						end
 						
@@ -60,7 +60,7 @@ module RicWebsite
 						@text_attachments = RicWebsite.text_attachment_model.where(kind: "image").order(id: :asc)
 						@text_attachments.each do |text_attachment|
 							if text_attachment.file.exists?
-								result << { title: I18n.t("general.file").upcase_first + " - " + text_attachment.file_file_name, value: text_attachment.file.url }
+								result << { title: I18n.t("general.file").upcase_first + " | " + text_attachment.file_file_name, value: text_attachment.file.url }
 							end
 						end
 						render json: result

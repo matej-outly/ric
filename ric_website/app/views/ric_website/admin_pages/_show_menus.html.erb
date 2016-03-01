@@ -1,0 +1,7 @@
+<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
+	name: :string,
+	key: :string,
+}, paths: {
+	show: :menu_path,
+	destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
+} ) %>

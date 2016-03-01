@@ -4,11 +4,10 @@
 			<% @page.class.parts.each do |part| %>
 				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
 			<% end %>
-			<li><a href="#"><%= t("headers.ric_website.admin_pages.children") %></a></li>
-			<li><a href="#"><%= t("headers.ric_website.admin_pages.menus") %></a></li>
 		</ul>
 		<% @page.class.parts.each do |part| %>
 			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
+				
 				<% if part == :basic %>
 					<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
 					<%= render partial: "show_#{part.to_s}" %>
@@ -27,27 +26,8 @@
 				<% else %>
 					<%= render partial: "show_#{part.to_s}" %>
 				<% end %>
+
 			</div>
 		<% end %>
-		<div class="tab-content">
-			<%= rug_index_table_for(@page.children.order(lft: :asc), { 
-				title: :string,
-				url: :string,
-			}, paths: {
-				show: :page_path,
-				edit: :edit_page_path,
-				destroy: :page_path
-			} ) %>
-		</div>
-		<div class="tab-content">
-			<%= rug_index_table_for(@page.menus.order(created_at: :asc), { 
-				name: :string,
-				key: :string,
-			}, paths: {
-				show: :menu_path,
-				destroy: lambda { |menu| page_menu_relation_path(id: @page.id, menu_id: menu.id) }
-			} ) %>
-		</div>
 	</section>
-
 <% end %>

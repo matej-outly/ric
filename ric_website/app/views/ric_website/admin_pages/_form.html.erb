@@ -2,14 +2,17 @@
 	<section class="tabs pill">
 		<ul class="tab-nav">
 			<% @page.class.parts.each do |part| %>
-				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
+				<% if !RicWebsite.page_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
+					<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
+				<% end %>
 			<% end %>
 		</ul>
 		<% @page.class.parts.each do |part| %>
-			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
-				<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
-				<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
-			</div>
+			<% if !RicWebsite.page_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
+				<div class="tab-content <%= (part == :basic ? "active" : "") %>">
+					<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
+				</div>
+			<% end %>
 		<% end %>
 	</section>
 	<%= f.primary_button_row :submit %>

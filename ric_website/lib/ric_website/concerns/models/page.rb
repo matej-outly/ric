@@ -83,7 +83,7 @@ module RicWebsite
 					# Parts
 					#
 					def parts
-						[:basic, :design, :meta]
+						[:basic, :design, :meta, :structure, :menus]
 					end
 
 					#
@@ -105,6 +105,20 @@ module RicWebsite
 					#
 					def meta_part_columns
 						[:meta_title, :meta_description]
+					end
+
+					#
+					# Columns
+					#
+					def structure_part_columns
+						[]
+					end
+
+					#
+					# Columns
+					#
+					def menus_part_columns
+						[]
 					end
 
 					#
