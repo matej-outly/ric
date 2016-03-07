@@ -48,11 +48,20 @@ module RicCustomer
 						if query.blank?
 							all
 						else
-							where("
-								(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR 
-								(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR 
-								(lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
-							", query: query)
+							if config(:disable_unaccent) == true
+								where_string = "
+									(lower(email) LIKE ('%' || lower(trim(:query)) || '%')) OR 
+									(lower(name_lastname) LIKE ('%' || lower(trim(:query)) || '%')) OR 
+									(lower(name_firstname) LIKE ('%' || lower(trim(:query)) || '%'))
+								"
+							else
+								where_string = "
+									(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR 
+									(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR 
+									(lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
+								"
+							end
+							where(where_string, query: query)
 						end
 					end
 
@@ -118,11 +127,20 @@ module RicCustomer
 					# Compose where part for string
 					#
 					def filter_type_string(column, operator, unused_value)
-						return case operator
-							when :like then "lower(unaccent(#{column.to_s})) LIKE ('%' || lower(unaccent(trim(:#{column.to_s}))) || '%')"
-							when :llike then "lower(unaccent(#{column.to_s})) LIKE ('%' || lower(unaccent(trim(:#{column.to_s}))) )"
-							when :rlike then "lower(unaccent(#{column.to_s})) LIKE ( lower(unaccent(trim(:#{column.to_s}))) || '%')"
-							else nil
+						if config(:disable_unaccent) == true
+							return case operator
+								when :like then "lower(#{column.to_s}) LIKE ('%' || lower(trim(:#{column.to_s})) || '%')"
+								when :llike then "lower(#{column.to_s}) LIKE ('%' || lower(trim(:#{column.to_s})) )"
+								when :rlike then "lower(#{column.to_s}) LIKE ( lower(trim(:#{column.to_s})) || '%')"
+								else nil
+							end
+						else
+							return case operator
+								when :like then "lower(unaccent(#{column.to_s})) LIKE ('%' || lower(unaccent(trim(:#{column.to_s}))) || '%')"
+								when :llike then "lower(unaccent(#{column.to_s})) LIKE ('%' || lower(unaccent(trim(:#{column.to_s}))) )"
+								when :rlike then "lower(unaccent(#{column.to_s})) LIKE ( lower(unaccent(trim(:#{column.to_s}))) || '%')"
+								else nil
+							end
 						end
 					end
 

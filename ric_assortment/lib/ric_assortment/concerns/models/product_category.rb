@@ -57,9 +57,12 @@ module RicAssortment
 						if query.blank?
 							all
 						else
-							where("
-								(lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
-							", query: query)
+							if config(:disable_unaccent) == true
+								where_string = "(lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))"
+							else
+								where_string = "(lower(name) LIKE ('%' || lower(trim(:query)) || '%'))"
+							end
+							where(where_string, query: query)
 						end
 					end
 
