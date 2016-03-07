@@ -116,7 +116,16 @@ module RicAssortment
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def product_photo_params
-						params.require(:product_photo).permit(:product_id, :title, :picture, :picture_crop_x, :picture_crop_y, :picture_crop_w, :picture_crop_h,)
+						params.require(:product_photo).permit(
+							:product_id, 
+							:title, 
+							:picture, 
+							:picture_crop_x, 
+							:picture_crop_y, 
+							:picture_crop_w, 
+							:picture_crop_h,
+							:picture_perform_cropping,
+						)
 					end
 
 				end

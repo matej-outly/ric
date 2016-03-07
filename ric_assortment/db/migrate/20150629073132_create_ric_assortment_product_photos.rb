@@ -15,6 +15,10 @@ class CreateRicAssortmentProductPhotos < ActiveRecord::Migration
 
 			# Picture
 			t.attachment :picture
+			t.integer :picture_crop_x
+			t.integer :picture_crop_y
+			t.integer :picture_crop_w
+			t.integer :picture_crop_h
 
 		end
 	end
