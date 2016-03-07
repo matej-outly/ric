@@ -18,6 +18,10 @@ class CreateRicLeagueTeams < ActiveRecord::Migration
 			t.text :description
 			t.attachment :logo
 			t.attachment :photo
+			t.integer :photo_crop_x
+			t.integer :photo_crop_y
+			t.integer :photo_crop_w
+			t.integer :photo_crop_h
 
 		end
 	end
