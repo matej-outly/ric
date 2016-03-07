@@ -100,6 +100,7 @@ cs:
           create: "Stránka byla úspěšně vytvořena."
           update: "Stránka byla úspěšně upravena."
           destroy: "Stránka byla úspěšně smazána."
+          move: "Stránka byla úspěšně přesunuta."
           bind_menu: "Vybraná menu byla úspěšně navázána."
           unbind_menu: "Vybrané menu bylo úspěšně odebráno."
         ric_website/page_block:

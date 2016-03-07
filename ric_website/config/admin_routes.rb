@@ -12,7 +12,12 @@
 RicWebsite::AdminEngine.routes.draw do
 
 	# Pages
-	resources :pages, controller: "admin_pages"
+	resources :pages, controller: "admin_pages" do
+		member do
+			put "move_up"
+			put "move_down"
+		end
+	end
 	resources :page_dynamic, only: [], controller: "admin_page_dynamic" do
 		collection do
 			get "available_models"

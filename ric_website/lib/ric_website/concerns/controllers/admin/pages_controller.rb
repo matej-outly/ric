@@ -25,7 +25,7 @@ module RicWebsite
 						#
 						# Set page before some actions
 						#
-						before_action :set_page, only: [:show, :edit, :update, :destroy]
+						before_action :set_page, only: [:show, :edit, :update, :move_up, :move_down, :destroy]
 
 					end
 
@@ -93,6 +93,22 @@ module RicWebsite
 								format.html { render "edit" }
 								format.json { render json: @page.errors }
 							end
+						end
+					end
+
+					def move_up
+						@page.move_left
+						respond_to do |format|
+							format.html { redirect_to pages_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.move") }
+							format.json { render json: @page.id }
+						end
+					end
+
+					def move_down
+						@page.move_right
+						respond_to do |format|
+							format.html { redirect_to pages_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.page_model.model_name.i18n_key}.move") }
+							format.json { render json: @page.id }
 						end
 					end
 

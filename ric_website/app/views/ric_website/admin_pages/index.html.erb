@@ -6,6 +6,8 @@
 	}, paths: {
 		show: :page_path,
 		edit: :edit_page_path,
-		destroy: :page_path
-	}, summary: true ) %>
+		destroy: :page_path,
+		move_up: :move_up_page_path,
+		move_down: :move_down_page_path,
+	}, moving: true, summary: true ) %>
 <% end %>
