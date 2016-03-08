@@ -7,7 +7,13 @@
 
 		<%= render partial: "ric_admin/shared/flash" %>
 		
-		<% if !(defined?(disable_header)) || (disable_header != true) %>
+		<% if (defined?(header)) %>
+			<% if header != false %>
+				<h2><%= header %></h2>
+			<% else %>
+				<!-- No header -->
+			<% end %>
+		<% else %>
 			<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
 		<% end %>
 
