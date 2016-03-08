@@ -92,11 +92,11 @@ module RicNewsletter
 						ActiveRecord::Base.transaction do
 							customer = RicNewsletter.customer_model.where(email: email).first
 							if customer
-								if customer.newsletter_token == newsletter_token
+								#if customer.newsletter_token == newsletter_token
 									customer.enable_newsletter = false
 									customer.save
 									result = customer
-								end
+								#end
 							end
 						end
 						return result

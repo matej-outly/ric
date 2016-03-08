@@ -3,7 +3,7 @@ class CreateRicNewsletterSentNewsletters < ActiveRecord::Migration
     create_table :sent_newsletters do |t|
 
       # Timestamps
-      t.timestamps null: false
+      t.timestamps null: true
       t.datetime :sent_at
 
       # Binding to newsletter

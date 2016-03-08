@@ -3,7 +3,7 @@ class CreateRicNewsletterNewsletters < ActiveRecord::Migration
     create_table :newsletters do |t|
 
       # Timestamps
-      t.timestamps null: false
+      t.timestamps null: true
 
       # Content
       t.string :subject
