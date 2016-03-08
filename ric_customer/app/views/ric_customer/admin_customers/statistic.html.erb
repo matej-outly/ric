@@ -1,4 +1,4 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
+<%= render layout: "ric_admin/layouts/with_right_side", locals: { header: t("headers.ric_customer.admin_customers.statistic_#{@statistic.to_s}") } do %>
 	<%= rug_index_table_for(@customers, { 
 		name: :name,
 		email: :string
@@ -6,5 +6,5 @@
 		show: :customer_path,
 		edit: :edit_customer_path,
 		destroy: :customer_path
-	}, pagination: true, summary: true ) %>
+	}, model_class: RicCustomer.customer_model.to_s ) %>
 <% end %>

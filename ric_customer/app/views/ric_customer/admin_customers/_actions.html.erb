@@ -7,4 +7,7 @@
 	<% if action_name == "index" %>
 		<%= m.item t('general.action.export_xls').upcase_first, customers_path(format: "xls"), icon: "attach" %>
 	<% end %>
+	<% if action_name == "statistic" %>
+		<%= m.item t('general.action.export_xls').upcase_first, statistic_customers_path(statistic: @statistic, format: "xls"), icon: "attach" %>
+	<% end %>
 <% end %>

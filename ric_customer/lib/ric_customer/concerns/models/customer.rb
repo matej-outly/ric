@@ -225,7 +225,7 @@ module RicCustomer
 								blank = true if params[column].blank?
 							end
 							if blank
-								all
+								all.order(name_lastname: :asc, name_firstname: :asc, email: :asc)
 							else
 								block.call(params)
 							end
