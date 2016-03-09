@@ -1,6 +1,7 @@
 <%
 	columns = RugBuilder::TableBuilder::Columns.new
 	columns.add_column_by_type(:title, :string)
+	columns.add_column_by_type(:key, :enum) if RicWebsite.page_model.config(:enable_key)
 	columns.add_column_by_block(:nature) do |page|
 		natures = page.config(:natures)
 		if !page.nature.blank? && natures[page.nature.to_sym]

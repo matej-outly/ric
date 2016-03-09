@@ -95,15 +95,6 @@ module RicWebsite
 	@@page_block_model = "RicWebsite::PageBlock"
 
 	#
-	# Menu model
-	#
-	mattr_accessor :menu_model
-	def self.menu_model
-		return @@menu_model.constantize
-	end
-	@@menu_model = "RicWebsite::Menu"
-
-	#
 	# Slug model
 	#
 	mattr_accessor :slug_model
@@ -111,6 +102,12 @@ module RicWebsite
 		return @@slug_model.constantize
 	end
 	@@slug_model = "RicWebsite::Slug"
+
+	#
+	# Enable settings subsystem
+	#
+	mattr_accessor :enable_settings
+	@@enable_settings = true
 
 	#
 	# Setting model
@@ -129,5 +126,20 @@ module RicWebsite
 		return @@settings_collection_model.constantize
 	end
 	@@settings_collection_model = "RicWebsite::SettingsCollection"
+
+	#
+	# Enable menus subsystem
+	#
+	mattr_accessor :enable_menus
+	@@enable_menus = true
+
+	#
+	# Menu model
+	#
+	mattr_accessor :menu_model
+	def self.menu_model
+		return @@menu_model.constantize
+	end
+	@@menu_model = "RicWebsite::Menu"
 
 end

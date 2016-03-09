@@ -54,8 +54,6 @@ module RicWebsite
 
 				end
 
-
-
 			end
 		end
 	end

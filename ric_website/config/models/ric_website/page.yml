@@ -15,3 +15,11 @@ layouts:
 background_crop:
   thumb: "300x300#"
   full: "1920x1920>"
+
+# Enable or disable key attribute
+enable_key: false
+
+# Possible keys
+#keys:
+#  - key_1
+#  - key_2

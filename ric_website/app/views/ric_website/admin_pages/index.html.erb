@@ -1,9 +1,12 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_hierarchical_index_table_for(@pages, { 
-		title: :string,
-		url: :string,
-		menus: { type: :has_many, label: :name, path: "ric_website_admin.menu_path" }
-	}, paths: {
+	<%
+		columns = {}
+		columns[:title] = :string
+		columns[:key] = :enum if RicWebsite.page_model.config(:enable_key)
+		columns[:url] = :string
+		columns[:menus] = { type: :has_many, label: :name, path: "ric_website_admin.menu_path" } if RicWebsite.enable_menus
+	%>
+	<%= rug_hierarchical_index_table_for(@pages, columns, paths: {
 		show: :page_path,
 		edit: :edit_page_path,
 		destroy: :page_path,

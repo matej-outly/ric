@@ -59,6 +59,7 @@ cs:
     attributes:
       ric_website/page:
         title: Nadpis
+        key: Identifikující klíč
         parent: Nadřazená stránka
         parent_id: Nadřazená stránka
         nature: Obsah stránky

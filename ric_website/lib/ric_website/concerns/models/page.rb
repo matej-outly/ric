@@ -28,7 +28,7 @@ module RicWebsite
 					#
 					# Relation to menus
 					#
-					has_and_belongs_to_many :menus, class_name: RicWebsite.menu_model.to_s
+					has_and_belongs_to_many :menus, class_name: RicWebsite.menu_model.to_s if RicWebsite.enable_menus
 
 					#
 					# Relation to common model
@@ -75,6 +75,15 @@ module RicWebsite
 					has_attached_file :background, :styles => { :thumb => config(:background_crop, :thumb), :full => config(:background_crop, :full) }
 					validates_attachment_content_type :background, :content_type => /\Aimage\/.*\Z/
 
+					# *************************************************************************
+					# Key
+					# *************************************************************************
+
+					#
+					# Key enum
+					#
+					enum_column :key, config(:keys) if config(:enable_key)
+
 				end
 
 				module ClassMethods
@@ -83,14 +92,16 @@ module RicWebsite
 					# Parts
 					#
 					def parts
-						[:basic, :design, :meta, :structure, :menus]
+						result = [:basic, :design, :meta, :structure]
+						result << :menus if RicWebsite.enable_menus
+						return result
 					end
 
 					#
 					# Columns
 					#
 					def basic_part_columns
-						[:title, :parent_id, :nature, :model_id]
+						[:title, :key, :parent_id, :nature, :model_id]
 					end
 
 					#
@@ -151,6 +162,7 @@ module RicWebsite
 
 						# Binded page
 						url_template = url_template.gsub(/:page_id/, self.id.to_s)
+						url_template = url_template.gsub(/:page_key/, self.key.to_s)
 
 						# Binded model
 						if !self.model.nil?
