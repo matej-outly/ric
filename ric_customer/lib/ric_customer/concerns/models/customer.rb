@@ -107,13 +107,13 @@ module RicCustomer
 
 									# Make where
 									if !where_string.nil?
-										result = where(where_string, {column => params[column]})
+										result = result.where(where_string, {column => params[column]})
 									end
 
 								elsif respond_to?(scope_method) # Or call scope
 
 									# Call scope
-									result = send(scope_method, params[column])
+									result = result.send(scope_method, params[column])
 								
 								else
 									raise "No way to filter #{column} found."
@@ -163,7 +163,7 @@ module RicCustomer
 					#
 					def filter_type_boolean(column, operator, value)
 						return case operator
-							when :eq then "#{column.to_s} = :#{column.to_s}" + (value == "0" ? " OR #{column.to_s} IS NULL" : "")
+							when :eq then "#{column.to_s} = :#{column.to_s}" + (value == "0" || value == "false" ? " OR #{column.to_s} IS NULL" : "")
 							else nil
 						end
 					end
