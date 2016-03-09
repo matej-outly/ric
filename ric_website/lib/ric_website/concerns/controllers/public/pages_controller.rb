@@ -73,6 +73,9 @@ module RicWebsite
 
 					def set_page
 						@page = RicWebsite.page_model.find_by_id(params[:id])
+						if @page.nil? && RicWebsite.page_model.config(:enable_key)
+							@page = RicWebsite.page_model.find_by_key(params[:id])
+						end
 						if @page.nil?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.page_model.model_name.i18n_key}.not_found")
 						end
