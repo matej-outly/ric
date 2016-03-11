@@ -48,8 +48,8 @@ module RicReservation
 	# Resource model
 	#
 	mattr_accessor :resource_model
-	def self.order_model
-		return @@order_model.constantize
+	def self.resource_model
+		return @@resource_model.constantize
 	end
 	@@resource_model = "RicReservation::Resource"
 

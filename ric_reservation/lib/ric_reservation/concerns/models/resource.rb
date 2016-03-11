@@ -60,6 +60,19 @@ module RicReservation
 						end
 					end
 
+					# *********************************************************
+					# Time windows
+					# *********************************************************
+
+					#
+					# Define time windows as duration
+					# 
+					if config(:states)
+						config(:states).each_with_index do |state_spec, index|
+							duration_column "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+						end
+					end
+
 				end
 
 				module ClassMethods

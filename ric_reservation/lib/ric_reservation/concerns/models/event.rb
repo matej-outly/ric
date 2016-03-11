@@ -136,6 +136,55 @@ module RicReservation
 					#
 					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green", "grey"], default: "yellow"
 
+					# *********************************************************
+					# Time windows
+					# *********************************************************
+
+					#
+					# Define time windows as duration
+					# 
+					if config(:states)
+						config(:states).each_with_index do |state_spec, index|
+							
+							new_column = "time_window_#{state_spec[:name]}".to_sym
+
+							# Duration column
+							duration_column new_column if index != 0 && index != config(:states).length
+
+							# Redefine getter
+							define_method(new_column) do
+								column = new_column
+								value = read_attribute(column)
+								if value.nil? && self.resource
+									value = self.resource.send(column)
+								end
+								return value
+							end
+
+							# Redefine formatted getter
+							define_method((new_column.to_s + "_formatted").to_sym) do
+								column = new_column
+								if read_attribute(column.to_s).nil? && self.resource
+									return self.resource.send(new_column.to_s + "_formatted")
+								else
+									value = read_attribute(column.to_s)
+									return nil if value.blank?
+									days = value.days_since_new_year
+									hours = value.hour
+									minutes = value.min
+									seconds = value.sec
+									result = []
+									result << days.to_s + " " + I18n.t("general.attribute.duration.days").downcase_first if days > 0
+									result << hours.to_s + " " + I18n.t("general.attribute.duration.hours").downcase_first if hours > 0
+									result << minutes.to_s + " " + I18n.t("general.attribute.duration.minutes").downcase_first if minutes > 0
+									result << seconds.to_s + " " + I18n.t("general.attribute.duration.seconds").downcase_first if seconds > 0
+									return result.join(", ")
+								end
+							end
+
+						end
+					end
+
 				end
 
 				module ClassMethods
@@ -465,43 +514,6 @@ module RicReservation
 				#
 				def month_scope_period?
 					return self.period == "week" || self.period == "odd_week" || self.period == "even_week" || self.period == "month" || self.period == "once"
-				end
-
-				# *************************************************************
-				# Time windows
-				# *************************************************************
-
-				#
-				# Get time window open
-				#
-				def time_window_open
-					value = read_attribute(:time_window_open)
-					if value.nil? && self.resource
-						value = self.resource.time_window_open
-					end
-					return value
-				end
-
-				#
-				# Get time window soon
-				#
-				def time_window_soon
-					value = read_attribute(:time_window_soon)
-					if value.nil? && self.resource
-						value = self.resource.time_window_soon
-					end
-					return value
-				end
-
-				#
-				# Get time window deadline
-				#
-				def time_window_deadline
-					value = read_attribute(:time_window_deadline)
-					if value.nil? && self.resource
-						value = self.resource.time_window_deadline
-					end
-					return value
 				end
 
 				# *************************************************************
