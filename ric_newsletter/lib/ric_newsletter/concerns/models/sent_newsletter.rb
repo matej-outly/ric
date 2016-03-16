@@ -144,6 +144,11 @@ module RicNewsletter
 
 						# If still some customers remaining, enqueue next batch
 						if remaining > 0
+
+							# Sleep for a while to prevent SMTP server overflow
+							sleep 5 # seconds
+
+							# Queue first batch
 							QC.enqueue("#{RicNewsletter.sent_newsletter_model.to_s}.send_batch_and_enqueue", id)
 							return false
 						else

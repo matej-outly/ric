@@ -220,9 +220,10 @@ module RicCustomer
 
 						# Scope
 						define_singleton_method(statistic.to_sym) do |params = {}|
+							params.symbolize_keys!
 							blank = false
 							@statistic_columns[statistic.to_sym].each do |column, spec| 
-								blank = true if params[column].blank?
+								blank = true if params[column.to_sym].blank?
 							end
 							if blank
 								all.order(name_lastname: :asc, name_firstname: :asc, email: :asc)
@@ -241,9 +242,9 @@ module RicCustomer
 							result = []
 							@statistic_columns[statistic.to_sym].each do |column, spec|
 								if spec[:type] == :string_array
-									result << { column => [] }
+									result << { column.to_sym => [] }
 								else
-									result << column
+									result << column.to_sym
 								end
 							end
 							return result

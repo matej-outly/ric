@@ -84,10 +84,10 @@ module RicNewsletter
 						else
 							@customers_scope_params = nil
 						end
-
+						
 						if @customers_scope
 							if @customers_scope_params
-								@customers = RicNewsletter.customer_model.method(@customers_scope.to_sym).call(@customers_scope_params)
+								@customers = RicNewsletter.customer_model.method(@customers_scope.to_sym).call(@customers_scope_params.symbolize_keys)
 							else
 								@customers = RicNewsletter.customer_model.method(@customers_scope.to_sym).call
 							end
