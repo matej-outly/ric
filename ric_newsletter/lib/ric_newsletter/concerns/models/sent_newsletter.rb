@@ -76,7 +76,17 @@ module RicNewsletter
 						end
 
 						# Filter out customers with disabled newsletters
-						customers = customers.newsletter_enabled
+						if customers.respond_to?(:newsletter_enabled) # Active record collection is returned from filter
+							customers = customers.newsletter_enabled
+						else # Array is returned from filter
+							new_customers = []
+							customers.each do |customer|
+								if customer.respond_to?(:enable_newsletter) && customer.enable_newsletter == true
+									new_customers << customer
+								end
+							end
+							customers = new_customers
+						end
 
 						# Destroy all associated customer bindings
 						sent_newsletter.sent_newsletter_customers.clear
