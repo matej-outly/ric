@@ -49,7 +49,11 @@ module RicNewsletter
 					# Send email to customer
 					begin 
 						RicNewsletter::NewsletterMailer.to_customer(newsletter, self.customer).deliver_now
-					rescue Net::SMTPFatalError
+						self.success = true
+					#rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+					rescue Exception => e
+						self.success = false
+						self.error_message = e.message
 					end
 				
 					# Mark as sent

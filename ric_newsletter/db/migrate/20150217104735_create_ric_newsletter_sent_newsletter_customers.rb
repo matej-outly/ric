@@ -10,6 +10,10 @@ class CreateRicNewsletterSentNewsletterCustomers < ActiveRecord::Migration
       t.integer :sent_newsletter_id
       t.integer :customer_id
 
+      # Status
+      t.boolean :success
+      t.string :error_message
+
       # Cache
       t.string :customer_email
 

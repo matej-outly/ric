@@ -117,7 +117,7 @@ module RicEshop
 					# Send payment email TODO
 					begin
 						RicPayment.payment_subject_mailer.payment(payment_subject).deliver_now
-					rescue Net::SMTPFatalError
+					rescue Net::SMTPFatalError, Net::SMTPSyntaxError
 					end
 
 					# Log

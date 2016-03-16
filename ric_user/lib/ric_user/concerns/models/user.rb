@@ -162,7 +162,7 @@ module RicUser
 					if result && options[:disable_email] != true
 						begin 
 							RicUser::UserMailer.new_password(self, new_password).deliver_now
-						rescue Net::SMTPFatalError
+						rescue Net::SMTPFatalError, Net::SMTPSyntaxError
 						end
 					end
 
@@ -191,7 +191,7 @@ module RicUser
 					if result && options[:disable_email] != true
 						begin 
 							RicUser::UserMailer.new_password(self, new_password).deliver_now
-						rescue Net::SMTPFatalError
+						rescue Net::SMTPFatalError, Net::SMTPSyntaxError
 						end
 					end
 

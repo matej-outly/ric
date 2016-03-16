@@ -76,8 +76,11 @@ module RicNotification
 						return false
 					end
 
-					# Send email to customer
-					RicNotification::NotificationMailer.notify(notification, self.user).deliver
+					# Send email
+					begin 
+						RicNotification::NotificationMailer.notify(notification, self.user).deliver_now
+					rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+					end
 
 					# Mark as sent
 					self.sent_at = Time.current
