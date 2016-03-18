@@ -4,7 +4,9 @@ cs:
     ric_account:
       account:
         user: Upravit uživatelský účet
+        user_update: Upravit uživatelský účet
         password: Změnit heslo
+        password_update: Změnit heslo
 
   activerecord:
     notices:
