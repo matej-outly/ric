@@ -123,6 +123,26 @@ body {
 		text-align: justify; 
 		@media only screen and (max-width: $tablet-width) { text-align: left; }
 	}
+
+	/*************************************************************************/
+	/* Visibility                                                            */
+	/*************************************************************************/
+
+	.hide-on-pc {
+		display: none;
+	}
+
+	.show-on-pc {
+		display: inherit;
+	}
+
+	.hide-on-tablet {
+		@media only screen and (max-width: $tablet-width) { display: none; }
+	}
+
+	.show-on-tablet {
+		@media only screen and (max-width: $tablet-width) { display: inherit; }
+	}
 	
 	/*************************************************************************/
 	/* Tables                                                                */
