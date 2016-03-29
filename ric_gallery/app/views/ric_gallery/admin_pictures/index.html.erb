@@ -1,10 +1,11 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_picture_index_table_for(@gallery_pictures, { 
+	<%= rug_index_table_for(@gallery_pictures, { 
 		picture: { type: :picture, thumb_style: :thumb },
 		title: :string
 	}, paths: {
 		show: :picture_path,
 		edit: :edit_picture_path,
+		move: :move_picture_path,
 		destroy: :picture_path
-	} ) %>
+	}, moving: true ) %>
 <% end %>

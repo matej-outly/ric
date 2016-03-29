@@ -25,7 +25,7 @@ module RicGallery
 						#
 						# Set directory before some actions
 						#
-						before_action :set_gallery_directory, only: [:show, :edit, :update, :destroy]
+						before_action :set_gallery_directory, only: [:show, :edit, :update, :move_up, :move_down, :destroy]
 
 					end
 
@@ -95,6 +95,22 @@ module RicGallery
 						end
 					end
 
+					def move_up
+						@gallery_directory.move_left
+						respond_to do |format|
+							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.gallery_directory_model.model_name.i18n_key}.move") }
+							format.json { render json: @gallery_directory.id }
+						end
+					end
+
+					def move_down
+						@gallery_directory.move_right
+						respond_to do |format|
+							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.gallery_directory_model.model_name.i18n_key}.move") }
+							format.json { render json: @gallery_directory.id }
+						end
+					end
+					
 					#
 					# Destroy action
 					#

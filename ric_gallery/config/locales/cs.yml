@@ -3,7 +3,7 @@ cs:
   headers:
     ric_gallery:
       admin_directories:
-        index: "Alba fotogalerie"
+        index: "Fotogalerie"
         show: "Detail alba"
         new: "Nové album"
         create: "Nové album"
@@ -39,10 +39,12 @@ cs:
         ric_gallery/gallery_directory:
           create: Album bylo úspěšně vytvořeno.
           update: Album bylo úspěšně uloženo.
+          move: Album bylo úspěšně přesunuto.
           destroy: Album bylo úspěšně smazáno.
         ric_gallery/gallery_picture:
           create: Obrázek byl úspěšně vytvořen.
           update: Obrázek byl úspěšně uložen.
+          move: Obrázek byl úspěšně přesunut.
           destroy: Obrázek byl úspěšně smazán.
     errors:
       models:

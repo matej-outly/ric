@@ -5,8 +5,10 @@
 	}, paths: {
 		show: :directory_path,
 		edit: :edit_directory_path,
+		move_up: :move_up_directory_path,
+		move_down: :move_down_directory_path,
 		destroy: :directory_path
-	}, summary: true ) %>
+	}, moving: true, summary: true ) %>
 
 	<% if @gallery_pictures.count > 0 %>
 		<h3><%= t("headers.ric_gallery.admin_directories.pictures") %></h3>
@@ -17,8 +19,9 @@
 		}, paths: {
 			show: :picture_path,
 			edit: :edit_picture_path,
+			move: :move_picture_path,
 			destroy: :picture_path
-		} ) %>
+		}, moving: true) %>
 	<% end %>
 
 <% end %>

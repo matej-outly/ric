@@ -25,7 +25,7 @@ module RicGallery
 						#
 						# Set picture before some actions
 						#
-						before_action :set_gallery_picture, only: [:show, :edit, :update, :destroy]
+						before_action :set_gallery_picture, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
@@ -90,6 +90,23 @@ module RicGallery
 						else
 							respond_to do |format|
 								format.html { render "edit" }
+								format.json { render json: @gallery_picture.errors }
+							end
+						end
+					end
+
+					#
+					# Move action
+					#
+					def move
+						if RicGallery.gallery_picture_model.move(params[:id], params[:relation], params[:destination_id])
+							respond_to do |format|
+								format.html { redirect_to (@gallery_picture.gallery_directory_id ? directory_path(@gallery_picture.gallery_directory_id) : directories_path), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.move") }
+								format.json { render json: @gallery_picture.id }
+							end
+						else
+							respond_to do |format|
+								format.html { redirect_to (@gallery_picture.gallery_directory_id ? directory_path(@gallery_picture.gallery_directory_id) : directories_path), alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.move") }
 								format.json { render json: @gallery_picture.errors }
 							end
 						end
