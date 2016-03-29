@@ -16,6 +16,7 @@ module RicPartnership
 		# Controllers
 		#
 		require 'ric_partnership/concerns/controllers/admin/partners_controller'
+		require 'ric_partnership/concerns/controllers/admin/references_controller'
 		
 		isolate_namespace RicPartnership
 

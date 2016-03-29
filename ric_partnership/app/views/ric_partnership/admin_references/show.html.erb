@@ -1,0 +1,7 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@reference, {
+		name: :string,
+		url: :string,
+		logo: { type: :picture, thumb_style: :full },
+	}) %>
+<% end %>

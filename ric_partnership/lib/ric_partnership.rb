@@ -15,6 +15,7 @@ require "ric_partnership/public_engine"
 
 # Models
 require 'ric_partnership/concerns/models/partner'
+require 'ric_partnership/concerns/models/reference'
 
 module RicPartnership
 
@@ -40,12 +41,33 @@ module RicPartnership
 	# *************************************************************************
 
 	#
-	# Partnership model
+	# Partner model
 	#
 	mattr_accessor :partner_model
 	def self.partner_model
 		return @@partner_model.constantize
 	end
 	@@partner_model = "RicPartnership::Partner"
+
+	#
+	# Enable partners subsystem
+	#
+	mattr_accessor :enable_partners
+	@@enable_partners = true
+
+	#
+	# Reference model
+	#
+	mattr_accessor :reference_model
+	def self.reference_model
+		return @@reference_model.constantize
+	end
+	@@reference_model = "RicPartnership::Reference"
+
+	#
+	# Enable references subsystem
+	#
+	mattr_accessor :enable_references
+	@@enable_references = true
 
 end
