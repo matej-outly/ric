@@ -32,6 +32,7 @@ require 'ric_website/concerns/models/settings_collection'
 
 # Helpers
 require 'ric_website/helpers/locale_helper'
+require 'ric_website/helpers/page_helper'
 require 'ric_website/helpers/slug_helper'
 require 'ric_website/helpers/setting_helper'
 

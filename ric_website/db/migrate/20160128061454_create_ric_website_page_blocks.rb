@@ -7,6 +7,9 @@ class CreateRicWebsitePageBlocks < ActiveRecord::Migration
 
 			# Position
 			t.integer :position
+
+			# Key
+			t.string :key
 	
 			# Relation to page
 			t.integer :page_id

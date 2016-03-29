@@ -12,6 +12,9 @@ class CreateRicWebsitePages < ActiveRecord::Migration
 
 			# Title
 			t.string :title
+
+			# Key
+			t.string :key
 			
 			# URL
 			t.string :nature

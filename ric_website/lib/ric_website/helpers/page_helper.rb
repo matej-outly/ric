@@ -2,19 +2,34 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Railtie for view helpers integration
+# * Page helper
 # *
 # * Author: Matěj Outlý
-# * Date  : 22. 7. 2015
+# * Date  : 7. 10. 2015
 # *
 # *****************************************************************************
 
 module RicWebsite
-	class Railtie < Rails::Railtie
-		initializer "ric_website.helpers" do
-			ActionView::Base.send :include, Helpers::PageHelper
-			ActionView::Base.send :include, Helpers::SlugHelper
-			ActionView::Base.send :include, Helpers::SettingHelper
+	module Helpers
+		module PageHelper
+
+			def self.page_get(key)
+
+				# Find model
+				page = RicWebsite.page_model.find_by_key(key)
+
+				# Return value
+				if page
+					return page
+				else
+					return nil
+				end
+			end
+
+			def page_get(key)
+				return PageHelper.page_get(key)
+			end
+
 		end
 	end
 end

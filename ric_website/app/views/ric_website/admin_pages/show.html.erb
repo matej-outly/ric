@@ -13,10 +13,13 @@
 					<%= render partial: "show_#{part.to_s}" %>
 					<% if @page.page_blocks.count > 0 %>
 						<h3><%= t("headers.ric_website.admin_pages.page_blocks") %></h3>
-						<%= rug_index_table_for(@page.page_blocks.order(position: :asc), { 
-							title: :string,
-							content: :text,
-						}, paths: {
+						<%
+							columns = {}
+							columns[:title] = :string
+							columns[:key] = :enum if RicWebsite.page_block_model.config(:enable_key)
+							columns[:content] = :text
+						%>
+						<%= rug_index_table_for(@page.page_blocks.order(position: :asc), columns, paths: {
 							show: :page_block_path,
 							edit: :edit_page_block_path,
 							move: :move_page_block_path,

@@ -74,6 +74,7 @@ cs:
       ric_website/page_block:
         page_id: Stránka
         page: Stránka
+        key: Identifikující klíč
         subject: Navázaný záznam
         subject_id: Navázaný záznam
         title: Nadpis
