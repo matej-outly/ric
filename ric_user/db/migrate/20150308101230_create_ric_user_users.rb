@@ -50,5 +50,6 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			t.string :person_type
 
 		end
+		RicUser::User.create(name_firstname: "", name_lastname: "", email: "admin@clockstar.cz", password: "admin", password_confirmation: "admin", role: "admin")
 	end
 end
