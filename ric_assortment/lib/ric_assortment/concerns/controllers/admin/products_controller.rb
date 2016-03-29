@@ -25,7 +25,7 @@ module RicAssortment
 						#
 						# Set product before some actions
 						#
-						before_action :set_product, only: [:show, :edit, :update, :duplicate, :destroy]
+						before_action :set_product, only: [:show, :edit, :update, :duplicate, :move, :destroy]
 
 					end
 
@@ -112,12 +112,12 @@ module RicAssortment
 						if RicAssortment.product_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
 								format.html { redirect_to products_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
-								format.json { render json: true }
+								format.json { render json: @product.id }
 							end
 						else
 							respond_to do |format|
 								format.html { redirect_to products_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
-								format.json { render json: false }
+								format.json { render json: @product.errors }
 							end
 						end
 					end
