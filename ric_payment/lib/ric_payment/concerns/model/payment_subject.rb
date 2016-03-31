@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-module RicEshop
+module RicPayment
 	module Concerns
 		module Models
 			module PaymentSubject extend ActiveSupport::Concern
@@ -144,7 +144,7 @@ module RicEshop
 				end
 
 				# *************************************************************
-				# Status
+				# State
 				# *************************************************************
 
 				#
@@ -177,11 +177,29 @@ module RicEshop
 					return payment_in_progress? || paid?
 				end
 
+				# *************************************************************
+				# Attributes for gateway (to be overriden)
+				# *************************************************************
+
 				#
 				# Label for payment gateway
 				#
 				def payment_label
-					""
+					return nil
+				end
+
+				#
+				# Amount of money to pay via gateway
+				#
+				def payment_value
+					return self.price
+				end
+
+				#
+				# Currency used in gateway
+				#
+				def payment_currency
+					return "cs"
 				end
 
 			end

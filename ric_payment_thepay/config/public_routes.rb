@@ -5,6 +5,19 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 31. 3. 2016
 # *
 # *****************************************************************************
+
+RicPaymentThepay::PublicEngine.routes.draw do
+
+	# Payments
+	resources :payments, controller: "public_payments", only: [] do
+		member do
+			get "new"
+			get "success"
+			get "failed"
+		end
+	end
+
+end

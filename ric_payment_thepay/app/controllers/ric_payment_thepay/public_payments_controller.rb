@@ -2,9 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Payments
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 31. 3. 2016
 # *
 # *****************************************************************************
+
+require_dependency "ric_payment_thepay/public_controller"
+
+module RicPaymentThepay
+	class PublicPaymentsController < PublicController
+		include RicPaymentThepay::Concerns::Controllers::Public::PaymentsController
+	end
+end

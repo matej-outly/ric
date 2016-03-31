@@ -10,16 +10,11 @@
 # *****************************************************************************
 
 # Engines
-require "ric_payment/admin_engine"
-require "ric_payment/public_engine"
-require "ric_payment/gateway_engine"
+require "ric_payment/engine"
 
 # Models
 require 'ric_payment/concerns/model/payment_subject'
 
-# Backends
-require 'ric_payment/backends/dummy'
-require 'ric_payment/backends/gopay'
 
 module RicPayment
 
@@ -43,15 +38,6 @@ module RicPayment
 	# *************************************************************************
 	# Config options
 	# *************************************************************************
-
-	#
-	# Backend
-	#
-	mattr_accessor :backend
-	def self.backend
-		return @@backend.constantize
-	end
-	@@backend = "RicPayment::Backends::Dummy"
 
 	#
 	# Payment subject model

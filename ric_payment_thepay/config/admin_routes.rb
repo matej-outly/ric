@@ -5,6 +5,10 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 31. 3. 2016
 # *
 # *****************************************************************************
+
+RicPaymentThepay::AdminEngine.routes.draw do
+
+end

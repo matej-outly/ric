@@ -116,7 +116,7 @@ module RicEshop
 				# Locked for update?
 				#
 				def locked?
-					return false	
+					return false
 				end
 
 				#

@@ -1,10 +1,5 @@
 cs:
 
-  headers:
-    ric_payment:
-      public_payments:
-        new: "Přesměrování na platební bránu"
-
   activerecord:
     notices:
       models:
