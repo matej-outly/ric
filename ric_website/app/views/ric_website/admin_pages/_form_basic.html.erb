@@ -1,4 +1,4 @@
-<%= f.text_input_row :title, :text_field %>
+<%= f.text_input_row :title, :text_field, localization: (RicWebsite.localized == true) %>
 <%= f.picker_row :key, nil, :value, :label, enable_null: true if RicWebsite.page_model.config(:enable_key) %>
 <%= f.picker_row :parent_id, @page.available_parents, :id, :title_with_depth, enable_null: true %>
 <%= f.picker_row :nature, @page.config(:natures).map { |key,value| OpenStruct.new(label: value[:name], value: key) }, :value, :label, enable_null: true %>

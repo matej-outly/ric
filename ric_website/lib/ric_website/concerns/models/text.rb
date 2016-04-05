@@ -21,14 +21,47 @@ module RicWebsite
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Relation to page blocks
 					#
 					has_many :page_blocks, class_name: RicWebsite.page_block_model.to_s, as: :subject
+
+					# *********************************************************
+					# Localization
+					# *********************************************************
+
+					if RicWebsite.localized
+						localized_column :title
+						localized_column :content
+					end
+
+				end
+
+				module ClassMethods
+
+					#
+					# Columns
+					#
+					def permitted_columns
+						result = []
+						[:title, :content].each do |column|
+							if RicWebsite.localized
+								I18n.available_locales.each do |locale|
+									result << "#{column.to_s}_#{locale.to_s}".to_sym
+								end
+							else
+								result << column
+							end
+						end
+						[:key].each do |column|
+							result << column
+						end
+						return result
+					end
 
 				end
 

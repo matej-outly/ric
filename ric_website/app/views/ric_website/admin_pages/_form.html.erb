@@ -1,4 +1,4 @@
-<%= rug_form_for(@page, create_url: :pages_path, update_url: :page_path) do |f| %>
+<%= rug_form_for(@page, create_url: "ric_website_admin.pages_path", update_url: "ric_website_admin.page_path") do |f| %>
 	<section class="tabs pill">
 		<ul class="tab-nav">
 			<% @page.class.parts.each do |part| %>

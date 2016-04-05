@@ -82,6 +82,9 @@ cs:
         text_attachments: Přílohy
       ric_website/menu:
         key: Identifikující klíč
+        key_values:
+          main: Hlavní menu
+          footer: Patičkové menu
         name: Jméno
       ric_website/text:
         key: Identifikující klíč

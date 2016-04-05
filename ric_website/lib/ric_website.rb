@@ -143,4 +143,10 @@ module RicWebsite
 	end
 	@@menu_model = "RicWebsite::Menu"
 
+	#
+	# Localization of some specific columns (titles, contents, descriptions, etc.)
+	#
+	mattr_accessor :localized
+	@@localized = false
+
 end

@@ -1,15 +1,18 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_show_table_for(@menu, { 
-		key: :string,
+		key: :enum,
 		name: :string,
 	}) %>
 
 	<h3><%= t("headers.ric_website.admin_menus.pages") %></h3>
 
-	<%= rug_hierarchical_index_table_for(@menu.pages.order(lft: :asc), { 
-		title: :string,
-		url: :string
-	}, paths: {
+	<%
+		columns = {}
+		columns[:title] = :string
+		columns[:key] = :enum if RicWebsite.page_model.config(:enable_key)
+		columns[:url] = :string
+	%>
+	<%= rug_hierarchical_index_table_for(@menu.pages.order(lft: :asc), columns, paths: {
 		show: :page_path,
 	} ) %>
 

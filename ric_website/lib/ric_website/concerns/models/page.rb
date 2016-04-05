@@ -21,9 +21,9 @@ module RicWebsite
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Relation to menus
@@ -65,9 +65,9 @@ module RicWebsite
 					#
 					after_destroy :destroy_slugs_after
 
-					# *************************************************************************
+					# *********************************************************
 					# Attachments
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Background
@@ -75,14 +75,24 @@ module RicWebsite
 					has_attached_file :background, :styles => { :thumb => config(:background_crop, :thumb), :full => config(:background_crop, :full) }
 					validates_attachment_content_type :background, :content_type => /\Aimage\/.*\Z/
 
-					# *************************************************************************
+					# *********************************************************
 					# Key
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Key enum
 					#
 					enum_column :key, config(:keys) if config(:enable_key)
+
+					# *********************************************************
+					# Localization
+					# *********************************************************
+
+					if RicWebsite.localized
+						localized_column :title
+						localized_column :meta_title
+						localized_column :meta_description
+					end
 
 				end
 
@@ -101,7 +111,20 @@ module RicWebsite
 					# Columns
 					#
 					def basic_part_columns
-						[:title, :key, :parent_id, :nature, :model_id]
+						result = []
+						[:title].each do |column|
+							if RicWebsite.localized
+								I18n.available_locales.each do |locale|
+									result << "#{column.to_s}_#{locale.to_s}".to_sym
+								end
+							else
+								result << column
+							end
+						end
+						[:key, :parent_id, :nature, :model_id].each do |column|
+							result << column
+						end
+						return result
 					end
 
 					#
@@ -115,7 +138,17 @@ module RicWebsite
 					# Columns
 					#
 					def meta_part_columns
-						[:meta_title, :meta_description]
+						result = []
+						[:meta_title, :meta_description].each do |column|
+							if RicWebsite.localized
+								I18n.available_locales.each do |locale|
+									result << "#{column.to_s}_#{locale.to_s}".to_sym
+								end
+							else
+								result << column
+							end
+						end
+						return result
 					end
 
 					#

@@ -2,6 +2,6 @@
 	<%= rug_show_table_for(@text, { 
 		key: :string,
 		title: :string,
-		content: :text,
+		content: { type: :text, truncate: false },
 	}) %>
 <% end %>

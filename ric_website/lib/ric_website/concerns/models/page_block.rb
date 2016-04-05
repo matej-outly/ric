@@ -63,9 +63,9 @@ module RicWebsite
 					#
 					after_save :synchronize_subject_after_save
 
-					# *************************************************************************
+					# *********************************************************
 					# Key
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Key enum
@@ -76,13 +76,55 @@ module RicWebsite
 					# Text virtual attributes
 					# *********************************************************
 
-					attr_writer :title
-					attr_writer :content
+					#
+					# Attribute writers, reades and localized columns
+					#
+					[:title, :content].each do |new_column|
+						if RicWebsite.localized
+							I18n.available_locales.each do |locale|
+								attr_writer "#{new_column.to_s}_#{locale.to_s}".to_sym
+								define_method("#{new_column.to_s}_#{locale.to_s}") do
+									column = new_column
+									value = instance_variable_get("@#{column.to_s}_#{locale.to_s}")
+									value = self.subject.send("#{column.to_s}_#{locale.to_s}") if value.nil? && self.subject
+									return value
+								end
+							end
+							localized_column new_column
+						else
+							attr_writer new_column
+							define_method(new_column) do
+								column = new_column
+								value = instance_variable_get("@#{column.to_s}")
+								value = self.subject.send(column) if value.nil? && self.subject
+								return value
+							end
+						end
+					end
 
 				end
 
 				module ClassMethods
 
+					#
+					# Columns
+					#
+					def permitted_columns
+						result = []
+						[:title, :content].each do |column|
+							if RicWebsite.localized
+								I18n.available_locales.each do |locale|
+									result << "#{column.to_s}_#{locale.to_s}".to_sym
+								end
+							else
+								result << column
+							end
+						end
+						[:key, :page_id].each do |column|
+							result << column
+						end
+						return result
+					end
 
 				end
 
@@ -90,28 +132,9 @@ module RicWebsite
 				# Text virtual attributes
 				# *************************************************************
 
-				def title
-					value = @title
-					if value.nil? && self.subject
-						value = self.subject.title
-					end
-					return value
-				end
-
-				def content
-					value = @content
-					if value.nil? && self.subject
-						value = self.subject.content
-					end
-					return value
-				end
-
 				def content_formatted
-					if self.subject
-						return self.subject.content_formatted
-					else
-						return ""
-					end
+					return self.subject.content_formatted if self.subject
+					return ""
 				end
 
 			protected
@@ -124,8 +147,16 @@ module RicWebsite
 
 				def synchronize_subject_after_save
 					if self.subject
-						self.subject.title = self.title
-						self.subject.content = self.content
+						[:title, :content].each do |column|
+							if RicWebsite.localized
+								I18n.available_locales.each do |locale|
+									self.subject.title = self.title
+									self.subject.send("#{column.to_s}_#{locale.to_s}=", self.send("#{column.to_s}_#{locale.to_s}"))
+								end
+							else
+								self.subject.send("#{column.to_s}=", self.send(column))
+							end
+						end						
 						self.subject.save
 					end
 				end

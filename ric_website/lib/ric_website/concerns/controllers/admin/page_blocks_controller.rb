@@ -129,12 +129,7 @@ module RicWebsite
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def page_block_params
-						params.require(:page_block).permit(
-							:title, 
-							:content, 
-							:page_id,
-							:key
-						)
+						params.require(:page_block).permit(RicWebsite.page_block_model.permitted_columns)
 					end
 
 				end

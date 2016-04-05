@@ -2,7 +2,7 @@
 	<%= rug_index_table_for(@texts, { 
 		title: :string,
 		key: :string,
-		content: :text,
+		content: { type: :text, strip_tags: true },
 	}, paths: {
 		show: :text_path,
 		edit: :edit_text_path,

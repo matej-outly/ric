@@ -1,7 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@menus, { 
 		name: :string,
-		key: :string,
+		key: :enum,
 	}, paths: {
 		show: :menu_path,
 		edit: :edit_menu_path,

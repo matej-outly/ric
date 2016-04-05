@@ -17,7 +17,7 @@
 							columns = {}
 							columns[:title] = :string
 							columns[:key] = :enum if RicWebsite.page_block_model.config(:enable_key)
-							columns[:content] = :text
+							columns[:content] = { type: :text, strip_tags: true }
 						%>
 						<%= rug_index_table_for(@page.page_blocks.order(position: :asc), columns, paths: {
 							show: :page_block_path,
