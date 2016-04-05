@@ -14,6 +14,7 @@ require "singleton"
 # Backend parts
 require "ric_payment_thepay/backend/config"
 require "ric_payment_thepay/backend/payment"
+require "ric_payment_thepay/backend/data_api"
 
 module RicPaymentThepay
 	class Backend
@@ -28,7 +29,7 @@ module RicPaymentThepay
 		#
 		def payment_factory
 			payment = Payment.new
-			payment.return_url = self.success_url # Success and failed URL is the same for this gateway
+			payment.return_url = self.return_url # Success, failed and notify URL is the same for this gateway
 			return payment
 		end
 
@@ -38,8 +39,10 @@ module RicPaymentThepay
 		def payment_from_subject(payment_subject)	
 			payment = self.payment_factory
 			payment.value = payment_subject.payment_value
-			payment.description = payment_subject.payment_label
 			payment.currency = Backend.locale_to_currency(payment_subject.payment_currency)
+			payment.description = payment_subject.payment_label
+			payment.merchant_data = payment_subject.id
+			payment.is_deposit = false
 			# TODO other attributes
 			return payment
 		end
@@ -49,25 +52,31 @@ module RicPaymentThepay
 		#
 		def payment_from_params(params)
 			payment = self.payment_factory
-			# TODO
+			payment.load_from_params(params)
 			return payment
+		end
+
+		# *****************************************************************
+		# Data API
+		# *****************************************************************
+
+		#
+		# Get payment
+		#
+		def get_payment_state(payment_id)
+			data_api = DataApi.instance
+			response = data_api.get_payment_state(payment_id)
+			return response.state
 		end
 
 		# *****************************************************************
 		# URLs
 		# *****************************************************************
 
-		attr_accessor :success_url
-		def success_url=(success_url)
-			@success_url = success_url
-			@failed_url = success_url # Success and failed URL is the same for this gateway
-		end
-
-		attr_accessor :failed_url
-		def failed_url=(failed_url)
-			@failed_url = failed_url
-			@success_url = failed_url # Success and failed URL is the same for this gateway
-		end
+		#
+		# Success, failed and notify URL is the same for this gateway
+		#
+		attr_accessor :return_url
 
 	protected
 

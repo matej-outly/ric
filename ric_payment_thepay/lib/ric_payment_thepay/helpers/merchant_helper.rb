@@ -19,8 +19,8 @@ module RicPaymentThepay
 				url = RicPaymentThepay::Backend::Config.gate_url
 				
 				# Optional args
-				query_args = {}
-				query_args["skin"] = options[:skin] if options[:skin]
+				query_data = {}
+				query_data["skin"] = options[:skin] if options[:skin]
 
 				result = "";
 				if options[:disable_button_css] != true
@@ -29,7 +29,7 @@ module RicPaymentThepay
 					result += "<link href=\"#{href}\" type=\"text/css\" rel=\"stylesheet\" />\n"
 				end
 
-				thepay_gate_url = url + "div/index.php?" + payment.get_query(query_args)
+				thepay_gate_url = url + "div/index.php?" + payment.query(query_data)
 				result += "<script type=\"text/javascript\">"
 				result += "\tvar thepayGateUrl = #{thepay_gate_url.to_json};\n"
 				result += "\tvar disableThepayPopupCss = #{(options[:disable_popup_css] == true).to_json};\n"

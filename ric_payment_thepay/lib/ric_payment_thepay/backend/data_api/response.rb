@@ -2,21 +2,20 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Data API response
 # *
 # * Author: Matěj Outlý
-# * Date  : 31. 3. 2016
+# * Date  : 4. 4. 2016
 # *
 # *****************************************************************************
 
-RicPaymentThepay::PublicEngine.routes.draw do
+module RicPaymentThepay
+	class Backend
+		class DataApi
+			class Response
 
-	# Payments
-	resources :payments, controller: "public_payments", only: [] do
-		member do
-			get "new"
-			get "done"
+			
+			end
 		end
 	end
-
 end
