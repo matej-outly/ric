@@ -57,4 +57,16 @@ module RicPayment
 	end
 	@@payment_subject_mailer = "RicEshop::OrderMailer"
 
+	#
+	# If finalization mail should be sent
+	#
+	mattr_accessor :send_payment_finalize_mail
+	@@send_payment_finalize_mail = false
+
+	#
+	# If finalization should be performed in background job
+	#
+	mattr_accessor :finalize_payment_in_background
+	@@finalize_payment_in_background = false
+
 end

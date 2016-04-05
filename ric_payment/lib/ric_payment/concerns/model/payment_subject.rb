@@ -51,6 +51,41 @@ module RicPayment
 						where(payment_id: payment.id)
 					end
 
+					# *************************************************************
+					# Actions
+					# *************************************************************
+
+					#
+					# Pay for the order, finalize action by:
+					# - Sending notification e-mail
+					#
+					def pay_finalize(payment_subject_id)
+
+						payment_subject = RicPayment.payment_subject_model.find_by_id(payment_subject_id)
+						if !payment_subject
+							return false
+						end
+
+						# Stop if not paid
+						if !payment_subject.paid?
+							return false
+						end
+
+						# Send payment email TODO
+						if RicPayment.send_payment_finalize_mail == true
+							begin
+								RicPayment.payment_subject_mailer.payment(payment_subject).deliver_now
+							rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+							end
+						end
+
+						# Log
+						Rails.logger.info("payment_subject#pay_finalize: #{RicPayment.payment_subject_model.to_s}.id=" + payment_subject.id.to_s + ": Payment finalized")
+
+						return true
+
+					end
+
 				end
 
 				# *************************************************************
@@ -64,8 +99,9 @@ module RicPayment
 						return false
 					end
 
-					# Save payment session id 
+					# Save payment id 
 					self.payment_id = payment.id
+					self.override_accept_terms
 					if !self.save
 						return false
 					end
@@ -85,46 +121,22 @@ module RicPayment
 					self.payment_id = nil
 
 					# Save
+					self.override_accept_terms
 					if !self.save
 						return false
 					end
 
-					# E-mail
-					RicPayment.payment_subject_model.pay_finalize(self.id) # QC not working in this case
-					#QC.enqueue("(RicPayment.payment_subject_model.to_s}.pay_finalize", self.id)
+					# Finalization
+					if RicPayment.finalize_payment_in_background == true
+						QC.enqueue("(RicPayment.payment_subject_model.to_s}.pay_finalize", self.id) # TODO some bugs may be in QC -> should be checked before use
+					else
+						RicPayment.payment_subject_model.pay_finalize(self.id) 
+					end
 
 					# Log
 					Rails.logger.info("payment_subject#pay: #{RicPayment.payment_subject_model.to_s}.id=" + self.id.to_s + ": Paid and finalization enqueued")
 
 					return true
-				end
-
-				#
-				# Pay for the order - finalize action by sending e-mail
-				#
-				def self.pay_finalize(payment_subject_id)
-
-					payment_subject = RicPayment.payment_subject_model.find_by_id(payment_subject_id)
-					if !payment_subject
-						return false
-					end
-
-					# Stop if not paid
-					if !payment_subject.paid?
-						return false
-					end
-
-					# Send payment email TODO
-					begin
-						RicPayment.payment_subject_mailer.payment(payment_subject).deliver_now
-					rescue Net::SMTPFatalError, Net::SMTPSyntaxError
-					end
-
-					# Log
-					Rails.logger.info("payment_subject#pay_finalize: #{RicPayment.payment_subject_model.to_s}.id=" + payment_subject.id.to_s + ": Payment e-mail sent")
-
-					return true
-
 				end
 
 				#
@@ -136,6 +148,7 @@ module RicPayment
 					self.payment_id = nil
 					
 					# Save
+					self.override_accept_terms
 					if !self.save
 						return false
 					end
@@ -167,7 +180,7 @@ module RicPayment
 				# Is some payment in progress?
 				#
 				def payment_in_progress?
-					return !self.payment_session_id.nil?
+					return !self.payment_id.nil?
 				end
 
 				#

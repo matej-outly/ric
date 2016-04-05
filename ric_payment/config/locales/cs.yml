@@ -4,8 +4,9 @@ cs:
     notices:
       models:
         ric_payment/payment:
-          success: Platba byla úspěšně provedena.
+          success: "Platba byla úspěšně provedena."
           success_not_finished: "Platba byla úspěšně založena. Údaje, nutné pro provedení platby, byly zaslány na zadanou e-mailovou adresu." 
+          success_deposit: "Částka byla úspěšně zablokována na Vaší platební kartě."
     errors:
       models:
         ric_payment/payment:
@@ -15,3 +16,5 @@ cs:
           failed: "Platbu se nepodařilo uskutečnit."
           canceled: "Platba byla zrušena."
           timeout: "Vypršela životnost platby."
+          underpaid: "Byla zaplacena jen část objednávky."
+          not_verified: "Nepodařilo se ověřit platnost platby."
