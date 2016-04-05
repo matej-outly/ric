@@ -22,7 +22,7 @@ class CreateRicEshopOrders < ActiveRecord::Migration
       t.string :billing_address_city
 
       # Payment
-      t.string :payment_session_id
+      t.string :payment_id
       t.string :payment_type
       t.datetime :paid_at
       t.string :currency
