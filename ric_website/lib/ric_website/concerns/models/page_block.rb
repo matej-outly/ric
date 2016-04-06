@@ -80,7 +80,7 @@ module RicWebsite
 					# Attribute writers, reades and localized columns
 					#
 					[:title, :content].each do |new_column|
-						if RicWebsite.localized
+						if RicWebsite.localization
 							I18n.available_locales.each do |locale|
 								attr_writer "#{new_column.to_s}_#{locale.to_s}".to_sym
 								define_method("#{new_column.to_s}_#{locale.to_s}") do
@@ -112,7 +112,7 @@ module RicWebsite
 					def permitted_columns
 						result = []
 						[:title, :content].each do |column|
-							if RicWebsite.localized
+							if RicWebsite.localization
 								I18n.available_locales.each do |locale|
 									result << "#{column.to_s}_#{locale.to_s}".to_sym
 								end
@@ -148,7 +148,7 @@ module RicWebsite
 				def synchronize_subject_after_save
 					if self.subject
 						[:title, :content].each do |column|
-							if RicWebsite.localized
+							if RicWebsite.localization
 								I18n.available_locales.each do |locale|
 									self.subject.title = self.title
 									self.subject.send("#{column.to_s}_#{locale.to_s}=", self.send("#{column.to_s}_#{locale.to_s}"))

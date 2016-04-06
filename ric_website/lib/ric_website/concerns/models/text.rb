@@ -34,7 +34,7 @@ module RicWebsite
 					# Localization
 					# *********************************************************
 
-					if RicWebsite.localized
+					if RicWebsite.localization
 						localized_column :title
 						localized_column :content
 					end
@@ -49,7 +49,7 @@ module RicWebsite
 					def permitted_columns
 						result = []
 						[:title, :content].each do |column|
-							if RicWebsite.localized
+							if RicWebsite.localization
 								I18n.available_locales.each do |locale|
 									result << "#{column.to_s}_#{locale.to_s}".to_sym
 								end

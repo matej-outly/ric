@@ -146,7 +146,7 @@ module RicWebsite
 	#
 	# Localization of some specific columns (titles, contents, descriptions, etc.)
 	#
-	mattr_accessor :localized
-	@@localized = false
+	mattr_accessor :localization
+	@@localization = false
 
 end

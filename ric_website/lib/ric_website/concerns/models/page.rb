@@ -88,7 +88,7 @@ module RicWebsite
 					# Localization
 					# *********************************************************
 
-					if RicWebsite.localized
+					if RicWebsite.localization
 						localized_column :title
 						localized_column :meta_title
 						localized_column :meta_description
@@ -113,7 +113,7 @@ module RicWebsite
 					def basic_part_columns
 						result = []
 						[:title].each do |column|
-							if RicWebsite.localized
+							if RicWebsite.localization
 								I18n.available_locales.each do |locale|
 									result << "#{column.to_s}_#{locale.to_s}".to_sym
 								end
@@ -140,7 +140,7 @@ module RicWebsite
 					def meta_part_columns
 						result = []
 						[:meta_title, :meta_description].each do |column|
-							if RicWebsite.localized
+							if RicWebsite.localization
 								I18n.available_locales.each do |locale|
 									result << "#{column.to_s}_#{locale.to_s}".to_sym
 								end
