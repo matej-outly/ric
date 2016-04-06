@@ -58,4 +58,10 @@ module RicGallery
 	end
 	@@gallery_picture_model = "RicGallery::GalleryPicture"
 
+		#
+	# Localization of some specific columns (names, titles, descriptions, etc.)
+	#
+	mattr_accessor :localization
+	@@localization = false
+
 end

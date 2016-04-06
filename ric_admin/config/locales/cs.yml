@@ -17,6 +17,9 @@ cs:
         contact: "Kontakt"
 
   views:
+    languages:
+      cs: CZ
+      en: EN
     pagination:
       first: "&laquo; První"
       last: "Poslední &raquo;"

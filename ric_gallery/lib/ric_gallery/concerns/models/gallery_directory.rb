@@ -21,9 +21,9 @@ module RicGallery
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 					
 					#
 					# Relation to gallery pictures
@@ -35,9 +35,9 @@ module RicGallery
 					#
 					enable_hierarchical_ordering
 					
-					# *************************************************************************
+					# *********************************************************
 					# Attachments
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Picture
@@ -45,13 +45,38 @@ module RicGallery
 					has_attached_file :picture, :styles => { :thumb => config(:picture_crop, :thumb), :full => config(:picture_crop, :full) }
 					validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 					
+					# *********************************************************
+					# Localization
+					# *********************************************************
+
+					if RicWebsite.localization
+						localized_column :name
+						localized_column :description
+					end
+
 				end
 
 				module ClassMethods
 
-					# *********************************************************************
-					# Scopes
-					# *********************************************************************
+					#
+					# Columns
+					#
+					def permitted_columns
+						result = []
+						[:name, :description].each do |column|
+							if RicWebsite.localization
+								I18n.available_locales.each do |locale|
+									result << "#{column.to_s}_#{locale.to_s}".to_sym
+								end
+							else
+								result << column
+							end
+						end
+						[:parent_id, :picture].each do |column|
+							result << column
+						end
+						return result
+					end
 					
 				end
 

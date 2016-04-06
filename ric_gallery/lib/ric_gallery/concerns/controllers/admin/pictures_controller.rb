@@ -136,7 +136,7 @@ module RicGallery
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def gallery_picture_params
-						params.require(:gallery_picture).permit(:gallery_directory_id, :picture, :title)
+						params.require(:gallery_picture).permit(RicGallery.gallery_picture_model.permitted_columns)
 					end
 
 				end
