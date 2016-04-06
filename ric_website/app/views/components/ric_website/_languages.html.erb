@@ -5,6 +5,10 @@
 			css_class = locale.to_s
 			css_class += " active" if I18n.locale.to_sym == locale.to_sym
 		%>
-		<li class="<%= css_class %>"><%= link_to(t("views.languages.#{locale.to_s}"), RicWebsite::Helpers::LocaleHelper.assemble(locale, current_path), class: css_class) %></li>
+		<li class="<%= css_class %>">
+			<a class="<%= css_class %>" href="<%= RicWebsite::Helpers::SlugHelper.slugify(RicWebsite::Helpers::LocaleHelper.assemble(locale, current_path)) %>">
+				<%= t("views.languages.#{locale.to_s}") %>
+			</a>
+		</li>
 	<% end %>
 </ul>

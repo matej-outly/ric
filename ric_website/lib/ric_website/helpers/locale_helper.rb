@@ -37,7 +37,7 @@ module RicWebsite
 			end
 
 			def self.assemble(locale, path)
-				if locale && I18n.default_locale != locale.to_sym
+				if locale && I18n.default_locale.to_sym != locale.to_sym
 					if path == "/"
 						path = "/" + locale.to_s
 					else
