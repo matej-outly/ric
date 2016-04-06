@@ -21,18 +21,18 @@ module RicPartnership
 				#
 				included do
 					
-					# *********************************************************************
+					# *********************************************************
 					# Structure
-					# *********************************************************************
+					# *********************************************************
 
 					#
 					# Ordering
 					#
 					enable_ordering
 
-					# *************************************************************************
+					# *********************************************************
 					# Attachments
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Logo
@@ -44,7 +44,7 @@ module RicPartnership
 					# Localization
 					# *********************************************************
 
-					if RicWebsite.localization
+					if RicPartnership.localization
 						localized_column :name
 					end
 
@@ -58,7 +58,7 @@ module RicPartnership
 					def permitted_columns
 						result = []
 						[:name].each do |column|
-							if RicWebsite.localization
+							if RicPartnership.localization
 								I18n.available_locales.each do |locale|
 									result << "#{column.to_s}_#{locale.to_s}".to_sym
 								end

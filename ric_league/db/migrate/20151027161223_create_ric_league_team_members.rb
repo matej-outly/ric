@@ -26,10 +26,10 @@ class CreateRicLeagueTeamMembers < ActiveRecord::Migration
 			# Description
 			t.text :description
 			t.attachment :photo
-			t.integer :photo_crop_x
-			t.integer :photo_crop_y
-			t.integer :photo_crop_w
-			t.integer :photo_crop_h
+			#t.integer :photo_crop_x # Only if croppable
+			#t.integer :photo_crop_y # Only if croppable
+			#t.integer :photo_crop_w # Only if croppable
+			#t.integer :photo_crop_h # Only if croppable
 			
 		end
 	end

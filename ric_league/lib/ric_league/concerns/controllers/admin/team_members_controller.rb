@@ -129,7 +129,22 @@ module RicLeague
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def team_member_params
-						params.require(:team_member).permit(:team_id, :league_category_id, :name, :kind, :role, :classification, :dress_number, :photo, :photo_crop_x, :photo_crop_y, :photo_crop_w, :photo_crop_h, :description)
+						params.require(:team_member).permit(
+							:team_id, 
+							:league_category_id, 
+							:name, 
+							:kind, 
+							:role, 
+							:classification, 
+							:dress_number, 
+							:photo, 
+							:photo_crop_x,
+							:photo_crop_y, 
+							:photo_crop_w, 
+							:photo_crop_h, 
+							:photo_perform_cropping, 
+							:description
+						)
 					end
 
 				end

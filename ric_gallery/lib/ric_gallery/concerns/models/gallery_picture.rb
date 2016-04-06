@@ -49,7 +49,7 @@ module RicGallery
 					# Localization
 					# *********************************************************
 
-					if RicWebsite.localization
+					if RicGallery.localization
 						localized_column :title
 					end
 
@@ -63,7 +63,7 @@ module RicGallery
 					def permitted_columns
 						result = []
 						[:title].each do |column|
-							if RicWebsite.localization
+							if RicGallery.localization
 								I18n.available_locales.each do |locale|
 									result << "#{column.to_s}_#{locale.to_s}".to_sym
 								end

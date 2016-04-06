@@ -1,5 +1,5 @@
 <%= rug_form_for(@reference, create_url: :references_path, update_url: :reference_path) do |f| %>
-	<%= f.text_input_row :name, :text_field, localization: (RicWebsite.localization == true) %>
+	<%= f.text_input_row :name, :text_field, localization: (RicPartnership.localization == true) %>
 	<%= f.text_input_row :url %>
 	<%= f.dropzone_row :logo %>
 	<%= f.primary_button_row :submit %>
