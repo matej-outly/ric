@@ -12,9 +12,22 @@
 RicContact::AdminEngine.routes.draw do
 
 	# Branches
-	resources :branches, controller: "admin_branches"
-
+	if RicContact.enable_branches
+		resources :branches, controller: "admin_branches"
+	end
+	
 	# Contact messages
-	resources :contact_messages, controller: "admin_contact_messages"
+	if RicContact.enable_contact_messages
+		resources :contact_messages, controller: "admin_contact_messages"
+	end
+
+	# Contact people
+	if RicContact.enable_contact_people
+		resources :contact_people, controller: "admin_contact_people" do
+			member do
+				put "move/:relation/:destination_id", action: "move", as: "move"
+			end
+		end
+	end
 
 end

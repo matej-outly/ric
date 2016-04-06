@@ -18,6 +18,14 @@ cs:
         edit: "Upravit zprávu"
         update: "Upravit zprávu"
         destroy: "Smazat zprávu"
+      admin_contact_people:
+        index: "Kontaktní osoby"
+        show: "Detail osoby"
+        new: "Nová osoba"
+        create: "Nová osoba"
+        edit: "Upravit osobu"
+        update: "Upravit osobu"
+        destroy: "Smazat osobu"
 
   activerecord:
     attributes:
@@ -32,6 +40,13 @@ cs:
         name: Jméno odesílatele
         email: E-mail odesílatele
         message: Zpráva
+      ric_contact/contact_person:
+        name: Jméno
+        role: Role
+        phone: Telefon
+        email: E-mail
+        photo: Fotografie
+        photo_crop: Ořez fotografie
     notices:
       models:
         ric_contact/branch:
@@ -42,9 +57,16 @@ cs:
           create: Zpráva byla úspěšně vytvořena.
           update: Zpráva byla úspěšně uložena.
           destroy: Zpráva byla úspěšně smazána.
+        ric_contact/contact_person:
+          create: Kontaktní osoba byla úspěšně vytvořena.
+          update: Kontaktní osoba byla úspěšně uložena.
+          move: Kontaktní osoba byla úspěšně přesunuta.
+          destroy: Kontaktní osoba byla úspěšně smazána.
     errors:
       models:
         ric_contact/branch:
           not_found: Pobočka nebyla nalezena.
         ric_contact/contact_message:
           not_found: Zpráva nebyla nalezena.
+        ric_contact/contact_person:
+          not_found: Kontaktní osoba nebyla nalezena.

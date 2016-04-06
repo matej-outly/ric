@@ -16,6 +16,7 @@ require "ric_contact/public_engine"
 # Models
 require 'ric_contact/concerns/models/branch'
 require 'ric_contact/concerns/models/contact_message'
+require 'ric_contact/concerns/models/contact_person'
 
 module RicContact
 
@@ -41,6 +42,12 @@ module RicContact
 	# *************************************************************************
 
 	#
+	# Enable branches subsystem
+	#
+	mattr_accessor :enable_branches
+	@@enable_branches = true
+
+	#
 	# Branch model
 	#
 	mattr_accessor :branch_model
@@ -50,6 +57,12 @@ module RicContact
 	@@branch_model = "RicContact::Branch"
 
 	#
+	# Enable contact messages subsystem
+	#
+	mattr_accessor :enable_contact_messages
+	@@enable_contact_messages = true
+
+	#
 	# Contact message model
 	#
 	mattr_accessor :contact_message_model
@@ -57,5 +70,26 @@ module RicContact
 		return @@contact_message_model.constantize
 	end
 	@@contact_message_model = "RicContact::ContactMessage"
+
+	#
+	# Enable contact people subsystem
+	#
+	mattr_accessor :enable_contact_people
+	@@enable_contact_people = true
+
+	#
+	# Contact person model
+	#
+	mattr_accessor :contact_person_model
+	def self.contact_person_model
+		return @@contact_person_model.constantize
+	end
+	@@contact_person_model = "RicContact::ContactPerson"
+
+	#
+	# Localization of some specific columns (roles, descriptions, etc.)
+	#
+	mattr_accessor :localization
+	@@localization = false
 
 end

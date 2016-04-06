@@ -1,0 +1,9 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@contact_person, {
+		name: :name,
+		role: :string,
+		phone: :string,
+		email: :string,
+		photo: { type: :picture, thumb_style: :thumb },
+	}) %>
+<% end %>

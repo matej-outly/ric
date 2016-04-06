@@ -1,0 +1,7 @@
+# Photo crop settings
+photo_crop:
+  thumb: "300x300#"
+  full: "1000x1000>"
+
+# Is photo manually croppable?
+photo_croppable: false
