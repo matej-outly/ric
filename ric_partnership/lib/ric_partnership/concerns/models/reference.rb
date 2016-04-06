@@ -40,6 +40,38 @@ module RicPartnership
 					has_attached_file :logo, :styles => { :full => config(:logo_crop, :full) }
 					validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
 
+					# *********************************************************
+					# Localization
+					# *********************************************************
+
+					if RicWebsite.localization
+						localized_column :name
+					end
+
+				end
+
+				module ClassMethods
+
+					#
+					# Columns
+					#
+					def permitted_columns
+						result = []
+						[:name].each do |column|
+							if RicWebsite.localization
+								I18n.available_locales.each do |locale|
+									result << "#{column.to_s}_#{locale.to_s}".to_sym
+								end
+							else
+								result << column
+							end
+						end
+						[:url, :logo].each do |column|
+							result << column
+						end
+						return result
+					end
+
 				end
 
 			end

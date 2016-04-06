@@ -135,7 +135,7 @@ module RicPartnership
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def reference_params
-						params.require(:reference).permit(:name, :url, :logo)
+						params.require(:reference).permit(RicPartnership.reference_model.permitted_columns)
 					end
 
 				end

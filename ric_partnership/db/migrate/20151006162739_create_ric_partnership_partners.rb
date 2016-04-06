@@ -10,6 +10,10 @@ class CreateRicPartnershipPartners < ActiveRecord::Migration
 			# Name
 			t.string :name
 
+			# Localized name
+			#t.string :name_cs
+			#t.string :name_en
+
 			# URL
 			t.string :url
 

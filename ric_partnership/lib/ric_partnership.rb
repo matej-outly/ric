@@ -70,4 +70,10 @@ module RicPartnership
 	mattr_accessor :enable_references
 	@@enable_references = true
 
+	#
+	# Localization of some specific columns (names, etc.)
+	#
+	mattr_accessor :localization
+	@@localization = false
+
 end
