@@ -82,6 +82,7 @@ module RicEshop
 				# Constructor
 				#
 				def initialize(session_id)
+					super({})
 					@session_id = session_id
 				end
 
@@ -220,20 +221,36 @@ module RicEshop
 				end
 
 				# *************************************************************
-				# Total price
+				# Price
 				# *************************************************************
 				
-				def price
-					if @price.nil?
-						@price = 0
+				#
+				# Price including real and virtual items
+				#
+				def final_price
+					if @final_price.nil?
+						@final_price = 0
 						self.cart_items.each do |cart_item|
-							@price += cart_item.price
+							@final_price += cart_item.price
 						end
 						self.virtual_items.each do |virtual_item|
-							@price += virtual_item.price
+							@final_price += virtual_item.price
 						end
 					end
-					return @price
+					return @final_price
+				end
+
+				#
+				# Price including real items only
+				#
+				def basic_price
+					if @basic_price.nil?
+						@basic_price = 0
+						self.cart_items.each do |cart_item|
+							@basic_price += cart_item.price
+						end
+					end
+					return @basic_price
 				end
 
 				# *************************************************************
