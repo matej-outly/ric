@@ -36,6 +36,10 @@ cs:
           not_paid: Nezaplaceno
           in_progress: Platba probíhá
           paid: Zaplaceno
+        payment_state_colors:
+          not_paid: red
+          in_progress: yellow
+          paid: green
         paid_at: Čas zaplacení
         price: Cena
         currency: Měna
