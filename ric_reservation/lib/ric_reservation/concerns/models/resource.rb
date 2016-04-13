@@ -73,6 +73,15 @@ module RicReservation
 						end
 					end
 
+					# *********************************************************
+					# Period
+					# *********************************************************
+
+					#
+					# Period
+					#
+					enum_column :period, ["full", "week"], default: "full"
+
 				end
 
 				module ClassMethods
@@ -89,8 +98,27 @@ module RicReservation
 					end
 
 					# *********************************************************
-					# Scopes
+					# Columns
 					# *********************************************************
+
+					#
+					# Columns permitted to be updated via request
+					#
+					def permitted_columns
+						result = []
+						if config(:states)
+							config(:states).each_with_index do |state_spec, index|
+								result << "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+							end
+						end	
+						result << :name
+						result << :valid_from
+						result << :valid_to
+						result << :period
+						result << :owner_reservation_limit
+						result << { :opening_hours => [:min, :max] }
+						return result
+					end
 
 				end
 

@@ -1,5 +1,8 @@
 <%= rug_form_for(@resource, create_url: "ric_reservation_admin.resources_path", update_url: "ric_reservation_admin.resource_path") do |f| %>
 	<%= f.text_input_row :name, :text_field %>
+	<%= f.date_picker_row :valid_from %>
+	<%= f.date_picker_row :valid_to %>
+	<%= f.picker_row :period %>
 	<% @resource.config(:states).reverse_each_with_index do |state_spec, index| %>
 		<%= f.duration_row "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != @resource.config(:states).length %>
 	<% end %>

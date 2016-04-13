@@ -701,6 +701,13 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# Default capacity kind
+				# 
+				def capacity_type
+					:integer
+				end
+
+				#
 				# Get all reservations 
 				#
 				def reservations
@@ -755,13 +762,12 @@ module RicReservation
 				end
 
 				#
-				# Get current (scheduled) event size
+				# Get current event size in case capacity/size type is integer
 				#
-				def size
+				def size_integer
 					if !scheduled?
 						raise "Schedule event to specific date first."
 					end
-
 					if @size.nil?
 						@size = 0
 						self.reservations.each do |reservation|
@@ -771,6 +777,45 @@ module RicReservation
 						end
 					end
 					return @size
+				end
+
+				#
+				# Get current event size in case capacity/size type is time
+				#
+				def size_time
+					if !scheduled?
+						raise "Schedule event to specific date first."
+					end
+					if @size.nil?
+						@size = DateTime.parse("2000-01-01 00:00:00 +0000")
+						self.reservations.each do |reservation|
+							if reservation.above_line?
+								@size += reservation.size.seconds_since_midnight.seconds
+							end
+						end
+					end
+					return @size
+				end
+
+				#
+				# Get current event size (based on defined capacity/size type)
+				#
+				def size
+					return self.send("size_#{self.capacity_type.to_s}")
+				end
+
+				#
+				# Get current capacity (based on defined capacity/size type)
+				#
+				def capacity
+					return self.send("capacity_#{self.capacity_type.to_s}")
+				end
+
+				#
+				# Set current capacity (based on defined capacity/size type)
+				#
+				def capacity=(capacity)
+					self.send("capacity_#{self.capacity_type.to_s}=", capacity)
 				end
 
 				#
@@ -786,7 +831,6 @@ module RicReservation
 					end
 					return @at_capacity
 				end
-
 
 				# *************************************************************
 				# Modifiers

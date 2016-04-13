@@ -158,6 +158,30 @@ module RicReservation
 				end
 
 				# *************************************************************
+				# Size
+				# *************************************************************
+
+				#
+				# Get current size (based on defined capacity type)
+				#
+				def size
+					if self.event.nil?
+						raise "Please bind valid event first."
+					end
+					return self.send("size_#{self.event.capacity_type.to_s}")
+				end
+
+				#
+				# Set current size (based on defined capacity type)
+				#
+				def size=(size)
+					if self.event.nil?
+						raise "Please bind valid event first."
+					end
+					self.send("size_#{self.capacity_type.to_s}=", size)
+				end
+
+				# *************************************************************
 				# Line
 				# *************************************************************
 
@@ -199,15 +223,37 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# Check if capacity (integer) condition valid => returns true if OK
+				#
+				def check_capacity_integer
+					if self.new_record? || self.below_line?
+						size_diff = self.size_integer
+					else
+						size_diff = self.size_integer - self.size_integer_was
+					end
+					return self.event.size + size_diff <= self.event.capacity
+				end
+
+				#
+				# Check if capacity (time) condition valid => returns true if OK
+				#
+				def check_capacity_time
+					if self.new_record? || self.below_line?
+						size_diff = self.size_time.seconds_since_midnight.seconds
+					else
+						size_diff = (self.size_time.seconds_since_midnight - self.size_time_was.seconds_since_midnight).seconds
+					end
+					return self.event.size + size_diff <= self.event.capacity
+				end
+
+				#
 				# Check if capacity condition valid => returns true if OK
 				#
 				def check_capacity
-					if self.new_record? || self.below_line?
-						size_diff = self.size
-					else
-						size_diff = self.size - self.size_was
+					if self.event.nil?
+						raise "Please bind valid event first."
 					end
-					return self.event.size + size_diff <= self.event.capacity
+					return self.send("check_capacity_#{self.event.capacity_type.to_s}")
 				end
 
 				#

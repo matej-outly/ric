@@ -23,7 +23,7 @@ module RicReservation
 					included do
 						
 						before_action :set_type
-						before_action :set_resource, only: [:show, :edit, :update, :destroy]
+						before_action :set_resource, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
@@ -96,12 +96,12 @@ module RicReservation
 						if type_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
 								format.html { redirect_to ric_reservation_admin.resources_path, notice: I18n.t("activerecord.notices.models.#{type_model.model_name.i18n_key}.move") }
-								format.json { render json: true }
+								format.json { render json: @resource.id }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.move") }
-								format.json { render json: false }
+								format.html { redirect_to ric_reservation_admin.resources_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.move") }
+								format.json { render json: @resource.errors }
 							end
 						end
 					end
@@ -135,7 +135,7 @@ module RicReservation
 					def set_resource
 						@resource = type_model.find_by_id(params[:id])
 						if @resource.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.not_found")
+							redirect_to ric_reservation_admin.resources_path, alert: I18n.t("activerecord.errors.models.#{type_model.model_name.i18n_key}.not_found")
 						end
 					end
 
@@ -147,7 +147,7 @@ module RicReservation
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def resource_params
-						params.require(:resource).permit(:name, :time_window_open, :time_window_soon, :time_window_deadline, :owner_reservation_limit, :opening_hours => [:min, :max])
+						params.require(:resource).permit(RicReservation.resource_model.permitted_columns)
 					end
 
 				end

@@ -35,6 +35,13 @@ class CreateRicReservationResources < ActiveRecord::Migration
 			t.integer :opening_hours_min
 			t.integer :opening_hours_max
 
+			# Validity
+			t.date :valid_from
+			t.date :valid_to
+
+			# Period
+			t.string :period
+
 		end
 	end
 end

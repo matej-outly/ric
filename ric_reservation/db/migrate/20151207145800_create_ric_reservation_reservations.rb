@@ -25,8 +25,11 @@ class CreateRicReservationReservations < ActiveRecord::Migration
 			# Event reservation
 			t.integer :event_id
 			t.date :schedule_date
-			t.integer :size
 			t.boolean :below_line
+
+			# Size
+			#t.integer :size_integer
+			#t.time :size_time
 
 			# Owner
 			t.integer :owner_id

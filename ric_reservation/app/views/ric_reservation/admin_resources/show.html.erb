@@ -55,6 +55,9 @@
 			<%
 				columns = RugBuilder::TableBuilder::Columns.new({ 
 					name: :string,
+					valid_from: :date,
+					valid_to: :date,
+					period: :enum,
 					owner_reservation_limit: :integer,
 					opening_hours: :range,
 				})

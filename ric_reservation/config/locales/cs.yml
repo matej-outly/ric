@@ -69,6 +69,12 @@ cs:
           soon: Brzký
           deadline: Po deadline
           closed: Již uzavřený
+        valid_from: Platné od
+        valid_to: Platné do
+        period: Perioda
+        period_values:
+          full: Neomezený rozvrh
+          week: Týdenní rozvrh
       ric_reservation/event:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka

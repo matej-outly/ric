@@ -1,6 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@resources, { 
-		name: :string
+		name: :string,
+		valid_from: :date,
+		valid_to: :date,
+		period: :enum,
 	}, paths: {
 		show: "ric_reservation_admin.resource_path",
 		edit: "ric_reservation_admin.edit_resource_path",
