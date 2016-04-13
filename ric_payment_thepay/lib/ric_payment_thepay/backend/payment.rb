@@ -246,31 +246,16 @@ module RicPaymentThepay
 			end
 
 			#
-			# Returns signature to authenticate the payment. The signature
-			# consists of hash of all specified parameters and the merchant
-			# password specified in the configuration. So no one can alter the
-			# payment, because the password is not known.
-			#
-			def query_signature
-				result = ""
-				query_data.each do |key, value|
-					result += key + "=" + value.to_s + "&"
-				end
-				result += "password=" + Config.password
-				return hash_function(result)
-			end
-
-			#
 			# Build the query part of the URL from payment data and optional
 			# helper data.
 			#
-			def query(optional_data = {})
-				result = []
-				all_query_data = query_data.merge(optional_data).merge({"signature" => self.query_signature})
-				all_query_data.each do |key, value|
-					result << (CGI.escape(key.to_s).gsub("+", "%20") + "=" + CGI.escape(value.to_s).gsub("+", "%20"))
-				end
-				return result.join("&amp;")
+			def query(options = {})
+				data = query_data
+				data = data.merge(options[:optional_data]) if options[:optional_data]
+				options[:signature_data] = query_data
+				options[:escape_signature] = false
+				options[:filter_signature] = false
+				return Query.build(data, options)
 			end
 
 			# *****************************************************************
@@ -337,30 +322,20 @@ module RicPaymentThepay
 				end
 
 				# Compute signature from current data
-				data_signature = []
-				data_signature << "merchantId=" + @returned_merchant_id.to_s
-				data_signature << "accountId=" + @returned_account_id.to_s
+				data = {}
+				data["merchantId"] = @returned_merchant_id.to_s
+				data["accountId"] = @returned_account_id.to_s
 				RETURNED_REQUIRED_ARGS.merge(RETURNED_OPTIONAL_ARGS).each do |param_name, attribute_name|
 					value = self.send(attribute_name)
-					data_signature << (param_name + "=" + value.to_s) if !value.nil?
+					data[param_name] = value if !value.nil?
 				end
-				data_signature << "password=" + Config.password
-				data_signature = self.hash_function(data_signature.join("&"))
-
+				data_signature = Query.signature(data, escape_signature: false, filter_signature: false)
+				
 				if data_signature == @returned_signature
 					return true
 				else
 					return false
 				end
-			end
-
-		protected
-
-			#
-			# Function that calculates hash
-			#
-			def hash_function(str)
-				return Digest::MD5.hexdigest(str)
 			end
 
 		end

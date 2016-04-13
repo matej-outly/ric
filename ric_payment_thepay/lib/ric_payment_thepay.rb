@@ -15,7 +15,6 @@ require 'ric_payment_thepay/railtie' if defined?(Rails)
 # Engines
 require "ric_payment_thepay/admin_engine"
 require "ric_payment_thepay/public_engine"
-require "ric_payment_thepay/gateway_engine"
 
 # Backend
 require 'ric_payment_thepay/backend'

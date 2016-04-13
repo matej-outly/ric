@@ -13,6 +13,7 @@ require "singleton"
 
 # Backend parts
 require "ric_payment_thepay/backend/config"
+require "ric_payment_thepay/backend/query"
 require "ric_payment_thepay/backend/payment"
 require "ric_payment_thepay/backend/data_api"
 

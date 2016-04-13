@@ -133,7 +133,6 @@ module RicPaymentThepay
 									
 									# Payment subject not verified
 									flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.not_verified")
-									puts "1"
 
 								end
 
@@ -141,7 +140,6 @@ module RicPaymentThepay
 
 								# Payment subject not verified
 								flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.not_verified")
-								puts "2"
 
 							end
 
@@ -149,27 +147,12 @@ module RicPaymentThepay
 
 							# Payment not verified
 							flash[:alert] = I18n.t("activerecord.errors.models.ric_payment/payment.not_verified")
-							puts "3"
 
 						end
 
 					end
 
 				protected
-
-					#
-					# Get path which should be followed after payment is succesfully created
-					#
-					def payment_success_path
-						ric_eshop_public.finalize_order_path(@payment_subject)
-					end
-
-					#
-					# Get path which should be followed after payment is failed
-					#
-					def payment_failed_path
-						main_app.root_path
-					end
 
 					#
 					# Find model according to parameter

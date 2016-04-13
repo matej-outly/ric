@@ -39,6 +39,12 @@ module RicPayment
 					#
 					add_methods_to_json [:payment_state]
 
+					# *********************************************************
+					# State
+					# *********************************************************
+
+					enum_column :payment_state, ["paid", "in_progress", "not_paid"]
+
 				end
 
 				module ClassMethods
