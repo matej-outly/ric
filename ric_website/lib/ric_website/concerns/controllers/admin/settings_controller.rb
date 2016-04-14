@@ -63,8 +63,7 @@ module RicWebsite
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def settings_collection_params
-						permitted_params = @settings_collection.settings.keys
-						params.require(:settings_collection).permit(permitted_params)
+						params.require(:settings_collection).permit(RicWebsite.settings_collection_model.permitted_columns)
 					end
 
 				end

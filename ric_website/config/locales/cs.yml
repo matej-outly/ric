@@ -98,6 +98,9 @@ cs:
         kind_values:
           string: Textový řetězec
           integer: Celé číslo
+          enum: Výčtový typ
+          integer_range: Rozsah mezi celými čísly
+          double_range: Rozsah mezi desetinnými čísly
         category: Kategorie
     notices:
       models:

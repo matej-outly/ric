@@ -37,7 +37,9 @@ module RicWebsite
 
 						# Initialize
 						@settings = {} if @settings.nil?
+						@permitted_columns = [] if @permitted_columns.nil?
 						new_key = new_key.to_sym
+						keys_to_define = [new_key]
 
 						# Store
 						@settings[new_key] = options
@@ -47,9 +49,11 @@ module RicWebsite
 						# Define tableless column
 						if kind == :string # String
 							column new_key, :varchar
+							@permitted_columns << new_key.to_sym
 
 						elsif kind == :integer # Integer
 							column new_key, :integer
+							@permitted_columns << new_key.to_sym
 
 						elsif kind == :enum # Enum
 							if !options[:values]
@@ -57,24 +61,43 @@ module RicWebsite
 							end
 							column new_key, :varchar
 							enum_column new_key, options[:values]
+							@permitted_columns << new_key.to_sym
+
+						elsif kind == :integer_range
+							column "#{new_key.to_s}_min".to_sym, :integer
+							column "#{new_key.to_s}_max".to_sym, :integer
+							range_column new_key
+							keys_to_define = ["#{new_key.to_s}_min".to_sym, "#{new_key.to_s}_max".to_sym]
+							@permitted_columns << { new_key.to_sym => [ :min, :max ] }
+
+						elsif kind == :double_range
+							column "#{new_key.to_s}_min".to_sym, :varchar
+							column "#{new_key.to_s}_max".to_sym, :varchar
+							range_column new_key
+							keys_to_define = ["#{new_key.to_s}_min".to_sym, "#{new_key.to_s}_max".to_sym]
+							@permitted_columns << { new_key.to_sym => [ :min, :max ] }
 
 						else
 							raise "Unknown kind #{kind.to_s} of setting #{new_key.to_s}."
 						end
 
-						# Get method
-						define_method(new_key) do
-							key = new_key
-							@settings_values = {} if @settings_values.nil?
-							@settings_values[key] = self.get(key) if !@settings_values[key]
-							return @settings_values[key]
-						end
+						keys_to_define.each do |key_to_define|
+							
+							# Get method
+							define_method(key_to_define) do
+								key = key_to_define
+								@settings_values = {} if @settings_values.nil?
+								@settings_values[key] = self.get(key) if !@settings_values[key]
+								return @settings_values[key]
+							end
 
-						# Set method
-						define_method((new_key.to_s + "=").to_sym) do |value|
-							key = new_key
-							@settings_values = {} if @settings_values.nil?
-							@settings_values[key] = value
+							# Set method
+							define_method((key_to_define.to_s + "=").to_sym) do |value|
+								key = key_to_define
+								@settings_values = {} if @settings_values.nil?
+								@settings_values[key] = value
+							end
+
 						end
 
 					end
@@ -103,6 +126,14 @@ module RicWebsite
 						return result
 					end
 
+					#
+					# Get all columns permitted for update via request
+					#
+					def permitted_columns
+						@permitted_columns = [] if @permitted_columns.nil?
+						return @permitted_columns
+					end
+
 				end
 
 				#
@@ -117,6 +148,13 @@ module RicWebsite
 				#
 				def categories
 					self.class.categories
+				end
+
+				#
+				# Get all columns permitted for update via request
+				#
+				def permitted_columns
+					self.class.permitted_columns
 				end
 
 				#
@@ -138,8 +176,8 @@ module RicWebsite
 				def set(key, value)
 					object = RicWebsite.setting_model.find_or_create_by(key: key.to_s)
 					object.value = value
-					object.kind = self.settings[key.to_sym][:kind]
-					object.category = self.settings[key.to_sym][:category]
+					#object.kind = self.settings[key.to_sym][:kind]
+					#object.category = self.settings[key.to_sym][:category]
 					return object.save
 				end
 
