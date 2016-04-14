@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Matej Outly (Clockstar s.r.o.)"]
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
-  s.summary     = "RIC engine for payment management"
-  s.description = "Payment realization and notification from gateway, possibility to attach different payment backends."
+  s.summary     = "RIC engine for payment management oner ThePat gateway"
+  s.description = "Payment realization and notification from ThePay gateway."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
