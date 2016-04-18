@@ -80,7 +80,7 @@ module RicPaymentThepay
 										# Now we can trust payment data (except payment status)
 
 										# Status can be double-checked via Data API
-										#status = @backend.get_payment_state(payment.payment_id) # TODO returns incorrect status
+										#status = @backend.get_payment_state(payment) # TODO returns incorrect status
 										status = payment.status
 
 										# Get action based on status

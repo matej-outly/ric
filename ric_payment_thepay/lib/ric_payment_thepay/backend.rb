@@ -64,9 +64,9 @@ module RicPaymentThepay
 		#
 		# Get payment
 		#
-		def get_payment_state(payment_id)
+		def get_payment_state(payment)
 			data_api = DataApi.instance
-			response = data_api.get_payment_state(payment_id)
+			response = data_api.get_payment_state(payment.id)
 			return response.state
 		end
 
