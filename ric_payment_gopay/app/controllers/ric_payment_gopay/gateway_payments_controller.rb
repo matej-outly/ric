@@ -12,7 +12,7 @@
 require_dependency "ric_payment_gopay/gateway_controller"
 
 module RicPaymentGopay
-	class GatewayPaymentsController < PublicController
+	class GatewayPaymentsController < GatewayController
 		include RicPaymentGopay::Concerns::Controllers::Gateway::PaymentsController
 	end
 end

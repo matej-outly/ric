@@ -79,18 +79,5 @@ module RicPaymentThepay
 		#
 		attr_accessor :return_url
 
-	protected
-
-		#
-		# Translate locale to currency identifier used in ThePay system
-		#
-		def self.locale_to_currency(locale)
-			locale_to_currency = {
-				"cs" => "CZK"	
-			}
-			return locale_to_currency[locale.to_s] if locale_to_currency[locale.to_s]
-			return "CZK"
-		end
-
 	end
 end

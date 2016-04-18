@@ -18,32 +18,32 @@ module RicPaymentGopay
 			# *****************************************************************
 
 			#
-			# Correctly paid.
+			# Correctly paid
 			#
 			STATUS_PAID = PaymentStatus::STATE_PAID
 
 			#
-			# Payment in progress, offline payment method chosen.
+			# Payment in progress, offline payment method chosen
 			#
 			STATUS_PAYMENT_METHOD_CHOSEN = PaymentStatus::STATE_PAYMENT_METHOD_CHOSEN
 
 			#
-			# Canceled by customer.
+			# Canceled by customer
 			#
 			STATUS_CANCELED = PaymentStatus::STATE_CANCELED
 			
 			#
-			# Not paid in timepout
+			# Not paid in timeout
 			#
 			STATUS_TIMEOUT = PaymentStatus::STATE_TIMEOUTED
 			
 			#
-			# Money refunded to customer.
+			# Money refunded to customer
 			#
 			STATUS_REFUNDED = PaymentStatus::STATE_REFUNDED
 
 			#
-			# Money partially refunded to customer.
+			# Money partially refunded to customer
 			#
 			STATUS_PARTIALLY_REFUNDED = PaymentStatus::STATE_PARTIALLY_REFUNDED
 
@@ -72,7 +72,7 @@ module RicPaymentGopay
 			attr_accessor :currency
 
 			#
-			# Unique payment ID in the GoPay system.
+			# Unique payment ID in the GoPay system
 			#
 			attr_accessor :payment_id
 			def payment_id=(payment_id)
@@ -80,19 +80,19 @@ module RicPaymentGopay
 			end
 
 			#
-			# Unique payment ID in the GoPay system.
+			# Unique payment ID in the GoPay system
 			#
 			def id
 				return self.payment_id
 			end
 
 			#
-			# Payment channel.
+			# Payment channel
 			#
 			attr_accessor :channel
 
 			#
-			# Order number.
+			# Order number
 			#
 			attr_accessor :order_number
 
@@ -102,12 +102,17 @@ module RicPaymentGopay
 			attr_accessor :description
 
 			#
-			# Go ID returned from gateway.
+			# Customer data (email, first name, last name)
+			#
+			attr_accessor :customer
+
+			#
+			# Go ID returned from gateway
 			#
 			attr_accessor :target_go_id
 
 			#
-			# Encrypted signature returned from gateway.
+			# Encrypted signature returned from gateway
 			#
 			attr_accessor :encrypted_signature
 
@@ -123,13 +128,12 @@ module RicPaymentGopay
 			}
 
 			def load_from_params(params)
-				
 				RETURNED_ARGS.each do |param_name, attribute_name|
 					if params[param_name]
 						self.send("#{attribute_name}=", params[param_name])
 					end
 				end
-
+				return self
 			end
 
 			# *****************************************************************
@@ -137,9 +141,42 @@ module RicPaymentGopay
 			# *****************************************************************
 
 			def load_from_subject(payment_subject)
-				# todo..
+				self.value = payment_subject.payment_value
+				self.currency = Payment.locale_to_currency(payment_subject.payment_currency)
+				self.description = payment_subject.payment_label
+				self.order_number = payment_subject.id
+				self.channel = Payment.payment_type_to_channel(payment_subject.payment_type)
+				self.customer = OpenStruct.new({
+					firstname: payment_subject.customer.name[:firstname],
+					lastname: payment_subject.customer.name[:lastname],
+					email: payment_subject.customer.email,
+				})
+				return self
+			end
 
-				
+		protected
+
+			#
+			# Translate locale to currency identifier used in GoPay system
+			#
+			def self.locale_to_currency(locale)
+				locale_to_currency = {
+					"cs" => "CZK",
+				}
+				return locale_to_currency[locale.to_s] if locale_to_currency[locale.to_s]
+				return Config.default_currency
+			end
+
+			#
+			# Translate payment type to channel identifier used in GoPay system
+			#
+			def self.payment_type_to_channel(payment_type)
+				payment_type_to_channel = {
+					"card" => "eu_gp_u",
+					"bank" => "eu_bank",
+				}
+				return payment_type_to_channel[payment_type.to_s] if payment_type_to_channel[payment_type.to_s]
+				return nil
 			end
 
 		end

@@ -1,21 +1,23 @@
 
 <div class="payment perform-redirect" 
 	data-url="<%= main_app.root_path %>"
+	data-timeout="10000"
 ></div>
 
 <div class="payment perform-pay" 
 	data-create-url="<%= ric_payment_public.payment_path(@payment_subject) %>"
 	data-redirect-url="<%= RicPaymentGopay::Backend::Config.redirect_url %>"
+	data-timeout="10000"
 ></div>
 
 <ul class="payment" 
 	data-create-url="<%= ric_payment_public.payment_path(@payment_subject) %>"
 	data-redirect-url="<%= RicPaymentGopay::Backend::Config.redirect_url %>"
 >
-	<li class="payment-type" data-type="card">
-		<%= link_to ("<span></span>" + t("activerecord.attributes.order.payment_type_values_shop_parent.card")).html_safe, nil %>
+	<li>
+		<%= link_to t("activerecord.attributes.#{RicPayment.payment_subject_model.model_name.i18n_key}.payment_type_values.card"), "#", class: "payment-type", data: { type: "card" } %>
 	</li>
-	<li class="payment-type" data-type="bank">
-		<%= link_to ("<span></span>" + t("activerecord.attributes.order.payment_type_values_shop_parent.bank")).html_safe, nil %>
+	<li>
+		<%= link_to t("activerecord.attributes.#{RicPayment.payment_subject_model.model_name.i18n_key}.payment_type_values.bank"), "#", class: "payment-type", data: { type: "bank" } %>
 	</li>
 </ul>

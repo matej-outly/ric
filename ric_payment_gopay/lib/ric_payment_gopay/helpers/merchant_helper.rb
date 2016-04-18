@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-module RicPaymentThepay
+module RicPaymentGopay
 	module Helpers
 		module MerchantHelper
 

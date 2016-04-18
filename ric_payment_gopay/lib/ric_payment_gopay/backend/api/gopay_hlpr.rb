@@ -40,10 +40,10 @@ module PaymentConstants
     GOPAY_WS_ENDPOINT = "https://gate.gopay.cz/axis/EPaymentServiceV2?wsdl"
     
     #URL testovaci webove sluzby
-    GOPAY_WS_ENDPOINT_TEST = "http://testgw.gopay.cz/axis/EPaymentServiceV2?wsdl"
+    GOPAY_WS_ENDPOINT_TEST = "https://testgw.gopay.cz/axis/EPaymentServiceV2?wsdl"
 
     #URL testovaci platebni brany  -- uplna integrace
-    GOPAY_FULL_TEST = "http://testgw.gopay.cz/gw/pay-full-v2"
+    GOPAY_FULL_TEST = "https://testgw.gopay.cz/gw/pay-full-v2"
 
     #URL platebni brany  -- uplna integrace 
     GOPAY_FULL = "https://gate.gopay.cz/gw/pay-full-v2"

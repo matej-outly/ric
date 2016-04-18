@@ -15,7 +15,9 @@ RicPaymentGopay::PublicEngine.routes.draw do
 	resources :payments, controller: "public_payments", only: [] do
 		member do
 			get "new"
-			get "done"
+			post "create"
+			get "success"
+			get "failed"
 		end
 	end
 

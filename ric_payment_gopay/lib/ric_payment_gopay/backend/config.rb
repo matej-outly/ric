@@ -25,22 +25,35 @@ module RicPaymentGopay
 			end
 
 			#
-			# Security key
+			# Secure key
 			#
-			def self.security_key
+			def self.secure_key
 				if RicPaymentGopay.environment.to_s == "production"
-					return RicPaymentGopay.security_key
+					return RicPaymentGopay.secure_key
 				else
-					return RicPaymentGopay.test_security_key
+					return RicPaymentGopay.test_secure_key
 				end
 			end
 
+			#
+			# Gateway language
+			#
 			def self.language
 				return RicPaymentGopay.language
 			end
 
+			#
+			# Allowed payment channels
+			#
 			def self.allowed_channels
 				return RicPaymentGopay.allowed_channels
+			end
+
+			#
+			# Default currency
+			#
+			def self.default_currency
+				return RicPaymentGopay.default_currency
 			end
 
 			#

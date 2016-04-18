@@ -71,7 +71,7 @@ module RicPaymentGopay
 			# Basic stuff
 			command.productName = payment.description
 			command.orderNumber = payment.order_number.to_s
-			command.totalPrice =  (payment.value.to_f * 100) # In cents
+			command.totalPrice =  (payment.value.to_f * 100).to_i # In cents
 			command.currency = payment.currency
 			command.targetGoId = Config.go_id
 
@@ -85,9 +85,9 @@ module RicPaymentGopay
 
 			# Customer data
 			customer_data = ECustomerData.new
-			customer_data.firstName = payment.customer.name_firstname if !payment.customer.name_firstname.nil?
-			customer_data.lastName = payment.customer.name_lastname if !payment.customer.name_lastname.nil?
-			customer_data.email = payment.customer.email    
+			customer_data.firstName = payment.customer.firstname if !payment.customer.firstname.blank?
+			customer_data.lastName = payment.customer.lastname if !payment.customer.lastname.blank?
+			customer_data.email = payment.customer.email
 			command.customerData = customer_data
 
 			# Language
@@ -96,6 +96,8 @@ module RicPaymentGopay
 			# Sign with secure key
 			gopay_helper = GopayHlpr.new
 			gopay_helper.sign(command, Config.secure_key)
+
+			puts command.inspect
 
 			# Create payment
 			payment_status = self.communicator.createPayment(command)
@@ -148,7 +150,7 @@ module RicPaymentGopay
 			status = self.communicator.paymentStatus(info)
 			    
 			# Payment status check
-			gopay_helper.checkPaymentStatus(status, Config.go_id, payment.order_number.to_s, (payment.value.to_f * 100), payment.currency, payment.description, Config.secure_key)
+			gopay_helper.checkPaymentStatus(status, Config.go_id, payment.order_number.to_s, (payment.value.to_f * 100).to_i, payment.currency, payment.description, Config.secure_key)
 
 			return status.sessionState
 		end

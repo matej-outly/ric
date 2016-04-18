@@ -22,28 +22,15 @@ module RicPayment
 				included do
 					
 					# *********************************************************
-					# Enums
+					# State
 					# *********************************************************
 
-					#
-					# Payment state
-					#
-					enum_column :payment_state, [:paid, :in_progress, :not_paid]
-
-					# *********************************************************
-					# JSON
-					# *********************************************************
+					enum_column :payment_state, ["paid", "in_progress", "not_paid"]
 
 					#
 					# Define additional methods to JSON export
 					#
 					add_methods_to_json [:payment_state]
-
-					# *********************************************************
-					# State
-					# *********************************************************
-
-					enum_column :payment_state, ["paid", "in_progress", "not_paid"]
 
 				end
 

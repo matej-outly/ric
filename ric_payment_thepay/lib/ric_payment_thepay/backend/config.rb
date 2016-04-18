@@ -69,6 +69,10 @@ module RicPaymentThepay
 				end
 			end
 
+			def self.default_currency
+				return RicPaymentThepay.default_currency
+			end
+
 		end
 	end
 end

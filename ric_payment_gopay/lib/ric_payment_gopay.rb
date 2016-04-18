@@ -10,7 +10,7 @@
 # *****************************************************************************
 
 # Railtie
-require 'ric_payment_gopay/railtie' if defined?(Rails)
+require "ric_payment_gopay/railtie" if defined?(Rails)
 
 # Engines
 require "ric_payment_gopay/admin_engine"
@@ -18,10 +18,10 @@ require "ric_payment_gopay/gateway_engine"
 require "ric_payment_gopay/public_engine"
 
 # Backend
-require 'ric_payment_gopay/backend'
+require "ric_payment_gopay/backend"
 
 # Helpers
-require 'ric_payment_gopay/helpers/merchant_helper'
+require "ric_payment_gopay/helpers/merchant_helper"
 
 module RicPaymentGopay
 
@@ -88,4 +88,10 @@ module RicPaymentGopay
 	mattr_accessor :allowed_channels
 	@@allowed_payment_channels = [ "eu_gp_u", "eu_bank" ]
 
+	#
+	# Default currency used if not specified in payment subject.
+	#
+	mattr_accessor :default_currency
+	@@default_currency = "CZK"
+	
 end

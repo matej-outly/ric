@@ -129,4 +129,10 @@ module RicPaymentThepay
 	mattr_accessor :test_data_web_services_wsdl
 	@@test_data_web_services_wsdl = "https://www.thepay.cz/demo-gate/api/data-demo.wsdl"
 
+	#
+	# Default currency used if not specified in payment subject.
+	#
+	mattr_accessor :default_currency
+	@@default_currency = "CZK"
+
 end

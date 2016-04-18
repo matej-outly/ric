@@ -8,11 +8,14 @@ function payment_pay(options)
 		create_url = window.location.pathname.replace(/\/new.*/, "") + window.location.search; // Try to compute create URL from current URL
 	}
 	if (options["type"] != null) {
-		create_url += (window.location.search ? "&" : "?") + "type=" + options["type"];
+		create_url += ((create_url.indexOf("?") > -1) ? "&" : "?") + "type=" + options["type"];
 	}
 
 	// Get GoPay redirect URL
 	var redirect_url = options["redirect_url"];
+
+	console.log(create_url);
+	console.log(redirect_url);
 
 	$.ajax({
 		url: create_url,
@@ -36,21 +39,22 @@ function payment_pay(options)
 	});
 }
 
-function payment_redirect(url) 
+function payment_redirect(options) 
 {
-	window.location = url;
+	window.location = options["url"];
 }
 
 var payment_timeout = null;
-function payment_set_timeout(callback, param)
+function payment_set_timeout(callback, options)
 {
+	var timeout = options["timeout"] != null ? options["timeout"] : 0;
 	if (payment_timeout) {
 		clearTimeout(payment_timeout);
 	}
 	payment_timeout = setTimeout(function() { 
-		callback(param);
+		callback(options);
 		payment_timeout = null;
-	}, $("#gopay_timeout").val());
+	}, timeout);
 }
 
 function payment_ready()
@@ -58,23 +62,29 @@ function payment_ready()
 	if ($(".payment.perform-pay").length > 0) {
 		var create_url = $(".payment").data("createUrl");
 		var redirect_url = $(".payment").data("redirectUrl");
+		var timeout = parseInt($(".payment").data("timeout"));
 		payment_set_timeout(payment_pay, {
-			"create_url": create_url,
-			"redirect_url": redirect_url,
+			create_url: create_url,
+			redirect_url: redirect_url,
+			timeout: timeout,
 		});
 	}
 	if ($(".payment.perform-redirect").length > 0) {
 		var url = $(".payment.perform-redirect").data("url");
-		payment_set_timeout(payment_redirect, url);
+		var timeout = parseInt($(".payment").data("timeout"));
+		payment_set_timeout(payment_redirect, {
+			url: url,
+			timeout: timeout,
+		});
 	}
-	$(".payment .payment-type a").click(function(e) {
+	$(".payment a.payment-type").click(function(e) {
 		var create_url = $(".payment").data("createUrl");
 		var redirect_url = $(".payment").data("redirectUrl");
 		var type = $(this).data("type");
 		payment_pay({
-			"type": type,
-			"create_url": create_url,
-			"redirect_url": redirect_url,
+			type: type,
+			create_url: create_url,
+			redirect_url: redirect_url,
 		});
 		e.preventDefault();
 		return false;

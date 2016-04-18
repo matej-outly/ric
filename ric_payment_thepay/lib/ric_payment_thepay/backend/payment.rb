@@ -338,6 +338,34 @@ module RicPaymentThepay
 				end
 			end
 
+			# *****************************************************************
+			# Payment subject
+			# *****************************************************************
+
+			def load_from_subject(payment_subject)
+
+				self.value = payment_subject.payment_value
+				self.currency = Payment.locale_to_currency(payment_subject.payment_currency)
+				self.description = payment_subject.payment_label
+				self.merchant_data = payment_subject.id
+				self.is_deposit = false
+				# TODO other attributes
+
+			end
+
+		protected
+
+			#
+			# Translate locale to currency identifier used in ThePay system
+			#
+			def self.locale_to_currency(locale)
+				locale_to_currency = {
+					"cs" => "CZK"	
+				}
+				return locale_to_currency[locale.to_s] if locale_to_currency[locale.to_s]
+				return Config.default_currency
+			end
+		
 		end
 	end
 end
