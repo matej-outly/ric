@@ -150,7 +150,6 @@ module RicWebsite
 						[:title, :content].each do |column|
 							if RicWebsite.localization
 								I18n.available_locales.each do |locale|
-									self.subject.title = self.title
 									self.subject.send("#{column.to_s}_#{locale.to_s}=", self.send("#{column.to_s}_#{locale.to_s}"))
 								end
 							else
