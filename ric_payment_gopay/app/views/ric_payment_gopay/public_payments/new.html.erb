@@ -1,0 +1,21 @@
+
+<div class="payment perform-redirect" 
+	data-url="<%= main_app.root_path %>"
+></div>
+
+<div class="payment perform-pay" 
+	data-create-url="<%= ric_payment_public.payment_path(@payment_subject) %>"
+	data-redirect-url="<%= RicPaymentGopay::Backend::Config.redirect_url %>"
+></div>
+
+<ul class="payment" 
+	data-create-url="<%= ric_payment_public.payment_path(@payment_subject) %>"
+	data-redirect-url="<%= RicPaymentGopay::Backend::Config.redirect_url %>"
+>
+	<li class="payment-type" data-type="card">
+		<%= link_to ("<span></span>" + t("activerecord.attributes.order.payment_type_values_shop_parent.card")).html_safe, nil %>
+	</li>
+	<li class="payment-type" data-type="bank">
+		<%= link_to ("<span></span>" + t("activerecord.attributes.order.payment_type_values_shop_parent.bank")).html_safe, nil %>
+	</li>
+</ul>
