@@ -24,6 +24,11 @@ require 'ric_reservation/concerns/models/reservation'
 require 'ric_reservation/concerns/models/event_reservation'
 require 'ric_reservation/concerns/models/resource_reservation'
 
+# Helpers
+require 'ric_reservation/helpers/month_timetable_helper'
+require 'ric_reservation/helpers/timetable_pagination_helper'
+require 'ric_reservation/helpers/week_timetable_helper'
+
 module RicReservation
 
 	#

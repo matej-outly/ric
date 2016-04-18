@@ -98,6 +98,7 @@ cs:
         formatted_time: Čas
         schedule_date: Datum
         schedule_formatted_time: Čas
+        size: Naplnění
         capacity: Kapacita
         period: Perioda
         period_values:
@@ -205,6 +206,9 @@ cs:
       models:
         ric_reservation/resource:
           not_found: Rozvrhová tabulka nebyla nalezena.
+          attributes:
+            valid_from: 
+              blank: Vyplňte platnost rozvrhu.
         ric_reservation/event:
           not_found: Událost nebyla nalezena.
           attributes:

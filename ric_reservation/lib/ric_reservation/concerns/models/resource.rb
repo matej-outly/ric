@@ -82,6 +82,15 @@ module RicReservation
 					#
 					enum_column :period, ["full", "week"], default: "full"
 
+					# *********************************************************
+					# Validators
+					# *********************************************************
+
+					#
+					# Some columns must be present if period is week
+					#
+					validates :valid_from, presence: true, if: :period_week?
+
 				end
 
 				module ClassMethods
@@ -222,6 +231,24 @@ module RicReservation
 				def state_behavior(datetime)
 					result_state, result_state_behavior = _state(datetime)
 					return result_state_behavior
+				end
+
+				# *************************************************************
+				# Period
+				# *************************************************************
+
+				#
+				# Is period full?
+				#
+				def kind_full?
+					self.period == "full"
+				end
+
+				#
+				# Is period week?
+				#
+				def kind_week?
+					self.period == "week"
 				end
 
 			protected

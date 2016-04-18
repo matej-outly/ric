@@ -135,7 +135,10 @@ module RicReservation
 					#
 					def reservation_params
 						if params[:reservation]
-							return params[:reservation].permit(:owner_name, :owner_id)
+							return params[:reservation].permit(
+								:owner_name, 
+								:owner_id
+							)
 						else
 							return {}
 						end

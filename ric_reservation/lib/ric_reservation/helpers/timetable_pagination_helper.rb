@@ -2,11 +2,15 @@ module RicReservation
 	module Helpers
 		module TimetablePaginationHelper
 
+			# *****************************************************************
+			# Interface
+			# *****************************************************************
+
 			#
 			# Draw pagination for timetable
 			#
-			def self.timetable_pagination(date, period, page, path_callback, options = {})
-
+			def timetable_pagination(date, period, page, path_callback, options = {})
+				
 				# From / to / period / page
 				from, to, period, page = RicReservation.event_model.schedule_paginate(date, period, page)
 
@@ -49,17 +53,6 @@ module RicReservation
 				result += "</div>\n"
 				
 				return result.html_safe
-			end
-
-			# *****************************************************************
-			# Interface
-			# *****************************************************************
-			
-			#
-			# Draw pagination for timetable
-			#
-			def timetable_pagination(date, period, page, path_callback, options = {})
-				return self.class.timetable_pagination(date, period, page, path_callback, options)
 			end
 
 		end

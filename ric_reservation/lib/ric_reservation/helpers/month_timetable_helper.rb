@@ -30,7 +30,7 @@ module RicReservation
 			#
 			# Get item label
 			#
-			def self.month_timetable_item_label(item)
+			def self.month_timetable_item_label(item, options = {})
 				if item.respond_to?(:name)
 					return item.name
 				elsif item.respond_to?(:subject) && item.subject && item.subject.respond_to?(:name)
@@ -43,18 +43,24 @@ module RicReservation
 			#
 			# Get item tooltip
 			#
-			def self.month_timetable_item_tooltip(item)
-				return "#{I18n.l(item.schedule_date)} #{item.schedule_from.strftime("%k:%M")} - #{item.schedule_to.strftime("%k:%M")}"
+			def self.month_timetable_item_tooltip(item, options = {})
+				if options[:tooltip] == false
+					return nil
+				else
+					return item.formatted_time
+				end
 			end
 
-			def self.month_timetable_day_label(day)
-				return "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
-			end
-
-			def self.month_timetable_week_label(date)
+			def self.month_timetable_day_label(day, options = {})
 				result = ""
-				result += "<div class=\"week-of-year\">" + I18n.t("views.calendar.week", week: date.cweek) + "</div>"
-				result += "<div class=\"date\">#{I18n.l(date)} - #{I18n.l(date + 1.week - 1.day)}</div>"
+				result += "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>" if options[:label_day_of_week] != false
+				return result
+			end
+
+			def self.month_timetable_week_label(date, options = {})
+				result = ""
+				result += "<div class=\"week-of-year\">" + I18n.t("views.calendar.week", week: date.cweek) + "</div>" if options[:label_week_of_year] != false
+				result += "<div class=\"week-date\">#{I18n.l(date)} - #{I18n.l(date + 1.week - 1.day)}</div>" if options[:label_week_date] != false
 				return result
 			end
 
@@ -87,9 +93,9 @@ module RicReservation
 						items << {
 							week: ((item.schedule_from.to_date - first_monday) / 7).to_i,
 							day: item.schedule_from.to_date.cwday - 1,
-							label: label_callback.call(item).html_safe,
+							label: label_callback.call(item, options).html_safe,
 							tags: tags.join(" "),
-							tooltip: tooltip_callback.call(item),
+							tooltip: tooltip_callback.call(item, options),
 							path_callback: path_callback,
 							object: item
 						}
@@ -114,7 +120,7 @@ module RicReservation
 				["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
 					label = "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
 					days << {
-						label: label_callback.call(day).html_safe,
+						label: label_callback.call(day, options).html_safe,
 					}
 				end
 				return days
@@ -138,7 +144,7 @@ module RicReservation
 				weeks = []
 				while tmp_date < first_next_month do
 					weeks << {
-						label: label_callback.call(tmp_date).html_safe,
+						label: label_callback.call(tmp_date, options).html_safe,
 						date: tmp_date
 					}
 					tmp_date = tmp_date + 1.week
@@ -301,17 +307,24 @@ module RicReservation
 			# *****************************************************************
 
 			#
+			# Find matching timetable item
+			#
+			def month_timetable_find_item(items, week, day, row)
+				return MonthTimetableHelper.month_timetable_find_item(items, week, day, row)
+			end
+
+			#
 			# Prepare week timetable table for drawing
 			#
 			def month_timetable_prepare(date, data_sources, global_options = {})
-				return self.class.month_timetable_prepare(date, data_sources, global_options)
+				return MonthTimetableHelper.month_timetable_prepare(date, data_sources, global_options)
 			end
 
 			#
 			# Draw month timetable table
 			#
 			def month_timetable(date, data_sources, global_options = {})
-				return self.class.month_timetable(date, data_sources, global_options)
+				return MonthTimetableHelper.month_timetable(date, data_sources, global_options)
 			end
 
 		end

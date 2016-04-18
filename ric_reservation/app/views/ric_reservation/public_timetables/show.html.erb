@@ -14,11 +14,11 @@
 				<%=
 					week_timetable(@from, [
 						[ @events, {
-							label_callback: lambda { |event| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+							label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
 							#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
 						} ],
 						[ @reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+							label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
 							item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 						} ],
 					], {
@@ -37,11 +37,11 @@
 				<%=
 					month_timetable(@from, [
 						[ @events, {
-							label_callback: lambda { |event| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+							label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
 							#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
 						} ],
 						[ @reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+							label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
 							item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
 						} ],
 					], {

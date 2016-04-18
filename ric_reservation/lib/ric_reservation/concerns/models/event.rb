@@ -599,26 +599,12 @@ module RicReservation
 				end
 
 				#
-				# Schedule to a specific date
-				#
-				def _schedule(date)
-					
-					# Save
-					self.schedule_date = date
-
-					# Schedule to exact time in given date
-					self.schedule_from = DateTime.compose(date, self.from)
-					
-					# Schedule to exact time in given date
-					self.schedule_to = DateTime.compose(date, self.to)
-					
-					return self
-				end
-
-				#
 				# Is event scheduled
 				#
 				def scheduled?
+					if self.schedule_date.nil?
+						self.automatic_schedule_if_possible
+					end
 					return !self.schedule_date.nil?
 				end
 
@@ -910,9 +896,13 @@ module RicReservation
 					reservation.schedule_to = self.schedule_to
 
 					# Bind subject
-					reservation.size = subject.size
-					reservation.subject = subject
-					
+					if !subject.nil?
+						reservation.size = subject.size
+						reservation.subject = subject
+					else
+						reservation.size = 1
+					end
+
 					# Bind owner
 					if !owner.nil?
 						reservation.owner_id = owner.id if !owner.id.nil?
@@ -1030,6 +1020,42 @@ module RicReservation
 				def copy_from_to_errors_after_validation
 					errors[:from].each { |message| errors.add(:time_from, message) }
 					errors[:to].each { |message| errors.add(:time_to, message) }
+				end
+
+				# *************************************************************
+				# Schedule
+				# *************************************************************
+
+				#
+				# Schedule to a specific date
+				#
+				def _schedule(date)
+					
+					# Save
+					self.schedule_date = date
+
+					# Schedule to exact time in given date
+					self.schedule_from = DateTime.compose(date, self.from)
+					
+					# Schedule to exact time in given date
+					self.schedule_to = DateTime.compose(date, self.to)
+					
+					return self
+				end
+
+				#
+				# Try to automatically schedule event
+				#
+				def automatic_schedule_if_possible
+					
+					if self.period == "once" # Automatic schedule is possible for events with period "once"
+						self.schedule(self.from.to_date)
+					
+					elsif self.resource.period == "week" # Automatic schedule is possible for events in resources with period "week"
+						monday = self.resource.valid_from.week_monday # Monday matching to resource "valid from" date
+						self.schedule(monday + (self.from.to_date.cwday - 1).days) # Schedule to the matching day in the week identified by resource "valid from" date
+					end
+
 				end
 
 			end

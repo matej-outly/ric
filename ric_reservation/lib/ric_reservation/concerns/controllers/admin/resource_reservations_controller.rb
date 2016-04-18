@@ -125,7 +125,15 @@ module RicReservation
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def reservation_params
-						params.require(:reservation).permit(:resource_id, :owner_id, :name, :schedule_date, :time_from, :time_to, :color)
+						params.require(:reservation).permit(
+							:resource_id, 
+							:owner_id, 
+							:name, 
+							:schedule_date, 
+							:time_from, 
+							:time_to, 
+							:color
+						)
 					end
 
 				end

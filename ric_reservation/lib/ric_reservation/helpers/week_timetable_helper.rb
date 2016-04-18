@@ -49,7 +49,7 @@ module RicReservation
 			#
 			# Get item label
 			#
-			def self.week_timetable_item_label(item)
+			def self.week_timetable_item_label(item, options = {})
 				if item.respond_to?(:name)
 					return item.name
 				elsif item.respond_to?(:subject) && item.subject && item.subject.respond_to?(:name)
@@ -62,18 +62,22 @@ module RicReservation
 			#
 			# Get day label
 			#
-			def self.week_timetable_day_label(day, date)
+			def self.week_timetable_day_label(day, date, options = {})
 				result = ""
-				result += "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
-				result += "<div class=\"date\">#{I18n.l(date)}</div>"
+				result += "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>" if options[:label_day_of_week] != false
+				result += "<div class=\"date\">#{I18n.l(date)}</div>" if options[:label_date] != false
 				return result
 			end
 
 			#
 			# Get item tooltip
 			#
-			def self.week_timetable_item_tooltip(item)
-				return "#{I18n.l(item.schedule_date)} #{item.schedule_from.strftime("%k:%M")} - #{item.schedule_to.strftime("%k:%M")}"
+			def self.week_timetable_item_tooltip(item, options = {})
+				if options[:tooltip] == false
+					return nil
+				else
+					return item.formatted_time
+				end
 			end
 
 			#
@@ -128,9 +132,9 @@ module RicReservation
 							hour: from_hour,
 							col: from_col,
 							width: width,
-							label: label_callback.call(item).html_safe,
+							label: label_callback.call(item, options).html_safe,
 							tags: tags.join(" "),
-							tooltip: tooltip_callback.call(item),
+							tooltip: tooltip_callback.call(item, options),
 							path_callback: path_callback,
 							object: item
 						}
@@ -183,7 +187,7 @@ module RicReservation
 				days = []
 				["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
 					days << {
-						label: label_callback.call(day, tmp_date).html_safe,
+						label: label_callback.call(day, tmp_date, options).html_safe,
 						date: tmp_date,
 						rows: 0
 					}
@@ -355,17 +359,24 @@ module RicReservation
 			# *****************************************************************
 
 			#
+			# Find matching timetable item
+			#
+			def week_timetable_find_item(items, day, hour, row, col)
+				return WeekTimetableHelper.week_timetable_find_item(items, day, hour, row, col)
+			end
+
+			#
 			# Prepare week timetable table for drawing
 			#
 			def week_timetable_prepare(date, data_sources, global_options = {})
-				return self.class.week_timetable_prepare(date, data_sources, global_options)
+				return WeekTimetableHelper.week_timetable_prepare(date, data_sources, global_options)
 			end
 
 			#
 			# Draw week timetable table
 			#
 			def week_timetable(date, data_sources, global_options = {})
-				return self.class.week_timetable(date, data_sources, global_options)
+				return WeekTimetableHelper.week_timetable(date, data_sources, global_options)
 			end
 
 		end

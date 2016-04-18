@@ -11,11 +11,11 @@
 				<%= 
 					week_timetable(@from, [
 						[ @valid_events, {
-							label_callback: lambda { |event| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+							label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
 							item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
 						} ],
 						[ @valid_reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+							label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
 							item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
 						} ],
 					], {
@@ -28,11 +28,11 @@
 				<%= 
 					month_timetable(@from, [
 						[ @valid_events, {
-							label_callback: lambda { |event| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+							label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
 							item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
 						} ],
 						[ @valid_reservations, {
-							label_callback: lambda { |reservation| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+							label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
 							item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
 						} ],
 					], {
