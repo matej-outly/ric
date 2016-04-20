@@ -64,7 +64,14 @@ module RicUser
 					#
 					def cleanup
 						now = Time.current
-						RicUser.session_model.delete_all(["updated_at < ?", (now - 1.day)])
+						RicUser.session_model.delete_all(["updated_at < ?", (now - self.cleanup_timeout)])
+					end
+
+					#
+					# Get cleanup timeout
+					#
+					def cleanup_timeout
+						return 1.day
 					end
 
 				end

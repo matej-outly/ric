@@ -162,6 +162,7 @@ module RicPaymentGopay
 			def self.locale_to_currency(locale)
 				locale_to_currency = {
 					"cs" => "CZK",
+					"sk" => "EUR",
 				}
 				return locale_to_currency[locale.to_s] if locale_to_currency[locale.to_s]
 				return Config.default_currency
