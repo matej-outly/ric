@@ -55,6 +55,10 @@ module RicWebsite
 							column new_key, :integer
 							@permitted_columns << new_key.to_sym
 
+						elsif kind == :currency # Currency
+							column new_key, :integer
+							@permitted_columns << new_key.to_sym
+
 						elsif kind == :enum # Enum
 							if !options[:values]
 								raise "Please define values for setting #{new_key.to_s} with enum kind."
