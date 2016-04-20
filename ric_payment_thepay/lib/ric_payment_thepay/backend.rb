@@ -39,12 +39,7 @@ module RicPaymentThepay
 		#
 		def payment_from_subject(payment_subject)	
 			payment = self.payment_factory
-			payment.value = payment_subject.payment_value
-			payment.currency = Backend.locale_to_currency(payment_subject.payment_currency)
-			payment.description = payment_subject.payment_label
-			payment.merchant_data = payment_subject.id
-			payment.is_deposit = false
-			# TODO other attributes
+			payment.load_from_subject(payment_subject)
 			return payment
 		end
 
