@@ -12,7 +12,7 @@
 require_dependency "ric_website/admin_controller"
 
 module RicWebsite
-	class AdminPageDynamicController < AdminController
-		include RicWebsite::Concerns::Controllers::Admin::PageDynamicController
+	class AdminPageNaturesController < AdminController
+		include RicWebsite::Concerns::Controllers::Admin::PageNaturesController
 	end
 end

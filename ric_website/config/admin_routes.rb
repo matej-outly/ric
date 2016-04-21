@@ -18,12 +18,11 @@ RicWebsite::AdminEngine.routes.draw do
 			put "move_down"
 		end
 	end
-	resources :page_dynamic, only: [], controller: "admin_page_dynamic" do
-		collection do
-			get "available_models"
-		end
-	end
 
+	# Page natures
+	resources :page_natures, only: [:show], controller: "admin_page_natures"
+
+	# Page blocks
 	resources :page_blocks, except: [:index], controller: "admin_page_blocks" do
 		member do
 			put "move/:relation/:destination_id", action: "move", as: "move"

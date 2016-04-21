@@ -19,7 +19,7 @@ module RicWebsite
 		require 'ric_website/concerns/controllers/admin/text_attachments_controller'
 		require 'ric_website/concerns/controllers/admin/pages_controller'
 		require 'ric_website/concerns/controllers/admin/page_blocks_controller'
-		require 'ric_website/concerns/controllers/admin/page_dynamic_controller'
+		require 'ric_website/concerns/controllers/admin/page_natures_controller'
 		require 'ric_website/concerns/controllers/admin/page_menu_relations_controller'
 		require 'ric_website/concerns/controllers/admin/menus_controller'
 		require 'ric_website/concerns/controllers/admin/menu_page_relations_controller'

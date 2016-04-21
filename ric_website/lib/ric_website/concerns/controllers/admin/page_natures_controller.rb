@@ -13,7 +13,7 @@ module RicWebsite
 	module Concerns
 		module Controllers
 			module Admin
-				module PageDynamicController extend ActiveSupport::Concern
+				module PageNaturesController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -25,18 +25,28 @@ module RicWebsite
 					end
 
 					#
-					# Available models action
+					# Show details about page nature
 					#
-					def available_models
+					def show
+						
+						# Initiate page model
 						@page = RicWebsite.page_model.new
-						if params[:nature]
-							@page.nature = params[:nature]
+						if params[:id]
+							@page.nature = params[:id]
 						end
-						result = []
+
+						# Get available models
+						available_models = []
 						@page.available_models.each do |model|
-							result << { title: model.title, id: model.id } # TODO configurable title
+							available_models << { title: model.title, id: model.id } # TODO configurable title
 						end
-						render json: result
+						
+						# Render result
+						render json: {
+							automatic_url: @page.automatic_url,
+							available_models: available_models,
+						}
+						
 					end
 
 				protected

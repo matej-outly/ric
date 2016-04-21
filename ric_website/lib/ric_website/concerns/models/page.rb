@@ -121,7 +121,7 @@ module RicWebsite
 								result << column
 							end
 						end
-						[:key, :parent_id, :nature, :model_id].each do |column|
+						[:key, :parent_id, :nature, :model_id, :url].each do |column|
 							result << column
 						end
 						return result
@@ -187,28 +187,38 @@ module RicWebsite
 				# *************************************************************
 
 				#
+				# Is URL generated automatically
+				#
+				def automatic_url
+					return !self.nature.blank? && !config(:natures, self.nature.to_sym, :url).blank?
+				end
+
+				#
 				# Generate path
 				#
 				def generate_url
 					if !self.nature.blank?
-						url_template = config(:natures, self.nature.to_sym, :url).to_s
+						url_template = config(:natures, self.nature.to_sym, :url)
+						if !url_template.blank?
+							url_template = url_template.to_s
 
-						# Binded page
-						url_template = url_template.gsub(/:page_id/, self.id.to_s)
-						url_template = url_template.gsub(/:page_key/, self.key.to_s)
+							# Binded page
+							url_template = url_template.gsub(/:page_id/, self.id.to_s)
+							url_template = url_template.gsub(/:page_key/, self.key.to_s)
 
-						# Binded model
-						if !self.model.nil?
-							if self.model.respond_to?(:id)
-								url_template = url_template.gsub(/:model_id/, self.model.id.to_s)
+							# Binded model
+							if !self.model.nil?
+								if self.model.respond_to?(:id)
+									url_template = url_template.gsub(/:model_id/, self.model.id.to_s)
+								end
+								if self.model.respond_to?(:key)
+									url_template = url_template.gsub(/:model_key/, self.model.key.to_s)
+								end
 							end
-							if self.model.respond_to?(:key)
-								url_template = url_template.gsub(/:model_key/, self.model.key.to_s)
-							end
+
+							# Store generated url
+							self.url = url_template
 						end
-
-						# Store generated url
-						self.url = url_template
 					end
 				end
 
