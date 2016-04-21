@@ -39,8 +39,12 @@ module RicPaymentThepay
 		#
 		def payment_from_subject(payment_subject)	
 			payment = self.payment_factory
-			payment.load_from_subject(payment_subject)
-			return payment
+			result = payment.load_from_subject(payment_subject)
+			if result
+				return payment
+			else
+				return nil
+			end
 		end
 
 		#
@@ -48,8 +52,12 @@ module RicPaymentThepay
 		#
 		def payment_from_params(params)
 			payment = self.payment_factory
-			payment.load_from_params(params)
-			return payment
+			result = payment.load_from_params(params)
+			if result
+				return payment
+			else
+				return nil
+			end
 		end
 
 		# *****************************************************************

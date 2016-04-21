@@ -62,7 +62,7 @@ module RicPaymentThepay
 						payment = @backend.payment_from_params(params)
 
 						# Verify if returned signature is correct
-						if payment.verify_returned_signature
+						if !payment.nil? && payment.verify_returned_signature
 
 							# Verify if merchant data contains correct payment subject ID
 							if payment.merchant_data.to_i == @payment_subject.id.to_i

@@ -297,7 +297,7 @@ module RicPaymentThepay
 					if params[param_name]
 						self.send("#{attribute_name}=", params[param_name])
 					else
-						raise "Missing parameter #{param_name}."
+						return false
 					end
 				end
 
@@ -308,6 +308,7 @@ module RicPaymentThepay
 					end
 				end
 				
+				return true
 			end
 
 			#
@@ -351,6 +352,7 @@ module RicPaymentThepay
 				self.is_deposit = false
 				# TODO other attributes
 
+				return true
 			end
 
 		protected
