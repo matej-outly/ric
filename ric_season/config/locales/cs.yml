@@ -1,0 +1,43 @@
+cs:
+
+  headers:
+    ric_season:
+      admin_seasons:
+        index: "Sezóny"
+        show: "Detail sezóny"
+        new: "Nová sezóna"
+        create: "Nová sezóna"
+        edit: "Upravit sezónu"
+        update: "Upravit sezónu"
+        destroy: "Smazat sezónu"
+
+  activerecord:
+    attributes:
+      ric_season/season:
+        name: Jméno
+        from: Začátek
+        to: Konec
+        current: Aktuální sezóna
+        current_values:
+          bool_yes: Ano
+          bool_no: Ne
+        current_colors:
+          bool_yes: green
+          bool_no: yellow
+    notices:
+      models:
+        ric_season/season:
+          create: Sezóna byla úspěšně vytvořena.
+          update: Sezóna byla úspěšně uložena.
+          destroy: Sezóna byla úspěšně smazána.
+    errors:
+      models:
+        ric_season/season:
+          not_found: Sezóna nebyla nalezena.
+          attributes:
+            name:
+              blank: Jméno musí být vyplněno.
+            from:
+              blank: Začátek musí být vyplněn.
+            to:
+              blank: Konec musí být vyplněn.

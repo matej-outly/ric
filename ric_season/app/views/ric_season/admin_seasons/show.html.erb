@@ -1,0 +1,8 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@season, {
+		name: :string,
+		from: :date,
+		to: :date,
+		current: { type: :state, bool_as_enum: true }
+	}) %>
+<% end %>

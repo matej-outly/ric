@@ -1,0 +1,17 @@
+# Season period
+#
+# Permitted values:
+#  - nothing
+#  - "year"
+#  - "month"
+period: year
+
+# Season starting date
+#
+# Format:
+#  - "MM-DD" if period "year"
+#  - "DD" if period "month"
+start: "01-01"
+
+# Disable unaccent SQL extension for search
+disable_unaccent: false

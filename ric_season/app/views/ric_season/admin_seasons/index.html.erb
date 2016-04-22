@@ -1,0 +1,12 @@
+<%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_index_table_for(@seasons, { 
+		name: :string,
+		from: :date,
+		to: :date,
+		current: { type: :state, bool_as_enum: true }
+	}, paths: {
+		show: :season_path,
+		edit: :edit_season_path,
+		destroy: :season_path
+	}, summary: true ) %>
+<% end %>
