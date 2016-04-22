@@ -240,14 +240,14 @@ module RicReservation
 				#
 				# Is period full?
 				#
-				def kind_full?
+				def period_full?
 					self.period == "full"
 				end
 
 				#
 				# Is period week?
 				#
-				def kind_week?
+				def period_week?
 					self.period == "week"
 				end
 
