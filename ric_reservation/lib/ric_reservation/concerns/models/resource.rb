@@ -275,8 +275,8 @@ module RicReservation
 					
 					# Bind owner
 					if !owner.nil?
-						reservation.owner_id = owner.id if !owner.id.nil?
 						reservation.owner_name = owner.name if !owner.name.nil?
+						reservation.owner = owner if owner.is_a?(ActiveRecord::Base) # In case owner is not ActiveRecord, only name can be stored
 					end
 
 					return reservation

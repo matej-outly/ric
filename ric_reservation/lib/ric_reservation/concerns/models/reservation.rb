@@ -28,7 +28,7 @@ module RicReservation
 					#
 					# One-to-many relation with owners
 					#
-					belongs_to :owner, class_name: RicReservation.owner_model.to_s
+					belongs_to :owner, polymorphic: true
 
 					#
 					# One-to-many relation with subjects

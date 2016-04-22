@@ -178,7 +178,7 @@ module RicReservation
 					if self.event.nil?
 						raise "Please bind valid event first."
 					end
-					self.send("size_#{self.capacity_type.to_s}=", size)
+					self.send("size_#{self.event.capacity_type.to_s}=", size)
 				end
 
 				# *************************************************************
@@ -273,12 +273,12 @@ module RicReservation
 							.event(self.event, self.schedule_date)
 							.above_line
 							.where("id <> :id", id: self.id)
-							.where(owner_id: self.owner_id).count < self.event.owner_reservation_limit)
+							.where(owner_id: self.owner_id, owner_type: self.owner_type).count < self.event.owner_reservation_limit)
 					else
 						return (RicReservation.reservation_model
 							.event(self.event, self.schedule_date)
 							.above_line
-							.where(owner_id: self.owner_id).count < self.event.owner_reservation_limit)
+							.where(owner_id: self.owner_id, owner_type: self.owner_type).count < self.event.owner_reservation_limit)
 					end
 				end
 
@@ -305,7 +305,7 @@ module RicReservation
 
 				def enqueue_for_process_above_line
 					return if !self.kind_event?
-					if RicReservation.event_model.config(:enable_below_line) == true
+					if self.event.config(:enable_below_line) == true
 						QC.enqueue("#{RicReservation.reservation_model.to_s}.process_above_line", self.event_id, self.schedule_date)
 					end
 				end
@@ -320,7 +320,7 @@ module RicReservation
 				def validate_capacity
 					return if !self.kind_event?
 					if !check_capacity
-						if RicReservation.event_model.config(:enable_below_line) == true
+						if self.event.config(:enable_below_line) == true
 							self.below_line = true
 						else
 							errors.add(:size, "activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.capacity_overdraw")
@@ -335,7 +335,7 @@ module RicReservation
 				def validate_owner_reservation_limit
 					return if !self.kind_event?
 					if !check_owner_reservation_limit
-						if RicReservation.event_model.config(:enable_below_line) == true
+						if self.event.config(:enable_below_line) == true
 							self.below_line = true
 						else
 							errors.add(:owner_id, I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.owner_reservation_limit_overdraw"))

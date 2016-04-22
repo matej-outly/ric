@@ -147,6 +147,7 @@ cs:
           deadline: Po deadline
           closed: Již uzavřený
       ric_reservation/reservation:
+        created_at: Rezervováno
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
         name: Poznámka k rezervaci

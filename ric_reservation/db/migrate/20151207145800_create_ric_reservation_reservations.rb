@@ -33,6 +33,7 @@ class CreateRicReservationReservations < ActiveRecord::Migration
 
 			# Owner
 			t.integer :owner_id
+			t.string :owner_type
 			t.string :owner_name
 
 			# Subject

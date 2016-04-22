@@ -87,14 +87,5 @@ module RicReservation
 		return @@reservation_model.constantize
 	end
 	@@reservation_model = "RicReservation::Reservation"
-
-	#
-	# Owner model
-	#
-	mattr_accessor :owner_model
-	def self.owner_model
-		return @@owner_model.constantize
-	end
-	@@owner_model = "RicUser::User"
-
+	
 end

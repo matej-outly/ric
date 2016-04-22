@@ -694,6 +694,13 @@ module RicReservation
 				end
 
 				#
+				# Default reservation size set if no subject defined
+				#
+				def default_reservation_size
+					1
+				end
+
+				#
 				# Get all reservations 
 				#
 				def reservations
@@ -900,13 +907,13 @@ module RicReservation
 						reservation.size = subject.size
 						reservation.subject = subject
 					else
-						reservation.size = 1
+						reservation.size = self.default_reservation_size
 					end
 
 					# Bind owner
 					if !owner.nil?
-						reservation.owner_id = owner.id if !owner.id.nil?
 						reservation.owner_name = owner.name if !owner.name.nil?
+						reservation.owner = owner if owner.is_a?(ActiveRecord::Base) # In case owner is not ActiveRecord, only name can be stored
 					end
 
 					return reservation
