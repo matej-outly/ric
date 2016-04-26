@@ -567,13 +567,13 @@ module RicReservation
 					days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 					if self.period == "week"
 						day = days[self.from.to_datetime.cwday - 1]
-						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.#{day}") + " "
+						result += I18n.t("date.days.#{day}") + " "
 					elsif self.period == "odd_week"
 						day = days[self.from.to_datetime.cwday - 1]
-						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.odd_#{day}") + " "
+						result += I18n.t("date.days.odd_#{day}") + " "
 					elsif self.period == "even_week"
 						day = days[self.from.to_datetime.cwday - 1]
-						result += I18n.t("activerecord.attributes.ric_reservation/event.day_values.even_#{day}") + " "
+						result += I18n.t("date.days.even_#{day}") + " "
 					elsif self.period == "month"
 						result += self.from.strftime("%-d. ")
 					elsif self.period == "once"

@@ -90,6 +90,7 @@ module RicReservation
 				label_callback = options[:label_callback] ? options[:label_callback] : method(:week_timetable_item_label)
 				tooltip_callback = options[:tooltip_callback] ? options[:tooltip_callback] : method(:week_timetable_item_tooltip)
 				path_callback = options[:item_path_callback] ? options[:item_path_callback] : nil
+				tags_callback = options[:tags_callback] ? options[:tags_callback] : nil
 
 				# Items
 				items = []
@@ -122,7 +123,11 @@ module RicReservation
 						width = (cols_in_hour - from_col) + (cols_in_hour * (to_hour - from_hour - 1)) + (to_col + 1)
 
 						# Tags
-						tags = []
+						if tags_callback
+							tags = tags_callback.call(item, options)
+						else
+							tags = []
+						end
 						tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
 						tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
 						tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?

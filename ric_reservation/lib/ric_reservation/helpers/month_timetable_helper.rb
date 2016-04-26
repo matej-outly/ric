@@ -73,7 +73,8 @@ module RicReservation
 				label_callback = options[:label_callback] ? options[:label_callback] : method(:month_timetable_item_label)
 				tooltip_callback = options[:tooltip_callback] ? options[:tooltip_callback] : method(:month_timetable_item_tooltip)
 				path_callback = options[:item_path_callback] ? options[:item_path_callback] : nil
-
+				tags_callback = options[:tags_callback] ? options[:tags_callback] : nil
+				
 				# Get monday
 				first_this_month = date.beginning_of_month
 				first_monday = first_this_month.week_monday
@@ -85,7 +86,11 @@ module RicReservation
 					if !item.respond_to?(:tmp_canceled?) || !item.tmp_canceled?
 						
 						# Tags
-						tags = []
+						if tags_callback
+							tags = tags_callback.call(item, options)
+						else
+							tags = []
+						end
 						tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
 						tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
 						tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?

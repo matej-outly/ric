@@ -28,7 +28,7 @@ module RicReservation
 					#
 					# One-to-many relation with events
 					#
-					#belongs_to :event, class_name: RicReservation.event_model.to_s
+					belongs_to :event, class_name: RicReservation.event_model.to_s
 
 					# *********************************************************
 					# Validators
@@ -73,6 +73,19 @@ module RicReservation
 						result = result.where(event_id: event.id) if event
 						result = result.where(schedule_date: schedule_date) if schedule_date
 						return result
+					end
+
+					#
+					# Scope for event reservation belonging to some resource
+					#
+					def event_belonging_to_resource(resource, schedule_date = nil)
+						if resource.nil?
+							all
+						else
+							result = joins(:event).where(reservations: { kind: "event" }, events: { resource_id: resource.id })
+							result = result.where(reservations: { schedule_date: schedule_date }) if schedule_date
+							return result
+						end
 					end
 
 					# *********************************************************

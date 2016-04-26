@@ -102,6 +102,17 @@ module RicReservation
 						date_to = date_from + 1.day if date_to.nil?
 						where(":date_from <= schedule_date AND schedule_date < :date_to", date_from: date_from, date_to: date_to)
 					end
+
+					#
+					# Get reservations owned by some person
+					#
+					def owned_by(owner)
+						if owner.nil?
+							all
+						else
+							where(owner_type: owner.class.to_s, owner_id: owner.id)
+						end
+					end
 					
 				end
 
@@ -147,7 +158,22 @@ module RicReservation
 				# Human readable time
 				#
 				def formatted_time
-					return self.schedule_from.strftime("%-d. %-m. %Y %k:%M") + " - " + self.schedule_to.strftime("%k:%M")
+					result = ""
+					resource_period = nil
+					if self.kind_event?
+						resource_period = self.event.resource.period
+					else
+						resource_period = self.resource.period
+					end
+					days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]	
+					if resource_period == "week"
+						day = days[self.schedule_from.to_datetime.cwday - 1]
+						result += I18n.t("date.days.#{day}") + " "
+					else
+						result += self.schedule_from.strftime("%-d. %-m. %Y ")
+					end
+					result += self.schedule_from.strftime("%k:%M") + " - " + self.schedule_to.strftime("%k:%M")
+					return result
 				end
 
 				# *************************************************************

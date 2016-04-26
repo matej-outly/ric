@@ -110,28 +110,6 @@ cs:
           even_week: Sudý týden
           month: Měsíc
           once: Jednorázově
-        day_values:
-          monday: Pondělí
-          tuesday: Úterý
-          wednesday: Středa
-          thursday: Čtvrtek
-          friday: Pátek
-          saturday: Sobota
-          sunday: Neděle
-          odd_monday: Liché pondělí
-          odd_tuesday: Liché úterý
-          odd_wednesday: Lichá středa
-          odd_thursday: Lichý čtvrtek
-          odd_friday: Lichý pátek
-          odd_saturday: Lichá sobota
-          odd_sunday: Lichá neděle
-          even_monday: Sudé pondělí
-          even_tuesday: Sudé úterý
-          even_wednesday: Sudá středa
-          even_thursday: Sudý čtvrtek
-          even_friday: Sudý pátek
-          even_saturday: Sudá sobota
-          even_sunday: Sudá neděle
         tmp_canceled: Jednorázově zrušeno
         valid_from: Platné od
         valid_to: Smazané od
@@ -229,6 +207,7 @@ cs:
               blank: Vyplňte kapacitu události.
         ric_reservation/reservation:
           not_found: Rezervace nebyla nalezena.
+          create: Rezervace nebyla vytvořena.
           overlapping: "Rezervace se časově kryje s jinou rezervací či událostí."
           capacity_overdraw: "Rezervace je nad kapacitu události."
           owner_reservation_limit_overdraw: "Maximální počet rezervací od jednoho uživatele je vyčerpán."
