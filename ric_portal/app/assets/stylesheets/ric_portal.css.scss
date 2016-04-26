@@ -324,19 +324,30 @@ body {
 	/*************************************************************************/
 
 	table {
-		
+		background-color: transparent;
+		border: none;
+
 		tbody {
 			tr {
 				td {
 					font-size: $base-font-size;
+					padding: 8px;
+					border-top: 1px solid #dddddd;
 				}
 			}
 		}
 
 		thead {
+			color: inherit;
+			background-color: transparent;
+
 			tr {
 				th {
 					font-size: $base-font-size;
+					vertical-align: top;
+					padding: 8px;
+					border-top: none;
+					border-bottom: 1px solid #4a4d50;
 				}
 			}
 		}
@@ -365,6 +376,53 @@ body {
 					}
 				}
 			}
+		}
+
+		&.index-table {
+
+			tr {
+				
+				td {
+					transition: background-color 0.3s;
+					min-height: 40px;
+					&.action {
+						text-align: right;
+						@media only screen and (max-width: $tablet-width) {
+							width: auto;
+						}
+						& + .action {
+							padding-left: 0;
+							@media only screen and (max-width: $tablet-width) {
+								padding-left: 45%;
+							}
+						}
+						&.standard {
+							width: 1px; /* Minimal width */
+						}
+					}
+
+					> .btn, .skiplink {
+						display: block;
+					}
+
+					&:first-child {
+						font-weight: normal;
+					}
+				}
+				&:hover td {
+					background-color: #ffb4b4;
+				}
+
+				&.odd-stripe {
+					/* background-color: ... */
+				}
+
+				&.even-stripe {
+					background-color: #e5e5e5;
+				}
+				
+			}
+
 		}
 
 	}	
@@ -490,11 +548,9 @@ body {
 	/*************************************************************************/
 
 	.tabs {
-		
 		.tab-content {
 			padding: 20px 0;
 		}
-
 	}
 
 	.pill, .tabs.pill {
@@ -531,6 +587,23 @@ body {
 		}
 	}
 
+	.tab-nav { 
+		> li {
+			margin: 0 1% 0 0;
+			> a {
+				background: #E5E5E5;
+				border-width: 1px 1px 1px 1px;
+				margin-bottom: -1px;
+			}
+			&.active {
+				> a {
+					background: #F6F6F6;
+					border-bottom: 1px solid #F6F6F6;;
+				}
+			}
+		}
+	}
+
 	/*************************************************************************/
 	/* Label                                                                 */
 	/*************************************************************************/
@@ -555,6 +628,11 @@ body {
 
 	h2 {
 		padding-top: 0.4em;
+		padding-bottom: 0.6em;
+	}
+
+	h3 {
+		padding-top: 0.6em;
 		padding-bottom: 0.6em;
 	}
 
