@@ -206,12 +206,13 @@ cs:
             capacity:
               blank: Vyplňte kapacitu události.
         ric_reservation/reservation:
-          not_found: Rezervace nebyla nalezena.
-          create: Rezervace nebyla vytvořena.
+          not_found: "Rezervace nebyla nalezena."
+          create: "Rezervace nebyla vytvořena."
           overlapping: "Rezervace se časově kryje s jinou rezervací či událostí."
           capacity_overdraw: "Rezervace je nad kapacitu události."
           owner_reservation_limit_overdraw: "Maximální počet rezervací od jednoho uživatele je vyčerpán."
-          put_above_line: Rezervaci není možné posunout nad čáru.
+          put_above_line: "Rezervaci není možné posunout nad čáru."
+          closed: "Možnost rezervace je již uzavřena."
           attributes:
             kind:
               blank: Vyplňte typ rezervace.
