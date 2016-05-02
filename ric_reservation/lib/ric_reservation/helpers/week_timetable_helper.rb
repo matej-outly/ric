@@ -163,8 +163,18 @@ module RicReservation
 
 				# Min/max hour
 				items.each do |item|
-					min_hour = item[:hour] if item[:hour] < min_hour
-					max_hour = item[:hour] if item[:hour] > max_hour
+					
+					# Begin hour
+					begin_hour = item[:hour]
+
+					# Width in hours = Number of cols from beginning of item hour / cols in one hour
+					width_in_hours = ((item[:col] + item[:width]).to_f / cols_in_hour.to_f).ceil
+
+					# Finish hour
+					finish_hour = begin_hour + width_in_hours - 1
+
+					min_hour = begin_hour if begin_hour < min_hour
+					max_hour = finish_hour if finish_hour > max_hour
 				end
 
 				# Hours
