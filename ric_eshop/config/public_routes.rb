@@ -17,7 +17,7 @@ RicEshop::PublicEngine.routes.draw do
 			get "finalize"
 		end
 		collection do
-			post "preserve"
+			get "reset"
 		end
 	end
 
