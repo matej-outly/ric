@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Payment subject
+# * Payment subject (to be included to Order model or matching structure)
 # *
 # * Author: Matěj Outlý
 # * Date  : 20. 2. 2016
@@ -188,24 +188,87 @@ module RicPayment
 				# *************************************************************
 
 				#
-				# Label for payment gateway
+				# Description for payment gateway
 				#
-				def payment_label
+				def payment_description
 					return nil
 				end
 
 				#
-				# Amount of money to pay via gateway
+				# Total amount of money to pay via gateway
 				#
-				def payment_value
+				def payment_price
 					return self.price
 				end
 
 				#
-				# Currency used in gateway
+				# Tax included in total price
+				#
+				def payment_price_tax
+					return nil
+				end
+
+				#
+				# Shipping included in total price
+				#
+				def payment_price_shipping
+					return nil
+				end
+
+				#
+				# Discount included in total price
+				#
+				def payment_price_discount
+					return nil
+				end
+
+				#
+				# Currency (as locale code) used for payment
 				#
 				def payment_currency
 					return "cs"
+				end
+
+				#
+				# Items for payment gateway
+				#
+				def payment_items
+					return self.order_items
+				end
+
+				#
+				# Customer first name for payment gateway
+				#
+				def payment_customer_firstname
+					return nil # TODO customer name should be of type Name
+				end
+
+				#
+				# Customer last name for payment gateway
+				#
+				def payment_customer_lastname
+					return self.customer_name
+				end
+
+				#
+				# Customer e-mail for payment gateway
+				#
+				def payment_customer_email
+					return self.customer_email
+				end
+
+				#
+				# Customer phone for payment gateway
+				#
+				def payment_customer_phone
+					return self.customer_phone
+				end
+
+				#
+				# Customer address (street, number, city, zipcode) for payment gateway
+				#
+				def payment_customer_address
+					return self.billing_address
 				end
 
 			end

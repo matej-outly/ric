@@ -141,15 +141,15 @@ module RicPaymentGopay
 			# *****************************************************************
 
 			def load_from_subject(payment_subject)
-				self.value = payment_subject.payment_value
+				self.value = payment_subject.payment_price
 				self.currency = Payment.locale_to_currency(payment_subject.payment_currency)
-				self.description = payment_subject.payment_label
+				self.description = payment_subject.payment_description
 				self.order_number = payment_subject.id
 				self.channel = Payment.payment_type_to_channel(payment_subject.payment_type)
 				self.customer = OpenStruct.new({
-					firstname: payment_subject.customer.name[:firstname],
-					lastname: payment_subject.customer.name[:lastname],
-					email: payment_subject.customer.email,
+					firstname: payment_subject.payment_customer_firstname,
+					lastname: payment_subject.payment_customer_lastname,
+					email: payment_subject.payment_customer_email,
 				})
 				return self
 			end

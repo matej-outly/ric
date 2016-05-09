@@ -362,13 +362,40 @@ module RicPaymentThepay
 
 			def load_from_subject(payment_subject)
 
-				self.value = payment_subject.payment_value
+				self.value = payment_subject.payment_price
 				self.currency = Payment.locale_to_currency(payment_subject.payment_currency)
-				self.description = payment_subject.payment_label
+				self.description = payment_subject.payment_description
 				self.merchant_data = payment_subject.id
 				self.is_deposit = false
-				
-				# TODO other attributes - customer data, etc.
+
+				# Customer data
+				customer_object = CustomerData::Customer.new({
+					first_name: payment_subject.payment_customer_firstname,
+					last_name: payment_subject.payment_customer_lastname,
+					email: payment_subject.payment_customer_email,
+					phone: payment_subject.payment_customer_phone,
+				})
+				if !payment_subject.payment_customer_address.nil?
+					customer_object.address = payment_subject.payment_customer_address[:street] + " " + payment_subject.payment_customer_address[:number]
+					customer_object.city = payment_subject.payment_customer_address[:city]
+					customer_object.postal_code = payment_subject.payment_customer_address[:zipcode]
+				end
+				cart_object = CustomerData::Cart.new({
+					shipping: payment_subject.payment_price_shipping,
+					tax: payment_subject.payment_price_tax,
+					discount: payment_subject.payment_price_discount,
+				})
+				payment_subject.payment_items.each do |payment_subject_item|
+					cart_object.add(
+						CustomerData::CartItem.new({
+							name: payment_subject_item.payment_name,
+							description: payment_subject_item.payment_description,
+							price: payment_subject_item.payment_price,
+							quantity: payment_subject_item.payment_amount,
+						})
+					)
+				end
+				self.customer_data = CustomerData::Order.new(customer_object, cart_object)
 
 				return true
 			end

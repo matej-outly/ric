@@ -14,7 +14,7 @@ require "ric_payment/engine"
 
 # Models
 require 'ric_payment/concerns/model/payment_subject'
-
+require 'ric_payment/concerns/model/payment_subject_item'
 
 module RicPayment
 
