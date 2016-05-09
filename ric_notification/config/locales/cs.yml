@@ -12,6 +12,11 @@ cs:
         deliver: "Odeslat systémovou zprávu"
         destroy: "Smazat systémovou zprávu"
         receivers: "Příjemci"
+      admin_notification_templates:
+        index: "Šablony systémových zpráv"
+        show: "Detail šablony"
+        edit: "Upravit šablonu"
+        update: "Upravit šablonu"
 
   activerecord:
     attributes:
@@ -36,6 +41,10 @@ cs:
         created_at: Vytvořeno
         sent_at: Odesláno
         received_at: Doručeno
+      ric_notification/notification_template:
+        key: Klíč
+        description: Popis
+        message: Zpráva
     notices:
       models:
         ric_notification/notification:
@@ -43,11 +52,14 @@ cs:
           create: Zpráva byla úspěšně vytvořena.
           enqueue_for_delivery: Zpráva byla úspěšně zařazena k odeslání.
           destroy: Zpráva byla úspěšně smazána.
+        ric_notification/notification_template:
+          update: Šablona zprávy byla úspěšně uložena.
     errors:
       models:
         ric_notification/notification:
           not_found: Zpráva nebyla nalezena.
-          attributes:
+        ric_notification/notification_template:
+          not_found: Šablona zprávy nebyla nalezena.
     mailers:
       ric_notification:
         notification:

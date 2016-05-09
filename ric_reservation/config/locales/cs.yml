@@ -160,6 +160,10 @@ cs:
           soon: Brzký
           deadline: Po deadline
           closed: Již uzavřený
+      ric_notification/notification_template:
+        key_values:
+          reservation_above_line: Rezervace na čárou
+          reservation_below_line: Rezervace pod čárou
     notices:
       models:
         ric_reservation/resource:

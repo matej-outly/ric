@@ -1,0 +1,5 @@
+<%= rug_form_for(@notification_template, update_url: :notification_template_path) do |f| %>
+	<%= f.text_input_row :description %>
+	<%= f.text_area_row :message %>
+	<%= f.primary_button_row :submit %>
+<% end %>

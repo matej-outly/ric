@@ -16,6 +16,7 @@ require "ric_notification/public_engine"
 # Models
 require 'ric_notification/concerns/models/notification'
 require 'ric_notification/concerns/models/notification_receiver'
+require 'ric_notification/concerns/models/notification_template'
 
 # Mailers
 require 'ric_notification/concerns/mailers/notification_mailer'
@@ -71,6 +72,15 @@ module RicNotification
 		return @@notification_receiver_model.constantize
 	end
 	@@notification_receiver_model = "RicNotification::NotificationReceiver"
+
+	#
+	# Notification template model
+	#
+	mattr_accessor :notification_template_model
+	def self.notification_template_model
+		return @@notification_template_model.constantize
+	end
+	@@notification_template_model = "RicNotification::NotificationTemplate"
 
 	#
 	# User model

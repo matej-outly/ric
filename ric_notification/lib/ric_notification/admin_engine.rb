@@ -16,6 +16,7 @@ module RicNotification
 		# Controllers
 		#
 		require 'ric_notification/concerns/controllers/admin/notifications_controller'
+		require 'ric_notification/concerns/controllers/admin/notification_templates_controller'
 		
 		isolate_namespace RicNotification
 

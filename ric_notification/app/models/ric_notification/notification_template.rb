@@ -2,23 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Notification template
 # *
 # * Author: Matěj Outlý
-# * Date  : 26. 11. 2015
+# * Date  : 9. 5. 2016
 # *
 # *****************************************************************************
 
-RicNotification::AdminEngine.routes.draw do
-
-	# Notifications
-	resources :notifications, controller: "admin_notifications" do
-		member do 
-			put "deliver"
-		end
+module RicNotification
+	class NotificationTemplate < ActiveRecord::Base
+		include RicNotification::Concerns::Models::NotificationTemplate
 	end
-
-	# Notification templates
-	resources :notification_templates, controller: "admin_notification_templates", only: [:index, :show, :edit, :update]
-
 end
