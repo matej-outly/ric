@@ -9,6 +9,12 @@
 # *
 # *****************************************************************************
 
+# Customer data
+require "ric_payment_thepay/backend/customer_data/order"
+require "ric_payment_thepay/backend/customer_data/customer"
+require "ric_payment_thepay/backend/customer_data/cart"
+require "ric_payment_thepay/backend/customer_data/cart_item"
+
 module RicPaymentThepay
 	class Backend
 		class Payment
@@ -123,6 +129,11 @@ module RicPaymentThepay
 			attr_accessor :return_url
 
 			#
+			# Optional data about customer. Required for FerBuy method.
+			#
+			attr_accessor :customer_data
+
+			#
 			# Customer’s e-mail address. Used to send payment info and payment 
 			# link from the payment info page
 			#
@@ -219,7 +230,7 @@ module RicPaymentThepay
 				"currency" => "currency", 
 				"description" => "description", 
 				"merchantData" => "merchant_data",
-				# Customer data (only for FerBuy order) TODO
+				"customerData" => "customer_data",
 				"customerEmail" => "customer_email", 
 				"returnUrl" => "return_url",
 				"methodId" => "method_id",
@@ -239,7 +250,13 @@ module RicPaymentThepay
 				result["accountId"] = Config.account_id
 				QUERY_ARGS.each do |param_name, attribute_name|
 					value = self.send(attribute_name)
-					result[param_name] = value if !value.nil?
+					if !value.nil?
+						if value.is_a?(CustomerData::Order)
+							result[param_name] = value.to_json
+						else
+							result[param_name] = value 
+						end
+					end
 				end
 				
 				return result
@@ -350,7 +367,8 @@ module RicPaymentThepay
 				self.description = payment_subject.payment_label
 				self.merchant_data = payment_subject.id
 				self.is_deposit = false
-				# TODO other attributes
+				
+				# TODO other attributes - customer data, etc.
 
 				return true
 			end

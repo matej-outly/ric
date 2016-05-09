@@ -249,9 +249,9 @@ module RicEshop
 				#
 				def synchronize_customer
 					if !self.customer_id.blank?
-						self.product_name = self.customer.name
-						self.product_email = self.customer.email
-						self.product_phone = self.customer.phone
+						self.customer_name = self.customer.name
+						self.customer_email = self.customer.email
+						self.customer_phone = self.customer.phone
 					end
 				end
 
