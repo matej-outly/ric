@@ -9,7 +9,7 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 			t.string :kind
 
 			# Message
-			t.string :message
+			t.text :message
 			t.string :url
 
 			# Author (user)

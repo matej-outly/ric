@@ -31,6 +31,8 @@ cs:
           warning: Varování
         author: Autor
         author_id: Autor
+        receiver: Příjemce
+        receiver_id: Příjemce
       ric_notification/notification_receiver:
         user: Uživatel
         state: Stav
