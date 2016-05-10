@@ -216,6 +216,21 @@ module RicUser
 					self.save
 				end
 
+				# *************************************************************
+				# Name
+				# *************************************************************
+
+				#
+				# Get name of email in case name is not set
+				#
+				def name_or_email
+					if self.name.nil?
+						return self.email
+					else
+						self.name_formatted
+					end
+				end
+
 			end
 		end
 	end

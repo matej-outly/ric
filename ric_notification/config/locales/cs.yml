@@ -21,6 +21,7 @@ cs:
   activerecord:
     attributes:
       ric_notification/notification:
+        created_at: Vytvořeno
         message: Obsah
         url: URL
         kind: Typ zprávy
