@@ -95,7 +95,7 @@ module RicNotification
 								else
 
 									# Static message
-									message_text = I18n.t("notifications.automatic_messages.#{message_text.to_s}")
+									message_text = I18n.t("notifications.automatic_messages.#{message_text.to_s}", default: "")
 
 								end
 							end

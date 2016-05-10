@@ -72,7 +72,7 @@ module RicWebsite
 					result = self.content
 					if config(:partials)
 						config(:partials).each do |key, partial|
-							result = result.gsub("{" + key.to_s + "}", render_partial(partial))
+							result = result.gsub("%{" + key.to_s + "}", render_partial(partial))
 						end
 					end
 					return result
