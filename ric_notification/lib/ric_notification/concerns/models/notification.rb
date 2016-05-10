@@ -85,15 +85,27 @@ module RicNotification
 
 							# Automatic message
 							if message_text.is_a?(Symbol)
-								message_text = I18n.t("notifications.automatic_messages.#{message_text.to_s}")
+								
+								notification_template = RicNotification.notification_template_model.where(key: message_text.to_s).first
+								if notification_template
+
+									# Message from template
+									message_text = notification_template.message
+
+								else
+
+									# Static message
+									message_text = I18n.t("notifications.automatic_messages.#{message_text.to_s}")
+
+								end
 							end
 
-							# Message params
-							# TODO
-
-							# Store
-							notification.message = message_text
-
+							# First parameter is message text (all other parameters are indexed from 1)
+							message_params.unshift(message_text)
+							
+							# Interpret params and store it in DB
+							notification.message = interpret_params(message_text, message_params)
+							
 							# *************************************************
 							# Kind
 							# *************************************************
@@ -158,6 +170,27 @@ module RicNotification
 						notification.enqueue_for_delivery
 
 						return notification
+					end
+
+					#
+					# Interpret params into given text
+					#
+					def interpret_params(text, params)
+						return text.gsub(/%{[^{}]+}/) do |match|
+
+							# Substitude all %1, %2, %3, ... to a form which can be evaluated
+							template_to_eval = match[2..-2].gsub(/%([0-9]+)/, "params[\\1]")
+							
+							# Evaluate match
+							begin
+								evaluated_match = eval(template_to_eval)
+							rescue
+								evaluated_match = ""
+							end
+
+							# Result
+							evaluated_match
+						end
 					end
 
 					#
