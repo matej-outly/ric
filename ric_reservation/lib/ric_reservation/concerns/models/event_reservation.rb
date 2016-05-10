@@ -365,7 +365,7 @@ module RicReservation
 					return if self.owner.nil?
 
 					# Get receiver object
-					if RicReservation.owner_model == RicNotification.user_model
+					if self.owner_type == RicNotification.user_model
 						receiver = self.owner
 					else
 						receiver = self.owner.user
