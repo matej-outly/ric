@@ -102,7 +102,7 @@ module RicNotification
 
 							# First parameter is message text (all other parameters are indexed from 1)
 							message_params.unshift(message_text)
-							
+
 							# Interpret params and store it in DB
 							notification.message = interpret_params(message_text, message_params)
 							
