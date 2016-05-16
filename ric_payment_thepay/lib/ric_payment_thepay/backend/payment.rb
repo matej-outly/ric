@@ -366,7 +366,7 @@ module RicPaymentThepay
 				self.currency = Payment.locale_to_currency(payment_subject.payment_currency)
 				self.description = payment_subject.payment_description
 				self.merchant_data = payment_subject.id
-				self.is_deposit = false
+				#self.is_deposit = true
 
 				# Customer data BUGGY
 				#customer_object = CustomerData::Customer.new({
