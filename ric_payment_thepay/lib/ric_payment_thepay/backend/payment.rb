@@ -9,11 +9,11 @@
 # *
 # *****************************************************************************
 
-# Customer data
-require "ric_payment_thepay/backend/customer_data/order"
-require "ric_payment_thepay/backend/customer_data/customer"
-require "ric_payment_thepay/backend/customer_data/cart"
-require "ric_payment_thepay/backend/customer_data/cart_item"
+# Customer data - BUGGY
+#require "ric_payment_thepay/backend/customer_data/order"
+#require "ric_payment_thepay/backend/customer_data/customer"
+#require "ric_payment_thepay/backend/customer_data/cart"
+#require "ric_payment_thepay/backend/customer_data/cart_item"
 
 module RicPaymentThepay
 	class Backend
@@ -131,7 +131,7 @@ module RicPaymentThepay
 			#
 			# Optional data about customer. Required for FerBuy method.
 			#
-			attr_accessor :customer_data
+			#attr_accessor :customer_data BUGGY
 
 			#
 			# Customer’s e-mail address. Used to send payment info and payment 
@@ -230,7 +230,7 @@ module RicPaymentThepay
 				"currency" => "currency", 
 				"description" => "description", 
 				"merchantData" => "merchant_data",
-				"customerData" => "customer_data",
+				#"customerData" => "customer_data", BUGGY
 				"customerEmail" => "customer_email", 
 				"returnUrl" => "return_url",
 				"methodId" => "method_id",
@@ -251,11 +251,11 @@ module RicPaymentThepay
 				QUERY_ARGS.each do |param_name, attribute_name|
 					value = self.send(attribute_name)
 					if !value.nil?
-						if value.is_a?(CustomerData::Order)
-							result[param_name] = value.to_json
-						else
+						#if value.is_a?(CustomerData::Order)
+						#	result[param_name] = value.to_json
+						#else
 							result[param_name] = value 
-						end
+						#end
 					end
 				end
 				
@@ -368,34 +368,34 @@ module RicPaymentThepay
 				self.merchant_data = payment_subject.id
 				self.is_deposit = false
 
-				# Customer data
-				customer_object = CustomerData::Customer.new({
-					first_name: payment_subject.payment_customer_firstname,
-					last_name: payment_subject.payment_customer_lastname,
-					email: payment_subject.payment_customer_email,
-					phone: payment_subject.payment_customer_phone,
-				})
-				if !payment_subject.payment_customer_address.nil?
-					customer_object.address = payment_subject.payment_customer_address[:street] + " " + payment_subject.payment_customer_address[:number]
-					customer_object.city = payment_subject.payment_customer_address[:city]
-					customer_object.postal_code = payment_subject.payment_customer_address[:zipcode]
-				end
-				cart_object = CustomerData::Cart.new({
-					shipping: payment_subject.payment_price_shipping,
-					tax: payment_subject.payment_price_tax,
-					discount: payment_subject.payment_price_discount,
-				})
-				payment_subject.payment_items.each do |payment_subject_item|
-					cart_object.add(
-						CustomerData::CartItem.new({
-							name: payment_subject_item.payment_name,
-							description: payment_subject_item.payment_description,
-							price: payment_subject_item.payment_price,
-							quantity: payment_subject_item.payment_amount,
-						})
-					)
-				end
-				self.customer_data = CustomerData::Order.new(customer_object, cart_object)
+				# Customer data BUGGY
+				#customer_object = CustomerData::Customer.new({
+				#	first_name: payment_subject.payment_customer_firstname,
+				#	last_name: payment_subject.payment_customer_lastname,
+				#	email: payment_subject.payment_customer_email,
+				#	phone: payment_subject.payment_customer_phone,
+				#})
+				#if !payment_subject.payment_customer_address.nil?
+				#	customer_object.address = payment_subject.payment_customer_address[:street] + " " + payment_subject.payment_customer_address[:number]
+				#	customer_object.city = payment_subject.payment_customer_address[:city]
+				#	customer_object.postal_code = payment_subject.payment_customer_address[:zipcode]
+				#end
+				#cart_object = CustomerData::Cart.new({
+				#	shipping: payment_subject.payment_price_shipping,
+				#	tax: payment_subject.payment_price_tax,
+				#	discount: payment_subject.payment_price_discount,
+				#})
+				#payment_subject.payment_items.each do |payment_subject_item|
+				#	cart_object.add(
+				#		CustomerData::CartItem.new({
+				#			name: payment_subject_item.payment_name,
+				#			description: payment_subject_item.payment_description,
+				#			price: payment_subject_item.payment_price,
+				#			quantity: payment_subject_item.payment_amount,
+				#		})
+				#	)
+				#end
+				#self.customer_data = CustomerData::Order.new(customer_object, cart_object)
 
 				return true
 			end
