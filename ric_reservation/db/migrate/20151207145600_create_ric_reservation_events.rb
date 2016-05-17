@@ -14,9 +14,6 @@ class CreateRicReservationEvents < ActiveRecord::Migration
 		create_table :events do |t|
 			t.timestamps null: true
 
-			# Single table inheritance
-			t.string :type
-			
 			# Bind to resources
 			t.integer :resource_id
 

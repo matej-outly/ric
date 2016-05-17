@@ -14,9 +14,6 @@ class CreateRicReservationResources < ActiveRecord::Migration
 		create_table :resources do |t|
 			t.timestamps null: true
 
-			# Single table inheritance
-			t.string :type
-
 			# Position
 			t.integer :position
 

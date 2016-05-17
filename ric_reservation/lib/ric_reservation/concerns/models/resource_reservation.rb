@@ -28,7 +28,7 @@ module RicReservation
 					#
 					# One-to-many relation with resources
 					#
-					belongs_to :resource, class_name: RicReservation.resource_model.to_s
+					belongs_to :resource, polymorphic: true
 
 					# *********************************************************
 					# Validators
@@ -38,6 +38,7 @@ module RicReservation
 					# Some columns must be present if kind is resource
 					#
 					validates :resource_id, presence: true, if: :kind_resource?
+					validates :resource_type, presence: true, if: :kind_resource?
 
 					#
 					# Reservations and event can't overlap 
@@ -57,7 +58,7 @@ module RicReservation
 					#
 					def resource(resource = nil)
 						result = where(kind: "resource")
-						result = result.where(resource_id: resource.id) if resource
+						result = result.where(resource_id: resource.id) if resource # TODO resource type
 						return result
 					end
 

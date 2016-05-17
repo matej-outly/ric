@@ -28,7 +28,7 @@ module RicReservation
 					#
 					# One-to-many relation with events
 					#
-					has_many :events, class_name: RicReservation.event_model.to_s, dependent: :destroy
+					#has_many :events, class_name: RicReservation.event_model.to_s, dependent: :destroy # not anymore
 
 					#
 					# One-to-many relation with reservations
@@ -170,7 +170,7 @@ module RicReservation
 				#
 				# State
 				#
-				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 				
 				#
 				# Get state according to datetime
@@ -265,7 +265,7 @@ module RicReservation
 					# Create reservation
 					reservation = RicReservation.reservation_model.new
 					reservation.kind = "resource"
-					reservation.resource_id = self.id
+					reservation.resource = self
 
 					# Bind subject
 					reservation.schedule_date = subject.date

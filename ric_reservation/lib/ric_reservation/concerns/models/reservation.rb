@@ -183,7 +183,7 @@ module RicReservation
 				#
 				# State
 				#
-				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 				#
 				# Get state according to current date and time

@@ -19,11 +19,13 @@ class CreateRicReservationReservations < ActiveRecord::Migration
 
 			# Resource reservation
 			t.integer :resource_id
+			t.string :resource_type
 			t.datetime :schedule_from
 			t.datetime :schedule_to
 
 			# Event reservation
 			t.integer :event_id
+			t.string :event_type
 			t.date :schedule_date
 			t.boolean :below_line
 

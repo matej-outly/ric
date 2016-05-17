@@ -28,7 +28,7 @@ module RicReservation
 					#
 					# One-to-many relation with events
 					#
-					belongs_to :event, class_name: RicReservation.event_model.to_s
+					belongs_to :event, polymorphic: true
 
 					# *********************************************************
 					# Validators
@@ -38,6 +38,7 @@ module RicReservation
 					# Some columns must be present if kind is event
 					#
 					validates :event_id, presence: true, if: :kind_event?
+					validates :event_type, presence: true, if: :kind_event?
 					validates :schedule_date, presence: true, if: :kind_event?
 					validates :size, presence: true, if: :kind_event?
 
@@ -70,7 +71,7 @@ module RicReservation
 					#
 					def event(event = nil, schedule_date = nil)
 						result = where(kind: "event")
-						result = result.where(event_id: event.id) if event
+						result = result.where(event_id: event.id) if event # TODO event type
 						result = result.where(schedule_date: schedule_date) if schedule_date
 						return result
 					end
@@ -82,7 +83,7 @@ module RicReservation
 						if resource.nil?
 							all
 						else
-							result = joins(:event).where(reservations: { kind: "event" }, events: { resource_id: resource.id })
+							result = joins(:event).where(reservations: { kind: "event" }, events: { resource_id: resource.id }) # TODO ?????
 							result = result.where(reservations: { schedule_date: schedule_date }) if schedule_date
 							return result
 						end
@@ -145,7 +146,7 @@ module RicReservation
 				#
 				def event
 					if @event.nil?
-						@event = RicReservation.event_model.find_by_id(self.event_id)
+						@event = RicReservation.event_model.find_by_id(self.event_id) # TODO event type
 						if @event
 							@event.schedule(self.schedule_date)
 						else
@@ -160,7 +161,7 @@ module RicReservation
 				#
 				def valid_event
 					if @valid_event.nil?
-						@valid_event = RicReservation.event_model.valid(self.schedule_date).where(id: self.event_id).first
+						@valid_event = RicReservation.event_model.valid(self.schedule_date).where(id: self.event_id).first # TODO event type
 						if @valid_event
 							@valid_event.schedule(self.schedule_date)
 						else

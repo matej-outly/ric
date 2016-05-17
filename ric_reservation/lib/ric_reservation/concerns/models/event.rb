@@ -33,7 +33,7 @@ module RicReservation
 					#
 					# One-to-many relation with resources
 					#
-					belongs_to :resource, class_name: RicReservation.resource_model.to_s
+					#belongs_to :resource, class_name: RicReservation.resource_model.to_s # not anymore
 
 					#
 					# One-to-many relation with reservations
@@ -487,10 +487,31 @@ module RicReservation
 						if owner.nil?
 							all
 						else
-							joins("LEFT OUTER JOIN reservations ON reservations.event_id = events.id").where(reservations: { owner_id: owner.id }).group("events.id")
+							joins("LEFT OUTER JOIN reservations ON reservations.event_id = events.id").where(reservations: { owner_id: owner.id }).group("events.id") # TODO event type
 						end
 					end
 
+				end
+
+				# *************************************************************
+				# Resource
+				# *************************************************************
+
+				#
+				# Get resource object
+				#
+				def resource
+					if @resource.nil?
+						@resource = self._resource
+					end
+					return @resource
+				end
+
+				#
+				# Get resource object - to be overriden in model
+				# 
+				def _resource
+					raise "Not implemented."
 				end
 
 				# *************************************************************
@@ -625,7 +646,7 @@ module RicReservation
 				#
 				# State
 				#
-				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 				#
 				# Get state according to date
@@ -897,7 +918,7 @@ module RicReservation
 					# Create reservation
 					reservation = RicReservation.reservation_model.new
 					reservation.kind = "event"
-					reservation.event_id = self.id
+					reservation.event = self
 					reservation.schedule_date = self.schedule_date
 					reservation.schedule_from = self.schedule_from
 					reservation.schedule_to = self.schedule_to
