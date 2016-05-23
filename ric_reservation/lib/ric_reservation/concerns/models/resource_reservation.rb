@@ -58,7 +58,7 @@ module RicReservation
 					#
 					def resource(resource = nil)
 						result = where(kind: "resource")
-						result = result.where(resource_id: resource.id) if resource # TODO resource type
+						result = result.where(resource_id: resource.id, resource_type: resource.class.name) if resource
 						return result
 					end
 
@@ -108,9 +108,20 @@ module RicReservation
 							.resource(self.resource)
 							.overlaps_with_resource_reservation(self).count == 0) # With other resource reservations
 					end
-					result &= (RicReservation.event_model
-						.where(resource_id: self.resource_id)
-						.overlaps_with_resource_reservation(self).count == 0) # With other events in the same resource
+					if config(:overlap_event_types)
+						config(:overlap_event_types).each do |type|
+							event_model = nil
+							begin
+								event_model = type.constantize
+							rescue
+							end
+							if event_model
+								result &= (event_model
+									.where(resource_id: self.resource_id, resource_type: self.resource_type)
+									.overlaps_with_resource_reservation(self).count == 0) # With other events in the same resource
+							end
+						end
+					end
 					return result
 				end
 

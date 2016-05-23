@@ -20,7 +20,7 @@ module RicReservation
 				# the module's context.
 				#
 				included do
-					
+
 					# *********************************************************
 					# Structure
 					# *********************************************************
@@ -29,11 +29,6 @@ module RicReservation
 					# One-to-many relation with event modifiers
 					#
 					has_many :event_modifiers, class_name: RicReservation.event_modifier_model.to_s, dependent: :destroy
-
-					#
-					# One-to-many relation with resources
-					#
-					#belongs_to :resource, class_name: RicReservation.resource_model.to_s # not anymore
 
 					#
 					# One-to-many relation with reservations
@@ -48,7 +43,7 @@ module RicReservation
 					#
 					# Some columns must be present
 					#
-					validates_presence_of :name, :resource_id, :capacity, :from, :to, :period
+					validates_presence_of :name, :capacity, :from, :to, :period
 
 					#
 					# From / to times must be consistent
@@ -106,19 +101,6 @@ module RicReservation
 					attr_accessor :schedule_to
 
 					# *********************************************************
-					# STI
-					# *********************************************************
-
-					#
-					# Define scope for each available type
-					#
-					if config(:types)
-						config(:types).each do |type|
-							scope type.to_snake.pluralize.to_sym, -> { where(type: type) }
-						end
-					end
-
-					# *********************************************************
 					# Reservations
 					# *********************************************************
 
@@ -137,7 +119,7 @@ module RicReservation
 					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green", "grey"], default: "yellow"
 
 					# *********************************************************
-					# Time windows
+					# Time windows / states
 					# *********************************************************
 
 					#
@@ -185,19 +167,31 @@ module RicReservation
 						end
 					end
 
+					#
+					# State
+					#
+					state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+
 				end
 
 				module ClassMethods
-					
+
 					# *********************************************************
-					# STI
+					# Resource
 					# *********************************************************
 
 					#
-					# Get available STI types
+					# Get resource id column name - to be overriden in model
 					#
-					def types
-						config(:types)
+					def resource_id_column
+						raise "Not implemented."
+					end
+
+					#
+					# Get resource type - to be overriden in model
+					#
+					def resource_type
+						raise "Not implemented."
 					end
 
 					# *********************************************************
@@ -466,19 +460,6 @@ module RicReservation
 						)
 					end
 
-					#def overlaps_with_event(event)
-					#	where(
-					#		"
-					#			(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
-					#			(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
-					#			(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
-					#		", 
-					#		from: event.from, 
-					#		to: event.to, 
-					#		period_once: "once"
-					#	)
-					#end
-
 					# *********************************************************
 					# Reservation
 					# *********************************************************
@@ -487,7 +468,9 @@ module RicReservation
 						if owner.nil?
 							all
 						else
-							joins("LEFT OUTER JOIN reservations ON reservations.event_id = events.id").where(reservations: { owner_id: owner.id }).group("events.id") # TODO event type
+							joins("LEFT OUTER JOIN reservations ON reservations.event_id = #{self.table_name}.id AND reservations.event_type = #{ActiveRecord::Base.connection.quote(self.name)}")
+								.where(reservations: { owner_id: owner.id, owner_type: owner.class.name })
+								.group("#{self.table_name}.id")
 						end
 					end
 
@@ -498,20 +481,30 @@ module RicReservation
 				# *************************************************************
 
 				#
+				# Get resource id
+				#
+				def resource_id
+					return self.send(self.class.resource_id_column)
+				end
+
+				#
+				# Get resource type
+				#
+				def resource_type
+					return self.class.resource_type
+				end
+
+				#
 				# Get resource object
 				#
 				def resource
 					if @resource.nil?
-						@resource = self._resource
+						begin
+							@resource = self.resource_type.constantize.find_by_id(self.resource_id)
+						rescue
+						end
 					end
 					return @resource
-				end
-
-				#
-				# Get resource object - to be overriden in model
-				# 
-				def _resource
-					raise "Not implemented."
 				end
 
 				# *************************************************************
@@ -524,6 +517,28 @@ module RicReservation
 				def invalidate(date)
 					self.valid_to = date
 					self.save
+				end
+
+				#
+				# Is event yet invalid?
+				#
+				def is_yet_invalid?(date)
+					return !self.valid_from.nil? && self.valid_from > date
+				end
+
+				#
+				# Is event already invalid?
+				#
+				def is_already_invalid?(date)
+					return !self.valid_to.nil? && self.valid_to <= date
+				end
+
+				#
+				# Is event valid?
+				#
+				def is_valid?(date_from, date_to = nil)
+					date_to = date_from + 1.day if date_to.nil?
+					return (self.valid_from.nil? || self.valid_from < date_to) && (self.valid_to.nil? || date_from < self.valid_to)
 				end
 
 				# *************************************************************
@@ -642,11 +657,6 @@ module RicReservation
 				# *************************************************************
 				# State
 				# *************************************************************
-
-				#
-				# State
-				#
-				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 				#
 				# Get state according to date

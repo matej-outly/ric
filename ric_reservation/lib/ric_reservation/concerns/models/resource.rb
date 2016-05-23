@@ -26,14 +26,9 @@ module RicReservation
 					# *********************************************************
 
 					#
-					# One-to-many relation with events
-					#
-					#has_many :events, class_name: RicReservation.event_model.to_s, dependent: :destroy # not anymore
-
-					#
 					# One-to-many relation with reservations
 					#
-					has_many :reservations, -> { where(kind: "resource") }, class_name: RicReservation.reservation_model.to_s, dependent: :destroy
+					has_many :reservations, -> { where(kind: "resource") }, class_name: RicReservation.reservation_model.to_s, as: :resource, dependent: :destroy	
 					
 					# *********************************************************
 					# Ordering
@@ -48,20 +43,7 @@ module RicReservation
 					range_column :opening_hours
 
 					# *********************************************************
-					# STI
-					# *********************************************************
-
-					#
-					# Define scope for each available type
-					#
-					if config(:types)
-						config(:types).each do |type|
-							scope type.to_snake.pluralize.to_sym, -> { where(type: type) }
-						end
-					end
-
-					# *********************************************************
-					# Time windows
+					# Time windows / states
 					# *********************************************************
 
 					#
@@ -72,6 +54,11 @@ module RicReservation
 							duration_column "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
 						end
 					end
+
+					#
+					# State
+					#
+					#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 					# *********************************************************
 					# Period
@@ -95,17 +82,6 @@ module RicReservation
 
 				module ClassMethods
 					
-					# *********************************************************
-					# STI
-					# *********************************************************
-
-					#
-					# Get available STI types
-					#
-					def types
-						config(:types)
-					end
-
 					# *********************************************************
 					# Columns
 					# *********************************************************
@@ -167,11 +143,6 @@ module RicReservation
 				# State
 				# *************************************************************
 
-				#
-				# State
-				#
-				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
-				
 				#
 				# Get state according to datetime
 				#

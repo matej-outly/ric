@@ -110,7 +110,7 @@ module RicReservation
 						if owner.nil?
 							all
 						else
-							where(owner_type: owner.class.to_s, owner_id: owner.id)
+							where(owner_type: owner.class.name, owner_id: owner.id)
 						end
 					end
 					
@@ -183,7 +183,7 @@ module RicReservation
 				#
 				# State
 				#
-				state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
 
 				#
 				# Get state according to current date and time

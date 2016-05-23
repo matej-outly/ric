@@ -71,7 +71,7 @@ module RicReservation
 					#
 					def event(event = nil, schedule_date = nil)
 						result = where(kind: "event")
-						result = result.where(event_id: event.id) if event # TODO event type
+						result = result.where(event_id: event.id, event_type: event.class.name) if event
 						result = result.where(schedule_date: schedule_date) if schedule_date
 						return result
 					end
@@ -79,15 +79,15 @@ module RicReservation
 					#
 					# Scope for event reservation belonging to some resource
 					#
-					def event_belonging_to_resource(resource, schedule_date = nil)
-						if resource.nil?
-							all
-						else
-							result = joins(:event).where(reservations: { kind: "event" }, events: { resource_id: resource.id }) # TODO ?????
-							result = result.where(reservations: { schedule_date: schedule_date }) if schedule_date
-							return result
-						end
-					end
+#					def event_belonging_to_resource(resource, schedule_date = nil)
+#						if resource.nil?
+#							all
+#						else
+#							result = joins(:event).where(reservations: { kind: "event" }, events: { resource_id: resource.id }) # TODO ?????
+#							result = result.where(reservations: { schedule_date: schedule_date }) if schedule_date
+#							return result
+#						end
+#					end
 
 					# *********************************************************
 					# Line
@@ -110,10 +110,14 @@ module RicReservation
 					#
 					# Process above line possibility
 					#
-					def process_above_line(event_id, schedule_date)
+					def process_above_line(event_type, event_id, schedule_date)
 							
 						# Check valid event
-						event = RicReservation.event_model.find_by_id(event_id)
+						event = nil
+						begin
+							event = event_type.constantize.find_by_id(event_id)
+						rescue
+						end
 						if event.nil?
 							return false
 						end
@@ -126,7 +130,7 @@ module RicReservation
 							# Check all reservations for possibility to put above line
 							reservations.each do |reservation|
 								if reservation.check_above_line
-									reservation.put_above_line
+									#reservation.put_above_line
 								end
 							end
 
@@ -145,30 +149,22 @@ module RicReservation
 				# Get (scheduled) event
 				#
 				def event
-					if @event.nil?
-						@event = RicReservation.event_model.find_by_id(self.event_id) # TODO event type
-						if @event
-							@event.schedule(self.schedule_date)
-						else
-							@event = false
-						end
+					result = super
+					if result
+						result.schedule(self.schedule_date)
 					end
-					return @event
+					return result
 				end
 
 				#
-				# Get (scheduled) event valid for schedule date of false if not any
+				# Get (scheduled) event valid for schedule date of nil if not any
 				#
 				def valid_event
-					if @valid_event.nil?
-						@valid_event = RicReservation.event_model.valid(self.schedule_date).where(id: self.event_id).first # TODO event type
-						if @valid_event
-							@valid_event.schedule(self.schedule_date)
-						else
-							@valid_event = false
-						end
+					result = self.event
+					if result && !result.is_valid?(self.schedule_date)
+						result = nil
 					end
-					return @valid_event
+					return result
 				end
 
 				# *************************************************************
@@ -320,7 +316,7 @@ module RicReservation
 				def enqueue_for_process_above_line
 					return if !self.kind_event?
 					if self.event.config(:enable_below_line) == true
-						QC.enqueue("#{RicReservation.reservation_model.to_s}.process_above_line", self.event_id, self.schedule_date)
+						QC.enqueue("#{RicReservation.reservation_model.to_s}.process_above_line", self.event_type, self.event_id, self.schedule_date)
 					end
 				end
 

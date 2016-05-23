@@ -1,8 +1,3 @@
-# Available STI types
-#types:
-#  - Event1
-#  - Event2
-
 # Enable reservation below line
 enable_below_line: false
 

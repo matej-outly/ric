@@ -1,3 +1,8 @@
+# Available types
+#overlap_event_types:
+#  - Event1
+#  - Event2
+
 # Avalilable reservation states and designated behavior
 states:
   - 
