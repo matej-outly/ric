@@ -654,6 +654,23 @@ module RicReservation
 					return self.schedule_from.strftime("%k:%M") + " - " + self.schedule_to.strftime("%k:%M")
 				end
 
+				#
+				# Schedule to a specific date
+				#
+				def _schedule(date)
+					
+					# Save
+					self.schedule_date = date
+
+					# Schedule to exact time in given date
+					self.schedule_from = DateTime.compose(date, self.from)
+					
+					# Schedule to exact time in given date
+					self.schedule_to = DateTime.compose(date, self.to)
+					
+					return self
+				end
+
 				# *************************************************************
 				# State
 				# *************************************************************
@@ -1063,23 +1080,6 @@ module RicReservation
 				# *************************************************************
 				# Schedule
 				# *************************************************************
-
-				#
-				# Schedule to a specific date
-				#
-				def _schedule(date)
-					
-					# Save
-					self.schedule_date = date
-
-					# Schedule to exact time in given date
-					self.schedule_from = DateTime.compose(date, self.from)
-					
-					# Schedule to exact time in given date
-					self.schedule_to = DateTime.compose(date, self.to)
-					
-					return self
-				end
 
 				#
 				# Try to automatically schedule event

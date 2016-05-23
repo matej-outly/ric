@@ -115,9 +115,9 @@ module RicReservation
 								event_model = type.constantize
 							rescue
 							end
-							if event_model
+							if event_model && self.resource_type == event_model.resource_type
 								result &= (event_model
-									.where(resource_id: self.resource_id, resource_type: self.resource_type)
+									.where({event_model.resource_id_column => self.resource_id})
 									.overlaps_with_resource_reservation(self).count == 0) # With other events in the same resource
 							end
 						end
