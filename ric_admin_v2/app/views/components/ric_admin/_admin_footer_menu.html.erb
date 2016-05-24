@@ -1,0 +1,16 @@
+<ul class="menu">
+	<% @admin_footer_menu.config(:items).each do |item| %>
+		<%
+			# Get URL
+			if item[:url]
+				url = eval("(#{item[:url]}).to_s")
+			else
+				url = "#"
+			end
+
+			# Get label
+			label = I18n.t(item[:label], default: item[:label])
+		%>
+		<li><%= link_to label, url %></li>
+	<% end %>
+</ul>
