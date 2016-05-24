@@ -76,19 +76,6 @@ module RicReservation
 						return result
 					end
 
-					#
-					# Scope for event reservation belonging to some resource
-					#
-#					def event_belonging_to_resource(resource, schedule_date = nil)
-#						if resource.nil?
-#							all
-#						else
-#							result = joins(:event).where(reservations: { kind: "event" }, events: { resource_id: resource.id }) # TODO ?????
-#							result = result.where(reservations: { schedule_date: schedule_date }) if schedule_date
-#							return result
-#						end
-#					end
-
 					# *********************************************************
 					# Line
 					# *********************************************************
