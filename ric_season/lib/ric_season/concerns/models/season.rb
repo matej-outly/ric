@@ -94,6 +94,34 @@ module RicSeason
 					end
 
 					#
+					# Get current, last and next seasons
+					#
+					def current_and_last_and_next
+						return [self.current, self.last, self.next]
+					end
+					
+					#
+					# Get current and last seasons
+					#
+					def current_and_last
+						return [self.current, self.last]
+					end
+
+					#
+					# Get current and next seasons
+					#
+					def current_and_next
+						return [self.current, self.next]
+					end
+
+					#
+					# Get last and next seasons
+					#
+					def last_and_next
+						return [self.last, self.next]
+					end
+
+					#
 					# Clear current cache
 					#
 					def clear_current_cache
