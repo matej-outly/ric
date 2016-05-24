@@ -29,12 +29,6 @@ module RicReservation
 					# One-to-many relation with reservations
 					#
 					has_many :reservations, -> { where(kind: "resource") }, class_name: RicReservation.reservation_model.to_s, as: :resource, dependent: :destroy	
-					
-					# *********************************************************
-					# Ordering
-					# *********************************************************
-
-					enable_ordering
 
 					# *********************************************************
 					# Opening hours
@@ -73,6 +67,11 @@ module RicReservation
 					# Validators
 					# *********************************************************
 
+					#
+					# Some columns must be present
+					#
+					validates_presence_of :name
+					
 					#
 					# Some columns must be present if period is week
 					#
