@@ -13,15 +13,28 @@ require_dependency "ric_admin/application_controller"
 
 module RicAdmin
 	class PublicController < ApplicationController
+		
+		#
+		# Terms
+		#
 		def terms
 		end
 		
+		#
+		# Accessibility
+		#
 		def accessibility
 		end
 		
+		#
+		# Help
+		#
 		def help
 		end
 		
+		#
+		# Contact
+		#
 		def contact
 		end
 	end

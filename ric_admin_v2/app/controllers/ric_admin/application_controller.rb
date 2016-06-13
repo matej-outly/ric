@@ -25,27 +25,27 @@ module RicAdmin
 		#
 		# Title component
 		#
-		component RicAdmin::AdminTitleComponent
+		component RicAdmin::TitleComponent
 
 		#
 		# Header logo component
 		#
-		component RicAdmin::AdminHeaderLogoComponent
+		component RicAdmin::HeaderLogoComponent
 
 		#
 		# Header menu component
 		#
-		component RicAdmin::AdminHeaderMenuComponent
+		component RicAdmin::HeaderMenuComponent
 		
 		#
 		# Footer menu component
 		#
-		component RicAdmin::AdminFooterMenuComponent
+		component RicAdmin::FooterMenuComponent
 
 		#
 		# Footer copy component
 		#
-		component RicAdmin::AdminFooterCopyComponent
+		component RicAdmin::FooterCopyComponent
 
 	end
 end

@@ -2,14 +2,14 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Admin header menu
+# * Footer menu
 # *
 # * Author: Matěj Outlý
 # * Date  : 13. 8. 2015
 # *
 # *****************************************************************************
 
-class RicAdmin::AdminHeaderMenuComponent < RugController::Component
+class RicAdmin::FooterMenuComponent < RugController::Component
 
 	def control
 	end

@@ -39,6 +39,12 @@ module RicDevise
 	# *************************************************************************
 
 	#
+	# Route name
+	#
+	mattr_accessor :route_name
+	@@route_name = :users
+	
+	#
 	# User model
 	#
 	mattr_accessor :user_model

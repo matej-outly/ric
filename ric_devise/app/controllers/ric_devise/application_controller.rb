@@ -20,17 +20,17 @@ module RicDevise
 		#
 		# Title component
 		#
-		component RicAdmin::AdminTitleComponent
+		component RicAdmin::TitleComponent
 
 		#
 		# Header logo component
 		#
-		component RicAdmin::AdminHeaderLogoComponent
+		component RicAdmin::HeaderLogoComponent
 
 		#
 		# Footer copy component
 		#
-		component RicAdmin::AdminFooterCopyComponent
+		component RicAdmin::FooterCopyComponent
 
 	protected
 		

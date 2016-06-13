@@ -1,7 +1,0 @@
-<div class="navbar-right">
-	<% if user_signed_in? %>
-		<p class="navbar-text"><%= link_to current_user.email, ric_account.account_user_path %></p>
-		<%= link_to t("devise.action.sign_out").downcase, ric_devise.destroy_user_session_path, method: :delete, class: "btn btn-default navbar-btn" %>
-	<% else %>
-	<% end %>
-</div>
