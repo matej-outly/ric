@@ -4,6 +4,11 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+/*****************************************************************************/
+/* Mixins                                                                    */
+/*****************************************************************************/
+
 @import "ric_admin/mixins";
 
 /*****************************************************************************/
@@ -23,6 +28,17 @@ $mobile-width: 320px;
 
 $base-font-color: #555555;
 
+/*****************************************************************************/
+/* Typography                                                                */
+/*****************************************************************************/
+
+@import "ric_admin/typography";
+
+/*****************************************************************************/
+/* Components                                                                */
+/*****************************************************************************/
+
+@import "ric_admin/components";
 
 /*****************************************************************************/
 /* Global settings                                                           */
@@ -90,6 +106,10 @@ body {
 	background: #ffffff;
 	padding: 20px 20px 70px 20px;
 
+	&.pad-header {
+		padding-top: 113px;
+	}
+
 	h2 {
 		padding-bottom: 0.3em;
 	}
@@ -123,6 +143,11 @@ body {
 				padding-bottom: 6px;
 				margin-right: 20px;
 				border-bottom: 1px solid #dddddd;
+
+				.glyphicon {
+					margin-left: 5px;
+					margin-right: 5px;
+				}
 			}
 
 			&.active {
@@ -259,7 +284,7 @@ body {
 
 	.copy {
 		text-align: center;
-		margin: 25px 0;
+		margin: 15px 0;
 		font-size: 80%; 
 		
 		li {
@@ -303,84 +328,6 @@ body {
 
 }
 
-/*****************************************************************************/
-/* Forms                                                                     */
-/*****************************************************************************/
-
-.input-group {
-	margin-bottom: 5px;
-}
-
-/*************************************************************************/
-/* Checkbox / Radiobutton                                                */
-/*************************************************************************/
-
-.checkbox-no-bootstrap {
-
-	label {
-		font-weight: normal;
-	}
-
-	label input[type=checkbox] {
-		display: none;
-		& + span {
-			height: 18px;
-			width: 18px;
-			border: 1px solid #ccc;
-			background: white;
-			-moz-border-radius: 2px;
-			-webkit-border-radius: 2px;
-			border-radius: 2px;
-			display: inline-block;
-			vertical-align: top;
-			position: relative;
-			top: 3px;
-		}
-		&:checked + span:before {
-			display: block;
-			text-align: center;
-			line-height: 16px;
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			font-family: 'Glyphicons Halflings';
-			content: "\e013";
-			font-size: 70%;
-		}
-	}
-
-	label input[type=radio] {
-		display: none;
-		& + span {
-			height: 18px;
-			width: 18px;
-			border: 1px solid #ccc;
-			background: white;
-			-moz-border-radius: 50%;
-			-webkit-border-radius: 50%;
-			border-radius: 50%;
-			display: inline-block;
-			vertical-align: top;
-			position: relative;
-			top: 3px;
-		}
-		&:checked + span:before {
-			display: block;
-			text-align: center;
-			line-height: 18px;
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			font-family: 'Glyphicons Halflings';
-			content: "\e013";
-			font-size: 70%;
-		}
-	}
-}
 
 
 /*****************************************************************************/

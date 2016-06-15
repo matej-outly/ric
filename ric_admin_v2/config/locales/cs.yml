@@ -21,10 +21,10 @@ cs:
       cs: CZ
       en: EN
     pagination:
-      first: "&laquo; První"
-      last: "Poslední &raquo;"
-      previous: "&lsaquo; Předchozí"
-      next: "Následující &rsaquo;"
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
       truncate: "&hellip;"
     pagination_more:
       more: "Načíst další"

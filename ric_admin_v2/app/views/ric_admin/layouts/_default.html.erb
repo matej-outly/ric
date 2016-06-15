@@ -1,20 +1,18 @@
 <div class="layout default">
 	<div class="content">
-
+	
+		<%= render partial: "ric_admin/shared/flash" %>
+		
 		<%= breadcrumbs if defined?(breadcrumbs) %>
 		
-		<div class="clearfix">
-			<%= render partial: "ric_admin/shared/flash" %>
-		</div>
-
 		<% if (defined?(header)) %>
 			<% if header != false %>
-				<h2><%= header %></h2>
+				<div class="page-header"><h2><%= header %></h2></div>
 			<% else %>
 				<!-- No header -->
 			<% end %>
 		<% else %>
-			<h2><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h2>
+			<div class="page-header"><h1><%= t("headers.#{controller_path.gsub('/', '.')}.#{action_name}") %></h1></div>
 		<% end %>
 
 		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
