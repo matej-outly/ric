@@ -16,6 +16,30 @@
 	margin-bottom: 5px;
 }
 
+.form-inline {
+	label {
+		margin-right: 5px;
+	}
+	.form-group {
+		margin-right: 10px;
+	}
+	.btn-primary {
+		float: right;
+	}
+
+	@media (max-width: $screen-xs-max) {
+		label {
+			margin-right: 0;
+		}
+		.form-group {
+			margin-right: 0;
+		}
+		.btn-primary {
+			float: none;
+		}
+	}
+}
+
 /*****************************************************************************/
 /* Checkbox / Radiobutton                                                    */
 /*****************************************************************************/
@@ -90,6 +114,14 @@
 /*****************************************************************************/
 /* Panel                                                                     */
 /*****************************************************************************/
+
+.panel-heading {
+	@include clearfix();
+
+	.btn-primary {
+		float: right;
+	}
+}
 
 .panel-footer {
 	@include clearfix();
@@ -197,4 +229,23 @@
 	height: 400px; 
 	margin-bottom: 20px;
 	img { max-width: none; }
+}
+
+/*****************************************************************************/
+/* Labels                                                                    */
+/*****************************************************************************/
+
+.label {
+	//margin-bottom: 10px;
+
+	&.label-default {
+		&.color-yellow { background: $yellow; border-color: $yellow-dark; }
+		&.color-turquoise { background: $turquoise; border-color: $turquoise-dark; }
+		&.color-blue { background: $blue; border-color: $blue-dark; }
+		&.color-pink { background: $pink; border-color: $pink-dark; }
+		&.color-violet { background: $violet; border-color: $violet-dark; }
+		&.color-orange { background: $orange; border-color: $orange-dark; }
+		&.color-red { background: $red; border-color: $red-dark; color: white; }
+		&.color-green { background: $green; border-color: $green-dark; color: white; }
+	}
 }

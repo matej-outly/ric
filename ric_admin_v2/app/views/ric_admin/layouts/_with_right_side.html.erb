@@ -22,10 +22,10 @@
 		<% if lookup_context.find_all("#{controller_path}/_filters").any? %>
 			<% partial = render(partial: "#{controller_path}/filters") %>
 			<% if !partial.trim(" \t\n").blank? || (defined?(enforce_filters) && enforce_filters == true) %>
-				<div class="filters">
+				<div class="filters panel panel-default"><div class="panel-body">
 					<!--<h2><%= t("headers.filters") %></h2>-->
 					<%= partial %>
-				</div>
+				</div></div>
 			<% end %>
 		<% end %>
 
