@@ -98,6 +98,7 @@ cs:
     drop_file_here: "Sem přetáhněte soubor nebo klikněte pro vložení souboru přes dialogové okno."
     page: stránka
     file: soubor
+    more: více
     and_more: "a další..."
 
     action:
