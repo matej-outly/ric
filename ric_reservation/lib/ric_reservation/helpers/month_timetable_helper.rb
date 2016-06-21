@@ -222,16 +222,16 @@ module RicReservation
 								if row == 0
 									url = (options[:empty_path_callback] ? options[:empty_path_callback].call(date) : nil)
 									if url
-										result += "				<a class=\"title\" href=\"#{url}\">#{date.strftime("%-d") + "."}<i class=\"icon-plus\"></i></a>\n"
+										result += "				<a class=\"title\" href=\"#{url}\">#{date.strftime("%-d") + "."}<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span></a>\n"
 									else
 										result += "				<div class=\"title\">#{date.strftime("%-d") + "."}</div>\n"
 									end
 								end
 								url = item[:path_callback] ? item[:path_callback].call(item[:object]) : nil
 								if url
-									result += "				<a class=\"#{(!item[:tooltip].nil? ? "ttip" : "")}\" href=\"#{url}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe}>#{item[:label]}</a>\n"
+									result += "				<a class=\"\" href=\"#{url}\" #{(!item[:tooltip].nil? ? "data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + item[:tooltip] + "\"" : "").html_safe}>#{item[:label]}</a>\n"
 								else
-									result += "				<div class=\"padding #{(!item[:tooltip].nil? ? "ttip" : "")}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe}>#{item[:label]}</div>\n"
+									result += "				<div class=\"padding\" #{(!item[:tooltip].nil? ? "data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + item[:tooltip] + "\"" : "").html_safe}>#{item[:label]}</div>\n"
 								end
 								result += "			</td>\n"
 							else
@@ -240,7 +240,7 @@ module RicReservation
 								if row == 0
 									url = (options[:empty_path_callback] ? options[:empty_path_callback].call(date) : nil)
 									if url
-										result += "				<a class=\"title\" href=\"#{url}\">#{date.strftime("%-d") + "."}<i class=\"icon-plus\"></i></a>\n"
+										result += "				<a class=\"title\" href=\"#{url}\">#{date.strftime("%-d") + "."}<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span></a>\n"
 									else
 										result += "				<div class=\"title\">#{date.strftime("%-d") + "."}</div>\n"
 									end

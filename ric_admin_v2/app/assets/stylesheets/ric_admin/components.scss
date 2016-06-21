@@ -79,6 +79,13 @@
 			font-size: 70%;
 		}
 	}
+}
+
+.radio-no-bootstrap {
+
+	label {
+		font-weight: normal;
+	}
 
 	label input[type=radio] {
 		display: none;
@@ -100,13 +107,13 @@
 			text-align: center;
 			line-height: 18px;
 			position: absolute;
-			top: 0;
+			top: -3px;
 			left: 0;
 			right: 0;
 			bottom: 0;
 			font-family: 'Glyphicons Halflings';
-			content: "\e013";
-			font-size: 70%;
+			content: "\25cf";
+			font-size: 110%;
 		}
 	}
 }
@@ -220,6 +227,18 @@
 	}
 }
 
+tr.placeholder {
+	td {
+		background: #337ab7;
+	}
+}
+
+.dragged {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 2000;
+}
+
 /*****************************************************************************/
 /* Maps                                                                      */
 /*****************************************************************************/
@@ -248,4 +267,26 @@
 		&.color-red { background: $red; border-color: $red-dark; color: white; }
 		&.color-green { background: $green; border-color: $green-dark; color: white; }
 	}
+}
+
+/*****************************************************************************/
+/* Tabs                                                                      */
+/*****************************************************************************/
+
+.nav-tabs {
+	margin-bottom: 15px;
+
+	> li.active {
+		> a, a:hover, > a:focus {
+			background-color: #efefef;
+		}
+	}
+}
+
+/*****************************************************************************/
+/* Breadcrumb                                                                */
+/*****************************************************************************/
+
+.breadcrumb {
+	background-color: white;
 }

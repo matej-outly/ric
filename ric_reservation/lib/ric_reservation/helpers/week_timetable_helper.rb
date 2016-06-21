@@ -288,7 +288,7 @@ module RicReservation
 									item = week_timetable_find_item(items, day_idx, hour[:hour], row, col)
 									if !item.nil?
 										# Item
-										result += "			<td class=\"item #{item[:tags]} #{(!item[:tooltip].nil? ? "ttip" : "")}\" #{(!item[:tooltip].nil? ? 'data-tooltip="' + item[:tooltip] + '"' : "").html_safe} colspan=\"#{item[:width]}\">\n"
+										result += "			<td class=\"item #{item[:tags]}\" #{(!item[:tooltip].nil? ? "data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + item[:tooltip] + "\"" : "").html_safe} colspan=\"#{item[:width]}\">\n"
 										url = item[:path_callback] ? item[:path_callback].call(item[:object]) : nil
 										if url
 											result += "				<a href=\"#{url}\">#{item[:label]}</a>\n"
@@ -303,7 +303,7 @@ module RicReservation
 										if row == 0
 											url = (options[:empty_path_callback] ? options[:empty_path_callback].call(day[:date], "#{hour[:hour]}:#{((60/hour[:cols]).to_i * col).to_s.rjust(2, "0")}") : nil)
 											if url
-												result += "				<a href=\"#{url}\"><i class=\"icon-plus\"></i></a>\n"
+												result += "				<a href=\"#{url}\"><span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span></a>\n"
 											else
 												result += "				<div class=\"padding\"></div>\n"
 											end

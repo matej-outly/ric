@@ -21,35 +21,46 @@ module RicReservation
 				month_label = options[:month_label] ? options[:month_label] : I18n.t("views.calendar.period.month").upcase_first
 				
 				result = ""
+				
+				# Wrapper
 				result += "<div class=\"timetable-pagination\">\n"
+				
+				# Previous
 				result += "	<div class=\"prev\">\n"
 				if options[:page_bottom].nil? || page > options[:page_bottom]
 					params = {}
 					params[:period] = period if period != "week"
 					params[:page] = page-1 if page != 2
-					result += "		" + link_to("<i class=\"icon-left-open-big\"></i>".html_safe + prev_label, path_callback.call(params)) + "\n"
+					result += "		" + link_to("<span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span> ".html_safe + prev_label, path_callback.call(params), class: "btn btn-default btn-sm") + "\n"
 				end
 				result += "	</div>\n"
-				result += "	<div class=\"title\">\n"
+
+				# Middle
+				result += "	<div class=\"middle\">\n"
 				
 				# Period toggle
-				result += "		" + link_to(week_label, path_callback.call({}), class: (period == "week" ? "active" : "")) + "\n"
-				result += "		" + link_to(month_label, path_callback.call({period: "month"}), class: (period == "month" ? "active" : "")) + "\n"
-				
-				result += "		<br/>"
+				result += "		<div class=\"btn-group btn-group-sm\">"
+				result += "		" + link_to(week_label, path_callback.call({}), class: "btn btn-default " + (period == "week" ? "active" : "")) + "\n"
+				result += "		" + link_to(month_label, path_callback.call({period: "month"}), class: "btn btn-default " + (period == "month" ? "active" : "")) + "\n"
+				result += "		</div><br/>"
 				
 				# Date
-				result += "		#{I18n.l(from)} - #{I18n.l(to - 1.day)}\n"
+				result += "		<span class=\"label label-default\">#{I18n.l(from)} - #{I18n.l(to - 1.day)}</label>\n"
 
+				# Middle
 				result += "	</div>\n"
+
+				# Next
 				result += "	<div class=\"next\">\n"
 				if options[:page_top].nil? || page < options[:page_top]
 					params = {}
 					params[:period] = period if period != "week"
 					params[:page] = page+1 if page != 0
-					result += "		" + link_to((next_label + "<i class=\"icon-right-open-big\"></i>").html_safe, path_callback.call(params)) + "\n"
+					result += "		" + link_to((next_label + " <span class=\"glyphicon glyphicon-menu-right\" aria-hidden=\"true\"></span>").html_safe, path_callback.call(params), class: "btn btn-default btn-sm") + "\n"
 				end
 				result += "	</div>\n"
+
+				# Wrapper
 				result += "</div>\n"
 				
 				return result.html_safe

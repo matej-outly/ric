@@ -30,7 +30,7 @@ module RicPortal
 		#
 		# Header menu component
 		#
-		component RicAdmin::AdminHeaderMenuComponent
+		component RicAdmin::HeaderMenuComponent
 		
 		#
 		# Footer component
