@@ -41,7 +41,7 @@
 				if !dropdown.blank?
 					result += link_to(url, class: "dropdown-toggle", data: { toggle: "dropdown" }, aria: {haspopup: "true", expanded: "false" }, role: "button") do
 						result = ""
-						result += "<span class=\"glyphicon glyphicon-#{item[:icon]}\" aria-hidden=\"true\"></span> " if item[:icon]
+						result += RugBuilder::IconBuilder.render(item[:icon]) if item[:icon]
 						result += label
 						result += " <span class=\"caret\"></span>"
 						result.html_safe
@@ -49,7 +49,7 @@
 				else
 					result += link_to(url) do
 						result = ""
-						result += "<span class=\"glyphicon glyphicon-#{item[:icon]}\" aria-hidden=\"true\"></span> " if item[:icon]
+						result += RugBuilder::IconBuilder.render(item[:icon]) if item[:icon]
 						result += label
 						result.html_safe
 					end

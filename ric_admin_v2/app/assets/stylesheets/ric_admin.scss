@@ -5,6 +5,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
 /*****************************************************************************/
 /* Mixins                                                                    */
 /*****************************************************************************/
@@ -98,7 +101,7 @@ body {
 			}
 		}
 
-		.glyphicon {
+		.glyphicon, .fa {
 			margin-right: 5px;
 		}
 	}
@@ -150,7 +153,7 @@ body {
 				margin-right: 20px;
 				border-bottom: 1px solid #dddddd;
 
-				.glyphicon {
+				.glyphicon, .fa {
 					margin-left: 5px;
 					margin-right: 5px;
 				}
