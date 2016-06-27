@@ -9,6 +9,7 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 			t.string :kind
 
 			# Message
+			t.string :subject
 			t.text :message
 			t.string :url
 

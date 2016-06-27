@@ -2,6 +2,7 @@
 	<%= rug_show_table_for(@notification_template, { 
 		key: :enum,
 		description: :string,
+		subject: :string,
 		message: { type: :text, truncate: false }
 	}) %>
 <% end %>

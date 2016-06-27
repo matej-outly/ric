@@ -1,6 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@notifications, { 
 		created_at: :datetime,
+		subject: :string,
 		message: { type: :text, strip_tags: true },
 		kind: :enum,
 		url: :string,

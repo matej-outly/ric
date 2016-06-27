@@ -10,6 +10,7 @@ class CreateRicNotificationNotificationTemplates < ActiveRecord::Migration
 			t.string :description
 
 			# Message
+			t.string :subject 
 			t.text :message
 			
 		end

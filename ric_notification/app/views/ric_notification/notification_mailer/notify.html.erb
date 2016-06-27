@@ -1,5 +1,5 @@
 <p>
-	Zpráva: <strong><%= @notification.message %></strong><br/>
+	Zpráva: <strong><%= @notification.message.html_safe %></strong><br/>
 	Typ zprávy <strong><%= @notification.kind_obj.label %></strong><br/>
 	<% if !@notification.url.blank? %>
 		Odkaz: <strong><a href="<%= @notification.url %>"><%= @notification.url %><a></strong><br/>

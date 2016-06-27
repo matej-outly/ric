@@ -89,13 +89,15 @@ module RicNotification
 								notification_template = RicNotification.notification_template_model.where(key: message_text.to_s).first
 								if notification_template
 
-									# Message from template
+									# Message and subject from template
 									message_text = notification_template.message
+									subject = notification_template.subject
 
 								else
 
 									# Static message
 									message_text = I18n.t("notifications.automatic_messages.#{message_text.to_s}", default: "")
+									subject = nil
 
 								end
 							end
@@ -105,7 +107,8 @@ module RicNotification
 
 							# Interpret params and store it in DB
 							notification.message = interpret_params(message_text, message_params)
-							
+							notification.subject = subject
+
 							# *************************************************
 							# Kind
 							# *************************************************

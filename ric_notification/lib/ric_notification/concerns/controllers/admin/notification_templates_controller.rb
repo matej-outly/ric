@@ -84,6 +84,7 @@ module RicNotification
 					def notification_template_params
 						params.require(:notification_template).permit(
 							:description,
+							:subject,
 							:message,
 						)
 					end

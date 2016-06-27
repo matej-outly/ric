@@ -20,7 +20,8 @@ module RicNotification
 				def notify(notification, receiver)
 					@notification = notification
 					@receiver = receiver
-					mail(from: RicNotification.mailer_sender, to: receiver.email, subject: I18n.t("activerecord.mailers.ric_notification.notification.notify.subject", url: main_app.root_url))
+					subject = !@notification.subject.blank? ? @notification.subject : I18n.t("activerecord.mailers.ric_notification.notification.notify.subject", url: main_app.root_url)
+					mail(from: RicNotification.mailer_sender, to: receiver.email, subject: subject)
 				end
 
 			end
