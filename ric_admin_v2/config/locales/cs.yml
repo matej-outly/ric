@@ -155,6 +155,10 @@ cs:
       datetime:
         date: Datum
         time: Čas
+      datetime_range:
+        date: Datum
+        from: Začátek
+        to: Konec
       duration:
         days: Dní
         hours: Hodin
