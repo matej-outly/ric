@@ -68,6 +68,9 @@ module RicPaymentGopay
 									  status == RicPaymentGopay::Backend::Payment::STATUS_REFUNDED ||
 									  status == RicPaymentGopay::Backend::Payment::STATUS_PARTIALLY_REFUNDED # Payment canceled, timeout or refunded
 
+									# Log
+									Rails.logger.info("ric_payment_gopay/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{@payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{@payment_subject.payment_id.to_s}: Canceled")
+										
 									# Cancel payment
 									@payment_subject.cancel_payment
 

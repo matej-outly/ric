@@ -1,0 +1,6 @@
+<%= form_tag(RicPaymentGopay::Backend::Config.gate_url) do %>
+	<% @payment.query_data.each do |key, value| %>
+		<%= hidden_field_tag(key.to_sym, value) %>
+	<% end %>
+	<%= submit_tag "Zaplatit" %>
+<% end %>
