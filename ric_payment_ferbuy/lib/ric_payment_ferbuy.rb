@@ -12,6 +12,7 @@
 # Engines
 require "ric_payment_ferbuy/admin_engine"
 require "ric_payment_ferbuy/public_engine"
+require "ric_payment_ferbuy/gateway_engine"
 
 # Backend
 require 'ric_payment_ferbuy/backend'

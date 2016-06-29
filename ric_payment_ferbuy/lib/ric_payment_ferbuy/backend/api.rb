@@ -13,17 +13,17 @@ require "singleton"
 require "rest-client"
 
 # Common request, response and other methods
-require "ric_payment_ferbuy/backend/data_api/request"
-require "ric_payment_ferbuy/backend/data_api/response"
-require "ric_payment_ferbuy/backend/data_api/checksum"
+require "ric_payment_ferbuy/backend/api/request"
+require "ric_payment_ferbuy/backend/api/response"
+require "ric_payment_ferbuy/backend/api/checksum"
 
 # Request and response for transaction operation
-require "ric_payment_ferbuy/backend/data_api/transaction/request"
-require "ric_payment_ferbuy/backend/data_api/transaction/response"
+require "ric_payment_ferbuy/backend/api/transaction/request"
+require "ric_payment_ferbuy/backend/api/transaction/response"
 
 # Request and response for mark_order_shipped operation
-require "ric_payment_ferbuy/backend/data_api/mark_order_shipped/request"
-require "ric_payment_ferbuy/backend/data_api/mark_order_shipped/response"
+require "ric_payment_ferbuy/backend/api/mark_order_shipped/request"
+require "ric_payment_ferbuy/backend/api/mark_order_shipped/response"
 
 module RicPaymentFerbuy
 	class Backend

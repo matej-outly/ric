@@ -237,17 +237,18 @@ module RicPayment
 				end
 
 				#
-				# Customer first name for payment gateway
+				# Customer name for payment gateway
 				#
-				def payment_customer_firstname
-					return nil # TODO customer name should be of type Name
-				end
-
-				#
-				# Customer last name for payment gateway
-				#
-				def payment_customer_lastname
-					return self.customer_name
+				def payment_customer_name
+					if self.customer_name.is_a?(String)
+						parsed_name = self.class.parse_name(self.customer_name)
+						return {
+							firstname: parsed_name[1],
+							lastname: parsed_name[2],
+						}
+					else
+						return self.customer_name # We expect hash containing :firstname and :lastname keys
+					end
 				end
 
 				#
@@ -268,7 +269,17 @@ module RicPayment
 				# Customer address (street, number, city, zipcode) for payment gateway
 				#
 				def payment_customer_address
-					return self.billing_address
+					if self.billing_address.is_a?(String)
+						parsed_address = self.class.parse_address(self.billing_address)
+						return {
+							street: parsed_address[3],
+							number: parsed_address[4],
+							city: parsed_address[2],
+							zipcode: parsed_address[1]
+						}
+					else
+						return self.billing_address # We expect hash containing :street, :number, :city and :zipcode keys
+					end
 				end
 
 			end

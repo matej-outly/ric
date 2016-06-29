@@ -97,7 +97,7 @@ module RicPaymentFerbuy
 				self.value = amount.to_f / 100
 			end
 			def amount
-				return (self.value * 100).to_i
+				return (@value * 100).to_i
 			end
 
 			#
@@ -348,8 +348,10 @@ module RicPaymentFerbuy
 				self.currency = Payment.locale_to_currency(payment_subject.payment_currency)
 				self.order_number = payment_subject.id
 				
-				self.first_name = payment_subject.payment_customer_firstname
-				self.last_name = payment_subject.payment_customer_lastname
+				if !payment_subject.payment_customer_name.nil?
+					self.first_name = payment_subject.payment_customer_name[:firstname]
+					self.last_name = payment_subject.payment_customer_name[:lastname]
+				end
 				if !payment_subject.payment_customer_address.nil?
 					self.address = payment_subject.payment_customer_address[:street] + " " + payment_subject.payment_customer_address[:number]
 					self.postal_code = payment_subject.payment_customer_address[:zipcode]

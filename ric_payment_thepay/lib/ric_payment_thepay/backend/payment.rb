@@ -370,11 +370,13 @@ module RicPaymentThepay
 
 				# Customer data BUGGY
 				#customer_object = CustomerData::Customer.new({
-				#	first_name: payment_subject.payment_customer_firstname,
-				#	last_name: payment_subject.payment_customer_lastname,
 				#	email: payment_subject.payment_customer_email,
 				#	phone: payment_subject.payment_customer_phone,
 				#})
+				#if !payment_subject.payment_customer_name.nil?
+				#	customer_object.first_name = payment_subject.payment_customer_name[:firstname]
+				#	customer_object.last_name = payment_subject.payment_customer_name[:lastname]
+				#end
 				#if !payment_subject.payment_customer_address.nil?
 				#	customer_object.address = payment_subject.payment_customer_address[:street] + " " + payment_subject.payment_customer_address[:number]
 				#	customer_object.city = payment_subject.payment_customer_address[:city]

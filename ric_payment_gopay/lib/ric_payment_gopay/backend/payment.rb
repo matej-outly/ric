@@ -147,8 +147,8 @@ module RicPaymentGopay
 				self.order_number = payment_subject.id
 				self.channel = Payment.payment_type_to_channel(payment_subject.payment_type)
 				self.customer = OpenStruct.new({
-					firstname: payment_subject.payment_customer_firstname,
-					lastname: payment_subject.payment_customer_lastname,
+					firstname: payment_subject.payment_customer_name ? payment_subject.payment_customer_name[:firstname] : nil,
+					lastname: payment_subject.payment_customer_name ? payment_subject.payment_customer_name[:lastname] : nil,
 					email: payment_subject.payment_customer_email,
 				})
 				return self
