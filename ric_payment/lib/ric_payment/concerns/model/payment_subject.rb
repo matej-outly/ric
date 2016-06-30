@@ -111,7 +111,7 @@ module RicPayment
 					self.paid_at = Time.current
 
 					# Delete payment id
-					self.payment_id = nil
+					#self.payment_id = nil
 
 					# Save
 					self.override_accept_terms

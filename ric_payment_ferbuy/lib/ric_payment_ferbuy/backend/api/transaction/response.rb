@@ -23,9 +23,17 @@ module RicPaymentFerbuy
 					#
 					# Constructor
 					#
-					def initialize(data = {})
-						super(data)
-						#self.status = data[:state].to_i if data[:state] # TODO
+					def initialize(request, data = {})
+						super(request, data)
+						
+						# Read status
+						if  data["message"] && 
+							data["message"][request.transaction_id.to_s] &&
+							data["message"][request.transaction_id.to_s].length > 0 && 
+							data["message"][request.transaction_id.to_s].last["status"]
+							
+							self.status = data["message"][request.transaction_id.to_s].last["status"].to_i
+						end
 					end
 
 				end

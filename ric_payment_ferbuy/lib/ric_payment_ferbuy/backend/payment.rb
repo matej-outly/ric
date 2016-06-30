@@ -62,7 +62,7 @@ module RicPaymentFerbuy
 			STATUS_ERROR = 500
 			
 			#
-			# Transaction order fulfilled - ???
+			# Transaction order fulfilled - set when order is marked as shipped
 			#
 			STATUS_ORDER_FULFILLED = 600
 			

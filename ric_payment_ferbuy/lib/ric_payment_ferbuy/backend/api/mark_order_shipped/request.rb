@@ -19,7 +19,7 @@ module RicPaymentFerbuy
 					# Create response object matching the specific request
 					#
 					def response_factory(data)
-						return Response.new(data)
+						return Response.new(self, data)
 					end
 
 					#

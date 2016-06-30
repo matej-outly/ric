@@ -64,14 +64,7 @@ module RicPaymentFerbuy
 									#status = @backend.get_payment_state(payment)
 									status = payment.status
 									
-									if payment_subject.paid? && status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL
-
-										# Log
-										Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success")		
-
-										# TODO
-
-									elsif !payment_subject.paid?
+									if !payment_subject.paid?
 									
 										if status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL || 
 										   status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL_AWAITING # Payment sucessfully finished
@@ -82,10 +75,14 @@ module RicPaymentFerbuy
 												# Log
 												Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success")
 												
+												# Store payment ID
+												payment_id = payment_subject.payment_id
+
 												# Pay
 												payment_subject.pay
 
-												# TODO Mark order shipped
+												# Mark order shipped
+												RicPaymentFerbuy::Backend::Api.instance.mark_order_shipped(payment_id, "OWN", "OWN")
 												
 											end
 

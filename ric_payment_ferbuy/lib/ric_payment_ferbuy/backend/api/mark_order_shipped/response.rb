@@ -18,8 +18,8 @@ module RicPaymentFerbuy
 					#
 					# Constructor
 					#
-					def initialize(data = {})
-						super(data)
+					def initialize(request, data = {})
+						super(request, data)
 					end
 
 				end

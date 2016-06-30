@@ -36,7 +36,7 @@ module RicPaymentFerbuy
 			def call(request)
 				
 				begin
-					response = RestClient.post(URI.escape(Config.api_url + request.operation))
+					response = RestClient.post(URI.escape(Config.api_url + request.operation), request.data)
 				rescue RestClient::Unauthorized, Exception
 					return nil
 				end
@@ -73,7 +73,7 @@ module RicPaymentFerbuy
 			# Mark transaction as shipped
 			#
 			def mark_order_shipped(transaction_id, postal_company, tracking_number)
-				request = Transaction::Request.new(
+				request = MarkOrderShipped::Request.new(
 					transaction_id: transaction_id,
 					postal_company: postal_company,
 					tracking_number: tracking_number

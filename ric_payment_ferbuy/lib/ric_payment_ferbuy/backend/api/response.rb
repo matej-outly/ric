@@ -26,7 +26,7 @@ module RicPaymentFerbuy
 				#
 				# Constructor
 				#
-				def initialize(data = {})
+				def initialize(request, data = {})
 					self.code = data["code"].to_i if data["code"]
 				end
 
