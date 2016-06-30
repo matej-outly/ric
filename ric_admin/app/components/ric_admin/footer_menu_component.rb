@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-class RicAdmin::AdminFooterMenuComponent < RugController::Component
+class RicAdmin::FooterMenuComponent < RugController::Component
 
 	def control
 	end

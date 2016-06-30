@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-class RicAdmin::AdminTitleComponent < RugController::Component
+class RicAdmin::TitleComponent < RugController::Component
 
 	def control
 	end

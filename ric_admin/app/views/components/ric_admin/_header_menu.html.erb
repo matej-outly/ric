@@ -51,7 +51,7 @@
 
 <div class="menu">
 	<ul>
-		<% @admin_header_menu.config(:items).each do |item| %>
+		<% @header_menu.config(:items).each do |item| %>
 			<% dropdown = "" %>
 			<% if item[:dropdown] %>
 				<% dropdown += "<div class=\"dropdown\"><ul>\n" %>

@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-class RicAdmin::AdminHeaderLogoComponent < RugController::Component
+class RicAdmin::HeaderMenuComponent < RugController::Component
 
 	def control
 	end
