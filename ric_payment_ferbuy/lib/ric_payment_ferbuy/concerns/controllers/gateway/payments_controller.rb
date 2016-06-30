@@ -37,27 +37,21 @@ module RicPaymentFerbuy
 						# Create payment object
 						payment = @backend.payment_from_params(params)
 
-						# Verify if returned checksum is correct
-						if !payment.nil? && payment.verify_notification_checksum
+						# Check if payment found
+						if !payment.nil?
 
-							# Get order based on order and payment ID
-							payment_subject = RicPayment.payment_subject_model.where(id: payment.order_number).first
+							# Verify if returned checksum is correct
+							if payment.verify_notification_checksum
 
-							if !payment_subject.nil?
+								# Get order based on order
+								payment_subject = RicPayment.payment_subject_model.where(id: payment.order_number).first
 
-								# Save payment ID into the payment subject if not yet associated
-								if !payment_subject.payment_in_progress?
-									payment_subject.initialize_payment(payment)
-								end
+								if !payment_subject.nil?
 
-								if payment_subject.paid? && payment.status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL
-
-									# Log
-									Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success")		
-
-									# TODO
-
-								elsif !payment_subject.paid?
+									# Save payment ID into the payment subject if not yet associated
+									if !payment_subject.payment_in_progress?
+										payment_subject.initialize_payment(payment)
+									end
 
 									# Now we can trust payment data (except payment status)
 
@@ -65,58 +59,74 @@ module RicPaymentFerbuy
 									#status = @backend.get_payment_state(payment)
 									status = payment.status
 									
-									if status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL_AWAITING # Payment sucessfully finished
-
-										# In transaction
-										payment_subject.transaction do
-
-											# Log
-											Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success awaiting")
-											
-											# Pay
-											payment_subject.pay
-
-											# TODO Mark order shipped
-											
-										end
-
-									elsif status == RicPaymentFerbuy::Backend::Payment::STATUS_FAILED || 
-										  status == RicPaymentFerbuy::Backend::Payment::STATUS_TIMED_OUT ||
-										  status == RicPaymentFerbuy::Backend::Payment::STATUS_REFUND ||
-										  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_CONSUMER ||
-										  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_MERCHANT # Payment canceled, timeout or refunded
+									if payment_subject.paid? && status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL
 
 										# Log
-										Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Canceled")
-											
-										# Cancel payment
-										payment_subject.cancel_payment
+										Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success")		
 
-									else # Unknown state
+										# TODO
+
+									elsif !payment_subject.paid?
+									
+										if status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL_AWAITING # Payment sucessfully finished
+
+											# In transaction
+											payment_subject.transaction do
+
+												# Log
+												Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success awaiting")
+												
+												# Pay
+												payment_subject.pay
+
+												# TODO Mark order shipped
+												
+											end
+
+										elsif status == RicPaymentFerbuy::Backend::Payment::STATUS_FAILED || 
+											  status == RicPaymentFerbuy::Backend::Payment::STATUS_TIMED_OUT ||
+											  status == RicPaymentFerbuy::Backend::Payment::STATUS_REFUND ||
+											  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_CONSUMER ||
+											  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_MERCHANT # Payment canceled, timeout or refunded
+
+											# Log
+											Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Canceled")
+												
+											# Cancel payment
+											payment_subject.cancel_payment
+
+										else # Unknown state
+
+											# Error
+											Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Unknown state")
+
+										end
+
+									else
 
 										# Error
-										Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Unknown state")
+										Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Already paid")
 
 									end
-
+								
 								else
 
 									# Error
-									Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Already paid")
+									Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment.order_number.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment.id.to_s}: Payment subject not found")
 
 								end
-							
+
 							else
 
 								# Error
-								Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment.order_number.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment.id.to_s}: Payment subject not found")
+								Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.payment_id=#{payment.id.to_s}: Payment not verified")
 
 							end
 
 						else
 
 							# Error
-							Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.payment_id=#{payment.id.to_s}: Payment not verified")
+							Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: Payment not found")
 
 						end
 

@@ -1,3 +1,7 @@
+//
+// TODO move to merchant helper!!!
+//
+
 function payment_pay(options) 
 {
 	// Get create payment URL

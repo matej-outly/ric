@@ -124,8 +124,8 @@ module RicPaymentThepay
 				return url
 			end
 
-			def thepay_radio_merchant(params, options = {})
-				return MerchantHelper.thepay_radio_merchant(params, options)
+			def thepay_radio_merchant(payment, options = {})
+				return MerchantHelper.thepay_radio_merchant(payment, options)
 			end
 
 			def thepay_radio_merchant_check(params)

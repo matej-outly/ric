@@ -92,8 +92,8 @@ module RicPaymentFerbuy
 					#
 					def set_backend
 						@backend = RicPaymentFerbuy::Backend.instance
-						@backend.success_url = ric_payment_public.success_payment_url(@payment_subject)
-						@backend.failed_url = ric_payment_public.failed_payment_url(@payment_subject)
+						@backend.success_url = ric_payment_ferbuy_public.success_payment_url(@payment_subject)
+						@backend.failed_url = ric_payment_ferbuy_public.failed_payment_url(@payment_subject)
 					end
 
 				end

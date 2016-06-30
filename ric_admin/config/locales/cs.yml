@@ -83,6 +83,7 @@ cs:
       register: "Registrovat"
       order: "Dokončit objednávku"
       send: "Odeslat"
+      pay: "Zaplatit"
 
   general:
     back: "zpět"

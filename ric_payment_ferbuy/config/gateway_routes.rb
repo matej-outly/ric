@@ -13,7 +13,8 @@ RicPaymentFerbuy::GatewayEngine.routes.draw do
 
 	# Payments
 	resources :payments, controller: "gateway_payments", only: [] do
-		member do
+		collection do
+			get "notify"
 			post "notify"
 		end
 	end
