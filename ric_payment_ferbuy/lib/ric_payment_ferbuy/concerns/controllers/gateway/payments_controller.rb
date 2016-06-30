@@ -68,13 +68,14 @@ module RicPaymentFerbuy
 
 									elsif !payment_subject.paid?
 									
-										if status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL_AWAITING # Payment sucessfully finished
-
+										if status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL || 
+										   status == RicPaymentFerbuy::Backend::Payment::STATUS_SUCCESSFUL_AWAITING # Payment sucessfully finished
+											
 											# In transaction
 											payment_subject.transaction do
 
 												# Log
-												Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success awaiting")
+												Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Success")
 												
 												# Pay
 												payment_subject.pay
@@ -131,8 +132,11 @@ module RicPaymentFerbuy
 						end
 
 						# Send result code 200 to acknowledge status change
-						head :ok
-						render :text => "#{payment.transaction_id}.#{payment.status}" if !payment.nil?
+						if !payment.nil?
+							render :text => "#{payment.transaction_id}.#{payment.status}"
+						else
+							head :ok
+						end
 					end
 
 				protected
