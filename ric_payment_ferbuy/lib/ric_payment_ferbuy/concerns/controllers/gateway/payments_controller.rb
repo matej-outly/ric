@@ -90,10 +90,11 @@ module RicPaymentFerbuy
 											  status == RicPaymentFerbuy::Backend::Payment::STATUS_TIMED_OUT ||
 											  status == RicPaymentFerbuy::Backend::Payment::STATUS_REFUND ||
 											  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_CONSUMER ||
-											  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_MERCHANT # Payment canceled, timeout or refunded
+											  status == RicPaymentFerbuy::Backend::Payment::STATUS_CANCELED_MERCHANT || 
+											  status == RicPaymentFerbuy::Backend::Payment::STATUS_ERROR # Payment canceled, timeout, refunded or error
 
 											# Log
-											Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Canceled")
+											Rails.logger.info("ric_payment_ferbuy/gateway_payments#notify: #{RicPayment.payment_subject_model.to_s}.id=#{payment_subject.id.to_s},#{RicPayment.payment_subject_model.to_s}.payment_id=#{payment_subject.payment_id.to_s}: Canceled or error")
 												
 											# Cancel payment
 											payment_subject.cancel_payment
