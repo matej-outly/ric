@@ -52,7 +52,7 @@ module RicPaymentFerbuy
 			def self.notification(data, options = {})
 				result = []
 				result << Config.env
-				QUERY_ARGS.each do |key|
+				NOTIFICATION_ARGS.each do |key|
 					if data[key].blank?
 						return nil
 					end

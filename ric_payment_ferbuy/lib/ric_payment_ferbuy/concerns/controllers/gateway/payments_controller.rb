@@ -27,6 +27,11 @@ module RicPaymentFerbuy
 						#
 						before_action :set_backend, only: [:notify]
 
+						#
+						# No token verification
+						#
+						skip_before_action :verify_authenticity_token
+
 					end
 
 					#
