@@ -1,13 +1,10 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 
-	<%
-		columns = RugBuilder::TableBuilder::Columns.new({ 
-			schedule_date: :date,
-			schedule_formatted_time: :string,
-			name: :string
-		})
-	%>
-	<%= rug_show_table_for(@event, columns) %>
+	<%= rug_show_table_for(@event, { 
+		schedule_date: :date,
+		schedule_formatted_time: :string,
+		name: :string
+	}) %>
 
 	<%= rug_form_for(@reservation, url: ric_reservation_admin.create_event_reservation_path(id: @event.id, schedule_date: @event.schedule_date)) do |f| %>
 		<%= f.hidden_field :owner_id %>

@@ -1,10 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	
 	<%
-		columns = RugBuilder::TableBuilder::Columns.new({ 
-			schedule_date: :date,
-			schedule_formatted_time: :string,
-		})
+		columns = rug_columns
+		columns.add_column_by_type(:schedule_date, :date)
+		columns.add_column_by_type(:schedule_formatted_time, :string)
 		columns.add_column_by_block(:name) do |event|
 			link_to event.name, ric_reservation_admin.event_path(event)
 		end

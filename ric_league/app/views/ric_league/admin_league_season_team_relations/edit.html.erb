@@ -1,7 +1,9 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_form_for(@league_season, url: league_season_team_relation_path(@league_season)) do |f| %>
 		<%
-			columns = RugBuilder::TableBuilder::Columns.new(name: :string, key: :string)
+			columns = rug_columns
+			columns.add_column_by_type(:name, :string)
+			columns.add_column_by_type(:key, :string)
 			columns.add_column_by_block(:checkbox, column_label: false) do |team|
 				check_box_tag "#{@league_season.class.model_name.param_key}[teams][#{team.id.to_s}]", "1", (@league_season.team_ids.include?(team.id))
 			end

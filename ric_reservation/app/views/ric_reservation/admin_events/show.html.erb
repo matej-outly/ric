@@ -1,15 +1,14 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	
 	<%
-		columns = RugBuilder::TableBuilder::Columns.new({ 
-			resource: { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" },
-			name: :string,
-			color: :enum,
-			formatted_time: :string,
-			period: :enum,
-			capacity: :integer,
-			owner_reservation_limit: :integer,
-		})
+		columns = rug_columns
+		columns.add_column_by_type(:resource, { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" })
+		columns.add_column_by_type(:name, :string)
+		columns.add_column_by_type(:color, :enum)
+		columns.add_column_by_type(:formatted_time, :string)
+		columns.add_column_by_type(:period, :enum)
+		columns.add_column_by_type(:capacity, :integer)
+		columns.add_column_by_type(:owner_reservation_limit, :integer)
 		@event.config(:states).reverse_each_with_index do |state_spec, index|
 			columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :time) if index != 0 && index != @event.config(:states).length
 		end
@@ -18,10 +17,9 @@
 
 	<h3><%= t("headers.ric_reservation.admin_events.scheduled_events") %></h3>
 	<%
-		columns = RugBuilder::TableBuilder::Columns.new({ 
-			schedule_date: :date,
-			schedule_formatted_time: :string
-		})
+		columns = rug_columns
+		columns.add_column_by_type(:schedule_date, :date)
+		columns.add_column_by_type(:schedule_formatted_time, :string)
 		columns.add_column_by_block(:capacity) do |scheduled_event|
 			if !scheduled_event.tmp_canceled?
 				"#{scheduled_event.reservations.above_line.count}/#{ scheduled_event.capacity}"

@@ -35,7 +35,7 @@
 		</div>
 		<div class="tab-content">
 			<% 
-				columns = RugBuilder::TableBuilder::Columns.new 
+				columns = rug_columns 
 				columns.add_column_by_block(:product_name) do |order_item|
 					order_item.product_name + (order_item.sub_product_names ? " + " + order_item.sub_product_names.join(", ") : "")
 				end

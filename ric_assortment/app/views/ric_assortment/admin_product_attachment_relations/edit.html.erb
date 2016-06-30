@@ -3,7 +3,8 @@
 	<%= rug_form_for(@product, url: product_attachment_relation_path(@product)) do |f| %>
 
 		<%
-			columns = RugBuilder::TableBuilder::Columns.new(title: :string)
+			columns = rug_columns
+			columns.add_column_by_type(:title, :string)
 			columns.add_column_by_block(:checkbox, column_label: false) do |product_attachment|
 				check_box_tag "product[product_attachments][#{product_attachment.id.to_s}]", "1", (@product.product_attachment_ids.include?(product_attachment.id))
 			end

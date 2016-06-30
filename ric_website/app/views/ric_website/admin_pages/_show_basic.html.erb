@@ -1,5 +1,5 @@
 <%
-	columns = RugBuilder::TableBuilder::Columns.new
+	columns = rug_columns
 	columns.add_column_by_type(:title, :string)
 	columns.add_column_by_type(:key, :enum) if RicWebsite.page_model.config(:enable_key)
 	columns.add_column_by_block(:nature) do |page|
