@@ -40,23 +40,23 @@
 			}
 		}
 	
-		&.index_table {
+		&.index-table {
 
 			page-break-before: always;
 
 			tr {
 				
-				&.odd_stripe {
+				&.odd-stripe {
 					/* background-color: ... */
 				}
 
-				&.even_stripe {
+				&.even-stripe {
 					background-color: #e5e5e5;
 				}
 				
 			}
 
-			&.first_column_not_highlighted tr td:first-child {
+			&.first-column-not-highlighted tr td:first-child {
 				font-weight: normal;
 			}
 		}
