@@ -360,7 +360,7 @@ module RicPaymentFerbuy
 				end
 				self.mobile_phone = payment_subject.payment_customer_phone
 				self.email = payment_subject.payment_customer_email
-				self.language = "cs_CZ" # TODO
+				self.language = "cz" # TODO
 				
 				# Shopping cart
 				cart_object = ShoppingCart::Cart.new({
