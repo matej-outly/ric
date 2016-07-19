@@ -6,4 +6,5 @@
 	<%= f.dropzone_many_row :text_attachments, :file, :text_attachments_path, :text_attachment_path, RicWebsite.text_attachment_model.all.order(id: :asc), RicWebsite.text_attachment_model %>
 
 	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
 <% end %>

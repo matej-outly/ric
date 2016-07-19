@@ -1,3 +1,6 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
+	<%= rug_show_table_for(@notification_template, { 
+		key: :enum
+	}) %>
 	<%= render partial: "form" %>
 <% end %>

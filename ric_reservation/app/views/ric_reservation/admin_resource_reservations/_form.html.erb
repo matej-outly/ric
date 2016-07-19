@@ -6,4 +6,5 @@
 	<%= f.time_picker_row :time_to %>
 	<%= f.text_input_row :name %>
 	<%= f.primary_button_row :submit, label: (@reservation.new_record? ? t("helpers.submit.reserve") : nil) %>
+	<%= f.back_link_button_row %>
 <% end %>
