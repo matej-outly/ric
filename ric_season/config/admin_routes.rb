@@ -16,6 +16,9 @@ RicSeason::AdminEngine.routes.draw do
 		collection do
 			get "search"
 		end
+		member do
+			put "make_current"
+		end
 	end
 
 end

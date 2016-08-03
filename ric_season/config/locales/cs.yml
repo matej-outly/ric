@@ -9,6 +9,7 @@ cs:
         create: "Nová sezóna"
         edit: "Upravit sezónu"
         update: "Upravit sezónu"
+        make_current: "Nastavit sezónu jako aktuální"
         destroy: "Smazat sezónu"
 
   activerecord:
@@ -29,6 +30,7 @@ cs:
         ric_season/season:
           create: Sezóna byla úspěšně vytvořena.
           update: Sezóna byla úspěšně uložena.
+          make_current: Sezóna byla úspěšně nastavena jako aktuální.
           destroy: Sezóna byla úspěšně smazána.
     errors:
       models:

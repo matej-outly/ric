@@ -8,5 +8,7 @@
 		show: :season_path,
 		edit: :edit_season_path,
 		destroy: :season_path
+	}, actions: {
+		make_current: { label: "", icon: "thumb-tack", path: "ric_season_admin.make_current_season_path", method: "put", show_if: { |season| season.current != true } }
 	}, summary: true ) %>
 <% end %>

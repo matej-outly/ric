@@ -25,7 +25,7 @@ module RicSeason
 						#
 						# Set season before some actions
 						#
-						before_action :set_season, only: [:show, :edit, :update, :destroy]
+						before_action :set_season, only: [:show, :edit, :update, :make_current, :destroy]
 
 					end
 
@@ -102,6 +102,18 @@ module RicSeason
 								format.html { render "edit" }
 								format.json { render json: @season.errors }
 							end
+						end
+					end
+
+					#
+					# Make current action
+					#
+					def make_current
+						@season.current = true
+						@season.save
+						respond_to do |format|
+							format.html { redirect_to ric_season_admin.seasons_path, notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.make_current") }
+							format.json { render json: @season.id }
 						end
 					end
 
