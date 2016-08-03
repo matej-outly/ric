@@ -276,9 +276,12 @@ tr.placeholder {
 .nav-tabs {
 	margin-bottom: 15px;
 
-	> li.active {
-		> a, a:hover, > a:focus {
-			background-color: #efefef;
+	> li {
+		margin-bottom: -2px;
+		&.active {
+			> a, a:hover, > a:focus {
+				background-color: #efefef;
+			}
 		}
 	}
 }
