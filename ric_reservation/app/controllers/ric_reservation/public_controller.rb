@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicReservation
-	class PublicController < RicPortal::ApplicationController
+	class PublicController < ::ApplicationController
 	end
 end
