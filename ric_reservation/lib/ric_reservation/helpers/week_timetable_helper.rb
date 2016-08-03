@@ -97,54 +97,75 @@ module RicReservation
 				minute_step = (60 / cols_in_hour).round # How many minutes are in one column
 				data.each do |item|
 
-					if !item.respond_to?(:tmp_canceled?) || !item.tmp_canceled?
-					
-						from_hour = item.schedule_from.strftime("%k").to_i
-						from_minute = item.schedule_from.strftime("%M").to_i
+					# Item is canceled => do not display
+					next if item.respond_to?(:tmp_canceled?) && item.tmp_canceled?
 
-						to_hour = item.schedule_to.strftime("%k").to_i
-						to_minute = item.schedule_to.strftime("%M").to_i		
+					from_hour = item.schedule_from.strftime("%k").to_i
+					from_minute = item.schedule_from.strftime("%M").to_i
 
-						# Find closest "from" column (in "from" hour)
-						from_col = 0
-						while (from_col * minute_step) <= from_minute
-							from_col += 1
-						end
-						from_col -= 1
+					to_hour = item.schedule_to.strftime("%k").to_i
+					to_minute = item.schedule_to.strftime("%M").to_i
 
-						# Find closest "to" column (in "to" hour)
-						to_col = 0
-						while (to_col * minute_step) < to_minute
-							to_col += 1
-						end
-						to_col -= 1
-
-						# Width (to end of first hour)    + (whole hours between)                      + (last hour)
-						width = (cols_in_hour - from_col) + (cols_in_hour * (to_hour - from_hour - 1)) + (to_col + 1)
-
-						# Tags
-						if tags_callback
-							tags = tags_callback.call(item, options)
-						else
-							tags = []
-						end
-						tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
-						tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
-						tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?
-
-						items << {
-							day: item.schedule_from.to_date.cwday - 1,
-							hour: from_hour,
-							col: from_col,
-							width: width,
-							label: label_callback.call(item, options).html_safe,
-							tags: tags.join(" "),
-							tooltip: tooltip_callback.call(item, options),
-							path_callback: path_callback,
-							object: item
-						}
-
+					# "from" minute correction to meet exactly the minute step
+					if (from_minute % minute_step) < (minute_step / 2)
+						from_minute = from_minute - (from_minute % minute_step)
+					else
+						from_minute = from_minute + minute_step - (from_minute % minute_step)
 					end
+					if from_minute >= 60
+						from_minute -= 60
+						from_hour += 1
+					end
+
+					# "to" minute correction to meet exactly the minute step
+					if (to_minute % minute_step) < (minute_step / 2)
+						to_minute = to_minute - (to_minute % minute_step)
+					else
+						to_minute = to_minute + minute_step - (to_minute % minute_step)
+					end
+					if to_minute >= 60
+						to_minute -= 60
+						to_hour += 1
+					end
+
+					# Find closest "from" column (in "from" hour)
+					from_col = 0
+					while (from_col * minute_step) <= from_minute
+						from_col += 1
+					end
+					from_col -= 1
+
+					# Find closest "to" column (in "to" hour)
+					to_col = 0
+					while (to_col * minute_step) < to_minute
+						to_col += 1
+					end
+					to_col -= 1
+
+					# Width (to end of first hour)    + (whole hours between)                      + (last hour)
+					width = (cols_in_hour - from_col) + (cols_in_hour * (to_hour - from_hour - 1)) + (to_col + 1)
+
+					# Tags
+					if tags_callback
+						tags = tags_callback.call(item, options)
+					else
+						tags = []
+					end
+					tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
+					tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
+					tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?
+
+					items << {
+						day: item.schedule_from.to_date.cwday - 1,
+						hour: from_hour,
+						col: from_col,
+						width: width,
+						label: label_callback.call(item, options).html_safe,
+						tags: tags.join(" "),
+						tooltip: tooltip_callback.call(item, options),
+						path_callback: path_callback,
+						object: item
+					}
 
 				end
 
