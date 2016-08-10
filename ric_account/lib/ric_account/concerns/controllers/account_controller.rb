@@ -33,7 +33,7 @@ module RicAccount
 
 				def user_update
 					if @user.update(user_params)
-						redirect_to account_user_path, notice: I18n.t("activerecord.notices.models.account.user_update")
+						redirect_to account_user_path, notice: I18n.t("activerecord.notices.models.ric_account/account.user_update")
 					else
 						render "user"
 					end
@@ -45,7 +45,7 @@ module RicAccount
 				def password_update
 					if @user.update_with_password(password_params)
 						sign_in @user, :bypass => true
-						redirect_to account_user_path, notice: I18n.t("activerecord.notices.models.account.password_update")
+						redirect_to account_user_path, notice: I18n.t("activerecord.notices.models.ric_account/account.password_update")
 					else
 						render "password"
 					end
@@ -56,7 +56,7 @@ module RicAccount
 				def set_user
 					@user = current_user
 					if @user.nil?
-						redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.user.not_found")
+						redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.ric_user/user.not_found")
 					end
 				end
 
