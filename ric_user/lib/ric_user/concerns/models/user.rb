@@ -166,6 +166,9 @@ module RicUser
 						end
 					end
 
+					# Set passowrd as result if everything OK
+					result = new_password if result
+
 					return result
 				end
 
@@ -195,6 +198,9 @@ module RicUser
 						end
 					end
 
+					# Set passowrd as result if everything OK
+					result = new_password if result
+					
 					return result
 				end
 
