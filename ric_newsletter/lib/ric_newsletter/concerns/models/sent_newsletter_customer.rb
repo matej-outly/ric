@@ -35,8 +35,21 @@ module RicNewsletter
 					#
 					belongs_to :customer, class_name: RicNewsletter.customer_model.to_s
 
+					# *********************************************************
+					# Validators
+					# *********************************************************
+
+					#
+					# Some columns must be present
+					#
+					validates_presence_of :sent_newsletter_id, :customer_id
+
 				end
 
+				# *************************************************************
+				# Delivery
+				# *************************************************************
+				
 				#
 				# Send given newsletter
 				#
