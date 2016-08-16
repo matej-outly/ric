@@ -6,6 +6,7 @@
 		kind: :enum,
 		url: :string,
 		author: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
+		done: :string,
 	}, paths: {
 		show: :notification_path,
 		edit: :edit_notification_path,

@@ -51,16 +51,8 @@ module RicNotification
 					#
 					# State
 					#
-					enum_column :state, ["created", "sent", "received", "accepted"], default: "created"
+					enum_column :state, ["created", "sent", "received", "accepted", "error"], default: "created"
 					
-				end
-
-				module ClassMethods
-
-					# *********************************************************
-					# Scopes
-					# *********************************************************
-
 				end
 
 				# *************************************************************
@@ -79,12 +71,15 @@ module RicNotification
 					# Send email
 					begin 
 						RicNotification::NotificationMailer.notify(notification, self.user).deliver_now
-					rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+						self.state = "sent"
+					#rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+					rescue Exception => e
+						self.state = "error"
+						self.error_message = e.message
 					end
-
+				
 					# Mark as sent
 					self.sent_at = Time.current
-					self.state = "sent"
 
 					# Save
 					self.save

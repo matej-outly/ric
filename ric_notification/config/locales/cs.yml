@@ -34,6 +34,8 @@ cs:
         author_id: Autor
         receiver: Příjemce
         receiver_id: Příjemce
+        sent_at: Odesláno
+        done: Hotovo
       ric_notification/notification_receiver:
         user: Uživatel
         state: Stav
@@ -42,6 +44,13 @@ cs:
           sent: Odesláno
           received: Doručeno
           accepted: Akceptováno
+          error: Chyba
+        state_colors:
+          created: yellow
+          sent: green
+          received: green
+          accepted: green
+          error: red
         created_at: Vytvořeno
         sent_at: Odesláno
         received_at: Doručeno

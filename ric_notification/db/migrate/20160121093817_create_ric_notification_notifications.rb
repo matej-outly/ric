@@ -4,6 +4,7 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 
 			# Timestamps
 			t.timestamps null: true
+			t.datetime :sent_at
 
 			# Kind
 			t.string :kind
@@ -15,6 +16,10 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 
 			# Author (user)
 			t.integer :author_id
+
+			# Statistics
+			t.integer :receivers_count
+			t.integer :sent_count
 
 		end
 	end

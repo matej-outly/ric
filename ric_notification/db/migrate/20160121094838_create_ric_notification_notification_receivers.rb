@@ -13,6 +13,8 @@ class CreateRicNotificationNotificationReceivers < ActiveRecord::Migration
 
 			# State
 			t.string :state
+			t.string :error_message
+
 		end
 	end
 end
