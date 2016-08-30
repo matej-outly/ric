@@ -6,8 +6,14 @@
 	<%= f.datetime_picker_row :to %>
 	<%= f.picker_row :period %>
 	<%= f.text_input_row :capacity, :number_field, min: 0 %>
-	<% @event.config(:states).reverse_each_with_index do |state_spec, index| %>
-		<%= f.duration_row "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != @event.config(:states).length %>
+	<% if @resource.config(:state_policy) == "time_fixed" %>
+		<% @event.config(:states).each_with_index do |state_spec, index| %>
+			<%= f.datetime_picker_row "time_fixed_#{state_spec[:name]}".to_sym if index != 0 %>
+		<% end %>
+	<% else %>
+		<% @event.config(:states).reverse_each_with_index do |state_spec, index| %>
+			<%= f.duration_row "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != @event.config(:states).length %>
+		<% end %>
 	<% end %>
 	<%= f.text_input_row :owner_reservation_limit, :number_field %>
 	<%= f.primary_button_row :submit %>

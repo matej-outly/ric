@@ -60,6 +60,10 @@ cs:
         time_window_open: Jak dlouho před brzkou považovat rezervaci za otevřenou
         time_window_soon: Jak dlouho před uzavřením považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
+        time_fixed_open: Kdy otevřít rezervaci
+        time_fixed_soon: Kdy považovat brzký konec rezervace
+        time_fixed_deadline: Kdy uzavřít rezervaci
+        time_fixed_already_closed: Kdy uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
         opening_hours: Otevírací hodiny
         state: Stav
@@ -116,6 +120,10 @@ cs:
         time_window_open: Jak dlouho před brzkou považovat rezervaci za otevřenou
         time_window_soon: Jak dlouho před začátkem považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
+        time_fixed_open: Kdy otevřít rezervaci
+        time_fixed_soon: Kdy považovat brzký konec rezervace
+        time_fixed_deadline: Kdy uzavřít rezervaci
+        time_fixed_already_closed: Kdy uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
         state: Stav
         state_values:

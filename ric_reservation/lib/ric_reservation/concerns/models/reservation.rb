@@ -196,19 +196,38 @@ module RicReservation
 						states = config(:states)
 
 						# Break times
-						break_times = [self.schedule_from]
-						states.reverse_each_with_index do |state_spec, index|
-							if index != 0 && index != (states.length - 1) # Do not consider first and last state
-								state_name = state_spec[:name]
-								if self.kind_event?
-									time_window = self.event.send("time_window_#{state_name}")
-								else # if self.kind_resource?
-									time_window = self.resource.send("time_window_#{state_name}")
+						if config(:state_policy) == "time_fixed"
+							break_times = []
+							states.reverse_each_with_index do |state_spec, index|
+								if index != 0 # Do not consider first state
+									state_name = state_spec[:name]
+									if self.kind_event?
+										time_fixed = self.event.send("time_fixed_#{state_name}")
+									else # if self.kind_resource?
+										time_fixed = self.resource.send("time_fixed_#{state_name}")
+									end
+									if time_fixed
+										break_times << time_fixed
+									else
+										break_times << break_times.last
+									end
 								end
-								if time_window
-									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
-								else
-									break_times << break_times.last
+							end
+						else
+							break_times = [self.schedule_from]
+							states.reverse_each_with_index do |state_spec, index|
+								if index != 0 && index != (states.length - 1) # Do not consider first and last state
+									state_name = state_spec[:name]
+									if self.kind_event?
+										time_window = self.event.send("time_window_#{state_name}")
+									else # if self.kind_resource?
+										time_window = self.resource.send("time_window_#{state_name}")
+									end
+									if time_window
+										break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+									else
+										break_times << break_times.last
+									end
 								end
 							end
 						end

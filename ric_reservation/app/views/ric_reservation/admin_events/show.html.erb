@@ -9,8 +9,14 @@
 		columns.add_column_by_type(:period, :enum)
 		columns.add_column_by_type(:capacity, :integer)
 		columns.add_column_by_type(:owner_reservation_limit, :integer)
-		@event.config(:states).reverse_each_with_index do |state_spec, index|
-			columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :time) if index != 0 && index != @event.config(:states).length
+		if @event.config(:state_policy) == "time_fixed"
+			@event.config(:states).each_with_index do |state_spec, index|
+				columns.add_column_by_type("time_fixed_#{state_spec[:name]}".to_sym, :datetime) if index != 0
+			end
+		else
+			@event.config(:states).reverse_each_with_index do |state_spec, index|
+				columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :duration) if index != 0 && index != @event.config(:states).length
+			end
 		end
 	%>
 	<%= rug_show_table_for(@event, columns) %>

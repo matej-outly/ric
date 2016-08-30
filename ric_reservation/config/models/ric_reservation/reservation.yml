@@ -3,6 +3,9 @@
 #  - Event1
 #  - Event2
 
+# State computing policy ... time_window | time_fixed
+state_policy: time_window
+
 # Avalilable reservation states and designated behavior
 states:
   - 

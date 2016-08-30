@@ -1,3 +1,6 @@
+# State computing policy ... time_window | time_fixed
+state_policy: time_window
+
 # Avalilable resource states and designated behavior
 states:
   - 

@@ -60,8 +60,14 @@
 				columns.add_column_by_type(:period, :enum)
 				columns.add_column_by_type(:owner_reservation_limit, :integer)
 				columns.add_column_by_type(:opening_hours, :range)
-				@resource.config(:states).reverse_each_with_index do |state_spec, index|
-					columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :time) if index != 0 && index != @resource.config(:states).length
+				if @resource.config(:state_policy) == "time_fixed"
+					@resource.config(:states).each_with_index do |state_spec, index|
+						columns.add_column_by_type("time_fixed_#{state_spec[:name]}".to_sym, :datetime) if index != 0
+					end
+				else
+					@resource.config(:states).reverse_each_with_index do |state_spec, index|
+						columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :duration) if index != 0 && index != @resource.config(:states).length
+					end
 				end
 			%>
 			<%= rug_show_table_for(@resource, columns) %>

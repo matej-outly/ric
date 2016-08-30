@@ -1,6 +1,9 @@
 # Enable reservation below line
 enable_below_line: false
 
+# State computing policy ... time_window | time_fixed
+state_policy: time_window
+
 # Avalilable event states and designated behavior
 states:
   - 

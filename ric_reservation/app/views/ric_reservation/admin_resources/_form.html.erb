@@ -3,8 +3,14 @@
 	<%= f.date_picker_row :valid_from %>
 	<%= f.date_picker_row :valid_to %>
 	<%= f.picker_row :period %>
-	<% @resource.config(:states).reverse_each_with_index do |state_spec, index| %>
-		<%= f.duration_row "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != @resource.config(:states).length %>
+	<% if @resource.config(:state_policy) == "time_fixed" %>
+		<% @resource.config(:states).each_with_index do |state_spec, index| %>
+			<%= f.datetime_picker_row "time_fixed_#{state_spec[:name]}".to_sym if index != 0 %>
+		<% end %>
+	<% else %>
+		<% @resource.config(:states).reverse_each_with_index do |state_spec, index| %>
+			<%= f.duration_row "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != @resource.config(:states).length %>
+		<% end %>
 	<% end %>
 	<%= f.text_input_row :owner_reservation_limit, :number_field %>
 	<%= f.range_row :opening_hours, :number_field %>

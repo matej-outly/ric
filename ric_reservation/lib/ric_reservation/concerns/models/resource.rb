@@ -43,7 +43,7 @@ module RicReservation
 					#
 					# Define time windows as duration
 					# 
-					if config(:states)
+					if config(:states) && config(:state_policy) == "time_window"
 						config(:states).each_with_index do |state_spec, index|
 							duration_column "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
 						end
@@ -91,8 +91,14 @@ module RicReservation
 					def permitted_columns
 						result = []
 						if config(:states)
-							config(:states).each_with_index do |state_spec, index|
-								result << "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+							if config(:state_policy) == "time_fixed"
+								config(:states).each_with_index do |state_spec, index|
+									result << "time_fixed_#{state_spec[:name]}".to_sym if index != 0
+								end
+							else
+								config(:states).each_with_index do |state_spec, index|
+									result << "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+								end
 							end
 						end	
 						result << :name
@@ -154,15 +160,30 @@ module RicReservation
 					states = config(:states)
 
 					# Break times
-					break_times = [datetime]
-					states.reverse_each_with_index do |state_spec, index|
-						if index != 0 && index != (states.length - 1) # Do not consider first and last state
-							state_name = state_spec[:name]
-							time_window = self.send("time_window_#{state_name}")
-							if time_window
-								break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
-							else
-								break_times << break_times.last
+					if config(:state_policy) == "time_fixed"
+						break_times = []
+						states.reverse_each_with_index do |state_spec, index|
+							if index != 0 # Do not consider first state
+								state_name = state_spec[:name]
+								time_fixed = self.send("time_fixed_#{state_name}")
+								if time_fixed
+									break_times << time_fixed
+								else
+									break_times << break_times.last
+								end
+							end
+						end
+					else
+						break_times = [datetime]
+						states.reverse_each_with_index do |state_spec, index|
+							if index != 0 && index != (states.length - 1) # Do not consider first and last state
+								state_name = state_spec[:name]
+								time_window = self.send("time_window_#{state_name}")
+								if time_window
+									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+								else
+									break_times << break_times.last
+								end
 							end
 						end
 					end
@@ -172,7 +193,7 @@ module RicReservation
 					result_state_behavior = nil
 					states.each_with_index do |state_spec, index|
 						if index < states.length - 1
-							if now < break_times[states.length - 2 - index]
+							if !break_times[states.length - 2 - index].nil? && now < break_times[states.length - 2 - index]
 								result_state = state_spec[:name].to_sym
 								result_state_behavior = state_spec[:behavior].to_sym
 								break

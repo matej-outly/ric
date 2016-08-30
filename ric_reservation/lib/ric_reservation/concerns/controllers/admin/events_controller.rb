@@ -122,7 +122,7 @@ module RicReservation
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def event_params
-						params.require(:event).permit(:resource_id, :name, :color, :from, :to, :period, :capacity, :time_window_open, :time_window_soon, :time_window_deadline, :owner_reservation_limit)
+						params.require(:event).permit(RicReservation.event_model.permitted_columns)
 					end
 
 				end

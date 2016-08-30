@@ -125,45 +125,69 @@ module RicReservation
 					#
 					# Define time windows as duration
 					# 
-					if config(:states)
-						config(:states).each_with_index do |state_spec, index|
-							
-							new_column = "time_window_#{state_spec[:name]}".to_sym
+					if config(:states) 
+						if config(:state_policy) == "time_fixed"
+							config(:states).each_with_index do |state_spec, index|
+								if index != 0
 
-							# Duration column
-							duration_column new_column if index != 0 && index != config(:states).length
+									# Column name
+									new_column = "time_fixed_#{state_spec[:name]}".to_sym
 
-							# Redefine getter
-							define_method(new_column) do
-								column = new_column
-								value = read_attribute(column)
-								if value.nil? && self.resource
-									value = self.resource.send(column)
-								end
-								return value
-							end
+									# Redefine getter
+									define_method(new_column) do
+										column = new_column
+										value = read_attribute(column)
+										if value.nil? && self.resource
+											value = self.resource.send(column)
+										end
+										return value
+									end
 
-							# Redefine formatted getter
-							define_method((new_column.to_s + "_formatted").to_sym) do
-								column = new_column
-								if read_attribute(column.to_s).nil? && self.resource
-									return self.resource.send(new_column.to_s + "_formatted")
-								else
-									value = read_attribute(column.to_s)
-									return nil if value.blank?
-									days = value.days_since_new_year
-									hours = value.hour
-									minutes = value.min
-									seconds = value.sec
-									result = []
-									result << days.to_s + " " + I18n.t("general.attribute.duration.days").downcase_first if days > 0
-									result << hours.to_s + " " + I18n.t("general.attribute.duration.hours").downcase_first if hours > 0
-									result << minutes.to_s + " " + I18n.t("general.attribute.duration.minutes").downcase_first if minutes > 0
-									result << seconds.to_s + " " + I18n.t("general.attribute.duration.seconds").downcase_first if seconds > 0
-									return result.join(", ")
 								end
 							end
+						else
+							config(:states).each_with_index do |state_spec, index|
+								if index != 0 && index != config(:states).length
 
+									# Column name
+									new_column = "time_window_#{state_spec[:name]}".to_sym
+
+									# Duration column
+									duration_column new_column 
+
+									# Redefine getter
+									define_method(new_column) do
+										column = new_column
+										value = read_attribute(column)
+										if value.nil? && self.resource
+											value = self.resource.send(column)
+										end
+										return value
+									end
+
+									# Redefine formatted getter
+									define_method((new_column.to_s + "_formatted").to_sym) do
+										column = new_column
+										if read_attribute(column.to_s).nil? && self.resource
+											return self.resource.send(new_column.to_s + "_formatted")
+										else
+											value = read_attribute(column.to_s)
+											return nil if value.blank?
+											days = value.days_since_new_year
+											hours = value.hour
+											minutes = value.min
+											seconds = value.sec
+											result = []
+											result << days.to_s + " " + I18n.t("general.attribute.duration.days").downcase_first if days > 0
+											result << hours.to_s + " " + I18n.t("general.attribute.duration.hours").downcase_first if hours > 0
+											result << minutes.to_s + " " + I18n.t("general.attribute.duration.minutes").downcase_first if minutes > 0
+											result << seconds.to_s + " " + I18n.t("general.attribute.duration.seconds").downcase_first if seconds > 0
+											return result.join(", ")
+										end
+									end
+
+								end
+							end
 						end
 					end
 
@@ -175,6 +199,37 @@ module RicReservation
 				end
 
 				module ClassMethods
+
+					# *********************************************************
+					# Columns
+					# *********************************************************
+
+					#
+					# Columns permitted to be updated via request
+					#
+					def permitted_columns
+						result = []
+						if config(:states)
+							if config(:state_policy) == "time_fixed"
+								config(:states).each_with_index do |state_spec, index|
+									result << "time_fixed_#{state_spec[:name]}".to_sym if index != 0
+								end
+							else
+								config(:states).each_with_index do |state_spec, index|
+									result << "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+								end
+							end
+						end	
+						result << :resource_id
+						result << :name
+						result << :color
+						result << :from
+						result << :to
+						result << :period
+						result << :capacity
+						result << :owner_reservation_limit
+						return result
+					end
 
 					# *********************************************************
 					# Resource
@@ -683,21 +738,38 @@ module RicReservation
 						raise "Schedule event to specific date first."
 					end
 					if @state.nil?
+						
+						# Now
 						now = Time.current
 						
 						# States
 						states = config(:states)
 
 						# Break times
-						break_times = [self.schedule_from]
-						states.reverse_each_with_index do |state_spec, index|
-							if index != 0 && index != (states.length - 1) # Do not consider first and last state
-								state_name = state_spec[:name]
-								time_window = self.send("time_window_#{state_name}")
-								if time_window
-									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
-								else
-									break_times << break_times.last
+						if config(:state_policy) == "time_fixed"
+							break_times = []
+							states.reverse_each_with_index do |state_spec, index|
+								if index != 0 # Do not consider first state
+									state_name = state_spec[:name]
+									time_fixed = self.send("time_fixed_#{state_name}")
+									if time_fixed
+										break_times << time_fixed
+									else
+										break_times << break_times.last
+									end
+								end
+							end
+						else
+							break_times = [self.schedule_from]
+							states.reverse_each_with_index do |state_spec, index|
+								if index != 0 && index != (states.length - 1) # Do not consider first and last state
+									state_name = state_spec[:name]
+									time_window = self.send("time_window_#{state_name}")
+									if time_window
+										break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
+									else
+										break_times << break_times.last
+									end
 								end
 							end
 						end
@@ -705,7 +777,7 @@ module RicReservation
 						# State recognititon
 						states.each_with_index do |state_spec, index|
 							if index < states.length - 1
-								if now < break_times[states.length - 2 - index]
+								if !break_times[states.length - 2 - index].nil? && now < break_times[states.length - 2 - index]
 									@state = state_spec[:name].to_sym
 									@state_behavior = state_spec[:behavior].to_sym
 									break
