@@ -1,0 +1,7 @@
+<li><%= link_to t("headers.ric_auth.public_sessions.new").capitalize, ric_auth_public.new_session_path %></li>
+<% if RicAuth.user_model.registerable? %>
+	<li><%= link_to t("headers.ric_auth.public_registrations.new").capitalize, ric_auth_public.new_registration_path %></li>
+<% end %>
+<% if RicAuth.user_model.recoverable? %>
+	<li><%= link_to t("headers.ric_auth.public_passwords.new").capitalize, ric_auth_public.new_password_path %></li>
+<% end %>

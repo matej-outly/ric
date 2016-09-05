@@ -1,0 +1,4 @@
+<li><%= link_to t("headers.ric_auth.admin_sessions.new").capitalize, ric_auth_admin.new_session_path %></li>
+<% if RicAuth.user_model.recoverable? %>
+	<li><%= link_to t("headers.ric_auth.admin_passwords.new").capitalize, ric_auth_admin.new_password_path %></li>
+<% end %>
