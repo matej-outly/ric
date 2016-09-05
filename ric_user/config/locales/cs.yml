@@ -43,6 +43,7 @@ cs:
       models:
         ric_user/user:
           update: Uživatel byl úspěšně uložen.
+          update_password: Heslo bylo úspěšně změněno.
           create: Uživatel byl úspěšně vytvořen.
           destroy: Uživatel byl úspěšně smazán.
           lock: Uživatel byl úspěšně zablokován.
