@@ -1,5 +1,1 @@
-Zpráva: <%= @notification.message.to_s.strip_tags %>
-Typ zprávy <%= @notification.kind_obj.label %>
-<% if !@notification.url.blank? %>
-Odkaz: <%= @notification.url %>
-<% end %>
+<%= @notification.message.to_s.strip_tags %>

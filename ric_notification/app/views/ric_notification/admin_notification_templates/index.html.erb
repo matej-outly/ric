@@ -1,7 +1,7 @@
 <%= render layout: "ric_admin/layouts/with_right_side" do %>
 	<%= rug_index_table_for(@notification_templates, { 
 		key: :enum,
-		description: :string,
+		#description: :string,
 		subject: :string,
 		message: { type: :text, strip_tags: true }
 	}, paths: {

@@ -105,75 +105,81 @@ module RicNotification
 							# First parameter is message text (all other parameters are indexed from 1)
 							message_params.unshift(message_text)
 
-							# Interpret params and store it in DB
-							notification.message = interpret_params(message_text, message_params)
-							notification.subject = subject
+							if !message_text.blank?
 
-							# *************************************************
-							# Kind
-							# *************************************************
+								# Interpret params and store it in DB
+								notification.message = interpret_params(message_text, message_params)
+								notification.subject = subject
 
-							if options[:kind]
-								notification.kind = options[:kind]
-							end
+								# *************************************************
+								# Kind
+								# *************************************************
 
-							# *************************************************
-							# Author
-							# *************************************************
+								if options[:kind]
+									notification.kind = options[:kind]
+								end
 
-							if options[:author] && options[:author].is_a?(RicNotification.user_model)
-								notification.author_id = options[:author].id
-							end
+								# *************************************************
+								# Author
+								# *************************************************
 
-							# *************************************************
-							# URL
-							# *************************************************
+								if options[:author] && options[:author].is_a?(RicNotification.user_model)
+									notification.author_id = options[:author].id
+								end
 
-							if options[:url]
-								notification.url = options[:url]
-							end
+								# *************************************************
+								# URL
+								# *************************************************
 
-							# *************************************************
-							# Store
-							# *************************************************
+								if options[:url]
+									notification.url = options[:url]
+								end
 
-							notification.sent_count = 0
-							notification.save
+								# *************************************************
+								# Store
+								# *************************************************
 
-							# *************************************************
-							# Receivers
-							# *************************************************
+								notification.sent_count = 0
+								notification.save
 
-							# Arrayize
-							if !receivers.is_a?(Array)
-								receivers = [receivers]
-							end
+								# *************************************************
+								# Receivers
+								# *************************************************
 
-							# Automatic receivers
-							automatic_receivers = []
-							receivers.each do |receiver|
-								if receiver.is_a?(Symbol) || receiver.is_a?(String)
-									if receiver.to_s == "all"
-										automatic_receivers.concat(RicNotification.user_model.all)
-									elsif receiver.to_s.start_with?("role_")
-										automatic_receivers.concat(RicNotification.user_model.where(role: receiver.to_s[5..-1]))
+								# Arrayize
+								if !receivers.is_a?(Array)
+									receivers = [receivers]
+								end
+
+								# Automatic receivers
+								automatic_receivers = []
+								receivers.each do |receiver|
+									if receiver.is_a?(Symbol) || receiver.is_a?(String)
+										if receiver.to_s == "all"
+											automatic_receivers.concat(RicNotification.user_model.all)
+										elsif receiver.to_s.start_with?("role_")
+											automatic_receivers.concat(RicNotification.user_model.where(role: receiver.to_s[5..-1]))
+										end
 									end
 								end
+								receivers.concat(automatic_receivers)
+
+								# Filter users
+								receivers = receivers.delete_if { |receiver| !receiver.is_a?(RicNotification.user_model) }
+
+								# Store
+								notification.receivers = receivers
+								notification.receivers_count = receivers.size
+								notification.save
+
+							else
+								notification = nil # Do not create notification with empty message
 							end
-							receivers.concat(automatic_receivers)
-
-							# Filter users
-							receivers = receivers.delete_if { |receiver| !receiver.is_a?(RicNotification.user_model) }
-
-							# Store
-							notification.receivers = receivers
-							notification.receivers_count = receivers.size
-							notification.save
 
 						end
 
 						# Enqueue for delivery
-						notification.enqueue_for_delivery
+						notification.enqueue_for_delivery if !notification.nil?
 
 						return notification
 					end
