@@ -14,11 +14,13 @@ require "ric_user/admin_engine"
 require "ric_user/public_engine"
 
 # Models
-require 'ric_user/concerns/models/user'
-require 'ric_user/concerns/models/session'
+require "ric_user/concerns/models/person"
+require "ric_user/concerns/models/person_with_multiple_users"
+require "ric_user/concerns/models/session"
+require "ric_user/concerns/models/user"
 
 # Mailers
-require 'ric_user/concerns/mailers/user_mailer'
+require "ric_user/concerns/mailers/user_mailer"
 
 module RicUser
 

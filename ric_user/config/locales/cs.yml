@@ -39,11 +39,15 @@ cs:
         locked?: "Zablokován"
         locked_at: "Čas zablokování"
         confirmed?: "Ověřen"
+      ric_notification/notification_template:
+        key_values:
+          user_new_password: Nové heslo uživatele
     notices:
       models:
         ric_user/user:
           update: Uživatel byl úspěšně uložen.
           update_password: Heslo bylo úspěšně změněno.
+          regenerate_password: Heslo bylo úspěšně přegenerováno a odesláno na e-mail uživatele.
           create: Uživatel byl úspěšně vytvořen.
           destroy: Uživatel byl úspěšně smazán.
           lock: Uživatel byl úspěšně zablokován.

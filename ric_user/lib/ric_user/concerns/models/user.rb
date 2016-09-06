@@ -158,15 +158,21 @@ module RicUser
 					self.password = new_password
 					result = self.save
 
-					# Deliver email
-					if result && options[:disable_email] != true
-						begin 
-							RicUser::UserMailer.new_password(self, new_password).deliver_now
-						rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+					# Notification
+					if result
+						if options[:notification] == false
+							# No notification
+						elsif options[:notification] == "email"
+							begin 
+								RicUser::UserMailer.new_password(self, new_password).deliver_now
+							rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+							end
+						else
+							RicNotification.notify([:user_new_password, self, new_password], self) if !(defined?(RicNotification).nil?)
 						end
 					end
 
-					# Set passowrd as result if everything OK
+					# Set password as result if everything OK
 					result = new_password if result
 
 					return result
@@ -190,11 +196,17 @@ module RicUser
 					self.password = new_password
 					result = self.save
 
-					# Deliver email
-					if result && options[:disable_email] != true
-						begin 
-							RicUser::UserMailer.new_password(self, new_password).deliver_now
-						rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+					# Notification
+					if result
+						if options[:notification] == false
+							# No notification
+						elsif options[:notification] == "email"
+							begin 
+								RicUser::UserMailer.new_password(self, new_password).deliver_now
+							rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+							end
+						else
+							RicNotification.notify([:user_new_password, self, new_password], self) if !(defined?(RicNotification).nil?)
 						end
 					end
 

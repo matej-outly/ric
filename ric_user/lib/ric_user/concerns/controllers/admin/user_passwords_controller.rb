@@ -40,7 +40,7 @@ module RicUser
 					#
 					def update
 						if @user.update_password(user_params[:password], user_params[:password_confirmation])
-							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update_password")
 						else
 							render "edit"
 						end
@@ -51,7 +51,7 @@ module RicUser
 					#
 					def regenerate
 						if @user.regenerate_password
-							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
+							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.regenerate_password")
 						else
 							redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.regenerate_password")
 						end
