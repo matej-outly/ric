@@ -1,5 +1,5 @@
 <ul class="menu">
-	<% @footer_menu.config(:items).each do |item| %>
+	<% RicAdmin.footer_menu.each do |item| %>
 		<%
 			# Get URL
 			if item[:url]
