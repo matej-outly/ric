@@ -205,6 +205,7 @@ cs:
       - Čt
       - Pá
       - So
+      - Ne
     abbr_month_names:
       -
       - Leden
@@ -227,6 +228,7 @@ cs:
       - Čtvrtek
       - Pátek
       - Sobota
+      - Neděle
     formats:
       default: "%-d. %-m. %Y"
     month_names:
