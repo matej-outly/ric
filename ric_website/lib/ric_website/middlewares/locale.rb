@@ -29,10 +29,18 @@ module RicWebsite
 				else
 					
 					# Match locale from path
-					locale, path = RicWebsite::Helpers::LocaleHelper.disassemble(env["PATH_INFO"])
+					path_locale, path = RicWebsite::Helpers::LocaleHelper.disassemble(env["PATH_INFO"])
+					path_locale = nil if !I18n.available_locales.include?(path_locale)
+					
+					# Match locale from browser
+					browser_locale = env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first.to_sym
+					browser_locale = nil if !I18n.available_locales.include?(browser_locale)
+
+					# Set as default locale (for paths without locale spec)
+					I18n.default_locale = browser_locale if browser_locale
 					
 					# Set correct locale and define default locale for URLs
-					I18n.locale = locale || I18n.default_locale
+					I18n.locale = path_locale || I18n.default_locale
 					Rails.application.routes.default_url_options[:locale] = ( I18n.default_locale == I18n.locale ? nil : I18n.locale )
 					
 					return @app.call(env)
