@@ -16,21 +16,6 @@ module RicDevise
 		# Layout
 		#
 		layout "ric_admin"
-		
-		#
-		# Title component
-		#
-		component RicAdmin::TitleComponent
-
-		#
-		# Header logo component
-		#
-		component RicAdmin::HeaderLogoComponent
-
-		#
-		# Footer copy component
-		#
-		component RicAdmin::FooterCopyComponent
 
 	protected
 		
