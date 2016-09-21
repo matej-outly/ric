@@ -1,4 +1,0 @@
-<%= rug_menu_for(@user, name: "actions") do |m| %>
-	<%= m.item t("headers.ric_account.account.user"), account_user_path, icon: "user", active: (action_name.include?('user')) %>
-	<%= m.item t("headers.ric_account.account.password"), account_password_path, icon: "lock", active: (action_name.include?('password')) %>
-<% end %>
