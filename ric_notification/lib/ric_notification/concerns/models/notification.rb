@@ -29,8 +29,7 @@ module RicNotification
 					# Relation to users
 					#
 					has_many :notification_receivers, class_name: RicNotification.notification_receiver_model.to_s, dependent: :destroy
-					has_many :receivers, class_name: RicNotification.user_model.to_s, through: :notification_receivers, source: :user
-
+					
 					#
 					# Relation to user
 					#
@@ -46,7 +45,7 @@ module RicNotification
 					# (First) receiver TODO TEMP
 					# *********************************************************
 
-					after_save :set_receiver_after_save
+					#after_save :set_receiver_after_save
 
 				end
 
@@ -164,11 +163,13 @@ module RicNotification
 								end
 								receivers.concat(automatic_receivers)
 
-								# Filter users
-								receivers = receivers.delete_if { |receiver| !receiver.is_a?(RicNotification.user_model) }
+								# Filter receivers
+								receivers = receivers.delete_if { |receiver| !valid_receiver?(receiver) }
 
 								# Store
-								notification.receivers = receivers
+								receivers.each do |receiver|
+									notification.notification_receivers.create(receiver: receiver)
+								end
 								notification.receivers_count = receivers.size
 								notification.save
 
@@ -293,6 +294,15 @@ module RicNotification
 
 					end
 
+					#
+					# Check if object is valid receiver
+					# 
+					def valid_receiver?(receiver)
+						return false if !receiver.respond_to?(:email)
+						return false if !receiver.respond_to?(:name_or_email)
+						return true
+					end
+
 				end
 
 				#
@@ -306,24 +316,24 @@ module RicNotification
 				# (First) receiver TODO TEMP
 				# *************************************************************
 
-				def receiver_id=(new_receiver_id)
-					@receiver_id_was = @receiver_id
-					@receiver_id = new_receiver_id
-				end
+#				def receiver_id=(new_receiver_id)
+#					@receiver_id_was = @receiver_id
+#					@receiver_id = new_receiver_id
+#				end#
 
-				def receiver_id
-					if @receiver_id
-						return @receiver_id
-					elsif self.receivers.first
-						return self.receivers.first.id
-					else
-						return nil
-					end
-				end
+#				def receiver_id
+#					if @receiver_id
+#						return @receiver_id
+#					elsif self.receivers.first
+#						return self.receivers.first.id
+#					else
+#						return nil
+#					end
+#				end#
 
-				def receiver
-					return self.receivers.first
-				end
+#				def receiver
+#					return self.receivers.first
+#				end
 
 				# *************************************************************
 				# Progress
@@ -343,11 +353,11 @@ module RicNotification
 				# (First) receiver TODO TEMP
 				# *************************************************************
 
-				def set_receiver_after_save
-					if @receiver_id != @receiver_id_was
-						self.receiver_ids = [@receiver_id]
-					end
-				end
+#				def set_receiver_after_save
+#					if @receiver_id != @receiver_id_was
+#						self.receiver_ids = [@receiver_id]
+#					end
+#				end
 
 			end
 		end

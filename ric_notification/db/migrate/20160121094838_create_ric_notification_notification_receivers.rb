@@ -8,8 +8,9 @@ class CreateRicNotificationNotificationReceivers < ActiveRecord::Migration
 			t.datetime :received_at
 
 			# Relations
-			t.integer :notification_id
-			t.integer :user_id
+			t.integer :notification_id, index: true
+			t.integer :receiver_id, index: true
+			t.string :receiver_type, index: true
 
 			# State
 			t.string :state

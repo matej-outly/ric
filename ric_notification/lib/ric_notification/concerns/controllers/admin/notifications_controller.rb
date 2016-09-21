@@ -112,8 +112,7 @@ module RicNotification
 							:subject, 
 							:message, 
 							:kind, 
-							:url, 
-							:receiver_id
+							:url
 						)
 					end
 

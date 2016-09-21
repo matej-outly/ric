@@ -32,12 +32,10 @@ cs:
           warning: Varování
         author: Autor
         author_id: Autor
-        receiver: Příjemce
-        receiver_id: Příjemce
         sent_at: Odesláno
         done: Hotovo
       ric_notification/notification_receiver:
-        user: Uživatel
+        receiver: Příjemce
         state: Stav
         state_values:
           created: Vytvořeno

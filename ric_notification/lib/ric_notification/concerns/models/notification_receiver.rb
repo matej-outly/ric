@@ -31,9 +31,9 @@ module RicNotification
 					belongs_to :notification, class_name: RicNotification.notification_model.to_s
 
 					#
-					# Relation to user
+					# Relation to receiver
 					#
-					belongs_to :user, class_name: RicNotification.user_model.to_s
+					belongs_to :receiver, polymorphic: true
 
 					# *********************************************************
 					# Validators
@@ -42,7 +42,7 @@ module RicNotification
 					#
 					# Some columns must be present
 					#
-					validates_presence_of :notification_id, :user_id
+					validates_presence_of :notification_id, :receiver_id, :receiver_type
 
 					# *********************************************************
 					# State
@@ -70,7 +70,7 @@ module RicNotification
 
 					# Send email
 					begin 
-						RicNotification::NotificationMailer.notify(notification, self.user).deliver_now
+						RicNotification::NotificationMailer.notify(notification, self.receiver).deliver_now
 						self.state = "sent"
 					#rescue Net::SMTPFatalError, Net::SMTPSyntaxError
 					rescue Exception => e

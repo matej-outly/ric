@@ -3,7 +3,6 @@
 	<%= f.text_area_row :message %>
 	<%= f.picker_row :kind %>
 	<%= f.text_input_row :url %>
-	<%= f.token_input_row :receiver_id, ric_user_admin.search_users_path, as: :receiver, value_attr: :id, label_attr: :email, limit: 1 %>
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
 <% end %>

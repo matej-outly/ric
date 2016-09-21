@@ -15,7 +15,7 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 			t.string :url
 
 			# Author (user)
-			t.integer :author_id
+			t.integer :author_id, index: true
 
 			# Statistics
 			t.integer :receivers_count
