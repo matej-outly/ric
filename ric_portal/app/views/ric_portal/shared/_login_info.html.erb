@@ -1,9 +1,0 @@
-<ul class="login-info">
-	<% if user_signed_in? %>
-		<li><%= link_to current_user.email, ric_account.account_user_path %></li>
-		<li class="icon-right icon-logout"><%= link_to t("devise.action.sign_out").downcase, ric_devise.destroy_user_session_path, method: :delete %></li>
-	<% else %>
-		<li class="icon-right icon-login"><%= link_to t("devise.action.sign_in").downcase, ric_devise.new_user_session_path %></li>
-		<!--<li class="icon-right icon-user-add"><%#= link_to t("devise.action.sign_up").downcase, ric_devise.new_user_registration_path %></li>-->
-	<% end %>
-</ul>
