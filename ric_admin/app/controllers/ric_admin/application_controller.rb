@@ -12,14 +12,16 @@
 module RicAdmin
 	class ApplicationController < ::ApplicationController
 
-		#
-		# Authenticate before every action
-		#
+		#**********************************************************************
+		# Authentication
+		#**********************************************************************
+
 		before_action :authenticate_user!
 
-		#
+		#**********************************************************************
 		# Layout
-		#
+		#**********************************************************************
+
 		layout "ric_admin"
 
 	end
