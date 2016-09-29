@@ -18,10 +18,14 @@ module RicNotification
 				# New password
 				#
 				def notify(notification, receiver)
+					@sender = RicNotification.mailer_sender
+					if @sender.nil?
+						raise "Please specify sender."
+					end
 					@notification = notification
 					@receiver = receiver
 					subject = !@notification.subject.blank? ? @notification.subject : I18n.t("activerecord.mailers.ric_notification.notification.notify.subject", url: main_app.root_url)
-					mail(from: RicNotification.mailer_sender, to: receiver.email, subject: subject)
+					mail(from: @sender, to: receiver.email, subject: subject)
 				end
 
 			end

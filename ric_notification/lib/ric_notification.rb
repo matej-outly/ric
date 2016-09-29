@@ -95,6 +95,6 @@ module RicNotification
 	# Mailer sender
 	#
 	mattr_accessor :mailer_sender
-	@@mailer_sender = "no-reply@clockapp.cz"
+	#@@mailer_sender = ... to be set in module initializer
 
 end
