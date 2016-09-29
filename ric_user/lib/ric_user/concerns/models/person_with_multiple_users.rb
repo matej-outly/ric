@@ -38,7 +38,7 @@ module RicUser
 					user = self.users.build(user_params)
 					new_password = user.regenerate_password(notification: false)
 					if new_password
-						RicNotification.notify(["welcome_#{self.person_role}".to_sym, self, user, new_password], user) if !(defined?(RicNotification).nil?)
+						RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, user, new_password], user) if !(defined?(RicNotification).nil?)
 						return user
 					else
 						return user
