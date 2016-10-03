@@ -12,8 +12,8 @@ cs:
         edit: Změnit heslo
         update: Změnit heslo
       admin_accounts:
-        edit: Upravit uživatelský účet
-        update: Upravit uživatelský účet
+        edit: Upravit profil
+        update: Upravit profil
       public_sessions:
         new: Přihlásit se
         create: Přihlásit se
@@ -24,8 +24,8 @@ cs:
         edit: Změnit heslo
         update: Změnit heslo
       public_accounts:
-        edit: Upravit uživatelský účet
-        update: Upravit uživatelský účet
+        edit: Upravit profil
+        update: Upravit profil
 
   #
   # Devise
