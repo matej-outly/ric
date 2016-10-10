@@ -10,13 +10,6 @@
 # *****************************************************************************
 
 module RicAuth
-	class AdminController < ::ApplicationController
-		
-		#**********************************************************************
-		# Layout
-		#**********************************************************************
-
-		layout "ric_admin"
-
+	class AdminController < RicAdmin::ApplicationController
 	end
 end

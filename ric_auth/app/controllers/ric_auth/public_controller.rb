@@ -11,6 +11,5 @@
 
 module RicAuth
 	class PublicController < ::ApplicationController
-		
 	end
 end

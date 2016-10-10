@@ -1,13 +1,12 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@banner, { 
-		name: :string,
-		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
-		url: :string,
-		kind: :enum,
-		file: :file,
-		file_kind: :enum,
-		valid_from: :date,
-		valid_to: :date,
-		priority: :integer
-	}) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_show_table_for(@banner, { 
+	name: :string,
+	advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
+	url: :string,
+	kind: :enum,
+	file: :file,
+	file_kind: :enum,
+	valid_from: :date,
+	valid_to: :date,
+	priority: :integer
+}) %>

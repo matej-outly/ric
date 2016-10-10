@@ -1,9 +1,8 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@advertisers, { 
-		name: :string,
-	}, paths: {
-		show: "ric_advert_admin.advertiser_path",
-		edit: "ric_advert_admin.edit_advertiser_path",
-		destroy: "ric_advert_admin.advertiser_path"
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@advertisers, { 
+	name: :string,
+}, paths: {
+	show: "ric_advert_admin.advertiser_path",
+	edit: "ric_advert_admin.edit_advertiser_path",
+	destroy: "ric_advert_admin.advertiser_path"
+}, pagination: true, summary: true ) %>

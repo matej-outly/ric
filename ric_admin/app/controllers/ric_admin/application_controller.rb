@@ -22,7 +22,7 @@ module RicAdmin
 		# Layout
 		#**********************************************************************
 
-		layout "ric_admin"
+		layout "ruth_admin"
 
 	end
 end

@@ -1,30 +1,28 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@advertiser, { 
-		name: :string
-	}) %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_show_table_for(@advertiser, { 
+	name: :string
+}) %>
 
-	<h3><%= t("headers.ric_advert.observer_advertisers.valid_banners") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.valid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :enum,
-	}, paths: {
-		show: "ric_advert_observer.banner_path"
-	}, summary: true ) %>
+<h3><%= t("headers.ric_advert.observer_advertisers.valid_banners") %></h3>
+<%= rug_index_table_for(@advertiser.banners.valid(@today).order(name: :asc), { 
+	name: :string,
+	kind: :enum,
+}, paths: {
+	show: "ric_advert_observer.banner_path"
+}, summary: true ) %>
 
-	<h3><%= t("headers.ric_advert.observer_advertisers.sofar_invalid_banners") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :enum,
-	}, paths: {
-		show: "ric_advert_observer.banner_path"
-	}, summary: true ) %>
+<h3><%= t("headers.ric_advert.observer_advertisers.sofar_invalid_banners") %></h3>
+<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
+	name: :string,
+	kind: :enum,
+}, paths: {
+	show: "ric_advert_observer.banner_path"
+}, summary: true ) %>
 
-	<h3><%= t("headers.ric_advert.observer_advertisers.already_invalid_banners") %></h3>
-	<%= rug_index_table_for(@advertiser.banners.already_invalid(@today).order(name: :asc), { 
-		name: :string,
-		kind: :enum,
-	}, paths: {
-		show: "ric_advert_observer.banner_path"
-	}, summary: true ) %>
-	
-<% end %>
+<h3><%= t("headers.ric_advert.observer_advertisers.already_invalid_banners") %></h3>
+<%= rug_index_table_for(@advertiser.banners.already_invalid(@today).order(name: :asc), { 
+	name: :string,
+	kind: :enum,
+}, paths: {
+	show: "ric_advert_observer.banner_path"
+}, summary: true ) %>

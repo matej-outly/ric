@@ -1,15 +1,14 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@notifications, { 
-		created_at: :datetime,
-		subject: :string,
-		message: { type: :text, strip_tags: true },
-		kind: :enum,
-		url: :string,
-		author: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
-		done: :string,
-	}, paths: {
-		show: :notification_path,
-		edit: :edit_notification_path,
-		destroy: :notification_path
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@notifications, { 
+	created_at: :datetime,
+	subject: :string,
+	message: { type: :text, strip_tags: true },
+	kind: :enum,
+	url: :string,
+	author: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
+	done: :string,
+}, paths: {
+	show: :notification_path,
+	edit: :edit_notification_path,
+	destroy: :notification_path
+}, pagination: true, summary: true ) %>

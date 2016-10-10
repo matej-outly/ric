@@ -1,11 +1,10 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@notification_templates, { 
-		key: :enum,
-		#description: :string,
-		subject: :string,
-		message: { type: :text, strip_tags: true }
-	}, paths: {
-		show: :notification_template_path,
-		edit: :edit_notification_template_path,
-	}, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@notification_templates, { 
+	key: :enum,
+	#description: :string,
+	subject: :string,
+	message: { type: :text, strip_tags: true }
+}, paths: {
+	show: :notification_template_path,
+	edit: :edit_notification_template_path,
+}, summary: true ) %>

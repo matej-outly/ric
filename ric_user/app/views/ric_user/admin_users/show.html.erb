@@ -1,10 +1,9 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@user, { 
-		name: :name,
-		email: :string,
-		role: :enum,
-		sign_in_count: :integer,
-		current_sign_in_at: :datetime,
-		locked?: :boolean,
-	}) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_show_table_for(@user, { 
+	name: :name,
+	email: :string,
+	role: :enum,
+	sign_in_count: :integer,
+	current_sign_in_at: :datetime,
+	locked?: :boolean,
+}) %>

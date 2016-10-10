@@ -1,8 +1,7 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@notification_template, { 
-		key: :enum,
-		#description: :string,
-		subject: :string,
-		message: { type: :text, truncate: false }
-	}) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_show_table_for(@notification_template, { 
+	key: :enum,
+	#description: :string,
+	subject: :string,
+	message: { type: :text, truncate: false }
+}) %>
