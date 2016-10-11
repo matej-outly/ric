@@ -1,75 +1,70 @@
 <%= render partial: "ruth_admin/components/page_header" %>
-<section class="tabs pill">
-	<ul class="tab-nav">
-		<li class="active"><a href="#"><%= t("headers.ric_reservation.admin_resources.valid") %></a></li>
-		<li><a href="#"><%= t("headers.ric_reservation.admin_resources.invalid_events") %></a></li>
-		<li><a href="#"><%= t("headers.ric_reservation.admin_resources.show") %></a></li>
-	</ul>
-	<div class="tab-content active">
-		<%=	timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_admin.resource_path(@resource, params) }) %>
-		<% if @period == "week" %>
-			<%= 
-				week_timetable(@from, [
-					[ @valid_events, {
-						label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
-						item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
-					} ],
-					[ @valid_reservations, {
-						label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
-						item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
-					} ],
-				], {
-					min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
-					max_hour: @resource.opening_hours ? @resource.opening_hours[:max] : 16,
-					empty_path_callback: lambda { |date, time_from| ric_reservation_admin.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) }
-				})
-			%>
-		<% else %>
-			<%= 
-				month_timetable(@from, [
-					[ @valid_events, {
-						label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
-						item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
-					} ],
-					[ @valid_reservations, {
-						label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
-						item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
-					} ],
-				], {
-					empty_path_callback: lambda { |date| ric_reservation_admin.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) }
-				})
-			%>
-		<% end %>
-	</div>
-	<div class="tab-content">
-		<%= rug_index_table_for(@invalid_events, { 
-			name: :string,
-			formatted_time: :string,
-			period: :enum,
-			valid_to: :date
-		}, paths: {
-			show: "ric_reservation_admin.event_path"
-		}, summary: true ) %>
-	</div>
-	<div class="tab-content">
-		<%
-			columns = rug_columns
-			columns.add_column_by_type(:name, :string)
-			columns.add_column_by_type(:valid_from, :date)
-			columns.add_column_by_type(:valid_to, :date)
-			columns.add_column_by_type(:period, :enum)
-			columns.add_column_by_type(:owner_reservation_limit, :integer)
-			columns.add_column_by_type(:opening_hours, :range)
-			if @resource.config(:state_policy) == "time_fixed"
-				@resource.config(:states).each_with_index do |state_spec, index|
-					columns.add_column_by_type("time_fixed_#{state_spec[:name]}".to_sym, :datetime) if index != 0
-				end
-			else
-				@resource.config(:states).reverse_each_with_index do |state_spec, index|
-					columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :duration) if index != 0 && index != @resource.config(:states).length
-				end
-			end
+<% tabs = rug_tabs %>
+<% tabs.tab :valid, t("headers.ric_reservation.admin_resources.valid") do %>
+	<%=	timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_admin.resource_path(@resource, params) }) %>
+	<% if @period == "week" %>
+		<%= 
+			week_timetable(@from, [
+				[ @valid_events, {
+					label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+					item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
+				} ],
+				[ @valid_reservations, {
+					label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+					item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
+				} ],
+			], {
+				min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
+				max_hour: @resource.opening_hours ? @resource.opening_hours[:max] : 16,
+				empty_path_callback: lambda { |date, time_from| ric_reservation_admin.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) }
+			})
 		%>
-		<%= rug_show_table_for(@resource, columns) %>
-	</div>
-</section>
+	<% else %>
+		<%= 
+			month_timetable(@from, [
+				[ @valid_events, {
+					label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+					item_path_callback: lambda { |event| ric_reservation_admin.event_path(event) }
+				} ],
+				[ @valid_reservations, {
+					label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+					item_path_callback: lambda { |reservation| ric_reservation_admin.resource_reservation_path(reservation) }
+				} ],
+			], {
+				empty_path_callback: lambda { |date| ric_reservation_admin.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) }
+			})
+		%>
+	<% end %>
+<% end %>
+<% tabs.tab :invalid_events, t("headers.ric_reservation.admin_resources.invalid_events") do %>
+	<%= rug_index_table_for(@invalid_events, { 
+		name: :string,
+		formatted_time: :string,
+		period: :enum,
+		valid_to: :date
+	}, paths: {
+		show: "ric_reservation_admin.event_path"
+	}, summary: true ) %>
+<% end %>
+<% tabs.tab :show, t("headers.ric_reservation.admin_resources.show") do %>
+	<%
+		columns = rug_columns
+		columns.add_column_by_type(:name, :string)
+		columns.add_column_by_type(:valid_from, :date)
+		columns.add_column_by_type(:valid_to, :date)
+		columns.add_column_by_type(:period, :enum)
+		columns.add_column_by_type(:owner_reservation_limit, :integer)
+		columns.add_column_by_type(:opening_hours, :range)
+		if @resource.config(:state_policy) == "time_fixed"
+			@resource.config(:states).each_with_index do |state_spec, index|
+				columns.add_column_by_type("time_fixed_#{state_spec[:name]}".to_sym, :datetime) if index != 0
+			end
+		else
+			@resource.config(:states).reverse_each_with_index do |state_spec, index|
+				columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :duration) if index != 0 && index != @resource.config(:states).length
+			end
+		end
+	%>
+	<%= rug_show_table_for(@resource, columns) %>
+<% end %>
+<%= tabs.render %>

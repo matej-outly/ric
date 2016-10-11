@@ -1,20 +1,13 @@
 <%= rug_form_for(@page, create_url: "ric_website_admin.pages_path", update_url: "ric_website_admin.page_path") do |f| %>
-	<section class="tabs pill">
-		<ul class="tab-nav">
-			<% @page.class.parts.each do |part| %>
-				<% if !RicWebsite.page_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
-					<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
-				<% end %>
-			<% end %>
-		</ul>
-		<% @page.class.parts.each do |part| %>
-			<% if !RicWebsite.page_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
-				<div class="tab-content <%= (part == :basic ? "active" : "") %>">
-					<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
-				</div>
+	<% tabs = rug_tabs %>
+	<% @page.class.parts.each do |part| %>
+		<% if !RicWebsite.page_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
+			<% tabs.tab part, t("headers.ric_website.admin_pages.#{part.to_s}") do %>
+				<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
 			<% end %>
 		<% end %>
-	</section>
+	<% end %>
+	<%= tabs.render %>
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
 <% end %>

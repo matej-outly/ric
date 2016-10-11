@@ -1,19 +1,14 @@
 <%= render partial: "ruth_admin/components/page_header" %>
 <%= rug_form_for(@settings_collection, url: settings_path, method: :put) do |f| %>
-	<section class="tabs pill">
-		<ul class="tab-nav">
-			<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
-				<li class="<%= (index == 0 ? "active" : "") %>"><a href="#"><%= t("activerecord.attributes.ric_website/settings_collection.category_values.#{category}") %></a></li>
+	<% tabs = rug_tabs %>
+	<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
+		<% tabs.tab category.to_sym, t("activerecord.attributes.ric_website/settings_collection.category_values.#{category}") do %>
+			<% settings.each do |setting_key| %>
+				<%= f.generic_row setting_key, @settings_collection.settings[setting_key.to_sym][:kind] %>
 			<% end %>
-		</ul>
-		<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
-			<div class="tab-content <%= (index == 0 ? "active" : "") %>">
-				<% settings.each do |setting_key| %>
-					<%= f.generic_row setting_key, @settings_collection.settings[setting_key.to_sym][:kind] %>
-				<% end %>
-			</div>
 		<% end %>
-	</section>
+	<% end %>
+	<%= tabs.render %>
 	<%= f.primary_button_row :submit, t("helpers.submit.update") %>
 	<%= f.back_link_button_row %>
 <% end %>
