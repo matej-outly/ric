@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicNewsletter
-	class AdminController < RicAdmin::ApplicationController
+	class AdminController < RuthAdmin::ApplicationController
 	end
 end

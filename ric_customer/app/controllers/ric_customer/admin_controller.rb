@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicCustomer
-	class AdminController < RicAdmin::ApplicationController
+	class AdminController < RuthAdmin::ApplicationController
 	end
 end
