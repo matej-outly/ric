@@ -1,11 +1,10 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@branches, { 
-		name: :string,
-		address: :address,
-		url: :string
-	}, paths: {
-		show: :branch_path,
-		edit: :edit_branch_path,
-		destroy: :branch_path
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@branches, { 
+	name: :string,
+	address: :address,
+	url: :string
+}, paths: {
+	show: :branch_path,
+	edit: :edit_branch_path,
+	destroy: :branch_path
+}, pagination: true, summary: true ) %>

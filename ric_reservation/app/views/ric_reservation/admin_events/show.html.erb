@@ -1,46 +1,43 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	
-	<%
-		columns = rug_columns
-		columns.add_column_by_type(:resource, { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" })
-		columns.add_column_by_type(:name, :string)
-		columns.add_column_by_type(:color, :enum)
-		columns.add_column_by_type(:formatted_time, :string)
-		columns.add_column_by_type(:period, :enum)
-		columns.add_column_by_type(:capacity, :integer)
-		columns.add_column_by_type(:owner_reservation_limit, :integer)
-		if @event.config(:state_policy) == "time_fixed"
-			@event.config(:states).each_with_index do |state_spec, index|
-				columns.add_column_by_type("time_fixed_#{state_spec[:name]}".to_sym, :datetime) if index != 0
-			end
+<%= render partial: "ruth_admin/components/page_header" %>	
+<%
+	columns = rug_columns
+	columns.add_column_by_type(:resource, { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" })
+	columns.add_column_by_type(:name, :string)
+	columns.add_column_by_type(:color, :enum)
+	columns.add_column_by_type(:formatted_time, :string)
+	columns.add_column_by_type(:period, :enum)
+	columns.add_column_by_type(:capacity, :integer)
+	columns.add_column_by_type(:owner_reservation_limit, :integer)
+	if @event.config(:state_policy) == "time_fixed"
+		@event.config(:states).each_with_index do |state_spec, index|
+			columns.add_column_by_type("time_fixed_#{state_spec[:name]}".to_sym, :datetime) if index != 0
+		end
+	else
+		@event.config(:states).reverse_each_with_index do |state_spec, index|
+			columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :duration) if index != 0 && index != @event.config(:states).length
+		end
+	end
+%>
+<%= rug_show_table_for(@event, columns) %>
+
+<h3><%= t("headers.ric_reservation.admin_events.scheduled_events") %></h3>
+<%
+	columns = rug_columns
+	columns.add_column_by_type(:schedule_date, :date)
+	columns.add_column_by_type(:schedule_formatted_time, :string)
+	columns.add_column_by_block(:capacity) do |scheduled_event|
+		if !scheduled_event.tmp_canceled?
+			"#{scheduled_event.reservations.above_line.count}/#{ scheduled_event.capacity}"
 		else
-			@event.config(:states).reverse_each_with_index do |state_spec, index|
-				columns.add_column_by_type("time_window_#{state_spec[:name]}".to_sym, :duration) if index != 0 && index != @event.config(:states).length
-			end
+			t("general.canceled")
 		end
-	%>
-	<%= rug_show_table_for(@event, columns) %>
-
-	<h3><%= t("headers.ric_reservation.admin_events.scheduled_events") %></h3>
-	<%
-		columns = rug_columns
-		columns.add_column_by_type(:schedule_date, :date)
-		columns.add_column_by_type(:schedule_formatted_time, :string)
-		columns.add_column_by_block(:capacity) do |scheduled_event|
-			if !scheduled_event.tmp_canceled?
-				"#{scheduled_event.reservations.above_line.count}/#{ scheduled_event.capacity}"
-			else
-				t("general.canceled")
-			end
-		end
-	%>
-	<%= rug_index_table_for(@scheduled_events, 
-		columns, 
-		paths: {
-			show: lambda {|scheduled_event| ric_reservation_admin.event_reservations_path(id: scheduled_event.id, schedule_date: scheduled_event.schedule_date) }
-		},
-		model_class: RicReservation.event_model.to_s
-	) %>
-	<%=	timetable_pagination(Date.today, (@event.month_scope_period? ? "month" : "week"), @page, lambda { |params| ric_reservation_admin.event_path(@event, params) }) %>
-
-<% end %>
+	end
+%>
+<%= rug_index_table_for(@scheduled_events, 
+	columns, 
+	paths: {
+		show: lambda {|scheduled_event| ric_reservation_admin.event_reservations_path(id: scheduled_event.id, schedule_date: scheduled_event.schedule_date) }
+	},
+	model_class: RicReservation.event_model.to_s
+) %>
+<%=	timetable_pagination(Date.today, (@event.month_scope_period? ? "month" : "week"), @page, lambda { |params| ric_reservation_admin.event_path(@event, params) }) %>

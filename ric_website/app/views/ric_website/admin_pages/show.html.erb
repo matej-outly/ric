@@ -1,36 +1,35 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<section class="tabs pill">
-		<ul class="tab-nav">
-			<% @page.class.parts.each do |part| %>
-				<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
-			<% end %>
-		</ul>
+<%= render partial: "ruth_admin/components/page_header" %>
+<section class="tabs pill">
+	<ul class="tab-nav">
 		<% @page.class.parts.each do |part| %>
-			<div class="tab-content <%= (part == :basic ? "active" : "") %>">
-				
-				<% if part == :basic %>
-					<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
-					<%= render partial: "show_#{part.to_s}" %>
-					<% if @page.page_blocks.count > 0 %>
-						<h3><%= t("headers.ric_website.admin_pages.page_blocks") %></h3>
-						<%
-							columns = {}
-							columns[:title] = :string
-							columns[:key] = :enum if RicWebsite.page_block_model.config(:enable_key)
-							columns[:content] = { type: :text, strip_tags: true }
-						%>
-						<%= rug_index_table_for(@page.page_blocks.order(position: :asc), columns, paths: {
-							show: :page_block_path,
-							edit: :edit_page_block_path,
-							move: :move_page_block_path,
-							destroy: :page_block_path
-						}, moving: true ) %>
-					<% end %>
-				<% else %>
-					<%= render partial: "show_#{part.to_s}" %>
-				<% end %>
-
-			</div>
+			<li class="<%= (part == :basic ? "active" : "") %>"><a href="#"><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></a></li>
 		<% end %>
-	</section>
-<% end %>
+	</ul>
+	<% @page.class.parts.each do |part| %>
+		<div class="tab-content <%= (part == :basic ? "active" : "") %>">
+			
+			<% if part == :basic %>
+				<h3><%= t("headers.ric_website.admin_pages.#{part.to_s}") %></h3>
+				<%= render partial: "show_#{part.to_s}" %>
+				<% if @page.page_blocks.count > 0 %>
+					<h3><%= t("headers.ric_website.admin_pages.page_blocks") %></h3>
+					<%
+						columns = {}
+						columns[:title] = :string
+						columns[:key] = :enum if RicWebsite.page_block_model.config(:enable_key)
+						columns[:content] = { type: :text, strip_tags: true }
+					%>
+					<%= rug_index_table_for(@page.page_blocks.order(position: :asc), columns, paths: {
+						show: :page_block_path,
+						edit: :edit_page_block_path,
+						move: :move_page_block_path,
+						destroy: :page_block_path
+					}, moving: true ) %>
+				<% end %>
+			<% else %>
+				<%= render partial: "show_#{part.to_s}" %>
+			<% end %>
+
+		</div>
+	<% end %>
+</section>

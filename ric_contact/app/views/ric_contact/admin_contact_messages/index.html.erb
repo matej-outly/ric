@@ -1,11 +1,10 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@contact_messages, { 
-		created_at: :datetime,
-		name: :string,
-		email: :string,
-	}, paths: {
-		show: :contact_message_path,
-		edit: :edit_contact_message_path,
-		destroy: :contact_message_path
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@contact_messages, { 
+	created_at: :datetime,
+	name: :string,
+	email: :string,
+}, paths: {
+	show: :contact_message_path,
+	edit: :edit_contact_message_path,
+	destroy: :contact_message_path
+}, pagination: true, summary: true ) %>

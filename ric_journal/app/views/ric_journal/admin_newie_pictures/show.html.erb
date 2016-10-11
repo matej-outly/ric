@@ -1,7 +1,6 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_show_table_for(@newie_picture, {
-		newie: { type: :belongs_to, label: :title, path: "ric_journal_admin.newie_path" },
-		picture: { type: :picture, thumb_style: :thumb },
-		title: :string
-	}) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_show_table_for(@newie_picture, {
+	newie: { type: :belongs_to, label: :title, path: "ric_journal_admin.newie_path" },
+	picture: { type: :picture, thumb_style: :thumb },
+	title: :string
+}) %>

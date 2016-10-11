@@ -1,13 +1,12 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@teams, { 
-		name: :string,
-		key: :string,
-		league_category: { type: :belongs_to, label: :name, path: :league_category_path },
-		home: :boolean,
-	}, paths: {
-		show: :team_path,
-		edit: :edit_team_path,
-		move: :move_team_path,
-		destroy: :team_path
-	}, moving: true, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@teams, { 
+	name: :string,
+	key: :string,
+	league_category: { type: :belongs_to, label: :name, path: :league_category_path },
+	home: :boolean,
+}, paths: {
+	show: :team_path,
+	edit: :edit_team_path,
+	move: :move_team_path,
+	destroy: :team_path
+}, moving: true, pagination: true, summary: true ) %>

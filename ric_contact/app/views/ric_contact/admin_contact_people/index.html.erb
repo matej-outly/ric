@@ -1,13 +1,12 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@contact_people, { 
-		name: :name,
-		role: :string,
-		phone: :string,
-		email: :string,
-	}, paths: {
-		show: :contact_person_path,
-		edit: :edit_contact_person_path,
-		move: :move_contact_person_path,
-		destroy: :contact_person_path
-	}, moving: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@contact_people, { 
+	name: :name,
+	role: :string,
+	phone: :string,
+	email: :string,
+}, paths: {
+	show: :contact_person_path,
+	edit: :edit_contact_person_path,
+	move: :move_contact_person_path,
+	destroy: :contact_person_path
+}, moving: true, summary: true ) %>

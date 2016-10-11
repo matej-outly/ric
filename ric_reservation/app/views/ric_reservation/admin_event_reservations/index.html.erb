@@ -1,65 +1,63 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	
-	<%
-		columns = rug_columns
-		columns.add_column_by_type(:schedule_date, :date)
-		columns.add_column_by_type(:schedule_formatted_time, :string)
-		columns.add_column_by_block(:name) do |event|
-			link_to event.name, ric_reservation_admin.event_path(event)
+<%= render partial: "ruth_admin/components/page_header" %>	
+<%
+	columns = rug_columns
+	columns.add_column_by_type(:schedule_date, :date)
+	columns.add_column_by_type(:schedule_formatted_time, :string)
+	columns.add_column_by_block(:name) do |event|
+		link_to event.name, ric_reservation_admin.event_path(event)
+	end
+	columns.add_column_by_block(:tmp_canceled) do |event|
+		result = ""
+		result += (event.tmp_canceled? ? t("general.bool_yes") : t("general.bool_no") )
+		if event.tmp_canceled?
+			result += link_to("<i class=\"icon-check\"></i>".html_safe + t('general.action.reset'), ric_reservation_admin.event_modifier_path(event.tmp_canceled_modifier), method: :delete)
 		end
-		columns.add_column_by_block(:tmp_canceled) do |event|
-			result = ""
-			result += (event.tmp_canceled? ? t("general.bool_yes") : t("general.bool_no") )
-			if event.tmp_canceled?
-				result += link_to("<i class=\"icon-check\"></i>".html_safe + t('general.action.reset'), ric_reservation_admin.event_modifier_path(event.tmp_canceled_modifier), method: :delete)
-			end
-			result
-		end	
-	%>
-	<%= rug_show_table_for(@event, columns) %>
+		result
+	end	
+%>
+<%= rug_show_table_for(@event, columns) %>
 
-	<table class="striped index_table reservations list">
-		<thead>
+<table class="index-table reservations list">
+	<thead>
+		<tr>
+			<th><%= RicReservation.reservation_model.human_attribute_name('owner_name').capitalize %></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		
+		<% @reservations_above_line.each do |reservation| %>
 			<tr>
-				<th><%= RicReservation.reservation_model.human_attribute_name('owner_name').capitalize %></th>
-				<th></th>
+				<td>
+					<% if !reservation.owner_id.nil? %>
+						<%= link_to reservation.owner_name, ric_reservation_admin.teacher_path(reservation.owner_id) %>
+					<% else %>
+						<%= reservation.owner_name %>
+					<% end %>
+				</td>
+				<td class="action">
+					<div class="medium default btn icon-left icon-trash"><%= link_to t('headers.ric_reservation.admin_event_reservations.destroy').html_safe, ric_reservation_admin.event_reservation_path(reservation), method: :delete, data: { confirm: t('general.are_you_sure') } %></div>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			
-			<% @reservations_above_line.each do |reservation| %>
-				<tr>
-					<td>
-						<% if !reservation.owner_id.nil? %>
-							<%= link_to reservation.owner_name, ric_reservation_admin.teacher_path(reservation.owner_id) %>
-						<% else %>
-							<%= reservation.owner_name %>
-						<% end %>
-					</td>
-					<td class="action">
-						<div class="medium default btn icon-left icon-trash"><%= link_to t('headers.ric_reservation.admin_event_reservations.destroy').html_safe, ric_reservation_admin.event_reservation_path(reservation), method: :delete, data: { confirm: t('general.are_you_sure') } %></div>
-					</td>
-				</tr>
-			<% end %>
+		<% end %>
 
-			<tr class="line"><td colspan="4"></td></tr>
+		<tr class="line"><td colspan="4"></td></tr>
 
-			<% @reservations_below_line.each do |reservation| %>
-				<tr>
-					<td>
-						<% if !reservation.owner_id.nil? %>
-							<%= link_to reservation.owner_name, ric_reservation_admin.teacher_path(reservation.owner_id) %>
-						<% else %>
-							<%= reservation.owner_name %>
-						<% end %>
-					</td>
-					<td class="action">
-						<div class="medium default btn icon-left icon-trash"><%= link_to t('headers.ric_reservation.admin_event_reservations.destroy').html_safe, ric_reservation_admin.event_reservation_path(reservation), method: :delete, data: { confirm: t('general.are_you_sure') } %></div>
-					</td>
-				</tr>
-			<% end %>
+		<% @reservations_below_line.each do |reservation| %>
+			<tr>
+				<td>
+					<% if !reservation.owner_id.nil? %>
+						<%= link_to reservation.owner_name, ric_reservation_admin.teacher_path(reservation.owner_id) %>
+					<% else %>
+						<%= reservation.owner_name %>
+					<% end %>
+				</td>
+				<td class="action">
+					<div class="medium default btn icon-left icon-trash"><%= link_to t('headers.ric_reservation.admin_event_reservations.destroy').html_safe, ric_reservation_admin.event_reservation_path(reservation), method: :delete, data: { confirm: t('general.are_you_sure') } %></div>
+				</td>
+			</tr>
+		<% end %>
 
-		</tbody>
-	</table>
+	</tbody>
+</table>
 
-<% end %>

@@ -1,54 +1,52 @@
-<%= render layout: "ric_portal/layouts/with_full_width_row", locals: { disable_header: true } do %>
-	<%= render partial: "submenu" %>
-	<% if @resource %>
-		<h2><%= t("headers.ric_reservation.public_timetables.show_named", resource_name: @resource.name) %></h2>
-		<% content_for :full_width_row do %>
-			<% if @period == "week" %>
-				<%=	
-					timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_public.timetable_path(@resource, params) }, 
-					{
-						page_bottom: 1,
-						page_top: 8
-					}) 
-				%>
-				<%=
-					week_timetable(@from, [
-						[ @events, {
-							label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
-							#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
-						} ],
-						[ @reservations, {
-							label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
-							item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
-						} ],
-					], {
-						min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
-						max_hour: @resource.opening_hours ? @resource.opening_hours[:max] : 16,
-						empty_path_callback: lambda { |date, time_from| @resource.state_behavior(DateTime.compose(date, time_from)) == :open ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) : nil }
-					})
-				%>
-			<% else %>
-				<%=	
-					timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_public.timetable_path(@resource, params) }, {
-						page_bottom: 1,
-						page_top: 2
-					}) 
-				%>
-				<%=
-					month_timetable(@from, [
-						[ @events, {
-							label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
-							#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
-						} ],
-						[ @reservations, {
-							label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
-							item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
-						} ],
-					], {
-						empty_path_callback: lambda { |date| @resource.state_behavior(date + 1.day) == :open ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) : nil }
-					})
-				%>
-			<% end %>
+<%= render partial: "submenu" %>
+<% if @resource %>
+	<h2><%= t("headers.ric_reservation.public_timetables.show_named", resource_name: @resource.name) %></h2>
+	<% content_for :full_width_row do %>
+		<% if @period == "week" %>
+			<%=	
+				timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_public.timetable_path(@resource, params) }, 
+				{
+					page_bottom: 1,
+					page_top: 8
+				}) 
+			%>
+			<%=
+				week_timetable(@from, [
+					[ @events, {
+						label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+						#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
+					} ],
+					[ @reservations, {
+						label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+						item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
+					} ],
+				], {
+					min_hour: @resource.opening_hours ? @resource.opening_hours[:min] : 8, 
+					max_hour: @resource.opening_hours ? @resource.opening_hours[:max] : 16,
+					empty_path_callback: lambda { |date, time_from| @resource.state_behavior(DateTime.compose(date, time_from)) == :open ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date, time_from: time_from) : nil }
+				})
+			%>
+		<% else %>
+			<%=	
+				timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_public.timetable_path(@resource, params) }, {
+					page_bottom: 1,
+					page_top: 2
+				}) 
+			%>
+			<%=
+				month_timetable(@from, [
+					[ @events, {
+						label_callback: lambda { |event, options| "<div class=\"name\">#{event.name}</div><div class=\"capacity\">#{event.reservations.above_line.count}/#{event.capacity.to_s}</div>" },
+						#item_path_callback: lambda { |event| ric_reservation_public.event_path(event) }
+					} ],
+					[ @reservations, {
+						label_callback: lambda { |reservation, options| "<div class=\"name\">#{reservation.name}</div><div class=\"owner\">#{!reservation.owner.nil? ? reservation.owner.name_formatted : ""}</div>" },
+						item_path_callback: lambda { |reservation| current_user && reservation.owner_id == current_user.id ? ric_reservation_public.resource_reservation_path(reservation) : nil }
+					} ],
+				], {
+					empty_path_callback: lambda { |date| @resource.state_behavior(date + 1.day) == :open ? ric_reservation_public.new_resource_reservation_path(resource_id: @resource.id, schedule_date: date) : nil }
+				})
+			%>
 		<% end %>
 	<% end %>
 <% end %>

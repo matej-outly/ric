@@ -1,11 +1,10 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@newies, { 
-		title: :string,
-		perex: :text,
-		published_at: :datetime
-	}, paths: {
-		show: "ric_journal_admin.newie_path",
-		edit: "ric_journal_admin.edit_newie_path",
-		destroy: "ric_journal_admin.newie_path"
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@newies, { 
+	title: :string,
+	perex: :text,
+	published_at: :datetime
+}, paths: {
+	show: "ric_journal_admin.newie_path",
+	edit: "ric_journal_admin.edit_newie_path",
+	destroy: "ric_journal_admin.newie_path"
+}, pagination: true, summary: true ) %>

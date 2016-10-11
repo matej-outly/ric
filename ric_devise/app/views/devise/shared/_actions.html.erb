@@ -1,4 +1,4 @@
-<%= rug_menu_for(nil, name: "actions") do |m| %>
+<%= rug_menu(name: "actions") do |m| %>
 	<%= m.item t("devise.action.sign_in").capitalize, new_session_path(resource_name), icon: "login", active: (controller_name == 'sessions') %>
 	<% if devise_mapping.registerable? %>
 		<%= m.item t("devise.action.sign_up").capitalize, new_registration_path(resource_name), icon: "user-add", active: (controller_name == 'registrations') %>

@@ -1,6 +1,4 @@
-<%= render layout: "ric_portal/layouts/default" do %>
-	<%= rug_show_table_for(@reservation, { 
-		resource: { type: :belongs_to, label: :name, path: "ric_reservation_public.timetable_path" },
-	}) %>
-	<%= render partial: "form" %>
-<% end %>
+<%= rug_show_table_for(@reservation, { 
+	resource: { type: :belongs_to, label: :name, path: "ric_reservation_public.timetable_path" },
+}) %>
+<%= render partial: "form" %>

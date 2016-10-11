@@ -1,27 +1,25 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_hierarchical_index_table_for(@gallery_directories, { 
-		name: :string,
-		description: :text
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_hierarchical_index_table_for(@gallery_directories, { 
+	name: :string,
+	description: :text
+}, paths: {
+	show: :directory_path,
+	edit: :edit_directory_path,
+	move_up: :move_up_directory_path,
+	move_down: :move_down_directory_path,
+	destroy: :directory_path
+}, moving: true, summary: true ) %>
+
+<% if @gallery_pictures.count > 0 %>
+	<h3><%= t("headers.ric_gallery.admin_directories.pictures") %></h3>
+
+	<%= rug_index_table_for(@gallery_pictures, { 
+		picture: { type: :picture, thumb_style: :thumb },
+		title: :string
 	}, paths: {
-		show: :directory_path,
-		edit: :edit_directory_path,
-		move_up: :move_up_directory_path,
-		move_down: :move_down_directory_path,
-		destroy: :directory_path
-	}, moving: true, summary: true ) %>
-
-	<% if @gallery_pictures.count > 0 %>
-		<h3><%= t("headers.ric_gallery.admin_directories.pictures") %></h3>
-
-		<%= rug_index_table_for(@gallery_pictures, { 
-			picture: { type: :picture, thumb_style: :thumb },
-			title: :string
-		}, paths: {
-			show: :picture_path,
-			edit: :edit_picture_path,
-			move: :move_picture_path,
-			destroy: :picture_path
-		}, moving: true) %>
-	<% end %>
-
+		show: :picture_path,
+		edit: :edit_picture_path,
+		move: :move_picture_path,
+		destroy: :picture_path
+	}, moving: true) %>
 <% end %>

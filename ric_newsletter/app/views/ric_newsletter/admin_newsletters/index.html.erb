@@ -1,10 +1,9 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@newsletters, { 
-		subject: :string,
-		created_at: :datetime
-	}, paths: {
-		show: :newsletter_path,
-		edit: :edit_newsletter_path,
-		destroy: :newsletter_path
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@newsletters, { 
+	subject: :string,
+	created_at: :datetime
+}, paths: {
+	show: :newsletter_path,
+	edit: :edit_newsletter_path,
+	destroy: :newsletter_path
+}, pagination: true, summary: true ) %>

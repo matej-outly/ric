@@ -1,20 +1,19 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<section class="tabs pill">
-		<ul class="tab-nav">
-			<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
-				<li class="<%= (index == 0 ? "active" : "") %>"><a href="#"><%= t("activerecord.attributes.ric_website/settings_collection.category_values.#{category}") %></a></li>
-			<% end %>
-		</ul>
+<%= render partial: "ruth_admin/components/page_header" %>
+<section class="tabs pill">
+	<ul class="tab-nav">
 		<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
-			<div class="tab-content <%= (index == 0 ? "active" : "") %>">
-				<% 
-					columns = {}
-					settings.each do |setting_key| 
-						columns[setting_key] = @settings_collection.settings[setting_key.to_sym][:kind]
-					end
-				%>
-				<%= rug_show_table_for(@settings_collection, columns) %>
-			</div>
+			<li class="<%= (index == 0 ? "active" : "") %>"><a href="#"><%= t("activerecord.attributes.ric_website/settings_collection.category_values.#{category}") %></a></li>
 		<% end %>
-	</section>
-<% end %>
+	</ul>
+	<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
+		<div class="tab-content <%= (index == 0 ? "active" : "") %>">
+			<% 
+				columns = {}
+				settings.each do |setting_key| 
+					columns[setting_key] = @settings_collection.settings[setting_key.to_sym][:kind]
+				end
+			%>
+			<%= rug_show_table_for(@settings_collection, columns) %>
+		</div>
+	<% end %>
+</section>

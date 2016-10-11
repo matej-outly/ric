@@ -1,12 +1,11 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@orders, { 
-		created_at: :datetime,
-		price: :currency,
-		payment_type: :enum,
-		delivery_type: :enum,
-		paid_at: :datetime,
-	}, paths: {
-		show: :order_path,
-		destroy: :order_path
-	}, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@orders, { 
+	created_at: :datetime,
+	price: :currency,
+	payment_type: :enum,
+	delivery_type: :enum,
+	paid_at: :datetime,
+}, paths: {
+	show: :order_path,
+	destroy: :order_path
+}, pagination: true, summary: true ) %>
