@@ -10,14 +10,6 @@
 # *****************************************************************************
 
 RicDevise::Engine.routes.draw do
-
 	root "root#index"
-
-	#
-	# RIC Devise
-	#
-	#devise_for :users, controllers: { sessions: "ric_devise/sessions", passwords: "ric_devise/passwords" }
-	
 	devise_for RicDevise.route_name.to_sym, class_name: RicDevise.user_model.to_s, module: :devise
-
 end

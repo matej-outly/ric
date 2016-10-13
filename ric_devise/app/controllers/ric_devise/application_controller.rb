@@ -11,13 +11,5 @@
 
 module RicDevise
 	class ApplicationController < ::ApplicationController
-
-		#
-		# Layout
-		#
-		layout "ric_admin"
-
-	protected
-		
 	end
 end
