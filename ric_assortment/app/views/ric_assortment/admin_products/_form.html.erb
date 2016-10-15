@@ -1,20 +1,16 @@
 <%= rug_form_for(@product, create_url: :products_path, update_url: :product_path) do |f| %>
-	<section class="tabs pill">
-		<ul class="tab-nav">
-			<% @product.class.parts.each do |part| %>
-				<% if !RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
-					<li class="<%= (part == :identification ? "active" : "") %>"><a href="#"><%= t("headers.ric_assortment.admin_products.#{part.to_s}") %></a></li>
-				<% end %>
-			<% end %>
-		</ul>
-		<% @product.class.parts.each do |part| %>
-			<% if !RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call.empty? %>
-				<div class="tab-content <%= (part == :identification ? "active" : "") %>">
-					<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
-				</div>
+	<% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:form) %>
+		<%= render partial: "form_identification", locals: { f: f } %>
+	<% end %>
+	<% tabs = rug_tabs %>
+	<% @product.class.parts.select { |part, appearences| part != :identification }.each do |part, appearences| %>
+		<% if appearences.include?(:form) %>
+			<% tabs.tab part, t("headers.ric_assortment.admin_products.#{part.to_s}") do %>
+				<%= render partial: "form_#{part.to_s}", locals: { f: f } %>
 			<% end %>
 		<% end %>
-	</section>
+	<% end %>
+	<%= tabs.render %>
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
 <% end %>

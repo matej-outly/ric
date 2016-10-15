@@ -37,6 +37,17 @@ module RicAssortment
 					end
 
 					#
+					# Search action
+					#
+					def search
+						@product_attachments = RicAssortment.product_attachment_model.search(params[:q]).order(title: :asc)
+						respond_to do |format|
+							format.html { render "index" }
+							format.json { render json: @product_attachments.to_json }
+						end
+					end
+
+					#
 					# Show action
 					#
 					def show
@@ -46,6 +57,7 @@ module RicAssortment
 					# New action
 					#
 					def new
+						save_referrer
 						@product_attachment = RicAssortment.product_attachment_model.new
 						@product_attachment.product_ids = [ params[:product_id] ] if params[:product_id]
 					end
@@ -54,6 +66,7 @@ module RicAssortment
 					# Edit action
 					#
 					def edit
+						save_referrer
 					end
 
 					#
@@ -62,9 +75,8 @@ module RicAssortment
 					def create
 						@product_attachment = RicAssortment.product_attachment_model.new(product_attachment_params)
 						if @product_attachment.save
-							@product_attachment.product_ids = product_ids_from_params
 							respond_to do |format|
-								format.html { redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.create") }
 								format.json { render json: @product_attachment.id }
 							end
 						else
@@ -80,9 +92,8 @@ module RicAssortment
 					#
 					def update
 						if @product_attachment.update(product_attachment_params)
-							@product_attachment.product_ids = product_ids_from_params
 							respond_to do |format|
-								format.html { redirect_to product_attachment_path(@product_attachment), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.update") }
 								format.json { render json: @product_attachment.id }
 							end
 						else
@@ -99,37 +110,35 @@ module RicAssortment
 					def destroy
 						@product_attachment.destroy
 						respond_to do |format|
-							format.html { redirect_to product_attachments_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @product_attachment.id }
 						end
 					end
 
 				protected
 
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+
 					def set_product_attachment
 						@product_attachment = RicAssortment.product_attachment_model.find_by_id(params[:id])
 						if @product_attachment.nil?
-							redirect_to product_attachments_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.not_found")
 						end
 					end
+
+					# *********************************************************
+					# Param filters
+					# *********************************************************
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def product_attachment_params
-						params.require(:product_attachment).permit(:title, :file)
-					end
-
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
-					def product_ids_from_params
-						params.require(:product_attachment).permit(:product_ids)
-						if params[:product_attachment] && params[:product_attachment][:product_ids]
-							return params[:product_attachment][:product_ids].split(" ")
-						else
-							return []
-						end
+						result = params.require(:product_attachment).permit(:title, :file, :product_ids)
+						result[:product_ids] = result[:product_ids].split(",") if !result[:product_ids].blank?
+						return result
 					end
 
 				end

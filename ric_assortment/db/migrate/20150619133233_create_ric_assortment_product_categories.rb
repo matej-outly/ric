@@ -12,6 +12,23 @@ class CreateRicAssortmentProductCategories < ActiveRecord::Migration
 
 			# Name
 			t.string :name
+
+			# Content
+			t.text :perex
+			t.text :content
+
+			# Default attributes dynamically defined for contaned products
+			t.string :default_attributes
+
+		end
+		create_table :product_categories_products, id: false do |t|
+
+			t.timestamps null: true
+
+			# Relations
+			t.integer :product_id, index: true
+			t.integer :product_category_id, index: true
+
 		end
 	end
 end

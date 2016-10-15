@@ -25,70 +25,38 @@ module RicAssortment
 					# Structure
 					# *********************************************************
 
-					#
-					# Relation to product categories
-					#
 					has_and_belongs_to_many :product_categories, class_name: RicAssortment.product_category_model.to_s, after_add: :update_default_product_category, after_remove: :update_default_product_category
 
-					#
-					# Relation to product categories
-					#
 					belongs_to :default_product_category, class_name: RicAssortment.product_category_model.to_s
 
-					#
-					# Relation to product attachments
-					#
-					has_and_belongs_to_many :product_attachments, class_name: RicAssortment.product_attachment_model.to_s
+					has_many :product_pictures, class_name: RicAssortment.product_picture_model.to_s, dependent: :destroy if RicAssortment.enable_pictures
 
-					#
-					# Relation to product photos
-					#
-					has_many :product_photos, class_name: RicAssortment.product_photo_model.to_s, dependent: :destroy
+					has_and_belongs_to_many :product_attachments, class_name: RicAssortment.product_attachment_model.to_s if RicAssortment.enable_attachments
 
-					#
-					# Relation to product variants
-					#
-					has_many :product_variants, class_name: RicAssortment.product_variant_model.to_s, dependent: :destroy
-
-					#
-					# Relation to product tickers
-					#
-					has_and_belongs_to_many :product_tickers, class_name: RicAssortment.product_ticker_model.to_s
+					has_and_belongs_to_many :product_teasers, class_name: RicAssortment.product_teaser_model.to_s if RicAssortment.enable_teasers
 
 					# *********************************************************
-					# Enums
-					# *********************************************************
-
-					#
 					# Currency
-					#
+					# *********************************************************
+
 					enum_column :currency, config(:currencies)
 
 					# *********************************************************
 					# Ordering
 					# *********************************************************
 
-					#
-					# Ordering
-					#
 					enable_ordering
 
 					# *********************************************************
-					# Callbacks
+					# Slugs
 					# *********************************************************
 
-					#
-					# Genereate slugs after save
-					#
 					after_save :generate_slugs
 
-					#
-					# Destroy slugs before destroy
-					#
 					before_destroy :destroy_slugs, prepend: true
 
 					# *********************************************************
-					# JSON
+					# Name
 					# *********************************************************
 
 					#
@@ -97,86 +65,76 @@ module RicAssortment
 					add_methods_to_json :name_with_category
 
 					# *********************************************************
+					# Other attributes
+					# *********************************************************
+
+					store_accessor :other_attributes
+
+					before_save :_synchronize_category_attributes
+
+					# *********************************************************
 					# Filter
 					# *********************************************************
 
-					#
-					# For filtering by product category
-					#
-					attr_accessor :product_category_id
+					attr_accessor :product_category_id # For filtering by product category
 
 				end
 
 				module ClassMethods
 
-					#
+					# *********************************************************
 					# Parts
-					#
+					# *********************************************************
+
 					def parts
-						[:identification, :content, :dimensions, :price, :meta, :categories, :variants, :photos, :attachments]
+						result = {}
+						result[:identification] = [:show, :form]
+						result[:attributes] = [:show, :form]
+						result[:content] = [:show, :form]
+						result[:pictures] = [:show] if RicAssortment.enable_pictures
+						result[:pricing] = [:show, :form]
+						result[:meta] = [:show, :form]
+						result[:teasers] = [:show] if RicAssortment.enable_teasers
+						result[:attachments] = [:show] if RicAssortment.enable_attachments
+						return result
 					end
 
-					#
+					# *********************************************************
 					# Columns
-					#	
-					def identification_part_columns
-						[:name, :catalogue_number, :ean]
+					# *********************************************************
+					
+					def permitted_columns
+						[
+							# Identification
+							:name, 
+							:catalogue_number,
+							:ean,
+							:product_category_ids,
+
+							# Attributes
+							:other_attributes,
+							
+							# Content
+							:perex, 
+							:content,
+
+							# Price part
+							:price, 
+							:currency,
+
+							# Meta part
+							:description,
+							:keywords,
+						]
 					end
 
-					#
-					# Columns
-					#	
-					def content_part_columns
-						[:perex, :content]
-					end
-
-					#
-					# Columns
-					#
-					def dimensions_part_columns
-						[:height, :width, :depth, :weight]
-					end
-
-					#
-					# Columns
-					#
-					def price_part_columns
-						[:price, :currency]
-					end
-
-					#
-					# Columns
-					#
-					def meta_part_columns
-						[:description, :keywords]
-					end
-
-					#
-					# Columns
-					#
-					def categories_part_columns
-						[:product_category_ids, :product_ticker_ids]
-					end
-
-					#
-					# Columns
-					#
-					def variants_part_columns
-						[]
-					end
-
-					#
-					# Columns
-					#
-					def photos_part_columns
-						[]
-					end
-
-					#
-					# Columns
-					#
-					def attachments_part_columns
-						[]
+					def filter_columns
+						[
+							:name, 
+							:catalogue_number,
+							:ean,
+							:product_category_id,
+						]
 					end
 					
 					# *********************************************************
@@ -203,19 +161,32 @@ module RicAssortment
 							joins(:product_categories).where(product_categories: { id: product_category_id })
 						end
 					end
-
+					
 					def filter(params = {})
 						
 						# Preset
 						result = all
 
-						# Process known filters
-						params.each do |column, value|
-							if column == :product_category_id
-								result = from_category(value)
-							end
+						# Name
+						if !params[:name].blank?
+							result = result.where("lower(unaccent(products.name)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:name].to_s)
 						end
 
+						# Catalogue number
+						if !params[:catalogue_number].blank?
+							result = result.where("lower(unaccent(products.catalogue_number)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:catalogue_number].to_s)
+						end
+
+						# EAN
+						if !params[:ean].blank?
+							result = result.where("lower(unaccent(products.ean)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:ean].to_s)
+						end
+
+						# Product category
+						if !params[:product_category_id].blank?
+							result = result.from_category(params[:product_category_id])
+						end
+					
 						result
 					end
 
@@ -239,19 +210,16 @@ module RicAssortment
 						new_record.product_categories = self.product_categories
 
 						# Attachments
-						new_record.product_attachments = self.product_attachments
+						new_record.product_attachments = self.product_attachments if RicAssortment.enable_attachments
 
-						# Tickers
-						new_record.product_tickers = self.product_tickers
+						# Teasers
+						new_record.product_teasers = self.product_teasers if RicAssortment.enable_teasers
 
-						# Photos
-						self.product_photos.each do |product_photo|
-							new_record.product_photos << product_photo.duplicate
-						end
-
-						# Panels
-						self.product_variants.each do |product_variant|
-							new_record.product_variants << product_variant.duplicate
+						# Pictures
+						if RicAssortment.enable_pictures
+							self.product_pictures.each do |product_picture|
+								new_record.product_pictures << product_picture.duplicate
+							end
 						end
 
 					end
@@ -260,7 +228,7 @@ module RicAssortment
 				end
 
 				# *************************************************************
-				# Slug
+				# Slugs
 				# *************************************************************
 
 				#
@@ -314,7 +282,7 @@ module RicAssortment
 					end
 					return default_product_category
 				end
-
+				
 				#
 				# Find and bind default category (first of categories with maximal depth)
 				#
@@ -324,6 +292,10 @@ module RicAssortment
 					return default_product_category
 				end
 
+				# *************************************************************
+				# Name
+				# *************************************************************
+
 				#
 				# Get name with default product category name combined
 				#
@@ -331,6 +303,32 @@ module RicAssortment
 					result = self.name
 					result += " - " + self.default_product_category.name if self.default_product_category
 					return result
+				end
+				
+				# *************************************************************
+				# Attributes
+				# *************************************************************
+
+				def _synchronize_category_attributes
+					self.product_categories.each do |leaf_product_category|
+						leaf_product_category.self_and_ancestors.each do |product_category|
+							if product_category.default_attributes
+								product_category.default_attributes.each do |default_attribute|
+									if self.other_attributes.nil?
+										self.other_attributes = {}
+									end
+									if !self.other_attributes.key?(default_attribute)
+										self.other_attributes[default_attribute] = ""
+									end
+								end
+							end
+						end
+					end
+				end
+
+				def synchronize_category_attributes
+					self._synchronize_category_attributes
+					self.save
 				end
 
 			end

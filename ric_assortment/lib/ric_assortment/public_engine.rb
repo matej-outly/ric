@@ -15,7 +15,7 @@ module RicAssortment
 		#
 		# Controllers
 		#
-		require 'ric_assortment/concerns/controllers/public/products_controller'
+		require "ric_assortment/concerns/controllers/public/products_controller"
 		
 		isolate_namespace RicAssortment
 

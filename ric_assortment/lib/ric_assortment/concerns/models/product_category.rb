@@ -25,29 +25,43 @@ module RicAssortment
 					# Structure
 					# *********************************************************
 
-					#
-					# Relation to products
-					#
 					has_and_belongs_to_many :products, class_name: RicAssortment.product_model.to_s
 
-					#
+					# *********************************************************
 					# Ordering
-					#
+					# *********************************************************
+
 					enable_hierarchical_ordering
 					
-					#
-					# Genereate slugs after save
-					#
+					# *********************************************************
+					# Slugs
+					# *********************************************************
+
 					after_save :generate_slugs
 
-					#
-					# Destroy slugs before destroy
-					#
 					before_destroy :destroy_slugs, prepend: true
+
+					# *********************************************************
+					# Default attributes
+					# *********************************************************
+
+					array_column :default_attributes
 
 				end
 
 				module ClassMethods
+
+					# *********************************************************
+					# Columns
+					# *********************************************************
+
+					def permitted_columns
+						[
+							:name, 
+							:parent_id,
+							:default_attributes,
+						]
+					end
 
 					# *********************************************************
 					# Scopes
@@ -69,7 +83,7 @@ module RicAssortment
 				end
 
 				# *************************************************************
-				# Slug
+				# Slugs
 				# *************************************************************
 
 				#

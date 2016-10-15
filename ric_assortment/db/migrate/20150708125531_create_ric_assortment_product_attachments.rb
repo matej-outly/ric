@@ -5,7 +5,7 @@ class CreateRicAssortmentProductAttachments < ActiveRecord::Migration
 			t.timestamps null: true
 			
 			# Position
-			t.integer :position
+			t.integer :position, index: true
 
 			# Title
 			t.string :title
@@ -18,9 +18,9 @@ class CreateRicAssortmentProductAttachments < ActiveRecord::Migration
 
 			t.timestamps null: true
 
-			# Bind
-			t.integer :product_id
-			t.integer :product_attachment_id
+			# Relations
+			t.integer :product_id, index: true
+			t.integer :product_attachment_id, index: true
 
 		end
 	end

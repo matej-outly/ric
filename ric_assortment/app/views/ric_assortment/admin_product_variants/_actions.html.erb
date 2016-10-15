@@ -1,6 +1,0 @@
-<%= rug_menu_for(@product_variant, name: "actions", path_base: "product_variant") do |m| %>
-	<%= m.new_item nil, new_product_variant_path(product_id: @product_variant.product_id) %>
-	<%= m.show_item %>
-	<%= m.edit_item %>
-	<%= m.destroy_item %>
-<% end %>

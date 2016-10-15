@@ -15,14 +15,12 @@ cs:
         destroy: "Smazat produkt"
         identification: Identifikace
         content: Popis
-        dimensions: Rozměry
-        price: Cena
+        attributes: Rozměry
+        pricing: Cena
         meta: Meta info.
-        photos: Fotografie
-        variants: Varianty produktu
+        pictures: Fotografie
         attachments: Přílohy
-        categories: Kategorie
-        tickers: Upoutávky
+        teasers: Upoutávky
       admin_product_attachments:
         index: "Přílohy produktů"
         show: "Detail přílohy produktu"
@@ -31,10 +29,9 @@ cs:
         edit: "Upravit přílohu produktu"
         update: "Upravit přílohu produktu"
         destroy: "Smazat přílohu produktu"
-        products: "Navázané produkty"
-      admin_product_attachment_relations:
-        edit: "Přidat přílohu produktu"
-        update: "Přidat přílohu produktu"
+      admin_products_product_attachments:
+        edit: "Navázat přílohy produktu"
+        update: "Navázat přílohy produktu"
         destroy: "Odebrat přílohu produktu"
       admin_product_categories:
         index: "Kategorie produktů"
@@ -44,27 +41,14 @@ cs:
         edit: "Upravit kategorii produktů"
         update: "Upravit kategorii produktů"
         destroy: "Smazat kategorii produktů"
-        children: "Podřazené kategorie"
-        products: "Obsažené produkty"
-      admin_product_category_relations:
-        edit: "Přidat kategorie produktu"
-        update: "Přidat kategorie produktu"
-        destroy: "Odebrat kategorii produktu"
-      admin_product_photos:
+      admin_product_pictures:
         show: Detail fotografie
         new: Nová fotografie
         create: Nová fotografie
         edit: Upravit fotografii
         update: Upravit fotografii
         destroy: Smazat fotografii
-      admin_product_variants:
-        show: Detail varianty
-        new: Nová varianta
-        create: Nová varianta
-        edit: Upravit variantu
-        update: Upravit variantu
-        destroy: Smazat variantu
-      admin_product_tickers:
+      admin_product_teasers:
         index: "Upoutávky produktů"
         show: "Detail upoutávky produktů"
         new: "Nová upoutávka produktů"
@@ -72,7 +56,6 @@ cs:
         edit: "Upravit upoutávku produktů"
         update: "Upravit upoutávku produktů"
         destroy: "Smazat upoutávku produktů"
-        products: "Obsažené produkty"
       public_products:
         index: Produkty
 
@@ -84,6 +67,7 @@ cs:
         ean: EAN
         perex: Perex
         content: Popis
+        other_attributes: Atributy
         height: Výška (cm)
         width: Šířka (cm)
         depth: Hloubka (cm)
@@ -101,40 +85,36 @@ cs:
         product_category: Kategorie
         product_category_ids: Kategorie
         product_categories: Kategorie
-        product_ticker_ids: Upoutávky
-        product_tickers: Upoutávky
+        product_attachment_ids: Přílohy
+        product_attachments: Přílohy
+        product_teaser_ids: Upoutávky
+        product_teasers: Upoutávky
         all_product_categories: Všechny kategorie
       ric_assortment/product_attachment:
         file: Soubor
         title: Popis
-        products: Produkty
+        products: Navázané produkty
+        product_ids: Navázané produkty
       ric_assortment/product_category:
         name: Jméno
+        default_attributes: Přednastavené atributy
         parent: Nadřazená kategorie
         parent_id: Nadřazená kategorie
-      ric_assortment/product_photo:
+        children: Podřazené kategorie
+        products: Obsažené produkty
+      ric_assortment/product_picture:
         product: Produkt
         product_id: Produkt
         picture: Obrázek
         picture_crop: Ořez obrázku
         title: Popis
-      ric_assortment/product_ticker:
+      ric_assortment/product_teaser:
         name: Jméno
         key: Identifikující klíč
-        products: Produkty
-        product_ids: Produkty
+        products: Obsažené Produkty
+        product_ids: Obsažené Produkty
         key_values:
           homepage: Upoutávka na homepage
-      ric_assortment/product_variant:
-        product: Produkt
-        product_id: Produkt
-        name: Jméno
-        required: Povinné vyplnění
-        operator: Operátor
-        operator_values:
-          xor: XOR
-        sub_products: Produkty ve výběru
-        sub_product_ids: Produkty ve výběru
     notices:
       models:
         ric_assortment/product:
@@ -143,34 +123,27 @@ cs:
           move: "Produkt byl úspěšně přesunut."
           destroy: "Produkt byl úspěšně smazán."
           duplicate: "Produkt byl úspěšně zduplikován."
-          attachment_bind: "Vybrané přílohy byly úspěšně přidány."
-          attachment_unbind: "Příloha byla úspěšně odebrána."
-          category_bind: "Vybrané kategorie byly úspěšně přidány."
-          category_unbind: "Kategorie byla úspěšně odebrána."
+          update_attachments: "Vybrané přílohy byly úspěšně navázány k produktu."
+          destroy_attachment: "Příloha byla úspěšně odebrána z produktu."
         ric_assortment/product_attachment:
           create: "Příloha produktu byla úspěšně vytvořena."
           update: "Příloha produktu byla úspěšně upravena."
+          move: "Příloha produktu byla úspěšně přesunuta."
           destroy: "Příloha produktu byla úspěšně smazána."
         ric_assortment/product_category:
           create: "Kategorie produktů byla úspěšně vytvořena."
           update: "Kategorie produktů byla úspěšně upravena."
+          move: "Kategorie produktů byla úspěšně přesunuta."
           destroy: "Kategorie produktů byla úspěšně smazána."
-        ric_assortment/product_photo:
+        ric_assortment/product_picture:
           create: "Fotografie produktu byla úspěšně vytvořena."
           update: "Fotografie produktu byla úspěšně upravena."
+          move: "Fotografie produktu byla úspěšně přesunuta."
           destroy: "Fotografie produktu byla úspěšně smazána."
-        ric_assortment/product_ticker:
+        ric_assortment/product_teaser:
           create: "Upoutávka produktů byla úspěšně vytvořena."
           update: "Upoutávka produktů byla úspěšně upravena."
           destroy: "Upoutávka produktů byla úspěšně smazána."
-          product_bind: "Vybrané produkty byly úspěšně přidány."
-          product_unbind: "Produkt byl úspěšně odebrán."
-        ric_assortment/product_variant:
-          create: "Panel produktu byl úspěšně vytvořen."
-          update: "Panel produktu byl úspěšně upraven."
-          destroy: "Panel produktu byl úspěšně smazán."
-          sub_product_bind: "Vybrané produkty byly úspěšně přidány."
-          sub_product_unbind: "Produkt byl úspěšně odebrán."
     errors:
       models:
         ric_assortment/product:
@@ -180,15 +153,11 @@ cs:
           not_found: "Příloha produktu nebyla nalezena."
         ric_assortment/product_category:
           not_found: "Kategorie produktů nebyla nalezena."
-        ric_assortment/product_photo:
+        ric_assortment/product_picture:
           not_found: "Fotografie produktu nebyla nalezena."
           attributes:
             product_id:
               blank: "Produkt musí být vybrán."
-        ric_assortment/product_ticker:
+        ric_assortment/product_teaser:
           not_found: "Upoutávka produktů nebyla nalezena."
-        ric_assortment/product_variant:
-          not_found: "Panel produktu nebyl nalezen."
-          attributes:
-            product_id:
-              blank: "Produkt musí být vybrán."
+

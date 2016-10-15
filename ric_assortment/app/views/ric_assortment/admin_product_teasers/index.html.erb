@@ -1,0 +1,10 @@
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@product_tickers, { 
+	name: :string,
+	key: :enum,
+	products: { type: :has_many, label: :name_with_category }
+}, paths: {
+	show: :product_ticker_path,
+	edit: :edit_product_ticker_path,
+	destroy: :product_ticker_path
+}, summary: true ) %>

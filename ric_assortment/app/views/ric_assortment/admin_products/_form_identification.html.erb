@@ -1,3 +1,4 @@
 <%= f.text_input_row :name, :text_field %>
 <%= f.text_input_row :catalogue_number, :text_field %>
 <%= f.text_input_row :ean, :text_field %>
+<%= f.token_input_row :product_category_ids, ric_assortment_admin.search_product_categories_path, as: :product_categories, value_attr: :id, label_attr: :name %>

@@ -15,14 +15,12 @@ module RicAssortment
 		#
 		# Controllers
 		#
-		require 'ric_assortment/concerns/controllers/admin/products_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_attachments_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_attachment_relations_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_categories_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_category_relations_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_variants_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_photos_controller'
-		require 'ric_assortment/concerns/controllers/admin/product_tickers_controller'
+		require "ric_assortment/concerns/controllers/admin/products_controller"
+		require "ric_assortment/concerns/controllers/admin/product_categories_controller"
+		require "ric_assortment/concerns/controllers/admin/product_pictures_controller"
+		require "ric_assortment/concerns/controllers/admin/product_attachments_controller"
+		require "ric_assortment/concerns/controllers/admin/products_product_attachments_controller"
+		require "ric_assortment/concerns/controllers/admin/product_teasers_controller"
 		
 		isolate_namespace RicAssortment
 

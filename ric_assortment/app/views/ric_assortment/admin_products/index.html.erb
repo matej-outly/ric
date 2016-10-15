@@ -1,13 +1,12 @@
-<%= render layout: "ric_admin/layouts/with_right_side" do %>
-	<%= rug_index_table_for(@products, { 
-		name: :string,
-		catalogue_number: :string,
-		ean: :string,
-		price: :integer
-	}, paths: {
-		show: :product_path,
-		edit: :edit_product_path,
-		move: :move_product_path,
-		destroy: :product_path
-	}, moving: true, pagination: true, summary: true ) %>
-<% end %>
+<%= render partial: "ruth_admin/components/page_header" %>
+<%= rug_index_table_for(@products, { 
+	name: :string,
+	catalogue_number: :string,
+	ean: :string,
+	price: :integer
+}, paths: {
+	show: :product_path,
+	edit: :edit_product_path,
+	move: :move_product_path,
+	destroy: :product_path
+}, moving: true, pagination: true, summary: true ) %>

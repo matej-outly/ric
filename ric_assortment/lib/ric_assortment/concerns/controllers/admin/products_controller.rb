@@ -127,7 +127,7 @@ module RicAssortment
 					#
 					def duplicate
 						new_product = @product.duplicate
-						redirect_to product_path(new_product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.duplicate")
+						redirect_to edit_product_path(new_product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.duplicate")
 					end
 
 					#
@@ -140,20 +140,20 @@ module RicAssortment
 
 				protected
 
-					# *********************************************************************
+					# *********************************************************
 					# Model setters
-					# *********************************************************************
+					# *********************************************************
 
 					def set_product
 						@product = RicAssortment.product_model.find_by_id(params[:id])
 						if @product.nil?
-							redirect_to products_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
 						end
 					end
 
-					# *********************************************************************
+					# *********************************************************
 					# Session
-					# *********************************************************************
+					# *********************************************************
 
 					def session_key
 						return "products"
@@ -176,26 +176,24 @@ module RicAssortment
 						end
 					end
 
-					# *********************************************************************
+					# *********************************************************
 					# Param filters
-					# *********************************************************************
+					# *********************************************************
 
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def product_params
-						permitted_params = []
-						RicAssortment.product_model.parts.each do |part|
-							permitted_params.concat(RicAssortment.product_model.method("#{part.to_s}_part_columns".to_sym).call)
+						result = params.require(:product).permit(RicAssortment.product_model.permitted_columns)
+						RicAssortment.product_model.permitted_columns.select { |column| column.to_s.end_with?("_ids") }.each do |column|
+							result[column] = result[column].split(",") if !result[column].blank?
 						end
-						result = params.require(:product).permit(permitted_params)
-						result[:product_category_ids] = result[:product_category_ids].split(",") if !result[:product_category_ids].blank?
-						result[:product_ticker_ids] = result[:product_ticker_ids].split(",") if !result[:product_ticker_ids].blank?
+						result[:other_attributes] = JSON.parse(result[:other_attributes]) if !result[:other_attributes].blank?
 						return result
 					end
 
 					def filter_params
-						return params[:product].permit(:product_category_id)
+						return params[:product].permit(RicAssortment.product_model.filter_columns)
 					end
 
 				end

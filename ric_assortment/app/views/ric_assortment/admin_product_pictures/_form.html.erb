@@ -1,0 +1,14 @@
+<%= rug_form_for(@product_picture, 
+	create_url: lambda { product_product_pictures_path(@product) }, 
+	update_url: lambda { |product_picture| product_product_picture_path(@product, product_picture) }, 
+) do |f| %>
+	<% if @product_picture.config(:picture_croppable) == true %>
+		<%= f.dropzone_row :picture, append_columns: { product_id: true }, crop: true %>
+		<%= f.crop_row :picture %>
+	<% else %>
+		<%= f.dropzone_row :picture, append_columns: { product_id: true } %>
+	<% end %>
+	<%= f.text_input_row :title, :text_field %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

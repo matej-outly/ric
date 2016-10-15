@@ -1,5 +1,0 @@
-<%= rug_menu_for(@product_variant, name: "related") do |m| %>
-	<% if @product_variant %>
-		<%= m.item t("headers.ric_assortment.admin_products.show"), product_path(@product_variant.product), icon: "search" %>
-	<% end %>
-<% end %>

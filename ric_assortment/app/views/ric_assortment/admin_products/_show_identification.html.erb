@@ -1,5 +1,5 @@
 <%= rug_show_table_for(@product, { 
-	name: :string,
 	catalogue_number: :string,
-	ean: :string
+	ean: :string,
+	product_categories: { type: :has_many, label: :name, path: :product_category_path },
 }) %>

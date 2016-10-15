@@ -1,9 +1,0 @@
-<%= rug_form_for(@product_variant, create_url: :product_variants_path, update_url: :product_variant_path) do |f| %>
-	<%= f.hidden_field :product_id %>
-	<%= f.text_input_row :name %>
-	<%= f.checkbox_row :required %>
-	<%= f.picker_row :operator %>
-	<%= f.token_input_row :sub_product_ids, ric_assortment_admin.search_products_path, as: :sub_products, value_attr: :id, label_attr: :name_with_category %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
-<% end %>

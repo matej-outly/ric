@@ -21,37 +21,49 @@ RicAssortment::AdminEngine.routes.draw do
 			post "filter"
 			get "search"
 		end
+
+		# Product pictures
+		if RicAssortment.enable_pictures
+			resources :product_pictures, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_pictures" do
+				member do
+					put "move/:relation/:destination_id", action: "move", as: "move"
+				end
+			end
+		end
+
+	end
+	
+	# Product categories
+	resources :product_categories, controller: "admin_product_categories" do
+		member do
+			put "move_up"
+			put "move_down"
+		end
+		collection do 
+			get "search"
+		end
+	end
+	
+	# Products product attachments
+	if RicAssortment.enable_attachments
+		resources :products_product_attachments, only: [:edit, :update, :destroy], controller: "admin_products_product_attachments"
 	end
 
 	# Product attachments
-	resources :product_attachments, controller: "admin_product_attachments"
-
-	# Product attachment relations
-	resources :product_attachment_relations, only: [:edit, :update, :destroy], controller: "admin_product_attachment_relations"
-
-	# Product categories
-	resources :product_categories, controller: "admin_product_categories" do
-		collection do 
-			get "search"
+	if RicAssortment.enable_attachments
+		resources :product_attachments, controller: "admin_product_attachments" do
+			collection do 
+				get "search"
+			end
 		end
 	end
 
-	# Product category relations
-	resources :product_category_relations, only: [:edit, :update, :destroy], controller: "admin_product_category_relations"
-
-	# Product photos
-	resources :product_photos, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_photos"
-
-	# Product variants
-	resources :product_variants, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_variants"
-
-	# Product tickers
-	resources :product_tickers, controller: "admin_product_tickers" do
-		member do 
-			delete "unbind_product"
-		end
-		collection do 
-			get "search"
+	# Product teasers
+	if RicAssortment.enable_teasers
+		resources :product_teasers, controller: "admin_product_teasers" do
+			collection do 
+				get "search"
+			end
 		end
 	end
 

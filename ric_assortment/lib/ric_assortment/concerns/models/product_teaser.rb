@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product attachment
+# * Product teaser
 # *
 # * Author: Matěj Outlý
-# * Date  : 8. 7. 2015
+# * Date  : 12. 8. 2015
 # *
 # *****************************************************************************
 
 module RicAssortment
 	module Concerns
 		module Models
-			module ProductAttachment extend ActiveSupport::Concern
+			module ProductTeaser extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -28,19 +28,10 @@ module RicAssortment
 					has_and_belongs_to_many :products, class_name: RicAssortment.product_model.to_s
 
 					# *********************************************************
-					# Ordering
-					# *********************************************************
-					
-					enable_ordering
-					
-					# *********************************************************
-					# File
+					# Keys
 					# *********************************************************
 
-					has_attached_file :file
-					validates_attachment :file, content_type: { content_type: /\Aapplication\/.*\Z/ }
-
-					before_save :set_title_if_empty
+					enum_column :key, config(:keys)
 
 				end
 
@@ -55,22 +46,16 @@ module RicAssortment
 							all
 						else
 							if config(:disable_unaccent) == true
-								where_string = "(lower(title) LIKE ('%' || lower(trim(:query)) || '%'))"
+								where_string = "(lower(name) LIKE ('%' || lower(trim(:query)) || '%'))"
 							else
-								where_string = "(lower(unaccent(title)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))"
+								where_string = "(lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))"
 							end
 							where(where_string, query: query)
 						end
 					end
 
 				end
-
-				def set_title_if_empty
-					if self.title.blank?
-						self.title = file_file_name
-					end
-				end
-
+				
 			end
 		end
 	end

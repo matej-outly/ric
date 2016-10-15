@@ -14,12 +14,11 @@ require "ric_assortment/admin_engine"
 require "ric_assortment/public_engine"
 
 # Models
-require 'ric_assortment/concerns/models/product'
-require 'ric_assortment/concerns/models/product_attachment'
-require 'ric_assortment/concerns/models/product_category'
-require 'ric_assortment/concerns/models/product_photo'
-require 'ric_assortment/concerns/models/product_ticker'
-require 'ric_assortment/concerns/models/product_variant'
+require "ric_assortment/concerns/models/product"
+require "ric_assortment/concerns/models/product_attachment"
+require "ric_assortment/concerns/models/product_category"
+require "ric_assortment/concerns/models/product_picture"
+require "ric_assortment/concerns/models/product_teaser"
 
 module RicAssortment
 
@@ -54,19 +53,28 @@ module RicAssortment
 	@@product_model = "RicAssortment::Product"
 
 	#
-	# Enable photos subsystem
+	# Product category model
 	#
-	mattr_accessor :enable_photos
-	@@enable_photos = false
+	mattr_accessor :product_category_model
+	def self.product_category_model
+		return @@product_category_model.constantize
+	end
+	@@product_category_model = "RicAssortment::ProductCategory"
 
 	#
-	# Product photo model
+	# Enable pictures subsystem
 	#
-	mattr_accessor :product_photo_model
-	def self.product_photo_model
-		return @@product_photo_model.constantize
+	mattr_accessor :enable_pictures
+	@@enable_pictures = true
+
+	#
+	# Product picture model
+	#
+	mattr_accessor :product_picture_model
+	def self.product_picture_model
+		return @@product_picture_model.constantize
 	end
-	@@product_photo_model = "RicAssortment::ProductPhoto"
+	@@product_picture_model = "RicAssortment::ProductPicture"
 
 	#
 	# Enable attachments subsystem
@@ -84,50 +92,18 @@ module RicAssortment
 	@@product_attachment_model = "RicAssortment::ProductAttachment"
 
 	#
-	# Enable categories subsystem
+	# Enable teasers subsystem
 	#
-	mattr_accessor :enable_categories
-	@@enable_categories = false
+	mattr_accessor :enable_teasers
+	@@enable_teasers = false
 
 	#
-	# Product category model
+	# Product teaser model
 	#
-	mattr_accessor :product_category_model
-	def self.product_category_model
-		return @@product_category_model.constantize
+	mattr_accessor :product_teaser_model
+	def self.product_teaser_model
+		return @@product_teaser_model.constantize
 	end
-	@@product_category_model = "RicAssortment::ProductCategory"
-
-	#
-	# Enable tickers subsystem
-	#
-	mattr_accessor :enable_tickers
-	@@enable_tickers = false
-
-	#
-	# Product ticker model
-	#
-	mattr_accessor :product_ticker_model
-	def self.product_ticker_model
-		return @@product_ticker_model.constantize
-	end
-	@@product_ticker_model = "RicAssortment::ProductTicker"
-
-	#
-	# Enable variants subsystem
-	#
-	mattr_accessor :enable_variants
-	@@enable_variants = false
-
-	#
-	# Product variant model
-	#
-	mattr_accessor :product_variant_model
-	def self.product_variant_model
-		return @@product_variant_model.constantize
-	end
-	@@product_variant_model = "RicAssortment::ProductVariant"
-
-
+	@@product_teaser_model = "RicAssortment::ProductTeaser"
 
 end

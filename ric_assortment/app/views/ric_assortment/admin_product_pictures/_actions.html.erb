@@ -1,0 +1,5 @@
+<%= rug_menu_for(@product_picture, name: "actions") do |m| %>
+	<%= m.new_item nil, lambda { new_product_product_picture_path(@product) } %>
+	<%= m.edit_item nil, lambda { |product_picture| edit_product_product_picture_path(@product, product_picture) } %>
+	<%= m.destroy_item nil, lambda { |product_picture| product_product_picture_path(@product, product_picture) } %>
+<% end %>

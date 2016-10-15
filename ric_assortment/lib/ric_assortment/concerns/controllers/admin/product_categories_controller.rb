@@ -25,7 +25,7 @@ module RicAssortment
 						#
 						# Set product before some actions
 						#
-						before_action :set_product_category, only: [:show, :edit, :update, :destroy]
+						before_action :set_product_category, only: [:show, :edit, :update, :move_up, :move_down, :destroy]
 
 					end
 
@@ -90,6 +90,28 @@ module RicAssortment
 					end
 
 					#
+					# Move up action
+					#
+					def move_up
+						@product_category.move_left
+						respond_to do |format|
+							format.html { redirect_to product_categories_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.move") }
+							format.json { render json: @product_category.id }
+						end
+					end
+
+					#
+					# Move down action
+					#
+					def move_down
+						@product_category.move_right
+						respond_to do |format|
+							format.html { redirect_to product_categories_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.move") }
+							format.json { render json: @product_category.id }
+						end
+					end
+
+					#
 					# Destroy action
 					#
 					def destroy
@@ -99,18 +121,26 @@ module RicAssortment
 
 				protected
 
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+
 					def set_product_category
 						@product_category = RicAssortment.product_category_model.find_by_id(params[:id])
 						if @product_category.nil?
-							redirect_to product_categories_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_category_model.model_name.i18n_key}.not_found")
+							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_category_model.model_name.i18n_key}.not_found")
 						end
 					end
 
+					# *********************************************************
+					# Param filters
+					# *********************************************************
+					
 					# 
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def product_category_params
-						params.require(:product_category).permit(:name, :parent_id)
+						params.require(:product_category).permit(RicAssortment.product_category_model.permitted_columns)
 					end
 
 				end
