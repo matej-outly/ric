@@ -28,7 +28,7 @@ module RicReservation
 					#
 					# One-to-many relation with event modifiers
 					#
-					has_many :event_modifiers, class_name: RicReservation.event_modifier_model.to_s, dependent: :destroy
+					has_many :event_modifiers, foreign_key: "event_id", class_name: RicReservation.event_modifier_model.to_s, dependent: :destroy
 
 					#
 					# One-to-many relation with reservations
