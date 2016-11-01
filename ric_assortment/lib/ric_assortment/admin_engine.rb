@@ -21,6 +21,7 @@ module RicAssortment
 		require "ric_assortment/concerns/controllers/admin/product_attachments_controller"
 		require "ric_assortment/concerns/controllers/admin/products_product_attachments_controller"
 		require "ric_assortment/concerns/controllers/admin/product_teasers_controller"
+		require "ric_assortment/concerns/controllers/admin/product_manufacturers_controller"
 		
 		isolate_namespace RicAssortment
 

@@ -35,6 +35,8 @@ module RicAssortment
 
 					has_and_belongs_to_many :product_teasers, class_name: RicAssortment.product_teaser_model.to_s if RicAssortment.enable_teasers
 
+					belongs_to :product_manufacturer, class_name: RicAssortment.product_manufacturer_model.to_s if RicAssortment.enable_manufacturers
+
 					# *********************************************************
 					# Currency
 					# *********************************************************
@@ -110,6 +112,7 @@ module RicAssortment
 							:catalogue_number,
 							:ean,
 							:product_category_ids,
+							:product_manufacturer_id,
 
 							# Attributes
 							:other_attributes,
@@ -169,17 +172,29 @@ module RicAssortment
 
 						# Name
 						if !params[:name].blank?
-							result = result.where("lower(unaccent(products.name)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:name].to_s)
+							if config(:disable_unaccent) == true
+								result = result.where("lower(products.name) LIKE ('%' || lower(trim(?)) || '%')", params[:name].to_s)
+							else
+								result = result.where("lower(unaccent(products.name)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:name].to_s)
+							end
 						end
 
 						# Catalogue number
 						if !params[:catalogue_number].blank?
-							result = result.where("lower(unaccent(products.catalogue_number)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:catalogue_number].to_s)
+							if config(:disable_unaccent) == true
+								result = result.where("lower(products.catalogue_number) LIKE ('%' || lower(trim(?)) || '%')", params[:catalogue_number].to_s)
+							else
+								result = result.where("lower(unaccent(products.catalogue_number)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:catalogue_number].to_s)
+							end
 						end
 
 						# EAN
 						if !params[:ean].blank?
-							result = result.where("lower(unaccent(products.ean)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:ean].to_s)
+							if config(:disable_unaccent) == true
+								result = result.where("lower(products.ean) LIKE ('%' || lower(trim(?)) || '%')", params[:ean].to_s)
+							else
+								result = result.where("lower(unaccent(products.ean)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:ean].to_s)
+							end
 						end
 
 						# Product category

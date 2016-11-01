@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Product teaser
+# * Product manufacturer
 # *
 # * Author: Matěj Outlý
 # * Date  : 12. 8. 2015
@@ -12,7 +12,7 @@
 module RicAssortment
 	module Concerns
 		module Models
-			module ProductTeaser extend ActiveSupport::Concern
+			module ProductManufacturer extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -25,13 +25,14 @@ module RicAssortment
 					# Structure
 					# *********************************************************
 
-					has_and_belongs_to_many :products, class_name: RicAssortment.product_model.to_s
+					has_many :products, class_name: RicAssortment.product_model.to_s
 
 					# *********************************************************
-					# Keys
+					# Logo
 					# *********************************************************
 
-					enum_column :key, config(:keys)
+					has_attached_file :logo, :styles => { thumb: config(:logo_crop, :thumb), full: config(:logo_crop, :full) }
+					validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
 
 				end
 
@@ -61,8 +62,8 @@ module RicAssortment
 					def permitted_columns
 						[
 							:name, 
-							:key, 
-							:product_ids
+							:url,
+							:logo,
 						]
 					end
 

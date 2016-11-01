@@ -56,6 +56,14 @@ cs:
         edit: "Upravit upoutávku produktů"
         update: "Upravit upoutávku produktů"
         destroy: "Smazat upoutávku produktů"
+      admin_product_manufacturers:
+        index: "Výrobci"
+        show: "Detail výrobce"
+        new: "Nový výrobce"
+        create: "Nový výrobce"
+        edit: "Upravit výrobce"
+        update: "Upravit výrobce"
+        destroy: "Smazat výrobce"
       public_products:
         index: Produkty
 
@@ -89,6 +97,8 @@ cs:
         product_attachments: Přílohy
         product_teaser_ids: Upoutávky
         product_teasers: Upoutávky
+        product_manufacturer_id: Výrobce
+        product_manufacturer: Výrobce
         all_product_categories: Všechny kategorie
       ric_assortment/product_attachment:
         file: Soubor
@@ -115,6 +125,10 @@ cs:
         product_ids: Obsažené Produkty
         key_values:
           homepage: Upoutávka na homepage
+      ric_assortment/product_manufacturer:
+        name: Jméno
+        url: Odkaz
+        logo: Logo
     notices:
       models:
         ric_assortment/product:
@@ -144,6 +158,10 @@ cs:
           create: "Upoutávka produktů byla úspěšně vytvořena."
           update: "Upoutávka produktů byla úspěšně upravena."
           destroy: "Upoutávka produktů byla úspěšně smazána."
+        ric_assortment/product_manufacturer:
+          create: "Výrobce byl úspěšně vytvořen."
+          update: "Výrobce byl úspěšně upraven."
+          destroy: "Výrobce byl úspěšně smazán."
     errors:
       models:
         ric_assortment/product:
@@ -160,4 +178,6 @@ cs:
               blank: "Produkt musí být vybrán."
         ric_assortment/product_teaser:
           not_found: "Upoutávka produktů nebyla nalezena."
+        ric_assortment/product_manufacturer:
+          not_found: "Výrobce nebyl nalezen."
 

@@ -19,6 +19,7 @@ require "ric_assortment/concerns/models/product_attachment"
 require "ric_assortment/concerns/models/product_category"
 require "ric_assortment/concerns/models/product_picture"
 require "ric_assortment/concerns/models/product_teaser"
+require "ric_assortment/concerns/models/product_manufacturer"
 
 module RicAssortment
 
@@ -105,5 +106,21 @@ module RicAssortment
 		return @@product_teaser_model.constantize
 	end
 	@@product_teaser_model = "RicAssortment::ProductTeaser"
+
+
+	#
+	# Enable manufacturers subsystem
+	#
+	mattr_accessor :enable_manufacturers
+	@@enable_manufacturers = false
+
+	#
+	# Product manufacturer model
+	#
+	mattr_accessor :product_manufacturer_model
+	def self.product_manufacturer_model
+		return @@product_manufacturer_model.constantize
+	end
+	@@product_manufacturer_model = "RicAssortment::ProductManufacturer"
 
 end

@@ -34,7 +34,7 @@ module RicAssortment
 					#
 					def index
 						@filter_product = RicAssortment.product_model.new(load_params_from_session)
-						@products = RicAssortment.product_model.filter(load_params_from_session.symbolize_keys).order(default_product_category_id: :asc, position: :asc)
+						@products = RicAssortment.product_model.filter(load_params_from_session.symbolize_keys).order(position: :asc)
 						if request.format.to_sym == :html
 							@products = @products.page(params[:page]).per(50)
 						end

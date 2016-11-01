@@ -33,6 +33,9 @@ class CreateRicAssortmentProducts < ActiveRecord::Migration
 			# Product category
 			t.integer :default_product_category_id, index: true
 
+			# Product manufacturer
+			t.integer :product_manufacturer_id, index: true
+
 			# Meta
 			t.string :keywords
 			t.string :description

@@ -67,4 +67,13 @@ RicAssortment::AdminEngine.routes.draw do
 		end
 	end
 
+	# Product manufacturers
+	if RicAssortment.enable_manufacturers
+		resources :product_manufacturers, controller: "admin_product_manufacturers" do
+			collection do 
+				get "search"
+			end
+		end
+	end
+
 end

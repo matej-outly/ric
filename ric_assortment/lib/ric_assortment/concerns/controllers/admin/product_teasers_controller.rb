@@ -130,7 +130,7 @@ module RicAssortment
 					# Never trust parameters from the scary internet, only allow the white list through.
 					#
 					def product_teaser_params
-						result = params.require(:product_teaser).permit(:name, :key, :product_ids)
+						result = params.require(:product_teaser).permit(RicAssortment.product_teaser_model.permitted_columns)
 						result[:product_ids] = result[:product_ids].split(",") if !result[:product_ids].blank?
 						return result
 					end

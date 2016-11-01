@@ -3,7 +3,7 @@
 	name: :string,
 	default_attributes: :string_array,
 	parent: { type: :belongs_to, label: :name, path: :product_category_path },
-	children: { type: :has_many, label: :name, path: :product_category_path },
+	children: { type: :has_many, label: :name, path: :product_category_path, format: :br },
 }) %>
 
 <% if @product_category.products.count > 0 %>

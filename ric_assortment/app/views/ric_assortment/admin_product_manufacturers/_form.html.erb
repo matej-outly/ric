@@ -1,0 +1,7 @@
+<%= rug_form_for(@product_manufacturer, create_url: :product_manufacturers_path, update_url: :product_manufacturer_path) do |f| %>
+	<%= f.text_input_row :name %>
+	<%= f.text_input_row :url %>
+	<%= f.dropzone_row :logo %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>
