@@ -1,7 +1,6 @@
 cs:
 
   headers:
-
     ric_website:
       admin_pages:
         index: "Stránky"
@@ -50,10 +49,6 @@ cs:
         edit: "Upravit textovou stránku"
         update: "Upravit textovou stránku"
         destroy: "Smazat textovou stránku"
-      admin_settings:
-        show: "Nastavení"
-        edit: "Upravit nastavení"
-        update: "Upravit nastavení"
 
   activerecord:
     attributes:
@@ -91,17 +86,6 @@ cs:
         title: Nadpis
         content: Obsah
         text_attachments: Přílohy
-      ric_website/setting:
-        key: Identifikující klíč
-        value: Hodnota
-        kind: Typ
-        kind_values:
-          string: Textový řetězec
-          integer: Celé číslo
-          enum: Výčtový typ
-          integer_range: Rozsah mezi celými čísly
-          double_range: Rozsah mezi desetinnými čísly
-        category: Kategorie
     notices:
       models:
         ric_website/page:
@@ -125,8 +109,6 @@ cs:
           create: "Textová stránka byla úspěšně vytvořena."
           update: "Textová stránka byla úspěšně upravena."
           destroy: "Textová stránka byla úspěšně smazána."
-        ric_website/setting:
-          update: "Nastavení bylo úspěšně upraveno."
     errors:
       models:
         ric_website/page:

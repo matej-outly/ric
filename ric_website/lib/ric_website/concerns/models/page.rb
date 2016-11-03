@@ -284,16 +284,16 @@ module RicWebsite
 				def generate_slugs(options = {})
 					
 					# Generate slug in this model
-					if !RicWebsite.slug_model.nil? && self.url_was != self.url && !self.url_was.blank?
+					if defined?(RicUrl) && !RicUrl.slug_model.nil? && self.url_was != self.url && !self.url_was.blank?
 						I18n.available_locales.each do |locale|
-							RicWebsite.slug_model.remove_slug(locale, self.url_was)
+							RicUrl.slug_model.remove_slug(locale, self.url_was)
 						end
 					end
-					if !RicWebsite.slug_model.nil? && !self.url.blank?
+					if defined?(RicUrl) && !RicUrl.slug_model.nil? && !self.url.blank?
 						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
-							translation = RicWebsite.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :title)
-							RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
+							translation = RicUrl.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :title)
+							RicUrl.slug_model.add_slug(locale, tmp_uri.path, translation)
 						end
 					end
 
@@ -318,10 +318,10 @@ module RicWebsite
 				def destroy_slugs_before(options = {})
 
 					# Destroy slug of this model
-					if !RicWebsite.slug_model.nil? && !self.url.blank?
+					if defined?(RicUrl) && !RicUrl.slug_model.nil? && !self.url.blank?
 						tmp_uri = URI.parse(self.url)
 						I18n.available_locales.each do |locale|
-							RicWebsite.slug_model.remove_slug(locale, tmp_uri.path)
+							RicUrl.slug_model.remove_slug(locale, tmp_uri.path)
 						end
 					end
 

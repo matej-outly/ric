@@ -10,31 +10,21 @@
 # *****************************************************************************
 
 # Railtie
-require 'ric_website/railtie' if defined?(Rails)
+require "ric_website/railtie" if defined?(Rails)
 
 # Engines
 require "ric_website/admin_engine"
 require "ric_website/public_engine"
 
-# Middlewares
-require 'ric_website/middlewares/locale'
-require 'ric_website/middlewares/slug'
-
 # Models
-require 'ric_website/concerns/models/page'
-require 'ric_website/concerns/models/page_block'
-require 'ric_website/concerns/models/menu'
-require 'ric_website/concerns/models/text'
-require 'ric_website/concerns/models/text_attachment'
-require 'ric_website/concerns/models/slug'
-require 'ric_website/concerns/models/setting'
-require 'ric_website/concerns/models/settings_collection'
+require "ric_website/concerns/models/page"
+require "ric_website/concerns/models/page_block"
+require "ric_website/concerns/models/menu"
+require "ric_website/concerns/models/text"
+require "ric_website/concerns/models/text_attachment"
 
 # Helpers
-require 'ric_website/helpers/locale_helper'
-require 'ric_website/helpers/page_helper'
-require 'ric_website/helpers/slug_helper'
-require 'ric_website/helpers/setting_helper'
+require "ric_website/helpers/page_helper"
 
 module RicWebsite
 
@@ -94,39 +84,6 @@ module RicWebsite
 		return @@page_block_model.constantize
 	end
 	@@page_block_model = "RicWebsite::PageBlock"
-
-	#
-	# Slug model
-	#
-	mattr_accessor :slug_model
-	def self.slug_model
-		return @@slug_model.constantize
-	end
-	@@slug_model = "RicWebsite::Slug"
-
-	#
-	# Enable settings subsystem
-	#
-	mattr_accessor :enable_settings
-	@@enable_settings = true
-
-	#
-	# Setting model
-	#
-	mattr_accessor :setting_model
-	def self.setting_model
-		return @@setting_model.constantize
-	end
-	@@setting_model = "RicWebsite::Setting"
-
-	#
-	# Settings collection model
-	#
-	mattr_accessor :settings_collection_model
-	def self.settings_collection_model
-		return @@settings_collection_model.constantize
-	end
-	@@settings_collection_model = "RicWebsite::SettingsCollection"
 
 	#
 	# Enable menus subsystem
