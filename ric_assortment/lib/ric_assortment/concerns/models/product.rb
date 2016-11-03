@@ -250,7 +250,7 @@ module RicAssortment
 				# Genereate slugs after save
 				#
 				def generate_slugs
-					if config(:enable_slugs) == true && !RicWebsite.slug_model.nil?
+					if config(:enable_slugs) == true && !RicUrl.slug_model.nil?
 						
 						# Get all models relevant for slug
 						slug_models = []
@@ -262,8 +262,8 @@ module RicAssortment
 						tmp_uri = URI.parse(url)
 						
 						I18n.available_locales.each do |locale|
-							translation = RicWebsite.slug_model.compose_translation(locale, models: slug_models, label: :name)
-							RicWebsite.slug_model.add_slug(locale, tmp_uri.path, translation)
+							translation = RicUrl.slug_model.compose_translation(locale, models: slug_models, label: :name)
+							RicUrl.slug_model.add_slug(locale, tmp_uri.path, translation)
 						end
 					end
 				end
@@ -272,11 +272,11 @@ module RicAssortment
 				# Destroy slugs before destroy
 				#
 				def destroy_slugs
-					if config(:enable_slugs) == true && !RicWebsite.slug_model.nil?
+					if config(:enable_slugs) == true && !RicUrl.slug_model.nil?
 						url = config(:url).gsub(/:id/, self.id.to_s)
 						tmp_uri = URI.parse(url)
 						I18n.available_locales.each do |locale|
-							RicWebsite.slug_model.remove_slug(locale, tmp_uri.path)
+							RicUrl.slug_model.remove_slug(locale, tmp_uri.path)
 						end
 					end
 				end
