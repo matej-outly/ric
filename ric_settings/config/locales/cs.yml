@@ -1,0 +1,30 @@
+cs:
+
+  headers:
+    ric_settings:
+      admin_settings:
+        show: "Nastavení"
+        edit: "Upravit nastavení"
+        update: "Upravit nastavení"
+
+  activerecord:
+    attributes:
+      ric_settings/setting:
+        key: Identifikující klíč
+        value: Hodnota
+        kind: Typ
+        kind_values:
+          string: Textový řetězec
+          integer: Celé číslo
+          enum: Výčtový typ
+          integer_range: Rozsah mezi celými čísly
+          double_range: Rozsah mezi desetinnými čísly
+        category: Kategorie
+    notices:
+      models:
+        ric_settings/setting:
+          update: "Nastavení bylo úspěšně upraveno."
+    errors:
+      models:
+        ric_settings/setting:
+          not_found: "Nastavení nebylo nalezeno."
