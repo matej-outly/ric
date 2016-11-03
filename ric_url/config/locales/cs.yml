@@ -1,0 +1,18 @@
+cs:
+
+  activerecord:
+    attributes:
+      ric_url/slug:
+        original: Systémové URL
+        translation: Hezké URL
+        slug_locale: Jazyk
+    notices:
+      models:
+        ric_url/slug:
+          create: "Překlad URL byl úspěšně vytvořen."
+          update: "Překlad URL byl úspěšně upraven."
+          destroy: "Překlad URL byl úspěšně smazán."
+    errors:
+      models:
+        ric_url/slug:
+          not_found: "Překlad URL nebyl nalezen."
