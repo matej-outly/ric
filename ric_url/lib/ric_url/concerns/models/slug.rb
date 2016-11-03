@@ -36,9 +36,9 @@ module RicUrl
 					end
 
 					#
-					# Load specific language to cache
+					# Load specific locale to cache
 					#
-					def load_cache(language)
+					def load_cache(locale)
 
 						# Initialize cache structures
 						if @o2t.nil?
@@ -49,15 +49,15 @@ module RicUrl
 						end
 
 						# Fill cache if empty
-						if @o2t[language.to_sym].nil? || @t2o[language.to_sym].nil?
+						if @o2t[locale.to_sym].nil? || @t2o[locale.to_sym].nil?
 							
-							@o2t[language.to_sym] = {}
-							@t2o[language.to_sym] = {}
+							@o2t[locale.to_sym] = {}
+							@t2o[locale.to_sym] = {}
 
-							data = where(slug_language: language.to_s)
+							data = where(slug_locale: locale.to_s)
 							data.each do |item|
-								@o2t[language.to_sym][item.original] = item.translation
-								@t2o[language.to_sym][item.translation] = item.original
+								@o2t[locale.to_sym][item.original] = item.translation
+								@t2o[locale.to_sym][item.translation] = item.original
 							end
 
 						end
@@ -67,29 +67,29 @@ module RicUrl
 					#
 					# Get translation according to original
 					#
-					def original_to_translation(language, original)
-						load_cache(language)
-						return @o2t[language.to_sym][original.to_s]
+					def original_to_translation(locale, original)
+						load_cache(locale)
+						return @o2t[locale.to_sym][original.to_s]
 					end
 
 					#
 					# Get original according to translation
 					#
-					def translation_to_original(language, translation)
-						load_cache(language)
-						return @t2o[language.to_sym][translation.to_s]
+					def translation_to_original(locale, translation)
+						load_cache(locale)
+						return @t2o[locale.to_sym][translation.to_s]
 					end
 
 					#
 					# Add new slug or edit existing
 					#
-					def add_slug(language, original, translation)
+					def add_slug(locale, original, translation)
 						
 						# Do not process blank
 						return if translation.blank? || original.blank?
 
 						# Prepare
-						language = language.to_s
+						locale = locale.to_s
 						original = "/" + original.to_s.trim("/")
 						translation = "/" + translation.to_s.trim("/")
 
@@ -97,7 +97,7 @@ module RicUrl
 						return if original == "/"
 						
 						# Try to find existing record
-						slug = where(slug_language: language, original: original).first						
+						slug = where(slug_locale: locale, original: original).first						
 						if slug.nil?
 							slug = new
 						end
@@ -105,7 +105,7 @@ module RicUrl
 						# TODO duplicate translations
 
 						# Save
-						slug.slug_language = language
+						slug.slug_locale = locale
 						slug.original = original
 						slug.translation = translation
 						slug.save
@@ -118,14 +118,14 @@ module RicUrl
 					#
 					# Remove existing slug if exists
 					#
-					def remove_slug(language, original)
+					def remove_slug(locale, original)
 						
 						# Prepare
-						language = language.to_s
+						locale = locale.to_s
 						original = "/" + original.to_s.trim("/")
 
 						# Try to find existing record
-						slug = where(slug_language: language, original: original).first						
+						slug = where(slug_locale: locale, original: original).first						
 						if !slug.nil?
 							slug.destroy
 						end
@@ -138,7 +138,7 @@ module RicUrl
 					#
 					# Compose translation from various models
 					#
-					def compose_translation(language, models)
+					def compose_translation(locale, models)
 
 						# Convert to array
 						if !models.is_a? Array
@@ -169,8 +169,8 @@ module RicUrl
 							section_options[:models].each do |model|
 
 								# Get part
-								if model.respond_to?("#{section_options[:label].to_s}_#{language.to_s}".to_sym)
-									part = model.send("#{section_options[:label].to_s}_#{language.to_s}".to_sym)
+								if model.respond_to?("#{section_options[:label].to_s}_#{locale.to_s}".to_sym)
+									part = model.send("#{section_options[:label].to_s}_#{locale.to_s}".to_sym)
 								elsif model.respond_to?(section_options[:label].to_sym)
 									part = model.send(section_options[:label].to_sym)
 								else
