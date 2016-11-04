@@ -50,14 +50,6 @@ module RicAssortment
 					enable_ordering
 
 					# *********************************************************
-					# Slugs
-					# *********************************************************
-
-					after_save :generate_slugs
-
-					before_destroy :destroy_slugs, prepend: true
-
-					# *********************************************************
 					# Name
 					# *********************************************************
 
@@ -243,45 +235,6 @@ module RicAssortment
 				end
 
 				# *************************************************************
-				# Slugs
-				# *************************************************************
-
-				#
-				# Genereate slugs after save
-				#
-				def generate_slugs
-					if config(:enable_slugs) == true && !RicUrl.slug_model.nil?
-						
-						# Get all models relevant for slug
-						slug_models = []
-						slug_models.concat(self.default_product_category.self_and_ancestors) if self.default_product_category
-						slug_models << self
-
-						# Compose URL
-						url = config(:url).gsub(/:id/, self.id.to_s)
-						tmp_uri = URI.parse(url)
-						
-						I18n.available_locales.each do |locale|
-							translation = RicUrl.slug_model.compose_translation(locale, models: slug_models, label: :name)
-							RicUrl.slug_model.add_slug(locale, tmp_uri.path, translation)
-						end
-					end
-				end
-
-				#
-				# Destroy slugs before destroy
-				#
-				def destroy_slugs
-					if config(:enable_slugs) == true && !RicUrl.slug_model.nil?
-						url = config(:url).gsub(/:id/, self.id.to_s)
-						tmp_uri = URI.parse(url)
-						I18n.available_locales.each do |locale|
-							RicUrl.slug_model.remove_slug(locale, tmp_uri.path)
-						end
-					end
-				end
-
-				# *************************************************************
 				# Default category
 				# *************************************************************
 
@@ -344,6 +297,34 @@ module RicAssortment
 				def synchronize_category_attributes
 					self._synchronize_category_attributes
 					self.save
+				end
+
+			protected
+
+				# *************************************************************
+				# Slugs
+				# *************************************************************
+
+				#
+				# Genereate slugs after save
+				#
+				def _generate_slug(slug_model, locale)
+						
+					# Get all models relevant for slug
+					slug_models = []
+					slug_models.concat(self.default_product_category.self_and_ancestors) if self.default_product_category
+					slug_models << self
+
+					# Compose URL, transpation and add slug
+					url = config(:url).gsub(/:id/, self.id.to_s)
+					translation = slug_model.compose_translation(locale, models: slug_models, label: :name)
+					slug_model.add_slug(locale, URI.parse(url).path, translation)
+					
+				end
+
+				def _destroy_slug(slug_model, locale)
+					url = config(:url).gsub(/:id/, self.id.to_s)
+					slug_model.remove_slug(locale, URI.parse(url).path)
 				end
 
 			end

@@ -34,14 +34,6 @@ module RicAssortment
 					enable_hierarchical_ordering
 					
 					# *********************************************************
-					# Slugs
-					# *********************************************************
-
-					after_save :generate_slugs
-
-					before_destroy :destroy_slugs, prepend: true
-
-					# *********************************************************
 					# Default attributes
 					# *********************************************************
 
@@ -83,68 +75,39 @@ module RicAssortment
 				end
 
 				# *************************************************************
-				# Slugs
-				# *************************************************************
-
-				#
-				# Genereate slugs after save
-				#
-				def generate_slugs(options = {})
-					
-					# Generate slug in this model
-					if config(:enable_slugs) == true && !RicUrl.slug_model.nil?
-						url = config(:url).gsub(/:id/, self.id.to_s)
-						tmp_uri = URI.parse(url)
-						I18n.available_locales.each do |locale|
-							translation = RicUrl.slug_model.compose_translation(locale, models: self.self_and_ancestors, label: :name, is_category: true)
-							RicUrl.slug_model.add_slug(locale, tmp_uri.path, translation)
-						end
-					end
-
-					# Propagate to other models
-					if options[:disable_propagation] != true
-						
-						# Propagate to descendants
-						self.descendants.each do |descendant|
-							descendant.generate_slugs(disable_propagation: true)
-						end
-
-					end
-
-				end
-
-				#
-				# Destroy slugs before destroy
-				#
-				def destroy_slugs(options = {})
-
-					# Destroy slug of this model
-					if config(:enable_slugs) == true && !RicUrl.slug_model.nil?
-						url = config(:url).gsub(/:id/, self.id.to_s)
-						tmp_uri = URI.parse(url)
-						I18n.available_locales.each do |locale|
-							RicUrl.slug_model.remove_slug(locale, tmp_uri.path)
-						end
-					end
-
-					# Propagate to other models
-					if options[:disable_propagation] != true
-						
-						# Propagate to descendants
-						self.descendants.each do |descendant|
-							descendant.destroy_slugs(disable_propagation: true)
-						end
-
-					end
-
-				end
-
-				# *************************************************************
 				# Name with depth
 				# *************************************************************
 
 				def name_with_depth(delimiter = " - ")
 					return (delimiter * self.depth.to_i) + self.name.to_s
+				end
+
+			protected
+
+				# *************************************************************
+				# Slugs
+				# *************************************************************
+
+				def _generate_slug(slug_model, locale)
+					url = config(:url).gsub(/:id/, self.id.to_s)
+					translation = slug_model.compose_translation(
+						locale, 
+						models: self.self_and_ancestors, 
+						label: :name, 
+						is_category: true
+					)
+					slug_model.add_slug(locale, URI.parse(url).path, translation)
+
+					# TODO regenerate slug of contained products
+				end
+
+				def _destroy_slug(slug_model, locale)
+					url = config(:url).gsub(/:id/, self.id.to_s)
+					slug_model.remove_slug(locale, URI.parse(url).path)
+				end
+
+				def _destroy_slug_was(slug_model, locale)
+					# original URL did not change since it is derived from ID
 				end
 
 			end

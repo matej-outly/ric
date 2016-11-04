@@ -11,6 +11,7 @@
 
 module RicAssortment
 	class ProductCategory < ActiveRecord::Base
+		include RicUrl::Concerns::Models::HierarchicalSlugGenerator if defined?(RicUrl)
 		include RicAssortment::Concerns::Models::ProductCategory
 	end
 end

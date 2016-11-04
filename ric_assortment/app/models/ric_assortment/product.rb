@@ -11,6 +11,7 @@
 
 module RicAssortment
 	class Product < ActiveRecord::Base
+		include RicUrl::Concerns::Models::SlugGenerator if defined?(RicUrl)
 		include RicAssortment::Concerns::Models::Product
 	end
 end
