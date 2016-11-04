@@ -11,6 +11,7 @@
 
 module RicWebsite
 	class Page < ActiveRecord::Base
+		include RicUrl::Concerns::Models::HierarchicalSlugGenerator if defined?(RicUrl)
 		include RicWebsite::Concerns::Models::Page
 	end
 end
