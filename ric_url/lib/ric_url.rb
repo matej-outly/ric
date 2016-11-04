@@ -21,6 +21,8 @@ require "ric_url/middlewares/slug"
 
 # Models
 require "ric_url/concerns/models/slug"
+require "ric_url/concerns/models/slug_generator"
+require "ric_url/concerns/models/hierarchical_slug_generator"
 
 # Helpers
 require "ric_url/helpers/locale_helper"
