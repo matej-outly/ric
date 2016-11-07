@@ -1,4 +1,4 @@
-<%= rug_menu_for(@notification_template, name: "actions", path_base: "notification_templates") do |m| %>
+<%= rug_menu_for(@notification_template, options.merge(path_base: "notification_templates")) do |m| %>
 	<%= m.index_item %>
 	<%= m.show_item %>
 	<%= m.edit_item %>

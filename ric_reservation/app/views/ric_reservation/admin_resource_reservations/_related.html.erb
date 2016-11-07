@@ -1,4 +1,4 @@
-<%= rug_menu_for(@reservation, name: "related") do |m| %>
+<%= rug_menu_for(@reservation) do |m| %>
 	<% if @reservation %>
 		<%= m.item t("headers.ric_reservation.admin_resources.show"), ric_reservation_admin.resource_path(@reservation.resource_id), icon: "calendar" %>
 	<% end %>

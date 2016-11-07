@@ -1,4 +1,4 @@
-<%= rug_menu_for(@resource, name: "actions", path_base: "ric_reservation_admin.resources") do |m| %>
+<%= rug_menu_for(@resource, options.merge(path_base: "ric_reservation_admin.resources")) do |m| %>
 	<%= m.index_item %>
 	<%= m.new_item %>
 	<%= m.show_item %>

@@ -1,4 +1,4 @@
-<%= rug_menu_for(@newie_picture, name: "actions", path_base: "ric_journal_admin.newie_pictures") do |m| %>
+<%= rug_menu_for(@newie_picture, options.merge(path_base: "ric_journal_admin.newie_pictures")) do |m| %>
 	<%= m.new_item nil, ric_journal_admin.new_newie_picture_path(newie_id: @newie_picture.newie_id) %>
 	<%= m.show_item %>
 	<%= m.edit_item %>

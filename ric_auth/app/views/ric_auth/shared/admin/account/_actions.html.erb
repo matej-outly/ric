@@ -1,4 +1,4 @@
-<%= rug_menu_for(@user, name: "actions") do |m| %>
+<%= rug_menu_for(@user, options) do |m| %>
 	<%= m.item t("headers.ric_auth.admin_accounts.edit"), edit_account_path, icon: "user", active: (controller_name.include?("accounts")) %>
 	<%= m.item t("headers.ric_auth.admin_passwords.edit"), edit_password_path, icon: "lock", active: (controller_name.include?("passwords")) %>
 <% end %>

@@ -1,4 +1,4 @@
-<%= rug_menu_for(@team, name: "related") do |m| %>
+<%= rug_menu_for(@team) do |m| %>
 	<% if @team && !@team.new_record? %>
 		<%= m.item t("headers.ric_league.admin_team_members.new"), new_team_member_path(team_id: @team.id), icon: "plus" %>
 	<% end %>

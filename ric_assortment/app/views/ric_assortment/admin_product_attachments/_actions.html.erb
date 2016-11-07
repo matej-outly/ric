@@ -1,4 +1,4 @@
-<%= rug_menu_for(@product_attachment, name: "actions", path_base: "product_attachments") do |m| %>
+<%= rug_menu_for(@product_attachment, options.merge(path_base: "product_attachments")) do |m| %>
 	<%= m.index_item %>
 	<%= m.new_item %>
 	<%= m.show_item %>

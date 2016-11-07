@@ -1,4 +1,4 @@
-<%= rug_menu_for(@resource, name: "related") do |m| %>
+<%= rug_menu_for(@resource) do |m| %>
 	<% if @resource && !@resource.new_record? %>
 		<%= m.item t("headers.ric_reservation.admin_events.new"), ric_reservation_admin.new_event_path(resource_id: @resource.id), icon: "plus" %>
 	<% end %>

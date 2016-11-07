@@ -1,4 +1,4 @@
-<%= rug_menu_for(nil, name: "actions") do |m| %>
+<%= rug_menu do |m| %>
 	<%= m.item t("headers.ric_auth.admin_sessions.new").capitalize, ric_auth_admin.new_session_path, icon: "login", active: (controller_name == 'sessions') %>
 	<% if RicAuth.user_model.recoverable? %>
 		<%= m.item t("headers.ric_auth.admin_passwords.new").capitalize, ric_auth_admin.new_password_path, icon: "lifebuoy", active: (controller_name == 'passwords') %>

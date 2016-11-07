@@ -1,4 +1,3 @@
-<%= render partial: "ruth_admin/components/page_header" %>
 <% tabs = rug_tabs %>
 <% tabs.tab :valid, t("headers.ric_reservation.admin_resources.valid") do %>
 	<%=	timetable_pagination(@today, @period, @page, lambda { |params| ric_reservation_admin.resource_path(@resource, params) }) %>

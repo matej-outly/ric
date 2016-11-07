@@ -1,4 +1,4 @@
-<%= rug_menu_for(@event, name: "actions", path_base: "ric_reservation_admin.events") do |m| %>
+<%= rug_menu_for(@event, options.merge(path_base: "ric_reservation_admin.events")) do |m| %>
 	<%= m.new_item %>
 	<%= m.show_item %>
 	<%= m.edit_item %>

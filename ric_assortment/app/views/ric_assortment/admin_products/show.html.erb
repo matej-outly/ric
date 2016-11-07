@@ -1,14 +1,13 @@
-<%= render partial: "ruth_admin/components/page_header", locals: { header: @product.name } %>
-	<% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:show) %>
-		<%= render partial: "show_identification" %>
-	<% end %>
-	<% tabs = rug_tabs %>
-	<% @product.class.parts.select { |part, appearences| part != :identification }.each do |part, appearences| %>
-		<% if appearences.include?(:show) %>
-			<% tabs.tab part, t("headers.ric_assortment.admin_products.#{part.to_s}") do %>
-				<%= render partial: "show_#{part.to_s}" %>
-			<% end %>
+<%#= render partial: "ruth_admin/components/page_header", locals: { header: @product.name } %>
+<% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:show) %>
+	<%= render partial: "show_identification" %>
+<% end %>
+<% tabs = rug_tabs %>
+<% @product.class.parts.select { |part, appearences| part != :identification }.each do |part, appearences| %>
+	<% if appearences.include?(:show) %>
+		<% tabs.tab part, t("headers.ric_assortment.admin_products.#{part.to_s}") do %>
+			<%= render partial: "show_#{part.to_s}" %>
 		<% end %>
 	<% end %>
-	<%= tabs.render %>
-</section>
+<% end %>
+<%= tabs.render %>

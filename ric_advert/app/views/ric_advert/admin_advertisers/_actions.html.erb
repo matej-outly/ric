@@ -1,4 +1,4 @@
-<%= rug_menu_for(@advertiser, name: "actions", path_base: "advertisers") do |m| %>
+<%= rug_menu_for(@advertiser, options.merge(path_base: "advertisers")) do |m| %>
 	<%= m.index_item %>
 	<%= m.new_item %>
 	<%= m.show_item %>

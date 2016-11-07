@@ -1,4 +1,4 @@
-<%= rug_menu_for(nil, name: "actions") do |m| %>
+<%= rug_menu(options) do |m| %>
 
 	<%= m.item t("headers.ric_reservation.admin_event_reservations.index").capitalize, ric_reservation_admin.event_reservations_path(id: @event.id, schedule_date: @event.schedule_date), icon: "list", active: (controller_name == "reservations" && action_name == "index") %>
 	<%= m.item t("headers.ric_reservation.admin_event_reservations.new").capitalize, ric_reservation_admin.new_event_reservation_path(id: @event.id, schedule_date: @event.schedule_date), icon: "plus", active: (controller_name == "reservations" && action_name == "new") %>

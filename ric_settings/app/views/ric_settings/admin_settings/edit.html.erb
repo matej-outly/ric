@@ -1,4 +1,3 @@
-<%= render partial: "ruth_admin/components/page_header" %>
 <%= rug_form_for(@settings_collection, url: settings_path, method: :put) do |f| %>
 	<% tabs = rug_tabs %>
 	<% @settings_collection.categories.each_with_index do |(category, settings), index| %>

@@ -1,4 +1,4 @@
-<%= rug_menu_for(@page_block, name: "related") do |m| %>
+<%= rug_menu_for(@page_block) do |m| %>
 	<% if @page_block %>
 		<%= m.item t("headers.ric_website.admin_pages.show"), ric_website_admin.page_path(@page_block.page_id), icon: "search" %>
 	<% end %>
