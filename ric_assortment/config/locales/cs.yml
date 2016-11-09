@@ -15,7 +15,7 @@ cs:
         destroy: "Smazat produkt"
         identification: Identifikace
         content: Popis
-        attributes: Rozměry
+        attributes: Vlastnosti
         pricing: Cena
         meta: Meta info.
         pictures: Fotografie
@@ -75,7 +75,7 @@ cs:
         ean: EAN
         perex: Perex
         content: Popis
-        other_attributes: Atributy
+        other_attributes: Vlastnosti
         height: Výška (cm)
         width: Šířka (cm)
         depth: Hloubka (cm)
@@ -107,7 +107,7 @@ cs:
         product_ids: Navázané produkty
       ric_assortment/product_category:
         name: Jméno
-        default_attributes: Přednastavené atributy
+        default_attributes: Přednastavené vlastnosti
         parent: Nadřazená kategorie
         parent_id: Nadřazená kategorie
         children: Podřazené kategorie
