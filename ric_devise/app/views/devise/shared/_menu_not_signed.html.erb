@@ -1,7 +1,7 @@
-<li><%= link_to t("devise.action.sign_in").capitalize, ric_devise.new_user_session_path %></li>
+<li><%= link_to rug_icon(:sign_in) + t("devise.action.sign_in").capitalize, ric_devise.new_user_session_path %></li>
 <% if devise_mapping.registerable? %>
-	<li><%= link_to t("devise.action.sign_up").capitalize, ric_devise.new_user_registration_path %></li>
+	<li><%= link_to rug_icon(:sign_up) + t("devise.action.sign_up").capitalize, ric_devise.new_user_registration_path %></li>
 <% end %>
 <% if devise_mapping.recoverable? %>
-	<li><%= link_to t("devise.action.reset_password").capitalize, ric_devise.new_user_password_path %></li>
+	<li><%= link_to rug_icon(:recover) + t("devise.action.reset_password").capitalize, ric_devise.new_user_password_path %></li>
 <% end %>
