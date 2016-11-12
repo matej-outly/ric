@@ -1,0 +1,8 @@
+<%= rug_index_table_for(@slugs, { 
+	slug_locale: :string,
+	original: :string,
+	translation: :string,
+}, paths: {
+	edit: :edit_slug_path,
+	destroy: :slug_path,
+}, pagination: true, summary: true ) %>

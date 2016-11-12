@@ -1,0 +1,10 @@
+<% if action_name == "index" %>
+	<%= rug_form_for(@filter_slug, url: ric_url_admin.filter_slugs_path) do |f| %>
+		<div class="form-inline">
+			<%= f.text_input_row :slug_locale, :text_field, label: false, placeholder: RicUrl.slug_model.human_attribute_name("slug_locale") %>
+			<%= f.text_input_row :original, :text_field, label: false, placeholder: RicUrl.slug_model.human_attribute_name("original") %>
+			<%= f.text_input_row :translation, :text_field, label: false, placeholder: RicUrl.slug_model.human_attribute_name("translation") %>
+			<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
+		</div>
+	<% end %>
+<% end %>

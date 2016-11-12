@@ -1,0 +1,11 @@
+<%= rug_form_for(
+	@slug, 
+	create_url: :slugs_path, 
+	update_url: :slug_path
+) do |f| %>
+	<%= f.text_input_row :slug_locale %>
+	<%= f.text_input_row :original %>
+	<%= f.text_input_row :translation %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

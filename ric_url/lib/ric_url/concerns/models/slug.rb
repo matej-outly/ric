@@ -200,6 +200,65 @@ module RicUrl
 						return result						
 					end
 
+					# *********************************************************
+					# Columns
+					# *********************************************************
+					
+					def permitted_columns
+						[
+							:slug_locale,
+							:original,
+							:translation
+						]
+					end
+
+					def filter_columns
+						[
+							:slug_locale,
+							:original,
+							:translation
+						]
+					end
+
+					# *********************************************************
+					# Scopes
+					# *********************************************************
+					
+					def filter(params = {})
+						
+						# Preset
+						result = all
+
+						# Locale
+						if !params[:slug_locale].blank?
+							if config(:disable_unaccent) == true
+								result = result.where("lower(slug_locale) LIKE ('%' || lower(trim(?)) || '%')", params[:slug_locale].to_s)
+							else
+								result = result.where("lower(unaccent(slug_locale)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:slug_locale].to_s)
+							end
+						end
+
+						# Original
+						if !params[:original].blank?
+							if config(:original) == true
+								result = result.where("lower(original) LIKE ('%' || lower(trim(?)) || '%')", params[:original].to_s)
+							else
+								result = result.where("lower(unaccent(original)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:original].to_s)
+							end
+						end
+
+						# Translation
+						if !params[:translation].blank?
+							if config(:disable_unaccent) == true
+								result = result.where("lower(translation) LIKE ('%' || lower(trim(?)) || '%')", params[:translation].to_s)
+							else
+								result = result.where("lower(unaccent(translation)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:translation].to_s)
+							end
+						end
+					
+						result
+					end
+
 				end
 
 			end

@@ -2,20 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Slugs
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 12. 11. 2016
 # *
 # *****************************************************************************
 
-RicUrl::AdminEngine.routes.draw do
+require_dependency "ric_url/admin_controller"
 
-	# Slugs
-	resources :slugs, controller: "admin_slugs", only: [:index, :new, :create, :edit, :update, :destroy] do
-		collection do
-			post "filter"
-		end
+module RicUrl
+	class AdminSlugsController < AdminController
+		include RicUrl::Concerns::Controllers::Admin::SlugsController
 	end
-	
 end

@@ -15,6 +15,7 @@ module RicUrl
 		#
 		# Controllers
 		#
+		require "ric_url/concerns/controllers/admin/slugs_controller"
 		
 		isolate_namespace RicUrl
 

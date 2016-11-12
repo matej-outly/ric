@@ -1,11 +1,20 @@
 cs:
+  headers:
+    ric_url:
+      admin_slugs:
+        index: Překlady URL
+        edit: Upravit překlad URL
+        update: Upravit překlad URL
+        new: Nový překlad URL
+        create: Nový překlad URL
+        destroy: Smazat překlad URL
 
   activerecord:
     attributes:
       ric_url/slug:
+        slug_locale: Jazyk
         original: Systémové URL
         translation: Hezké URL
-        slug_locale: Jazyk
     notices:
       models:
         ric_url/slug:
