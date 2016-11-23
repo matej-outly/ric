@@ -1,8 +1,11 @@
-<%= rug_index_table_for(@slugs, { 
-	slug_locale: :string,
-	original: :string,
-	translation: :string,
-}, paths: {
+<%
+	columns = rug_columns
+	columns.add_column_by_type(:locale, :string)
+	columns.add_column_by_type(:original, :string)
+	columns.add_column_by_type(:translation, :string)
+	columns.add_column_by_type(:filter, :string) if RicUrl.slug_model.config(:use_filter) == true
+%>
+<%= rug_index_table_for(@slugs, columns, paths: {
 	edit: :edit_slug_path,
 	destroy: :slug_path,
 }, pagination: true, summary: true ) %>

@@ -54,10 +54,22 @@ module RicUrl
 							@o2t[locale.to_sym] = {}
 							@t2o[locale.to_sym] = {}
 
-							data = where(slug_locale: locale.to_s)
+							data = where(locale: locale.to_s)
 							data.each do |item|
-								@o2t[locale.to_sym][item.original] = item.translation
-								@t2o[locale.to_sym][item.translation] = item.original
+								if config(:use_filter)
+									if config(:current_app_filter) == item.filter # Slug belongs to current application
+										@o2t[locale.to_sym][item.original] = item.translation
+										@t2o[locale.to_sym][item.translation] = item.original
+									elsif !item.filter.blank? # Slug belongs to other application
+										url = config(:other_apps_filter, item.filter.to_sym)
+										if !url.blank?
+											@o2t[locale.to_sym][item.original] = url.trim("/") + item.translation
+										end
+									end
+								else
+									@o2t[locale.to_sym][item.original] = item.translation
+									@t2o[locale.to_sym][item.translation] = item.original
+								end
 							end
 
 						end
@@ -83,7 +95,7 @@ module RicUrl
 					#
 					# Add new slug or edit existing
 					#
-					def add_slug(locale, original, translation)
+					def add_slug(locale, original, translation, filter = nil)
 						
 						# Do not process blank
 						return if translation.blank? || original.blank?
@@ -97,7 +109,7 @@ module RicUrl
 						return if original == "/"
 						
 						# Try to find existing record
-						slug = where(slug_locale: locale, original: original).first						
+						slug = where(locale: locale, original: original).first
 						if slug.nil?
 							slug = new
 						end
@@ -105,7 +117,8 @@ module RicUrl
 						# TODO duplicate translations
 
 						# Save
-						slug.slug_locale = locale
+						slug.locale = locale
+						slug.filter = filter if config(:use_filter) == true
 						slug.original = original
 						slug.translation = translation
 						slug.save
@@ -125,7 +138,7 @@ module RicUrl
 						original = "/" + original.to_s.trim("/")
 
 						# Try to find existing record
-						slug = where(slug_locale: locale, original: original).first						
+						slug = where(locale: locale, original: original).first						
 						if !slug.nil?
 							slug.destroy
 						end
@@ -206,17 +219,19 @@ module RicUrl
 					
 					def permitted_columns
 						[
-							:slug_locale,
+							:locale,
 							:original,
-							:translation
+							:translation,
+							:filter,
 						]
 					end
 
 					def filter_columns
 						[
-							:slug_locale,
+							:locale,
 							:original,
-							:translation
+							:translation,
+							:filter,
 						]
 					end
 
@@ -230,17 +245,17 @@ module RicUrl
 						result = all
 
 						# Locale
-						if !params[:slug_locale].blank?
+						if !params[:locale].blank?
 							if config(:disable_unaccent) == true
-								result = result.where("lower(slug_locale) LIKE ('%' || lower(trim(?)) || '%')", params[:slug_locale].to_s)
+								result = result.where("lower(locale) LIKE ('%' || lower(trim(?)) || '%')", params[:locale].to_s)
 							else
-								result = result.where("lower(unaccent(slug_locale)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:slug_locale].to_s)
+								result = result.where("lower(unaccent(locale)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:locale].to_s)
 							end
 						end
 
 						# Original
 						if !params[:original].blank?
-							if config(:original) == true
+							if config(:disable_unaccent) == true
 								result = result.where("lower(original) LIKE ('%' || lower(trim(?)) || '%')", params[:original].to_s)
 							else
 								result = result.where("lower(unaccent(original)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:original].to_s)
@@ -253,6 +268,17 @@ module RicUrl
 								result = result.where("lower(translation) LIKE ('%' || lower(trim(?)) || '%')", params[:translation].to_s)
 							else
 								result = result.where("lower(unaccent(translation)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:translation].to_s)
+							end
+						end
+
+						# Filter
+						if config(:use_filter) == true
+							if !params[:filter].blank?
+								if config(:disable_unaccent) == true
+									result = result.where("lower(filter) LIKE ('%' || lower(trim(?)) || '%')", params[:filter].to_s)
+								else
+									result = result.where("lower(unaccent(filter)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:filter].to_s)
+								end
 							end
 						end
 					

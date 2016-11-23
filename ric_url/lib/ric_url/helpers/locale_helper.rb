@@ -14,7 +14,8 @@ module RicUrl
 		module LocaleHelper
 
 			def self.disassemble(path)
-				
+				# TODO work correctly with http:// and https:// links
+
 				# Match locale from path
 				match = /^\/(#{I18n.available_locales.join("|")})\//.match(path + "/")
 				if match
