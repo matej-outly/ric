@@ -12,9 +12,10 @@ cs:
   activerecord:
     attributes:
       ric_url/slug:
-        slug_locale: Jazyk
+        locale: Jazyk
         original: Systémové URL
         translation: Hezké URL
+        filter: Syst. zn. aplikace
     notices:
       models:
         ric_url/slug:

@@ -98,7 +98,7 @@ module RicUrl
 					def add_slug(locale, original, translation, filter = nil)
 						
 						# Do not process blank
-						return if translation.blank? || original.blank?
+						return if original.blank? # || translation.blank? blank translation means that original translates to root
 
 						# Prepare
 						locale = locale.to_s

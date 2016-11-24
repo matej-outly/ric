@@ -71,7 +71,9 @@ module RicUrl
 
 					# Destroy slug of this model
 					if !RicUrl.slug_model.nil?
-						self._destroy_slug(RicUrl.slug_model, locale)
+						I18n.available_locales.each do |locale|
+							self._destroy_slug(RicUrl.slug_model, locale)
+						end
 					end
 
 					# Propagate to other models
