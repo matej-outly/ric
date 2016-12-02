@@ -33,8 +33,12 @@ module RicUrl
 					path_locale = nil if !I18n.available_locales.include?(path_locale)
 					
 					# Match locale from browser
-					browser_locale = env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first.to_sym
-					browser_locale = nil if !I18n.available_locales.include?(browser_locale)
+					if env['HTTP_ACCEPT_LANGUAGE']
+						browser_locale = env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first.to_sym
+						browser_locale = nil if !I18n.available_locales.include?(browser_locale)
+					else
+						browser_locale = nil
+					end
 
 					# Set as default locale (for paths without locale spec)
 					I18n.default_locale = browser_locale if browser_locale
