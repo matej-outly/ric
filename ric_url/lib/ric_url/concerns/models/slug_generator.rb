@@ -68,6 +68,10 @@ module RicUrl
 					raise "No be defined in application."
 				end
 
+				def _destroy_slug_was(slug_model, locale)
+					raise "No be defined in application."
+				end
+
 			end
 		end
 	end
