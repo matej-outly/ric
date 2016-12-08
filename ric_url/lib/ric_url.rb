@@ -64,12 +64,18 @@ module RicUrl
 	# Enable slugs subsystem
 	#
 	mattr_accessor :enable_slugs
-	@@enable_sluggification = true
+	@@enable_slugs = true
 
 	#
 	# Enable localization subsystem
 	#
 	mattr_accessor :enable_locales
-	@@enable_localization = true
+	@@enable_locales = true
+
+	#
+	# Default locale is hidden in URL by default. This feature can be disabled here by setting tue
+	#
+	mattr_accessor :disable_default_locale
+	@@disable_default_locale = false
 
 end
