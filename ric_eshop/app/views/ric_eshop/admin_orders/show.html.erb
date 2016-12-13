@@ -41,4 +41,4 @@
 	%>
 	<%= rug_index_table_for(@order.order_items.order(created_at: :asc), columns, summary: true ) %>
 <% end %>
-<%= tabs.render %>
+<%= tabs.render(header_style: "pills", header_class: "hr-divider-content hr-divider-nav", header_container_class: "hr-divider") %>
