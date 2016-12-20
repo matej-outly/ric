@@ -81,7 +81,75 @@ module RicUrl
 					#
 					def original_to_translation(locale, original)
 						load_cache(locale)
-						return @o2t[locale.to_sym][original.to_s]
+
+						# First priority translation (without IDs)
+						result = @o2t[locale.to_sym][original.to_s]
+						if result.nil?
+
+							# Ensure single "/" on right
+							original = original.rtrim("/") + "/"
+
+							# Create array of all matched IDs alongside with string ":id" (i.e. [["1", ":id"], ["2", ":id"]]) 
+							# Subsitude all numeric IDs in original to string ":id"
+							matched_ids = []
+							product_1 = []
+							original = original.gsub(/\/[0-9]+\//) do |matched|
+								matched_id = matched[1..-2]
+								matched_ids << matched_id
+								product_1 << [matched_id, ":id"]
+								"/:id/"
+							end
+
+							if !product_1.empty?
+								
+								# Create product of matched IDs (i.e. [["1", "2"], ["1", ":id"], [":id", "2"], [":id", ":id"]])
+								product_2 = product_1.first.product(*product_1[1..-1])
+							
+								# Try to find some result for all combinations (except first one, which is already tried and failed)
+								result_ids = nil
+								product_2[1..-1].each do |combined_ids|
+
+									# IDs missing in this combination
+									result_ids = []
+
+									# Generate original acording to current combination (i.e. "/nodes/1/photos/:id" or "/nodes/:id/photos/:id")
+									index = 0
+									product_original = original.gsub(/\/:id\//) do
+										result_ids << matched_ids[index] if combined_ids.first == ":id"
+										index += 1
+										"/#{combined_ids.shift.to_s}/"
+									end
+
+									# Remove "/" on right
+									product_original = product_original.rtrim("/")
+
+									# Try to translate current combination and break if match found
+									result = @o2t[locale.to_sym][product_original.to_s]
+									break if !result.nil?
+
+								end
+
+								# Correct result if any
+								if !result.nil?
+
+									# Ensure single "/" on right
+									result = result.rtrim("/") + "/" 
+
+									# Substitute :id to numeric IDS matched from translation
+									result = result.gsub(/\/:id\//) do
+										"/#{result_ids.shift.to_s}/"
+									end
+
+									# Remove "/" on right
+									result = result.rtrim("/")
+
+								end
+
+							end
+
+						end
+
+						return result
 					end
 
 					#
@@ -89,7 +157,43 @@ module RicUrl
 					#
 					def translation_to_original(locale, translation)
 						load_cache(locale)
-						return @t2o[locale.to_sym][translation.to_s]
+						
+						# First priority translation (without IDs)
+						result = @t2o[locale.to_sym][translation.to_s] 
+						if result.nil?
+							
+							# Ensure single "/" on right
+							translation = translation.rtrim("/") + "/" 
+							
+							# Substitute numeric parts to :id
+							matched_ids = []
+							translation = translation.gsub(/\/[0-9]+\//) do |matched|
+								matched_ids << matched[1..-2]
+								"/:id/"
+							end
+
+							# Remove "/" on right
+							translation = translation.rtrim("/")
+
+							# Second priority translation (width IDs)
+							result = @t2o[locale.to_sym][translation.to_s]
+							if !result.nil?
+
+								# Ensure single "/" on right
+								result = result.rtrim("/") + "/" 
+
+								# Substitute :id to numeric IDS matched from translation
+								result = result.gsub(/\/:id\//) do
+									"/#{matched_ids.shift.to_s}/"
+								end
+
+								# Remove "/" on right
+								result = result.rtrim("/")
+
+							end
+						end
+
+						return result
 					end
 
 					#
