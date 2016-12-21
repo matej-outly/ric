@@ -15,30 +15,16 @@ module RicAssortment
 			module Admin
 				module ProductCategoriesController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# conproduct where it is included, rather than being executed in 
-					# the module's conproduct.
-					#
 					included do
 					
-						#
-						# Set product before some actions
-						#
 						before_action :set_product_category, only: [:show, :edit, :update, :move_up, :move_down, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@product_categories = RicAssortment.product_category_model.all.order(lft: :asc)
 					end
 
-					#
-					# Search action
-					#
 					def search
 						@product_categories = RicAssortment.product_category_model.search(params[:q]).order(lft: :asc)
 						respond_to do |format|
@@ -47,28 +33,16 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Show action
-					#
 					def show
 					end
 
-					#
-					# New action
-					#
 					def new
 						@product_category = RicAssortment.product_category_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@product_category = RicAssortment.product_category_model.new(product_category_params)
 						if @product_category.save
@@ -78,9 +52,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @product_category.update(product_category_params)
 							redirect_to product_category_path(@product_category), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.update")
@@ -89,9 +60,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Move up action
-					#
 					def move_up
 						@product_category.move_left
 						respond_to do |format|
@@ -100,9 +68,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Move down action
-					#
 					def move_down
 						@product_category.move_right
 						respond_to do |format|
@@ -111,9 +76,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@product_category.destroy
 						redirect_to product_categories_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.destroy")
@@ -136,9 +98,6 @@ module RicAssortment
 					# Param filters
 					# *********************************************************
 					
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def product_category_params
 						params.require(:product_category).permit(RicAssortment.product_category_model.permitted_columns)
 					end

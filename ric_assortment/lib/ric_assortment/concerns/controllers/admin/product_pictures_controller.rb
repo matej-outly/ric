@@ -15,49 +15,30 @@ module RicAssortment
 			module Admin
 				module ProductPicturesController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# conproduct where it is included, rather than being executed in 
-					# the module's conproduct.
-					#
 					included do
 					
-						#
-						# Set product before some actions
-						#
 						before_action :set_product
 						before_action :set_product_picture, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
-					#
-					# Show action
-					#
-					def show
-						respond_to do |format|
-							format.json { render json: @product_picture.to_json(methods: :picture_url) }
-						end
+					def edit_many
 					end
 
-					#
-					# New action
-					#
+					def show
+						render json: @product_picture.to_json(methods: :picture_url)
+					end
+
 					def new
 						save_referrer
 						@product_picture = RicAssortment.product_picture_model.new
 						@product_picture.product_id = @product.id
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 						save_referrer
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@product_picture = RicAssortment.product_picture_model.new(product_picture_params)
 						@product_picture.product_id = @product.id
@@ -74,9 +55,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @product_picture.update(product_picture_params)
 							respond_to do |format|
@@ -91,9 +69,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Move action
-					#
 					def move
 						if RicAssortment.product_picture_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
@@ -108,9 +83,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@product_picture.destroy
 						respond_to do |format|
@@ -143,9 +115,6 @@ module RicAssortment
 					# Param filters
 					# *********************************************************
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def product_picture_params
 						params.require(:product_picture).permit(RicAssortment.product_picture_model.permitted_columns)
 					end

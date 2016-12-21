@@ -1,0 +1,15 @@
+<%= rug_form_for(@product, 
+	update_url: :product_path, 
+) do |f| %>
+	<%= f.dropzone_many_row(
+			:product_pictures, 
+			:picture, 
+			lambda { product_product_pictures_path(@product) },
+			lambda { |product_picture| product_product_picture_path(@product, product_picture) },
+			collection: @product.product_pictures.order(position: :asc),
+			label: false
+		)
+	%>
+	<%= f.primary_button_row :submit %>
+	<%#= f.back_link_button_row %>
+<% end %>

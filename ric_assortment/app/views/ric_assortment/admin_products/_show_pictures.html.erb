@@ -6,4 +6,11 @@
 	edit: lambda { |product_picture| edit_product_product_picture_path(@product, product_picture) },
 	move: lambda { |product_picture, relation, destination_id| move_product_product_picture_path(@product, product_picture, relation, destination_id) },
 	destroy: lambda { |product_picture| product_product_picture_path(@product, product_picture) },
+}, global_actions: {
+	edit_many: { 
+		path: lambda { |unused| edit_many_product_product_pictures_path(@product) },
+		icon: "plus",
+		label: t("headers.ric_assortment.admin_product_pictures.edit_many"),
+		style: "primary"
+	}
 }, moving: true) %>

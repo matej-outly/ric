@@ -42,12 +42,14 @@ cs:
         update: "Upravit kategorii produktů"
         destroy: "Smazat kategorii produktů"
       admin_product_pictures:
+        index: Produkty
         show: Detail fotografie
         new: Nová fotografie
         create: Nová fotografie
         edit: Upravit fotografii
         update: Upravit fotografii
         destroy: Smazat fotografii
+        edit_many: Hromadné nahrávání fotografií
       admin_product_teasers:
         index: "Upoutávky produktů"
         show: "Detail upoutávky produktů"
@@ -100,6 +102,8 @@ cs:
         product_manufacturer_id: Výrobce
         product_manufacturer: Výrobce
         all_product_categories: Všechny kategorie
+        product_picture_ids: Fotografie
+        product_pictures: Fotografie
       ric_assortment/product_attachment:
         file: Soubor
         title: Popis

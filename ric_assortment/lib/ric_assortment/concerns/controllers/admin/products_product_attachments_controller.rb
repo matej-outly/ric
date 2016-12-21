@@ -15,11 +15,6 @@ module RicAssortment
 			module Admin
 				module ProductsProductAttachmentsController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# conproduct where it is included, rather than being executed in 
-					# the module's conproduct.
-					#
 					included do
 
 						before_action :set_product
@@ -27,16 +22,10 @@ module RicAssortment
 
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 						save_referrer
 					end
-
-					#
-					# Update action
-					#
+					
 					def update
 						if @product.update(product_params)
 							redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.update_attachments")
@@ -45,9 +34,6 @@ module RicAssortment
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@product.product_attachments.delete(@product_attachment)
 						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.destroy_attachment")
@@ -77,9 +63,6 @@ module RicAssortment
 					# Param filters
 					# *********************************************************
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def product_params
 						result = params.require(:product).permit(:product_attachment_ids)
 						result[:product_attachment_ids] = result[:product_attachment_ids].split(",") if !result[:product_attachment_ids].blank?

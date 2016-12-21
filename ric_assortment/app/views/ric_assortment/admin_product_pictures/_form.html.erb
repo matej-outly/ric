@@ -4,7 +4,7 @@
 ) do |f| %>
 	<% if @product_picture.config(:picture_croppable) == true %>
 		<%= f.dropzone_row :picture, append_columns: { product_id: true }, crop: true %>
-		<%= f.crop_row :picture %>
+		<%= f.crop_row :picture, label: false %>
 	<% else %>
 		<%= f.dropzone_row :picture, append_columns: { product_id: true } %>
 	<% end %>
