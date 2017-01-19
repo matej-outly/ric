@@ -12,7 +12,7 @@
 module RicWebsite
 	class Railtie < Rails::Railtie
 		initializer "ric_website.helpers" do
-			ActionView::Base.send :include, Helpers::PageHelper
+			ActionView::Base.send :include, Helpers::NodeHelper
 		end
 	end
 end

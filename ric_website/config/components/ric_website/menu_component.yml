@@ -1,5 +1,0 @@
-# Maximal allowed level of nesting (nil if not forced)
-maximal_level: 1
-
-# Identification of displayed menu
-key: main

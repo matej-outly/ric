@@ -11,41 +11,34 @@
 
 RicWebsite::AdminEngine.routes.draw do
 
-	# Pages
-	resources :pages, controller: "admin_pages" do
-		member do
-			put "move_up"
-			put "move_down"
+	# Structures
+	resources :structures, controller: "admin_structures" do
+
+		# Fields
+		resources :fields, controller: "admin_fields", except: [:index] do
+			member do
+				put "move/:relation/:destination_id", action: "move", as: "move"
+			end
+		end
+
+	end
+
+	# Enums
+	resources :enums, controller: "admin_enums" do
+		collection do
+			get "search"
 		end
 	end
 
-	# Page natures
-	resources :page_natures, only: [:show], controller: "admin_page_natures"
-
-	# Page blocks
-	resources :page_blocks, except: [:index], controller: "admin_page_blocks" do
+	# Nodes
+	resources :nodes, controller: "admin_nodes" do
+		collection do
+			get "tree"
+			get "lazy_tree"
+			get "search"
+		end
 		member do
 			put "move/:relation/:destination_id", action: "move", as: "move"
-		end
-	end
-
-	# Page menu relations
-	resources :page_menu_relations, only: [:edit, :update, :destroy], controller: "admin_page_menu_relations"
-
-	# Menus
-	resources :menus, controller: "admin_menus"
-
-	# Menu page relations
-	resources :menu_page_relations, only: [:edit, :update, :destroy], controller: "admin_menu_page_relations"
-
-	# Texts
-	resources :texts, controller: "admin_texts"
-
-	# Text attachments
-	resources :text_attachments, only: [:create, :destroy], controller: "admin_text_attachments" do
-		collection do
-			get "links"
-			get "images"
 		end
 	end
 

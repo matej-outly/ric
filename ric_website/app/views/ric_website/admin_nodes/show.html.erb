@@ -1,0 +1,14 @@
+<%
+	columns = rug_columns
+	columns.add_column_by_type(:slug, :url)
+	@node.permitted_fields.each do |field|
+		if field.kind == "belongs_to" 
+			# TODO
+		elsif field.kind == "enum"
+			# TODO
+		else
+			columns.add_column_by_type(field.ref, type: field.kind, column_label: field.name)
+		end
+	end
+%>
+<%= rug_show_table_for(@node, columns) %>

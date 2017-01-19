@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
   s.summary     = "RIC engine for basic website management"
-  s.description = "Pages structured in menu, text pages."
+  s.description = "Hierarchical structure of website nodes acting like menu, text pages or different website pages."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

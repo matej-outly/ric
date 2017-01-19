@@ -1,5 +1,0 @@
-# Prepend some breadcrumb items
-prepend:
-  -
-    label: "Home"
-    url: "/"

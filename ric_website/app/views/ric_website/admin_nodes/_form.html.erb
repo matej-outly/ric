@@ -1,0 +1,26 @@
+<% if @node.new_record? %>
+	<%= rug_show_table_for(@node, {
+		structure: { type: :belongs_to, label: :name, path: "ric_website_admin.structure_path" },
+		parent: { type: :belongs_to, label: :name },
+	}) %>
+<% else %>
+	<%= rug_show_table_for(@node, {
+		structure: { type: :belongs_to, label: :name, path: "ric_website_admin.structure_path" },
+		parent: { type: :belongs_to, label: :name },
+		slug: :url,
+	}) %>
+<% end %>
+<%= rug_form_for(@node, 
+	create_url: "ric_website_admin.nodes_path", 
+	update_url: "ric_website_admin.node_path"
+) do |f| %>
+	<%= f.hidden_field :parent_id %>
+	<%= f.hidden_field :structure_id %>
+	<%= f.text_input_row :ref %>
+	<%= f.text_input_row :name %>
+	<% @node.permitted_fields.each do |field| %>
+		<%= node_field_row(f, field) %>
+	<% end %>
+	<%= f.primary_button_row :submit %>
+	<%#= f.back_link_button_row %>
+<% end %>

@@ -1,8 +1,0 @@
-# Maximal allowed level of nesting
-minimal_level: 1
-
-# Maximal allowed level of nesting
-maximal_level: 2
-
-# Identification of displayed menu
-key: main

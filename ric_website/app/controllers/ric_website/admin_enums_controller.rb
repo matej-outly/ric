@@ -2,13 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Enums
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 19. 1. 2017
 # *
 # *****************************************************************************
 
-RicWebsite::PublicEngine.routes.draw do
+require_dependency "ric_website/admin_controller"
 
+module RicWebsite
+	class AdminEnumsController < AdminController
+		include RicWebsite::Concerns::Controllers::Admin::EnumsController
+	end
 end

@@ -2,13 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Field
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 19. 1. 2017
 # *
 # *****************************************************************************
 
-RicWebsite::PublicEngine.routes.draw do
-
+module RicWebsite
+	class Field < ActiveRecord::Base
+		include RicWebsite::Concerns::Models::Field
+	end
 end

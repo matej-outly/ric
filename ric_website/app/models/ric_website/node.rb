@@ -2,13 +2,16 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Node
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 19. 1. 2017
 # *
 # *****************************************************************************
 
-RicWebsite::PublicEngine.routes.draw do
-
+module RicWebsite
+	class Node < ActiveRecord::Base
+		include RicUrl::Concerns::Models::HierarchicalSlugGenerator if defined?(RicUrl)
+		include RicWebsite::Concerns::Models::Node
+	end
 end

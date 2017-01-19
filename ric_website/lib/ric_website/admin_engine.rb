@@ -15,14 +15,10 @@ module RicWebsite
 		#
 		# Controllers
 		#
-		require 'ric_website/concerns/controllers/admin/texts_controller'
-		require 'ric_website/concerns/controllers/admin/text_attachments_controller'
-		require 'ric_website/concerns/controllers/admin/pages_controller'
-		require 'ric_website/concerns/controllers/admin/page_blocks_controller'
-		require 'ric_website/concerns/controllers/admin/page_natures_controller'
-		require 'ric_website/concerns/controllers/admin/page_menu_relations_controller'
-		require 'ric_website/concerns/controllers/admin/menus_controller'
-		require 'ric_website/concerns/controllers/admin/menu_page_relations_controller'
+		require "ric_website/concerns/controllers/admin/enums_controller"
+		require "ric_website/concerns/controllers/admin/fields_controller"
+		require "ric_website/concerns/controllers/admin/nodes_controller"
+		require "ric_website/concerns/controllers/admin/structures_controller"
 		
 		isolate_namespace RicWebsite
 

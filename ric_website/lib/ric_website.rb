@@ -17,14 +17,16 @@ require "ric_website/admin_engine"
 require "ric_website/public_engine"
 
 # Models
-require "ric_website/concerns/models/page"
-require "ric_website/concerns/models/page_block"
-require "ric_website/concerns/models/menu"
-require "ric_website/concerns/models/text"
-require "ric_website/concerns/models/text_attachment"
+require "ric_website/concerns/models/enum"
+require "ric_website/concerns/models/field"
+require "ric_website/concerns/models/field_value"
+require "ric_website/concerns/models/node"
+require "ric_website/concerns/models/node_attachment"
+require "ric_website/concerns/models/node_picture"
+require "ric_website/concerns/models/structure"
 
 # Helpers
-require "ric_website/helpers/page_helper"
+require "ric_website/helpers/node_helper"
 
 module RicWebsite
 
@@ -50,55 +52,73 @@ module RicWebsite
 	# *************************************************************************
 
 	#
-	# Text model
+	# Enum model
 	#
-	mattr_accessor :text_model
-	def self.text_model
-		return @@text_model.constantize
+	mattr_accessor :enum_model
+	def self.enum_model
+		return @@enum_model.constantize
 	end
-	@@text_model = "RicWebsite::Text"
+	@@enum_model = "RicWebsite::Enum"
 
 	#
-	# Text attachment model
+	# Structure model
 	#
-	mattr_accessor :text_attachment_model
-	def self.text_attachment_model
-		return @@text_attachment_model.constantize
+	mattr_accessor :structure_model
+	def self.structure_model
+		return @@structure_model.constantize
 	end
-	@@text_attachment_model = "RicWebsite::TextAttachment"
+	@@structure_model = "RicWebsite::Structure"
 
 	#
-	# Page model
+	# Field model
 	#
-	mattr_accessor :page_model
-	def self.page_model
-		return @@page_model.constantize
+	mattr_accessor :field_model
+	def self.field_model
+		return @@field_model.constantize
 	end
-	@@page_model = "RicWebsite::Page"
+	@@field_model = "RicWebsite::Field"
 
 	#
-	# Page block model
+	# Field value model
 	#
-	mattr_accessor :page_block_model
-	def self.page_block_model
-		return @@page_block_model.constantize
+	mattr_accessor :field_value_model
+	def self.field_value_model
+		return @@field_value_model.constantize
 	end
-	@@page_block_model = "RicWebsite::PageBlock"
+	@@field_value_model = "RicWebsite::FieldValue"
 
 	#
-	# Enable menus subsystem
+	# Node model
 	#
-	mattr_accessor :enable_menus
-	@@enable_menus = true
+	mattr_accessor :node_model
+	def self.node_model
+		return @@node_model.constantize
+	end
+	@@node_model = "RicWebsite::Node"
 
 	#
-	# Menu model
+	# Node attachment model
 	#
-	mattr_accessor :menu_model
-	def self.menu_model
-		return @@menu_model.constantize
+	mattr_accessor :node_attachment_model
+	def self.node_attachment_model
+		return @@node_attachment_model.constantize
 	end
-	@@menu_model = "RicWebsite::Menu"
+	@@node_attachment_model = "RicWebsite::NodeAttachment"
+
+	#
+	# Enable node pictures subsystem
+	#
+	mattr_accessor :enable_node_pictures
+	@@enable_node_pictures = false
+
+	#
+	# Node picture model
+	#
+	mattr_accessor :node_picture_model
+	def self.node_picture_model
+		return @@node_picture_model.constantize
+	end
+	@@node_picture_model = "RicWebsite::NodePicture"
 
 	#
 	# Localization of some specific columns (titles, contents, descriptions, etc.)

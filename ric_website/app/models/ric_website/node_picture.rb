@@ -2,13 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Node picture
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 19. 1. 2017
 # *
 # *****************************************************************************
 
-RicWebsite::PublicEngine.routes.draw do
-
+module RicWebsite
+	class NodePicture < ActiveRecord::Base
+		include RicWebsite::Concerns::Models::NodePicture
+	end
 end

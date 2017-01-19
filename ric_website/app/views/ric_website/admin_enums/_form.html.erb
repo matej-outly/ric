@@ -1,0 +1,11 @@
+<%= rug_form_for(
+	@enum, 
+	create_url: "ric_website_admin.enums_path", 
+	update_url: "ric_website_admin.enum_path"
+) do |f| %>
+	<%= f.text_input_row :name %>
+	<%= f.text_input_row :ref %>
+	<%= f.store_row :values, :text_field %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

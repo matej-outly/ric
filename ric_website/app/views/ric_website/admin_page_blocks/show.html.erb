@@ -1,8 +1,0 @@
-<%
-	columns = {}
-	columns[:page] = { type: :belongs_to, label: :title, path: "ric_website_admin.page_path" }
-	columns[:title] = :string
-	columns[:key] = :enum if RicWebsite.page_block_model.config(:enable_key)
-	columns[:content] = :text
-%>
-<%= rug_show_table_for(@page_block, columns) %>

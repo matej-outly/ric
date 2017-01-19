@@ -1,0 +1,8 @@
+<%= rug_show_table_for(@field, { 
+	structure: { type: :belongs_to, label: :name, path: "ric_website_admin.structure_path" },
+	name: :string,
+	ref: :string,
+	kind: :enum,
+	enum: { type: :belongs_to, label: :name, path: "ric_website_admin.enum_path" },
+	include_in_url: :boolean,
+}) %>

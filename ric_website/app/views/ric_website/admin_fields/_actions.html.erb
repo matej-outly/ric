@@ -1,0 +1,6 @@
+<%= rug_menu_for(@field, options) do |m| %>
+	<%= m.new_item nil, lambda { ric_website_admin.new_structure_field_path(@structure) } %>
+	<%= m.show_item nil, lambda { |field| ric_website_admin.structure_field_path(@structure, field) } %>
+	<%= m.edit_item nil, lambda { |field| ric_website_admin.edit_structure_field_path(@structure, field) } %>
+	<%= m.destroy_item nil, lambda { |field| ric_website_admin.structure_field_path(@structure, field) } %>
+<% end %>

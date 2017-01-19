@@ -1,5 +1,0 @@
-<%= rug_menu_for(@menu, name: "related") do |m| %>
-	<% if @menu && !@menu.new_record? %>
-		<%= m.item t("headers.ric_website.admin_menu_page_relations.edit"), ric_website_admin.edit_menu_page_relation_path(@menu), icon: "plus" %>
-	<% end %>
-<% end %>
