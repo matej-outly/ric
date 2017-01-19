@@ -9,8 +9,17 @@
 # *
 # *****************************************************************************
 
-module RicContact
-	class ContactMessage < ActiveRecord::Base
-		include RicContact::Concerns::Models::ContactMessage
+if RicContact.save_contact_messages_to_db
+	module RicContact
+		class ContactMessage < ActiveRecord::Base
+			include RicContact::Concerns::Models::ContactMessage
+		end
+	end
+else
+	module RicContact
+		class ContactMessage
+			include ActiveModel::Model
+			include RicContact::Concerns::Models::ContactMessageTableless
+		end
 	end
 end

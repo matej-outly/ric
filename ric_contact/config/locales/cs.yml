@@ -2,14 +2,6 @@ cs:
 
   headers:
     ric_contact:
-      admin_branches:
-        index: "Pobočky"
-        show: "Detail pobočky"
-        new: "Nová pobočka"
-        create: "Nová pobočka"
-        edit: "Upravit pobočku"
-        update: "Upravit pobočku"
-        destroy: "Smazat pobočku"
       admin_contact_messages:
         index: "Kontaktní zprávy"
         show: "Detail zprávy"
@@ -29,12 +21,6 @@ cs:
 
   activerecord:
     attributes:
-      ric_contact/branch:
-        name: Jméno
-        address: Adresa
-        url: URL
-        latitude: Zeměpisná šířka
-        longitude: Zeměpisná délka
       ric_contact/contact_message:
         created_at: Vytvořeno
         name: Jméno odesílatele
@@ -49,10 +35,6 @@ cs:
         photo_crop: Ořez fotografie
     notices:
       models:
-        ric_contact/branch:
-          create: Pobočka byla úspěšně vytvořena.
-          update: Pobočka byla úspěšně uložena.
-          destroy: Pobočka byla úspěšně smazána.
         ric_contact/contact_message:
           create: Zpráva byla úspěšně vytvořena.
           update: Zpráva byla úspěšně uložena.
@@ -64,9 +46,14 @@ cs:
           destroy: Kontaktní osoba byla úspěšně smazána.
     errors:
       models:
-        ric_contact/branch:
-          not_found: Pobočka nebyla nalezena.
         ric_contact/contact_message:
           not_found: Zpráva nebyla nalezena.
         ric_contact/contact_person:
           not_found: Kontaktní osoba nebyla nalezena.
+
+    mailers:
+      ric_contact:
+        contact_message:
+          new_message:
+            subject: "Nová zpráva z kontaktního formuláře"
+            

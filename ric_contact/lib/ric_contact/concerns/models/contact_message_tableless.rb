@@ -12,7 +12,7 @@
 module RicContact
 	module Concerns
 		module Models
-			module ContactMessage extend ActiveSupport::Concern
+			module ContactMessageTableless extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -22,14 +22,14 @@ module RicContact
 				included do
 					
 					# *********************************************************
-					# Callbacks
+					# Structure
 					# *********************************************************
 					
-					after_create :send_message
+					attr_accessor :name, :email, :message
 
 				end
 
-				def send_message
+				def save
 					if !(defined?(RicNotification).nil?)
 						RicNotification.notify([:contact_message_new_message, self], :role_admin)
 					else

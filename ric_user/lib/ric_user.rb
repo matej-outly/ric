@@ -55,6 +55,15 @@ module RicUser
 	@@user_model = "RicUser::User"
 
 	#
+	# User mailer
+	#
+	mattr_accessor :user_mailer
+	def self.user_mailer
+		return @@user_mailer.constantize
+	end
+	@@user_mailer = "RicUser::UserMailer"
+
+	#
 	# Session model
 	#
 	mattr_accessor :session_model

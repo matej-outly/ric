@@ -15,7 +15,7 @@ module RicContact
 		#
 		# Controllers
 		#
-		require 'ric_contact/concerns/controllers/public/contact_messages_controller'
+		require "ric_contact/concerns/controllers/public/contact_messages_controller"
 
 		isolate_namespace RicContact
 
