@@ -1,5 +1,5 @@
 # Define URL template if slug generation enables
-url: "/assortment/products/:id"
+url: "/product_category/:product_category_id/products/:id"
 
 # Available currencies
 currencies:

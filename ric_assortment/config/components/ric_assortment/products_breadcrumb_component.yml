@@ -1,8 +1,0 @@
-# Prepend some breadcrumb items
-prepend:
-  -
-    label: "Home"
-    url: "/"
-  -
-    label: "Produkty"
-    url: "/assortment/products"
