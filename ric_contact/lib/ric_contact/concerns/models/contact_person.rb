@@ -25,18 +25,12 @@ module RicContact
 					# Structure
 					# *********************************************************
 
-					#
-					# Ordering
-					#
 					enable_ordering
 
 					# *********************************************************
-					# Attachments
+					# Photo
 					# *********************************************************
 
-					#
-					# Photo
-					#
 					if config(:photo_croppable) == true
 						croppable_picture_column :photo, styles: { thumb: config(:photo_crop, :thumb), full: config(:photo_crop, :full) }
 					else
@@ -62,9 +56,6 @@ module RicContact
 
 				module ClassMethods
 
-					#
-					# Columns
-					#
 					def permitted_columns
 						result = []
 						[:role].each do |column|

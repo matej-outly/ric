@@ -10,11 +10,6 @@
 # *****************************************************************************
 
 RicContact::AdminEngine.routes.draw do
-
-	# Branches
-	if RicContact.enable_branches
-		resources :branches, controller: "admin_branches"
-	end
 	
 	# Contact messages
 	if RicContact.enable_contact_messages

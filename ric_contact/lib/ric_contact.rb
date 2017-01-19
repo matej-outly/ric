@@ -42,25 +42,10 @@ module RicContact
 	# *************************************************************************
 
 	#
-	# Enable branches subsystem
-	#
-	mattr_accessor :enable_branches
-	@@enable_branches = true
-
-	#
-	# Branch model
-	#
-	mattr_accessor :branch_model
-	def self.branch_model
-		return @@branch_model.constantize
-	end
-	@@branch_model = "RicContact::Branch"
-
-	#
 	# Enable contact messages subsystem
 	#
 	mattr_accessor :enable_contact_messages
-	@@enable_contact_messages = true
+	@@enable_contact_messages = false
 
 	#
 	# Contact message model
@@ -75,7 +60,7 @@ module RicContact
 	# Enable contact people subsystem
 	#
 	mattr_accessor :enable_contact_people
-	@@enable_contact_people = true
+	@@enable_contact_people = false
 
 	#
 	# Contact person model
