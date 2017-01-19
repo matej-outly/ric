@@ -20,14 +20,12 @@
 					// Success data fetch
 					success: function(callback) 
 					{
-						form.find(".field").removeClass("danger");
-						form.find(".flash_canvas").html("");
+						form.find(".flash-canvas").html("");
 						if (callback === true) {
-							form.find(".field input.input").val("");
-							form.find(".flash_canvas").html("<div class=\"success alert\"><%= I18n.t("activerecord.notices.models.#{RicNewsletter.customer_model.model_name.i18n_key}.newsletter_sign_up") %></div>");
+							form.find("input.form-control").val("");
+							form.find(".flash-canvas").html("<%= I18n.t("activerecord.notices.models.#{RicNewsletter.customer_model.model_name.i18n_key}.newsletter_sign_up") %>");
 						} else {
-							form.find(".field").addClass("danger");
-							form.find(".flash_canvas").html("<div class=\"danger alert\"><%= I18n.t("activerecord.errors.models.#{RicNewsletter.customer_model.model_name.i18n_key}.newsletter_sign_up") %></div>");
+							form.find(".flash-canvas").html("<%= I18n.t("activerecord.errors.models.#{RicNewsletter.customer_model.model_name.i18n_key}.newsletter_sign_up") %>");
 						}
 					},
 					
@@ -41,5 +39,4 @@
 		});
 	}
 	$(document).ready(newsletter_sign_up_ready);
-	$(document).on("page:load", newsletter_sign_up_ready);
-<% end -%>
+<% end %>
