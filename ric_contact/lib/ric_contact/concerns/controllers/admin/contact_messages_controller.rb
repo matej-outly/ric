@@ -22,68 +22,63 @@ module RicContact
 					#
 					included do
 					
-						#
-						# Set contact_message before some actions
-						#
 						before_action :set_contact_message, only: [:show, :edit, :update, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@contact_messages = RicContact.contact_message_model.all.order(created_at: :desc).page(params[:page]).per(50)
 					end
 
-					#
-					# Show action
-					#
 					def show
+						respond_to do |format|
+							format.html { render "show" }
+							format.json { render json: @contact_message.to_json }
+						end
 					end
 
-					#
-					# New action
-					#
 					def new
 						@contact_message = RicContact.contact_message_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@contact_message = RicContact.contact_message_model.new(contact_message_params)
 						if @contact_message.save
-							redirect_to contact_message_path(@contact_message), notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create")
+							respond_to do |format|
+								format.html { redirect_to contact_message_path(@contact_message), notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") }
+								format.json { render json: @contact_message.id }
+							end
 						else
-							render "new"
+							respond_to do |format|
+								format.html { render "new" }
+								format.json { render json: @contact_message.errors }
+							end
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @contact_message.update(contact_message_params)
-							redirect_to contact_message_path(@contact_message), notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to contact_message_path(@contact_message), notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.update") }
+								format.json { render json: @contact_message.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @contact_message.errors }
+							end
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@contact_message.destroy
-						redirect_to contact_messages_path, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.destroy")
+						respond_to do |format|
+							format.html { redirect_to contact_messages_path, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.destroy") }
+							format.json { render json: @contact_message.id }
+						end
 					end
 
 				protected
@@ -95,11 +90,8 @@ module RicContact
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def contact_message_params
-						params.require(:contact_message).permit(:name, :email, :message)
+						params.require(:contact_message).permit(RicContact.contact_message_model.permitted_columns)
 					end
 
 				end

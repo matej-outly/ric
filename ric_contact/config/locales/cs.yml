@@ -18,6 +18,8 @@ cs:
         edit: "Upravit osobu"
         update: "Upravit osobu"
         destroy: "Smazat osobu"
+      public_contact_messages:
+        create: Odeslat zprávu
 
   activerecord:
     attributes:
@@ -36,7 +38,7 @@ cs:
     notices:
       models:
         ric_contact/contact_message:
-          create: Zpráva byla úspěšně vytvořena.
+          create: Zpráva byla úspěšně odeslána.
           update: Zpráva byla úspěšně uložena.
           destroy: Zpráva byla úspěšně smazána.
         ric_contact/contact_person:
@@ -48,6 +50,10 @@ cs:
       models:
         ric_contact/contact_message:
           not_found: Zpráva nebyla nalezena.
+          create: Nepodařio se odeslat zprávu.
+          attributes:
+            message:
+              blank: Zpráva musí být vyplněna.
         ric_contact/contact_person:
           not_found: Kontaktní osoba nebyla nalezena.
 

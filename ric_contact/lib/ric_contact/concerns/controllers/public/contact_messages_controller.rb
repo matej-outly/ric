@@ -24,14 +24,26 @@ module RicContact
 
 					end
 
-					#
-					# Create action
-					#
 					def create
-						
+						@contact_message = RicContact.contact_message_model.new(contact_message_params)
+						if @contact_message.save
+							respond_to do |format|
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") }
+								format.json { render json: @contact_message.id }
+							end
+						else
+							respond_to do |format|
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") }
+								format.json { render json: @contact_message.errors }
+							end
+						end
 					end
 
 				protected
+
+					def contact_message_params
+						params.require(:contact_message).permit(RicContact.contact_message_model.permitted_columns)
+					end
 
 				end
 			end

@@ -1,0 +1,42 @@
+<%= javascript_tag do %>
+	function contact_message_create_ready()
+	{
+		$("form.contact-message-create").each(function() {
+			var form = $(this);
+
+			form.find("input[type='submit']").on("click", function(e) {
+				e.preventDefault();
+
+				// URL
+				var url = form.attr("action");
+
+				// Request
+				$.ajax({
+					url: url,
+					dataType: "json",
+					type: "POST",
+					data: form.serialize(),
+
+					// Success data fetch
+					success: function(callback) 
+					{
+						form.find(".flash-canvas").html("");
+						if (Number.isInteger(callback)) {
+							form.find("input.form-control").val("");
+							form.find(".flash-canvas").html("<%= I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") %>");
+						} else {
+							form.find(".flash-canvas").html("<%= I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") %>");
+						}
+					},
+					
+					// Error data fetch
+					error: function(callback) 
+					{
+					}
+				});
+
+			});
+		});
+	}
+	$(document).ready(contact_message_create_ready);
+<% end %>

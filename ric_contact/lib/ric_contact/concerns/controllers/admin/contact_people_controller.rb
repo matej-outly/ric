@@ -22,23 +22,14 @@ module RicContact
 					#
 					included do
 					
-						#
-						# Set contact_person before some actions
-						#
 						before_action :set_contact_person, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@contact_people = RicContact.contact_person_model.all.order(position: :asc)
 					end
 
-					#
-					# Show action
-					#
 					def show
 						respond_to do |format|
 							format.html { render "show" }
@@ -46,22 +37,13 @@ module RicContact
 						end
 					end
 
-					#
-					# New action
-					#
 					def new
 						@contact_person = RicContact.contact_person_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@contact_person = RicContact.contact_person_model.new(contact_person_params)
 						if @contact_person.save
@@ -77,9 +59,6 @@ module RicContact
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @contact_person.update(contact_person_params)
 							respond_to do |format|
@@ -94,9 +73,6 @@ module RicContact
 						end
 					end
 
-					#
-					# Move action
-					#
 					def move
 						if RicContact.contact_person_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
@@ -111,9 +87,6 @@ module RicContact
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@contact_person.destroy
 						respond_to do |format|
@@ -131,9 +104,6 @@ module RicContact
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def contact_person_params
 						params.require(:contact_person).permit(RicContact.contact_person_model.permitted_columns)
 					end

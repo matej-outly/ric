@@ -12,6 +12,6 @@
 RicContact::PublicEngine.routes.draw do
 
 	# Contact messages
-	resources :contact_messages, controller: "pulic_contact_messages", only: [:create]
+	resources :contact_messages, controller: "public_contact_messages", only: [:create]
 
 end

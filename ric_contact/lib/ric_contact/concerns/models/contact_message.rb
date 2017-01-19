@@ -27,6 +27,28 @@ module RicContact
 					
 					after_create :send_message
 
+					# *********************************************************
+					# Validators
+					# *********************************************************
+					
+					validates_presence_of :message
+
+				end
+
+				module ClassMethods
+
+					# *********************************************************
+					# Columns
+					# *********************************************************
+
+					def permitted_columns
+						[
+							:name,
+							:email,
+							:message,
+						]
+					end
+
 				end
 
 				def send_message
