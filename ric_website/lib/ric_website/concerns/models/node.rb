@@ -322,14 +322,6 @@ module RicWebsite
 					return @slug
 				end
 
-				def url_original
-					result = "/nodes/#{self.id}"
-					if self.structure && self.structure.ref.starts_with?("controller_")
-						result += self.structure.ref[10..-1].gsub("_", "/")
-					end
-					return result
-				end
-
 				def include_in_url
 					if @include_in_url.nil?
 						if self.structure
@@ -339,29 +331,6 @@ module RicWebsite
 						end
 					end
 					return @include_in_url
-				end
-
-				#
-				# Compose translation from all ancestors and their slugged fields
-				#
-				def compose_slug_translation(locale)
-					filter = nil
-					translation = ""
-					after_web_node = false
-					self.self_and_ancestors.each do |node|
-						if after_web_node
-							node.field_values.where(include_in_url: true).where("locale = ? OR locale IS NULL", locale).order(position: :asc).each do |field_value|
-								if !field_value.slug.blank?
-									translation += "/" + field_value.slug
-								end
-							end
-						end
-						if !after_web_node && node.structure && node.structure.ref == "web"
-							filter = node.ref
-							after_web_node = true
-						end
-					end
-					return [filter, translation]
 				end
 
 				def slugify_value(value)
@@ -403,13 +372,37 @@ module RicWebsite
 				# Slugs
 				# *************************************************************
 
+				def _url_original
+					"/nodes/#{self.id}"
+				end
+				
+				def _compose_slug_translation(locale)
+					filter = nil
+					translation = ""
+					after_web_node = false
+					self.self_and_ancestors.each do |node|
+						
+						if !after_web_node && node.structure && node.structure.ref == "web"
+							filter = node.ref
+							after_web_node = true
+						end
+
+						if after_web_node
+							node.field_values.where(include_in_url: true).where("locale = ? OR locale IS NULL", locale).order(position: :asc).each do |field_value|
+								if !field_value.slug.blank?
+									translation += "/" + field_value.slug
+								end
+							end
+						end
+						
+					end
+					return [filter, translation]
+				end
+
 				def _generate_slug(slug_model, locale)
 					if self.include_in_url
 						filter, translation = compose_slug_translation(locale)
-						
-						# Original slug
-						slug_model.add_slug(locale, URI.parse(self.url_original).path, translation, filter)
-						
+						slug_model.add_slug(locale, URI.parse(self.url_original).path, translation, filter) if !translation.blank?
 					end
 				end
 

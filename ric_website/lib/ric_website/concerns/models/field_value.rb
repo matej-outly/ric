@@ -138,7 +138,7 @@ module RicWebsite
 
 						# Belongs to
 						elsif self.kind == "belongs_to"
-							result = Node.find_by_id(value)
+							result = RicWebsite.node_model.find_by_id(value)
 						
 						# Other types without _obj support
 						else
