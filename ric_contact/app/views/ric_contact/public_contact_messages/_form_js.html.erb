@@ -18,19 +18,20 @@
 					data: form.serialize(),
 
 					// Success data fetch
-					success: function(callback) 
+					success: function(callback)
 					{
 						form.find(".flash-canvas").html("");
 						if (Number.isInteger(callback)) {
 							form.find("input.form-control").val("");
+							form.find("textarea.form-control").val("");
 							form.find(".flash-canvas").html("<%= I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") %>");
 						} else {
 							form.find(".flash-canvas").html("<%= I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") %>");
 						}
 					},
-					
+
 					// Error data fetch
-					error: function(callback) 
+					error: function(callback)
 					{
 					}
 				});
