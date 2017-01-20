@@ -88,22 +88,26 @@ module RicAssortment
 				# Slugs
 				# *************************************************************
 
-				def _generate_slug(slug_model, locale)
-					url = config(:url).gsub(/:id/, self.id.to_s)
-					translation = slug_model.compose_translation(
-						locale, 
-						models: self.self_and_ancestors, 
-						label: :name, 
-						is_category: true
-					)
-					slug_model.add_slug(locale, URI.parse(url).path, translation)
+				def _url_original
+					"/product_categories/#{self.id}"
+				end
 
+				def _compose_slug_translation(locale)
+					# TODO ...
+				end
+
+				def _generate_slug(slug_model, locale)
+					filter, translation = compose_slug_translation(locale)
+					if !translation.blank?
+						slug_model.add_slug(locale, URI.parse(self.url_original).path, translation, filter) 
+					else
+						slug_model.remove_slug(locale, URI.parse(self.url_original).path)
+					end
 					# TODO regenerate slug of contained products
 				end
 
 				def _destroy_slug(slug_model, locale)
-					url = config(:url).gsub(/:id/, self.id.to_s)
-					slug_model.remove_slug(locale, URI.parse(url).path)
+					slug_model.remove_slug(locale, URI.parse(self.url_original).path)
 				end
 
 				def _destroy_slug_was(slug_model, locale)

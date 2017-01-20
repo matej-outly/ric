@@ -305,26 +305,47 @@ module RicAssortment
 				# Slugs
 				# *************************************************************
 
-				#
-				# Genereate slugs after save
-				#
-				def _generate_slug(slug_model, locale)
-						
-					# Get all models relevant for slug
-					slug_models = []
-					slug_models.concat(self.default_product_category.self_and_ancestors) if self.default_product_category
-					slug_models << self
+				def _url_original(product_category = nil)
+					product_category = self.default_product_category if product_category.nil?
+					if product_category.nil?
+						raise "Cannot generate URL for product outside category tree."
+					end
+					"#{product_category.url_original}/products/#{self.id}"
+				end
 
-					# Compose URL, transpation and add slug
-					url = config(:url).gsub(/:id/, self.id.to_s)
-					translation = slug_model.compose_translation(locale, models: slug_models, label: :name)
-					slug_model.add_slug(locale, URI.parse(url).path, translation)
-					
+				def _compose_slug_translation(locale, product_category = nil)
+					product_category = self.default_product_category if product_category.nil?
+					if product_category.nil?
+						raise "Cannot generate URL for product outside category tree."
+					end
+					filter, translation = product_category.compose_slug_translation(locale)
+					if !self.name.blank?
+						translation += "/" + self.name.to_url
+					else
+						translation = ""
+					end
+					return [filter, translation]
+				end
+
+				def _generate_slug(slug_model, locale)
+					self.product_categories.order(depth: :desc).each do |product_category|
+						filter, translation = self._compose_slug_translation(locale, product_category)
+						if !translation.blank?
+							slug_model.add_slug(locale, URI.parse(self._url_original(product_category)).path, translation, filter) 
+						else
+							slug_model.remove_slug(locale, URI.parse(self._url_original(product_category)).path)
+						end
+					end
 				end
 
 				def _destroy_slug(slug_model, locale)
-					url = config(:url).gsub(/:id/, self.id.to_s)
-					slug_model.remove_slug(locale, URI.parse(url).path)
+					self.product_categories.order(depth: :desc).each do |product_category|
+						slug_model.remove_slug(locale, URI.parse(self._url_original(product_category)).path)
+					end
+				end
+
+				def _destroy_slug_was(slug_model, locale)
+					# original URL did not change since it is derived from ID
 				end
 
 			end

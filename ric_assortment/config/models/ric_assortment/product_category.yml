@@ -1,5 +1,2 @@
-# Define URL template if slug generation enables
-url: "/product_category/:id"
-
 # Optionaly disable DB function unaccent while search (i.e. PostgreSQL 8.4 does not support this function)
 disable_unaccent: false
