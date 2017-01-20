@@ -27,6 +27,16 @@ module RicUrl
 
 				end
 
+				module ClassMethods
+
+					def generate_slugs(options = {})
+						self.all.each do |item|
+							item.generate_slugs(options)
+						end
+					end
+
+				end
+
 				# *************************************************************
 				# Hooks
 				# *************************************************************
@@ -54,22 +64,41 @@ module RicUrl
 
 				end
 
+				def url_original
+					if @url_original.nil?
+						@url_original = self._url_original
+					end
+					return @url_original
+				end
+
+				def compose_slug_translation(locale)
+					return self._compose_slug_translation(locale)
+				end
+
 			protected
 
 				# *************************************************************
 				# Callbacks to be defined in apllication
 				# *************************************************************
 
+				def _url_original
+					raise "To be defined in application."
+				end
+
+				def _compose_slug_translation(locale)
+					raise "To be defined in application."
+				end
+
 				def _generate_slug(slug_model, locale)
-					raise "No be defined in application."
+					raise "To be defined in application."
 				end
 
 				def _destroy_slug(slug_model, locale)
-					raise "No be defined in application."
+					raise "To be defined in application."
 				end
 
 				def _destroy_slug_was(slug_model, locale)
-					raise "No be defined in application."
+					raise "To be defined in application."
 				end
 
 			end

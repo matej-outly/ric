@@ -255,6 +255,8 @@ module RicUrl
 					#
 					# Compose translation from various models
 					#
+					# Obsolete, please define own translation composition method
+					#
 					def compose_translation(locale, models)
 
 						# Convert to array
