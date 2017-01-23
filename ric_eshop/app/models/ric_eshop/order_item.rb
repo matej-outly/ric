@@ -12,6 +12,6 @@
 module RicEshop
 	class OrderItem < ActiveRecord::Base
 		include RicEshop::Concerns::Models::OrderItem
-		
+		include RicPayment::Concerns::Models::PaymentSubjectItem if defined?(RicPayment)
 	end
 end

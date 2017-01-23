@@ -6,13 +6,13 @@ class CreateRicEshopOrderItems < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# Link to order
-			t.integer :order_id
+			t.integer :order_id, index: true
 
 			# Amount
 			t.integer :amount
 
 			# Product
-			t.integer :product_id
+			t.integer :product_id, index: true
 			t.string :product_name
 			t.integer :product_price
 			t.string :product_currency
