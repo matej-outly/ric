@@ -13,6 +13,7 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 			t.string :subject
 			t.text :message
 			t.string :url
+			t.string :attachment
 
 			# Author (user)
 			t.integer :author_id, index: true

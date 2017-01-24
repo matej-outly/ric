@@ -18,13 +18,26 @@ module RicNotification
 				# New password
 				#
 				def notify(notification, receiver)
+					
+					# Sender
 					@sender = RicNotification.mailer_sender
 					if @sender.nil?
 						raise "Please specify sender."
 					end
+
+					# Otehr view data
 					@notification = notification
 					@receiver = receiver
+					
+					# Subject
 					subject = !@notification.subject.blank? ? @notification.subject : I18n.t("activerecord.mailers.ric_notification.notification.notify.subject", url: main_app.root_url)
+					
+					# Attachment
+					if !notification.attachment.blank?
+						attachments[File.basename(notification.attachment)] = File.read(notification.attachment)
+					end
+
+					# Mail
 					mail(from: @sender, to: receiver.email, subject: subject)
 				end
 
