@@ -21,7 +21,7 @@ module RicUrl
 				#
 				included do
 
-					after_save :generate_slugs
+					after_commit :generate_slugs
 
 					before_destroy :destroy_slugs_before, prepend: true
 
