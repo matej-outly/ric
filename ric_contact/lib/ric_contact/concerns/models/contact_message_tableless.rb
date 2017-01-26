@@ -22,16 +22,32 @@ module RicContact
 				included do
 					
 					# *********************************************************
+					# Config
+					# *********************************************************
+
+					self.config = RugRecord::Config.new(self)
+
+					# *********************************************************
 					# Structure
 					# *********************************************************
 					
-					attr_accessor :name, :email, :message
+					if config(:attributes)
+						config(:attributes).each do |attribute|
+							attr_accessor attribute[:name]
+						end
+					end
 
 					# *********************************************************
 					# Validators
 					# *********************************************************
 					
-					validates_presence_of :message
+					if config(:attributes)
+						config(:attributes).each do |attribute|
+							if attribute[:required] == true
+								validates_presence_of attribute[:name]
+							end
+						end
+					end
 
 				end
 
@@ -42,17 +58,13 @@ module RicContact
 					# *********************************************************
 
 					def permitted_columns
-						[
-							:name,
-							:email,
-							:message,
-						]
+						return config(:attributes).map { |attribute| attribute[:name].to_sym }
 					end
 
 				end
 				
 				def id
-					return 1	
+					return 1
 				end
 
 				def save

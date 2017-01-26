@@ -19,6 +19,7 @@ else
 	module RicContact
 		class ContactMessage
 			include ActiveModel::Model
+			include RugRecord::Concerns::Config
 			include RicContact::Concerns::Models::ContactMessageTableless
 		end
 	end

@@ -35,6 +35,9 @@ cs:
         email: E-mail
         photo: Fotografie
         photo_crop: Ořez fotografie
+      ric_notification/notification_template:
+        key_values:
+          contact_message_new_message: Nová zpráva z fontaktního formuláře
     notices:
       models:
         ric_contact/contact_message:
