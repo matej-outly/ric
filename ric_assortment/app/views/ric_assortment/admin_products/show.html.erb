@@ -1,4 +1,4 @@
-<%#= render partial: "ruth_admin/components/page_header", locals: { header: @product.name } %>
+<%= content_for :title, @product.name %>
 <% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:show) %>
 	<%= render partial: "show_identification" %>
 <% end %>

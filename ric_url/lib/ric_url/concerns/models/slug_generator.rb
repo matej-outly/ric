@@ -37,11 +37,20 @@ module RicUrl
 
 				end
 
+				def disable_slug_generator
+					@disable_slug_generator = true
+				end
+
+				def enable_slug_generator
+					@disable_slug_generator = false
+				end
+
 				# *************************************************************
 				# Hooks
 				# *************************************************************
 
 				def generate_slugs(options = {})
+					return if @disable_slug_generator == true
 					
 					# Generate slug in this model
 					if !RicUrl.slug_model.nil?
