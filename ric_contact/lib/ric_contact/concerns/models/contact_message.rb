@@ -53,7 +53,7 @@ module RicContact
 
 				def send_message
 					if !(defined?(RicNotification).nil?)
-						RicNotification.notify([:contact_message_new_message, self], :role_admin)
+						RicNotification.notify([:contact_message_created, self], :role_admin)
 					else
 						begin 
 							RicContact.contact_message_mailer.new_message(self).deliver_now
