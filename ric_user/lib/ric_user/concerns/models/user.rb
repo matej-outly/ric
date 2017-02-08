@@ -26,8 +26,7 @@ module RicUser
 					# *********************************************************
 
 					#
-					# Include default devise modules. Others available are:
-					# :confirmable, :lockable, :timeoutable and :omniauthable
+					# Include default devise modules defined in config.
 					#
 					devise *(config(:devise).map { |feature| feature.to_sym })
 
@@ -35,9 +34,6 @@ module RicUser
 					# Structure
 					# *********************************************************
 
-					#
-					# One-to-many relation with persons
-					#
 					belongs_to :person, polymorphic: true
 
 					# *********************************************************
@@ -52,18 +48,12 @@ module RicUser
 
 					name_column :name
 
-					#
-					# Add formatted name to JSON output
-					#
 					add_methods_to_json :name_formatted
 
 					# *********************************************************
 					# Validators
 					# *********************************************************
 
-					#
-					# E-mail must be set
-					#
 					validates_presence_of :email
 
 					# *********************************************************
@@ -86,6 +76,24 @@ module RicUser
 				module ClassMethods
 
 					# *********************************************************
+					# Columns
+					# *********************************************************
+
+					def permitted_columns
+						[
+							:email, 
+							:role,
+							{:name => [:title, :firstname, :lastname]}
+						]
+					end
+
+					def filter_columns
+						[
+							:email, 
+						]
+					end
+
+					# *********************************************************
 					# Scopes
 					# *********************************************************
 
@@ -99,6 +107,19 @@ module RicUser
 								(lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
 							", query: query)
 						end
+					end
+
+					def filter(params = {})
+						
+						# Preset
+						result = all
+
+						# E-mail
+						if !params[:email].blank?
+							result = result.where("lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:email].to_s)
+						end
+					
+						result
 					end
 
 					# *********************************************************
@@ -239,7 +260,7 @@ module RicUser
 				# *************************************************************
 
 				#
-				# Get name of email in case name is not set
+				# Get name or email in case name is not set
 				#
 				def name_or_email
 					if self.name.nil?

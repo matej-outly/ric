@@ -14,6 +14,7 @@ RicUser::AdminEngine.routes.draw do
 	# Users
 	resources :users, controller: "admin_users" do
 		collection do
+			post "filter"
 			get "search"
 		end
 		member do

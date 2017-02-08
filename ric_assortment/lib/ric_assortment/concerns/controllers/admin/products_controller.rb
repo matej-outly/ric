@@ -23,7 +23,7 @@ module RicAssortment
 
 					def index
 						@filter_product = RicAssortment.product_model.new(load_params_from_session)
-						@products = RicAssortment.product_model.filter(load_params_from_session.symbolize_keys).order(position: :asc)
+						@products = RicAssortment.product_model.filter(load_params_from_session).order(position: :asc)
 						if request.format.to_sym == :html
 							@products = @products.page(params[:page]).per(50)
 						end
@@ -35,7 +35,7 @@ module RicAssortment
 
 					def filter
 						save_params_to_session(filter_params)
-						redirect_to ric_assortment_admin.products_path
+						redirect_to products_path
 					end
 
 					def search
@@ -107,31 +107,6 @@ module RicAssortment
 						@product = RicAssortment.product_model.find_by_id(params[:id])
 						if @product.nil?
 							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
-						end
-					end
-
-					# *********************************************************
-					# Session
-					# *********************************************************
-
-					def session_key
-						return "products"
-					end
-
-					def save_params_to_session(params)
-						if session[session_key].nil?
-							session[session_key] = {}
-						end
-						if !params.nil?
-							session[session_key]["params"] = params
-						end
-					end
-
-					def load_params_from_session
-						if !session[session_key].nil? && !session[session_key]["params"].nil?
-							return session[session_key]["params"]
-						else
-							return {}
 						end
 					end
 

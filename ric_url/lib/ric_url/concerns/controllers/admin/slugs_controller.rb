@@ -22,45 +22,27 @@ module RicUrl
 					#
 					included do
 					
-						#
-						# Set slug before some actions
-						#
 						before_action :set_slug, only: [:show, :edit, :update, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@filter_slug = RicUrl.slug_model.new(load_params_from_session)
 						@slugs = RicUrl.slug_model.filter(load_params_from_session.symbolize_keys).order(original: :asc).page(params[:page]).per(50)
 					end
 
-					#
-					# Filter action
-					#
 					def filter
 						save_params_to_session(filter_params)
 						redirect_to ric_url_admin.slugs_path
 					end
 
-					#
-					# New action
-					#
 					def new
 						@slug = RicUrl.slug_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@slug = RicUrl.slug_model.new(slug_params)
 						if @slug.save
@@ -76,9 +58,6 @@ module RicUrl
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @slug.update(slug_params)
 							respond_to do |format|
@@ -93,9 +72,6 @@ module RicUrl
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@slug.destroy
 						respond_to do |format|
@@ -114,31 +90,6 @@ module RicUrl
 						@slug = RicUrl.slug_model.find_by_id(params[:id])
 						if @slug.nil?
 							redirect_to ric_slug_admin.slugs_path, alert: I18n.t("activerecord.errors.models.#{RicUrl.slug_model.model_name.i18n_key}.not_found")
-						end
-					end
-
-					# *********************************************************
-					# Session
-					# *********************************************************
-
-					def session_key
-						return "slugs"
-					end
-
-					def save_params_to_session(params)
-						if session[session_key].nil?
-							session[session_key] = {}
-						end
-						if !params.nil?
-							session[session_key]["params"] = params
-						end
-					end
-
-					def load_params_from_session
-						if !session[session_key].nil? && !session[session_key]["params"].nil?
-							return session[session_key]["params"]
-						else
-							return {}
 						end
 					end
 

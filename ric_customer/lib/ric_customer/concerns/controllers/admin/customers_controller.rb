@@ -165,31 +165,6 @@ module RicCustomer
 					end
 
 					# *********************************************************************
-					# Session
-					# *********************************************************************
-
-					def session_key
-						return "customers"
-					end
-
-					def save_params_to_session(params)
-						if session[session_key].nil?
-							session[session_key] = {}
-						end
-						if !params.nil?
-							session[session_key]["params"] = params
-						end
-					end
-
-					def load_params_from_session
-						if !session[session_key].nil? && !session[session_key]["params"].nil?
-							return session[session_key]["params"]
-						else
-							return {}
-						end
-					end
-
-					# *********************************************************************
 					# Param filters
 					# *********************************************************************
 

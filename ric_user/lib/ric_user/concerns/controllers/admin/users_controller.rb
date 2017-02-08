@@ -22,23 +22,20 @@ module RicUser
 					#
 					included do
 					
-						#
-						# Set user before some actions
-						#
 						before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :confirm, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
-						@users = RicUser.user_model.all.sorting(params[:sort], "email").page(params[:page]).per(50)
+						@filter_user = RicUser.user_model.new(load_params_from_session)
+						@users = RicUser.user_model.filter(load_params_from_session).sorting(params[:sort], "email").page(params[:page]).per(50)
 					end
 
-					#
-					# Search action
-					#
+					def filter
+						save_params_to_session(filter_params)
+						redirect_to users_path
+					end
+
 					def search
 						@users = RicUser.user_model.search(params[:q]).order(name_lastname: :asc, name_firstname: :asc, email: :asc)
 						respond_to do |format|
@@ -47,28 +44,16 @@ module RicUser
 						end
 					end
 
-					#
-					# Show action
-					#
 					def show
 					end
 
-					#
-					# New action
-					#
 					def new
 						@user = RicUser.user_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@user = RicUser.user_model.new(user_params)
 						@user.regenerate_password(disable_email: true)
@@ -79,20 +64,15 @@ module RicUser
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @user.update(user_params)
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
 						else
+							p @user.errors
 							render "edit"
 						end
 					end
 
-					#
-					# Lock action
-					#
 					def lock
 						if !@user.locked?
 							@user.lock
@@ -103,9 +83,6 @@ module RicUser
 						end
 					end
 
-					#
-					# Unlock action
-					#
 					def unlock
 						if @user.locked?
 							@user.unlock
@@ -115,9 +92,6 @@ module RicUser
 						end
 					end
 
-					#
-					# Confirm action
-					#
 					def confirm
 						if !@user.confirmed?
 							@user.confirm
@@ -127,15 +101,16 @@ module RicUser
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@user.destroy
 						redirect_to users_path, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.destroy")
 					end
 
 				protected
+
+					# *********************************************************
+					# Model setters
+					# *********************************************************
 
 					def set_user
 						@user = RicUser.user_model.find_by_id(params[:id])
@@ -144,11 +119,16 @@ module RicUser
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
+					# *********************************************************
+					# Param filters
+					# *********************************************************
+
 					def user_params
-						params.require(:user).permit(:email, :role, :name => [:title, :firstname, :lastname])
+						params.require(:user).permit(RicUser.user_model.permitted_columns)
+					end
+
+					def filter_params
+						params.require(:user).permit(RicUser.user_model.filter_columns)
 					end
 
 				end
