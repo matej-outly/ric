@@ -53,7 +53,7 @@ cs:
       models:
         ric_contact/contact_message:
           not_found: Zpráva nebyla nalezena.
-          create: Nepodařio se odeslat zprávu.
+          create: Nepodařilo se odeslat zprávu.
           attributes:
             message:
               blank: Zpráva musí být vyplněna.
@@ -65,4 +65,15 @@ cs:
         contact_message:
           new_message:
             subject: "Nová zpráva z kontaktního formuláře"
-            
+
+  activemodel:
+    errors:
+      models:
+        ric_contact/contact_message:
+          not_found: Zpráva nebyla nalezena.
+          create: Nepodařilo se odeslat zprávu.
+          attributes:
+            message:
+              blank: Zpráva musí být vyplněna.
+        ric_contact/contact_person:
+          not_found: Kontaktní osoba nebyla nalezena.

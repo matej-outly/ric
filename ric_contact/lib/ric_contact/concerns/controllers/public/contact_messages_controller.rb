@@ -17,7 +17,7 @@ module RicContact
 
 					#
 					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
+					# context where it is included, rather than being executed in
 					# the module's context.
 					#
 					included do
