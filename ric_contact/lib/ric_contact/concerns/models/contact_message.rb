@@ -42,11 +42,8 @@ module RicContact
 					# *********************************************************
 
 					def permitted_columns
-						[
-							:name,
-							:email,
-							:message,
-						]
+						result = config(:attributes).map { |attribute| attribute[:name].to_sym }
+						return result
 					end
 
 				end

@@ -107,4 +107,28 @@ module RicContact
 	mattr_accessor :mailer_receiver
 	#@@mailer_receiver = ... to be set in module initializer
 
+	#
+	# Use reCAPTCHA for contact message form
+	#
+	mattr_accessor :recaptcha
+	@@recaptcha = false
+
+	#
+	# Name of reCAPTCHA virtual attribute
+	#
+	mattr_accessor :recaptcha_attribute
+	@@recaptcha_attribute = "recaptcha"
+
+	#
+	# reCAPTCHA site key # TODO not implemented, please user recaptcha.rb initializer to set this option
+	#
+	#mattr_accessor :recaptcha_site_key
+	#@@recaptcha_site_key = nil
+
+	#
+	# reCAPTCHA secret key # TODO not implemented, please user recaptcha.rb initializer to set this option
+	#
+	#mattr_accessor :recaptcha_secret_key
+	#@@recaptcha_secret_key = nil
+
 end

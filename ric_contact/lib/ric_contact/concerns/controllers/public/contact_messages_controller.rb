@@ -26,7 +26,7 @@ module RicContact
 
 					def create
 						@contact_message = RicContact.contact_message_model.new(contact_message_params)
-						if @contact_message.save
+						if validate_recaptcha && @contact_message.save
 							respond_to do |format|
 								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") }
 								format.json { render json: @contact_message.id }
@@ -43,6 +43,14 @@ module RicContact
 
 					def contact_message_params
 						params.require(:contact_message).permit(RicContact.contact_message_model.permitted_columns)
+					end
+
+					def validate_recaptcha
+						if RicContact.recaptcha == true
+							verify_recaptcha(model: @contact_message, attribute: RicContact.recaptcha_attribute)
+						else
+							return true
+						end
 					end
 
 				end
