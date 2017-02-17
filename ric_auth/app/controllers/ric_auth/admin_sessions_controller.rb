@@ -12,7 +12,7 @@
 require_dependency "ric_auth/admin_controller"
 
 module RicAuth
-	class AdminSessionsController < AdminController
-		include RicAuth::Concerns::Controllers::Admin::SessionsController
+	class AdminSessionsController < Devise::SessionsController
+		layout "ruth_admin_auth"
 	end
 end

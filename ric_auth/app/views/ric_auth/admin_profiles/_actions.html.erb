@@ -1,0 +1,4 @@
+<%= rug_menu_for(@user, options) do |m| %>
+	<%= m.item t("headers.ric_auth.admin_profiles.edit"), ric_auth_admin.edit_profile_path, icon: :profile, active: (controller_name.include?("profiles")) %>
+	<%= m.item t("headers.ric_auth.admin_profile_passwords.edit"), ric_auth_admin.edit_profile_password_path, icon: :password, active: (controller_name.include?("profile_passwords")) %>
+<% end %>

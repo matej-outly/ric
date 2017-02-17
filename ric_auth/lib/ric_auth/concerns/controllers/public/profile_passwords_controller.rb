@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Accounts
+# * Passwords
 # *
 # * Author: Matěj Outlý
 # * Date  : 12. 11. 2015
@@ -13,7 +13,7 @@ module RicAuth
 	module Concerns
 		module Controllers
 			module Public
-				module AccountsController extend ActiveSupport::Concern
+				module PasswordsController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -31,8 +31,9 @@ module RicAuth
 					end
 
 					def update
-						if @user.update(user_params)
-							redirect_to ric_auth_public.edit_account_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update")
+						if @user.update_with_password(user_params)
+							sign_in @user, :bypass => true
+							redirect_to ric_auth_public.edit_profile_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update_password")
 						else
 							render "edit"
 						end
@@ -52,11 +53,12 @@ module RicAuth
 					#
 					def user_params
 						params.require(:user).permit(
-							:email, 
-							{ :name => [:title, :firstname, :lastname] }
+							:current_password, 
+							:password, 
+							:password_confirmation
 						)
 					end
-					
+
 				end
 			end
 		end

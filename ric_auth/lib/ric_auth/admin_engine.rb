@@ -15,9 +15,8 @@ module RicAuth
 		#
 		# Controllers
 		#
-		require "ric_auth/concerns/controllers/admin/passwords_controller"
-		require "ric_auth/concerns/controllers/admin/sessions_controller"
-		require "ric_auth/concerns/controllers/admin/accounts_controller"
+		require "ric_auth/concerns/controllers/admin/profile_passwords_controller"
+		require "ric_auth/concerns/controllers/admin/profiles_controller"
 		
 		#
 		# Namespace

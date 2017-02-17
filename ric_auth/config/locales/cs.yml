@@ -2,28 +2,20 @@ cs:
   
   headers:
     ric_auth:
-      admin_sessions:
-        new: Přihlásit se
-        create: Přihlásit se
-        destroy: Odhlásit se
-      admin_passwords:
+      admin_profile_passwords:
         new: Obnovit heslo
         create: Obnovit heslo
         edit: Změnit heslo
         update: Změnit heslo
-      admin_accounts:
+      admin_profiles:
         edit: Upravit profil
         update: Upravit profil
-      public_sessions:
-        new: Přihlásit se
-        create: Přihlásit se
-        destroy: Odhlásit se
-      public_passwords:
+      public_profile_passwords:
         new: Obnovit heslo
         create: Obnovit heslo
         edit: Změnit heslo
         update: Změnit heslo
-      public_accounts:
+      public_profiles:
         edit: Upravit profil
         update: Upravit profil
 

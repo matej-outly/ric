@@ -12,7 +12,7 @@
 module RicAuth
 	module Concerns
 		module Controllers
-			module Admin
+			module Public
 				module AccountsController extend ActiveSupport::Concern
 
 					#
@@ -32,7 +32,7 @@ module RicAuth
 
 					def update
 						if @user.update(user_params)
-							redirect_to ric_auth_admin.edit_account_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update")
+							redirect_to ric_auth_public.edit_profile_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -56,7 +56,7 @@ module RicAuth
 							{ :name => [:title, :firstname, :lastname] }
 						)
 					end
-
+					
 				end
 			end
 		end

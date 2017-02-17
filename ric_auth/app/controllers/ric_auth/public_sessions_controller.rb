@@ -12,7 +12,6 @@
 require_dependency "ric_auth/public_controller"
 
 module RicAuth
-	class PublicSessionsController < PublicController
-		include RicAuth::Concerns::Controllers::Public::SessionsController
+	class PublicSessionsController < Devise::SessionsController
 	end
 end
