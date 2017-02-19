@@ -13,6 +13,10 @@
 require "ric_auth/admin_engine"
 require "ric_auth/public_engine"
 
+# Concerns
+require "ric_auth/concerns/application_paths"
+require "ric_auth/concerns/devise_paths"
+
 module RicAuth
 
 	#
@@ -44,5 +48,14 @@ module RicAuth
 		return @@user_model.constantize
 	end
 	@@user_model = "RicUser::User"
+
+	#
+	# Devise paths concern
+	#
+	mattr_accessor :devise_paths_concern
+	def self.devise_paths_concern
+		return @@devise_paths_concern.constantize
+	end
+	@@devise_paths_concern = "RicAuth::Concerns::DevisePaths"
 
 end

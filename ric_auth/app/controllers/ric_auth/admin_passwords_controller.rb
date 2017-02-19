@@ -13,6 +13,7 @@ require_dependency "ric_auth/admin_controller"
 
 module RicAuth
 	class AdminPasswordsController < Devise::PasswordsController
+		include RicAuth.devise_paths_concern
 		layout "ruth_admin_auth"
 	end
 end
