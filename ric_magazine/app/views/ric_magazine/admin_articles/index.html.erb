@@ -1,8 +1,0 @@
-<%= rug_index_table_for(@articles, { 
-	title: :string,
-	published_at: :datetime
-}, paths: {
-	show: :article_path,
-	edit: :edit_article_path,
-	destroy: :article_path
-}, pagination: true, summary: true ) %>
