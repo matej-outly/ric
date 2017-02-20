@@ -28,6 +28,7 @@ cs:
         role: "Role"
         role_values:
           admin: "Administrátor"
+        avatar: "Avatar"
         sign_in_count: "Počet přihlášení"
         current_sign_in_at: "Čas posledního přihlášení"
         current_password: "Současné heslo"

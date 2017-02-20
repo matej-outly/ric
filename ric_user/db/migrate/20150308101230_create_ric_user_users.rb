@@ -45,6 +45,13 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			# Authorization
 			t.string :role
 
+			# Avatar
+			t.attachment :avatar
+			t.integer :avatar_crop_x
+			t.integer :avatar_crop_y
+			t.integer :avatar_crop_w
+			t.integer :avatar_crop_h
+
 			# Person
 			t.integer :person_id, index: true
 			t.string :person_type, index: true

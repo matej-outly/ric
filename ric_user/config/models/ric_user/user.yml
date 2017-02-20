@@ -17,3 +17,11 @@ devise:
 #  - lockable
 #  - timeoutable
 #  - omniauthable
+
+# Avatar crop settings
+avatar_crop:
+  thumb: "200x200#"
+  full: "500x500#"
+
+# Is avatar manually croppable?
+avatar_croppable: true

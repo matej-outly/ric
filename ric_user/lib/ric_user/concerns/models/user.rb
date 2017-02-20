@@ -51,6 +51,17 @@ module RicUser
 					add_methods_to_json :name_formatted
 
 					# *********************************************************
+					# Avatar
+					# *********************************************************
+
+					if config(:avatar_croppable) == true
+						croppable_picture_column :avatar, styles: { thumb: config(:avatar_crop, :thumb), full: config(:avatar_crop, :full) }
+					else
+						has_attached_file :avatar, :styles => { thumb: config(:avatar_crop, :thumb), full: config(:avatar_crop, :full) }
+						validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+					end
+
+					# *********************************************************
 					# Validators
 					# *********************************************************
 
@@ -83,6 +94,25 @@ module RicUser
 						[
 							:email, 
 							:role,
+							:avatar,
+							:avatar_crop_x, 
+							:avatar_crop_y, 
+							:avatar_crop_w, 
+							:avatar_crop_h,
+							:avatar_perform_cropping,
+							{:name => [:title, :firstname, :lastname]}
+						]
+					end
+
+					def profile_columns
+						[
+							:email, 
+							:avatar,
+							:avatar_crop_x, 
+							:avatar_crop_y, 
+							:avatar_crop_w, 
+							:avatar_crop_h,
+							:avatar_perform_cropping,
 							{:name => [:title, :firstname, :lastname]}
 						]
 					end

@@ -13,7 +13,7 @@ module RicAuth
 	module Concerns
 		module Controllers
 			module Public
-				module PasswordsController extend ActiveSupport::Concern
+				module ProfilePasswordsController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the

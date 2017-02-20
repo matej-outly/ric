@@ -13,7 +13,7 @@ module RicAuth
 	module Concerns
 		module Controllers
 			module Public
-				module AccountsController extend ActiveSupport::Concern
+				module ProfilesController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -27,14 +27,27 @@ module RicAuth
 
 					end
 
+					def show
+						respond_to do |format|
+							format.html { render "show" }
+							format.json { render json: @user.to_json }
+						end
+					end
+
 					def edit
 					end
 
 					def update
 						if @user.update(user_params)
-							redirect_to ric_auth_public.edit_profile_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update")
+							respond_to do |format|
+								format.html { redirect_to ric_auth_public.edit_profile_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update") }
+								format.json { render json: @user.id }
+							end
 						else
-							render "edit"
+							respond_to do |format|
+								format.html { render "edit" }
+								format.json { render json: @user.errors }
+							end
 						end
 					end
 
@@ -47,14 +60,8 @@ module RicAuth
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def user_params
-						params.require(:user).permit(
-							:email, 
-							{ :name => [:title, :firstname, :lastname] }
-						)
+						params.require(:user).permit(RicAuth.user_model.profile_columns)
 					end
 					
 				end
