@@ -27,11 +27,11 @@ module RicDms
 				end
 
 				def new
-					@document_folder = DocumentFolder.new
+					@document_folder = RicDms.document_folder_model.new
 				end
 
 				def create
-					@document_folder = DocumentFolder.new(document_folder_params)
+					@document_folder = RicDms.document_folder_model.new(document_folder_params)
 					if @document_folder.save
 						redirect_to @document_folder
 					else
@@ -40,7 +40,7 @@ module RicDms
 				end
 
 				def destroy
-					document_folder = DocumentFolder.find(params[:id]).destroy
+					document_folder = RicDms.document_folder_model.find(params[:id]).destroy
 					redirect_to (document_folder.parent || document_folders_url)
 				end
 
@@ -51,16 +51,16 @@ module RicDms
 				# Set current folder, files and folders into view
 				#
 				def set_files_and_folders
-					@current_folder = params[:id] ? DocumentFolder.find(params[:id]) : nil
-					@folders = DocumentFolder.where(parent_id: params[:id]).order(:name)
-					@files = Document.where(document_folder_id: params[:id]).order(:name)
+					@current_folder = params[:id] ? RicDms.document_folder_model.find(params[:id]) : nil
+					@folders = RicDms.document_folder_model.where(parent_id: params[:id]).order(:name)
+					@files = RicDms.document_model.where(document_folder_id: params[:id]).order(:name)
 				end
 
 
 			private
 
 				def document_folder_params
-					params.require(:document_folder).permit(DocumentFolder.permitted_columns)
+					params.require(:document_folder).permit(RicDms.document_folder_model.permitted_columns)
 				end
 
 			end

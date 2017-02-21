@@ -23,16 +23,16 @@ module RicDms
 				end
 
 				def show
-					@document = Document.find(params[:id])
+					@document = RicDms.document_model.find(params[:id])
 				end
 
 				def new
-					@document = Document.new
+					@document = RicDms.document_model.new
 				end
 
 				def create
 					# Get existing or create new document and add attachment into it
-					@document = Document.find_or_new_with_attachment(document_params)
+					@document = RicDms.document_model.find_or_new_with_attachment(document_params)
 					if @document.save
 						redirect_to @document
 					else
@@ -41,16 +41,16 @@ module RicDms
 				end
 
 				def destroy
-					document = Document.find(params[:id])
+					document = RicDms.document_model.find(params[:id])
 					document.destroy
 					redirect_to (document.document_folder || document_folders_url)
 				end
 
 
-			private
+			protected
 
 				def document_params
-					params.require(:document).permit(Document.permitted_columns)
+					params.require(:document).permit(RicDms.document_model.permitted_columns)
 				end
 
 			end

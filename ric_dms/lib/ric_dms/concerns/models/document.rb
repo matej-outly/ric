@@ -25,8 +25,8 @@ module RicDms
 					# Structure
 					# *************************************************************************
 
-					belongs_to :document_folder
-					has_many :document_versions, dependent: :delete_all # Delete instead of destroy is used
+					belongs_to :document_folder, class_name: RicDms.document_folder_model.to_s
+					has_many :document_versions, class_name: RicDms.document_version_model.to_s, dependent: :delete_all # Delete instead of destroy is used
 
 					attr_accessor :attachment # Attachment plays important role in document
 					                          # creation. It is source of document's name
@@ -75,7 +75,7 @@ module RicDms
 					#
 					# Get all columns permitted for editation
 					#
-					def self.permitted_columns
+					def permitted_columns
 						[
 							:name,
 							:document_folder_id,
@@ -129,7 +129,7 @@ module RicDms
 					#
 					# Get new document with attachment
 					#
-					def self.find_or_new_with_attachment(params)
+					def find_or_new_with_attachment(params)
 						# Get attachment
 						attachment = params[:attachment]
 						document_folder_id = !params[:document_folder_id].blank? ? params[:document_folder_id] : nil
@@ -137,7 +137,7 @@ module RicDms
 						if attachment
 							# Try to find existing document by filename
 							# TODO: Document names case sensitivity is now up to db engine
-							document = Document.find_by(name: attachment.original_filename, document_folder_id: document_folder_id)
+							document = RicDms.document_model.find_by(name: attachment.original_filename, document_folder_id: document_folder_id)
 
 							if document
 								# Get existing document object and add attachment into it
@@ -146,12 +146,12 @@ module RicDms
 							else
 								# Create new document with attachment and with name generated
 								# from attachment filename
-								document = Document.new(params.merge(name: attachment.original_filename))
+								document = RicDms.document_model.new(params.merge(name: attachment.original_filename))
 							end
 
 						else
 							# No attachment means new document with other params we have
-							document = Document.new(params)
+							document = RicDms.document_model.new(params)
 						end
 
 						return document
@@ -160,7 +160,7 @@ module RicDms
 					# Create document version, if attachment is available
 					def save_document_version
 						if self.attachment
-							DocumentVersion.create(
+							RicDms.document_version_model.create(
 								document_id: self.id,
 								attachment: self.attachment,
 							)

@@ -20,7 +20,7 @@ module RicDms
 					# Structure
 					# *************************************************************************
 
-					belongs_to :document
+					belongs_to :document, class_name: RicDms.document_model.to_s
 
 
 					# *************************************************************************

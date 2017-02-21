@@ -22,7 +22,7 @@ module RicDms
 
 					enable_hierarchical_ordering
 
-					has_many :documents, dependent: :destroy
+					has_many :documents, class_name: RicDms.document_model.to_s,  dependent: :destroy
 
 				end
 
@@ -35,7 +35,7 @@ module RicDms
 					#
 					# Get all columns permitted for editation
 					#
-					def self.permitted_columns
+					def permitted_columns
 						[
 							:name,
 							:parent_id

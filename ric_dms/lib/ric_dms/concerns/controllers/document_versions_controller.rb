@@ -18,7 +18,7 @@ module RicDms
 
 				def destroy
 
-					document_version = DocumentVersion.find(params[:id])
+					document_version = RicDms.document_version_model.find(params[:id])
 
 					if document_version
 						# Save document for redirection after deletion
