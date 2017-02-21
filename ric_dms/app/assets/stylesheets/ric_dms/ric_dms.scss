@@ -1,0 +1,34 @@
+$ric-dms-tile-width: 150px !default;
+$ric-dms-split-folders-and-files: false !default;
+
+.ric-dms-listing {
+	margin-left: ceil(-$grid-gutter-width/2);
+	margin-right: floor(-$grid-gutter-width/2);
+}
+
+.ric-dms-folder, .ric-dms-file {
+	display: inline-block;
+	margin: 0 floor($grid-gutter-width/2) $grid-gutter-width ceil($grid-gutter-width/2);
+	width: $ric-dms-tile-width;
+	vertical-align: top;
+
+	.ric-dms-mime-type {
+		display: block;
+		margin-bottom: 5px;
+	}
+
+	.ric-dms-title {
+		display: block;
+	}
+
+	a {
+		display: block;
+		text-align: center;
+	}
+}
+
+@if $ric-dms-split-folders-and-files == false {
+	.ric-dms-listing-folders, .ric-dms-listing-files {
+		display: inline;
+	}
+}

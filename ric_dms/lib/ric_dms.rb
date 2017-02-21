@@ -9,6 +9,9 @@
 # *
 # *****************************************************************************
 
+# Railtie
+require 'ric_dms/railtie' if defined?(Rails)
+
 # Engines
 require "ric_dms/engine"
 
@@ -16,6 +19,10 @@ require "ric_dms/engine"
 require 'ric_dms/concerns/models/document'
 require 'ric_dms/concerns/models/document_folder'
 require 'ric_dms/concerns/models/document_version'
+
+# Helpers
+require 'ric_dms/helpers/mime_type_helper'
+
 
 module RicDms
 
