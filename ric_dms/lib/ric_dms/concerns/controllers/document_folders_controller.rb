@@ -14,7 +14,11 @@ module RicDms
 		module Controllers
 			module DocumentFoldersController extend ActiveSupport::Concern
 
-				before_action :set_files_and_folders, only: [:index, :show]
+				included do
+
+					before_action :set_files_and_folders, only: [:index, :show]
+
+				end
 
 				def index
 				end

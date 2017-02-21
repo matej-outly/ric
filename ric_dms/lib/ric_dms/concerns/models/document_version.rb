@@ -14,42 +14,50 @@ module RicDms
 		module Models
 			module DocumentVersion extend ActiveSupport::Concern
 
-				# *************************************************************************
-				# Structure
-				# *************************************************************************
+				included do
 
-				belongs_to :document
+					# *************************************************************************
+					# Structure
+					# *************************************************************************
+
+					belongs_to :document
 
 
-				# *************************************************************************
-				# File
-				# *************************************************************************
+					# *************************************************************************
+					# File
+					# *************************************************************************
 
-				has_attached_file :attachment
-				do_not_validate_attachment_file_type :attachment
+					has_attached_file :attachment
+					do_not_validate_attachment_file_type :attachment
 
-				# *************************************************************************
-				# Validators
-				# *************************************************************************
+					# *************************************************************************
+					# Validators
+					# *************************************************************************
 
-				validates_presence_of :attachment
+					validates_presence_of :attachment
 
-				# *************************************************************************
-				# Destroy orphaned document
-				# *************************************************************************
-				around_destroy :destroy_orphaned_document
+					# *************************************************************************
+					# Destroy orphaned document
+					# *************************************************************************
+					around_destroy :destroy_orphaned_document
 
-				def destroy_orphaned_document
-					# Get document
-					document = self.document
+				end
 
-					# Delete document version
-					yield
+				module ClassMethods
 
-					# Delete orphaned document, which has no document versions
-					if document.document_versions.count == 0
-						document.destroy
+					def destroy_orphaned_document
+						# Get document
+						document = self.document
+
+						# Delete document version
+						yield
+
+						# Delete orphaned document, which has no document versions
+						if document.document_versions.count == 0
+							document.destroy
+						end
 					end
+
 				end
 
 			end

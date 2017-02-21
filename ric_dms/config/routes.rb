@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-RicInmail::Engine.routes.draw do
+RicDms::Engine.routes.draw do
 
 	# Documents
 	resources :documents, only: [:show, :new, :create, :destroy]

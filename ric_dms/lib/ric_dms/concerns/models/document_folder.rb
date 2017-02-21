@@ -14,26 +14,34 @@ module RicDms
 		module Models
 			module DocumentFolder extend ActiveSupport::Concern
 
-				# *************************************************************************
-				# Structure
-				# *************************************************************************
+				included do
 
-				enable_hierarchical_ordering
+					# *************************************************************************
+					# Structure
+					# *************************************************************************
 
-				has_many :documents, dependent: :destroy
+					enable_hierarchical_ordering
 
-				# *************************************************************************
-				# Columns
-				# *************************************************************************
+					has_many :documents, dependent: :destroy
 
-				#
-				# Get all columns permitted for editation
-				#
-				def self.permitted_columns
-					[
-						:name,
-						:parent_id
-					]
+				end
+
+				module ClassMethods
+
+					# *************************************************************************
+					# Columns
+					# *************************************************************************
+
+					#
+					# Get all columns permitted for editation
+					#
+					def self.permitted_columns
+						[
+							:name,
+							:parent_id
+						]
+					end
+
 				end
 
 			end
