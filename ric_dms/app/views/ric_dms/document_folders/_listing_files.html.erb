@@ -4,8 +4,7 @@
 		<div class="ric-dms-folder">
 			<%= link_to file, "data-document-id" => file.id do %>
 				<span class="ric-dms-mime-type">
-					<i class="fa fa-3x"></i>
-					<%= mime_type_fa_icon file.current_version.attachment_content_type %>
+					<i class="fa <%= mime_type_fa_icon file.current_version.attachment_content_type %> fa-3x"></i>
 				</span>
 				<span class="ric-dms-name">
 					<%= file.name %>
