@@ -17,7 +17,7 @@ require 'ric_dms/concerns/models/document'
 require 'ric_dms/concerns/models/document_folder'
 require 'ric_dms/concerns/models/document_version'
 
-module RicInmail
+module RicDms
 
 	#
 	# This will keep Rails Engine from generating all table prefixes with the engines name
