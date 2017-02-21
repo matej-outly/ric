@@ -43,21 +43,17 @@ module RicDms
 
 				end
 
-				module ClassMethods
+				def destroy_orphaned_document
+					# Get document
+					document = self.document
 
-					def destroy_orphaned_document
-						# Get document
-						document = self.document
+					# Delete document version
+					yield
 
-						# Delete document version
-						yield
-
-						# Delete orphaned document, which has no document versions
-						if document.document_versions.count == 0
-							document.destroy
-						end
+					# Delete orphaned document, which has no document versions
+					if document.document_versions.count == 0
+						document.destroy
 					end
-
 				end
 
 			end

@@ -55,20 +55,6 @@ module RicDms
 				module ClassMethods
 
 					# *************************************************************************
-					# Validators
-					# *************************************************************************
-
-
-					def attachment_belongs_to_this_document
-						# Attachment must have same name as current document's name is,
-						# otherwise it should be new document
-						if self.name.present? && self.attachment.present? && self.name != self.attachment.original_filename
-							errors.add(:attachment, "attachment does't belong to this document")
-						end
-					end
-
-
-					# *************************************************************************
 					# Columns
 					# *************************************************************************
 
@@ -82,45 +68,6 @@ module RicDms
 							:attachment
 						]
 					end
-
-
-					# *************************************************************************
-					# Methods
-					# *************************************************************************
-
-					#
-					# Get the latest (current) version of document
-					#
-					def current_version
-						document_versions.order(id: :desc).first
-					end
-
-					#
-					# Get list of all versions of document ordered from newest to oldest
-					#
-					def recent_versions
-						document_versions.order(id: :desc)
-					end
-
-
-					# *************************************************************************
-					# Hooks & notifications
-					# *************************************************************************
-
-					def notify_new_document
-						RicNotification.notify([:document_created, self], users) if defined?(RicNotification)
-					end
-
-					def notify_new_document_version
-						if self.attachment
-							RicNotification.notify([:document_updated, self], users) if defined?(RicNotification)
-						end
-					end
-
-					def notify_destroyed_document
-						RicNotification.notify([:document_destroyed, self], users) if defined?(RicNotification)
-					end
-
 
 					# *************************************************************************
 					# Save attachment (as document version)
@@ -157,19 +104,77 @@ module RicDms
 						return document
 					end
 
-					# Create document version, if attachment is available
-					def save_document_version
-						if self.attachment
-							RicDms.document_version_model.create(
-								document_id: self.id,
-								attachment: self.attachment,
-							)
-						end
-					end
+				end
 
+
+
+
+				# *************************************************************************
+				# Validators
+				# *************************************************************************
+
+				def attachment_belongs_to_this_document
+					# Attachment must have same name as current document's name is,
+					# otherwise it should be new document
+					if self.name.present? && self.attachment.present? && self.name != self.attachment.original_filename
+						errors.add(:attachment, "attachment does't belong to this document")
+					end
+				end
+
+
+				# *************************************************************************
+				# Methods
+				# *************************************************************************
+
+				#
+				# Get the latest (current) version of document
+				#
+				def current_version
+					document_versions.order(id: :desc).first
+				end
+
+				#
+				# Get list of all versions of document ordered from newest to oldest
+				#
+				def recent_versions
+					document_versions.order(id: :desc)
+				end
+
+
+				# *************************************************************************
+				# Hooks & notifications
+				# *************************************************************************
+
+				def notify_new_document
+					RicNotification.notify([:document_created, self], users) if defined?(RicNotification)
+				end
+
+				def notify_new_document_version
+					if self.attachment
+						RicNotification.notify([:document_updated, self], users) if defined?(RicNotification)
+					end
+				end
+
+				def notify_destroyed_document
+					RicNotification.notify([:document_destroyed, self], users) if defined?(RicNotification)
+				end
+
+
+			protected
+
+
+				# Create document version, if attachment is available
+				def save_document_version
+					if self.attachment
+						RicDms.document_version_model.create(
+							document_id: self.id,
+							attachment: self.attachment,
+						)
+					end
 				end
 
 			end
+
 		end
 	end
 end
