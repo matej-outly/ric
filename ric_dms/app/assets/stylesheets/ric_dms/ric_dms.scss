@@ -1,4 +1,4 @@
-$ric-dms-gutter-width: 20px !default;
+$ric-dms-gutter-width: 10px !default;
 $ric-dms-tile-width: 150px !default;
 $ric-dms-split-folders-and-files: false !default;
 
@@ -23,9 +23,16 @@ $ric-dms-split-folders-and-files: false !default;
 	}
 
 	a {
+		padding: 5px;
 		display: block;
 		text-align: center;
+
+		&.active {
+			background: $navbar-default-link-active-bg;
+		}
 	}
+
+
 }
 
 @if $ric-dms-split-folders-and-files == false {
