@@ -146,17 +146,17 @@ module RicDms
 				# *************************************************************************
 
 				def notify_new_document
-					RicNotification.notify([:document_created, self], users) if defined?(RicNotification)
+					# RicNotification.notify([:document_created, self], users) if defined?(RicNotification)
 				end
 
 				def notify_new_document_version
 					if self.attachment
-						RicNotification.notify([:document_updated, self], users) if defined?(RicNotification)
+						# RicNotification.notify([:document_updated, self], users) if defined?(RicNotification)
 					end
 				end
 
 				def notify_destroyed_document
-					RicNotification.notify([:document_destroyed, self], users) if defined?(RicNotification)
+					# RicNotification.notify([:document_destroyed, self], users) if defined?(RicNotification)
 				end
 
 

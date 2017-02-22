@@ -1,4 +1,4 @@
-class CreateDocumentFolder < ActiveRecord::Migration
+class CreateRicDmsDocumentFolder < ActiveRecord::Migration
 	def change
 		create_table :document_folders do |t|
 

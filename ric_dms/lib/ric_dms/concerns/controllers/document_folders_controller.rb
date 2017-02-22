@@ -24,6 +24,7 @@ module RicDms
 				end
 
 				def show
+					render "index"
 				end
 
 				def new
