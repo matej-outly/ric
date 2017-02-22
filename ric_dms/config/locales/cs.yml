@@ -1,0 +1,6 @@
+cs:
+
+  headers:
+    ric_dms:
+      document_folders:
+        index: "Sdílení souborů"

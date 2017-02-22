@@ -1,4 +1,4 @@
-class CreateDocumentVersion < ActiveRecord::Migration
+class CreateRicDmsDocumentVersion < ActiveRecord::Migration
 	def change
 		create_table :document_versions do |t|
 
