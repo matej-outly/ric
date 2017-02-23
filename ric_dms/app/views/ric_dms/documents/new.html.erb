@@ -9,7 +9,6 @@
 	<div class="form-group">
 		<%= f.label "Soubor", for: :attachment %>
 		<%= f.file_field :attachment %>
-		<%= @document.errors[:attachment] %>
 	</div>
 
 	<%= f.submit "Nahrát" %>

@@ -39,7 +39,7 @@ module RicDms
 						# Get existing or create new document and add attachment into it
 						@document = RicDms.document_model.find_or_new_with_attachment(document_params)
 						if @document.save
-							redirect_to @document
+							redirect_to (@document.document_folder || document_folders_url)
 						else
 							render "new"
 						end
