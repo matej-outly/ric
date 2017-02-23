@@ -14,36 +14,49 @@ module RicDms
 		module Controllers
 			module DocumentsController extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in
-				# the module's context.
-				#
-				included do
-				end
+				# *************************************************************************
+				# Actions
+				# *************************************************************************
 
 				def show
-					@document = RicDms.document_model.find(params[:id])
-				end
-
-				def new
-					@document = RicDms.document_model.new
-				end
-
-				def create
-					# Get existing or create new document and add attachment into it
-					@document = RicDms.document_model.find_or_new_with_attachment(document_params)
-					if @document.save
-						redirect_to @document
+					if can_read? || can_read_and_write?
+						@document = RicDms.document_model.find(params[:id])
 					else
-						render "new"
+						not_authorized!
 					end
 				end
 
+				def new
+					if can_read_and_write?
+						@document = RicDms.document_model.new
+					else
+						not_authorized!
+					end
+				end
+
+				def create
+					if can_read_and_write?
+						# Get existing or create new document and add attachment into it
+						@document = RicDms.document_model.find_or_new_with_attachment(document_params)
+						if @document.save
+							redirect_to @document
+						else
+							render "new"
+						end
+					else
+						not_authorized!
+					end
+
+				end
+
 				def destroy
-					document = RicDms.document_model.find(params[:id])
-					document.destroy
-					redirect_to (document.document_folder || document_folders_url)
+					if can_read_and_write?
+						document = RicDms.document_model.find(params[:id])
+						document.destroy
+						redirect_to (document.document_folder || document_folders_url)
+					else
+						not_authorized!
+					end
 				end
 
 

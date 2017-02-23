@@ -17,27 +17,34 @@ module RicDms
 			module DocumentVersionsController extend ActiveSupport::Concern
 
 				def destroy
+					# Authorization
+					if can_read_and_write?
 
-					document_version = RicDms.document_version_model.find(params[:id])
+						# Destroy document version
+						document_version = RicDms.document_version_model.find(params[:id])
 
-					if document_version
-						# Save document for redirection after deletion
-						document = document_version.document
+						if document_version
+							# Save document for redirection after deletion
+							document = document_version.document
 
-						# Destroy document version, may destroy also document itself
-						# if it is only document_version
-						document_version.destroy
+							# Destroy document version, may destroy also document itself
+							# if it is only document_version
+							document_version.destroy
 
-						# Redirect to document or folder, if document is also destroyed
-						if !document.destroyed?
-							redirect_to document
+							# Redirect to document or folder, if document is also destroyed
+							if !document.destroyed?
+								redirect_to document
+							else
+								redirect_to (document.document_folder || document_folders_path)
+							end
+
 						else
-							redirect_to (document.document_folder || document_folders_path)
+							not_found
 						end
-
 					else
-						not_found
+						not_authorized!
 					end
+
 				end
 
 			end

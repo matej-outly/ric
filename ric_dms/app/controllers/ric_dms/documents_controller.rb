@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-# require_dependency "controllers/ric_dms/application_controller"
+require_dependency "ric_dms/documents_controller"
 
 module RicDms
 	class DocumentsController < ApplicationController

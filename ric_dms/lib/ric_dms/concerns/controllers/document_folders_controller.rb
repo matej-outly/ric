@@ -16,33 +16,58 @@ module RicDms
 
 				included do
 
+					# Directory listing
 					before_action :set_files_and_folders, only: [:index, :show]
 
 				end
 
+				# *************************************************************************
+				# Actions
+				# *************************************************************************
+
+
 				def index
+					if !(can_read? || can_read_and_write?)
+						not_authorized!
+					end
 				end
 
 				def show
-					render "index"
+					if can_read? || can_read_and_write?
+						render "index"
+					else
+						not_authorized!
+					end
 				end
 
 				def new
-					@document_folder = RicDms.document_folder_model.new
+					if can_read_and_write?
+						@document_folder = RicDms.document_folder_model.new
+					else
+						not_authorized!
+					end
 				end
 
 				def create
-					@document_folder = RicDms.document_folder_model.new(document_folder_params)
-					if @document_folder.save
-						redirect_to @document_folder
+					if can_read_and_write?
+						@document_folder = RicDms.document_folder_model.new(document_folder_params)
+						if @document_folder.save
+							redirect_to @document_folder
+						else
+							render "new"
+						end
 					else
-						render "new"
+						not_authorized!
 					end
 				end
 
 				def destroy
-					document_folder = RicDms.document_folder_model.find(params[:id]).destroy
-					redirect_to (document_folder.parent || document_folders_url)
+					if can_read_and_write?
+						document_folder = RicDms.document_folder_model.find(params[:id]).destroy
+						redirect_to (document_folder.parent || document_folders_url)
+					else
+						not_authorized!
+					end
 				end
 
 

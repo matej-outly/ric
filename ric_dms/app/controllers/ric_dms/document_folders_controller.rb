@@ -9,7 +9,6 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_dms/application_controller"
 require_dependency "ric_dms/document_folders_controller"
 
 module RicDms

@@ -9,7 +9,10 @@
 # *
 # *****************************************************************************
 
+require_dependency "ric_dms/application_controller"
+
 module RicDms
 	class ApplicationController < ::ApplicationController
+		include RicDms::Concerns::Controllers::Authorization
 	end
 end
