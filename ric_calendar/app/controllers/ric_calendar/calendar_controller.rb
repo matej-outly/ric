@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_calendar/calendar_controller"
+require_dependency "ric_calendar/application_controller"
 
 module RicCalendar
 	class CalendarController < ApplicationController

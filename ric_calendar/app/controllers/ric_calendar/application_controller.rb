@@ -9,8 +9,6 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_calendar/application_controller"
-
 module RicCalendar
 	class ApplicationController < ::ApplicationController
 		include RicCalendar::Concerns::Authorization

@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_dms/document_versions_controller"
+require_dependency "ric_dms/application_controller"
 
 module RicDms
 	class DocumentVersionsController < ApplicationController
