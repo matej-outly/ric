@@ -4,3 +4,8 @@ cs:
     ric_dms:
       document_folders:
         index: "Sdílení souborů"
+        new: "Nová složka"
+        destroy: "Smazat složku"
+        destroy_current: "Smazat tuto složku"
+      documents:
+        new: "Nahrát soubor"
