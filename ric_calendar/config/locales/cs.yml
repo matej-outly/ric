@@ -1,0 +1,6 @@
+cs:
+
+  headers:
+    ric_calendar:
+      calendar:
+        index: "Kalendář"

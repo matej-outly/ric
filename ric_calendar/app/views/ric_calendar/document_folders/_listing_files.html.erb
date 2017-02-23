@@ -1,0 +1,16 @@
+<div class="ric-dms-listing-files">
+
+	<% @files.each do |file| %>
+		<div class="ric-dms-file">
+			<%= link_to file.current_version.attachment.url, "data-document-id" => file.id do %>
+				<span class="ric-dms-mime-type">
+					<i class="fa fa-3x"></i>
+				</span>
+				<span class="ric-dms-name">
+					<%= file.name %>
+				</span>
+			<% end %>
+		</div>
+	<% end %>
+
+</div>
