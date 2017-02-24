@@ -9,8 +9,6 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_auth/public_controller"
-
 module RicAuth
 	class PublicRegistrationsController < Devise::RegistrationsController
 		include RicAuth.devise_paths_concern
