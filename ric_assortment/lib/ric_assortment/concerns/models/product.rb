@@ -59,10 +59,10 @@ module RicAssortment
 					add_methods_to_json :name_with_category
 
 					# *********************************************************
-					# Other attributes
+					# Attributes
 					# *********************************************************
 
-					store_accessor :other_attributes
+					store_column :other_attributes
 
 					before_save :_synchronize_category_attributes
 

@@ -24,7 +24,8 @@ class CreateRicAssortmentProducts < ActiveRecord::Migration
 			# ... to be defined according to application
 
 			# Other (dynamically defined) attributes
-			t.hstore :other_attributes
+			t.hstore :other_attributes_values
+			t.string :other_attributes_order
 
 			# Price
 			t.integer :price
