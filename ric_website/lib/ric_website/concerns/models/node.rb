@@ -337,6 +337,16 @@ module RicWebsite
 					return self.class.slugify_value(value)
 				end
 
+
+				def slug_value(locale)
+					self.field_values.where(include_in_url: true).where("locale = ? OR locale IS NULL", locale).order(position: :asc).each do |field_value|
+						if !field_value.slug.blank?
+							return field_value.slug
+						end
+					end
+					return nil
+				end
+
 				# *************************************************************
 				# Navigation
 				# *************************************************************
@@ -375,34 +385,31 @@ module RicWebsite
 				def _url_original
 					"/nodes/#{self.id}"
 				end
-				
+
+				# Compose translation from all ancestors and their slugged fields
 				def _compose_slug_translation(locale)
 					filter = nil
 					translation = ""
 					after_web_node = false
 					self.self_and_ancestors.each do |node|
-						
 						if !after_web_node && node.structure && node.structure.ref == "web"
 							filter = node.ref
 							after_web_node = true
 						end
-
 						if after_web_node
-							node.field_values.where(include_in_url: true).where("locale = ? OR locale IS NULL", locale).order(position: :asc).each do |field_value|
-								if !field_value.slug.blank?
-									translation += "/" + field_value.slug
-								end
-							end
+							slug_value = node.slug_value(locale)
+							translation += "/" + slug_value if !slug_value.blank?
 						end
-						
 					end
 					return [filter, translation]
 				end
 
 				def _generate_slug(slug_model, locale)
 					if self.include_in_url
-						filter, translation = compose_slug_translation(locale)
-						slug_model.add_slug(locale, URI.parse(self.url_original).path, translation, filter) if !translation.blank?
+						if !self.slug_value(locale).blank?
+							filter, translation = _compose_slug_translation(locale)
+							slug_model.add_slug(locale, URI.parse(self.url_original).path, translation, filter) if !translation.blank?
+						end
 					end
 				end
 

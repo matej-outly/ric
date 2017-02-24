@@ -31,9 +31,17 @@ cs:
         new: Nový objekt
         create: Nový objekt
         edit: Upravit objekt
+        edit_user: Atributy objektu
+        edit_system: Systémové atributy
         update: Upravit objekt
+        generate_slugs: Přegenerovat URL
         destroy: Smazat objekt
       
+  content:
+    ric_website:
+      admin_nodes:
+        no_structure: Tento objekt nemá definovanou žádnou strukturu. Strukturu je možné nastavit na kartě <strong>Systémové atributy</strong>. Po nastavení struktury se zde objeví atributy specifické pro zvolenou strukturu.
+
   activerecord:
     attributes:
       ric_website/node:
@@ -97,6 +105,7 @@ cs:
           create: Objekt byl úspěšně vytvořen.
           update: Objekt byl úspěšně upraven.
           move: Objekt byl úspěšně přesunut.
+          generate_slugs: Heské URL bylo úspěšně přegenerováno.
           destroy: Objekt byl úspěšně smazán.
         
     errors:

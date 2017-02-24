@@ -1,1 +1,20 @@
-<%= render partial: "form" %>
+<%= rug_show_table_for(@node, {
+	name: :string,
+	structure: { type: :belongs_to, label: :name, path: "ric_website_admin.structure_path" },
+	parent: { type: :belongs_to, label: :name },
+	slug: :url,
+}) %>
+<% tabs = rug_tabs %>
+<% tabs.tab :edit_user, t("headers.ric_website.admin_nodes.edit_user") do %>
+	<% if @node.structure_id %>
+		<%= render partial: "form_user" %>
+	<% else %>
+		<div class="alert alert-info" role="alert">
+			<%= t("content.ric_website.admin_nodes.no_structure").html_safe %>
+		</div>
+	<% end %>
+<% end %>
+<% tabs.tab :edit_system, t("headers.ric_website.admin_nodes.edit_system") do %>
+	<%= render partial: "form_system" %>
+<% end %>
+<%= tabs.render(header_style: "pills", header_class: "hr-divider-content hr-divider-nav", header_container_class: "hr-divider") %>
