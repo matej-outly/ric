@@ -22,7 +22,7 @@ module RicWebsite
 					#
 					included do
 						
-						before_action :set_node, only: [:show, :edit, :update, :move, :destroy]
+						before_action :set_node, only: [:show, :edit, :update, :move, :generate_slugs, :destroy]
 
 					end
 
@@ -58,17 +58,11 @@ module RicWebsite
 					end
 
 					def create
-						@node = RicWebsite.node_model.create({
-							structure_id: (params[:node] ? params[:node][:structure_id] : nil),
-							name: (params[:node] ? params[:node][:name] : nil)
-						})
-						if !@node.new_record?
-							@node.disable_slug_generator
-							@node.update(node_params)
-						end
-						if !@node.new_record?
+						@node = Node.new(node_params)
+						@node.disable_slug_generator
+						if @node.save
 							respond_to do |format|
-								format.html { redirect_to edit_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.field_model.model_name.i18n_key}.create") }
+								format.html { redirect_to edit_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.create") }
 								format.json { render json: @node.id }
 							end
 						else
@@ -80,16 +74,33 @@ module RicWebsite
 					end
 
 					def update
-						@node.disable_slug_generator
-						if @node.update(node_params)
-							respond_to do |format|
-								format.html { redirect_to edit_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.field_model.model_name.i18n_key}.update") }
-								format.json { render json: @node.id }
+						new_node_params = node_params
+						if @requested_structure_id
+							requested_structure = RicWebsite.structure_model.find_by_id(@requested_structure_id)
+							if requested_structure
+								@node.change_structure(requested_structure)
+								respond_to do |format|
+									format.html { redirect_to main_app.edit_admin_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.update") }
+									format.json { render json: @node.id }
+								end
+							else
+								respond_to do |format|
+									format.html { render "edit" }
+									format.json { render json: @node.errors }
+								end
 							end
-						else
-							respond_to do |format|
-								format.html { render "edit" }
-								format.json { render json: @node.errors }
+						else 
+							@node.disable_slug_generator
+							if @node.update(new_node_params)
+								respond_to do |format|
+									format.html { redirect_to edit_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.update") }
+									format.json { render json: @node.id }
+								end
+							else
+								respond_to do |format|
+									format.html { render "edit" }
+									format.json { render json: @node.errors }
+								end
 							end
 						end
 					end
@@ -97,14 +108,22 @@ module RicWebsite
 					def move
 						if RicWebsite.node_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicWebsite.field_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.move") }
 								format.json { render json: @node.id }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicWebsite.field_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicWebsite.node_model.model_name.i18n_key}.move") }
 								format.json { render json: @node.errors }
 							end
+						end
+					end
+
+					def generate_slugs
+						@node.generate_slugs
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.generate_slugs") }
+							format.json { render json: @node.id }
 						end
 					end
 
@@ -116,7 +135,7 @@ module RicWebsite
 							return_path = nodes_path
 						end
 						respond_to do |format|
-							format.html { redirect_to return_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.field_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to return_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @node.id }
 						end
 					end
@@ -130,7 +149,7 @@ module RicWebsite
 					def set_node
 						@node = RicWebsite.node_model.find_by_id(params[:id])
 						if @node.nil?
-							redirect_to nodes_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.field_model.model_name.i18n_key}.not_found")
+							redirect_to nodes_path, alert: I18n.t("activerecord.errors.models.#{RicWebsite.node_model.model_name.i18n_key}.not_found")
 						end
 					end
 
@@ -139,13 +158,20 @@ module RicWebsite
 					# *************************************************************************
 
 					def node_params
+						result = nil
 						if @node
-							params.require(:node).permit(@node.permitted_columns)
+							result = params.require(:node).permit(@node.permitted_columns)
 						else
-							{}
+							result = params.require(:node).permit(:name, :parent_id, :structure_id)
 						end
+						if @node && result[:structure_id]
+							if result[:structure_id].to_i != @node.structure_id # Request to change structure
+								@requested_structure_id = result[:structure_id].to_i
+							end
+							result[:structure_id] = @node.structure_id
+						end
+						return result
 					end
-
 
 				end
 			end

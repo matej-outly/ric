@@ -38,6 +38,7 @@ RicWebsite::AdminEngine.routes.draw do
 			get "search"
 		end
 		member do
+			put "generate_slugs"
 			put "move/:relation/:destination_id", action: "move", as: "move"
 		end
 	end

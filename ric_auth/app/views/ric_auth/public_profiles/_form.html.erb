@@ -1,6 +1,6 @@
 <%= rug_form_for(@user, update_url: lambda { |user| ric_auth_public.profile_path }) do |f| %>
 	<%= f.name_row :name %>
-	<% if @product_picture.config(:avatar_croppable) == true %>
+	<% if @user.config(:avatar_croppable) == true %>
 		<%= f.dropzone_row :avatar, crop: true %>
 		<%= f.crop_row :avatar, label: false %>
 	<% else %>
