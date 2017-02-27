@@ -278,20 +278,20 @@ module RicAssortment
 				# *************************************************************
 
 				def _synchronize_category_attributes
+					new_other_attributes = self.other_attributes
+					new_other_attributes = {} if new_other_attributes.nil?
 					self.product_categories.each do |leaf_product_category|
 						leaf_product_category.self_and_ancestors.each do |product_category|
 							if product_category.default_attributes
 								product_category.default_attributes.each do |default_attribute|
-									if self.other_attributes.nil?
-										self.other_attributes = {}
-									end
-									if !self.other_attributes.key?(default_attribute)
-										self.other_attributes[default_attribute] = ""
+									if !new_other_attributes.key?(default_attribute)
+										new_other_attributes[default_attribute] = ""
 									end
 								end
 							end
 						end
 					end
+					self.other_attributes = new_other_attributes
 				end
 
 				def synchronize_category_attributes
