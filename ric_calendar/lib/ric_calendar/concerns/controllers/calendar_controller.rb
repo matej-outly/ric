@@ -37,15 +37,20 @@ module RicCalendar
 						end_date = Date.parse(params[:end].to_s)
 
 						# Add calendar events
-						real_events = []
+						fullcalendar_events = []
 						RicCalendar.calendar_event_model.schedule(start_date, end_date).each do |calendar_event|
-							real_events << calendar_event.to_fullcalendar
+							fullcalendar_event = calendar_event.to_fullcalendar
+
+							fullcalendar_event[:editable] = true
+							fullcalendar_event[:editUrl] = calendar_event_path(calendar_event.id)
+
+							fullcalendar_events << fullcalendar_event
 						end
 
 						# Add aditional events
-						real_events += load_events(start_date, end_date)
+						fullcalendar_events += load_events(start_date, end_date)
 
-						render json: real_events
+						render json: fullcalendar_events
 					else
 						not_authorized!
 					end

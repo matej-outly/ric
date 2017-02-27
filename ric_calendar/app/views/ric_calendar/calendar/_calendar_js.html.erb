@@ -1,5 +1,5 @@
 <script>
-	function moveEvent(calendarEventId, start, end, revertFunc) {
+	function moveEvent(calendarEventId, start, end, editUrl, revertFunc) {
 		var calendarEvent = {};
 		var startDate = (start ? start.format("YYYY-MM-DD") : null);
 		var startTime = (start && start.hasTime() ? start.format("HH:mm:ss") : null);
@@ -28,7 +28,7 @@
 		}
 
 		$.post({
-			url: Routes.ric_calendar_calendar_event_path(calendarEventId),
+			url: editUrl,
 			data: {
 				calendar_event: calendarEvent,
 				_method: "PATCH",
@@ -59,10 +59,10 @@
 			timeFormat: "H:mm", // Show 8:00 instead of 8
 
 			eventDrop: function(event, delta, revertFunc) {
-				moveEvent(event.objectId, event.start, event.end, revertFunc);
+				moveEvent(event.objectId, event.start, event.end, event.editUrl, revertFunc);
 			},
 			eventResize: function(event, delta, revertFunc) {
-				moveEvent(event.objectId, event.start, event.end, revertFunc);
+				moveEvent(event.objectId, event.start, event.end, event.editUrl, revertFunc);
 			}
 		});
 	});

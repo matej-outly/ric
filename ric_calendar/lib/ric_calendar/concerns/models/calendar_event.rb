@@ -146,7 +146,6 @@ module RicCalendar
 						start: self.start_datetime,
 						end: self.end_datetime,
 						allDay: self.all_day,
-						editable: true,
 					}
 				end
 
