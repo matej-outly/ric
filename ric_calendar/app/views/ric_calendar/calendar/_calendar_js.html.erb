@@ -1,27 +1,29 @@
 <script>
 	function moveEvent(calendarEventId, start, end, revertFunc) {
 		var calendarEvent = {};
-		var startDateTime = (start ? start.format() : null);
-		var endDateTime = (end ? end.format() : startDateTime);
+		var startDate = (start ? start.format("YYYY-MM-DD") : null);
+		var startTime = (start && start.hasTime() ? start.format("HH:mm:ss") : null);
+		var endDate = (end ? end.format("YYYY-MM-DD") : startDate);
+		var endTime = (end && end.hasTime() ? end.format("HH:mm:ss") : startTime);
 
 		if (start.hasTime()) {
 			// Move to another time
 			calendarEvent = {
 				all_day: false,
-				start_date: startDateTime,
-				start_time: startDateTime,
-				end_date: endDateTime,
-				end_time: endDateTime,
+				start_date: startDate,
+				start_time: startTime,
+				end_date: endDate,
+				end_time: endTime,
 			};
 		}
 		else {
 			// Move to all day activity
 			calendarEvent = {
 				all_day: true,
-				start_date: startDateTime,
-				start_time: startDateTime,
-				end_date: endDateTime,
-				end_time: endDateTime,
+				start_date: startDate,
+				start_time: startTime,
+				end_date: endDate,
+				end_time: endTime,
 			};
 		}
 
@@ -48,11 +50,11 @@
 					right: 'month,agendaWeek,agendaDay,listWeek'
 			},
 			//height: "auto",
-			aspectRatio: 2,
+			aspectRatio: 2, // smaller cells in month view
 			navLinks: true, // can click day/week names to navigate views
 			editable: false, // Would be overriden in editable events
 			eventLimit: true, // allow "more" link when too many events
-			events: '<%= events_calendar_index_path %>',
+			events: '<%= events_calendar_index_path %>', // data source
 			scrollTime: "8:00:00", // Where to start showing calendar in agenda
 			timeFormat: "H:mm", // Show 8:00 instead of 8
 
