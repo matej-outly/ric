@@ -2,29 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Document Folders
 # *
 # * Author:
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
 
+require_dependency "ric_calendar/application_controller"
+
 module RicCalendar
-	class Engine < ::Rails::Engine
-
-		#
-		# Controllers
-		#
-		require 'ric_calendar/concerns/controllers/calendar_controller'
-		require 'ric_calendar/concerns/controllers/calendar_events_controller'
-
-		#
-		# Authorization
-		#
-		require 'ric_calendar/concerns/authorization'
-
-
-		isolate_namespace RicCalendar
-
+	class CalendarEventsController < ApplicationController
+		include RicCalendar::Concerns::Controllers::CalendarEventsController
 	end
 end

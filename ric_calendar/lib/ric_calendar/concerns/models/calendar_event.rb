@@ -13,7 +13,6 @@ module RicCalendar
 	module Concerns
 		module Models
 			module CalendarEvent extend ActiveSupport::Concern
-
 				#
 				# 'included do' causes the included code to be evaluated in the
 				# context where it is included, rather than being executed in
@@ -63,13 +62,58 @@ module RicCalendar
 					#
 					def permitted_columns
 						[
-							:name,
-							:document_folder_id,
-							:attachment
+							:start_date,
+							:start_time,
+							:end_date,
+							:end_time,
+							:all_day,
+							:calendar_event_template_id,
+
+							:title,
+							:description,
+							:place,
+							:address,
+							:manager,
+							:administration,
+							:category,
 						]
 					end
 
+					# *************************************************************************
+					# Queries
+					# *************************************************************************
+
+					#
+					# Return all events between given dates
+					#
+					def schedule(start_date, end_date)
+						where("start_date >= ? AND end_date <= ?", start_date, end_date)
+					end
+
 				end
+
+				# *************************************************************************
+				# Shotcuts
+				# *************************************************************************
+
+				def start_datetime
+					if self.start_time
+						self.start_date.to_datetime + self.start_time.seconds_since_midnight.seconds
+					else
+						self.start_date.to_datetime
+					end
+				end
+
+				def end_datetime
+					if self.end_time
+						self.end_date.to_datetime + self.end_time.seconds_since_midnight.seconds
+					else
+						self.end_date.to_datetime
+					end
+				end
+
+
+
 
 				# *************************************************************************
 				# Hooks & notifications
@@ -88,6 +132,24 @@ module RicCalendar
 				def notify_destroyed_document
 					# RicNotification.notify([:document_destroyed, self], users) if defined?(RicNotification)
 				end
+
+
+				# *************************************************************************
+				# Conversions
+				# *************************************************************************
+
+				def to_fullcalendar
+					{
+						id: "RicCalendar::CalendarEvent<#{self.id}>",
+						objectId: self.id,
+						title: self.title,
+						start: self.start_datetime,
+						end: self.end_datetime,
+						allDay: self.all_day,
+						editable: true,
+					}
+				end
+
 
 			end
 
