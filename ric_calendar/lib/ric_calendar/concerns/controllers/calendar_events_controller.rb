@@ -28,6 +28,7 @@ module RicCalendar
 				def new
 					if can_read_and_write?
 						@calendar_event = RicCalendar.calendar_event_model.new
+						@calendar_event.build_calendar_data
 					else
 						not_authorized!
 					end
@@ -67,7 +68,10 @@ module RicCalendar
 			protected
 
 				def calendar_event_params
-					params.require(:calendar_event).permit(RicCalendar.calendar_event_model.permitted_columns)
+					params.require(:calendar_event).permit(
+						RicCalendar.calendar_event_model.permitted_columns,
+						"#{RicCalendar.calendar_data_model.model_name.param_key}_attributes" => RicCalendar.calendar_data_model.permitted_columns,
+					)
 				end
 
 

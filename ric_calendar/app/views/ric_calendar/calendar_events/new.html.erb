@@ -1,14 +1,17 @@
 <h1>Nová událost</h1>
 
 <%= form_for @calendar_event, url: ric_calendar.calendar_events_path do |f| %>
-	<div class="form-group">
-		<%= f.label "Název události", for: :title %>
-		<%= f.text_field :title, class: "form-control" %>
-	</div>
-	<div class="form-group">
-		<%= f.label "Popis", for: :description %>
-		<%= f.text_area :description, class: "form-control" %>
-	</div>
+
+	<%= f.fields_for :calendar_data do |cd| %>
+		<div class="form-group">
+			<%= cd.label "Název události", for: :title %>
+			<%= cd.text_field :title, class: "form-control" %>
+		</div>
+		<div class="form-group">
+			<%= cd.label "Popis", for: :description %>
+			<%= cd.text_area :description, class: "form-control" %>
+		</div>
+	<% end %>
 
 	<div class="row">
 		<div class="col-sm-4">
