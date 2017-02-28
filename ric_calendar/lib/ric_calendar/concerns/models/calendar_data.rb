@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Document model
+# * Calendar Data model
 # *
 # * Author:
 # * Date  : 19. 2. 2017
@@ -12,7 +12,7 @@
 module RicCalendar
 	module Concerns
 		module Models
-			module CalendarEvent extend ActiveSupport::Concern
+			module CalendarData extend ActiveSupport::Concern
 
 				included do
 
@@ -20,12 +20,25 @@ module RicCalendar
 					# Structure
 					# *************************************************************************
 
-					belongs_to :calendar_data, class_name: RicCalendar.calendar_data_model.to_s
-					belongs_to :calendar_event_template, class_name: RicCalendar.calendar_event_template_model.to_s
+					#has_many :calendar_, class_name: RicCalendar.calendar_data_model.to_s
+					#has_many :calendar_event_templates, class_name: RicCalendar.calendar_event_template_model.to_s
 
-					accepts_nested_attributes_for :calendar_data
+					# *************************************************************************
+					# Validators
+					# *************************************************************************
 
-					# TODO After destroy
+					# validates_presence_of :attachment
+					# validates_presence_of :name
+					# validate :attachment_belongs_to_this_document
+
+					# *************************************************************************
+					# Hooks & notifications
+					# *************************************************************************
+
+					# after_commit :notify_new_document, on: :create
+					# after_commit :notify_new_document_version, on: :update
+					# after_commit :notify_destroyed_document, on: :destroy
+
 				end
 
 				module ClassMethods
@@ -39,17 +52,8 @@ module RicCalendar
 					#
 					def permitted_columns
 						[
-							:start_date,
-							:start_time,
-							:end_date,
-							:end_time,
-							:all_day,
-							:calendar_event_template_id,
-							:is_modified,
-							:calendar_data_id,
-
 							:title,
-							:description
+							:description,
 						]
 					end
 
@@ -65,13 +69,6 @@ module RicCalendar
 					end
 
 				end
-
-				# *************************************************************************
-				# Calendar data
-				# *************************************************************************
-
-				# TODO: After destroy
-
 
 				# *************************************************************************
 				# Shotcuts
@@ -93,6 +90,26 @@ module RicCalendar
 					end
 				end
 
+
+				# *************************************************************************
+				# Hooks & notifications
+				# *************************************************************************
+
+				def notify_new_document
+					# RicNotification.notify([:document_created, self], users) if defined?(RicNotification)
+				end
+
+				def notify_new_document_version
+					if self.attachment
+						# RicNotification.notify([:document_updated, self], users) if defined?(RicNotification)
+					end
+				end
+
+				def notify_destroyed_document
+					# RicNotification.notify([:document_destroyed, self], users) if defined?(RicNotification)
+				end
+
+
 				# *************************************************************************
 				# Conversions
 				# *************************************************************************
@@ -101,7 +118,7 @@ module RicCalendar
 					{
 						id: "RicCalendar::CalendarEvent<#{self.id}>",
 						objectId: self.id,
-						title: self.calendar_data.title,
+						title: self.title,
 						start: self.start_datetime,
 						end: self.end_datetime,
 						allDay: self.all_day,

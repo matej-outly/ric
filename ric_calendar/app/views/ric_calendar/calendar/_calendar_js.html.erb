@@ -1,0 +1,70 @@
+<script>
+	function moveEvent(calendarEventId, start, end, editUrl, revertFunc) {
+		var calendarEvent = {};
+		var startDate = (start ? start.format("YYYY-MM-DD") : null);
+		var startTime = (start && start.hasTime() ? start.format("HH:mm:ss") : null);
+		var endDate = (end ? end.format("YYYY-MM-DD") : startDate);
+		var endTime = (end && end.hasTime() ? end.format("HH:mm:ss") : startTime);
+
+		if (start.hasTime()) {
+			// Move to another time
+			calendarEvent = {
+				all_day: false,
+				start_date: startDate,
+				start_time: startTime,
+				end_date: endDate,
+				end_time: endTime,
+			};
+		}
+		else {
+			// Move to all day activity
+			calendarEvent = {
+				all_day: true,
+				start_date: startDate,
+				start_time: startTime,
+				end_date: endDate,
+				end_time: endTime,
+			};
+		}
+
+		$.post({
+			url: editUrl,
+			data: {
+				calendar_event: calendarEvent,
+				_method: "PATCH",
+			},
+			dataType: 'json',
+			success: function() {
+			},
+			error: function() {
+				revertFunc();
+			},
+		});
+	}
+
+	$(document).ready(function() {
+		$('.ric-calendar').fullCalendar({
+			header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay,listWeek'
+			},
+			//height: "auto",
+			aspectRatio: 2, // smaller cells in month view
+			navLinks: true, // can click day/week names to navigate views
+			editable: false, // Would be overriden in editable events
+			eventLimit: true, // allow "more" link when too many events
+			events: '<%= events_calendar_index_path %>', // data source
+			scrollTime: "8:00:00", // Where to start showing calendar in agenda
+			timeFormat: "H:mm", // Show 8:00 instead of 8
+
+			eventDrop: function(event, delta, revertFunc) {
+				moveEvent(event.objectId, event.start, event.end, event.editUrl, revertFunc);
+			},
+			eventResize: function(event, delta, revertFunc) {
+				moveEvent(event.objectId, event.start, event.end, event.editUrl, revertFunc);
+			}
+		});
+	});
+
+</script>

@@ -11,7 +11,13 @@
 
 RicCalendar::Engine.routes.draw do
 
-	resources :calendar, only: [:index]
+	resources :calendar, only: [:index] do
+		collection do
+			get "events"
+		end
+	end
+
+	resources :calendar_events, only: [:new, :create, :update]
 
 	# # Documents
 	# resources :documents, only: [:show, :new, :create, :destroy]

@@ -1,0 +1,55 @@
+<h1>Nová událost</h1>
+
+<%= form_for @calendar_event, url: ric_calendar.calendar_events_path do |f| %>
+
+	<%= f.fields_for :calendar_data do |cd| %>
+		<div class="form-group">
+			<%= cd.label "Název události", for: :title %>
+			<%= cd.text_field :title, class: "form-control" %>
+		</div>
+		<div class="form-group">
+			<%= cd.label "Popis", for: :description %>
+			<%= cd.text_area :description, class: "form-control" %>
+		</div>
+	<% end %>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="form-group">
+				<%= f.label "Datum od", for: :start_date %>
+				<%= f.date_field :start_date, class: "form-control" %>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<%= f.label "Čas od", for: :start_time %>
+				<%= f.time_field :start_time, class: "form-control" %>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="form-group">
+				<%= f.label "Datum do", for: :end_date %>
+				<%= f.date_field :end_date, class: "form-control" %>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<%= f.label "Čas do", for: :end_time %>
+				<%= f.time_field :end_time, class: "form-control" %>
+			</div>
+		</div>
+	</div>
+
+	<div class="checkbox">
+		<label>
+		<%= f.check_box :all_day %> Celý den
+		</label>
+	</div>
+
+	<%= f.submit "Vytvořit", class: "btn btn-primary" %>
+<% end %>
