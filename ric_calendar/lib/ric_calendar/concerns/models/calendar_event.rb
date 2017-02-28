@@ -30,8 +30,10 @@ module RicCalendar
 					# attr_accessor :attachment # Attachment plays important role in document
 					#                           # creation. It is source of document's name
 					#                           # (via attachment.original_filename attribute)
+					attr_accessor :title
+					attr_accessor :description
 
-					# after_save :save_document_version
+					before_save :save_calendar_data, on: :create
 
 					# *************************************************************************
 					# Validators
@@ -68,14 +70,11 @@ module RicCalendar
 							:end_time,
 							:all_day,
 							:calendar_event_template_id,
+							:is_modified,
+							:calendar_data_id,
 
 							:title,
-							:description,
-							:place,
-							:address,
-							:manager,
-							:administration,
-							:category,
+							:description
 						]
 					end
 
@@ -91,6 +90,20 @@ module RicCalendar
 					end
 
 				end
+
+				# *************************************************************************
+				# Calendar data
+				# *************************************************************************
+
+				def save_calendar_data
+					calendar_data = RicCalendar.calendar_data_model.create(
+						title: self.title,
+						description: self.description,
+					)
+
+					self.calendar_data_id = calendar_data.id
+				end
+
 
 				# *************************************************************************
 				# Shotcuts
@@ -111,9 +124,6 @@ module RicCalendar
 						self.end_date.to_datetime
 					end
 				end
-
-
-
 
 				# *************************************************************************
 				# Hooks & notifications
@@ -142,7 +152,7 @@ module RicCalendar
 					{
 						id: "RicCalendar::CalendarEvent<#{self.id}>",
 						objectId: self.id,
-						title: self.title,
+						title: self.calendar_data.title,
 						start: self.start_datetime,
 						end: self.end_datetime,
 						allDay: self.all_day,
