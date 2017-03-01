@@ -14,23 +14,22 @@ module RicCalendar
 		module Controllers
 			module CalendarController extend ActiveSupport::Concern
 
-				included do
-
-					# Directory listing
-					# before_action :set_files_and_folders, only: [:index, :show]
-
-				end
-
 				# *************************************************************************
 				# Actions
 				# *************************************************************************
 
+				#
+				# Show calendar as regular HTML page
+				#
 				def index
 					if !(can_read? || can_read_and_write?)
 						not_authorized!
 					end
 				end
 
+				#
+				# Return events in Fullcalendar format via AJAX
+				#
 				def events
 					if can_read? || can_read_and_write?
 						start_date = Date.parse(params[:start].to_s)
@@ -39,8 +38,8 @@ module RicCalendar
 						# Calendar events
 						fullcalendar_events = []
 
-						# Add calendar events
-						fullcalendar_events += load_calendar_events(start_date, end_date)
+						# Add events from calendars
+						fullcalendar_events += load_calendars(start_date, end_date)
 
 						# Add aditional events
 						fullcalendar_events += load_events(start_date, end_date)
@@ -58,32 +57,56 @@ module RicCalendar
 				# *************************************************************************
 
 				#
-				# Load CalendarEvents
+				# Inject custom events into calendar and return list of fullcalendar objects
 				#
-				def load_calendar_events(start_date, end_date)
+				# Should be overrided
+				#
+				def load_events(start_date, end_date)
+					[]
+				end
+
+			protected
+
+				#
+				# Read events from calendars
+				#
+				def load_calendars(start_date, end_date)
 					fullcalendar_events = []
 
-					RicCalendar.calendar_event_model.schedule(start_date, end_date).each do |calendar_event|
-						if calendar_event.recurrence_rule == nil
-							fullcalendar_event = calendar_event.to_fullcalendar
+					RicCalendar.calendar_model.all.each do |calendar|
+						# Optimization: Get calendar color and action edit method now
+						calendar_color = calendar.color unless calendar.color.blank?
+						calendar_edit_action = self.method(calendar.edit_action) unless calendar.edit_action.blank?
 
-							# Edit simple events
-							fullcalendar_event[:editable] = true
-							fullcalendar_event[:editUrl] = calendar_event_path(calendar_event.id)
+						# Go through scheduled calendar events
+						calendar.events.schedule(start_date, end_date).each do |scheduled_event|
 
-							# TODO: If model does not have all_day field => disable all day drag & drop
-							fullcalendar_events << fullcalendar_event
-						else
-							base_fullcalendar_event = calendar_event.to_fullcalendar
+							# Create Fullcalendar event object
+							fullcalendar_event = {
+								id: "#{calendar.model}<#{scheduled_event[:event].id}>",
+								objectId: scheduled_event[:event].id,
+								start: scheduled_event[:event].start_datetime(scheduled_event[:start_date]),
+								end: scheduled_event[:event].end_datetime(scheduled_event[:end_date]),
+								allDay: scheduled_event[:all_day],
+							}
 
-							calendar_event.occurrences(start_date, end_date).each do |occurrence|
-								fullcalendar_event = base_fullcalendar_event.clone
-
-								fullcalendar_event[:start] = occurrence.start_time + calendar_event.start_time.seconds_since_midnight.seconds
-								fullcalendar_event[:end] = occurrence.end_time + calendar_event.end_time.seconds_since_midnight.seconds
-
-								fullcalendar_events << fullcalendar_event
+							# Update object by calendar specific attributes
+							if calendar_color
+								# Color events
+								fullcalendar_event[:borderColor] = calendar.color
+								fullcalendar_event[:backgroundColor] = calendar.color
 							end
+							if calendar_edit_action
+								# Edit events
+								fullcalendar_event[:editable] = true
+								fullcalendar_event[:editUrl] = calendar_edit_action.call(scheduled_event[:event].id)
+							end
+
+							# Update object by class specific attributes
+							scheduled_event[:event].update_fullcalendar(fullcalendar_event)
+
+							# Insert into events
+							fullcalendar_events << fullcalendar_event
 
 						end
 					end
@@ -91,21 +114,6 @@ module RicCalendar
 					return fullcalendar_events
 				end
 
-				#
-				# Load repeated events
-				#
-				def load_calendar_event_templates(start_date, end_date)
-					RicCalendar.calendar_event_template_model.schedule(start_date, end_date).each do |calendar_event_template|
-
-					end
-				end
-
-				#
-				# Inject custom events into calendar and return list of fullcalendar objects, should be overrided
-				#
-				def load_events(start_date, end_date)
-					[]
-				end
 
 			end
 		end

@@ -20,7 +20,7 @@ class CreateRicCalendarCalendarEvents < ActiveRecord::Migration
 			# All day
 			t.boolean :all_day
 
-			# t.boolean :is_recurred, default: false
+			# Recurrence rule
 			t.text :recurrence_rule, null: true
 
 			# Is it generated?

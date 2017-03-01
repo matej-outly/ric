@@ -14,8 +14,7 @@ require "ric_calendar/engine"
 
 # Models
 require 'ric_calendar/concerns/models/calendar_event'
-require 'ric_calendar/concerns/models/calendar_event_template'
-require 'ric_calendar/concerns/models/calendar_data'
+require 'ric_calendar/concerns/models/calendar'
 
 
 module RicCalendar
@@ -51,21 +50,12 @@ module RicCalendar
 	@@calendar_event_model = "RicCalendar::CalendarEvent"
 
 	#
-	# CalendarEventTemplate model
+	# Calendar model
 	#
-	mattr_accessor :calendar_event_template_model
-	def self.calendar_event_template_model
-		return @@calendar_event_template_model.constantize
+	mattr_accessor :calendar_model
+	def self.calendar_model
+		return @@calendar_model.constantize
 	end
-	@@calendar_event_template_model = "RicCalendar::CalendarEventTemplate"
-
-	#
-	# CalendarData model
-	#
-	mattr_accessor :calendar_data_model
-	def self.calendar_data_model
-		return @@calendar_data_model.constantize
-	end
-	@@calendar_data_model = "RicCalendar::CalendarData"
+	@@calendar_model = "RicCalendar::Calendar"
 
 end
