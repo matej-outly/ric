@@ -5,3 +5,188 @@ cs:
       calendar:
         index: "Kalendář"
 
+  recurring_select:
+    not_recurring: "Bez opakování"
+    change_schedule: "Upravit opakování..."
+    set_schedule: "Nastavit opakování..."
+    new_custom_schedule: "Nové opakování..."
+    custom_schedule: "Vlastní opakování..."
+    or: nebo
+
+  ice_cube:
+    pieces_connector: ' / '
+    not: 'mimo %{target}'
+    not_on: 'kromě v %{target}'
+    date:
+      formats:
+        default: '%B %-d, %Y'
+      month_names:
+      -
+      - Leden
+      - Únor
+      - Březen
+      - Duben
+      - Květen
+      - Červen
+      - Červenec
+      - Srpen
+      - Září
+      - Říjen
+      - Listopad
+      - Prosinec
+      day_names:
+      - neděle
+      - pondělí
+      - úterý
+      - středa
+      - čtvrtek
+      - pátek
+      - sobota
+    times:
+      other: '%{count} krát'
+      one: '%{count} krát'
+    until: 'do %{date}'
+    days_of_week: '%{segments} %{day}'
+    days_of_month:
+      other: '%{segments} dny v měsíci'
+      one: '%{segments} den v měsíci'
+    days_of_year:
+      other: '%{segments} dny v roce'
+      one: '%{segments} den v roce'
+    at_hours_of_the_day:
+      other: on the %{segments} hours of the day
+      one: on the %{segments} hour of the day
+    on_minutes_of_hour:
+      other: on the %{segments} minutes of the hour
+      one: on the %{segments} minute of the hour
+    at_seconds_of_minute:
+      other: at the %{segments} seconds
+      one: at the %{segments} second
+    on_seconds_of_minute:
+      other: on the %{segments} seconds of the minute
+      one: on the %{segments} second of the minute
+    each_second:
+      one: Secondly
+      other: Every %{count} seconds
+    each_minute:
+      one: Minutely
+      other: Every %{count} minutes
+    each_hour:
+      one: Hourly
+      other: Every %{count} hours
+    each_day:
+      one: Denně
+      other: Každé %{count} dny
+    each_week:
+      one: Týdně
+      other: Každé %{count} týdny
+    each_month:
+      one: Měsíčně
+      other: Každý %{count} měsíc
+    each_year:
+      one: Ročně
+      other: Každý %{count} rok
+    'on': v %{sentence}
+    in: 'v %{target}'
+    integer:
+      negative: '%{ordinal} to last'
+      literal_ordinals:
+        -1: poslední
+        -2: předposlední
+      ordinal: '%{number}%{ordinal}'
+      ordinals:
+        default: .
+        1: .
+        2: .
+        3: .
+        11: .
+        12: .
+        13: .
+    on_weekends: o víkendech
+    on_weekdays: v pracovních dnech
+    days_on:
+      - neděli
+      - pondělí
+      - úterý
+      - středu
+      - čvrtek
+      - pátek
+      - sobotu
+    on_days: v %{days}
+    array:
+      last_word_connector: ' a '
+      two_words_connector: ' a '
+      words_connector: ', '
+    string:
+      format:
+        day: '%{rest} %{current}'
+        day_of_week: '%{rest} %{current}'
+        day_of_month: '%{rest} %{current}'
+        day_of_year: '%{rest} %{current}'
+        hour_of_day: '%{rest} %{current}'
+        minute_of_hour: '%{rest} %{current}'
+        until: '%{rest} %{current}'
+        count: '%{rest} %{current}'
+        default: '%{rest} %{current}'
+
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :year
+    - :month
+    - :day
+
+  time:
+    am: am
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm

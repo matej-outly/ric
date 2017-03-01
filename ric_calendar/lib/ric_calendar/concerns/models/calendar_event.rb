@@ -93,6 +93,14 @@ module RicCalendar
 					end
 				end
 
+				def occurrences(start_date, end_date)
+					rule = RecurringSelect.dirty_hash_to_rule(self.recurrence_rule)
+
+					schedule = IceCube::Schedule.new(self.start_date)
+					schedule.add_recurrence_rule(rule.until(self.end_date))
+					return schedule.occurrences_between(start_date, end_date, spans: true)
+				end
+
 
 				# *************************************************************************
 				# Conversions

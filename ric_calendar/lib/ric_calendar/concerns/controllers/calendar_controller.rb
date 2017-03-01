@@ -74,7 +74,15 @@ module RicCalendar
 							# TODO: If model does not have all_day field => disable all day drag & drop
 							fullcalendar_events << fullcalendar_event
 						else
-							calendar_event.create_ice_cube.all_occurrences.each do |occurrence|
+							base_fullcalendar_event = calendar_event.to_fullcalendar
+
+							calendar_event.occurrences(start_date, end_date).each do |occurrence|
+								fullcalendar_event = base_fullcalendar_event.clone
+
+								fullcalendar_event[:start] = occurrence.start_time + calendar_event.start_time.seconds_since_midnight.seconds
+								fullcalendar_event[:end] = occurrence.end_time + calendar_event.end_time.seconds_since_midnight.seconds
+
+								fullcalendar_events << fullcalendar_event
 							end
 
 						end
