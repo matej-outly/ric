@@ -12,7 +12,7 @@
 module RicCalendar
 	module Concerns
 		module Controllers
-			module CalendarEventsController extend ActiveSupport::Concern
+			module CalendarEventTemplatesController extend ActiveSupport::Concern
 
 				# *************************************************************************
 				# Actions
@@ -20,7 +20,8 @@ module RicCalendar
 
 				def new
 					if can_read_and_write?
-						@calendar_event = RicCalendar.calendar_event_model.new
+						@calendar_event_template = RicCalendar.calendar_event_template_model.new
+						@calendar_event_template.build_calendar_data
 					else
 						not_authorized!
 					end
@@ -28,8 +29,8 @@ module RicCalendar
 
 				def create
 					if can_read_and_write?
-						@calendar_event = RicCalendar.calendar_event_model.new(calendar_event_params)
-						if @calendar_event.save
+						@calendar_event_template = RicCalendar.calendar_event_template_model.new(calendar_event_template_params)
+						if @calendar_event_template.save
 							redirect_to calendar_index_url
 						else
 							render "new"
@@ -44,9 +45,9 @@ module RicCalendar
 				#
 				def update
 					if can_read_and_write?
-						@calendar_event = RicCalendar.calendar_event_model.find(params[:id])
+						@calendar_event_template = RicCalendar.calendar_event_template_model.find(params[:id])
 
-						if @calendar_event.update(calendar_event_params)
+						if @calendar_event_template.update(calendar_event_template_params)
 							respond_to do |format|
 								format.json { render json: true }
 							end
@@ -63,8 +64,11 @@ module RicCalendar
 
 			protected
 
-				def calendar_event_params
-					params.require(:calendar_event).permit(RicCalendar.calendar_event_model.permitted_columns)
+				def calendar_event_template_params
+					params.require(:calendar_event_template).permit(
+						RicCalendar.calendar_event_template_model.permitted_columns,
+						"#{RicCalendar.calendar_data_model.model_name.param_key}_attributes" => RicCalendar.calendar_data_model.permitted_columns,
+					)
 				end
 
 

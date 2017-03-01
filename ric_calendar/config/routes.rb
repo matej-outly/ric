@@ -19,6 +19,8 @@ RicCalendar::Engine.routes.draw do
 
 	resources :calendar_events, only: [:new, :create, :update]
 
+	resources :calendar_event_templates, only: [:new, :create, :update]
+
 	# # Documents
 	# resources :documents, only: [:show, :new, :create, :destroy]
 

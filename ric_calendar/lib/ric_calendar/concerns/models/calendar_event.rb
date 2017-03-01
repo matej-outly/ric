@@ -20,12 +20,14 @@ module RicCalendar
 					# Structure
 					# *************************************************************************
 
-					belongs_to :calendar_data, class_name: RicCalendar.calendar_data_model.to_s
-					belongs_to :calendar_event_template, class_name: RicCalendar.calendar_event_template_model.to_s
+					belongs_to :source_event, class_name: RicCalendar.calendar_event_model.to_s, foreign_key: "source_event_id"
 
-					accepts_nested_attributes_for :calendar_data
-
-					# TODO After destroy
+					before_save do
+						# Recurrence select sets "null" string instead of real null
+						if self.recurrence_rule == "null"
+							self.recurrence_rule = nil
+						end
+					end
 				end
 
 				module ClassMethods
@@ -39,18 +41,19 @@ module RicCalendar
 					#
 					def permitted_columns
 						[
+							:title,
+							:description,
+
 							:start_date,
 							:start_time,
 							:end_date,
 							:end_time,
 							:all_day,
-							:calendar_event_template_id,
-							:is_modified,
-							:calendar_data_id,
+							:source_event_id,
 
-							:title,
-							:description
+							:recurrence_rule,
 						]
+
 					end
 
 					# *************************************************************************
@@ -67,14 +70,11 @@ module RicCalendar
 				end
 
 				# *************************************************************************
-				# Calendar data
+				# Recurrence
 				# *************************************************************************
 
-				# TODO: After destroy
-
-
 				# *************************************************************************
-				# Shotcuts
+				# Methods
 				# *************************************************************************
 
 				def start_datetime
@@ -93,6 +93,7 @@ module RicCalendar
 					end
 				end
 
+
 				# *************************************************************************
 				# Conversions
 				# *************************************************************************
@@ -101,7 +102,7 @@ module RicCalendar
 					{
 						id: "RicCalendar::CalendarEvent<#{self.id}>",
 						objectId: self.id,
-						title: self.calendar_data.title,
+						title: self.title,
 						start: self.start_datetime,
 						end: self.end_datetime,
 						allDay: self.all_day,

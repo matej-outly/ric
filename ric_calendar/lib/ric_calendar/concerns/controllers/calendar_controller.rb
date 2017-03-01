@@ -64,15 +64,20 @@ module RicCalendar
 					fullcalendar_events = []
 
 					RicCalendar.calendar_event_model.schedule(start_date, end_date).each do |calendar_event|
-						fullcalendar_event = calendar_event.to_fullcalendar
+						if calendar_event.recurrence_rule == nil
+							fullcalendar_event = calendar_event.to_fullcalendar
 
-						if calendar_event.calendar_event_template == nil
 							# Edit simple events
 							fullcalendar_event[:editable] = true
 							fullcalendar_event[:editUrl] = calendar_event_path(calendar_event.id)
-						end
 
-						fullcalendar_events << fullcalendar_event
+							# TODO: If model does not have all_day field => disable all day drag & drop
+							fullcalendar_events << fullcalendar_event
+						else
+							calendar_event.create_ice_cube.all_occurrences.each do |occurrence|
+							end
+
+						end
 					end
 
 					return fullcalendar_events

@@ -20,12 +20,18 @@ module RicCalendar
 					# Structure
 					# *************************************************************************
 
-					# enable_hierarchical_ordering
+					belongs_to :calendar_data, class_name: RicCalendar.calendar_data_model.to_s
+					accepts_nested_attributes_for :calendar_data
 
-					# has_many :documents, class_name: RicCalendar.document_model.to_s,  dependent: :destroy
+					# TODO After destroy
 
+					# *************************************************************************
+					# Ice Cube rules
+					# *************************************************************************
 					after_initialize :deserialize_ice_cube_rules
 					before_save :serialize_ice_cube_rules
+
+					attr_accessor :recurrence
 
 				end
 
@@ -40,8 +46,18 @@ module RicCalendar
 					#
 					def permitted_columns
 						[
-							:name,
-							:parent_id
+							:start_date,
+							:start_time,
+							:end_date,
+							:end_time,
+							:calendar_data_id,
+
+							:ice_cube_rule,
+							:recurrence, # Weekly, monthly
+							:interval, # Every month, every two weeks, ...
+
+
+
 						]
 					end
 

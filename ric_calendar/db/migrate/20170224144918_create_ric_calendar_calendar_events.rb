@@ -5,6 +5,10 @@ class CreateRicCalendarCalendarEvents < ActiveRecord::Migration
 			# Timestamps
 			t.timestamps null: true
 
+			# *************************************************************************
+			# Event time
+			# *************************************************************************
+
 			# Event start
 			t.date :start_date, index: true
 			t.time :start_time, null: true
@@ -13,17 +17,21 @@ class CreateRicCalendarCalendarEvents < ActiveRecord::Migration
 			t.date :end_date, index: true
 			t.time :end_time, null: true
 
-			# Is all day (then start_time and end_time should be null)
+			# All day
 			t.boolean :all_day
 
-			# Is generated from CalendarEventTemplate
-			t.integer :calendar_event_template_id
+			# t.boolean :is_recurred, default: false
+			t.text :recurrence_rule, null: true
 
-			# Is modified (has different time than defined by CalendarEventTemplate generator)
-			t.boolean :is_modified
+			# Is it generated?
+			t.integer :source_event_id, null: true
 
-			# Event data (such as title etc.)
-			t.integer :calendar_data_id, null: false
+
+			# *************************************************************************
+			# Event data
+			# *************************************************************************
+			t.string :title
+			t.text :description
 
 		end
 	end
