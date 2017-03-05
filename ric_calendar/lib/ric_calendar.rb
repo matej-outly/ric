@@ -16,7 +16,7 @@ require "ric_calendar/engine"
 require 'ric_calendar/concerns/models/calendar_event'
 require 'ric_calendar/concerns/models/calendar'
 require 'ric_calendar/concerns/models/schedulable'
-require 'ric_calendar/concerns/models/recurrenting'
+require 'ric_calendar/concerns/models/recurring'
 
 
 module RicCalendar

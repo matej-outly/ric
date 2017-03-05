@@ -12,7 +12,7 @@
 module RicCalendar
 	module Concerns
 		module Models
-			module Recurrenting extend ActiveSupport::Concern
+			module Recurring extend ActiveSupport::Concern
 
 				included do
 
