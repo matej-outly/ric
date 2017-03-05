@@ -39,6 +39,27 @@ t.boolean :all_day
 
 ```
 
+Each model implementation, must include `Schedulable` concern:
+
+```ruby
+include RicCalendar::Concerns::Models::Schedulable
+```
+
+From now, it has method `schedule(start_date, end_date)`, which returns scheduled
+events. The result is an array of schedulable hashes in the form:
+
+```ruby
+{
+	event: calendar_event, # Instance of "parent" class with event information
+	start_date: Date,
+	start_time: Time,
+	end_date: Date,
+	end_time: Time,
+	all_day: boolean, # Is it the event all day?
+	is_recurring: false, # Always false for non-recurring events
+}
+```
+
 ## Recurring events
 
 In addition to classic events, recurring evens must have these columns:
@@ -50,6 +71,15 @@ t.text :recurrence_rule, null: true
 # Is it generated?
 t.integer :source_event_id, null: true
 ```
+
+It is necessary to add also `Recurring` concern into model:
+
+```ruby
+include RicCalendar::Concerns::Models::Recurrenting
+```
+
+There is no other steps needed, `schedule` method now returns also recurring events.
+Result structure has `is_recurring` attribute set to `true` for recurring events.
 
 ## Calendars
 
@@ -82,4 +112,22 @@ The meaning is:
 ## Editing events by drag&drop in Fullcalendar
 
 Editing events is enabled for whole calendar by filling `edit_action` column, which
-must points to special update action of controller.
+must points to special update action of controller. To enable drag&drop editing
+for your model, the simpliest way is to include `UpdateScheduleAction` concern
+into your controller:
+
+```ruby
+include RicCalendar::Concerns::Controllers::UpdateScheduleAction
+```
+
+Also don't forget to set appropriate route:
+
+```ruby
+resources :my_controller do
+	member do
+		patch "update_schedule"
+	end
+end
+```
+
+And fill `edit_action` in database for calendar, which supports editing.
