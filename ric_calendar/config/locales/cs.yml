@@ -5,6 +5,25 @@ cs:
       calendar:
         index: "Kalendář"
 
+  activerecord:
+    attributes:
+      ric_calendar/calendar_event:
+        title: "Název události"
+        description: "Popis"
+        start_date: "Datum od"
+        start_time: "Čas od"
+        end_date: "Datum do"
+        end_time: "Čas do"
+        calendar_id: "Kalendář"
+        all_day: "Koná se celý den"
+        recurrence_rule: "Opakování"
+    errors:
+      models:
+        ric_calendar/calendar_event:
+          attributes:
+            title:
+              blank: "Název události musí být vyplněný"
+
   recurring_select:
     not_recurring: "Bez opakování"
     change_schedule: "Upravit opakování..."
