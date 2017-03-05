@@ -46,26 +46,7 @@ module RicCalendar
 					end
 				end
 
-				#
-				# Update via AJAX request from Fullcalendar
-				#
-				def update
-					if can_read_and_write?
-						@calendar_event = RicCalendar.calendar_event_model.find(params[:id])
 
-						if @calendar_event.update(calendar_event_params)
-							respond_to do |format|
-								format.json { render json: true }
-							end
-						else
-							respond_to do |format|
-								format.json { render json: false }
-							end
-						end
-					else
-						not_authorized!
-					end
-				end
 
 
 			protected

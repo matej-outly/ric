@@ -18,6 +18,8 @@ require 'ric_calendar/concerns/models/calendar'
 require 'ric_calendar/concerns/models/schedulable'
 require 'ric_calendar/concerns/models/recurring'
 
+# Controller concerns
+require 'ric_calendar/concerns/controllers/update_schedule_action'
 
 module RicCalendar
 
