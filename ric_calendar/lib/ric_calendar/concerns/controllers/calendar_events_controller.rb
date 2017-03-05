@@ -14,6 +14,10 @@ module RicCalendar
 		module Controllers
 			module CalendarEventsController extend ActiveSupport::Concern
 
+				included do
+					helper_method :has_calendar_id?
+				end
+
 				# *************************************************************************
 				# Actions
 				# *************************************************************************
@@ -44,6 +48,17 @@ module RicCalendar
 					else
 						not_authorized!
 					end
+				end
+
+				# *************************************************************************
+				# Methods
+				# *************************************************************************
+
+				#
+				# Check, if instance has optional attribute "calendar_id"
+				#
+				def has_calendar_id?
+					RicCalendar.calendar_event_model.column_names.include?("calendar_id")
 				end
 
 			protected

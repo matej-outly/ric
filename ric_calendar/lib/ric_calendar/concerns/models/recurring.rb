@@ -22,7 +22,7 @@ module RicCalendar
 
 					belongs_to :source_event, class_name: self.class.name
 
-					before_save do
+					before_validation do
 						# Recurring-select gem sets "null" string instead of real null
 						if self.recurrence_rule == "null"
 							self.recurrence_rule = nil

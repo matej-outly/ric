@@ -11,6 +11,13 @@
 		<%= f.text_area :description, class: "form-control" %>
 	</div>
 
+	<% if has_calendar_id? %>
+		<div class="form-group">
+			<%= f.label "Kalendář", for: :calendar_id %>
+			<%= f.collection_select :calendar_id, RicCalendar.calendar_model.all, :id, :title, {}, { class: "form-control" } %>
+		</div>
+	<% end %>
+
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="form-group">

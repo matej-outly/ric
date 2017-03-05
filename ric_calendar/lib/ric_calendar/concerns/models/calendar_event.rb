@@ -14,6 +14,13 @@ module RicCalendar
 		module Models
 			module CalendarEvent extend ActiveSupport::Concern
 
+				included do
+
+					validates :title, :start_date, :start_time, :end_date, :end_time, presence: true
+					validates :calendar_id, presence: true, if: :has_calendar_id?
+
+				end
+
 				module ClassMethods
 
 					# *************************************************************************
@@ -27,6 +34,8 @@ module RicCalendar
 						[
 							:title,
 							:description,
+
+							:calendar_id,
 
 							:start_date,
 							:start_time,
@@ -43,12 +52,24 @@ module RicCalendar
 				end
 
 				# *************************************************************************
+				# Methods
+				# *************************************************************************
+
+				#
+				# Check, if instance has optional attribute "calendar_id"
+				#
+				def has_calendar_id?
+					has_attribute?("calendar_id")
+				end
+
+				# *************************************************************************
 				# Conversions
 				# *************************************************************************
 
 				def into_fullcalendar(fullcalendar_event)
 					fullcalendar_event[:title] = self.title
 				end
+
 
 			end
 
