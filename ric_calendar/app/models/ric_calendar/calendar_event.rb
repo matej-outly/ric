@@ -11,6 +11,9 @@
 
 module RicCalendar
 	class CalendarEvent < ActiveRecord::Base
+		include RicCalendar::Concerns::Models::Schedulable
+		include RicCalendar::Concerns::Models::Recurrenting
+
 		include RicCalendar::Concerns::Models::CalendarEvent
 	end
 end

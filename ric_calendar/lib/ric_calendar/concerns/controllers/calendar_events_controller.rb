@@ -21,6 +21,13 @@ module RicCalendar
 				def new
 					if can_read_and_write?
 						@calendar_event = RicCalendar.calendar_event_model.new
+						@calendar_event.start_date = Date.today
+						@calendar_event.end_date = Date.today
+
+						@calendar_event.start_time = Time.now.change(sec: 0, usec: 0)
+						@calendar_event.end_time = @calendar_event.start_time + 1.hour
+
+
 					else
 						not_authorized!
 					end
