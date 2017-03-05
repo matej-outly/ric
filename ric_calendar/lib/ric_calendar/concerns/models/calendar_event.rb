@@ -152,7 +152,7 @@ module RicCalendar
 				# Conversions
 				# *************************************************************************
 
-				def update_fullcalendar(fullcalendar_event)
+				def into_fullcalendar(fullcalendar_event)
 					fullcalendar_event[:title] = self.title
 				end
 
