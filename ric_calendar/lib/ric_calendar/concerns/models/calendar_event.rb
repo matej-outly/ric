@@ -37,7 +37,6 @@ module RicCalendar
 							:source_event_id,
 							:recurrence_rule,
 						]
-
 					end
 
 

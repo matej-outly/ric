@@ -46,15 +46,11 @@ module RicCalendar
 					end
 				end
 
-
-
-
 			protected
 
 				def calendar_event_params
 					params.require(:calendar_event).permit(RicCalendar.calendar_event_model.permitted_columns)
 				end
-
 
 			end
 		end
