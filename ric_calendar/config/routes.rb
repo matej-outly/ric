@@ -17,7 +17,7 @@ RicCalendar::Engine.routes.draw do
 		end
 	end
 
-	resources :calendar_events, only: [:new, :create] do
+	resources :calendar_events, only: [:new, :create, :show] do
 		member do
 			patch "update_schedule"
 		end

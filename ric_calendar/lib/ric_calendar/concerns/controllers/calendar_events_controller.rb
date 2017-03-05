@@ -22,6 +22,14 @@ module RicCalendar
 				# Actions
 				# *************************************************************************
 
+				def show
+					if can_read?
+						@calendar_event = RicCalendar.calendar_event_model.find(params[:id])
+					else
+						not_authorized!
+					end
+				end
+
 				def new
 					if can_read_and_write?
 						@calendar_event = RicCalendar.calendar_event_model.new

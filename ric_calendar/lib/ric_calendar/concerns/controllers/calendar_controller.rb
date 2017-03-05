@@ -76,6 +76,7 @@ module RicCalendar
 					RicCalendar.calendar_model.all.each do |calendar|
 						# Get calendar color and action edit method
 						calendar_color = calendar.color unless calendar.color.blank?
+						calendar_show_action = self.method(calendar.show_action) unless calendar.show_action.blank?
 						calendar_edit_action = self.method(calendar.edit_action) unless calendar.edit_action.blank?
 
 						# Go through scheduled calendar events
@@ -96,11 +97,15 @@ module RicCalendar
 								fullcalendar_event[:borderColor] = calendar.color
 								fullcalendar_event[:backgroundColor] = calendar.color
 							end
+							if calendar_show_action
+								fullcalendar_event[:url] = calendar_show_action.call(scheduled_event[:event].id)
+							end
 							if calendar_edit_action && !scheduled_event[:is_recurring]
 								# Edit events (currently only simple non-repeating events)
 								fullcalendar_event[:editable] = true
 								fullcalendar_event[:editUrl] = calendar_edit_action.call(scheduled_event[:event].id)
 							end
+
 
 							# Update object by class specific attributes
 							scheduled_event[:event].into_fullcalendar(fullcalendar_event)
