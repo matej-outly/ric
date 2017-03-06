@@ -58,4 +58,16 @@ module RicAuth
 	end
 	@@devise_paths_concern = "RicAuth::Concerns::DevisePaths"
 
+	#
+	# Public auth layout
+	#
+	mattr_accessor :public_auth_layout
+	@@public_auth_layout = nil
+
+	#
+	# Admin auth layout
+	#
+	mattr_accessor :admin_auth_layout
+	@@admin_auth_layout = "ruth_admin_auth"
+
 end
