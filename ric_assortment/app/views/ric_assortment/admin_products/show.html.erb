@@ -1,4 +1,4 @@
-<%= content_for :title, @product.name %>
+<%= content_for :page_header, @product.name %>
 <% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:show) %>
 	<%= render partial: "show_identification" %>
 <% end %>
