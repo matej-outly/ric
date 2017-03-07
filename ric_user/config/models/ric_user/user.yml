@@ -24,4 +24,4 @@ avatar_crop:
   full: "500x500#"
 
 # Is avatar manually croppable?
-avatar_croppable: true
+avatar_croppable: false
