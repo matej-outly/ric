@@ -91,7 +91,7 @@ module RicNewsletter
 							else
 								@customers = RicNewsletter.customer_model.method(@customers_scope.to_sym).call
 							end
-							if @customers.respond_to?(:newsletter_enabled) # Acrive record collection is returned from filter
+							if @customers.respond_to?(:newsletter_enabled) # Active record collection is returned from filter
 								@customers = @customers.newsletter_enabled
 							else # Array is returned from filter
 								new_customers = []
