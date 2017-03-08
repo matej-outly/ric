@@ -12,7 +12,7 @@
 module RicCalendar
 	module Concerns
 		module Models
-			module CalendarEvent extend ActiveSupport::Concern
+			module Event extend ActiveSupport::Concern
 
 				included do
 
@@ -66,8 +66,8 @@ module RicCalendar
 				# Conversions
 				# *************************************************************************
 
-				def into_fullcalendar(fullcalendar_event)
-					fullcalendar_event[:title] = self.title
+				def into_fullcalendar(fullevent)
+					fullevent[:title] = self.title
 				end
 
 

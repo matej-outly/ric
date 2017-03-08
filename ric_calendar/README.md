@@ -50,7 +50,7 @@ events. The result is an array of schedulable hashes in the form:
 
 ```ruby
 {
-	event: calendar_event, # Instance of "parent" class with event information
+	event: event, # Instance of "parent" class with event information
 	start_date: Date,
 	start_time: Time,
 	end_date: Date,
@@ -91,7 +91,7 @@ table has at least these columns:
 # Model
 t.string :model
 
-# If editable, path to controller (such as "calendar_event_path")
+# If editable, path to controller (such as "event_path")
 t.string :edit_action, null: true
 
 # Color
@@ -102,10 +102,10 @@ t.string :color
 Each row represents one calendar with its own attributes, such as color.
 
 The meaning is:
-- `:model` - name of model, ie. `"RicCalendar::CalendarEvent"`
+- `:model` - name of model, ie. `"RicCalendar::Event"`
 - `:edit_action` - if `null`, it is not possible to edit events in Fullcalendar by
   drag&drop. If you want enable this feature, fill the path to appropriate edit
-  controller. Will be explained bellow. Example `"calendar_event_path"`
+  controller. Will be explained bellow. Example `"event_path"`
 - `:color` - color of calendar (CSS style) or `null` to use default. Example `"#fff"`
 
 

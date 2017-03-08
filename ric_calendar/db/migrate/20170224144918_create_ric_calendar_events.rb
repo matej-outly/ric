@@ -1,6 +1,6 @@
-class CreateRicCalendarCalendarEvents < ActiveRecord::Migration
+class CreateRicCalendarEvents < ActiveRecord::Migration
 	def change
-		create_table :calendar_events do |t|
+		create_table :events do |t|
 
 			# Timestamps
 			t.timestamps null: true

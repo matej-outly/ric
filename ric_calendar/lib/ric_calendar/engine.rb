@@ -16,7 +16,7 @@ module RicCalendar
 		# Controllers
 		#
 		require 'ric_calendar/concerns/controllers/calendar_controller'
-		require 'ric_calendar/concerns/controllers/calendar_events_controller'
+		require 'ric_calendar/concerns/controllers/events_controller'
 
 		#
 		# Authorization

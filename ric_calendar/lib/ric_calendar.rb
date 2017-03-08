@@ -13,7 +13,7 @@
 require "ric_calendar/engine"
 
 # Models
-require 'ric_calendar/concerns/models/calendar_event'
+require 'ric_calendar/concerns/models/event'
 require 'ric_calendar/concerns/models/calendar'
 require 'ric_calendar/concerns/models/schedulable'
 require 'ric_calendar/concerns/models/recurring'
@@ -45,13 +45,13 @@ module RicCalendar
 	# *************************************************************************
 
 	#
-	# CalendarEvent model
+	# Event model
 	#
-	mattr_accessor :calendar_event_model
-	def self.calendar_event_model
-		return @@calendar_event_model.constantize
+	mattr_accessor :event_model
+	def self.event_model
+		return @@event_model.constantize
 	end
-	@@calendar_event_model = "RicCalendar::CalendarEvent"
+	@@event_model = "RicCalendar::Event"
 
 	#
 	# Calendar model

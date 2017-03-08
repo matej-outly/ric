@@ -8,7 +8,7 @@ class CreateRicCalendarCalendars < ActiveRecord::Migration
 			# Model
 			t.string :model
 
-			# If editable, path to controller (such as "calendar_event_path")
+			# If editable, path to controller (such as "event_path")
 			t.string :edit_action, null: true
 
 			# Title
