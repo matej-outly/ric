@@ -14,6 +14,9 @@ require_dependency "ric_auth/admin_controller"
 module RicAuth
 	class AdminPasswordsController < Devise::PasswordsController
 		include RicAuth.devise_paths_concern
-		layout "ruth_admin_auth"
+		
+		if !RicAuth.admin_auth_layout.blank?
+			layout RicAuth.admin_auth_layout.to_s
+		end
 	end
 end

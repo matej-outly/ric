@@ -27,6 +27,7 @@ cs:
         sent_at: Odesláno
         done: Hotovo
         customers: Zákazníci
+        customers_count: Celkový počet zákazníků
         newsletter_id: Newsletter
       ric_customer/customer:
         enable_newsletter: Newsletter povolen
