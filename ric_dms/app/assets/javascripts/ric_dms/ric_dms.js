@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	/*
 	// Click on file/folder to select
 	$filesAndFolders = $(".ric-dms-file a, .ric-dms-folder a");
 
@@ -21,4 +22,5 @@ $(document).ready(function() {
 		$filesAndFolders.removeClass("active");
 
 	});
+	*/
 });
