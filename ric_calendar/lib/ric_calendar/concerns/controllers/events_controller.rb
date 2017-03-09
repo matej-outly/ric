@@ -12,7 +12,7 @@
 module RicCalendar
 	module Concerns
 		module Controllers
-			module CalendarEventsController extend ActiveSupport::Concern
+			module EventsController extend ActiveSupport::Concern
 
 				included do
 					helper_method :has_calendar_id?
@@ -24,7 +24,7 @@ module RicCalendar
 
 				def show
 					if can_read?
-						@calendar_event = RicCalendar.calendar_event_model.find(params[:id])
+						@event = RicCalendar.event_model.find(params[:id])
 					else
 						not_authorized!
 					end
@@ -32,12 +32,12 @@ module RicCalendar
 
 				def new
 					if can_read_and_write?
-						@calendar_event = RicCalendar.calendar_event_model.new
-						@calendar_event.start_date = Date.today
-						@calendar_event.end_date = Date.today
+						@event = RicCalendar.event_model.new
+						@event.start_date = Date.today
+						@event.end_date = Date.today
 
-						@calendar_event.start_time = Time.now.change(sec: 0, usec: 0)
-						@calendar_event.end_time = @calendar_event.start_time + 1.hour
+						@event.start_time = Time.now.change(sec: 0, usec: 0)
+						@event.end_time = @event.start_time + 1.hour
 
 
 					else
@@ -47,8 +47,8 @@ module RicCalendar
 
 				def create
 					if can_read_and_write?
-						@calendar_event = RicCalendar.calendar_event_model.new(calendar_event_params)
-						if @calendar_event.save
+						@event = RicCalendar.event_model.new(event_params)
+						if @event.save
 							redirect_to calendar_index_url
 						else
 							render "new"
@@ -66,13 +66,13 @@ module RicCalendar
 				# Check, if instance has optional attribute "calendar_id"
 				#
 				def has_calendar_id?
-					RicCalendar.calendar_event_model.column_names.include?("calendar_id")
+					RicCalendar.event_model.column_names.include?("calendar_id")
 				end
 
 			protected
 
-				def calendar_event_params
-					params.require(:calendar_event).permit(RicCalendar.calendar_event_model.permitted_columns)
+				def event_params
+					params.require(:event).permit(RicCalendar.event_model.permitted_columns)
 				end
 
 			end

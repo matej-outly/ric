@@ -53,30 +53,30 @@ module RicCalendar
 					def schedule(start_date, end_date)
 						scheduled_events = []
 
-						between(start_date, end_date).each do |calendar_event|
+						between(start_date, end_date).each do |event|
 
 							scheduled_event_base = {
-								event: calendar_event,
-								start_time: calendar_event.start_time,
-								end_time: calendar_event.end_time,
-								all_day: calendar_event.all_day,
+								event: event,
+								start_time: event.start_time,
+								end_time: event.end_time,
+								all_day: event.all_day,
 								is_recurring: false,
 							}
 
-							if !calendar_event.has_attribute?(:recurrence_rule) || calendar_event.recurrence_rule == nil
+							if !event.has_attribute?(:recurrence_rule) || event.recurrence_rule == nil
 								# Regular event
-								scheduled_event_base[:start_date] = calendar_event.start_date
-								scheduled_event_base[:end_date] = calendar_event.end_date
+								scheduled_event_base[:start_date] = event.start_date
+								scheduled_event_base[:end_date] = event.end_date
 								scheduled_events << scheduled_event_base
 
 							else
 								# Recurring event
-								calendar_event.occurrences(start_date, end_date).each do |occurence|
+								event.occurrences(start_date, end_date).each do |occurence|
 									scheduled_event = scheduled_event_base.clone
 									scheduled_event[:start_date] = occurence.start_time.to_date
 									scheduled_event[:end_date] = occurence.end_time.to_date
 									scheduled_event[:is_recurring] = true
-									scheduled_event[:recurrence_template_id] = calendar_event.id
+									scheduled_event[:recurrence_template_id] = event.id
 									scheduled_events << scheduled_event
 								end
 
@@ -124,8 +124,8 @@ module RicCalendar
 				# This method must be implemented in model:
 				#
 
-				# def into_fullcalendar(fullcalendar_event)
-				#	fullcalendar_event[:title] = self.title
+				# def into_fullcalendar(fullevent)
+				#	fullevent[:title] = self.title
 				# end
 
 			end

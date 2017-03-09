@@ -7,7 +7,7 @@ cs:
 
   activerecord:
     attributes:
-      ric_calendar/calendar_event:
+      ric_calendar/event:
         title: "Název události"
         description: "Popis"
         start_date: "Datum od"
@@ -19,7 +19,7 @@ cs:
         recurrence_rule: "Opakování"
     errors:
       models:
-        ric_calendar/calendar_event:
+        ric_calendar/event:
           attributes:
             title:
               blank: "Název události musí být vyplněný"

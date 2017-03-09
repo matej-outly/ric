@@ -36,16 +36,16 @@ module RicCalendar
 						end_date = Date.parse(params[:end].to_s)
 
 						# Calendar events
-						fullcalendar_events = []
+						fullevents = []
 
 						# Add events from calendars
-						fullcalendar_events += load_calendars(start_date, end_date)
+						fullevents += load_calendars(start_date, end_date)
 
 						# Add aditional events
-						fullcalendar_events += load_events(start_date, end_date)
+						fullevents += load_events(start_date, end_date)
 
 						# Return JSON response
-						render json: fullcalendar_events
+						render json: fullevents
 					else
 						not_authorized!
 					end
@@ -71,7 +71,7 @@ module RicCalendar
 				# Read events from calendars
 				#
 				def load_calendars(start_date, end_date)
-					fullcalendar_events = []
+					fullevents = []
 
 					RicCalendar.calendar_model.all.each do |calendar|
 						# Get calendar color and action edit method
@@ -83,7 +83,7 @@ module RicCalendar
 						calendar.events.schedule(start_date, end_date).each do |scheduled_event|
 
 							# Create Fullcalendar event object
-							fullcalendar_event = {
+							fullevent = {
 								id: "#{calendar.model}<#{scheduled_event[:event].id}>",
 								objectId: scheduled_event[:event].id,
 								start: scheduled_event[:event].start_datetime(scheduled_event[:start_date]),
@@ -94,29 +94,29 @@ module RicCalendar
 							# Update object by calendar specific attributes
 							if calendar_color
 								# Color events
-								fullcalendar_event[:borderColor] = calendar.color
-								fullcalendar_event[:backgroundColor] = calendar.color
+								fullevent[:borderColor] = calendar.color
+								fullevent[:backgroundColor] = calendar.color
 							end
 							if calendar_show_action
-								fullcalendar_event[:url] = calendar_show_action.call(scheduled_event[:event].id)
+								fullevent[:url] = calendar_show_action.call(scheduled_event[:event].id)
 							end
 							if calendar_edit_action && !scheduled_event[:is_recurring]
 								# Edit events (currently only simple non-repeating events)
-								fullcalendar_event[:editable] = true
-								fullcalendar_event[:editUrl] = calendar_edit_action.call(scheduled_event[:event].id)
+								fullevent[:editable] = true
+								fullevent[:editUrl] = calendar_edit_action.call(scheduled_event[:event].id)
 							end
 
 
 							# Update object by class specific attributes
-							scheduled_event[:event].into_fullcalendar(fullcalendar_event)
+							scheduled_event[:event].into_fullcalendar(fullevent)
 
 							# Insert into events
-							fullcalendar_events << fullcalendar_event
+							fullevents << fullevent
 
 						end
 					end
 
-					return fullcalendar_events
+					return fullevents
 				end
 
 

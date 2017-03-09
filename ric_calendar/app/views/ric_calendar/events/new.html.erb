@@ -1,6 +1,6 @@
 <h1>Nová událost</h1>
 
-<%= bootstrap_form_for @calendar_event, url: ric_calendar.calendar_events_path do |f| %>
+<%= bootstrap_form_for @event, url: ric_calendar.events_path do |f| %>
 	<%= f.text_field :title %>
 	<%= f.text_area :description %>
 
@@ -37,7 +37,7 @@
 	<%= f.check_box :all_day %>
 
 	<div class="form-group">
-		<%= f.label I18n.t("activerecord.attributes.ric_calendar/calendar_event.recurrence_rule"), for: :recurrence_rule %>
+		<%= f.label I18n.t("activerecord.attributes.ric_calendar/event.recurrence_rule"), for: :recurrence_rule %>
 		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control"} %>
 	</div>
 

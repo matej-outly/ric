@@ -2,18 +2,18 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Document Folders
+# * Document model
 # *
 # * Author:
-# * Date  : 21. 2. 2017
+# * Date  : 19. 2. 2017
 # *
 # *****************************************************************************
 
-require_dependency "ric_calendar/application_controller"
-
 module RicCalendar
-	class CalendarEventsController < ApplicationController
-		include RicCalendar::Concerns::Controllers::CalendarEventsController
-		include RicCalendar::Concerns::Controllers::UpdateScheduleAction
+	class Event < ActiveRecord::Base
+		include RicCalendar::Concerns::Models::Schedulable
+		include RicCalendar::Concerns::Models::Recurring
+
+		include RicCalendar::Concerns::Models::Event
 	end
 end
