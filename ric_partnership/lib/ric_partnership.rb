@@ -71,7 +71,7 @@ module RicPartnership
 	@@enable_references = true
 
 	#
-	# Localization of some specific columns (names, etc.)
+	# Localization of some specific columns (names, etc.) TODO not working right now
 	#
 	mattr_accessor :localization
 	@@localization = false
