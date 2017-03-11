@@ -6,7 +6,7 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# *************************************************************************
-			# Event time
+			# Schedulable
 			# *************************************************************************
 
 			# Event start
@@ -20,22 +20,26 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			# All day
 			t.boolean :all_day
 
+			# *************************************************************************
+			# Recurring
+			# *************************************************************************
+
 			# Recurrence rule
 			t.text :recurrence_rule, null: true
 
 			# Is it generated?
 			t.integer :source_event_id, null: true
 
-
 			# *************************************************************************
-			# Calendar (optional)
+			# Calendar
 			# *************************************************************************
+			
 			t.integer :calendar_id
-
 
 			# *************************************************************************
 			# Event data (can be customized)
 			# *************************************************************************
+			
 			t.string :title
 			t.text :description
 

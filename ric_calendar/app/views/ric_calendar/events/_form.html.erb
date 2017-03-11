@@ -1,0 +1,38 @@
+<%= rug_form_for(@event, 
+	create_url: "ric_calendar.events_path",
+	update_url: "ric_calendar.event_path"
+) do |f| %>
+	<%= f.text_input_row :title %>
+	<%= f.text_area_row :description %>
+	<%= f.picker_row :calendar_id, RicCalendar.calendar_model.where(resource_type: RicCalendar.calendar_model.name), :id, :title %>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<%= f.date_picker_row :start_date %>
+		</div>
+
+		<div class="col-sm-4">
+			<%= f.time_picker_row :start_time %>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<%= f.date_picker_row :end_date %>
+		</div>
+
+		<div class="col-sm-4">
+			<%= f.time_picker_row :end_time %>
+		</div>
+	</div>
+
+	<%= f.checkbox_row :all_day %>
+
+	<%= f.label_for :recurrence_rule %>
+	<div class="form-group">
+		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control" } %>
+	</div>
+
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

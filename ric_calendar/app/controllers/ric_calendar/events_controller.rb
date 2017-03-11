@@ -14,6 +14,5 @@ require_dependency "ric_calendar/application_controller"
 module RicCalendar
 	class EventsController < ApplicationController
 		include RicCalendar::Concerns::Controllers::EventsController
-		include RicCalendar::Concerns::Controllers::UpdateScheduleAction
 	end
 end

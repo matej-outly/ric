@@ -11,27 +11,18 @@
 
 RicCalendar::Engine.routes.draw do
 
-	resources :calendar, only: [:index] do
-		collection do
+	# Calendars
+	resources :calendars, except: [:show] do
+		collection do 
 			get "events"
 		end
 	end
 
-	resources :events, only: [:new, :create, :show] do
+	# Events
+	resources :events, except: [:index] do
 		member do
 			patch "update_schedule"
 		end
 	end
-
-	resources :event_templates, only: [:new, :create, :update]
-
-	# # Documents
-	# resources :documents, only: [:show, :new, :create, :destroy]
-
-	# # Document versions
-	# resources :document_versions, only: [:destroy]
-
-	# # Directory listing
-	# resources :document_folders, only: [:index, :show, :new, :create, :destroy]
 
 end

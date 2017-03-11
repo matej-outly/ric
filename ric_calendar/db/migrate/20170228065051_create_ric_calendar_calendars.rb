@@ -5,20 +5,23 @@ class CreateRicCalendarCalendars < ActiveRecord::Migration
 			# Timestamps
 			t.timestamps null: true
 
-			# Model
-			t.string :model
-
-			# Path to controller for showing event
-			t.string :show_action, null: true
-
-			# If editable, path to controller (such as "event_path")
-			t.string :edit_action, null: true
-
 			# Title
 			t.string :title
 
 			# Color
 			t.string :color
+
+			# Kind defining resource and event spec in config
+			t.string :kind
+
+			# Resource spec
+			t.string :resource_type, index: true
+			t.integer :resource_id, index: true
+			#t.string :resource_to_events_attr
+			
+			# Event spec
+			#t.string :event_type, index: true
+			#t.string :event_to_resource_attr
 
 		end
 	end

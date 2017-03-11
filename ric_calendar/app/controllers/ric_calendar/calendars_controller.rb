@@ -12,7 +12,7 @@
 require_dependency "ric_calendar/application_controller"
 
 module RicCalendar
-	class CalendarController < ApplicationController
-		include RicCalendar::Concerns::Controllers::CalendarController
+	class CalendarsController < ApplicationController
+		include RicCalendar::Concerns::Controllers::CalendarsController
 	end
 end

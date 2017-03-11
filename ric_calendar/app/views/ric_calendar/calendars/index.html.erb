@@ -1,0 +1,12 @@
+<% content_for :page_header, "false" %>
+<% hash = "1" %>
+<script>
+	var ric_calendar_<%= hash %> = null;
+	$(document).ready(function() {
+		ric_calendar_<%= hash %> = new RicCalendar('<%= hash %>', {
+			url: '<%= events_calendars_path %>'
+		});
+		ric_calendar_<%= hash %>.ready();
+	});
+</script>
+<div class="ric-calendar" id="ric-calendar-<%= hash %>"></div>

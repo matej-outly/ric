@@ -2,9 +2,9 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Calendar model
+# * Calendar
 # *
-# * Author:
+# * Author: Jaroslav Mlejnek
 # * Date  : 19. 2. 2017
 # *
 # *****************************************************************************

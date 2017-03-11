@@ -131,3 +131,9 @@ end
 ```
 
 And fill `edit_action` in database for calendar, which supports editing.
+
+## Known bugs and issues
+
+- Impossible to update schedule for all-day events
+- Necessary to remove end_date input in event form and substitude it with datetime_range...
+- Impossible to stretcj non-all-day event acros more days / maybe correct behavior

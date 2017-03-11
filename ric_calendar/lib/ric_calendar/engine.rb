@@ -15,14 +15,13 @@ module RicCalendar
 		#
 		# Controllers
 		#
-		require 'ric_calendar/concerns/controllers/calendar_controller'
+		require 'ric_calendar/concerns/controllers/calendars_controller'
 		require 'ric_calendar/concerns/controllers/events_controller'
 
 		#
 		# Authorization
 		#
 		require 'ric_calendar/concerns/authorization'
-
 
 		isolate_namespace RicCalendar
 

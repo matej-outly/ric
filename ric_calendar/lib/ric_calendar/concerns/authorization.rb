@@ -4,7 +4,7 @@
 # *
 # * Authorization
 # *
-# * Author:
+# * Author: Jaroslav Mlejnek, Matěj Outlý
 # * Date  : 23. 2. 2017
 # *
 # *****************************************************************************
@@ -18,14 +18,23 @@ module RicCalendar
 				helper_method :can_read_and_write?
 			end
 
+			#
+			# To be connected to authorization mechanism in application
+			#
 			def can_read?
 				true
 			end
 
+			#
+			# To be connected to authorization mechanism in application
+			#
 			def can_read_and_write?
 				true
 			end
 
+			#
+			# To be connected to authorization mechanism in application
+			#
 			def not_autorized!
 			end
 

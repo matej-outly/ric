@@ -1,0 +1,5 @@
+<%= rug_menu_for(@calendar, options.merge(path_base: "calendars")) do |m| %>
+	<%= m.new_item %>
+	<%= m.edit_item %>
+	<%= m.destroy_item %>
+<% end %>

@@ -2,9 +2,9 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Document model
+# * Event
 # *
-# * Author:
+# * Author: Jaroslav Mlejnek, Matěj Outlý
 # * Date  : 19. 2. 2017
 # *
 # *****************************************************************************
@@ -16,63 +16,64 @@ module RicCalendar
 
 				included do
 
+					# *********************************************************
+					# Structure
+					# *********************************************************
+
+					belongs_to :calendar
+
+					# *********************************************************
+					# Validators
+					# *********************************************************
+
 					validates :title, :start_date, :start_time, :end_date, :end_time, presence: true
-					validates :calendar_id, presence: true, if: :has_calendar_id?
+					validates :calendar_id, presence: true
 
 				end
 
 				module ClassMethods
 
-					# *************************************************************************
+					# *********************************************************
 					# Columns
-					# *************************************************************************
+					# *********************************************************
 
 					#
 					# Get all columns permitted for editation
 					#
 					def permitted_columns
 						[
+							# Event data
 							:title,
 							:description,
 
-							:calendar_id,
-
+							# Schedulable
 							:start_date,
 							:start_time,
 							:end_date,
 							:end_time,
 							:all_day,
 
+							# Recurring
 							:source_event_id,
 							:recurrence_rule,
+
+							# Calendar
+							:calendar_id,
 						]
 					end
 
 
 				end
 
-				# *************************************************************************
-				# Methods
-				# *************************************************************************
-
-				#
-				# Check, if instance has optional attribute "calendar_id"
-				#
-				def has_calendar_id?
-					has_attribute?("calendar_id")
-				end
-
-				# *************************************************************************
+				# *************************************************************
 				# Conversions
-				# *************************************************************************
+				# *************************************************************
 
-				def into_fullcalendar(fullevent)
+				def to_fullcalendar(fullevent)
 					fullevent[:title] = self.title
 				end
 
-
 			end
-
 		end
 	end
 end

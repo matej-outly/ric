@@ -1,0 +1,10 @@
+<%= rug_form_for(@calendar, 
+	create_url: "ric_calendar.calendars_path", 
+	update_url: "ric_calendar.calendar_path") do |f| 
+%>
+	<%= f.text_input_row :title, :text_field %>
+	<%= f.picker_row :color %>
+	<%= f.picker_row :kind %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

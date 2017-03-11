@@ -2,27 +2,77 @@ cs:
 
   headers:
     ric_calendar:
-      calendar:
-        index: "Kalendář"
+      calendars:
+        index: Kalendář
+        new: Nový kalendář
+        create: Nový kalendář
+        edit: Upravit kalendář
+        update: Upravit kalendář
+        destroy: Smazat kalendář
+      events:
+        show: Detail události
+        new: Nová událost
+        create: Nová událost
+        edit: Upravit událost
+        update: Upravit událost
+        destroy: Smazat událost
 
   activerecord:
     attributes:
+      ric_calendar/calendar:
+        title: Název
+        color: Barva
+        color_values:
+          yellow: Žlutá
+          turquoise: Tyrkysová
+          blue: Modrá
+          pink: Růžová
+          violet: Fialová
+          orange: Oranžová
+          red: Červená
+          green: Zelená
+          grey: Šedá
+        kind: Typ
+        kind_values:
+          simple: Jednoduché události
+        resource: Navázaný objekt
+        resource_id: Navázaný objekt
       ric_calendar/event:
-        title: "Název události"
-        description: "Popis"
-        start_date: "Datum od"
-        start_time: "Čas od"
-        end_date: "Datum do"
-        end_time: "Čas do"
-        calendar_id: "Kalendář"
-        all_day: "Koná se celý den"
-        recurrence_rule: "Opakování"
+        title: Název události
+        description: Popis
+        start_date: Datum od
+        start_time: Čas od
+        end_date: Datum do
+        end_time: Čas do
+        calendar_id: Kalendář
+        all_day: Koná se celý den
+        recurrence_rule: Opakování
+    notices:
+      models:
+        ric_calendar/calendar:
+          create: Kalendář byl úspěšně vytvořen.
+          update: Kalendář byl úspěšně upraven.
+          destroy: Kalendář byl úspěšně smazán.
+        ric_calendar/event:
+          create: Událost byla úspěšně vytvořena.
+          update: Událost byla úspěšně upravena.
+          destroy: Událost byla úspěšně smazána.
     errors:
       models:
-        ric_calendar/event:
+        ric_calendar/calendar:
+          not_found: Kalendář nebyl nalezen.
           attributes:
             title:
-              blank: "Název události musí být vyplněný"
+              blank: "Název kalendáře musí být vyplněn."
+            kind:
+              blank: "Typ kalendáře musí být vyplněn."
+            resource_id:
+              blank: "navázaný objekt musí být vyplněn."
+        ric_calendar/event:
+          not_found: Událost nebyla nalezena.
+          attributes:
+            title:
+              blank: "Název události musí být vyplněn."
 
   recurring_select:
     not_recurring: "Bez opakování"
@@ -40,27 +90,27 @@ cs:
       formats:
         default: '%B %-d, %Y'
       month_names:
-      -
-      - Leden
-      - Únor
-      - Březen
-      - Duben
-      - Květen
-      - Červen
-      - Červenec
-      - Srpen
-      - Září
-      - Říjen
-      - Listopad
-      - Prosinec
+        -
+        - Leden
+        - Únor
+        - Březen
+        - Duben
+        - Květen
+        - Červen
+        - Červenec
+        - Srpen
+        - Září
+        - Říjen
+        - Listopad
+        - Prosinec
       day_names:
-      - neděle
-      - pondělí
-      - úterý
-      - středa
-      - čtvrtek
-      - pátek
-      - sobota
+        - neděle
+        - pondělí
+        - úterý
+        - středa
+        - čtvrtek
+        - pátek
+        - sobota
     times:
       other: '%{count} krát'
       one: '%{count} krát'

@@ -2,9 +2,9 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Document model
+# * Recurring
 # *
-# * Author:
+# * Author: Jaroslav Mlejnek, Matěj Outlý
 # * Date  : 19. 2. 2017
 # *
 # *****************************************************************************
@@ -16,9 +16,9 @@ module RicCalendar
 
 				included do
 
-					# *************************************************************************
+					# *********************************************************
 					# Structure
-					# *************************************************************************
+					# *********************************************************
 
 					belongs_to :source_event, class_name: self.class.name
 
@@ -36,7 +36,6 @@ module RicCalendar
 				#
 				def occurrences(start_date, end_date)
 					rule = RecurringSelect.dirty_hash_to_rule(self.recurrence_rule)
-
 					schedule = IceCube::Schedule.new(self.start_date)
 					schedule.add_recurrence_rule(rule.until(self.end_date))
 					return schedule.occurrences_between(start_date, end_date, spans: true)
