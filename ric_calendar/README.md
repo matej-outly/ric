@@ -137,3 +137,6 @@ And fill `edit_action` in database for calendar, which supports editing.
 - Impossible to update schedule for all-day events
 - Necessary to remove end_date input in event form and substitude it with datetime_range...
 - Impossible to stretcj non-all-day event acros more days / maybe correct behavior
+- Calendar state (page, view) stored in JavaScript storage
+- Create new event from calendar with predefined date, edit event, destroy event from calendar
+- Calendars filter - switch on/off shown calendars
