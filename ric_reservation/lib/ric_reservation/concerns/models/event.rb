@@ -29,6 +29,13 @@ module RicReservation
 					# TODO reservations binded to scheduled event instead of simple event. Anyway
 					# this solution lacks dependent: :destroy or :nullify ability
 
+
+					# *********************************************************
+					# Validators
+					# *********************************************************
+					
+					validates_presence_of :capacity
+
 					# *********************************************************
 					# Time windows / reservation states
 					# *********************************************************
@@ -107,6 +114,15 @@ module RicReservation
 					#
 					state_column :reservation_state, config(:reservation_states).map { |reservation_reservation_state_spec| reservation_reservation_state_spec[:name] }
 
+					# *********************************************************
+					# Reservations
+					# *********************************************************
+
+					#
+					# All existing reservations must be synchronizied wih the data update
+					#
+					before_save :synchronize_reservations_before_save
+
 				end
 
 				module ClassMethods
@@ -153,6 +169,23 @@ module RicReservation
 					#
 					def resource_type
 						raise "Not implemented."
+					end
+
+					# *********************************************************
+					# Overlapping TODO: make compatible with RicCalendar, other periods than ONCE
+					# *********************************************************
+
+					def overlaps_with_resource_reservation(resource_reservation)
+						where(
+							"
+								(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
+								(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
+								(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
+							", 
+							from: resource_reservation.schedule_from, 
+							to: resource_reservation.schedule_to, 
+							period_once: "once"
+						)
 					end
 
 					# *********************************************************
@@ -345,7 +378,8 @@ module RicReservation
 				def capacity_type
 					:integer
 				end
-								#
+				
+				#
 				# Get current capacity (based on defined capacity/size type)
 				#
 				def capacity
@@ -451,16 +485,16 @@ module RicReservation
 				# All existing reservations must be synchronizied wih the data update
 				#
 				def synchronize_reservations_before_save
-					#if self.period_was == "once" TODO detect period once somehow ???
-						self.reservations(self.date_from_was).each do |reservation| # TODO change self.from accordingly ...
+					if !self.is_recurring?
+						self.reservations(self.date_from_was).each do |reservation|
 							reservation.schedule_date = self.date_from
 							reservation.schedule_from = self.datetime_from(self.date_from)
 							reservation.schedule_to = self.datetime_to(self.date_from)
 							reservation.save
 						end
-					#else
-						# TODO Other period than ONCE
-					#end
+					else
+						# TODO how to solve it for recurring events ???
+					end
 				end
 
 			end
