@@ -26,11 +26,11 @@ module RicCalendar
 
 				def new
 					@event = RicCalendar.event_model.new
-					@event.start_date = Date.today
-					@event.end_date = Date.today
+					@event.date_from = Date.today
+					@event.date_to = Date.today
 
-					@event.start_time = Time.now.change(sec: 0, usec: 0)
-					@event.end_time = @event.start_time + 1.hour
+					@event.time_from = Time.now.change(sec: 0, usec: 0)
+					@event.time_to = @event.time_from + 1.hour
 				end
 
 				def edit

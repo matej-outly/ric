@@ -15,7 +15,7 @@ class CreateRicReservationResources < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# Position
-			t.integer :position
+			t.integer :position, index: true
 
 			# Identification
 			t.string :name
@@ -39,8 +39,8 @@ class CreateRicReservationResources < ActiveRecord::Migration
 			t.integer :opening_hours_max
 
 			# Validity
-			t.date :valid_from
-			t.date :valid_to
+			t.date :valid_from, index: true
+			t.date :valid_to, index: true
 
 			# Period
 			t.string :period

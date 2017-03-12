@@ -17,38 +17,38 @@ function RicCalendar(hash, options)
 }
 RicCalendar.prototype = {
 	constructor: RicCalendar,
-	moveEvent: function(id, start, end, editUrl, revertFunc) 
+	moveEvent: function(id, datetimeFrom, datetimeTo, editUrl, revertFunc) 
 	{
-		var calendarEvent = {};
-		var startDate = (start ? start.format("YYYY-MM-DD") : null);
-		var startTime = (start && start.hasTime() ? start.format("HH:mm:ss") : null);
-		var endDate = (end ? end.format("YYYY-MM-DD") : startDate);
-		var endTime = (end && end.hasTime() ? end.format("HH:mm:ss") : startTime);
+		var event = {};
+		var dateFrom = (datetimeFrom ? datetimeFrom.format("YYYY-MM-DD") : null);
+		var timeFrom = (datetimeFrom && datetimeFrom.hasTime() ? datetimeFrom.format("HH:mm:ss") : null);
+		var dateTo = (datetimeTo ? datetimeTo.format("YYYY-MM-DD") : dateFrom);
+		var timeTo = (datetimeTo && datetimeTo.hasTime() ? datetimeTo.format("HH:mm:ss") : timeFrom);
 
-		if (start.hasTime()) {
+		if (datetimeFrom.hasTime()) {
 			// Move to another time
-			calendarEvent = {
+			event = {
 				all_day: false,
-				start_date: startDate,
-				start_time: startTime,
-				end_date: endDate,
-				end_time: endTime,
+				date_from: dateFrom,
+				time_from: timeFrom,
+				date_to: dateTo,
+				time_to: timeTo,
 			};
 		} else {
 			// Move to all day activity
-			calendarEvent = {
+			event = {
 				all_day: true,
-				start_date: startDate,
-				start_time: startTime,
-				end_date: endDate,
-				end_time: endTime,
+				date_from: dateFrom,
+				time_from: timeFrom,
+				date_to: dateTo,
+				time_to: timeTo,
 			};
 		}
 
 		$.post({
 			url: editUrl,
 			data: {
-				event: calendarEvent,
+				event: event,
 				_method: "PATCH",
 			},
 			dataType: 'json',

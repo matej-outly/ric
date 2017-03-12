@@ -58,15 +58,6 @@ module RicReservation
 					#
 					enum_column :kind, ["event", "resource"]
 
-					# *********************************************************
-					# Color
-					# *********************************************************
-
-					#
-					# Period
-					#
-					enum_column :color, ["yellow", "turquoise", "blue", "pink", "violet", "orange", "red", "green"], default: "yellow"
-
 					# *************************************************************
 					# Time
 					# *************************************************************
@@ -96,7 +87,7 @@ module RicReservation
 					# *********************************************************
 
 					#
-					# Scope for reservarions in some schedule
+					# Scope for reservations in some schedule
 					#
 					def schedule(date_from, date_to = nil)
 						date_to = date_from + 1.day if date_to.nil?
@@ -183,28 +174,28 @@ module RicReservation
 				#
 				# State
 				#
-				#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+				#state_column :reservation_state, config(:reservation_states).map { |reservation_state_spec| reservation_state_spec[:name] }
 
 				#
 				# Get state according to current date and time
 				#
-				def state
-					if @state.nil?
+				def reservation_state
+					if @reservation_state.nil?
 						now = Time.current
 						
 						# States
-						states = config(:states)
+						reservation_states = config(:reservation_states)
 
 						# Break times
-						if config(:state_policy) == "time_fixed"
+						if config(:reservation_state_policy) == "time_fixed"
 							break_times = []
-							states.reverse_each_with_index do |state_spec, index|
+							reservation_states.reverse_each_with_index do |reservation_state_spec, index|
 								if index != 0 # Do not consider first state
-									state_name = state_spec[:name]
+									reservation_state_name = reservation_state_spec[:name]
 									if self.kind_event?
-										time_fixed = self.event.send("time_fixed_#{state_name}")
+										time_fixed = self.event.send("time_fixed_#{reservation_state_name}")
 									else # if self.kind_resource?
-										time_fixed = self.resource.send("time_fixed_#{state_name}")
+										time_fixed = self.resource.send("time_fixed_#{reservation_state_name}")
 									end
 									if time_fixed
 										break_times << time_fixed
@@ -215,13 +206,13 @@ module RicReservation
 							end
 						else
 							break_times = [self.schedule_from]
-							states.reverse_each_with_index do |state_spec, index|
-								if index != 0 && index != (states.length - 1) # Do not consider first and last state
-									state_name = state_spec[:name]
+							reservation_states.reverse_each_with_index do |reservation_state_spec, index|
+								if index != 0 && index != (reservation_states.length - 1) # Do not consider first and last state
+									reservation_state_name = reservation_state_spec[:name]
 									if self.kind_event?
-										time_window = self.event.send("time_window_#{state_name}")
+										time_window = self.event.send("time_window_#{reservation_state_name}")
 									else # if self.kind_resource?
-										time_window = self.resource.send("time_window_#{state_name}")
+										time_window = self.resource.send("time_window_#{reservation_state_name}")
 									end
 									if time_window
 										break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
@@ -233,32 +224,32 @@ module RicReservation
 						end
 						
 						# State recognititon
-						states.each_with_index do |state_spec, index|
-							if index < states.length - 1
-								if now < break_times[states.length - 2 - index]
-									@state = state_spec[:name].to_sym
-									@state_behavior = state_spec[:behavior].to_sym
+						reservation_states.each_with_index do |reservation_state_spec, index|
+							if index < reservation_states.length - 1
+								if now < break_times[reservation_states.length - 2 - index]
+									@reservation_state = reservation_state_spec[:name].to_sym
+									@reservation_state_behavior = reservation_state_spec[:behavior].to_sym
 									break
 								end
 							else # Last fallback state
-								@state = state_spec[:name].to_sym
-								@state_behavior = state_spec[:behavior].to_sym
+								@reservation_state = reservation_state_spec[:name].to_sym
+								@reservation_state_behavior = reservation_state_spec[:behavior].to_sym
 								break
 							end
 						end
 
 					end
-					return @state
+					return @reservation_state
 				end
 
 				#
 				# Get state behavior according to current date and time
 				#
-				def state_behavior
-					if @state_behavior.nil?
-						self.state
+				def reservation_state_behavior
+					if @reservation_state_behavior.nil?
+						self.reservation_state
 					end
-					return @state_behavior
+					return @reservation_state_behavior
 				end
 
 			protected

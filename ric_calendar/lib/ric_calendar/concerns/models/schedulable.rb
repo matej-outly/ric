@@ -23,38 +23,38 @@ module RicCalendar
 					#
 					# Return all events between given dates
 					#
-					def between(start_date, end_date)
-						where("start_date >= ? AND end_date <= ?", start_date, end_date)
+					def between(date_from, date_to)
+						where("date_from >= ? AND date_to <= ?", date_from, date_to)
 					end
 
 					#
 					# Return all occurences of events in dates
 					#
-					def schedule(start_date, end_date)
+					def schedule(date_from, date_to)
 						scheduled_events = []
 
-						between(start_date, end_date).each do |event|
+						between(date_from, date_to).each do |event|
 
 							scheduled_event_base = {
 								event: event,
-								start_time: event.start_time,
-								end_time: event.end_time,
+								time_from: event.time_from,
+								time_to: event.time_to,
 								all_day: event.all_day,
 								is_recurring: false,
 							}
 
 							if !event.has_attribute?(:recurrence_rule) || event.recurrence_rule == nil
 								# Regular event
-								scheduled_event_base[:start_date] = event.start_date
-								scheduled_event_base[:end_date] = event.end_date
+								scheduled_event_base[:date_from] = event.date_from
+								scheduled_event_base[:date_to] = event.date_to
 								scheduled_events << scheduled_event_base
 
 							else
 								# Recurring event
-								event.occurrences(start_date, end_date).each do |occurence|
+								event.occurrences(date_from, date_to).each do |occurence|
 									scheduled_event = scheduled_event_base.clone
-									scheduled_event[:start_date] = occurence.start_time.to_date
-									scheduled_event[:end_date] = occurence.end_time.to_date
+									scheduled_event[:date_from] = occurence.start_time.to_date
+									scheduled_event[:date_to] = occurence.end_time.to_date
 									scheduled_event[:is_recurring] = true
 									scheduled_event[:recurrence_template_id] = event.id
 									scheduled_events << scheduled_event
@@ -66,8 +66,24 @@ module RicCalendar
 						return scheduled_events
 					end
 
-				end
+					# *********************************************************
+					# Columns
+					# *********************************************************
 
+					#
+					# Get all columns permitted for editation
+					#
+					def permitted_columns_for_schedulable
+						[
+							:date_from,
+							:time_from,
+							:date_to,
+							:time_to,
+							:all_day,
+						]
+					end
+
+				end
 
 				# *************************************************************
 				# Date and time
@@ -76,9 +92,9 @@ module RicCalendar
 				#
 				# Make DateTime object from (given) Date and Time objects
 				#
-				def start_datetime(base_date = self.start_date)
-					if self.start_time
-						base_date.to_datetime + self.start_time.seconds_since_midnight.seconds
+				def datetime_from(base_date = self.date_from)
+					if self.time_from
+						base_date.to_datetime + self.time_from.seconds_since_midnight.seconds
 					else
 						base_date.to_datetime
 					end
@@ -87,14 +103,13 @@ module RicCalendar
 				#
 				# Make DateTime object from (given) Date and Time objects
 				#
-				def end_datetime(base_date = self.end_date)
-					if self.end_time
-						base_date.to_datetime + self.end_time.seconds_since_midnight.seconds
+				def datetime_to(base_date = self.date_to)
+					if self.time_to
+						base_date.to_datetime + self.time_to.seconds_since_midnight.seconds
 					else
 						base_date.to_datetime
 					end
 				end
-
 
 				# *************************************************************
 				# Conversions
@@ -105,7 +120,7 @@ module RicCalendar
 				#
 
 				# def to_fullcalendar(fullevent)
-				#	fullevent[:title] = self.title
+				#	fullevent[:title] = self.name
 				# end
 
 			end

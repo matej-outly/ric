@@ -13,6 +13,7 @@ module RicCalendar
 	class Event < ActiveRecord::Base
 		include RicCalendar::Concerns::Models::Schedulable
 		include RicCalendar::Concerns::Models::Recurring
+		include RicCalendar::Concerns::Models::Colored
 		include RicCalendar::Concerns::Models::Event
 	end
 end

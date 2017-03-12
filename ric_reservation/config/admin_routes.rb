@@ -21,10 +21,6 @@ RicReservation::AdminEngine.routes.draw do
 	# Events
 	resources "events", only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_events"
 
-	# Event modifiers
-	post "event_modifiers/:id/:schedule_date", to: "admin_event_modifiers#create", as: "create_event_modifier"
-	resources :event_modifiers, only: [:destroy], controller: "admin_event_modifiers"
-
 	# Event reservations
 	get "event_reservations/:id/:schedule_date", to: "admin_event_reservations#index", as: "event_reservations"
 	get "event_reservations/:id/:schedule_date/new", to: "admin_event_reservations#new", as: "new_event_reservation"

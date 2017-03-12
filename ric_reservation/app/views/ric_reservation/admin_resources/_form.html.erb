@@ -1,4 +1,7 @@
-<%= rug_form_for(@resource, create_url: "ric_reservation_admin.resources_path", update_url: "ric_reservation_admin.resource_path") do |f| %>
+<%= rug_form_for(@resource, 
+	create_url: "ric_reservation_admin.resources_path", 
+	update_url: "ric_reservation_admin.resource_path"
+) do |f| %>
 	<%= f.text_input_row :name, :text_field %>
 	<%= f.date_picker_row :valid_from %>
 	<%= f.date_picker_row :valid_to %>

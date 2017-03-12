@@ -26,7 +26,7 @@ module RicCalendar
 					# Validators
 					# *********************************************************
 
-					validates :title, :start_date, :start_time, :end_date, :end_time, presence: true
+					validates :name, :date_from, :time_from, :date_to, :time_to, presence: true
 					validates :calendar_id, presence: true
 
 				end
@@ -41,27 +41,21 @@ module RicCalendar
 					# Get all columns permitted for editation
 					#
 					def permitted_columns
-						[
+						result = []
+						result = result.concat(self.permitted_columns_for_schedulable)
+						result = result.concat(self.permitted_columns_for_recurring)
+						result = result.concat(self.permitted_columns_for_colored)
+						result = result.concat([
+
 							# Event data
-							:title,
+							:name,
 							:description,
-
-							# Schedulable
-							:start_date,
-							:start_time,
-							:end_date,
-							:end_time,
-							:all_day,
-
-							# Recurring
-							:source_event_id,
-							:recurrence_rule,
 
 							# Calendar
 							:calendar_id,
-						]
+						])
+						return result
 					end
-
 
 				end
 
@@ -70,7 +64,7 @@ module RicCalendar
 				# *************************************************************
 
 				def to_fullcalendar(fullevent)
-					fullevent[:title] = self.title
+					fullevent[:title] = self.name
 				end
 
 			end

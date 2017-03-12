@@ -1,31 +1,4 @@
-# Available types
-#overlap_event_types:
-#  - Event1
-#  - Event2
-
-# State computing policy ... time_window | time_fixed
-reservation_state_policy: time_window
-
-# Avalilable reservation states and designated behavior
-reservation_states:
-  - 
-    name: yet_closed
-    behavior: closed
-  - 
-    name: open
-    behavior: open
-  -
-    name: soon
-    behavior: open
-  - 
-    name: deadline
-    behavior: closed
-  - 
-    name: already_closed
-    behavior: closed
-
-
-# Predefined reservation colors
+# Predefined event colors
 colors:
   yellow:
     primary: "#fff178"

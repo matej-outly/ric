@@ -2,63 +2,70 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Event modifier
+# * Colored
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 12. 2015
+# * Date  : 19. 2. 2017
 # *
 # *****************************************************************************
 
-module RicReservation
+module RicCalendar
 	module Concerns
 		module Models
-			module EventModifier extend ActiveSupport::Concern
+			module Colored extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
-					
+
 					# *********************************************************
-					# Structure
+					# Colors
 					# *********************************************************
 
-					#
-					# One-to-many relation with events
-					#
-					belongs_to :event, class_name: RicReservation.event_model.to_s
+					# Enum
+					enum_column :color, config(:colors).keys
 
 				end
 
 				module ClassMethods
 					
 					# *********************************************************
-					# Scopes
+					# Columns
 					# *********************************************************
 
 					#
-					# Scope for "tmp cancel"
+					# Get all columns permitted for editation
 					#
-					def tmp_canceled
-						where("tmp_canceled = true")
+					def permitted_columns_for_colored
+						[
+							:color,
+						]
 					end
 
 				end
 
-			protected
-
 				# *************************************************************
-				# Callbacks
+				# Color
 				# *************************************************************
 
+				def color_primary
+					if self.color && config(:colors)[self.color.to_sym]
+						config(:colors)[self.color.to_sym][:primary]
+					end
+				end
 
-				# *************************************************************
-				# Validators
-				# *************************************************************
+				def color_faded
+					if self.color && config(:colors)[self.color.to_sym]
+						config(:colors)[self.color.to_sym][:faded]
+					end
+				end
+
+				def color_text
+					if self.color && config(:colors)[self.color.to_sym]
+						config(:colors)[self.color.to_sym][:text]
+					end
+				end
 
 			end
+
 		end
 	end
 end

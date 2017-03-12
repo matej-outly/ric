@@ -10,12 +10,12 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			# *************************************************************************
 
 			# Event start
-			t.date :start_date, index: true
-			t.time :start_time, null: true
+			t.date :date_from, index: true
+			t.time :time_from
 
 			# Event end
-			t.date :end_date, index: true
-			t.time :end_time, null: true
+			t.date :date_to, index: true
+			t.time :time_to
 
 			# All day
 			t.boolean :all_day
@@ -25,22 +25,31 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			# *************************************************************************
 
 			# Recurrence rule
-			t.text :recurrence_rule, null: true
+			t.text :recurrence_rule
 
 			# Is it generated?
-			t.integer :source_event_id, null: true
+			t.integer :source_event_id
+
+			# *************************************************************************
+			# Validity
+			# *************************************************************************
+
+			# Validity TODO
+			t.date :valid_from, index: true
+			t.date :valid_to, index: true
 
 			# *************************************************************************
 			# Calendar
 			# *************************************************************************
 			
 			t.integer :calendar_id
-
+			t.string :color
+			
 			# *************************************************************************
 			# Event data (can be customized)
 			# *************************************************************************
 			
-			t.string :title
+			t.string :name
 			t.text :description
 
 		end

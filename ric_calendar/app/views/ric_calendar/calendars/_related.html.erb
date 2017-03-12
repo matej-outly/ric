@@ -3,7 +3,7 @@
 		<% @calendars.each do |calendar| %>
 			<li style="background: <%= calendar.color_primary %>; color: <%= calendar.color_text %>;">
 				<div>
-					<%= calendar.title %>
+					<%= calendar.name %>
 					<div class="float-right">
 						<%= rug_button(rug_icon("pencil"), ric_calendar.edit_calendar_path(calendar), style: "primary", size: "xs") %>
 						<%= rug_button(rug_icon("trash"), ric_calendar.calendar_path(calendar), method: "delete", style: "danger", size: "xs") %>

@@ -6,7 +6,7 @@ class CreateRicCalendarCalendars < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# Title
-			t.string :title
+			t.string :name
 
 			# Color
 			t.string :color

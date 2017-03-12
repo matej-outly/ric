@@ -30,15 +30,33 @@ module RicCalendar
 					end
 				end
 
+				module ClassMethods
+					
+					# *********************************************************
+					# Columns
+					# *********************************************************
+
+					#
+					# Get all columns permitted for editation
+					#
+					def permitted_columns_for_recurring
+						[
+							:source_event_id,
+							:recurrence_rule,
+						]
+					end
+
+				end
+
 				#
 				# Return all occurrences of this event between given dates by Ice Cube
 				# recurrence rule
 				#
-				def occurrences(start_date, end_date)
+				def occurrences(date_from, date_to)
 					rule = RecurringSelect.dirty_hash_to_rule(self.recurrence_rule)
-					schedule = IceCube::Schedule.new(self.start_date)
-					schedule.add_recurrence_rule(rule.until(self.end_date))
-					return schedule.occurrences_between(start_date, end_date, spans: true)
+					schedule = IceCube::Schedule.new(self.date_from)
+					schedule.add_recurrence_rule(rule.until(self.date_to))
+					return schedule.occurrences_between(date_from, date_to, spans: true)
 				end
 
 			end

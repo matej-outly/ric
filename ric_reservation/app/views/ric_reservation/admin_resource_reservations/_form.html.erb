@@ -1,4 +1,7 @@
-<%= rug_form_for(@reservation, create_url: "ric_reservation_admin.resource_reservations_path", update_url: "ric_reservation_admin.resource_reservation_path") do |f| %>
+<%= rug_form_for(@reservation, 
+	create_url: "ric_reservation_admin.resource_reservations_path", 
+	update_url: "ric_reservation_admin.resource_reservation_path"
+) do |f| %>
 	<%= f.hidden_field :resource_id %>
 	<%= f.token_input_row :owner_id, ric_user_admin.search_users_path, as: :owner, value_attr: :id, label_attr: :email, limit: 1 %>
 	<%= f.date_picker_row :schedule_date %>

@@ -10,44 +10,29 @@
 # *****************************************************************************
 
 class CreateRicReservationEvents < ActiveRecord::Migration
-	def change
-		create_table :events do |t|
-			t.timestamps null: true
+	
+	# Depends on events table defined in RicCalendar
 
-			# Bind to resources
-			t.integer :resource_id
+	# Resource
+	add_column :events, :resource_id, :integer
+	add_index  :events, :resource_id
+	
+	# Capacity - choose one of the columns representing correct capacity type
+	#add_column :events, :capacity_integer, :integer
+	#add_column :events, :capacity_time, :time
 
-			# Identification
-			t.string :name
-			t.string :color
+	# Time window - choose if reservation policy should be time_window
+	add_column :events, :time_window_open, :datetime
+	add_column :events, :time_window_soon, :datetime
+	add_column :events, :time_window_deadline, :datetime
 
-			# Schedule
-			t.datetime :from
-			t.datetime :to
-			t.string :period
+	# Time fixed - choose if reservation policy should be time_fixed
+	#add_column :events, :time_fixed_open, :datetime
+	#add_column :events, :time_fixed_deadline, :datetime
+	#add_column :events, :time_fixed_soon, :datetime
+	#add_column :events, :time_fixed_already_closed, :datetime
 
-			# Validity
-			t.date :valid_from
-			t.date :valid_to
+	# Limit number of reservations by single owner
+	add_column :events, :owner_reservation_limit, :integer
 
-			# Capacity
-			#t.integer :capacity_integer
-			#t.time :capacity_time
-
-			# Time window
-			t.datetime :time_window_open
-			t.datetime :time_window_soon
-			t.datetime :time_window_deadline
-
-			# Time fixed
-			#t.datetime :time_fixed_open
-			#t.datetime :time_fixed_deadline
-			#t.datetime :time_fixed_soon
-			#t.datetime :time_fixed_already_closed
-
-			# Limit number of reservations by single owner
-			t.integer :owner_reservation_limit
-
-		end
-	end
 end

@@ -140,3 +140,5 @@ And fill `edit_action` in database for calendar, which supports editing.
 - Calendar state (page, view) stored in JavaScript storage
 - Create new event from calendar with predefined date, edit event, destroy event from calendar
 - Calendars filter - switch on/off shown calendars
+- Validity from-to
+- Validate start_date/start_time < end_date/end_time

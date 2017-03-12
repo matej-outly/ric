@@ -2,10 +2,10 @@
 enable_below_line: false
 
 # State computing policy ... time_window | time_fixed
-state_policy: time_window
+reservation_state_policy: time_window
 
 # Avalilable event states and designated behavior
-states:
+reservation_states:
   - 
     name: yet_closed
     behavior: closed

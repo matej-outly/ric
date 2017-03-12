@@ -2,27 +2,27 @@
 	create_url: "ric_calendar.events_path",
 	update_url: "ric_calendar.event_path"
 ) do |f| %>
-	<%= f.text_input_row :title %>
+	<%= f.text_input_row :name %>
 	<%= f.text_area_row :description %>
-	<%= f.picker_row :calendar_id, RicCalendar.calendar_model.where(resource_type: RicCalendar.calendar_model.name), :id, :title %>
+	<%= f.picker_row :calendar_id, RicCalendar.calendar_model.where(resource_type: RicCalendar.calendar_model.name), :id, :name %>
 	
 	<div class="row">
 		<div class="col-sm-4">
-			<%= f.date_picker_row :start_date %>
+			<%= f.date_picker_row :date_from %>
 		</div>
 
 		<div class="col-sm-4">
-			<%= f.time_picker_row :start_time %>
+			<%= f.time_picker_row :time_from %>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-sm-4">
-			<%= f.date_picker_row :end_date %>
+			<%= f.date_picker_row :date_to %>
 		</div>
 
 		<div class="col-sm-4">
-			<%= f.time_picker_row :end_time %>
+			<%= f.time_picker_row :time_to %>
 		</div>
 	</div>
 

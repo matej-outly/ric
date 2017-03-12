@@ -19,7 +19,6 @@ require "ric_reservation/public_engine"
 # Models
 require 'ric_reservation/concerns/models/resource'
 require 'ric_reservation/concerns/models/event'
-require 'ric_reservation/concerns/models/event_modifier'
 require 'ric_reservation/concerns/models/reservation'
 require 'ric_reservation/concerns/models/event_reservation'
 require 'ric_reservation/concerns/models/resource_reservation'

@@ -43,16 +43,16 @@ module RicReservation
 					#
 					# Define time windows as duration
 					# 
-					if config(:states) && config(:state_policy) == "time_window"
-						config(:states).each_with_index do |state_spec, index|
-							duration_column "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+					if config(:reservation_states) && config(:reservation_state_policy) == "time_window"
+						config(:reservation_states).each_with_index do |reservation_state_spec, index|
+							duration_column "time_window_#{reservation_state_spec[:name]}".to_sym if index != 0 && index != config(:reservation_states).length
 						end
 					end
 
 					#
 					# State
 					#
-					#state_column :state, config(:states).map { |state_spec| state_spec[:name] }
+					#state_column :reservation_state, config(:reservation_states).map { |reservation_state_spec| reservation_state_spec[:name] }
 
 					# *********************************************************
 					# Period
@@ -90,14 +90,14 @@ module RicReservation
 					#
 					def permitted_columns
 						result = []
-						if config(:states)
-							if config(:state_policy) == "time_fixed"
-								config(:states).each_with_index do |state_spec, index|
-									result << "time_fixed_#{state_spec[:name]}".to_sym if index != 0
+						if config(:reservation_states)
+							if config(:reservation_state_policy) == "time_fixed"
+								config(:reservation_states).each_with_index do |reservation_state_spec, index|
+									result << "time_fixed_#{reservation_state_spec[:name]}".to_sym if index != 0
 								end
 							else
-								config(:states).each_with_index do |state_spec, index|
-									result << "time_window_#{state_spec[:name]}".to_sym if index != 0 && index != config(:states).length
+								config(:reservation_states).each_with_index do |reservation_state_spec, index|
+									result << "time_window_#{reservation_state_spec[:name]}".to_sym if index != 0 && index != config(:reservation_states).length
 								end
 							end
 						end	
@@ -149,23 +149,23 @@ module RicReservation
 				# *************************************************************
 
 				#
-				# Get state according to datetime
+				# Get reservation_state according to datetime
 				#
-				def _state(datetime)
+				def _reservation_state(base)
 					
 					# Now
 					now = Time.current
 					
 					# States
-					states = config(:states)
+					reservation_states = config(:reservation_states)
 
 					# Break times
-					if config(:state_policy) == "time_fixed"
+					if config(:reservation_state_policy) == "time_fixed"
 						break_times = []
-						states.reverse_each_with_index do |state_spec, index|
+						reservation_states.reverse_each_with_index do |reservation_state_spec, index|
 							if index != 0 # Do not consider first state
-								state_name = state_spec[:name]
-								time_fixed = self.send("time_fixed_#{state_name}")
+								reservation_state_name = reservation_state_spec[:name]
+								time_fixed = self.send("time_fixed_#{reservation_state_name}")
 								if time_fixed
 									break_times << time_fixed
 								else
@@ -174,11 +174,11 @@ module RicReservation
 							end
 						end
 					else
-						break_times = [datetime]
-						states.reverse_each_with_index do |state_spec, index|
-							if index != 0 && index != (states.length - 1) # Do not consider first and last state
-								state_name = state_spec[:name]
-								time_window = self.send("time_window_#{state_name}")
+						break_times = [base]
+						reservation_states.reverse_each_with_index do |reservation_state_spec, index|
+							if index != 0 && index != (reservation_states.length - 1) # Do not consider first and last reservation_state
+								reservation_state_name = reservation_state_spec[:name]
+								time_window = self.send("time_window_#{reservation_state_name}")
 								if time_window
 									break_times << (break_times.last - time_window.days_since_new_year.days - time_window.seconds_since_midnight.seconds)
 								else
@@ -189,39 +189,39 @@ module RicReservation
 					end
 
 					# State recognititon
-					result_state = nil
-					result_state_behavior = nil
-					states.each_with_index do |state_spec, index|
-						if index < states.length - 1
-							if !break_times[states.length - 2 - index].nil? && now < break_times[states.length - 2 - index]
-								result_state = state_spec[:name].to_sym
-								result_state_behavior = state_spec[:behavior].to_sym
+					result_reservation_state = nil
+					result_reservation_state_behavior = nil
+					reservation_states.each_with_index do |reservation_state_spec, index|
+						if index < reservation_states.length - 1
+							if !break_times[reservation_states.length - 2 - index].nil? && now < break_times[reservation_states.length - 2 - index]
+								result_reservation_state = reservation_state_spec[:name].to_sym
+								result_reservation_state_behavior = reservation_state_spec[:behavior].to_sym
 								break
 							end
 						else # Last fallback state
-							result_state = state_spec[:name].to_sym
-							result_state_behavior = state_spec[:behavior].to_sym
+							result_reservation_state = reservation_state_spec[:name].to_sym
+							result_reservation_state_behavior = reservation_state_spec[:behavior].to_sym
 							break
 						end
 					end
 					
-					return [result_state, result_state_behavior]
+					return [result_reservation_state, result_reservation_state_behavior]
 				end
 
 				#
 				# Get state according to datetime
 				#
-				def state(datetime)
-					result_state, result_state_behavior = _state(datetime)
-					return result_state
+				def reservation_state(base)
+					result_reservation_state, result_reservation_state_behavior = _reservation_state(base)
+					return result_reservation_state
 				end
 
 				#
 				# Get state behavior according to datetime
 				#
-				def state_behavior(datetime)
-					result_state, result_state_behavior = _state(datetime)
-					return result_state_behavior
+				def reservation_state_behavior(base)
+					result_reservation_state, result_reservation_state_behavior = _reservation_state(base)
+					return result_reservation_state_behavior
 				end
 
 				# *************************************************************

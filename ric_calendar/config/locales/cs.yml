@@ -20,7 +20,7 @@ cs:
   activerecord:
     attributes:
       ric_calendar/calendar:
-        title: Název
+        name: Název
         color: Barva
         color_values:
           yellow: Žlutá
@@ -38,12 +38,12 @@ cs:
         resource: Navázaný objekt
         resource_id: Navázaný objekt
       ric_calendar/event:
-        title: Název události
+        name: Název události
         description: Popis
-        start_date: Datum od
-        start_time: Čas od
-        end_date: Datum do
-        end_time: Čas do
+        date_from: Datum od
+        time_from: Čas od
+        date_to: Datum do
+        time_to: Čas do
         calendar_id: Kalendář
         all_day: Koná se celý den
         recurrence_rule: Opakování
@@ -62,7 +62,7 @@ cs:
         ric_calendar/calendar:
           not_found: Kalendář nebyl nalezen.
           attributes:
-            title:
+            name:
               blank: "Název kalendáře musí být vyplněn."
             kind:
               blank: "Typ kalendáře musí být vyplněn."
@@ -71,7 +71,7 @@ cs:
         ric_calendar/event:
           not_found: Událost nebyla nalezena.
           attributes:
-            title:
+            name:
               blank: "Název události musí být vyplněn."
 
   recurring_select:

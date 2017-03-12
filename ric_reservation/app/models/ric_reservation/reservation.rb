@@ -11,6 +11,7 @@
 
 module RicReservation
 	class Reservation < ActiveRecord::Base
+		include RicCalendar::Concerns::Models::Colored
 		include RicReservation::Concerns::Models::Reservation
 		include RicReservation::Concerns::Models::EventReservation
 		include RicReservation::Concerns::Models::ResourceReservation

@@ -18,32 +18,34 @@ class CreateRicReservationReservations < ActiveRecord::Migration
 			t.string :kind
 
 			# Resource reservation
-			t.integer :resource_id
-			t.string :resource_type
+			t.integer :resource_id, index: true
+			t.string :resource_type, index: true
 			t.datetime :schedule_from
 			t.datetime :schedule_to
 
 			# Event reservation
-			t.integer :event_id
-			t.string :event_type
+			t.integer :event_id, index: true
+			t.string :event_type, index: true
 			t.date :schedule_date
 			t.boolean :below_line
 
-			# Size
-			#t.integer :size_integer
-			#t.time :size_time
+			# Size - disable some of the following if not needed in application
+			t.integer :size_integer
+			t.time :size_time
 
 			# Owner
-			t.integer :owner_id
-			t.string :owner_type
+			t.integer :owner_id, index: true
+			t.string :owner_type, index: true
 			t.string :owner_name
 
 			# Subject
-			t.integer :subject_id
-			t.string :subject_type
+			t.integer :subject_id, index: true
+			t.string :subject_type, index: true
 
 			# Identification
 			t.string :name
+
+			# Color
 			t.string :color
 			
 		end

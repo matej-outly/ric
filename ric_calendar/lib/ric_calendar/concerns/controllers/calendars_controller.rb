@@ -25,24 +25,24 @@ module RicCalendar
 				# Show calendar as regular HTML page
 				#
 				def index
-					@calendars = RicCalendar.calendar_model.all.order(title: :asc)
+					@calendars = RicCalendar.calendar_model.all.order(name: :asc)
 				end
 
 				#
 				# Return events in Fullcalendar format via AJAX
 				#
 				def events
-					start_date = Date.parse(params[:start].to_s)
-					end_date = Date.parse(params[:end].to_s)
+					date_from = Date.parse(params[:start].to_s)
+					date_to = Date.parse(params[:end].to_s)
 
 					# Calendar events
 					fullevents = []
 
 					# Add events from calendars
-					fullevents += load_calendars(start_date, end_date)
+					fullevents += load_calendars(date_from, date_to)
 
 					# Add aditional events
-					fullevents += load_events(start_date, end_date)
+					fullevents += load_events(date_from, date_to)
 
 					# Return JSON response
 					render json: fullevents
@@ -125,14 +125,14 @@ module RicCalendar
 				#
 				# To be overriden in application
 				#
-				def load_events(start_date, end_date)
+				def load_events(date_from, date_to)
 					[]
 				end
 
 				#
 				# Read events from calendars
 				#
-				def load_calendars(start_date, end_date)
+				def load_calendars(date_from, date_to)
 					fullevents = []
 
 					path_resolver = RugSupport::PathResolver.new(self)
@@ -148,14 +148,14 @@ module RicCalendar
 						event_update_path = calendar.kind_options[:event_update_path]
 
 						# Go through scheduled calendar events
-						calendar.resource_events.schedule(start_date, end_date).each do |scheduled_event|
+						calendar.resource_events.schedule(date_from, date_to).each do |scheduled_event|
 
 							# Create Fullcalendar event object
 							fullevent = {
 								id: "#{calendar.kind_options[:event_type]}<#{scheduled_event[:event].id}>",
 								objectId: scheduled_event[:event].id,
-								start: scheduled_event[:event].start_datetime(scheduled_event[:start_date]),
-								end: scheduled_event[:event].end_datetime(scheduled_event[:end_date]),
+								start: scheduled_event[:event].datetime_from(scheduled_event[:date_from]),
+								end: scheduled_event[:event].datetime_to(scheduled_event[:date_to]),
 								allDay: scheduled_event[:all_day],
 							}
 

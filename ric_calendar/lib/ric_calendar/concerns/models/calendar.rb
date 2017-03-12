@@ -38,13 +38,6 @@ module RicCalendar
 					# Enum
 					enum_column :kind, config(:kinds).keys
 
-					# *********************************************************
-					# Colors
-					# *********************************************************
-
-					# Enum
-					enum_column :color, config(:colors).keys
-
 				end
 
 				module ClassMethods
@@ -57,12 +50,14 @@ module RicCalendar
 					# Get all columns permitted for editation
 					#
 					def permitted_columns
-						[
-							:title,
-							:color,
+						result = []
+						result = result.concat(self.permitted_columns_for_colored)
+						result = result.concat([
+							:name,
 							:kind,
 							:resource_id
-						]
+						])
+						return result
 					end
 
 				end
@@ -93,28 +88,6 @@ module RicCalendar
 						end
 					end
 					return @kind_options
-				end
-
-				# *************************************************************
-				# Color
-				# *************************************************************
-
-				def color_primary
-					if self.color && config(:colors)[self.color.to_sym]
-						config(:colors)[self.color.to_sym][:primary]
-					end
-				end
-
-				def color_faded
-					if self.color && config(:colors)[self.color.to_sym]
-						config(:colors)[self.color.to_sym][:faded]
-					end
-				end
-
-				def color_text
-					if self.color && config(:colors)[self.color.to_sym]
-						config(:colors)[self.color.to_sym][:text]
-					end
 				end
 
 			protected 

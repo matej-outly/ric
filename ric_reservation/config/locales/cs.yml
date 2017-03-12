@@ -12,15 +12,6 @@ cs:
         destroy: Smazat rozvrhovou tabulku
         invalid_events: "Smazané události"
         valid: "Platný rozvrh"
-      admin_events:
-        index: Události
-        show: Detail události
-        new: Nová událost
-        create: Nová událost
-        edit: Upravit událost
-        update: Upravit událost
-        destroy: Smazat událost
-        scheduled_events: Termíny
       admin_event_reservations:
         index: Rezervace na událost
         new: Rezervovat
@@ -35,8 +26,6 @@ cs:
         edit: Upravit rezervaci
         update: Upravit rezervaci
         destroy: Zrušit rezervaci
-      admin_event_modifiers:
-        create_canceled: Jednorázově zrušit událost
       admin_timetables:
         index: "Rezervace"
         show: "Rozvrhová tabulka"
@@ -66,8 +55,8 @@ cs:
         time_fixed_already_closed: Kdy uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
         opening_hours: Otevírací hodiny
-        state: Stav
-        state_values:
+        reservation_state: Stav
+        reservation_state_values:
           yet_closed: Zatím uzavřený
           open: Otevřený
           soon: Brzký
@@ -82,41 +71,8 @@ cs:
       ric_reservation/event:
         resource_id: Rozvrhová tabulka
         resource: Rozvrhová tabulka
-        name: Jméno
-        color: Barva v rozvrhové tabulce
-        color_values:
-          yellow: Žlutá
-          turquoise: Tyrkysová
-          blue: Modrá
-          pink: Růžová
-          violet: Fialová
-          orange: Oranžová
-          red: Červená
-          green: Zelená
-          grey: Šedá
-        from: Začátek
-        to: Konec
-        date: Datum
-        time_from: Začátek
-        time_to: Konec
-        formatted_time: Čas
-        schedule_date: Datum
-        schedule_formatted_time: Čas
         size: Naplnění
         capacity: Kapacita
-        period: Perioda
-        period_values:
-          day: Den
-          workday: Pracovní den
-          weekendday: Víkendový den
-          week: Týden
-          odd_week: Lichý týden
-          even_week: Sudý týden
-          month: Měsíc
-          once: Jednorázově
-        tmp_canceled: Jednorázově zrušeno
-        valid_from: Platné od
-        valid_to: Smazané od
         time_window_open: Jak dlouho před brzkou považovat rezervaci za otevřenou
         time_window_soon: Jak dlouho před začátkem považovat rezervaci za brzkou
         time_window_deadline: Jak dlouho před začátkem uzavřít rezervaci
@@ -125,8 +81,8 @@ cs:
         time_fixed_deadline: Kdy uzavřít rezervaci
         time_fixed_already_closed: Kdy uzavřít rezervaci
         owner_reservation_limit: Maximální počet rezervací od jednoho uživatele
-        state: Stav
-        state_values:
+        reservation_state: Stav
+        reservation_state_values:
           yet_closed: Zatím uzavřený
           open: Otevřený
           soon: Brzký
@@ -161,8 +117,8 @@ cs:
         owner_id: Osoba
         owner_name: Osoba
         owner_name_anonymous: "(neznámý)"
-        state: Stav
-        state_values:
+        reservation_state: Stav
+        reservation_state_values:
           yet_closed: Zatím uzavřený
           open: Otevřený
           soon: Brzký
