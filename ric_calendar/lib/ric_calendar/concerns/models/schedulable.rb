@@ -43,7 +43,7 @@ module RicCalendar
 								is_recurring: false,
 							}
 
-							if !event.has_attribute?(:recurrence_rule) || event.recurrence_rule == nil
+							if !event.is_recurring?
 								# Regular event
 								scheduled_event_base[:date_from] = event.date_from
 								scheduled_event_base[:date_to] = event.date_to
@@ -83,6 +83,14 @@ module RicCalendar
 						]
 					end
 
+				end
+
+				# *************************************************************
+				# Recurring
+				# *************************************************************
+
+				def is_recurring?
+					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule.nil?
 				end
 
 				# *************************************************************
