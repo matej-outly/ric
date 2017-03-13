@@ -80,7 +80,7 @@ module RicCalendar
 					@calendar.destroy
 					redirect_url = request.referrer
 					redirect_url = ric_calendar.calendars_path if redirect_url.blank?
-					redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.calendar_model.model_name.i18n_key}.destroy")			
+					redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.calendar_model.model_name.i18n_key}.destroy")
 				end
 
 			protected
@@ -138,7 +138,7 @@ module RicCalendar
 					path_resolver = RugSupport::PathResolver.new(self)
 
 					RicCalendar.calendar_model.all.each do |calendar|
-						
+
 						# Get calendar color and action edit method
 						if !calendar.color.blank?
 							color_primary = calendar.color_primary
@@ -162,7 +162,7 @@ module RicCalendar
 							# Update object by calendar specific attributes
 							if color_primary
 								# Color events
-								fullevent[:color] = color_text
+								fullevent[:textColor] = color_text
 								fullevent[:borderColor] = color_primary
 								fullevent[:backgroundColor] = color_primary
 							end
