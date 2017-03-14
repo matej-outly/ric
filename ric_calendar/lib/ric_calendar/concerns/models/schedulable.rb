@@ -47,7 +47,7 @@ module RicCalendar
 					#
 					def between(date_from, date_to)
 						#where("date_from >= ? AND date_to <= ?", date_from, date_to)
-						where("(date_from < :date_to) AND (:date_from < date_to)", date_from: date_from, date_to: date_to)
+						where("(date_from < :date_to) AND (:date_from <= date_to)", date_from: date_from, date_to: date_to)
 						
 						# TODO respect valid from / valid to for recurring events
 					end
