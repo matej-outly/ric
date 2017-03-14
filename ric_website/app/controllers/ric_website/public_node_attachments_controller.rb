@@ -2,16 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Node attachments
 # *
 # * Author: Matěj Outlý
-# * Date  : 13. 5. 2015
+# * Date  : 19. 1. 2017
 # *
 # *****************************************************************************
 
-RicWebsite::PublicEngine.routes.draw do
+require_dependency "ric_website/public_controller"
 
-	# Node attachments
-	resources :node_attachments, only: [:show], controller: "public_node_attachments"
-
+module RicWebsite
+	class PublicNodeAttachmentsController < AdminController
+		include RicWebsite::Concerns::Controllers::Public::NodeAttachmentsController
+	end
 end

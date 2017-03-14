@@ -17,6 +17,7 @@ module RicWebsite
 		#
 		require "ric_website/concerns/controllers/admin/enums_controller"
 		require "ric_website/concerns/controllers/admin/fields_controller"
+		require "ric_website/concerns/controllers/admin/node_attachments_controller"
 		require "ric_website/concerns/controllers/admin/nodes_controller"
 		require "ric_website/concerns/controllers/admin/structures_controller"
 		

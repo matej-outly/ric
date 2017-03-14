@@ -25,7 +25,7 @@ module RicWebsite
 					# Structure
 					# *********************************************************
 
-					belongs_to :node
+					belongs_to :node, class_name: RicWebsite.node_model.to_s
 
 					# *********************************************************
 					# Validators
@@ -64,6 +64,14 @@ module RicWebsite
 						]
 					end
 
+				end
+
+				def attachment_url
+					if self.attachment.present?
+						return self.attachment.url
+					else
+						return nil
+					end
 				end
 
 				# *************************************************************

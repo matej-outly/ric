@@ -13,7 +13,7 @@ module RicWebsite
 	module Helpers
 		module NodeHelper
 
-			def node_field_row(form, field)
+			def node_field_row(form, field, node)
 				result = ""
 				if field.kind == "belongs_to"
 					if field.ref.ends_with?("_id")
@@ -23,6 +23,8 @@ module RicWebsite
 					end
 				elsif field.kind == "enum"
 					# TODO
+				elsif field.kind == "text"
+					result = form.text_area_row(field.ref, label: field.name, data: { node_id: node.id })
 				else
 					result = form.generic_row(field.ref, field.kind, label: field.name)
 				end

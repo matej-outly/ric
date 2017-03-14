@@ -80,7 +80,7 @@ module RicWebsite
 							if requested_structure
 								@node.change_structure(requested_structure)
 								respond_to do |format|
-									format.html { redirect_to main_app.edit_admin_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.update") }
+									format.html { redirect_to edit_node_path(@node), notice: I18n.t("activerecord.notices.models.#{RicWebsite.node_model.model_name.i18n_key}.update") }
 									format.json { render json: @node.id }
 								end
 							else

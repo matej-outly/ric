@@ -25,8 +25,8 @@ module RicWebsite
 					# Structure
 					# *********************************************************
 
-					has_many :nodes, dependent: :nullify
-					has_many :fields, dependent: :destroy
+					has_many :nodes, dependent: :nullify, class_name: RicWebsite.node_model.to_s
+					has_many :fields, dependent: :destroy, class_name: RicWebsite.field_model.to_s
 
 					# *********************************************************
 					# Validators

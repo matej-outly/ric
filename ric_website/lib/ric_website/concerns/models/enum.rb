@@ -25,8 +25,8 @@ module RicWebsite
 					# Structure
 					# *********************************************************
 
-					has_many :fields, dependent: :destroy
-					has_many :field_values, dependent: :destroy
+					has_many :fields, dependent: :destroy, class_name: RicWebsite.field_model.to_s
+					has_many :field_values, dependent: :destroy, class_name: RicWebsite.field_value_model.to_s
 
 					# *********************************************************
 					# Validators

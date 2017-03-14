@@ -25,9 +25,9 @@ module RicWebsite
 					# Structure
 					# *********************************************************
 
-					belongs_to :structure
-					belongs_to :enum
-					has_many :field_values, dependent: :destroy
+					belongs_to :structure, class_name: RicWebsite.structure_model.to_s
+					belongs_to :enum, class_name: RicWebsite.enum_model.to_s
+					has_many :field_values, dependent: :destroy, class_name: RicWebsite.field_value_model.to_s
 					
 					# *********************************************************
 					# Ordering

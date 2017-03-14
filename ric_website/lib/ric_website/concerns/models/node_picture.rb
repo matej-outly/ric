@@ -21,6 +21,18 @@ module RicWebsite
 				#
 				included do
 
+					# *********************************************************
+					# Structure
+					# *********************************************************
+
+					belongs_to :node, class_name: RicWebsite.node_model.to_s
+
+					# *********************************************************
+					# Validators
+					# *********************************************************
+					
+					validates_presence_of :node_id
+					
 				end
 
 				module ClassMethods

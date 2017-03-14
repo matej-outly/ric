@@ -1,0 +1,65 @@
+<%= rug_picture_index_table_for(@node.node_attachments.order(id: :asc), { 
+	attachment: { type: :file, thumb_style: :original }
+}, paths: {
+	show: lambda { |attachment| ric_website_public.node_attachment_path(id: attachment) },
+	destroy: lambda { |attachment| ric_website_admin.node_attachment_path(@node, attachment) },
+}, moving: true, inline_destroy: true, thumbnail_crop: 100, grid_columns: 4) %>
+<%= rug_form_for(@node, update_url: "ric_website_admin.node_path") do |f| %>
+	<%= f.dropzone_many_row(
+			:node_attachments, 
+			attachment_name: :attachment, 
+			create_url: lambda { ric_website_admin.node_attachments_path(@node) },
+			show_url: lambda { |attachment| ric_website_admin.node_attachment_path(@node, attachment) },
+			collection: @node.node_attachments.order(id: :asc),
+			label: false,
+			move_to_object: ["rug_table_616088843dfbd23ff523704a4003f6ca740732ec", "tinymce_controller"]
+		)
+	%>
+<% end %>
+
+<script>
+
+	function TinymceController(hash, options)
+	{
+		if (top.tinymce.activeEditor) {
+			this.tinymceWindowManager = top.tinymce.activeEditor.windowManager;
+		} else {
+			this.tinymceWindowManager = null;
+		}
+	}
+	TinymceController.prototype = {
+		constructor: TinymceController,
+		ready: function()
+		{
+			this.reload();
+		},
+		addItem: function()
+		{
+			this.reload();
+		},
+		reload: function()
+		{
+			var _this = this;
+			$(".link-show").click(function(e) {
+				e.preventDefault();
+
+				// Get URL
+				var url = $(this).attr("href");
+
+				// Pass URL to TinyMCE and close
+				if (_this.tinymceWindowManager) {
+					_this.tinymceWindowManager.getParams().resultField.value = url;
+					_this.tinymceWindowManager.close();
+				}
+
+			});
+		}
+	}
+
+	var tinymce_controller = null;
+	$(document).ready(function() {
+		tinymce_controller = new TinymceController();
+		tinymce_controller.ready();
+	});
+
+</script>

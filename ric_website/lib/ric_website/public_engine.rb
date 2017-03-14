@@ -15,7 +15,7 @@ module RicWebsite
 		#
 		# Controllers
 		#
-		#require "ric_website/concerns/controllers/public/pages_controller"
+		require "ric_website/concerns/controllers/public/node_attachments_controller"
 		
 		isolate_namespace RicWebsite
 

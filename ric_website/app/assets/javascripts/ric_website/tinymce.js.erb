@@ -1,0 +1,102 @@
+tinyMCE.init({
+	selector: 'textarea.tinymce',
+
+	// Editor language
+	language: 'cs',
+
+	// Editor height
+	height: 350,
+
+	// CSS
+	content_css : "<%= asset_path('tinymce.css') %>",
+
+	// Fix nested ul/ol elements
+	fix_list_elements: true,
+
+	// Paste as text set as default
+	paste_as_text: true,
+
+	// Paste form word cleanup
+	paste_word_valid_elements: "a,b,strong,i,em,h1,h2,h3,h4,h5,h6",
+
+	// All characters will be stored in non-entity form except &amp; &lt; &gt; &quot;
+	entity_encoding: 'raw',
+
+	// Don't convert URLs to relative paths
+	relative_urls: false,
+
+	// Hide menu
+	menubar: false,
+
+	// Small icons in toolbar
+	toolbar_items_size: 'small',
+
+	// Toolbar
+	toolbar1: "undo redo | styleselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist indent outdent",
+	toolbar2: "link anchor | image media | hr charmap insertdatetime | table | searchreplace | code fullscreen",
+
+	// Plugins:
+	//  - anchor - insert an anchor
+	//  - charmap - instert some special character
+	//  - code - switch to HTML editation mode
+	//  - fullscreen - switch to fullscreen
+	//  - hr - insert a horizontal line
+	//  - image - insert a picture
+	//  - insertdatetime - insert date/time
+	//  - link - insert a link
+	//  - lists - bullet list and numbered lists
+	//  - media - HTML5 video and audio elements
+	//  - nonbreaking - insert &nbsp;
+	//  - paste - remove formating in text pasted from clipboard
+	//  - searchreplace - tool for find/replace text
+	//  - table - insert and edit a table
+	//  - template - insert predefined templates
+	//  - visualblocks - display non-visible blocks - p, div, span, ...
+	//  - visualchars - display non-visible characters
+	plugins: "anchor charmap code fullscreen hr image insertdatetime link lists media nonbreaking paste searchreplace table template visualblocks visualchars",
+
+	// Enable captions for images and encapsulation to figure tag
+	image_caption: true,
+
+	// Format override
+	formats: {
+		alignleft: [
+			{ selector: 'figure.image', classes: 'at-left', ceFalseOverride: true },
+			{ selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'at-left' }
+		],
+		aligncenter: [
+			{ selector: 'figure.image', classes: 'at-center', ceFalseOverride: true },
+			{ selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'at-center' }
+		],
+		alignright: [
+			{ selector: 'figure.image', classes: 'at-right', ceFalseOverride: true },
+			{ selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'at-right' }
+		],
+		alignjustify: [
+			{ selector: 'figure.image', classes: 'at-justify', ceFalseOverride: true },
+			{ selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'at-justify' }
+		],
+	},
+
+	insertdatetime_formats: ["%d. %m. %Y", "%H:%M", "%H:%M:%S"],
+
+	// Image browser
+	file_browser_callback: function(dialogFieldName, currentFieldValue, dialogType, tinyMCEWin) {
+		
+		// Get node ID
+		var nodeId = $(tinyMCE.activeEditor.targetElm).data('nodeId');
+
+		// Open dialog.
+		if (nodeId) {
+			tinyMCE.activeEditor.windowManager.open({
+				title: 'Výběr obrázku',
+				url: '/admin/nodes/:node_id/attachments'.replace(':node_id', nodeId),
+				width: 700,
+				height: 600
+			}, {
+				resultField: tinyMCEWin.document.getElementById(dialogFieldName),
+			});
+		}
+	},
+
+});

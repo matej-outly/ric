@@ -107,6 +107,10 @@ cs:
           move: Objekt byl úspěšně přesunut.
           generate_slugs: Heské URL bylo úspěšně přegenerováno.
           destroy: Objekt byl úspěšně smazán.
+        ric_website/node_attachment:
+          create: Příloha byla úspěšně vytvořena.
+          update: Příloha byla úspěšně upravena.
+          destroy: Příloha byla úspěšně smazána.
         
     errors:
       models:
@@ -121,3 +125,5 @@ cs:
           attributes:
             name:
               blank: Interní název musí být vyplněn.
+        ric_website/node_attachment:
+          not_found: Příloha nebyla nalezena.

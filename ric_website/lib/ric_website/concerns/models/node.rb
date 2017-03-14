@@ -25,9 +25,9 @@ module RicWebsite
 					# Structure
 					# *********************************************************
 
-					belongs_to :structure
-					has_many :field_values, dependent: :destroy
-					has_many :node_attachments, dependent: :destroy
+					belongs_to :structure, class_name: RicWebsite.structure_model.to_s
+					has_many :field_values, dependent: :destroy, class_name: RicWebsite.field_value_model.to_s
+					has_many :node_attachments, dependent: :destroy, class_name: RicWebsite.node_attachment_model.to_s
 
 					# *********************************************************
 					# Hierarchy

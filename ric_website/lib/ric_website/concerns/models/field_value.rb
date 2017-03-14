@@ -25,9 +25,9 @@ module RicWebsite
 					# Structure
 					# *********************************************************
 
-					belongs_to :node
-					belongs_to :field
-					belongs_to :enum
+					belongs_to :node, class_name: RicWebsite.node_model.to_s
+					belongs_to :field, class_name: RicWebsite.field_model.to_s
+					belongs_to :enum, class_name: RicWebsite.enum_model.to_s
 
 					# *********************************************************
 					# Validators

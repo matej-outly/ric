@@ -41,6 +41,9 @@ RicWebsite::AdminEngine.routes.draw do
 			put "generate_slugs"
 			put "move/:relation/:destination_id", action: "move", as: "move"
 		end
+
+		# Node attachments
+		resources :attachments, controller: "admin_node_attachments", only: [:index, :show, :create, :update, :destroy]
 	end
 
 end

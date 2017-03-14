@@ -4,7 +4,7 @@
 	<%= f.hidden_field :parent_id %>
 	<%= f.hidden_field :structure_id %>
 	<% @node.permitted_fields.each do |field| %>
-		<%= node_field_row(f, field) %>
+		<%= node_field_row(f, field, @node) %>
 	<% end %>
 	<%= f.primary_button_row :submit %>
 <% end %>
