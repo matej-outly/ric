@@ -28,7 +28,7 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			t.text :recurrence_rule
 
 			# Is it generated?
-			t.integer :source_event_id
+			t.integer :source_event_id, index: true
 
 			# *************************************************************************
 			# Validity

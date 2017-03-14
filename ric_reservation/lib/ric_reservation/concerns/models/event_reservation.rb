@@ -137,9 +137,9 @@ module RicReservation
 				#
 				def event
 					result = super
-					if result
-						result.schedule(self.schedule_date)
-					end
+					#if result
+					#	result.schedule(self.schedule_date)
+					#end
 					return result
 				end
 

@@ -21,8 +21,8 @@ module RicCalendar
 					# *********************************************************
 
 					# Enum
-					enum_column :color, config(:colors).keys
-
+					enum_column :color, (config(:colors) ? config(:colors).keys : [])
+					
 				end
 
 				module ClassMethods
@@ -47,19 +47,19 @@ module RicCalendar
 				# *************************************************************
 
 				def color_primary
-					if self.color && config(:colors)[self.color.to_sym]
+					if self.color && config(:colors) && config(:colors)[self.color.to_sym]
 						config(:colors)[self.color.to_sym][:primary]
 					end
 				end
 
 				def color_faded
-					if self.color && config(:colors)[self.color.to_sym]
+					if self.color && config(:colors) && config(:colors)[self.color.to_sym]
 						config(:colors)[self.color.to_sym][:faded]
 					end
 				end
 
 				def color_text
-					if self.color && config(:colors)[self.color.to_sym]
+					if self.color && config(:colors) && config(:colors)[self.color.to_sym]
 						config(:colors)[self.color.to_sym][:text]
 					end
 				end
