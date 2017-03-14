@@ -63,7 +63,7 @@ module RicReservation
 					end
 
 					# *********************************************************
-					# Overlapping
+					# Overlapping TODO
 					# *********************************************************
 
 					def overlaps_with_resource_reservation(resource_reservation)
@@ -98,6 +98,8 @@ module RicReservation
 
 				def check_overlapping
 					result = true
+					
+					# Overlapping with other reservation
 					if self.id
 						result &= (RicReservation.reservation_model
 							.resource(self.resource)
@@ -108,6 +110,8 @@ module RicReservation
 							.resource(self.resource)
 							.overlaps_with_resource_reservation(self).count == 0) # With other resource reservations
 					end
+
+					# Overlapping with other types (events...)
 					if config(:overlap_event_types)
 						config(:overlap_event_types).each do |type|
 							event_model = nil
@@ -122,6 +126,7 @@ module RicReservation
 							end
 						end
 					end
+
 					return result
 				end
 
@@ -133,9 +138,10 @@ module RicReservation
 					return if !self.kind_resource?
 					if !check_overlapping
 						message = I18n.t("activerecord.errors.models.#{RicReservation.reservation_model.model_name.i18n_key}.overlapping")
-						errors.add(:schedule_date, message)
-						errors.add(:schedule_from, message)
-						errors.add(:schedule_to, message)
+						errors.add(:date_from, message)
+						errors.add(:date_to, message)
+						errors.add(:time_from, message)
+						errors.add(:time_to, message)
 					end
 				end
 

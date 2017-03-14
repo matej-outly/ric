@@ -14,6 +14,28 @@ module RicCalendar
 		module Models
 			module Schedulable extend ActiveSupport::Concern
 
+				#
+				# 'included do' causes the included code to be evaluated in the
+				# context where it is included, rather than being executed in 
+				# the module's context.
+				#
+				included do
+					
+					# *********************************************************
+					# Validators
+					# *********************************************************
+
+					validates :date_from, :time_from, :date_to, :time_to, presence: true					
+					validate :validate_from_to_consistency
+
+					# *********************************************************
+					# Callbacks
+					# *********************************************************
+
+					before_validation :set_date_to_before_validation
+
+				end
+
 				module ClassMethods
 
 					# *********************************************************
@@ -24,7 +46,10 @@ module RicCalendar
 					# Return all events between given dates
 					#
 					def between(date_from, date_to)
-						where("date_from >= ? AND date_to <= ?", date_from, date_to)
+						#where("date_from >= ? AND date_to <= ?", date_from, date_to)
+						where("(date_from < :date_to) AND (:date_from < date_to)", date_from: date_from, date_to: date_to)
+						
+						# TODO respect valid from / valid to for recurring events
 					end
 
 					#
@@ -120,6 +145,22 @@ module RicCalendar
 				end
 
 				# *************************************************************
+				# Formatted time
+				# *************************************************************
+
+				def time_formatted
+					result = ""
+					if !self.is_recurring?
+						result += self.date_from.strftime("%-d. %-m. %Y")
+					else
+						result += self.recurrence_rule_formatted 
+					end
+					result += " "
+					result += self.time_from.strftime("%k:%M") + " - " + self.time_to.strftime("%k:%M")
+					return result
+				end
+
+				# *************************************************************
 				# Conversions
 				# *************************************************************
 
@@ -130,6 +171,33 @@ module RicCalendar
 				# def to_fullcalendar(fullevent)
 				#	fullevent[:title] = self.name
 				# end
+
+			protected
+
+				#
+				# "From" must be before "to" (causality)
+				#
+				def validate_from_to_consistency
+					if self.date_from.nil? || self.time_from.nil? || self.date_to.nil? || self.time_to.nil?
+						return
+					end
+
+					# Causality
+					if self.datetime_from >= self.datetime_to
+						errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
+						errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
+					end
+
+				end
+
+				#
+				# Set date to correctly if not defined
+				#
+				def set_date_to_before_validation
+					if self.date_to.blank?
+						self.date_to = self.date_from
+					end
+				end
 
 			end
 

@@ -53,10 +53,26 @@ module RicCalendar
 				# recurrence rule
 				#
 				def occurrences(date_from, date_to)
-					rule = RecurringSelect.dirty_hash_to_rule(self.recurrence_rule)
-					schedule = IceCube::Schedule.new(self.date_from)
-					schedule.add_recurrence_rule(rule.until(self.date_to))
-					return schedule.occurrences_between(date_from, date_to, spans: true)
+					return self.schedule.occurrences_between(date_from, date_to, spans: true)
+				end
+
+				#
+				# Get human readable recurrence rule
+				#
+				def recurrence_rule_formatted
+					return self.schedule.to_s
+				end
+
+				#
+				# Get IceCube Schedule object
+				#
+				def schedule
+					if @schedule.nil?
+						rule = RecurringSelect.dirty_hash_to_rule(self.recurrence_rule)
+						@schedule = IceCube::Schedule.new(self.date_from)
+						@schedule.add_recurrence_rule(rule.until(self.date_to))
+					end
+					return @schedule
 				end
 
 			end

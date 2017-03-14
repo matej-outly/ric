@@ -5,11 +5,8 @@ class CreateRicCalendarCalendars < ActiveRecord::Migration
 			# Timestamps
 			t.timestamps null: true
 
-			# Title
+			# Name
 			t.string :name
-
-			# Color
-			t.string :color
 
 			# Kind defining resource and event spec in config
 			t.string :kind
@@ -22,6 +19,19 @@ class CreateRicCalendarCalendars < ActiveRecord::Migration
 			# Event spec
 			#t.string :event_type, index: true
 			#t.string :event_to_resource_attr
+
+			# *****************************************************************
+			# Color
+			# *****************************************************************
+
+			t.string :color
+
+			# *****************************************************************
+			# Validity
+			# *****************************************************************
+
+			t.date :valid_from, index: true
+			t.date :valid_to, index: true
 
 		end
 	end

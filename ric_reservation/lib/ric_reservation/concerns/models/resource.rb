@@ -90,6 +90,7 @@ module RicReservation
 					#
 					def permitted_columns
 						result = []
+						result = result.concat(self.permitted_columns_for_validity)
 						if config(:reservation_states)
 							if config(:reservation_state_policy) == "time_fixed"
 								config(:reservation_states).each_with_index do |reservation_state_spec, index|
@@ -102,8 +103,6 @@ module RicReservation
 							end
 						end	
 						result << :name
-						result << :valid_from
-						result << :valid_to
 						result << :period
 						result << :owner_reservation_limit
 						result << { :opening_hours => [:min, :max] }
@@ -259,9 +258,10 @@ module RicReservation
 					reservation.resource = self
 
 					# Bind subject
-					reservation.schedule_date = subject.date
-					reservation.schedule_from = subject.from
-					reservation.schedule_to = subject.to
+					reservation.date_from = subject.date_from
+					reservation.time_from = subject.time_from
+					reservation.date_to = subject.date_to
+					reservation.time_to = subject.time_to
 					reservation.subject = subject
 					
 					# Bind owner

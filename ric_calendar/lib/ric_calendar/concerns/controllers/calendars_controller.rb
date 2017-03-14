@@ -48,6 +48,18 @@ module RicCalendar
 					render json: fullevents
 				end
 
+				#
+				# Resurn available resources
+				#
+				def resources
+					result = []
+					available_resource_types = RicCalendar.calendar_model.config(:kinds).map { |key, value| value[:resource_type] }.uniq.delete_if { |value| value == RicCalendar.calendar_model.to_s }
+					available_resource_types.each do |resource_type|
+						result += resource_type.constantize.search(params[:q]).to_a
+					end
+					render json: result
+				end
+
 				def new
 					@calendar = RicCalendar.calendar_model.new
 				end

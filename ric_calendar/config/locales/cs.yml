@@ -44,6 +44,7 @@ cs:
         time_from: Čas od
         date_to: Datum do
         time_to: Čas do
+        time_formatted: Čas události
         calendar_id: Kalendář
         all_day: Koná se celý den
         recurrence_rule: Opakování

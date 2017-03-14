@@ -26,8 +26,7 @@ module RicCalendar
 					# Validators
 					# *********************************************************
 
-					validates :name, :date_from, :time_from, :date_to, :time_to, presence: true
-					validates :calendar_id, presence: true
+					validates :name, :calendar_id, presence: true
 
 				end
 

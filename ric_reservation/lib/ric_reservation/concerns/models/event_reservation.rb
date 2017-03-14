@@ -25,9 +25,6 @@ module RicReservation
 					# Structure
 					# *********************************************************
 
-					#
-					# One-to-many relation with events
-					#
 					belongs_to :event, polymorphic: true
 
 					# *********************************************************
@@ -39,7 +36,6 @@ module RicReservation
 					#
 					validates :event_id, presence: true, if: :kind_event?
 					validates :event_type, presence: true, if: :kind_event?
-					validates :schedule_date, presence: true, if: :kind_event?
 					validates :size, presence: true, if: :kind_event?
 
 					#
@@ -69,10 +65,10 @@ module RicReservation
 					#
 					# Scope for event reservations
 					#
-					def event(event = nil, schedule_date = nil)
+					def event(event = nil, date_from = nil)
 						result = where(kind: "event")
 						result = result.where(event_id: event.id, event_type: event.class.name) if event
-						result = result.where(schedule_date: schedule_date) if schedule_date
+						result = result.where(date_from: date_from) if date_from
 						return result
 					end
 
@@ -97,7 +93,7 @@ module RicReservation
 					#
 					# Process above line possibility
 					#
-					def process_above_line(event_type, event_id, schedule_date)
+					def process_above_line(event_type, event_id, date_from)
 							
 						# Check valid event
 						event = nil
@@ -112,7 +108,7 @@ module RicReservation
 						RicReservation.reservation_model.transaction do 
 
 							# Get all reservations below line
-							reservations = event(event, schedule_date).below_line.order(created_at: :asc)
+							reservations = event(event, date_from).below_line.order(created_at: :asc)
 							
 							# Check all reservations for possibility to put above line
 							reservations.each do |reservation|
@@ -267,13 +263,13 @@ module RicReservation
 					# Limit is equal or overdrawn => No other reservation can be created
 					if self.id
 						return (RicReservation.reservation_model
-							.event(self.event, self.schedule_date)
+							.event(self.event, self.date_from)
 							.above_line
 							.where("id <> :id", id: self.id)
 							.where(owner_id: self.owner_id, owner_type: self.owner_type).count < self.event.owner_reservation_limit)
 					else
 						return (RicReservation.reservation_model
-							.event(self.event, self.schedule_date)
+							.event(self.event, self.date_from)
 							.above_line
 							.where(owner_id: self.owner_id, owner_type: self.owner_type).count < self.event.owner_reservation_limit)
 					end
@@ -303,7 +299,7 @@ module RicReservation
 				def enqueue_for_process_above_line
 					return if !self.kind_event?
 					if self.event.config(:enable_below_line) == true
-						QC.enqueue("#{RicReservation.reservation_model.to_s}.process_above_line", self.event_type, self.event_id, self.schedule_date)
+						QC.enqueue("#{RicReservation.reservation_model.to_s}.process_above_line", self.event_type, self.event_id, self.date_from)
 					end
 				end
 

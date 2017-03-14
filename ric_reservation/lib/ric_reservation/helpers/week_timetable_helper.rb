@@ -76,7 +76,7 @@ module RicReservation
 				if options[:tooltip] == false
 					return nil
 				else
-					return item.formatted_time
+					return item.time_formatted
 				end
 			end
 
@@ -97,14 +97,13 @@ module RicReservation
 				minute_step = (60 / cols_in_hour).round # How many minutes are in one column
 				data.each do |item|
 
-					# Item is canceled => do not display
-					next if item.respond_to?(:tmp_canceled?) && item.tmp_canceled?
+					event = item[:event]
 
-					from_hour = item.schedule_from.strftime("%k").to_i
-					from_minute = item.schedule_from.strftime("%M").to_i
+					from_hour = item[:time_from].strftime("%k").to_i
+					from_minute = item[:time_from].strftime("%M").to_i
 
-					to_hour = item.schedule_to.strftime("%k").to_i
-					to_minute = item.schedule_to.strftime("%M").to_i
+					to_hour = item[:time_to].strftime("%k").to_i
+					to_minute = item[:time_to].strftime("%M").to_i
 
 					# "from" minute correction to meet exactly the minute step
 					if (from_minute % minute_step) < (minute_step / 2)
@@ -147,24 +146,24 @@ module RicReservation
 
 					# Tags
 					if tags_callback
-						tags = tags_callback.call(item, options)
+						tags = tags_callback.call(event, options)
 					else
 						tags = []
 					end
-					tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
-					tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
-					tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?
+					tags << "state-#{event.state.to_s}" if event.respond_to?(:state)
+					tags << "color-#{event.color.to_s}" if event.respond_to?(:color)
+					tags << "at-capacity" if event.respond_to?(:at_capacity?) && event.at_capacity?
 
 					items << {
-						day: item.schedule_from.to_date.cwday - 1,
+						day: item[:date_from].cwday - 1,
 						hour: from_hour,
 						col: from_col,
 						width: width,
-						label: label_callback.call(item, options).html_safe,
+						label: label_callback.call(event, options).html_safe,
 						tags: tags.join(" "),
-						tooltip: tooltip_callback.call(item, options),
+						tooltip: tooltip_callback.call(event, options),
 						path_callback: path_callback,
-						object: item
+						object: event
 					}
 
 				end
@@ -309,12 +308,13 @@ module RicReservation
 									item = week_timetable_find_item(items, day_idx, hour[:hour], row, col)
 									if !item.nil?
 										# Item
-										result += "			<td class=\"item #{item[:tags]}\" #{(!item[:tooltip].nil? ? "data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + item[:tooltip] + "\"" : "").html_safe} colspan=\"#{item[:width]}\">\n"
+										tooltip = (!item[:tooltip].nil? ? "data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + item[:tooltip] + "\"" : "").html_safe
+										result += "			<td class=\"item #{item[:tags]}\" colspan=\"#{item[:width]}\">\n"
 										url = item[:path_callback] ? item[:path_callback].call(item[:object]) : nil
 										if url
-											result += "				<a href=\"#{url}\">#{item[:label]}</a>\n"
+											result += "				<a href=\"#{url}\" #{tooltip}>#{item[:label]}</a>\n"
 										else
-											result += "				<div class=\"padding\">#{item[:label]}</div>\n"
+											result += "				<div class=\"padding\" #{tooltip}>#{item[:label]}</div>\n"
 										end
 										result += "			</td>\n"
 										rest_item_width = item[:width] - 1

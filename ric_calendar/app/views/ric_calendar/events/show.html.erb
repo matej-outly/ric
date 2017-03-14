@@ -1,7 +1,5 @@
-<p>
-	<%= @event.name %>
-</p>
-
-<p>
-	<%= @event.description %>
-</p>
+<%= rug_show_table_for(@event, {
+	name: :string,
+	time_formatted: :string,
+	description: { type: :text, truncate: false },
+}) %>

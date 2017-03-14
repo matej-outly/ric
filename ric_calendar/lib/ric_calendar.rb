@@ -18,6 +18,7 @@ require 'ric_calendar/concerns/models/colored'
 require 'ric_calendar/concerns/models/calendar'
 require 'ric_calendar/concerns/models/schedulable'
 require 'ric_calendar/concerns/models/recurring'
+require 'ric_calendar/concerns/models/validity'
 
 module RicCalendar
 

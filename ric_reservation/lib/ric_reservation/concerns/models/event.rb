@@ -147,7 +147,7 @@ module RicReservation
 								end
 							end
 						end	
-						result << :resource_id
+						result << self.resource_id_column
 						result << :capacity
 						result << :owner_reservation_limit
 						return result
@@ -460,9 +460,10 @@ module RicReservation
 					reservation = RicReservation.reservation_model.new
 					reservation.kind = "event"
 					reservation.event = self
-					reservation.schedule_date = base
-					reservation.schedule_from = self.datetime_from(base)
-					reservation.schedule_to = self.datetime_to(base)
+					reservation.date_from = base
+					reservation.date_to = base + (self.date_to - self.date_from).to_i.days
+					reservation.time_from = self.time_from
+					reservation.time_to = self.time_to
 
 					# Bind subject
 					if !subject.nil?
@@ -487,9 +488,10 @@ module RicReservation
 				def synchronize_reservations_before_save
 					if !self.is_recurring?
 						self.reservations(self.date_from_was).each do |reservation|
-							reservation.schedule_date = self.date_from
-							reservation.schedule_from = self.datetime_from(self.date_from)
-							reservation.schedule_to = self.datetime_to(self.date_from)
+							reservation.date_from = self.date_from
+							reservation.date_to = self.date_to
+							reservation.time_from = self.time_from
+							reservation.time_to = self.time_to
 							reservation.save
 						end
 					else

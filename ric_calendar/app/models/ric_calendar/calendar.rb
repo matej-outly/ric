@@ -11,6 +11,7 @@
 
 module RicCalendar
 	class Calendar < ActiveRecord::Base
+		include RicCalendar::Concerns::Models::Validity
 		include RicCalendar::Concerns::Models::Colored
 		include RicCalendar::Concerns::Models::Calendar
 	end

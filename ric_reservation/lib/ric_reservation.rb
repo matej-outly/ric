@@ -22,6 +22,7 @@ require 'ric_reservation/concerns/models/event'
 require 'ric_reservation/concerns/models/reservation'
 require 'ric_reservation/concerns/models/event_reservation'
 require 'ric_reservation/concerns/models/resource_reservation'
+require 'ric_reservation/concerns/models/weekly_resource_event'
 
 # Helpers
 require 'ric_reservation/helpers/month_timetable_helper'
