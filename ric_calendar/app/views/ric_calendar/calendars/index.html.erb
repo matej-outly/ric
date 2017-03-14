@@ -4,7 +4,8 @@
 	var ric_calendar_<%= hash %> = null;
 	$(document).ready(function() {
 		ric_calendar_<%= hash %> = new RicCalendar('<%= hash %>', {
-			url: '<%= events_calendars_path %>'
+			url: '<%= events_calendars_path %>',
+			new_url: '<%= new_event_path %>',
 		});
 		ric_calendar_<%= hash %>.ready();
 	});

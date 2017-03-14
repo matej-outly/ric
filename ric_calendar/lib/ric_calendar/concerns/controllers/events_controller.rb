@@ -26,11 +26,25 @@ module RicCalendar
 
 				def new
 					@event = RicCalendar.event_model.new
-					@event.date_from = Date.today
-					@event.date_to = Date.today
 
-					@event.time_from = Time.now.change(sec: 0, usec: 0)
-					@event.time_to = @event.time_from + 1.hour
+					if params.has_key?(:date)
+						# Default values for date and time are in date attribute
+						date_time = DateTime.parse(params[:date])
+						@event.date_from = date_time
+						@event.date_to = date_time
+
+						@event.time_from = date_time
+						@event.time_to = @event.time_from + 1.hour
+
+
+					else
+						# Default values for date and time is determined from current moment
+						@event.date_from = Date.today
+						@event.date_to = Date.today
+
+						@event.time_from = Time.now.change(sec: 0, usec: 0)
+						@event.time_to = @event.time_from + 1.hour
+					end
 				end
 
 				def edit
