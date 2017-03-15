@@ -4,8 +4,14 @@ cs:
     ric_dms:
       document_folders:
         index: "Sdílení souborů"
+        show: "Sdílení souborů"
         new: "Nová složka"
         destroy: "Smazat složku"
         destroy_current: "Smazat tuto složku"
       documents:
         new: "Nahrát soubor"
+
+  activerecord:
+    attributes:
+      ric_dms/document:
+        attachment: Soubor

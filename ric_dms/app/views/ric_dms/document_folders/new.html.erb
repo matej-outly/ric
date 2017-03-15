@@ -1,6 +1,4 @@
-<h1>Nová složka</h1>
-
-<%= form_for @document_folder, url: ric_dms.document_folders_path do |f| %>
+<%= rug_form_for(@document_folder, url: ric_dms.document_folders_path) do |f| %>
 	<div class="form-group">
 		<%= f.label "Nadřazená složka", for: :parent_id %>
 		<%#= f.select :parent_id, options_from_collection_for_select(DocumentFolder.all, "id", "name"), { include_blank: "(není)" }, { class: "form-control" } %>
@@ -10,5 +8,5 @@
 		<%= f.label "Název složky", for: :name %>
 		<%= f.text_field :name, class: "form-control" %>
 	</div>
-	<%= f.submit "Vytvořit" %>
+	<%= f.primary_button_row :submit %>
 <% end %>
