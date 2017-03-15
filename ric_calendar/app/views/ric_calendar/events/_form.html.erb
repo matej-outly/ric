@@ -28,8 +28,8 @@
 
 	<%= f.checkbox_row :all_day %>
 
-	<%= f.label_for :recurrence_rule %>
 	<div class="form-group">
+		<%= f.label_for :recurrence_rule %>
 		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control" } %>
 	</div>
 

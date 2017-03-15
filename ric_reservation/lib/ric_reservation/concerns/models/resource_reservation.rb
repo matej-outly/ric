@@ -98,6 +98,7 @@ module RicReservation
 
 				def check_overlapping
 					result = true
+					return true # TMP hack
 					
 					# Overlapping with other reservation
 					if self.id
