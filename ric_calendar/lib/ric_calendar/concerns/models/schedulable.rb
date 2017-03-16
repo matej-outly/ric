@@ -47,7 +47,7 @@ module RicCalendar
 					# Return all events between given dates
 					#
 					def between(date_from, date_to)
-						where("(valid_from <= :valid_to) AND (:valid_from <= valid_to)", valid_from: date_from, valid_to: date_to)
+						where("(#{self.table_name}.valid_from <= :valid_to) AND (:valid_from <= #{self.table_name}.valid_to)", valid_from: date_from, valid_to: date_to)
 					end
 
 					#

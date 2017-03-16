@@ -1,0 +1,7 @@
+<% if can_read_and_write? %>
+	<%= rug_menu_for(@current_folder, options.merge(path_base: "ric_dms.document_folder")) do |m| %>
+		<%= m.new_item I18n.t("headers.ric_dms.document_folders.new") %>
+		<%= m.item I18n.t("headers.ric_dms.documents.new"), ric_dms.new_document_path, icon: "paperclip" %>
+		<%= m.destroy_item I18n.t("headers.ric_dms.document_folders.destroy_current") %>
+	<% end %>
+<% end %>

@@ -49,7 +49,7 @@ module RicReservation
 						end
 
 						# Set correct date_from and date_to
-						self.date_from = self.resource.valid_from.week_monday + cwday.days
+						self.date_from = self.resource.valid_from.week_monday + (cwday.days - 1) # Monday == 1
 						self.date_to = self.date_from
 
 					end

@@ -12,7 +12,7 @@
 require_dependency "ric_website/public_controller"
 
 module RicWebsite
-	class PublicNodeAttachmentsController < AdminController
+	class PublicNodeAttachmentsController < PublicController
 		include RicWebsite::Concerns::Controllers::Public::NodeAttachmentsController
 	end
 end
