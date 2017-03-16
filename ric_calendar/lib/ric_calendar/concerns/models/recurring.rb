@@ -31,7 +31,7 @@ module RicCalendar
 				end
 
 				module ClassMethods
-					
+
 					# *********************************************************
 					# Columns
 					# *********************************************************
@@ -68,9 +68,20 @@ module RicCalendar
 				#
 				def schedule
 					if @schedule.nil?
+						# Create IseCube scheduler object
+						@schedule = IceCube::Schedule.new(self.valid_from)
+
+						# Set duration of event
+						@schedule.duration = (self.datetime_to.to_time - self.datetime_from.to_time).round
+
+						# Deserialize saved recurrence rule
 						rule = RecurringSelect.dirty_hash_to_rule(self.recurrence_rule)
-						@schedule = IceCube::Schedule.new(self.date_from)
-						@schedule.add_recurrence_rule(rule.until(self.date_to))
+
+						# Rule is valid until valid_to date
+						rule = rule.until(self.valid_to)
+
+						# Pass date time into rule
+						@schedule.add_recurrence_rule(rule)
 					end
 					return @schedule
 				end

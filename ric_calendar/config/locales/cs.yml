@@ -79,6 +79,8 @@ cs:
               before_from: Událost končí před jejím začátkem
             time_to:
               before_from: Událost končí před jejím začátkem
+            valid_to:
+              before_from: Událost končí před jejím začátkem
 
   recurring_select:
     not_recurring: "Bez opakování"

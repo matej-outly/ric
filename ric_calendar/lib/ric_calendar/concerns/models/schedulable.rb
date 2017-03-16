@@ -25,7 +25,7 @@ module RicCalendar
 					# Validators
 					# *********************************************************
 
-					validates :date_from, :time_from, :date_to, :time_to, presence: true
+					validates :date_from, :time_from, :date_to, :time_to, :valid_from, :valid_to, presence: true
 					validate :validate_from_to_consistency
 
 					# *********************************************************
@@ -33,6 +33,7 @@ module RicCalendar
 					# *********************************************************
 
 					before_validation :set_date_to_before_validation
+					before_validation :set_valid_from_to_before_validation
 
 				end
 
@@ -46,10 +47,7 @@ module RicCalendar
 					# Return all events between given dates
 					#
 					def between(date_from, date_to)
-						#where("date_from >= ? AND date_to <= ?", date_from, date_to)
-						where("(date_from < :date_to) AND (:date_from < date_to)", date_from: date_from, date_to: date_to)
-
-						# TODO respect valid from / valid to for recurring events
+						where("(valid_from <= :valid_to) AND (:valid_from <= valid_to)", valid_from: date_from, valid_to: date_to)
 					end
 
 					#
@@ -180,6 +178,11 @@ module RicCalendar
 				# "From" must be before "to" (causality)
 				#
 				def validate_from_to_consistency
+					# Causality on valid_from & valid_to
+					if self.valid_from > self.valid_to
+						errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.before_from"))
+					end
+
 					if self.date_from.nil? || self.time_from.nil? || self.date_to.nil? || self.time_to.nil?
 						return
 					end
@@ -189,7 +192,6 @@ module RicCalendar
 						errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
 						errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
 					end
-
 				end
 
 				#
@@ -198,6 +200,19 @@ module RicCalendar
 				def set_date_to_before_validation
 					if self.date_to.blank?
 						self.date_to = self.date_from
+					end
+				end
+
+				#
+				# Set valid from / valid to correctly
+				#
+				def set_valid_from_to_before_validation
+					if !is_recurring?
+						self.valid_from = self.date_from
+						self.valid_to = self.date_to
+					else
+						self.valid_from = self.date_from
+						# self.valid_to should be set by user
 					end
 				end
 
