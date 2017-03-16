@@ -68,8 +68,13 @@ module RicCalendar
 				#
 				def schedule
 					if @schedule.nil?
+						# Start time should be composed from valid_from field,
+						# which gives date. And from time_from field, which gives
+						# time.
+						start_time = self.datetime_from(self.valid_from)
+
 						# Create IceCube scheduler object
-						@schedule = IceCube::Schedule.new(self.valid_from)
+						@schedule = IceCube::Schedule.new(start_time)
 
 						# Set duration of event
 						@schedule.duration = (self.datetime_to.to_time - self.datetime_from.to_time).round
