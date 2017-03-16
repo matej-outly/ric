@@ -131,7 +131,13 @@ RicCalendar.prototype = {
 					if (_this.options.new_url !== undefined) {
 						window.location.href = _this.options.new_url + "?date=" + date.format();
 					}
-				}
+				},
+
+				eventRender: function(event, element) {
+					if (event.isRecurring) {
+						element.find('.fc-title').prepend(" ").prepend($('<i class="fa fa-refresh" aria-hidden="true"></i>'));
+					}
+				},
 
 
 

@@ -22,7 +22,6 @@
 
 	<%= f.checkbox_row :all_day %>
 
-
 	<%= f.conditional_section :time_from_if_not_all_day, :all_day, "value === false" do %>
 		<div class="row">
 			<div class="col-sm-4">

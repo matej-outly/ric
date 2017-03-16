@@ -169,6 +169,7 @@ module RicCalendar
 								start: scheduled_event[:event].datetime_from(scheduled_event[:date_from]),
 								end: scheduled_event[:event].datetime_to(scheduled_event[:date_to]),
 								allDay: scheduled_event[:all_day],
+								isRecurring: scheduled_event[:is_recurring],
 							}
 
 							# Update object by calendar specific attributes
