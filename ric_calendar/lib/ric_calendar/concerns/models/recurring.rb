@@ -68,7 +68,7 @@ module RicCalendar
 				#
 				def schedule
 					if @schedule.nil?
-						# Create IseCube scheduler object
+						# Create IceCube scheduler object
 						@schedule = IceCube::Schedule.new(self.valid_from)
 
 						# Set duration of event
@@ -83,6 +83,7 @@ module RicCalendar
 						# Pass date time into rule
 						@schedule.add_recurrence_rule(rule)
 					end
+
 					return @schedule
 				end
 
