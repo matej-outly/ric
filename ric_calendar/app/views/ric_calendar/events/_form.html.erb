@@ -22,28 +22,28 @@
 
 	<%= f.checkbox_row :all_day %>
 
+
+	<%= f.conditional_section :time_from_if_not_all_day, :all_day, "value === false" do %>
+		<div class="row">
+			<div class="col-sm-4">
+				<%= f.time_picker_row :time_from %>
+			</div>
+
+			<div class="col-sm-4">
+				<%= f.time_picker_row :time_to %>
+			</div>
+		</div>
+	<% end %>
+
+
 	<div class="row">
 		<div class="col-sm-4">
 			<%= f.date_picker_row :date_from %>
 		</div>
 
-		<%= f.conditional_section :time_from_if_not_all_day, :all_day, "value === false" do %>
-			<div class="col-sm-4">
-				<%= f.time_picker_row :time_from %>
-			</div>
-		<% end %>
-	</div>
-
-	<div class="row">
 		<div class="col-sm-4">
 			<%= f.date_picker_row :date_to %>
 		</div>
-
-		<%= f.conditional_section :time_to_if_not_all_day, :all_day, "value === false" do %>
-			<div class="col-sm-4">
-				<%= f.time_picker_row :time_to %>
-			</div>
-		<% end %>
 	</div>
 
 
