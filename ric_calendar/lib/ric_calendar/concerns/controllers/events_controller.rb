@@ -27,6 +27,7 @@ module RicCalendar
 				def new
 					@event = RicCalendar.event_model.new
 
+					# Date and time values
 					if params.has_key?(:date)
 						# Default values for date and time are in date attribute
 						date_time = DateTime.parse(params[:date])
@@ -44,6 +45,14 @@ module RicCalendar
 
 						@event.time_from = Time.now.change(sec: 0, usec: 0)
 						@event.time_to = @event.time_from + 1.hour
+					end
+
+					# Valid to end of school year
+					current_season = RicSeason::Season.current
+					if current_season != nil
+						@event.valid_to = current_season.to
+					else
+						@event.valid_to = @event.date_to
 					end
 				end
 

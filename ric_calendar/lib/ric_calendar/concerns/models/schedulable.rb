@@ -16,16 +16,16 @@ module RicCalendar
 
 				#
 				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
+				# context where it is included, rather than being executed in
 				# the module's context.
 				#
 				included do
-					
+
 					# *********************************************************
 					# Validators
 					# *********************************************************
 
-					validates :date_from, :time_from, :date_to, :time_to, presence: true					
+					validates :date_from, :time_from, :date_to, :time_to, :valid_from, :valid_to, presence: true
 					validate :validate_from_to_consistency
 
 					# *********************************************************
@@ -33,6 +33,7 @@ module RicCalendar
 					# *********************************************************
 
 					before_validation :set_date_to_before_validation
+					before_validation :set_valid_from_to_before_validation
 
 				end
 
@@ -46,10 +47,7 @@ module RicCalendar
 					# Return all events between given dates
 					#
 					def between(date_from, date_to)
-						#where("date_from >= ? AND date_to <= ?", date_from, date_to)
-						where("(#{self.table_name}.date_from < :date_to) AND (:date_from <= #{self.table_name}.date_to)", date_from: date_from, date_to: date_to)
-						
-						# TODO respect valid from / valid to for recurring events
+						where("(#{self.table_name}.valid_from <= :valid_to) AND (:valid_from <= #{self.table_name}.valid_to)", valid_from: date_from, valid_to: date_to)
 					end
 
 					#
@@ -105,6 +103,8 @@ module RicCalendar
 							:date_to,
 							:time_to,
 							:all_day,
+							:valid_from,
+							:valid_to,
 						]
 					end
 
@@ -127,7 +127,7 @@ module RicCalendar
 				#
 				def datetime_from(base_date = self.date_from)
 					if self.time_from
-						base_date.to_datetime + self.time_from.seconds_since_midnight.seconds
+						DateTime.compose(base_date, self.time_from)
 					else
 						base_date.to_datetime
 					end
@@ -138,7 +138,7 @@ module RicCalendar
 				#
 				def datetime_to(base_date = self.date_to)
 					if self.time_to
-						base_date.to_datetime + self.time_to.seconds_since_midnight.seconds
+						DateTime.compose(base_date, self.time_to)
 					else
 						base_date.to_datetime
 					end
@@ -150,13 +150,21 @@ module RicCalendar
 
 				def time_formatted
 					result = ""
+
+					# Format date
 					if !self.is_recurring?
 						result += self.date_from.strftime("%-d. %-m. %Y")
 					else
-						result += self.recurrence_rule_formatted 
+						result += self.recurrence_rule_formatted
 					end
-					result += " "
-					result += self.time_from.strftime("%k:%M") + " - " + self.time_to.strftime("%k:%M")
+
+					# Format time
+					if !self.all_day
+						result += " " + self.time_from.strftime("%k:%M") + " - " + self.time_to.strftime("%k:%M")
+					else
+						result += ", " + I18n.t("activerecord.attributes.ric_calendar/event.all_day").downcase_first
+					end
+
 					return result
 				end
 
@@ -178,6 +186,11 @@ module RicCalendar
 				# "From" must be before "to" (causality)
 				#
 				def validate_from_to_consistency
+					# Causality on valid_from & valid_to
+					if self.valid_from > self.valid_to
+						errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.before_from"))
+					end
+
 					if self.date_from.nil? || self.time_from.nil? || self.date_to.nil? || self.time_to.nil?
 						return
 					end
@@ -187,7 +200,6 @@ module RicCalendar
 						errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
 						errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
 					end
-
 				end
 
 				#
@@ -196,6 +208,19 @@ module RicCalendar
 				def set_date_to_before_validation
 					if self.date_to.blank?
 						self.date_to = self.date_from
+					end
+				end
+
+				#
+				# Set valid from / valid to correctly
+				#
+				def set_valid_from_to_before_validation
+					if !is_recurring?
+						self.valid_from = self.date_from
+						self.valid_to = self.date_to
+					else
+						self.valid_from = self.date_from
+						# self.valid_to should be set by user
 					end
 				end
 

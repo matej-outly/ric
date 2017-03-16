@@ -48,6 +48,7 @@ cs:
         calendar_id: Kalendář
         all_day: Koná se celý den
         recurrence_rule: Opakování
+        valid_to: Opakovat do
     notices:
       models:
         ric_calendar/calendar:
@@ -64,16 +65,22 @@ cs:
           not_found: Kalendář nebyl nalezen.
           attributes:
             name:
-              blank: "Název kalendáře musí být vyplněn."
+              blank: Název kalendáře musí být vyplněn.
             kind:
-              blank: "Typ kalendáře musí být vyplněn."
+              blank: Typ kalendáře musí být vyplněn.
             resource_id:
-              blank: "navázaný objekt musí být vyplněn."
+              blank: navázaný objekt musí být vyplněn.
         ric_calendar/event:
-          not_found: Událost nebyla nalezena.
+          not_found: dálost nebyla nalezena.
           attributes:
             name:
-              blank: "Název události musí být vyplněn."
+              blank: Název události musí být vyplněn.
+            date_to:
+              before_from: Událost končí před jejím začátkem
+            time_to:
+              before_from: Událost končí před jejím začátkem
+            valid_to:
+              before_from: Událost končí před jejím začátkem
 
   recurring_select:
     not_recurring: "Bez opakování"
