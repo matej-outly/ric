@@ -1,18 +1,36 @@
-<%= rug_form_for(@event, 
+<%= rug_form_for(@event,
 	create_url: "ric_calendar.events_path",
 	update_url: "ric_calendar.event_path"
 ) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.text_area_row :description %>
 	<%= f.picker_row :calendar_id, RicCalendar.calendar_model.where(resource_type: RicCalendar.calendar_model.name), :id, :name %>
-	
+
+
+	<%= f.label_for :recurrence_rule %>
+	<div class="form-group">
+		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control" } %>
+	</div>
+
+	<%= f.conditional_section :valid_to_if_recurrent, :recurrence_rule, 'value !== "null"' do %>
+	<div class="row">
+		<div class="col-sm-4">
+			<%= f.date_picker_row :valid_to %>
+		</div>
+	</div>
+	<% end %>
+
+	<%= f.checkbox_row :all_day %>
+
 	<div class="row">
 		<div class="col-sm-4">
 			<%= f.date_picker_row :date_from %>
 		</div>
 
 		<div class="col-sm-4">
-			<%= f.time_picker_row :time_from %>
+			<%= f.conditional_section :time_from_if_not_all_day, :all_day, "value === false" do %>
+				<%= f.time_picker_row :time_from %>
+			<% end %>
 		</div>
 	</div>
 
@@ -22,17 +40,33 @@
 		</div>
 
 		<div class="col-sm-4">
-			<%= f.time_picker_row :time_to %>
+			<%= f.conditional_section :time_to_if_not_all_day, :all_day, "value === false" do %>
+				<%= f.time_picker_row :time_to %>
+			<% end %>
 		</div>
 	</div>
 
-	<%= f.checkbox_row :all_day %>
 
-	<%= f.label_for :recurrence_rule %>
-	<div class="form-group">
-		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control" } %>
-	</div>
 
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#event_recurrence_rule").change(function() {
+				var value = $(this).val();
+				var isRecurring = (value !== "null");
+
+				if (!isRecurring) {
+					// Simple event
+
+				}
+				else {
+					// Recurring event
+				}
+
+			});
+		});
+	</script>
+
 <% end %>

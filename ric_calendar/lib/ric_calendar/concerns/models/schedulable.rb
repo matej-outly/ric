@@ -16,16 +16,16 @@ module RicCalendar
 
 				#
 				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
+				# context where it is included, rather than being executed in
 				# the module's context.
 				#
 				included do
-					
+
 					# *********************************************************
 					# Validators
 					# *********************************************************
 
-					validates :date_from, :time_from, :date_to, :time_to, presence: true					
+					validates :date_from, :time_from, :date_to, :time_to, presence: true
 					validate :validate_from_to_consistency
 
 					# *********************************************************
@@ -48,7 +48,7 @@ module RicCalendar
 					def between(date_from, date_to)
 						#where("date_from >= ? AND date_to <= ?", date_from, date_to)
 						where("(date_from < :date_to) AND (:date_from < date_to)", date_from: date_from, date_to: date_to)
-						
+
 						# TODO respect valid from / valid to for recurring events
 					end
 
@@ -105,6 +105,8 @@ module RicCalendar
 							:date_to,
 							:time_to,
 							:all_day,
+							:valid_from,
+							:valid_to,
 						]
 					end
 
@@ -127,7 +129,7 @@ module RicCalendar
 				#
 				def datetime_from(base_date = self.date_from)
 					if self.time_from
-						base_date.to_datetime + self.time_from.seconds_since_midnight.seconds
+						DateTime.compose(base_date, self.time_from)
 					else
 						base_date.to_datetime
 					end
@@ -138,7 +140,7 @@ module RicCalendar
 				#
 				def datetime_to(base_date = self.date_to)
 					if self.time_to
-						base_date.to_datetime + self.time_to.seconds_since_midnight.seconds
+						DateTime.compose(base_date, self.time_to)
 					else
 						base_date.to_datetime
 					end
@@ -153,7 +155,7 @@ module RicCalendar
 					if !self.is_recurring?
 						result += self.date_from.strftime("%-d. %-m. %Y")
 					else
-						result += self.recurrence_rule_formatted 
+						result += self.recurrence_rule_formatted
 					end
 					result += " "
 					result += self.time_from.strftime("%k:%M") + " - " + self.time_to.strftime("%k:%M")
