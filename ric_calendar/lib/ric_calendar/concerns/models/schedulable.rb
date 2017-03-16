@@ -150,13 +150,21 @@ module RicCalendar
 
 				def time_formatted
 					result = ""
+
+					# Format date
 					if !self.is_recurring?
 						result += self.date_from.strftime("%-d. %-m. %Y")
 					else
 						result += self.recurrence_rule_formatted
 					end
-					result += " "
-					result += self.time_from.strftime("%k:%M") + " - " + self.time_to.strftime("%k:%M")
+
+					# Format time
+					if !self.all_day
+						result += " " + self.time_from.strftime("%k:%M") + " - " + self.time_to.strftime("%k:%M")
+					else
+						result += ", " + I18n.t("activerecord.attributes.ric_calendar/event.all_day").downcase_first
+					end
+
 					return result
 				end
 
