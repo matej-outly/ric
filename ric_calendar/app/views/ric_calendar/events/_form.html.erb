@@ -12,7 +12,7 @@
 		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control" } %>
 	</div>
 
-	<%= f.conditional_section :valid_to_if_recurrent, :recurrence_rule, 'value !== "null"' do %>
+	<%= f.conditional_section :valid_to_if_recurrent, :recurrence_rule, "value !== 'null'" do %>
 	<div class="row">
 		<div class="col-sm-4">
 			<%= f.date_picker_row :valid_to %>
