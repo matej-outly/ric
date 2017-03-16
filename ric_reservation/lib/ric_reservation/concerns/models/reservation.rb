@@ -117,7 +117,7 @@ module RicReservation
 								end
 							end
 						else
-							break_times = [self.schedule_from]
+							break_times = [self.datetime_from]
 							reservation_states.reverse_each_with_index do |reservation_state_spec, index|
 								if index != 0 && index != (reservation_states.length - 1) # Do not consider first and last state
 									reservation_state_name = reservation_state_spec[:name]
