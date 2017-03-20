@@ -14,10 +14,17 @@ require "ric_user/admin_engine"
 require "ric_user/public_engine"
 
 # Models
-require "ric_user/concerns/models/person"
-require "ric_user/concerns/models/person_with_multiple_users"
 require "ric_user/concerns/models/session"
 require "ric_user/concerns/models/user"
+require "ric_user/concerns/models/user_person"
+require "ric_user/concerns/models/user_role"
+require "ric_user/concerns/models/multi_people_user"
+require "ric_user/concerns/models/multi_roles_user"
+require "ric_user/concerns/models/single_person_user"
+require "ric_user/concerns/models/single_role_user"
+require "ric_user/concerns/models/model_1_person"
+require "ric_user/concerns/models/model_2_person"
+require "ric_user/concerns/models/model_3_person"
 
 # Mailers
 require "ric_user/concerns/mailers/user_mailer"
@@ -55,6 +62,24 @@ module RicUser
 	@@user_model = "RicUser::User"
 
 	#
+	# User role model
+	#
+	mattr_accessor :user_role_model
+	def self.user_role_model
+		return @@user_role_model.constantize
+	end
+	@@user_role_model = "RicUser::UserRole"
+
+	#
+	# User person model
+	#
+	mattr_accessor :user_person_model
+	def self.user_person_model
+		return @@user_person_model.constantize
+	end
+	@@user_person_model = "RicUser::UserPerson"
+
+	#
 	# User mailer
 	#
 	mattr_accessor :user_mailer
@@ -77,5 +102,35 @@ module RicUser
 	#
 	mattr_accessor :mailer_sender
 	@@mailer_sender = "no-reply@clockapp.cz"
+
+	#
+	# Roles
+	#
+	mattr_accessor :roles
+	@@roles = ["admin"]
+
+	#
+	# Default role
+	#
+	mattr_accessor :default_role
+	@@default_role = nil
+
+	#
+	# Association between users and people
+	#
+	# Available values:
+	# - none
+	# - one_user_one_person (model_1)
+	# - one_user_many_people (model_2)
+	# - many_users_one_person (model_3)
+	#
+	mattr_accessor :user_person_association
+	@@user_person_association = :one_user_one_person
+
+	#
+	# Person types
+	#
+	mattr_accessor :person_types
+	@@person_types = []
 
 end

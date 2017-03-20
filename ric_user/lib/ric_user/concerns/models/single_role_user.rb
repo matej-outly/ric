@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Person
+# * Single-role user
 # *
 # * Author: Matěj Outlý
-# * Date  : 6. 9. 2016
+# * Date  : 20. 3. 2017
 # *
 # *****************************************************************************
 
 module RicUser
 	module Concerns
 		module Models
-			module Person extend ActiveSupport::Concern
+			module SingleRoleUser extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -20,28 +20,13 @@ module RicUser
 				# the module's context.
 				#
 				included do
-
+					
 					# *********************************************************
-					# Structure
+					# Role
 					# *********************************************************
 
-					has_one :user, class_name: RicUser.user_model.to_s, as: :person
+					enum_column :role, RicUser.roles, default: RicUser.default_role
 
-				end
-
-				def person_role
-					raise "Please define person role."
-				end
-
-				def create_user
-					user = self.build_user(email: self.email, role: self.person_role)
-					new_password = user.regenerate_password(notification: false)
-					if new_password
-						RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
-						return user
-					else
-						return nil
-					end
 				end
 
 			end

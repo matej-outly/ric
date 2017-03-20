@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Person with multiple users
+# * User person
 # *
 # * Author: Matěj Outlý
-# * Date  : 6. 9. 2016
+# * Date  : 20. 3. 2017
 # *
 # *****************************************************************************
 
 module RicUser
 	module Concerns
 		module Models
-			module PersonWithMultipleUsers extend ActiveSupport::Concern
+			module UserPerson extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
@@ -25,24 +25,15 @@ module RicUser
 					# Structure
 					# *********************************************************
 
-					has_many :users, class_name: RicUser.user_model, as: :person, dependent: :destroy
+					belongs_to :user, class_name: RicUser.user_model.to_s
+					belongs_to :person, polymorphic: true
+					
+					# *********************************************************
+					# Validators
+					# *********************************************************
 
-				end
+					validates_presence_of :user_id, :person_id, :person_type
 
-				def person_role
-					raise "Please define person role."
-				end
-
-				def create_user(user_params)
-					user_params[:role] = self.person_role
-					user = self.users.build(user_params)
-					new_password = user.regenerate_password(notification: false)
-					if new_password
-						RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, user, new_password], user) if !(defined?(RicNotification).nil?)
-						return user
-					else
-						return user
-					end
 				end
 
 			end
