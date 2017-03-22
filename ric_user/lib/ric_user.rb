@@ -15,13 +15,17 @@ require "ric_user/public_engine"
 
 # Models
 require "ric_user/concerns/models/session"
-require "ric_user/concerns/models/user"
+
 require "ric_user/concerns/models/user_person"
 require "ric_user/concerns/models/user_role"
+
+require "ric_user/concerns/models/user"
 require "ric_user/concerns/models/multi_people_user"
 require "ric_user/concerns/models/multi_roles_user"
 require "ric_user/concerns/models/single_person_user"
 require "ric_user/concerns/models/single_role_user"
+
+require "ric_user/concerns/models/person"
 require "ric_user/concerns/models/model_1_person"
 require "ric_user/concerns/models/model_2_person"
 require "ric_user/concerns/models/model_3_person"
