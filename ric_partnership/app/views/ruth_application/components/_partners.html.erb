@@ -1,0 +1,19 @@
+<% if RicPartnership.partner_model.all.count > 0 %>
+	<div class="partners-list row">
+		<div class="col-xs-12">
+			<div class="well">
+				<% RicPartnership.partner_model.all.order(position: :asc).each do |partner|%>
+					<div class="partners-list-item">
+						<% if partner.url.blank? %>
+							<%= image_tag(partner.logo.url(:full)) if partner.logo.exists? %>
+						<% else %>
+							<%= link_to partner.url do %>
+								<%= image_tag(partner.logo.url(:full)) if partner.logo.exists? %>
+							<% end %>
+						<% end %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+<% end %>
