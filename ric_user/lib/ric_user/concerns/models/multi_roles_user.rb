@@ -22,7 +22,7 @@ module RicUser
 				included do
 					
 					# *********************************************************
-					# Roles
+					# Structure
 					# *********************************************************
 
 					has_many :user_roles, class_name: RicUser.user_role_model.to_s
@@ -36,8 +36,20 @@ module RicUser
 
 				end
 
+				module ClassMethods
+
+					def role_obj(role)
+						self.available_roles.find { |r| r.value == role }
+					end
+
+				end
+
+				# *************************************************************
+				# Roles as set in DB
+				# *************************************************************
+
 				#
-				# Roles getter
+				# Get all roles
 				#
 				def roles
 					if @roles.nil?
@@ -47,7 +59,7 @@ module RicUser
 				end
 
 				#
-				# Roles setter
+				# Set roles to DB
 				#
 				def roles=(new_roles)
 
@@ -67,7 +79,7 @@ module RicUser
 					# Roles to add
 					roles_to_add = []
 					new_roles.each do |role|
-						roles_to_add << role if !current_roles.include?(role)
+						roles_to_add << role.to_s if !current_roles.include?(role.to_s)
 					end
 
 					# Perform DB actions
@@ -86,25 +98,44 @@ module RicUser
 				end
 
 				#
-				# Highest priority role
+				# Get currently selected role, see current_role method
 				#
 				def role
-					if @role.nil?
-						RicUser.roles.each do |role|
+					self.current_role
+				end
+
+				#
+				# Set single role to DB (for compatibility with single-role user)
+				#
+				def role=(new_role)
+					self.roles = new_role
+				end
+
+				# *************************************************************
+				# Roles as set by application
+				# *************************************************************
+
+				#
+				# Get currently selected role. Role can be selected by current_role= method
+				#
+				def current_role
+					if @current_role.nil?
+						RicUser.roles.each do |role| # Get highest priority role
 							if self.roles.include?(role)
-								@role = role
+								@current_role = role
 								break
 							end
 						end
 					end
-					return @role
+					return @current_role
 				end
 
-				#
-				# Set single role (for compatibility with single-role user)
-				#
-				def role=(new_role)
-					self.roles = new_role
+				def current_role=(new_role)
+					if self.roles.include?(new_role)
+						@current_role = new_role.to_s
+					else
+						raise "Can't set role #{new_role} as current."
+					end
 				end
 
 			end
