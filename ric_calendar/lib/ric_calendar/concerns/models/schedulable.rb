@@ -27,6 +27,7 @@ module RicCalendar
 
 					validates :date_from, :time_from, :date_to, :time_to, presence: true
 					validate :validate_datetime_from_to_consistency
+					validate :validate_valid_from_to_consistency_presence
 
 					# *********************************************************
 					# Callbacks
@@ -217,6 +218,17 @@ module RicCalendar
 				def set_date_to_before_validation
 					if self.date_to.blank?
 						self.date_to = self.date_from
+					end
+				end
+
+				def validate_valid_from_to_consistency_presence
+					if self.respond_to?(:valid_from) && self.respond_to?(:valid_to)
+						if self.valid_from.blank?
+							errors.add(:valid_from, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_from.blank"))
+						end
+						if self.valid_to.blank?
+							errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.blank"))
+						end
 					end
 				end
 

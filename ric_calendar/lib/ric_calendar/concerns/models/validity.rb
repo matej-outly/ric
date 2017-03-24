@@ -20,7 +20,7 @@ module RicCalendar
 					# Validators
 					# *********************************************************
 
-					validates :valid_from, :valid_to, presence: true
+					#validates :valid_from, :valid_to, presence: true
 					validate :validate_valid_from_to_consistency
 					
 					# *********************************************************
