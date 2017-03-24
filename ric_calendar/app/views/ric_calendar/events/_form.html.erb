@@ -15,6 +15,9 @@
 	<%= f.conditional_section :valid_to_if_recurrent, :recurrence_rule, "value !== 'null'" do %>
 		<div class="row">
 			<div class="col-sm-4">
+				<%= f.date_picker_row :valid_from %>
+			</div>
+			<div class="col-sm-4">
 				<%= f.date_picker_row :valid_to %>
 			</div>
 		</div>
@@ -35,6 +38,7 @@
 	<% end %>
 
 
+	<%= f.conditional_section :valid_to_if_not_recurrent, :recurrence_rule, "value === 'null'" do %>
 	<div class="row">
 		<div class="col-sm-4">
 			<%= f.date_picker_row :date_from %>
@@ -44,6 +48,7 @@
 			<%= f.date_picker_row :date_to %>
 		</div>
 	</div>
+	<% end %>
 
 
 	<%= f.primary_button_row :submit %>

@@ -48,6 +48,7 @@ cs:
         calendar_id: Kalendář
         all_day: Koná se celý den
         recurrence_rule: Opakování
+        valid_from: Opakovat od
         valid_to: Opakovat do
     notices:
       models:

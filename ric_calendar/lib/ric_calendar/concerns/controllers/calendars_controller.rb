@@ -164,7 +164,7 @@ module RicCalendar
 
 							# Create Fullcalendar event object
 							fullevent = {
-								id: "#{calendar.kind_options[:event_type]}<#{scheduled_event[:event].id}>",
+								id: "#{calendar.kind_options[:event_type]}<#{scheduled_event[:event].id}>[#{scheduled_event[:recurrence_id]}]",
 								objectId: scheduled_event[:event].id,
 								start: scheduled_event[:event].datetime_from(scheduled_event[:date_from]),
 								end: scheduled_event[:event].datetime_to(scheduled_event[:date_to]),
@@ -182,7 +182,7 @@ module RicCalendar
 							if event_show_path
 								fullevent[:url] = path_resolver.resolve(event_show_path, scheduled_event[:event])
 							end
-							if event_update_path && !scheduled_event[:is_recurring]
+							if event_update_path
 								# Edit events (currently only simple non-repeating events)
 								fullevent[:editable] = true
 								fullevent[:editUrl] = path_resolver.resolve(event_update_path, scheduled_event[:event])

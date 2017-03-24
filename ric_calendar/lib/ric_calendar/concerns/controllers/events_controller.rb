@@ -47,6 +47,9 @@ module RicCalendar
 						@event.time_to = @event.time_from + 1.hour
 					end
 
+					# Valid from
+					@event.valid_from = @event.date_from
+
 					# Valid to end of school year
 					current_season = RicSeason::Season.current
 					if current_season != nil

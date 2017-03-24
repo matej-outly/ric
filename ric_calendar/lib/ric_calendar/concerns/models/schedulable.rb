@@ -64,6 +64,7 @@ module RicCalendar
 								time_to: event.time_to,
 								all_day: event.all_day,
 								is_recurring: false,
+								recurrence_id: 1,
 							}
 
 							if !event.is_recurring?
@@ -74,12 +75,13 @@ module RicCalendar
 
 							else
 								# Recurring event
-								event.occurrences(date_from, date_to).each do |occurence|
+								event.occurrences(date_from, date_to).each_with_index do |occurence, idx|
 									scheduled_event = scheduled_event_base.clone
 									scheduled_event[:date_from] = occurence.start_time.to_date
 									scheduled_event[:date_to] = occurence.end_time.to_date
 									scheduled_event[:is_recurring] = true
 									scheduled_event[:recurrence_template_id] = event.id
+									scheduled_event[:recurrence_id] = idx
 									scheduled_events << scheduled_event
 								end
 
@@ -116,6 +118,10 @@ module RicCalendar
 
 				def is_recurring?
 					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule.nil?
+				end
+
+				def was_recurring?
+					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule_was.nil?
 				end
 
 				# *************************************************************
@@ -216,13 +222,45 @@ module RicCalendar
 				#
 				def set_valid_from_to_before_validation
 					if !is_recurring?
+						# Non-recurring events have same valid_* and date_* fields
 						self.valid_from = self.date_from
 						self.valid_to = self.date_to
 					else
-						self.valid_from = self.date_from
-						# self.valid_to should be set by user
+						# Now we have recurring event
+						if self.new_record?
+							# If the record is new, just set date to today
+							self.date_from = Date.today
+							self.date_to = Date.today
+
+						else
+							# We are editting existing event
+							if self.was_recurring?
+								# Event recurrence has not been changed, it is still recurent
+
+								if self.time_from_changed? || self.time_to_changed?
+									# Event time has been changed
+
+
+								else
+								end
+
+							else
+								# Event was not recurring, but now it is
+								# This is same as in the case of new record, just
+								# ignore date_from and date_to
+								self.date_from = Date.today
+								self.date_to = Date.today
+
+							end
+						end
 					end
 				end
+
+				# *************************************************************
+				# Update schedulable event
+				# *************************************************************
+
+
 
 			end
 
