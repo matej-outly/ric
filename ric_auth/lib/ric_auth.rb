@@ -16,6 +16,7 @@ require "ric_auth/public_engine"
 # Concerns
 require "ric_auth/concerns/application_paths"
 require "ric_auth/concerns/devise_paths"
+require "ric_auth/concerns/overrides"
 
 module RicAuth
 

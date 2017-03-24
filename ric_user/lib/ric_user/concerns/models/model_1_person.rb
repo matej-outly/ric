@@ -29,16 +29,13 @@ module RicUser
 
 				end
 
-				def person_role
-					raise "Please define person role."
-				end
-
 				def create_user(user_params = {})
 					if !self.user.nil?
 						return self.user
 					end
 
 					# Build user
+					user_params = synchronized_params.merge(user_params)
 					user_params[:email] = self.email
 					user_params[:role] = self.person_role
 					user = self.build_user(user_params)

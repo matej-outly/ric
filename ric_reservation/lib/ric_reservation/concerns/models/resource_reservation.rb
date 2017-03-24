@@ -41,7 +41,7 @@ module RicReservation
 					validates :resource_type, presence: true, if: :kind_resource?
 
 					#
-					# Reservations and event can't overlap 
+					# Reservations and events can't overlap 
 					#
 					validate :validate_overlapping
 

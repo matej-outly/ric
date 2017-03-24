@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Accounts
+# * Profiles
 # *
 # * Author: Matěj Outlý
 # * Date  : 12. 11. 2015

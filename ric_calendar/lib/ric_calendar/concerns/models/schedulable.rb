@@ -25,15 +25,16 @@ module RicCalendar
 					# Validators
 					# *********************************************************
 
-					validates :date_from, :time_from, :date_to, :time_to, :valid_from, :valid_to, presence: true
-					validate :validate_from_to_consistency
+					validates :date_from, :time_from, :date_to, :time_to, presence: true
+					validate :validate_datetime_from_to_consistency
+					validate :validate_valid_from_to_consistency_presence
 
 					# *********************************************************
 					# Callbacks
 					# *********************************************************
 
+					before_validation :set_date_from_before_validation
 					before_validation :set_date_to_before_validation
-					before_validation :set_valid_from_to_before_validation
 
 				end
 
@@ -47,7 +48,14 @@ module RicCalendar
 					# Return all events between given dates
 					#
 					def between(date_from, date_to)
-						where("(#{self.table_name}.valid_from <= :valid_to) AND (:valid_from <= #{self.table_name}.valid_to)", valid_from: date_from, valid_to: date_to)
+						
+						if self.is_recurring? # Recurring models selected by valid_from / valid_to
+							where("(#{self.table_name}.valid_from <= :date_to) AND (:date_from <= #{self.table_name}.valid_to)", date_from: date_from, date_to: date_to)
+						
+						else # Not recurring models selected by date_from / date_to
+							where("(#{self.table_name}.date_from <= :date_to) AND (:date_from <= #{self.table_name}.date_to)", date_from: date_from, date_to: date_to)
+						end
+						
 					end
 
 					#
@@ -64,7 +72,6 @@ module RicCalendar
 								time_to: event.time_to,
 								all_day: event.all_day,
 								is_recurring: false,
-								recurrence_id: 1,
 							}
 
 							if !event.is_recurring?
@@ -75,13 +82,12 @@ module RicCalendar
 
 							else
 								# Recurring event
-								event.occurrences(date_from, date_to).each_with_index do |occurence, idx|
+								event.occurrences(date_from, date_to).each do |occurence|
 									scheduled_event = scheduled_event_base.clone
 									scheduled_event[:date_from] = occurence.start_time.to_date
 									scheduled_event[:date_to] = occurence.end_time.to_date
 									scheduled_event[:is_recurring] = true
 									scheduled_event[:recurrence_template_id] = event.id
-									scheduled_event[:recurrence_id] = idx
 									scheduled_events << scheduled_event
 								end
 
@@ -105,9 +111,18 @@ module RicCalendar
 							:date_to,
 							:time_to,
 							:all_day,
-							:valid_from,
-							:valid_to,
 						]
+					end
+
+					# *************************************************************
+					# Recurring
+					# *************************************************************
+
+					#
+					# Model is recurring if contains attributes recurrence_rule, valid_from and valid_to
+					#
+					def is_recurring?
+						self.column_names.include?("recurrence_rule") && self.column_names.include?("valid_from") && self.column_names.include?("valid_to")
 					end
 
 				end
@@ -118,10 +133,6 @@ module RicCalendar
 
 				def is_recurring?
 					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule.nil?
-				end
-
-				def was_recurring?
-					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule_was.nil?
 				end
 
 				# *************************************************************
@@ -174,29 +185,12 @@ module RicCalendar
 					return result
 				end
 
-				# *************************************************************
-				# Conversions
-				# *************************************************************
-
-				#
-				# This method must be implemented in model:
-				#
-
-				# def to_fullcalendar(fullevent)
-				#	fullevent[:title] = self.name
-				# end
-
 			protected
 
 				#
 				# "From" must be before "to" (causality)
 				#
-				def validate_from_to_consistency
-					# Causality on valid_from & valid_to
-					if self.valid_from > self.valid_to
-						errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.before_from"))
-					end
-
+				def validate_datetime_from_to_consistency
 					if self.date_from.nil? || self.time_from.nil? || self.date_to.nil? || self.time_to.nil?
 						return
 					end
@@ -211,56 +205,32 @@ module RicCalendar
 				#
 				# Set date to correctly if not defined
 				#
+				def set_date_from_before_validation
+					if is_recurring? && !self.valid_from.blank? && !self.valid_to.blank?
+						self.date_from = self.valid_from
+						self.date_to = self.date_from # Only for one-day recurrent events
+					end
+				end
+
+				#
+				# Set date to correctly if not defined
+				#
 				def set_date_to_before_validation
 					if self.date_to.blank?
 						self.date_to = self.date_from
 					end
 				end
 
-				#
-				# Set valid from / valid to correctly
-				#
-				def set_valid_from_to_before_validation
-					if !is_recurring?
-						# Non-recurring events have same valid_* and date_* fields
-						self.valid_from = self.date_from
-						self.valid_to = self.date_to
-					else
-						# Now we have recurring event
-						if self.new_record?
-							# If the record is new, just set date to today
-							self.date_from = Date.today
-							self.date_to = Date.today
-
-						else
-							# We are editting existing event
-							if self.was_recurring?
-								# Event recurrence has not been changed, it is still recurent
-
-								if self.time_from_changed? || self.time_to_changed?
-									# Event time has been changed
-
-
-								else
-								end
-
-							else
-								# Event was not recurring, but now it is
-								# This is same as in the case of new record, just
-								# ignore date_from and date_to
-								self.date_from = Date.today
-								self.date_to = Date.today
-
-							end
+				def validate_valid_from_to_consistency_presence
+					if self.respond_to?(:valid_from) && self.respond_to?(:valid_to)
+						if self.valid_from.blank?
+							errors.add(:valid_from, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_from.blank"))
+						end
+						if self.valid_to.blank?
+							errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.blank"))
 						end
 					end
 				end
-
-				# *************************************************************
-				# Update schedulable event
-				# *************************************************************
-
-
 
 			end
 

@@ -15,6 +15,7 @@ module RicAuth
 		#
 		# Controllers
 		#
+		require "ric_auth/concerns/controllers/admin/overrides_controller"
 		require "ric_auth/concerns/controllers/admin/profile_passwords_controller"
 		require "ric_auth/concerns/controllers/admin/profiles_controller"
 		

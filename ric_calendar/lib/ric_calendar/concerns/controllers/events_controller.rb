@@ -29,6 +29,7 @@ module RicCalendar
 
 					# Date and time values
 					if params.has_key?(:date)
+						
 						# Default values for date and time are in date attribute
 						date_time = DateTime.parse(params[:date])
 						@event.date_from = date_time
@@ -36,7 +37,6 @@ module RicCalendar
 
 						@event.time_from = date_time
 						@event.time_to = @event.time_from + 1.hour
-
 
 					else
 						# Default values for date and time is determined from current moment
@@ -47,16 +47,16 @@ module RicCalendar
 						@event.time_to = @event.time_from + 1.hour
 					end
 
-					# Valid from
-					@event.valid_from = @event.date_from
-
-					# Valid to end of school year
+					# Validity according to current season TODO: make configurable
 					current_season = RicSeason::Season.current
 					if current_season != nil
+						@event.valid_from = @event.date_from
 						@event.valid_to = current_season.to
 					else
+						@event.valid_from = @event.date_from
 						@event.valid_to = @event.date_to
 					end
+
 				end
 
 				def edit

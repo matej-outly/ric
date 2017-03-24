@@ -40,7 +40,7 @@ cs:
       ric_calendar/event:
         name: Název události
         description: Popis
-        date_from: Datum od
+        date_from: Datum
         time_from: Čas od
         date_to: Datum do
         time_to: Čas do

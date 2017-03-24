@@ -19,6 +19,14 @@ cs:
         edit: Upravit profil
         update: Upravit profil
 
+  activerecord:
+    notices:
+      ric_auth:
+        override_role_set: Nyní prohlížíte aplikaci jako %{role}.
+    errors:
+      ric_auth:
+        override_role_not_set: Nepodařilo se nastavit uživatelskou roli.
+
   #
   # Devise
   #

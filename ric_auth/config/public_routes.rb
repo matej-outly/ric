@@ -44,4 +44,11 @@ RicAuth::PublicEngine.routes.draw do
 	
 	end
 
+	resource :override, controller: "public_overrides", only: [] do
+		member do 
+			put :role
+			put :user
+		end
+	end
+
 end
