@@ -82,30 +82,28 @@ module RicReservation
 				# Items
 				items = []
 				data.each do |item|
+					event = item[:event]
 
-					if !item.respond_to?(:tmp_canceled?) || !item.tmp_canceled?
-						
-						# Tags
-						if tags_callback
-							tags = tags_callback.call(item, options)
-						else
-							tags = []
-						end
-						tags << "state-#{item.state.to_s}" if item.respond_to?(:state)
-						tags << "color-#{item.color.to_s}" if item.respond_to?(:color)
-						tags << "at-capacity" if item.respond_to?(:at_capacity?) && item.at_capacity?
-
-						items << {
-							week: ((item.schedule_from.to_date - first_monday) / 7).to_i,
-							day: item.schedule_from.to_date.cwday - 1,
-							label: label_callback.call(item, options).html_safe,
-							tags: tags.join(" "),
-							tooltip: tooltip_callback.call(item, options),
-							path_callback: path_callback,
-							object: item
-						}
-
+					# Tags
+					if tags_callback
+						tags = tags_callback.call(event, options)
+					else
+						tags = []
 					end
+					tags << "state-#{event.state.to_s}" if event.respond_to?(:state)
+					tags << "color-#{event.color.to_s}" if event.respond_to?(:color)
+					tags << "at-capacity" if event.respond_to?(:at_capacity?) && event.at_capacity?
+
+					items << {
+						week: ((item[:date_from] - first_monday) / 7).to_i,
+						day: item[:date_from].cwday - 1,
+						datetime: event.datetime_from(item[:date_from]),
+						label: label_callback.call(event, options).html_safe,
+						tags: tags.join(" "),
+						tooltip: tooltip_callback.call(event, options),
+						path_callback: path_callback,
+						object: event
+					}
 
 				end
 
@@ -283,7 +281,7 @@ module RicReservation
 					end
 					items.concat(month_timetable_items(date, data, data_options))
 				end
-				items.sort! { |item_1, item_2| item_1[:object].schedule_from <=> item_2[:object].schedule_from }
+				items.sort! { |item_1, item_2| item_1[:datetime] <=> item_2[:datetime] }
 
 				# Days
 				days = month_timetable_days(date, items, global_options)
