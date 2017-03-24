@@ -127,7 +127,12 @@ RicCalendar.prototype = {
 				dayClick: function(date, event, view) {
 					// Create new event on click in calendar white space
 					if (_this.options.newUrl !== undefined) {
-						window.location.href = _this.options.newUrl + "?date=" + date.format();
+						if (_this.options.newUrl.includes('?')) {
+							delimiter = '&'
+						} else {
+							delimiter = '?'
+						}
+						window.location.href = _this.options.newUrl + delimiter + 'date=' + date.format();
 					}
 				},
 

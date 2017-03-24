@@ -322,7 +322,7 @@ module RicReservation
 					if @reservation_state_behaviors.nil? || @reservation_state_behaviors[base.to_s].nil?
 						self.reservation_state
 					end
-					return @reservation_state_behaviors[base.to_s].nil?
+					return @reservation_state_behaviors[base.to_s]
 				end
 
 				# *************************************************************

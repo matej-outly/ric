@@ -1,0 +1,25 @@
+.fc-day-top {
+	position: relative;
+	cursor: pointer;
+
+	&:hover {
+		&:before {
+			opacity: 1;
+		}
+	}
+
+	&:before {
+		transition: opacity 0.3s;
+		content: "\f067";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 25px;
+		height: 25px;
+		font: normal normal normal 14px/1 FontAwesome;
+		text-align: center;
+		line-height: 25px;
+		opacity: 0;
+		color: #dddddd;
+	}
+}
