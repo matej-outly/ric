@@ -215,9 +215,9 @@ module RicSeason
 				#
 				def compute_date_to
 					if self.period == "year"
-						self.to = self.from + 1.year
+						self.to = self.from + 1.year - 1.day
 					elsif self.period == "month"
-						self.to = self.from + 1.month
+						self.to = self.from + 1.month - 1.day
 					end
 				end
 

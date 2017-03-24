@@ -9,9 +9,6 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
-
-
 /**
  * Ric Calendar builder class
  *
@@ -20,10 +17,11 @@
  * persistently save calendar view state for better user experience.
  *
  * Options:
- * url ... (string) Rails path to event source (usually `events_calendars_path`)
- * new_url .... (string) Rails path to new event action. Adds `date` as get param to path.
- * allowedCallendars ... (function) Function which
+ * - url ... (string) Rails path to event source (usually `events_calendars_path`)
+ * - newUrl .... (string) Rails path to new event action. Adds `date` as get param to path.
+ * - allowedCallendars ... (function) Function which ...
  */
+
 function RicCalendar(hash, options)
 {
 	this.hash = hash;
@@ -128,8 +126,8 @@ RicCalendar.prototype = {
 
 				dayClick: function(date, event, view) {
 					// Create new event on click in calendar white space
-					if (_this.options.new_url !== undefined) {
-						window.location.href = _this.options.new_url + "?date=" + date.format();
+					if (_this.options.newUrl !== undefined) {
+						window.location.href = _this.options.newUrl + "?date=" + date.format();
 					}
 				},
 

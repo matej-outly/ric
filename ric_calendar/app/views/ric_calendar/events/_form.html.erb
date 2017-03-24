@@ -6,45 +6,43 @@
 	<%= f.text_area_row :description %>
 	<%= f.picker_row :calendar_id, RicCalendar.calendar_model.where(resource_type: RicCalendar.calendar_model.name), :id, :name %>
 
-
 	<div class="form-group">
 		<%= f.label_for :recurrence_rule %>
 		<%= f.select_recurring :recurrence_rule, nil, { allow_blank: true }, { class: "form-control" } %>
 	</div>
 
-	<%= f.conditional_section :valid_to_if_recurrent, :recurrence_rule, "value !== 'null'" do %>
+	<%= f.conditional_section :valid_if_recurrent, :recurrence_rule, "value !== 'null'" do %>
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-6">
+				<%= f.date_picker_row :valid_from %>
+			</div>
+			<div class="col-sm-6">
 				<%= f.date_picker_row :valid_to %>
 			</div>
 		</div>
 	<% end %>
 
-	<%= f.checkbox_row :all_day %>
-
-	<%= f.conditional_section :time_from_if_not_all_day, :all_day, "value === false" do %>
+	<%= f.conditional_section :date_if_not_recurrent, :recurrence_rule, "value === 'null'" do %>
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-12">
+				<%= f.date_picker_row :date_from %>
+			</div>
+		</div>
+	<% end %>
+
+	<%= f.conditional_section :time_if_not_all_day, :all_day, "value === false" do %>
+		<div class="row">
+			<div class="col-sm-6">
 				<%= f.time_picker_row :time_from %>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-6">
 				<%= f.time_picker_row :time_to %>
 			</div>
 		</div>
 	<% end %>
 
-
-	<div class="row">
-		<div class="col-sm-4">
-			<%= f.date_picker_row :date_from %>
-		</div>
-
-		<div class="col-sm-4">
-			<%= f.date_picker_row :date_to %>
-		</div>
-	</div>
-
+	<%= f.checkbox_row :all_day %>
 
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>

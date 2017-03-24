@@ -17,13 +17,17 @@ module RicCalendar
 				included do
 
 					# *********************************************************
-					# Validity
+					# Validators
 					# *********************************************************
 
-					#
-					# Correct valid from must be set before save
-					#
-					before_save :set_valid_from_before_save
+					validates :valid_from, :valid_to, presence: true
+					validate :validate_valid_from_to_consistency
+					
+					# *********************************************************
+					# Callbacks
+					# *********************************************************
+
+					before_validation :set_valid_from_to_before_validation
 					
 				end
 
@@ -112,11 +116,30 @@ module RicCalendar
 			protected
 
 				#
-				# Set correct valid from time
+				# "From" must be before "to" (causality)
 				#
-				def set_valid_from_before_save
-					if self.respond_to?(:date_from)
-						self.valid_from = self.date_from
+				def validate_valid_from_to_consistency
+					if self.valid_from.nil? || self.valid_to.nil?
+						return
+					end
+
+					# Causality on valid_from & valid_to
+					if self.valid_from > self.valid_to
+						errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.before_from"))
+					end
+				end
+
+				#
+				# Set valid from / valid to correctly
+				#
+				def set_valid_from_to_before_validation
+					if self.respond_to?(:date_from) && self.respond_to?(:date_to)
+						if self.respond_to?(:is_recurring?) && !is_recurring?
+							self.valid_from = self.date_from
+							self.valid_to = self.date_to
+						else
+							# In this case valid_from and valid_to id set by user and date_from is changed respectively before validatation
+						end
 					end
 				end
 
