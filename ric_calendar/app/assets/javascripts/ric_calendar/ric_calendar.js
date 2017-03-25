@@ -40,42 +40,58 @@ RicCalendar.prototype = {
 	//
 	// Drag&drop events editation
 	//
-	moveEvent: function(id, datetimeFrom, datetimeTo, editUrl, revertFunc)
+	moveEvent: function(event, delta, revertFunc)
 	{
-		var event = {};
+		var self = this;
+
+		var datetimeFrom = event.start;
+		var datetimeTo = event.end;
+		var oldDatetimeFrom = event.oldStart;
+		var oldDatetimeTo = event.oldEnd;
+		var editUrl = event.editUrl;
+
 		var dateFrom = (datetimeFrom ? datetimeFrom.format("YYYY-MM-DD") : null);
 		var timeFrom = (datetimeFrom && datetimeFrom.hasTime() ? datetimeFrom.format("HH:mm:ss") : null);
 		var dateTo = (datetimeTo ? datetimeTo.format("YYYY-MM-DD") : dateFrom);
 		var timeTo = (datetimeTo && datetimeTo.hasTime() ? datetimeTo.format("HH:mm:ss") : timeFrom);
+		var allDay = !datetimeFrom.hasTime();
 
-		if (datetimeFrom.hasTime()) {
-			// Move to another time
-			event = {
-				all_day: false,
-				date_from: dateFrom,
-				time_from: timeFrom,
-				date_to: dateTo,
-				time_to: timeTo,
-			};
-		} else {
-			// Move to all day activity
-			event = {
-				all_day: true,
-				date_from: dateFrom,
-				time_from: timeFrom,
-				date_to: dateTo,
-				time_to: timeTo,
-			};
-		}
+		var oldDateFrom = (oldDatetimeFrom ? oldDatetimeFrom.format("YYYY-MM-DD") : null);
+		var oldTimeFrom = (oldDatetimeFrom && oldDatetimeFrom.hasTime() ? oldDatetimeFrom.format("HH:mm:ss") : null);
+		var oldDateTo = (oldDatetimeTo ? oldDatetimeTo.format("YYYY-MM-DD") : oldDateFrom);
+		var oldTimeTo = (oldDatetimeTo && oldDatetimeTo.hasTime() ? oldDatetimeTo.format("HH:mm:ss") : oldTimeFrom);
+		var oldAllDay = !oldDatetimeFrom.hasTime();
+
+		// Move to another time
+		var ajax_data = {
+			all_day: allDay,
+			date_from: dateFrom,
+			time_from: timeFrom,
+			date_to: dateTo,
+			time_to: timeTo,
+			old_all_day: oldAllDay,
+			old_date_from: oldDateFrom,
+			old_time_from: oldTimeFrom,
+			old_date_to: oldDateTo,
+			old_time_to: oldTimeTo,
+			update_action: "dragdrop_one",
+		};
 
 		$.post({
 			url: editUrl,
 			data: {
-				event: event,
+				event: ajax_data,
 				_method: "PATCH",
 			},
 			dataType: 'json',
-			success: function() {
+			success: function(result) {
+				if (result === true) {
+					// Refetch all events (TODO: should be improved in the future...)
+					self.calendar.fullCalendar('refetchEvents')
+				}
+				else {
+					revertFunc();
+				}
 			},
 			error: function() {
 				revertFunc();
@@ -107,12 +123,24 @@ RicCalendar.prototype = {
 				scrollTime: "8:00:00", // Where to start showing calendar in agenda
 				timeFormat: "H:mm", // Show 8:00 instead of 8
 
+				eventDragStart: function(event, delta, revertFunc) {
+					event.oldStart = event.start;
+					event.oldEnd = event.end;
+					event.oldAllDay = event.allDay;
+				},
+
+				eventResizeStart: function(event, delta, revertFunc) {
+					event.oldStart = event.start;
+					event.oldEnd = event.end;
+					event.oldAllDay = event.allDay;
+				},
+
 				eventDrop: function(event, delta, revertFunc) {
-					_this.moveEvent(event.objectId, event.start, event.end, event.editUrl, revertFunc);
+					_this.moveEvent(event, delta, revertFunc);
 				},
 
 				eventResize: function(event, delta, revertFunc) {
-					_this.moveEvent(event.objectId, event.start, event.end, event.editUrl, revertFunc);
+					_this.moveEvent(event, delta, revertFunc);
 				},
 
 				viewRender: function(view, element) {

@@ -29,7 +29,6 @@ module RicCalendar
 
 					# Date and time values
 					if params.has_key?(:date)
-						
 						# Default values for date and time are in date attribute
 						date_time = DateTime.parse(params[:date])
 						@event.date_from = date_time
@@ -37,6 +36,7 @@ module RicCalendar
 
 						@event.time_from = date_time
 						@event.time_to = @event.time_from + 1.hour
+
 
 					else
 						# Default values for date and time is determined from current moment
@@ -47,16 +47,16 @@ module RicCalendar
 						@event.time_to = @event.time_from + 1.hour
 					end
 
-					# Validity according to current season TODO: make configurable
+					# Valid from
+					@event.valid_from = @event.date_from
+
+					# Valid to end of school year
 					current_season = RicSeason::Season.current
 					if current_season != nil
-						@event.valid_from = @event.date_from
 						@event.valid_to = current_season.to
 					else
-						@event.valid_from = @event.date_from
 						@event.valid_to = @event.date_to
 					end
-
 				end
 
 				def edit
@@ -87,14 +87,53 @@ module RicCalendar
 				# Update via AJAX request from Fullcalendar
 				#
 				def update_schedule
-					if @event.update(event_params)
-						respond_to do |format|
-							format.json { render json: true }
+					if !@event.is_recurring?
+						# Editing simple events is easy... just pass new date and time
+						if @event.update(event_params)
+							respond_to do |format|
+								format.json { render json: true }
+							end
+						else
+							respond_to do |format|
+								format.json { render json: @event.errors }
+							end
 						end
+
 					else
-						respond_to do |format|
-							format.json { render json: false }
+						# Recurring event
+						data = event_params
+
+						# First we need to extract given occurrence from recurrenting event
+						@event.recurrence_exclude << Date.parse(data[:old_date_from])
+
+						# Now, we can create new standalone event
+						event = @event.dup
+
+						# New event is not recurring, it is simple event
+						event.recurrence_rule = nil
+						event.recurrence_exclude = nil
+						event.source_event_id = @event.id
+
+						# New event has date time from parameters
+						event.valid_from = nil
+						event.valid_to = nil
+						event.date_from = data[:date_from]
+						event.date_to = data[:date_to]
+						event.time_from = data[:time_from]
+						event.time_to = data[:time_to]
+						event.all_day = data[:all_day]
+
+						# Save changes
+						if @event.save && event.save
+							respond_to do |format|
+								format.json { render json: true }
+							end
+						else
+							respond_to do |format|
+								format.json { render json: event.errors }
+							end
 						end
+
 					end
 				end
 

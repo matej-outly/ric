@@ -35,7 +35,19 @@ module RicCalendar
 
 					before_validation :set_date_from_before_validation
 					before_validation :set_date_to_before_validation
+					before_validation :set_time_from_to_before_validation
+					before_validation :set_valid_from_to_before_validation
 
+					# *********************************************************
+					# Helper attribute for editing
+					# *********************************************************
+
+					attr_accessor :update_action # Possible values: "standard", "dragdrop_one"
+					attr_accessor :old_date_from # Possible values: "standard", "dragdrop_one"
+					attr_accessor :old_time_from # Possible values: "standard", "dragdrop_one"
+					attr_accessor :old_date_to # Possible values: "standard", "dragdrop_one"
+					attr_accessor :old_time_to # Possible values: "standard", "dragdrop_one"
+					attr_accessor :old_all_day # Possible values: "standard", "dragdrop_one"
 				end
 
 				module ClassMethods
@@ -48,14 +60,14 @@ module RicCalendar
 					# Return all events between given dates
 					#
 					def between(date_from, date_to)
-						
+
 						if self.is_recurring? # Recurring models selected by valid_from / valid_to
 							where("(#{self.table_name}.valid_from <= :date_to) AND (:date_from <= #{self.table_name}.valid_to)", date_from: date_from, date_to: date_to)
-						
+
 						else # Not recurring models selected by date_from / date_to
 							where("(#{self.table_name}.date_from <= :date_to) AND (:date_from <= #{self.table_name}.date_to)", date_from: date_from, date_to: date_to)
 						end
-						
+
 					end
 
 					#
@@ -82,12 +94,13 @@ module RicCalendar
 
 							else
 								# Recurring event
-								event.occurrences(date_from, date_to).each do |occurence|
+								event.occurrences(date_from, date_to).each_with_index do |occurence, recurrence_id|
 									scheduled_event = scheduled_event_base.clone
 									scheduled_event[:date_from] = occurence.start_time.to_date
 									scheduled_event[:date_to] = occurence.end_time.to_date
 									scheduled_event[:is_recurring] = true
 									scheduled_event[:recurrence_template_id] = event.id
+									scheduled_event[:recurrence_id] = recurrence_id
 									scheduled_events << scheduled_event
 								end
 
@@ -111,6 +124,12 @@ module RicCalendar
 							:date_to,
 							:time_to,
 							:all_day,
+							:update_action,
+							:old_date_from,
+							:old_time_from,
+							:old_date_to,
+							:old_time_to,
+							:old_all_day,
 						]
 					end
 
@@ -196,7 +215,7 @@ module RicCalendar
 					end
 
 					# Causality
-					if self.datetime_from >= self.datetime_to
+					if self.datetime_from > self.datetime_to
 						errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
 						errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
 					end
@@ -229,6 +248,26 @@ module RicCalendar
 						if self.valid_to.blank?
 							errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.blank"))
 						end
+					end
+				end
+
+				#
+				# Set time from and time to if all day is set
+				#
+				def set_time_from_to_before_validation
+					if self.all_day == true
+						self.time_from = Time.now if self.time_from.nil?
+						self.time_to = self.time_from
+					end
+				end
+
+				#
+				# Set valid from and to according to date for non-recurring events
+				#
+				def set_valid_from_to_before_validation
+					if !self.is_recurring?
+						self.valid_from = self.date_from
+						self.valid_to = self.date_to
 					end
 				end
 

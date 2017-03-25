@@ -27,6 +27,9 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			# Recurrence rule
 			t.text :recurrence_rule
 
+			# Exclude times from recurrence rule
+			t.text :recurrence_exclude
+
 			# Is it generated?
 			t.integer :source_event_id, index: true
 
@@ -42,11 +45,11 @@ class CreateRicCalendarEvents < ActiveRecord::Migration
 			# *****************************************************************
 
 			t.string :color
-						
+
 			# *****************************************************************
 			# Event data (can be customized)
 			# *****************************************************************
-			
+
 			# Calendar
 			t.integer :calendar_id
 

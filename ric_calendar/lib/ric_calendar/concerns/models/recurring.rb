@@ -21,6 +21,7 @@ module RicCalendar
 					# *********************************************************
 
 					belongs_to :source_event, class_name: self.class.name
+					has_many :source_events, class_name: self.class.name, dependent: :nullify
 
 					before_validation do
 						# Recurring-select gem sets "null" string instead of real null
@@ -28,6 +29,9 @@ module RicCalendar
 							self.recurrence_rule = nil
 						end
 					end
+
+					# Recurrence exclude is set of excluded dates
+					serialize :recurrence_exclude, Set
 				end
 
 				module ClassMethods
@@ -43,6 +47,7 @@ module RicCalendar
 						[
 							:source_event_id,
 							:recurrence_rule,
+							:recurrence_exclude,
 						]
 					end
 
@@ -85,8 +90,19 @@ module RicCalendar
 						# Rule is valid until valid_to date
 						rule = rule.until(self.valid_to)
 
-						# Pass date time into rule
+						# Add rule to the schedule
 						@schedule.add_recurrence_rule(rule)
+
+						# Add exception dates
+						self.recurrence_exclude.each do |exclude_date|
+							# Each exception must have same time as time_from (IceCube requirement)
+							exception_time = Time.new(
+								exclude_date.year, exclude_date.month, exclude_date.day,
+								self.time_from.hour, self.time_from.min, self.time_from.sec
+							)
+
+							@schedule.add_exception_time(exception_time)
+						end
 					end
 
 					return @schedule
