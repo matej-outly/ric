@@ -22,12 +22,7 @@ module RicCalendar
 
 					belongs_to :source_event, class_name: self.class.name
 
-					before_validation do
-						# Recurring-select gem sets "null" string instead of real null
-						if self.recurrence_rule == "null"
-							self.recurrence_rule = nil
-						end
-					end
+					before_validation :repair_recurrence_rule, prepend: true # Must be done as soon as possible
 				end
 
 				module ClassMethods
@@ -90,6 +85,15 @@ module RicCalendar
 					end
 
 					return @schedule
+				end
+
+			protected
+
+				def repair_recurrence_rule
+					# Recurring-select gem sets "null" string instead of real null
+					if self.recurrence_rule == "null"
+						self.recurrence_rule = nil
+					end
 				end
 
 			end

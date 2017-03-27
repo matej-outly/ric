@@ -132,7 +132,7 @@ module RicCalendar
 				# *************************************************************
 
 				def is_recurring?
-					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule.nil?
+					self.has_attribute?(:recurrence_rule) && !self.recurrence_rule.blank?
 				end
 
 				# *************************************************************
@@ -208,7 +208,7 @@ module RicCalendar
 				def set_date_from_before_validation
 					if is_recurring? && !self.valid_from.blank? && !self.valid_to.blank?
 						self.date_from = self.valid_from
-						self.date_to = self.date_from # Only for one-day recurrent events
+						self.date_to = self.date_from # TODO Only for one-day recurrent events
 					end
 				end
 
@@ -216,9 +216,9 @@ module RicCalendar
 				# Set date to correctly if not defined
 				#
 				def set_date_to_before_validation
-					if self.date_to.blank?
-						self.date_to = self.date_from
-					end
+					#if self.date_to.blank?
+						self.date_to = self.date_from # TODO Only for one-day events
+					#end
 				end
 
 				def validate_valid_from_to_consistency_presence
