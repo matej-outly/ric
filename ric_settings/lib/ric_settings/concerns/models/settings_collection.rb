@@ -14,20 +14,6 @@ module RicSettings
 		module Models
 			module SettingsCollection extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
-				included do
-					
-					#
-					# Tableless
-					#
-					has_no_table
-
-				end
-
 				module ClassMethods
 
 					#
@@ -48,35 +34,43 @@ module RicSettings
 
 						# Define tableless column
 						if kind == :string # String
-							column new_key, :varchar
+							attr_accessor new_key
+							#column new_key, :varchar
 							@permitted_columns << new_key.to_sym
 
 						elsif kind == :integer # Integer
-							column new_key, :integer
+							attr_accessor new_key
+							#column new_key, :integer
 							@permitted_columns << new_key.to_sym
 
 						elsif kind == :currency # Currency
-							column new_key, :integer
+							attr_accessor new_key
+							#column new_key, :integer
 							@permitted_columns << new_key.to_sym
 
 						elsif kind == :enum # Enum
 							if !options[:values]
 								raise "Please define values for setting #{new_key.to_s} with enum kind."
 							end
-							column new_key, :varchar
+							attr_accessor new_key
+							#column new_key, :varchar
 							enum_column new_key, options[:values]
 							@permitted_columns << new_key.to_sym
 
 						elsif kind == :integer_range
-							column "#{new_key.to_s}_min".to_sym, :integer
-							column "#{new_key.to_s}_max".to_sym, :integer
+							attr_accessor "#{new_key.to_s}_min".to_sym
+							attr_accessor "#{new_key.to_s}_max".to_sym
+							#column "#{new_key.to_s}_min".to_sym, :integer
+							#column "#{new_key.to_s}_max".to_sym, :integer
 							range_column new_key
 							keys_to_define = ["#{new_key.to_s}_min".to_sym, "#{new_key.to_s}_max".to_sym]
 							@permitted_columns << { new_key.to_sym => [ :min, :max ] }
 
 						elsif kind == :double_range
-							column "#{new_key.to_s}_min".to_sym, :varchar
-							column "#{new_key.to_s}_max".to_sym, :varchar
+							attr_accessor "#{new_key.to_s}_min".to_sym
+							attr_accessor "#{new_key.to_s}_max".to_sym
+							#column "#{new_key.to_s}_min".to_sym, :varchar
+							#column "#{new_key.to_s}_max".to_sym, :varchar
 							range_column new_key
 							keys_to_define = ["#{new_key.to_s}_min".to_sym, "#{new_key.to_s}_max".to_sym]
 							@permitted_columns << { new_key.to_sym => [ :min, :max ] }
@@ -159,6 +153,12 @@ module RicSettings
 				#
 				def permitted_columns
 					self.class.permitted_columns
+				end
+
+				def assign_attributes(attributes)
+					attributes.each do |key, value|
+						self.send("#{key}=", value)
+					end
 				end
 
 				#

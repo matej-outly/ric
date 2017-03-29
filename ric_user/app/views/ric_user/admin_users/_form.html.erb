@@ -1,7 +1,7 @@
 <%= rug_form_for(@user, create_url: :users_path, update_url: :user_path) do |f| %>
 	<%= f.name_row :name %>
 	<%= f.text_input_row :email, :email_field %>
-	<%= f.picker_row :role %>
+	<%= f.picker_row :role if RicUser.user_model.has_role? %>
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
 <% end %>

@@ -5,7 +5,7 @@ class CreateRicSettingsSettings < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# Ordering
-			t.integer :position
+			t.integer :position, index: true
 			
 			# Identification
 			t.string :key, index: true

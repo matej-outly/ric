@@ -1,8 +1,10 @@
-<%= rug_show_table_for(@user, { 
-	name: :name,
-	email: :string,
-	role: :enum,
-	sign_in_count: :integer,
-	current_sign_in_at: :datetime,
-	locked?: :boolean,
-}) %>
+<% 
+	columns = rug_columns 
+	columns.add_column_by_type(:name, type: :name)
+	columns.add_column_by_type(:email, type: :string)
+	columns.add_column_by_type(:role, type: :enum) if RicUser.user_model.has_role?
+	columns.add_column_by_type(:sign_in_count, type: :integer)
+	columns.add_column_by_type(:current_sign_in_at, type: :datetime)
+	columns.add_column_by_type(:locked?, type: :boolean)
+%>
+<%= rug_show_table_for(@user, columns) %>

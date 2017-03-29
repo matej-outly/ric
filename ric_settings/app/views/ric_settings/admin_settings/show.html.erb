@@ -4,7 +4,7 @@
 		<% 
 			columns = {}
 			settings.each do |setting_key| 
-				columns[setting_key] = @settings_collection.settings[setting_key.to_sym][:kind]
+				columns[setting_key] = { type: @settings_collection.settings[setting_key.to_sym][:kind], column_label: t("activerecord.attributes.ric_settings/settings_collection.#{setting_key}") }
 			end
 		%>
 		<%= rug_show_table_for(@settings_collection, columns) %>
