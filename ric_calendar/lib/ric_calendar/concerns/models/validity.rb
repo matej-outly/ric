@@ -136,7 +136,7 @@ module RicCalendar
 					if self.respond_to?(:date_from) && self.respond_to?(:date_to)
 						if self.respond_to?(:is_recurring?) && !is_recurring?
 							self.valid_from = self.date_from
-							self.valid_to = self.date_to
+							self.valid_to = self.valid_from # TODO Only for one-day events
 						else
 							# In this case valid_from and valid_to id set by user and date_from is changed respectively before validatation
 						end

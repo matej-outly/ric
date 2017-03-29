@@ -43,11 +43,15 @@ module RicUser
 					# Password
 					new_password = user.regenerate_password(notification: false)
 					
+					# Return invalid user with error messages
+					return user if !user.errors.empty?
+
 					# Notification
 					if new_password
 						RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
 						return user
 					else
+						# TODO user.errors.add(...)
 						return nil
 					end
 				end

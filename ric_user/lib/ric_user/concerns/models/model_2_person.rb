@@ -36,23 +36,29 @@ module RicUser
 					end
 
 					# User with similar e-mail may exist
-					user = RicUser.user_model.find_by(email: self.email)
+					user = RicUser.user_model.find_by(email: self.email.trim)
 					if !user
 						
 						# Build user
 						user_params = synchronized_params.merge(user_params)
 						user_params[:email] = self.email
-						user = RicUser.user_model.create(user_params)
-						user.roles = self.person_role
-
+						user = RicUser.user_model.new(user_params)
+						
 						# Password
 						new_password = user.regenerate_password(notification: false)
 						
+						# Return invalid user with error messages
+						return user if !user.errors.empty?
+						
+						# Roles
+						user.roles = self.person_role
+
 						# Notification
 						if new_password
 							RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
 							return user
 						else
+							# TODO user.errors.add(...)
 							return nil
 						end
 
