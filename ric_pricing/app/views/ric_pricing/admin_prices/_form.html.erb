@@ -1,0 +1,11 @@
+<%= rug_form_for(@price, 
+	create_url: lambda { price_list_prices_path(@price_list) }, 
+	update_url: lambda { |price| price_list_price_path(@price_list, price) }
+) do |f| %>
+	<%= f.text_input_row :description, :text_field %>
+	<%= f.text_input_row :amount, :text_field %>
+	<%= f.picker_row :operator %>
+	<%= f.text_input_row :price, :number_field %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>
