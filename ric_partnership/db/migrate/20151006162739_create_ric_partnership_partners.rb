@@ -5,7 +5,7 @@ class CreateRicPartnershipPartners < ActiveRecord::Migration
 			t.timestamps null: true
 			
 			# Position
-			t.integer :position
+			t.integer :position, index: true
 			
 			# Name
 			t.string :name

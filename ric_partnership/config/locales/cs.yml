@@ -10,22 +10,10 @@ cs:
         edit: "Upravit partnera"
         update: "Upravit partnera"
         destroy: "Smazat partnera"
-      admin_references:
-        index: "Reference"
-        show: "Detail reference"
-        new: "Nová reference"
-        create: "Nová reference"
-        edit: "Upravit referenci"
-        update: "Upravit referenci"
-        destroy: "Smazat referenci"
 
   activerecord:
     attributes:
       ric_partnership/partner:
-        name: Jméno
-        url: URL
-        logo: Logo
-      ric_partnership/reference:
         name: Jméno
         url: URL
         logo: Logo
@@ -36,16 +24,8 @@ cs:
           update: Partner byl úspěšně uložen.
           move: Partner byl úspěšně přesunut.
           destroy: Partner byl úspěšně smazán.
-        ric_partnership/reference:
-          create: Reference byla úspěšně vytvořena.
-          update: Reference byla úspěšně uložena.
-          move: Reference byla úspěšně přesunuta.
-          destroy: Reference byla úspěšně smazána.
     errors:
       models:
         ric_partnership/partner:
           not_found: Partner nebyl nalezen.
           move: Partner nebyl přesunut.
-        ric_partnership/reference:
-          not_found: Reference nebyla nalezena.
-          move: Reference nebyla přesunuta.
