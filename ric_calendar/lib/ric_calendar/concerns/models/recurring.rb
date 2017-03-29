@@ -196,7 +196,7 @@ module RicCalendar
 				# Update only this scheduled event
 				#
 				def update_row
-					if !self.update_action.in?(["only_this", "all_future"])
+					if !self.is_recurring? || !self.update_action.in?(["only_this", "all_future"])
 						return true
 					end
 

@@ -76,11 +76,20 @@ module RicCalendar
 
 				def update
 					if @event.update(event_params) #_update
-						redirect_url = load_referrer
-						redirect_url = ric_calendar.calendars_path if redirect_url.blank?
-						redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.event_model.model_name.i18n_key}.update")
+						respond_to do |format|
+							format.html  do
+								redirect_url = load_referrer
+								redirect_url = ric_calendar.calendars_path if redirect_url.blank?
+								redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.event_model.model_name.i18n_key}.update")
+							end
+
+							format.json { render json: true }
+						end
 					else
-						render "new"
+						respond_to do |format|
+							format.html { render "new" }
+							format.json { render json: @event.errors }
+						end
 					end
 
 					# _update.each do |affected_event|
@@ -107,46 +116,46 @@ module RicCalendar
 				#
 				# Update via AJAX request from Fullcalendar
 				#
-				def update_schedule
-					if !@event.is_recurring?
-						# Editing simple events is easy... just pass new date and time
-						if @event.update(event_params)
-							respond_to do |format|
-								format.json { render json: true }
-							end
-						else
-							respond_to do |format|
-								format.json { render json: @event.errors }
-							end
-						end
+				# def update_schedule
+				# 	if !@event.is_recurring?
+				# 		# Editing simple events is easy... just pass new date and time
+				# 		if @event.update(event_params)
+				# 			respond_to do |format|
+				# 				format.json { render json: true }
+				# 			end
+				# 		else
+				# 			respond_to do |format|
+				# 				format.json { render json: @event.errors }
+				# 			end
+				# 		end
 
-					else
-						# Recurring event
-						event_data = event_params
+				# 	else
+				# 		# Recurring event
+				# 		event_data = event_params
 
-						# Extract occurrence
-						extracted_event = @event.extract(@event.scheduled_date_from)
+				# 		# Extract occurrence
+				# 		extracted_event = @event.extract(@event.scheduled_date_from)
 
-						# Set new date and time
-						extracted_event.date_from = event_data[:date_from]
-						extracted_event.date_to = event_data[:date_to]
-						extracted_event.time_from = event_data[:time_from]
-						extracted_event.time_to = event_data[:time_to]
-						extracted_event.all_day = event_data[:all_day]
+				# 		# Set new date and time
+				# 		extracted_event.date_from = event_data[:date_from]
+				# 		extracted_event.date_to = event_data[:date_to]
+				# 		extracted_event.time_from = event_data[:time_from]
+				# 		extracted_event.time_to = event_data[:time_to]
+				# 		extracted_event.all_day = event_data[:all_day]
 
-						# Save changes
-						if @event.save && extracted_event.save
-							respond_to do |format|
-								format.json { render json: true }
-							end
-						else
-							respond_to do |format|
-								format.json { render json: event.errors }
-							end
-						end
+				# 		# Save changes
+				# 		if @event.save && extracted_event.save
+				# 			respond_to do |format|
+				# 				format.json { render json: true }
+				# 			end
+				# 		else
+				# 			respond_to do |format|
+				# 				format.json { render json: event.errors }
+				# 			end
+				# 		end
 
-					end
-				end
+				# 	end
+				# end
 
 				def destroy
 					@event.destroy

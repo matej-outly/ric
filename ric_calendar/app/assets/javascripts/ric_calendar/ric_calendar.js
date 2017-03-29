@@ -66,7 +66,7 @@ RicCalendar.prototype = {
 			date_to: dateTo,
 			time_to: timeTo,
 			scheduled_date_from: scheduledDateFrom,
-			update_action: "dragdrop",
+			update_action: "only_this",
 		};
 
 		$.post({

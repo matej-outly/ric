@@ -25,7 +25,8 @@ module RicCalendar
 					# Validators
 					# *********************************************************
 
-					validates :date_from, :time_from, :date_to, :time_to, presence: true
+					validates :date_from, :date_to, presence: true, unless: :is_recurring?
+					validates :time_from, :time_to, presence: true, if: lambda { |instance| instance.all_day == false }
 					validate :validate_datetime_from_to_consistency
 					validate :validate_valid_from_to_consistency_presence
 

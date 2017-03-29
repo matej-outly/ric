@@ -6,14 +6,14 @@ kinds:
     event_type: RicCalendar::Event
     event_to_resource_attr: calendar
     event_show_path: ric_calendar.event_path
-    event_update_path: ric_calendar.update_schedule_event_path
+    event_update_path: ric_calendar.event_path
 #  sample_model:
 #    resource_type: SampleResource
 #    resource_to_events_attr: sample_events
 #    event_type: SampleEvents
 #    event_to_resource_attr: sample_resource
 #    event_show_path: main_app.sample_event_path
-#    event_update_path: main_app.update_schedule_sample_event_path 
+#    event_update_path: main_app.update_schedule_sample_event_path
 
 # Predefined calendar colors
 colors:
