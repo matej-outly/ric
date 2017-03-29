@@ -94,9 +94,21 @@ module RicCalendar
 				end
 
 				def destroy
-					@event.destroy
-					redirect_url = request.referrer
-					redirect_url = ric_calendar.calendars_path if redirect_url.blank?
+					if !@event.is_recurring? || @event.scheduled_date_from.blank?
+						# Destroy event and all its occurrences
+						@event.destroy
+					else
+						# Destroy event only in given time
+						@event.recurrence_exclude << @event.scheduled_date_from
+						@event.save
+					end
+
+					# TODO: This old solution won't work, because usually we are comming from details page,
+					#       which won't exist after model deletion:
+					#redirect_url = request.referrer
+					#redirect_url = ric_calendar.calendars_path if redirect_url.blank?
+
+					redirect_url = ric_calendar.calendars_path
 					redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.event_model.model_name.i18n_key}.destroy")
 				end
 

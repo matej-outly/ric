@@ -2,15 +2,71 @@
 	<%= m.new_item %>
 	<%= m.show_item %>
 
-	<% if !@event.nil? && @event.scheduled_date_from.nil? %>
-		<%= m.edit_item %>
-	<% elsif !@event.nil? && !@event.new_record? %>
-		<li>
-			<%= link_to ric_calendar.edit_event_path(@event, scheduled_date_from: @event.scheduled_date_from) do %>
-				<i class="fa fa-pencil "></i> Upravit událost</a>
-			<% end %>
-		</li>
-	<% end %>
+	<% if !@event.nil? && !@event.new_record? %>
 
-	<%= m.destroy_item %>
+		<% if @event.scheduled_date_from.blank? %>
+			<%= m.edit_item %>
+			<%= m.destroy_item %>
+
+		<% else %>
+			<li>
+				<%= link_to ric_calendar.edit_event_path(@event, scheduled_date_from: @event.scheduled_date_from) do %>
+					<i class="fa fa-pencil "></i> Upravit událost</a>
+				<% end %>
+			</li>
+			<% if @event.is_recurring? %>
+				<li>
+					<%= link_to "#", rel: :nofollow, class: "delete-event-link" do %>
+						<i class="fa fa-trash"></i> Smazat událost</a>
+					<% end %>
+				</li>
+
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$(".delete-event-link").click(function(e) {
+							e.preventDefault();
+
+							$link = $(this);
+
+							$.confirm({
+								title: "Smazat událost",
+								content: "Přejete si smazat pouze tuto konkrétní událost a nebo celou řadu?",
+								columnClass: "col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12",
+								buttons: {
+									onlyThis: {
+										text: "Smazat pouze tuto událost",
+										btnClass: "btn-danger",
+										action: function() {
+											// Call default link with scheduled date
+											$link.attr("data-method", "delete");
+											$link.attr("href", '<%= ric_calendar.event_path(@event, scheduled_date_from: @event.scheduled_date_from) %>')
+											$.rails.handleMethod($link);
+										}
+									},
+
+									all: {
+										text: "Smazat všechny výskyty",
+										btnClass: "btn-danger",
+										action: function() {
+											$link.attr("data-method", "delete");
+											$link.attr("href", '<%= ric_calendar.event_path @event %>')
+											$.rails.handleMethod($link);
+										}
+									},
+
+									cancel: {
+										text: "Zrušit",
+									}
+								}
+
+							});
+						})
+
+					});
+				</script>
+			<% else %>
+				<%= m.destroy_item %>
+			<% end %>
+		<% end %>
+	<% end %>
 <% end %>
