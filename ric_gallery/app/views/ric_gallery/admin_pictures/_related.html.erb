@@ -1,9 +1,0 @@
-<%= rug_menu_for(@gallery_picture, name: "related") do |m| %>
-	<% if @gallery_picture %>
-		<% if @gallery_picture.gallery_directory_id %>
-			<%= m.item t("headers.ric_gallery.admin_directories.show"), directory_path(@gallery_picture.gallery_directory), icon: "search" %>
-		<% else %>
-			<%= m.item t("headers.ric_gallery.admin_directories.index"), directories_path, icon: "list" %>
-		<% end %>
-	<% end %>
-<% end %>

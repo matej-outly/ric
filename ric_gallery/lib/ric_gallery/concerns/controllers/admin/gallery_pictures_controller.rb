@@ -13,7 +13,7 @@ module RicGallery
 	module Concerns
 		module Controllers
 			module Admin
-				module PicturesController extend ActiveSupport::Concern
+				module GalleryPicturesController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -21,24 +21,16 @@ module RicGallery
 					# the module's context.
 					#
 					included do
-					
-						#
-						# Set picture before some actions
-						#
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_gallery_picture, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@gallery_pictures = RicGallery.gallery_picture_model.all.order(position: :asc)
 					end
 
-					#
-					# Show action
-					#
 					def show
 						respond_to do |format|
 							format.html { render "show" }
@@ -46,28 +38,19 @@ module RicGallery
 						end
 					end
 
-					#
-					# New action
-					#
 					def new
 						@gallery_picture = RicGallery.gallery_picture_model.new
 						@gallery_picture.gallery_directory_id = params[:gallery_directory_id] 
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@gallery_picture = RicGallery.gallery_picture_model.new(gallery_picture_params)
 						if @gallery_picture.save
 							respond_to do |format|
-								format.html { redirect_to picture_path(@gallery_picture), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.create") }
 								format.json { render json: @gallery_picture.id }
 							end
 						else
@@ -78,13 +61,10 @@ module RicGallery
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @gallery_picture.update(gallery_picture_params)
 							respond_to do |format|
-								format.html { redirect_to picture_path(@gallery_picture), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.update") }
 								format.json { render json: @gallery_picture.id }
 							end
 						else
@@ -95,30 +75,24 @@ module RicGallery
 						end
 					end
 
-					#
-					# Move action
-					#
 					def move
 						if RicGallery.gallery_picture_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to (@gallery_picture.gallery_directory_id ? directory_path(@gallery_picture.gallery_directory_id) : directories_path), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.move") }
 								format.json { render json: @gallery_picture.id }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to (@gallery_picture.gallery_directory_id ? directory_path(@gallery_picture.gallery_directory_id) : directories_path), alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.move") }
 								format.json { render json: @gallery_picture.errors }
 							end
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@gallery_picture.destroy
 						respond_to do |format|
-							format.html { redirect_to (@gallery_picture.gallery_directory_id ? directory_path(@gallery_picture.gallery_directory_id) : directories_path), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to (@gallery_picture.gallery_directory_id ? gallery_directory_path(@gallery_picture.gallery_directory_id) : gallery_directories_path), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @gallery_picture.id }
 						end
 					end
@@ -128,13 +102,10 @@ module RicGallery
 					def set_gallery_picture
 						@gallery_picture = RicGallery.gallery_picture_model.find_by_id(params[:id])
 						if @gallery_picture.nil?
-							redirect_to pictures_path, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_picture_model.model_name.i18n_key}.not_found")
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def gallery_picture_params
 						params.require(:gallery_picture).permit(RicGallery.gallery_picture_model.permitted_columns)
 					end

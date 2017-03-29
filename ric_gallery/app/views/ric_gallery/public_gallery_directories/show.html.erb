@@ -12,14 +12,14 @@
 </div>
 
 <div class="">
-	<%= link_to t("general.back"), (@gallery_directory.parent_id.nil? ? ric_gallery_public.directories_path : ric_gallery_public.directory_path(@gallery_directory.parent)) %>
+	<%= link_to t("general.back"), (@gallery_directory.parent_id.nil? ? ric_gallery_public.gallery_directories_path : ric_gallery_public.gallery_directory_path(@gallery_directory.parent)) %>
 </div>
 
 <% if @gallery_directory.children.count > 0 %>
 
 	<div class="gallery directories">
 		<% @gallery_directory.children.order(lft: :asc).each do |gallery_directory| %>
-			<%= link_to ric_gallery_public.directory_path(gallery_directory) do %>
+			<%= link_to ric_gallery_public.gallery_directory_path(gallery_directory) do %>
 				<% if gallery_directory.picture.exists? %>
 					<img src="<%= gallery_directory.picture.url(:thumb) %>">
 				<% end %>

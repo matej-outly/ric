@@ -13,7 +13,7 @@ module RicGallery
 	module Concerns
 		module Controllers
 			module Public
-				module DirectoriesController extend ActiveSupport::Concern
+				module GalleryDirectoriesController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the

@@ -5,10 +5,10 @@ class CreateRicGalleryGalleryPictures < ActiveRecord::Migration
 			t.timestamps null: true
 
 			# Position
-			t.integer :position
+			t.integer :position, index: true
 
 			# Directory
-			t.integer :gallery_directory_id
+			t.integer :gallery_directory_id, index: true
 
 			# Data
 			t.attachment :picture

@@ -1,6 +1,6 @@
 <div class="gallery directories">
 	<% @gallery_directories.each do |gallery_directory| %>
-		<%= link_to ric_gallery_public.directory_path(gallery_directory) do %>
+		<%= link_to ric_gallery_public.gallery_directory_path(gallery_directory) do %>
 			<% if gallery_directory.picture.exists? %>
 				<img src="<%= gallery_directory.picture.url(:thumb) %>">
 			<% end %>

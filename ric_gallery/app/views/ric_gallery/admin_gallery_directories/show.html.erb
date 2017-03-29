@@ -1,0 +1,35 @@
+<%= rug_show_table_for(@gallery_directory, {
+	name: :string,
+	parent: { type: :belongs_to, label: :name, path: :gallery_directory_path },
+	description: :text,
+	picture: { type: :picture, thumb_style: :thumb },
+}) %>
+
+<% if @gallery_directory.children.count > 0 %>
+	<div class="hr-divider">
+		<h3 class="hr-divider-content hr-divider-heading"><%= t("headers.ric_gallery.admin_gallery_directories.children") %></h3>
+	</div>
+	
+	<%= rug_index_table_for(@gallery_directory.children.order(lft: :asc), { 
+		name: :string,
+		description: :text,
+	}, paths: {
+		show: :gallery_directory_path,
+		edit: :edit_gallery_directory_path,
+		destroy: :gallery_directory_path
+	} ) %>
+<% end %>
+
+<div class="hr-divider">
+	<h3 class="hr-divider-content hr-divider-heading"><%= t("headers.ric_gallery.admin_gallery_directories.pictures") %></h3>
+</div>
+
+<%= rug_picture_index_table_for(@gallery_directory.gallery_pictures.order(position: :asc), { 
+	picture: { type: :picture, thumb_style: :thumb },
+	title: :string
+}, paths: {
+	new: lambda { new_gallery_picture_path(gallery_directory_id: @gallery_directory.id) },
+	edit: :edit_gallery_picture_path,
+	move: :move_gallery_picture_path,
+	destroy: :gallery_picture_path
+}, moving: true ) %>

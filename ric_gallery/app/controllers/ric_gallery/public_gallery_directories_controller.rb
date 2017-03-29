@@ -2,17 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Pictures
+# * Directories
 # *
 # * Author: Matěj Outlý
-# * Date  : 31. 7. 2015
+# * Date  : 30. 6. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_gallery/admin_controller"
+require_dependency "ric_gallery/public_controller"
 
 module RicGallery
-	class AdminPicturesController < AdminController
-		include RicGallery::Concerns::Controllers::Admin::PicturesController
+	class PublicGalleryDirectoriesController < PublicController
+		include RicGallery::Concerns::Controllers::Public::GalleryDirectoriesController
 	end
 end

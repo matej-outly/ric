@@ -14,8 +14,8 @@ require "ric_gallery/admin_engine"
 require "ric_gallery/public_engine"
 
 # Models
-require 'ric_gallery/concerns/models/gallery_directory'
-require 'ric_gallery/concerns/models/gallery_picture'
+require "ric_gallery/concerns/models/gallery_directory"
+require "ric_gallery/concerns/models/gallery_picture"
 
 module RicGallery
 
@@ -58,7 +58,7 @@ module RicGallery
 	end
 	@@gallery_picture_model = "RicGallery::GalleryPicture"
 
-		#
+	#
 	# Localization of some specific columns (names, titles, descriptions, etc.)
 	#
 	mattr_accessor :localization

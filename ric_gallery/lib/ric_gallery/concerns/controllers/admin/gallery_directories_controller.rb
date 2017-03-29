@@ -13,7 +13,7 @@ module RicGallery
 	module Concerns
 		module Controllers
 			module Admin
-				module DirectoriesController extend ActiveSupport::Concern
+				module GalleryDirectoriesController extend ActiveSupport::Concern
 
 					#
 					# 'included do' causes the included code to be evaluated in the
@@ -21,25 +21,17 @@ module RicGallery
 					# the module's context.
 					#
 					included do
-					
-						#
-						# Set directory before some actions
-						#
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_gallery_directory, only: [:show, :edit, :update, :move_up, :move_down, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@gallery_directories = RicGallery.gallery_directory_model.all.order(lft: :asc)
 						@gallery_pictures = RicGallery.gallery_picture_model.without_directory.order(position: :asc)
 					end
 
-					#
-					# Show action
-					#
 					def show
 						respond_to do |format|
 							format.html { render "show" }
@@ -47,27 +39,18 @@ module RicGallery
 						end
 					end
 
-					#
-					# New action
-					#
 					def new
 						@gallery_directory = RicGallery.gallery_directory_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@gallery_directory = RicGallery.gallery_directory_model.new(gallery_directory_params)
 						if @gallery_directory.save
 							respond_to do |format|
-								format.html { redirect_to directory_path(@gallery_directory), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.create") }
 								format.json { render json: @gallery_directory.id }
 							end
 						else
@@ -78,13 +61,10 @@ module RicGallery
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @gallery_directory.update(gallery_directory_params)
 							respond_to do |format|
-								format.html { redirect_to directory_path(@gallery_directory), notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.update") }
 								format.json { render json: @gallery_directory.id }
 							end
 						else
@@ -98,7 +78,7 @@ module RicGallery
 					def move_up
 						@gallery_directory.move_left
 						respond_to do |format|
-							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.gallery_directory_model.model_name.i18n_key}.move") }
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicWebsite.gallery_directory_model.model_name.i18n_key}.move") }
 							format.json { render json: @gallery_directory.id }
 						end
 					end
@@ -106,18 +86,15 @@ module RicGallery
 					def move_down
 						@gallery_directory.move_right
 						respond_to do |format|
-							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicWebsite.gallery_directory_model.model_name.i18n_key}.move") }
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicWebsite.gallery_directory_model.model_name.i18n_key}.move") }
 							format.json { render json: @gallery_directory.id }
 						end
 					end
 					
-					#
-					# Destroy action
-					#
 					def destroy
 						@gallery_directory.destroy
 						respond_to do |format|
-							format.html { redirect_to directories_path, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to gallery_directories_path, notice: I18n.t("activerecord.notices.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @gallery_directory.id }
 						end
 					end
@@ -127,13 +104,10 @@ module RicGallery
 					def set_gallery_directory
 						@gallery_directory = RicGallery.gallery_directory_model.find_by_id(params[:id])
 						if @gallery_directory.nil?
-							redirect_to directories_path, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicGallery.gallery_directory_model.model_name.i18n_key}.not_found")
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def gallery_directory_params
 						params.require(:gallery_directory).permit(RicGallery.gallery_directory_model.permitted_columns)
 					end

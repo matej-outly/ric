@@ -15,7 +15,7 @@ module RicGallery
 		#
 		# Controllers
 		#
-		require 'ric_gallery/concerns/controllers/public/directories_controller'
+		require "ric_gallery/concerns/controllers/public/gallery_directories_controller"
 
 		isolate_namespace RicGallery
 
