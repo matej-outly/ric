@@ -166,6 +166,33 @@ module RicCalendar
 					return recurrent_event
 				end
 
+				#
+				# Split event in given date
+				#
+				def split_recurrent(scheduled_date_from = self.scheduled_date_from)
+					# Get original instance of this event and duplicate it
+					past_event = self.class.find(self.id)
+					if past_event.nil?
+						return false
+					end
+
+					past_event = past_event.dup
+
+					# Stretch past event
+					past_event.valid_to = scheduled_date_from - 1.day
+					past_event.recurrence_exclude.delete_if { |date| date > past_event.valid_to }
+
+					unless past_event.save
+						return false
+					end
+
+					# Update
+					self.valid_from = scheduled_date_from
+					self.recurrence_exclude.delete_if { |date| date < self.valid_from }
+
+					return past_event
+				end
+
 
 			protected
 				#
@@ -205,7 +232,8 @@ module RicCalendar
 						return extract_from_recurrent
 
 					elsif self.update_action == "all_future"
-
+						# Split event
+						return split_recurrent
 					end
 				end
 

@@ -54,7 +54,7 @@
 				<%= f.primary_button_row :submit %>
 			<% else %>
 				<%= f.button "Upravit pouze tuto událost", name: :update_action, value: "only_this", type: :submit, class: "btn btn-primary" %>
-				<%= f.button "Upravit jen budoucí události", name: :update_action, value: "all_future", type: :submit, class: "btn btn-primary" %>
+				<%= f.button "Upravit jen následující události", name: :update_action, value: "all_future", type: :submit, class: "btn btn-primary" %>
 				<%= f.primary_button_row :submit, label: "Upravit všechny události" %>
 			<% end %>
 		<% end %>
