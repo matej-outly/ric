@@ -180,7 +180,7 @@ module RicCalendar
 								fullevent[:backgroundColor] = color_primary
 							end
 							if event_show_path
-								fullevent[:url] = path_resolver.resolve(event_show_path, scheduled_event[:event])
+								fullevent[:url] = path_resolver.resolve(event_show_path, scheduled_event[:event], scheduled_date_from: scheduled_event[:date_from])
 							end
 							if event_update_path
 								# Edit events (currently only simple non-repeating events)

@@ -2,6 +2,8 @@
 	create_url: "ric_calendar.events_path",
 	update_url: "ric_calendar.event_path"
 ) do |f| %>
+	<%= f.hidden_field :scheduled_date_from %>
+
 	<%= f.text_input_row :name %>
 	<%= f.text_area_row :description %>
 	<%= f.picker_row :calendar_id, RicCalendar.calendar_model.where(resource_type: RicCalendar.calendar_model.name), :id, :name %>
@@ -44,7 +46,20 @@
 
 	<%= f.checkbox_row :all_day %>
 
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
+	<div class="form-group">
+		<% if @event.new_record? || !@event.is_recurring? %>
+			<%= f.primary_button_row :submit %>
+		<% else %>
+			<% if @event.scheduled_date_from.blank? %>
+				<%= f.primary_button_row :submit %>
+			<% else %>
+				<%= f.button "Upravit pouze tuto událost", name: :update_action, value: "only_this", type: :submit, class: "btn btn-primary" %>
+				<%= f.button "Upravit jen budoucí události", name: :update_action, value: "all_future", type: :submit, class: "btn btn-primary" %>
+				<%= f.primary_button_row :submit, label: "Upravit všechny události" %>
+			<% end %>
+		<% end %>
+
+		<%= f.back_link_button_row %>
+	</div>
 
 <% end %>

@@ -56,11 +56,7 @@ RicCalendar.prototype = {
 		var timeTo = (datetimeTo && datetimeTo.hasTime() ? datetimeTo.format("HH:mm:ss") : timeFrom);
 		var allDay = !datetimeFrom.hasTime();
 
-		var oldDateFrom = (oldDatetimeFrom ? oldDatetimeFrom.format("YYYY-MM-DD") : null);
-		var oldTimeFrom = (oldDatetimeFrom && oldDatetimeFrom.hasTime() ? oldDatetimeFrom.format("HH:mm:ss") : null);
-		var oldDateTo = (oldDatetimeTo ? oldDatetimeTo.format("YYYY-MM-DD") : oldDateFrom);
-		var oldTimeTo = (oldDatetimeTo && oldDatetimeTo.hasTime() ? oldDatetimeTo.format("HH:mm:ss") : oldTimeFrom);
-		var oldAllDay = !oldDatetimeFrom.hasTime();
+		var scheduledDateFrom = (oldDatetimeFrom ? oldDatetimeFrom.format("YYYY-MM-DD") : null);
 
 		// Move to another time
 		var ajax_data = {
@@ -69,12 +65,8 @@ RicCalendar.prototype = {
 			time_from: timeFrom,
 			date_to: dateTo,
 			time_to: timeTo,
-			old_all_day: oldAllDay,
-			old_date_from: oldDateFrom,
-			old_time_from: oldTimeFrom,
-			old_date_to: oldDateTo,
-			old_time_to: oldTimeTo,
-			update_action: "dragdrop_one",
+			scheduled_date_from: scheduledDateFrom,
+			update_action: "dragdrop",
 		};
 
 		$.post({
@@ -223,27 +215,3 @@ RicCalendar.prototype = {
 
 }
 
-// ???
-$.fn.recurring_select.texts = {
-	locale_iso_code: "cs",
-	repeat: "Opakování",
-	last_day: "Poslední den",
-	frequency: "Četnost",
-	daily: "Denně",
-	weekly: "Týdně",
-	monthly: "Měsíčně",
-	yearly: "Ročně",
-	every: "Každý",
-	days: ". den/dny",
-	weeks_on: ". týden/týdny v ",
-	months: ". měsíc/měsíce",
-	years: ". rok/roky",
-	day_of_month: "Den v měsíci",
-	day_of_week: "Den v týdnu",
-	ok: "OK",
-	cancel: "Zpět",
-	summary: "Souhrn",
-	first_day_of_week: 1,
-	days_first_letter: ["Ne", "Po", "Út", "St", "Čt", "Pá", "So" ],
-	order: ["1.", "2.", "3.", "4.", "5.", "Poslední"],
-}

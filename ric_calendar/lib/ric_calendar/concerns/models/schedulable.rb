@@ -33,21 +33,7 @@ module RicCalendar
 					# Callbacks
 					# *********************************************************
 
-					before_validation :set_date_from_before_validation
 					before_validation :set_date_to_before_validation
-					before_validation :set_time_from_to_before_validation
-					before_validation :set_valid_from_to_before_validation
-
-					# *********************************************************
-					# Helper attribute for editing
-					# *********************************************************
-
-					attr_accessor :update_action # Possible values: "standard", "dragdrop_one"
-					attr_accessor :old_date_from # Possible values: "standard", "dragdrop_one"
-					attr_accessor :old_time_from # Possible values: "standard", "dragdrop_one"
-					attr_accessor :old_date_to # Possible values: "standard", "dragdrop_one"
-					attr_accessor :old_time_to # Possible values: "standard", "dragdrop_one"
-					attr_accessor :old_all_day # Possible values: "standard", "dragdrop_one"
 				end
 
 				module ClassMethods
@@ -124,12 +110,6 @@ module RicCalendar
 							:date_to,
 							:time_to,
 							:all_day,
-							:update_action,
-							:old_date_from,
-							:old_time_from,
-							:old_date_to,
-							:old_time_to,
-							:old_all_day,
 						]
 					end
 
@@ -210,24 +190,45 @@ module RicCalendar
 				# "From" must be before "to" (causality)
 				#
 				def validate_datetime_from_to_consistency
-					if self.date_from.nil? || self.time_from.nil? || self.date_to.nil? || self.time_to.nil?
-						return
-					end
+					if !is_recurring?
+						# Simple events
+						if self.all_day == true && !self.date_from.blank? && !self.date_to.blank?
+							# In all day events time no matters
+							if self.date_from > self.date_to
+								errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
+							end
 
-					# Causality
-					if self.datetime_from > self.datetime_to
-						errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
-						errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
+						elsif self.all_day == false && !self.date_from.blank? && !self.time_from.blank? && !self.date_to.blank? && !self.time_to.blank?
+							# Causality on both date and time
+							if self.datetime_from > self.datetime_to
+								errors.add(:date_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.date_to.before_from"))
+								errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
+							end
+						end
+					else
+						# Recurring events
+						if self.all_day == false && !self.time_from.blank? && !self.time_to.blank?
+							if self.time_from > self.time_to
+								errors.add(:time_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.time_to.before_from"))
+							end
+						end
 					end
 				end
 
-				#
-				# Set date to correctly if not defined
-				#
-				def set_date_from_before_validation
-					if is_recurring? && !self.valid_from.blank? && !self.valid_to.blank?
-						self.date_from = self.valid_from
-						self.date_to = self.date_from # Only for one-day recurrent events
+				def validate_valid_from_to_consistency_presence
+					if self.respond_to?(:valid_from) && self.respond_to?(:valid_to)
+						# Presence
+						if self.valid_from.blank?
+							errors.add(:valid_from, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_from.blank"))
+						end
+						if self.valid_to.blank?
+							errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.blank"))
+						end
+
+						# Causality
+						if !self.valid_from.blank? && !self.valid_to.blank? && self.valid_from > self.valid_to
+							errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.before_from"))
+						end
 					end
 				end
 
@@ -235,39 +236,8 @@ module RicCalendar
 				# Set date to correctly if not defined
 				#
 				def set_date_to_before_validation
-					if self.date_to.blank?
+					if self.date_to.blank? || self.date_from_changed?
 						self.date_to = self.date_from
-					end
-				end
-
-				def validate_valid_from_to_consistency_presence
-					if self.respond_to?(:valid_from) && self.respond_to?(:valid_to)
-						if self.valid_from.blank?
-							errors.add(:valid_from, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_from.blank"))
-						end
-						if self.valid_to.blank?
-							errors.add(:valid_to, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.valid_to.blank"))
-						end
-					end
-				end
-
-				#
-				# Set time from and time to if all day is set
-				#
-				def set_time_from_to_before_validation
-					if self.all_day == true
-						self.time_from = Time.now if self.time_from.nil?
-						self.time_to = self.time_from
-					end
-				end
-
-				#
-				# Set valid from and to according to date for non-recurring events
-				#
-				def set_valid_from_to_before_validation
-					if !self.is_recurring?
-						self.valid_from = self.date_from
-						self.valid_to = self.date_to
 					end
 				end
 

@@ -83,14 +83,6 @@ cs:
             valid_to:
               before_from: Událost končí před jejím začátkem
 
-  recurring_select:
-    not_recurring: "Bez opakování"
-    change_schedule: "Upravit opakování..."
-    set_schedule: "Nastavit opakování..."
-    new_custom_schedule: "Nové opakování..."
-    custom_schedule: "Vlastní opakování..."
-    or: nebo
-
   ice_cube:
     pieces_connector: ' / '
     not: 'mimo %{target}'

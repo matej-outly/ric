@@ -23,15 +23,23 @@ module RicCalendar
 					belongs_to :source_event, class_name: self.class.name
 					has_many :source_events, class_name: self.class.name, dependent: :nullify
 
-					before_validation do
-						# Recurring-select gem sets "null" string instead of real null
-						if self.recurrence_rule == "null"
-							self.recurrence_rule = nil
-						end
-					end
-
 					# Recurrence exclude is set of excluded dates
 					serialize :recurrence_exclude, Set
+
+					# *********************************************************
+					# Validation & updates
+					# *********************************************************
+
+					before_validation :set_recurrence_rule_to_real_nil
+					validate :validate_update_action
+
+					before_update :update_row
+
+					# *********************************************************
+					# Helper attribute for editing
+					# *********************************************************
+
+					attr_accessor :update_action
 				end
 
 				module ClassMethods
@@ -48,10 +56,28 @@ module RicCalendar
 							:source_event_id,
 							:recurrence_rule,
 							:recurrence_exclude,
+							:update_action,
+							:scheduled_date_from,
 						]
 					end
 
 				end
+
+				# *********************************************************
+				# Virtual attributes
+				# *********************************************************
+
+				def scheduled_date_from
+					@scheduled_date_from
+				end
+
+				def scheduled_date_from=(str)
+					@scheduled_date_from = !str.blank? ? Date.parse(str) : nil
+				end
+
+				# *********************************************************
+				# Scheduling
+				# *********************************************************
 
 				#
 				# Return all occurrences of this event between given dates by Ice Cube
@@ -108,8 +134,85 @@ module RicCalendar
 					return @schedule
 				end
 
-			end
+				#
+				# Extract this event from recurrenting row of events
+				#
+				def extract_from_recurrent(scheduled_date_from = self.scheduled_date_from)
+					# Get original instance of this event and duplicate it
+					recurrent_event = self.class.find(self.id)
+					if recurrent_event.nil?
+						return false
+					end
 
+					recurrent_event = recurrent_event.dup
+
+					# Extract given occurrence from recurrenting event
+					recurrent_event.recurrence_exclude << scheduled_date_from
+					unless recurrent_event.save
+						return false
+					end
+
+					# Remove recurrence rule
+					self.recurrence_rule = nil
+					self.recurrence_exclude = nil
+					self.source_event_id = recurrent_event.id
+
+					# Set dates to split date
+					if !self.date_from_changed? && !self.date_to_changed?
+						self.date_from = scheduled_date_from
+						self.date_to = self.date_from
+					end
+
+					return recurrent_event
+				end
+
+
+			protected
+				#
+				# Fix recurrence select return value to be nil
+				#
+				def set_recurrence_rule_to_real_nil
+					# Recurring-select gem sets "null" string instead of real null
+					if self.recurrence_rule == "null"
+						self.recurrence_rule = nil
+					end
+				end
+
+				#
+				# Validate update actions and neccessary attributes
+				#
+				def validate_update_action
+					if self.update_action.in?(["only_this", "all_future"]) && self.scheduled_date_from.nil?
+						# In these cases we need scheduled_date_from to be filled
+						errors.add(:scheduled_date_from, I18n.t("activerecord.errors.models.#{self.class.model_name.i18n_key}.attributes.scheduled_date_from.blank"))
+					end
+				end
+
+				# *********************************************************
+				# Updates
+				# *********************************************************
+
+				#
+				# Update only this scheduled event
+				#
+				def update_row
+					if !self.update_action.in?(["only_this", "all_future"])
+						return true
+					end
+
+					if self.update_action == "only_this"
+						# Remove recurrence rules from this instance
+						return extract_from_recurrent
+
+					elsif self.update_action == "all_future"
+
+					end
+				end
+
+
+
+
+			end
 		end
 	end
 end

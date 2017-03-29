@@ -1,6 +1,16 @@
 <%= rug_menu_for(@event, options.merge(path_base: "events")) do |m| %>
 	<%= m.new_item %>
 	<%= m.show_item %>
-	<%= m.edit_item %>
+
+	<% if !@event.nil? && @event.scheduled_date_from.nil? %>
+		<%= m.edit_item %>
+	<% elsif !@event.nil? && !@event.new_record? %>
+		<li>
+			<%= link_to ric_calendar.edit_event_path(@event, scheduled_date_from: @event.scheduled_date_from) do %>
+				<i class="fa fa-pencil "></i> Upravit událost</a>
+			<% end %>
+		</li>
+	<% end %>
+
 	<%= m.destroy_item %>
 <% end %>

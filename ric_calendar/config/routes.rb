@@ -13,7 +13,7 @@ RicCalendar::Engine.routes.draw do
 
 	# Calendars
 	resources :calendars, except: [:show] do
-		collection do 
+		collection do
 			get "events"
 			get "resources"
 		end

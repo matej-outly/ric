@@ -19,6 +19,7 @@ module RicCalendar
 					before_action :authorize_event_write, only: [:new, :edit, :create, :update, :update_schedule, :destroy]
 					before_action :save_referrer, only: [:new, :edit]
 					before_action :set_event, only: [:show, :edit, :update, :update_schedule, :destroy]
+					before_action :set_scheduled_date_from, only: [:show, :edit, :update, :update_schedule, :destroy]
 				end
 
 				def show
@@ -74,13 +75,33 @@ module RicCalendar
 				end
 
 				def update
-					if @event.update(event_params)
+					if @event.update(event_params) #_update
 						redirect_url = load_referrer
 						redirect_url = ric_calendar.calendars_path if redirect_url.blank?
 						redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.event_model.model_name.i18n_key}.update")
 					else
 						render "new"
 					end
+
+					# _update.each do |affected_event|
+					# 	unless affected_event.save
+					# 		if affected_event != @event
+					# 			affected_event.errors.each do |attribute, error|
+					# 				@event.errors.add attribute, error
+					# 			end
+					# 		end
+					# 	end
+					# end
+
+					# # byebug
+
+					# if @event.errors.empty?
+					# 	redirect_url = load_referrer
+					# 	redirect_url = ric_calendar.calendars_path if redirect_url.blank?
+					# 	redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.event_model.model_name.i18n_key}.update")
+					# else
+					# 	render "new"
+					# end
 				end
 
 				#
@@ -101,30 +122,20 @@ module RicCalendar
 
 					else
 						# Recurring event
-						data = event_params
+						event_data = event_params
 
-						# First we need to extract given occurrence from recurrenting event
-						@event.recurrence_exclude << Date.parse(data[:old_date_from])
+						# Extract occurrence
+						extracted_event = @event.extract(@event.scheduled_date_from)
 
-						# Now, we can create new standalone event
-						event = @event.dup
-
-						# New event is not recurring, it is simple event
-						event.recurrence_rule = nil
-						event.recurrence_exclude = nil
-						event.source_event_id = @event.id
-
-						# New event has date time from parameters
-						event.valid_from = nil
-						event.valid_to = nil
-						event.date_from = data[:date_from]
-						event.date_to = data[:date_to]
-						event.time_from = data[:time_from]
-						event.time_to = data[:time_to]
-						event.all_day = data[:all_day]
+						# Set new date and time
+						extracted_event.date_from = event_data[:date_from]
+						extracted_event.date_to = event_data[:date_to]
+						extracted_event.time_from = event_data[:time_from]
+						extracted_event.time_to = event_data[:time_to]
+						extracted_event.all_day = event_data[:all_day]
 
 						# Save changes
-						if @event.save && event.save
+						if @event.save && extracted_event.save
 							respond_to do |format|
 								format.json { render json: true }
 							end
@@ -169,6 +180,11 @@ module RicCalendar
 					end
 				end
 
+				def set_scheduled_date_from
+					@event.scheduled_date_from = params[:scheduled_date_from] unless params[:scheduled_date_from].nil?
+					@event.update_action = params[:update_action] unless params[:update_action].nil?
+				end
+
 				# *************************************************************
 				# Param filters
 				# *************************************************************
@@ -176,6 +192,64 @@ module RicCalendar
 				def event_params
 					params.require(:event).permit(RicCalendar.event_model.permitted_columns)
 				end
+
+				# *************************************************************
+				# Update event
+				# *************************************************************
+
+				def _update
+					if params[:update_action] == "only_this"
+						recurrent_row = @event.extract_from_recurrent(@event.scheduled_date_from)
+
+					elsif params[:update_action] == "all_future"
+
+					else
+						return @event.update(event_params)
+					end
+				end
+
+				def _update2
+					event_data = event_params
+
+					if @event.is_recurring? && event_data[:recurrence_rule] != "null" && params[:update_action] != "all"
+						if params[:update_action] == "only_this"
+							# Extract event and update its fields
+							extracted_event = @event.extract(@event.scheduled_date_from)
+							extracted_event.assign_attributes(event_data)
+
+							return [@event, extracted_event]
+
+						elsif params[:update_action] == "all_future"
+							# Split event and update only the future occurrences
+							new_event = @event.split(@event.scheduled_date_from)
+							new_event.assign_attributes(event_data)
+							new_event.valid_from = split_date
+
+							return [@event, new_event]
+
+						else
+							raise "Unknown event update action, possibles are: only_this, all_future"
+						end
+
+						# && data[:update_action] == "future" && @event.valid_to >= today
+						# # Split recurring event and make changes only on new instance
+						# new_event = @event.dup
+
+						# # Set old event validity
+						# @event.valid_to = yesterday
+
+						# # Update event attributes
+
+						# new_event.valid_from = today
+
+
+					else
+						# Regular update
+						@event.assign_attributes(event_data)
+						return [ @event ]
+					end
+				end
+
 
 			end
 		end
