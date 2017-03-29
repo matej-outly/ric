@@ -20,10 +20,6 @@ RicCalendar::Engine.routes.draw do
 	end
 
 	# Events
-	resources :events, except: [:index] do
-		member do
-			patch "update_schedule"
-		end
-	end
+	resources :events, except: [:index]
 
 end
