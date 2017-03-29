@@ -1,0 +1,10 @@
+<%= rug_form_for(@gallery_picture, 
+	create_url: :gallery_pictures_path, 
+	update_url: :gallery_picture_path
+) do |f| %>
+	<%= f.picker_row :gallery_directory_id, RicGallery.gallery_directory_model.all.order(lft: :asc), :id, :name_with_depth, enable_null: true %>
+	<%= f.dropzone_row :picture, append_columns: { gallery_directory_id: true }  %>
+	<%= f.text_input_row :title, :text_field, localization: (RicGallery.localization == true) %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

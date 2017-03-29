@@ -1,0 +1,8 @@
+<%= rug_form_for(@price_list, 
+	create_url: :price_lists_path, 
+	update_url: :price_list_path
+) do |f| %>
+	<%= f.text_input_row :name, :text_field %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

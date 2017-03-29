@@ -1,0 +1,5 @@
+<%= rug_menu_for(@gallery_picture, options.merge(path_base: "gallery_pictures")) do |m| %>
+	<%= m.new_item nil, lambda { new_gallery_picture_path(gallery_directory_id: @gallery_picture.gallery_directory_id) } %>
+	<%= m.edit_item %>
+	<%= m.destroy_item %>
+<% end %>

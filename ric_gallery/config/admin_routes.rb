@@ -11,18 +11,19 @@
 
 RicGallery::AdminEngine.routes.draw do
 
-	# Directories
-	resources :directories, controller: "admin_directories" do
+	# Gallery directories
+	resources :gallery_directories, controller: "admin_gallery_directories" do
 		member do
 			put "move_up"
 			put "move_down"
 		end
 	end
 
-	# Pictures
-	resources :pictures, controller: "admin_pictures" do
+	# Gallery pictures
+	resources :gallery_pictures, controller: "admin_gallery_pictures", except: [:index, :show] do
 		member do
 			put "move/:relation/:destination_id", action: "move", as: "move"
 		end
 	end
+
 end

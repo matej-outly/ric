@@ -1,0 +1,8 @@
+<%= rug_index_table_for(@price_lists, { 
+	name: :string,
+}, paths: {
+	show: :price_list_path,
+	edit: :edit_price_list_path,
+	move: :move_price_list_path,
+	destroy: :price_list_path
+}, moving: true, pagination: true, summary: true ) %>

@@ -14,8 +14,7 @@ require "ric_partnership/admin_engine"
 require "ric_partnership/public_engine"
 
 # Models
-require 'ric_partnership/concerns/models/partner'
-require 'ric_partnership/concerns/models/reference'
+require "ric_partnership/concerns/models/partner"
 
 module RicPartnership
 
@@ -48,27 +47,6 @@ module RicPartnership
 		return @@partner_model.constantize
 	end
 	@@partner_model = "RicPartnership::Partner"
-
-	#
-	# Enable partners subsystem
-	#
-	mattr_accessor :enable_partners
-	@@enable_partners = true
-
-	#
-	# Reference model
-	#
-	mattr_accessor :reference_model
-	def self.reference_model
-		return @@reference_model.constantize
-	end
-	@@reference_model = "RicPartnership::Reference"
-
-	#
-	# Enable references subsystem
-	#
-	mattr_accessor :enable_references
-	@@enable_references = true
 
 	#
 	# Localization of some specific columns (names, etc.) TODO not working right now

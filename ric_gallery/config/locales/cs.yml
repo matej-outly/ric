@@ -2,7 +2,7 @@ cs:
 
   headers:
     ric_gallery:
-      admin_directories:
+      admin_gallery_directories:
         index: "Fotogalerie"
         show: "Detail alba"
         new: "Nové album"
@@ -12,7 +12,7 @@ cs:
         destroy: "Smazat album"
         pictures: "Obrázky"
         children: "Podřazená alba"
-      admin_pictures:
+      admin_gallery_pictures:
         index: "Obrázky fotogalerie"
         show: "Detail obrázku"
         new: "Nový obrázek"

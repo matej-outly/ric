@@ -10,7 +10,8 @@
 # *****************************************************************************
 
 module RicSettings
-	class SettingsCollection < ActiveRecord::Base
+	class SettingsCollection
+		include ActiveModel::Model
 		include RicSettings::Concerns::Models::SettingsCollection
 
 		#

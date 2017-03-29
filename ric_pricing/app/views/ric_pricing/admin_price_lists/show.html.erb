@@ -1,0 +1,19 @@
+<%= rug_show_table_for(@price_list, {
+	name: :string,
+}) %>
+
+<div class="hr-divider">
+	<h3 class="hr-divider-content hr-divider-heading"><%= RicPricing.price_list_model.human_attribute_name("prices") %></h3>
+</div>
+
+<%= rug_index_table_for(@price_list.prices.order(position: :asc), { 
+	description: :string,
+	amount: :string,
+	operator: :enum,
+	price: :currency,
+}, paths: {
+	new: lambda { new_price_list_price_path(@price_list) },
+	edit: lambda { |price| edit_price_list_price_path(@price_list, price) },
+	move: lambda { |price, relation, destination_id| move_price_list_price_path(@price_list, price, relation, destination_id) },
+	destroy: lambda { |price| price_list_price_path(@price_list, price) },
+}, moving: true, summary: true ) %>

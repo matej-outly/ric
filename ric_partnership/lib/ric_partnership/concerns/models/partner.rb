@@ -25,18 +25,12 @@ module RicPartnership
 					# Structure
 					# *********************************************************
 
-					#
-					# Ordering
-					#
 					enable_ordering
 
 					# *********************************************************
 					# Attachments
 					# *********************************************************
 
-					#
-					# Logo
-					#
 					has_attached_file :logo, :styles => { :full => config(:logo_crop, :full) }
 					validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
 

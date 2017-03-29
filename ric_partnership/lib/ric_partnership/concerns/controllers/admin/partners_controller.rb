@@ -22,23 +22,14 @@ module RicPartnership
 					#
 					included do
 					
-						#
-						# Set partner before some actions
-						#
 						before_action :set_partner, only: [:show, :edit, :update, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@partners = RicPartnership.partner_model.all.order(position: :asc).page(params[:page]).per(50)
 					end
 
-					#
-					# Show action
-					#
 					def show
 						respond_to do |format|
 							format.html { render "show" }
@@ -46,22 +37,13 @@ module RicPartnership
 						end
 					end
 
-					#
-					# New action
-					#
 					def new
 						@partner = RicPartnership.partner_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@partner = RicPartnership.partner_model.new(partner_params)
 						if @partner.save
@@ -77,9 +59,6 @@ module RicPartnership
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @partner.update(partner_params)
 							respond_to do |format|
@@ -94,9 +73,6 @@ module RicPartnership
 						end
 					end
 
-					#
-					# Move action
-					#
 					def move
 						if RicPartnership.partner_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
@@ -111,9 +87,6 @@ module RicPartnership
 						end
 					end
 					
-					#
-					# Destroy action
-					#
 					def destroy
 						@partner.destroy
 						respond_to do |format|
@@ -131,9 +104,6 @@ module RicPartnership
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def partner_params
 						params.require(:partner).permit(RicPartnership.partner_model.permitted_columns)
 					end

@@ -1,9 +1,11 @@
-<%= rug_index_table_for(@users, { 
-	email: :string,
-	name_lastname: :string,
-	name_firstname: :string,
-	role: :enum,
-}, paths: {
+<% 
+	columns = rug_columns 
+	columns.add_column_by_type(:email, type: :string)
+	columns.add_column_by_type(:name_lastname, type: :string)
+	columns.add_column_by_type(:name_firstname, type: :string)
+	columns.add_column_by_type(:role, type: :enum) if RicUser.user_model.has_role?
+%>
+<%= rug_index_table_for(@users, columns, paths: {
 	show: :user_path,
 	edit: :edit_user_path,
 	destroy: :user_path

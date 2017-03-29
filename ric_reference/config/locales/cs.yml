@@ -1,0 +1,31 @@
+cs:
+
+  headers:
+    ric_reference:
+      admin_references:
+        index: "Reference"
+        show: "Detail reference"
+        new: "Nová reference"
+        create: "Nová reference"
+        edit: "Upravit referenci"
+        update: "Upravit referenci"
+        destroy: "Smazat referenci"
+
+  activerecord:
+    attributes:
+      ric_reference/reference:
+        name: Jméno
+        url: URL
+        logo: Logo
+    notices:
+      models:
+        ric_reference/reference:
+          create: Reference byla úspěšně vytvořena.
+          update: Reference byla úspěšně uložena.
+          move: Reference byla úspěšně přesunuta.
+          destroy: Reference byla úspěšně smazána.
+    errors:
+      models:
+        ric_reference/reference:
+          not_found: Reference nebyla nalezena.
+          move: Reference nebyla přesunuta.

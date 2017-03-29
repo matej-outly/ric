@@ -25,7 +25,17 @@ module RicUser
 					# Role
 					# *********************************************************
 
-					enum_column :role, RicUser.roles, default: RicUser.default_role
+					if has_role?
+						enum_column :role, RicUser.roles, default: RicUser.default_role
+					end
+
+				end
+
+				module ClassMethods
+
+					def has_role?
+						self.column_names.include?("role")
+					end
 
 				end
 

@@ -11,7 +11,7 @@
 
 RicGallery::PublicEngine.routes.draw do
 
-	# Directories
-	resources :directories, controller: "public_directories", only: [:index, :show]
+	# Gallery directories
+	resources :galleries, controller: "public_gallery_directories", only: [:index, :show]
 
 end
