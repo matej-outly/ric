@@ -71,12 +71,22 @@ module RicContact
 				def save
 					if valid?
 						if !(defined?(RicNotification).nil?)
+
+							# Send to receiver
 							RicNotification.notify([:contact_message_created, self], :role_admin)
+
+							# Send copy to author
+							if RicContact.send_contact_messages_copy_to_author && self.respond_to?(:email) && !self.email.blank?
+								RicNotification.notify([:contact_message_created, self], self.email)
+							end
 						else
+
+							# Send to receiver and copy to author
 							begin 
 								RicContact.contact_message_mailer.new_message(self).deliver_now
 							rescue Net::SMTPFatalError, Net::SMTPSyntaxError
 							end
+
 						end
 						return true
 					else
