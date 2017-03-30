@@ -75,6 +75,12 @@ module RicContact
 	@@save_contact_messages_to_db = false
 
 	#
+	# Send copy of contact contact messages to user who created it
+	#
+	mattr_accessor :send_contact_messages_copy_to_author
+	@@send_contact_messages_copy_to_author = false
+
+	#
 	# Enable contact people subsystem
 	#
 	mattr_accessor :enable_contact_people
