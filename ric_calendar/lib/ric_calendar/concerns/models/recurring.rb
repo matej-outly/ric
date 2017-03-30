@@ -20,8 +20,8 @@ module RicCalendar
 					# Structure
 					# *********************************************************
 
-					belongs_to :source_event, class_name: self.class.name
-					has_many :source_events, class_name: self.class.name, dependent: :nullify
+					belongs_to :source_event, class_name: name
+					has_many :source_events, class_name: name, foreign_key: "source_event_id", dependent: :nullify
 
 					# Recurrence exclude is set of excluded dates
 					serialize :recurrence_exclude, Set
