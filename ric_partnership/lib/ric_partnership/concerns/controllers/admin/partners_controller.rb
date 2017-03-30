@@ -21,7 +21,8 @@ module RicPartnership
 					# the module's context.
 					#
 					included do
-					
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_partner, only: [:show, :edit, :update, :destroy]
 
 					end
@@ -48,7 +49,7 @@ module RicPartnership
 						@partner = RicPartnership.partner_model.new(partner_params)
 						if @partner.save
 							respond_to do |format|
-								format.html { redirect_to ric_partnership_admin.partner_path(@partner), notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.create") }
 								format.json { render json: @partner.id }
 							end
 						else
@@ -62,7 +63,7 @@ module RicPartnership
 					def update
 						if @partner.update(partner_params)
 							respond_to do |format|
-								format.html { redirect_to ric_partnership_admin.partner_path(@partner), notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.update") }
 								format.json { render json: @partner.id }
 							end
 						else
@@ -76,12 +77,12 @@ module RicPartnership
 					def move
 						if RicPartnership.partner_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to ric_partnership_admin.partners_path, notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicPartnership.partner_model.model_name.i18n_key}.move") }
 								format.json { render json: true }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to root_path, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.move") }
 								format.json { render json: false }
 							end
 						end
@@ -100,7 +101,7 @@ module RicPartnership
 					def set_partner
 						@partner = RicPartnership.partner_model.find_by_id(params[:id])
 						if @partner.nil?
-							redirect_to ric_partnership_admin.partners_path, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.not_found")
 						end
 					end
 

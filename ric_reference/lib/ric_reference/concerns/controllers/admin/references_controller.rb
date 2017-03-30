@@ -21,7 +21,8 @@ module RicReference
 					# the module's context.
 					#
 					included do
-					
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_reference, only: [:show, :edit, :update, :destroy]
 
 					end
@@ -48,7 +49,7 @@ module RicReference
 						@reference = RicReference.reference_model.new(reference_params)
 						if @reference.save
 							respond_to do |format|
-								format.html { redirect_to ric_reference_admin.reference_path(@reference), notice: I18n.t("activerecord.notices.models.#{RicReference.reference_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicReference.reference_model.model_name.i18n_key}.create") }
 								format.json { render json: @reference.id }
 							end
 						else
@@ -62,7 +63,7 @@ module RicReference
 					def update
 						if @reference.update(reference_params)
 							respond_to do |format|
-								format.html { redirect_to ric_reference_admin.reference_path(@reference), notice: I18n.t("activerecord.notices.models.#{RicReference.reference_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicReference.reference_model.model_name.i18n_key}.update") }
 								format.json { render json: @reference.id }
 							end
 						else
@@ -76,12 +77,12 @@ module RicReference
 					def move
 						if RicReference.reference_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to ric_reference_admin.references_path, notice: I18n.t("activerecord.notices.models.#{RicReference.reference_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicReference.reference_model.model_name.i18n_key}.move") }
 								format.json { render json: true }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to ric_reference_admin.references_path, alert: I18n.t("activerecord.errors.models.#{RicReference.reference_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicReference.reference_model.model_name.i18n_key}.move") }
 								format.json { render json: false }
 							end
 						end
@@ -100,7 +101,7 @@ module RicReference
 					def set_reference
 						@reference = RicReference.reference_model.find_by_id(params[:id])
 						if @reference.nil?
-							redirect_to ric_reference_admin.references_path, alert: I18n.t("activerecord.errors.models.#{RicReference.reference_model.model_name.i18n_key}.not_found")
+							redirect_to request_referrer, alert: I18n.t("activerecord.errors.models.#{RicReference.reference_model.model_name.i18n_key}.not_found")
 						end
 					end
 

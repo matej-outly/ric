@@ -22,6 +22,7 @@ module RicService
 					#
 					included do
 					
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_service, only: [:show, :edit, :update, :move, :destroy]
 
 					end
@@ -48,7 +49,7 @@ module RicService
 						@service = RicService.service_model.new(service_params)
 						if @service.save
 							respond_to do |format|
-								format.html { redirect_to ric_service_admin.service_path(@service), notice: I18n.t("activerecord.notices.models.#{RicService.service_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicService.service_model.model_name.i18n_key}.create") }
 								format.json { render json: @service.id }
 							end
 						else
@@ -62,7 +63,7 @@ module RicService
 					def update
 						if @service.update(service_params)
 							respond_to do |format|
-								format.html { redirect_to ric_service_admin.service_path(@service), notice: I18n.t("activerecord.notices.models.#{RicService.service_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicService.service_model.model_name.i18n_key}.update") }
 								format.json { render json: @service.id }
 							end
 						else
@@ -76,12 +77,12 @@ module RicService
 					def move
 						if RicService.service_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to ric_service_admin.services_path, notice: I18n.t("activerecord.notices.models.#{RicService.service_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicService.service_model.model_name.i18n_key}.move") }
 								format.json { render json: true }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to ric_service_admin.services_path, alert: I18n.t("activerecord.errors.models.#{RicService.service_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicService.service_model.model_name.i18n_key}.move") }
 								format.json { render json: false }
 							end
 						end
@@ -100,7 +101,7 @@ module RicService
 					def set_service
 						@service = RicService.service_model.find_by_id(params[:id])
 						if @service.nil?
-							redirect_to ric_service_admin.services_path, alert: I18n.t("activerecord.errors.models.#{RicService.service_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicService.service_model.model_name.i18n_key}.not_found")
 						end
 					end
 
