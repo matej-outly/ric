@@ -25,9 +25,9 @@ module RicUser
 					# Role
 					# *********************************************************
 
-					if has_role?
+					#if has_role? # can§t be here, because of DB migrations failing to complete the contidion
 						enum_column :role, RicUser.roles, default: RicUser.default_role
-					end
+					#end
 
 				end
 
