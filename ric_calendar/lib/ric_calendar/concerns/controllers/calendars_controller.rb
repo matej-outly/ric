@@ -34,18 +34,7 @@ module RicCalendar
 				def events
 					date_from = Date.parse(params[:start].to_s)
 					date_to = Date.parse(params[:end].to_s)
-
-					# Calendar events
-					fullevents = []
-
-					# Add events from calendars
-					fullevents += load_calendars(date_from, date_to)
-
-					# Add aditional events
-					fullevents += load_events(date_from, date_to)
-
-					# Return JSON response
-					render json: fullevents
+					render json: load_calendars(date_from, date_to)
 				end
 
 				#
@@ -133,15 +122,6 @@ module RicCalendar
 				# *************************************************************
 
 				#
-				# Inject custom events into calendar and return list of fullcalendar objects
-				#
-				# To be overriden in application
-				#
-				def load_events(date_from, date_to)
-					[]
-				end
-
-				#
 				# Read events from calendars
 				#
 				def load_calendars(date_from, date_to)
@@ -189,7 +169,7 @@ module RicCalendar
 							end
 
 							# Update object by class specific attributes
-							scheduled_event[:event].to_fullcalendar(fullevent)
+							fullevent[:title] = scheduled_event[:event].event_title
 
 							# Insert into events
 							fullevents << fullevent

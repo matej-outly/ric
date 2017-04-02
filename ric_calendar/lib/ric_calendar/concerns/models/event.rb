@@ -63,8 +63,8 @@ module RicCalendar
 				# Conversions
 				# *************************************************************
 
-				def to_fullcalendar(fullevent)
-					fullevent[:title] = self.name
+				def event_title
+					return self.name
 				end
 
 			end

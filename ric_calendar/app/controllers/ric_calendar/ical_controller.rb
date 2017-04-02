@@ -2,27 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Document Folders
 # *
 # * Author:
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
 
-RicCalendar::Engine.routes.draw do
+require_dependency "ric_calendar/application_controller"
 
-	# Calendars
-	resources :calendars, except: [:show] do
-		collection do
-			get "events"
-			get "resources"
-		end
+module RicCalendar
+	class IcalController < ApplicationController
+		include RicCalendar::Concerns::Controllers::IcalController
 	end
-
-	# Events
-	resources :events, except: [:index]
-
-	# iCalendar output
-	get "ical", to: "ical#index"
-
 end
