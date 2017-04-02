@@ -34,7 +34,8 @@ module RicCalendar
 				def events
 					date_from = Date.parse(params[:start].to_s)
 					date_to = Date.parse(params[:end].to_s)
-					render json: load_calendars(date_from, date_to)
+					disabled_calendars = params[:disabled_calendars]
+					render json: load_calendars(date_from, date_to, disabled_calendars)
 				end
 
 				#
@@ -124,12 +125,12 @@ module RicCalendar
 				#
 				# Read events from calendars
 				#
-				def load_calendars(date_from, date_to)
+				def load_calendars(date_from, date_to, disabled_calendars)
 					fullevents = []
 
 					path_resolver = RugSupport::PathResolver.new(self)
 
-					RicCalendar.calendar_model.all.each do |calendar|
+					RicCalendar.calendar_model.not_disabled(disabled_calendars).each do |calendar|
 
 						# Get calendar color and action edit method
 						if !calendar.color.blank?

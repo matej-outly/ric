@@ -26,13 +26,19 @@ function RicCalendar(hash, options)
 {
 	this.hash = hash;
 	this.calendar = null;
-	this.options = (typeof options !== 'undefined' ? options : {});
+	this.options = $.extend({
+		url: "/calendars/events",
+		calendarsSelector: null,
+	}, options);
 
 	// Local storage key
 	this._localStorageKey = 'ric_calendar_' + hash;
 
 	// Ignore view render callback during fullcalendar load
 	this._ignoreViewRenderCallback = true;
+
+	// Do not show some calendars
+	this.disabledCalendarIds = [];
 }
 RicCalendar.prototype = {
 	constructor: RicCalendar,
@@ -66,7 +72,7 @@ RicCalendar.prototype = {
 			date_to: dateTo,
 			time_to: timeTo,
 			scheduled_date_from: scheduledDateFrom,
-			update_action: "only_this",
+			update_action: "onlyself",
 		};
 
 		$.post({
@@ -96,10 +102,14 @@ RicCalendar.prototype = {
 	//
 	ready: function()
 	{
-		var _this = this;
-		_this.calendar = $('#ric-calendar-' + _this.hash);
+		var self = this;
 
-		_this.calendar.fullCalendar(
+		// Load saved options from local storage
+		self.loadOptions();
+
+		// Initialize fullcalendar
+		self.calendar = $('#ric-calendar-' + self.hash);
+		self.calendar.fullCalendar(
 			$.extend({
 				header: {
 						left: 'prev,next today',
@@ -111,9 +121,24 @@ RicCalendar.prototype = {
 				navLinks: true, // can click day/week names to navigate views
 				editable: false, // Would be overriden in editable events
 				eventLimit: true, // allow "more" link when too many events
-				events: _this.options.url, // data source
 				scrollTime: "8:00:00", // Where to start showing calendar in agenda
 				timeFormat: "H:mm", // Show 8:00 instead of 8
+
+				events: function(start, end, timezone, callback) {
+					$.post({
+						url: self.options.url,
+						dataType: 'json',
+						data: {
+							start: start.format("YYYY-MM-DD"),
+							end: end.format("YYYY-MM-DD"),
+							disabled_calendars: self.disabledCalendarIds,
+						},
+						success: function(events) {
+							callback(events);
+						}
+					});
+				},
+				// events: self.options.url,
 
 				eventDragStart: function(event, delta, revertFunc) {
 					event.oldStart = event.start;
@@ -128,31 +153,31 @@ RicCalendar.prototype = {
 				},
 
 				eventDrop: function(event, delta, revertFunc) {
-					_this.moveEvent(event, delta, revertFunc);
+					self.moveEvent(event, delta, revertFunc);
 				},
 
 				eventResize: function(event, delta, revertFunc) {
-					_this.moveEvent(event, delta, revertFunc);
+					self.moveEvent(event, delta, revertFunc);
 				},
 
 				viewRender: function(view, element) {
-					if (!_this._ignoreViewRenderCallback) {
-						_this.saveView(view);
+					if (!self._ignoreViewRenderCallback) {
+						self.saveView(view);
 					}
 					else {
-						_this._ignoreViewRenderCallback = false;
+						self._ignoreViewRenderCallback = false;
 					}
 				},
 
 				dayClick: function(date, event, view) {
 					// Create new event on click in calendar white space
-					if (_this.options.newUrl !== undefined) {
-						if (_this.options.newUrl.includes('?')) {
+					if (self.options.newUrl !== undefined) {
+						if (self.options.newUrl.includes('?')) {
 							delimiter = '&'
 						} else {
 							delimiter = '?'
 						}
-						window.location.href = _this.options.newUrl + delimiter + 'date=' + date.format();
+						window.location.href = self.options.newUrl + delimiter + 'date=' + date.format();
 					}
 				},
 
@@ -164,8 +189,69 @@ RicCalendar.prototype = {
 
 
 
-			}, _this.loadState())
+			}, self.loadState())
 		);
+
+		// Set up calendars switch
+		if (self.options.calendarsSelector !== null) {
+			$(self.options.calendarsSelector).each(function() {
+				var $checkbox = $(this);
+				var calendarId = $checkbox.attr("data-calendar-id");
+
+				// Set up checkboxes
+				if (self.disabledCalendarIds && self.disabledCalendarIds.indexOf(calendarId) === -1) {
+					$checkbox.attr("checked", true);
+				}
+
+			}).click(function() {
+				var $checkbox = $(this);
+				var calendarId = $checkbox.attr("data-calendar-id");
+				var isEnabled = $checkbox.is(":checked");
+
+
+				var calendarIdIdx = self.disabledCalendarIds.indexOf(calendarId);
+
+				if (isEnabled && calendarIdIdx !== -1) {
+					// Enable calendar
+					self.disabledCalendarIds.splice(calendarIdIdx, 1);
+				}
+				if (!isEnabled && calendarIdIdx === -1) {
+					// Disable calendar
+					self.disabledCalendarIds.push(calendarId);
+				}
+
+				// Save state
+				self.saveOptions();
+
+				// Reload calendar
+				self.calendar.fullCalendar('refetchEvents')
+			});
+		}
+	},
+
+	//
+	// Save various calendar settings
+	//
+	saveOptions: function()
+	{
+		var serialized = JSON.stringify({
+			disabledCalendarIds: this.disabledCalendarIds,
+		});
+
+		localStorage.setItem(this._localStorageKey + "_options", serialized);
+
+	},
+
+	//
+	// Load various calendar settings
+	//
+	loadOptions: function()
+	{
+		var serialized = localStorage.getItem(this._localStorageKey + "_options");
+		var options = serialized !== null ? JSON.parse(serialized) : null;
+		if (options !== null) {
+			this.disabledCalendarIds = options.disabledCalendarIds;
+		}
 	},
 
 	//
@@ -183,7 +269,7 @@ RicCalendar.prototype = {
 			intervalEnd: view.intervalEnd,
 		});
 
-		localStorage.setItem(this._localStorageKey, serializedView);
+		localStorage.setItem(this._localStorageKey + "_view", serializedView);
 	},
 
 	//
@@ -193,7 +279,7 @@ RicCalendar.prototype = {
 	//
 	loadView: function()
 	{
-		var serializedView = localStorage.getItem(this._localStorageKey);
+		var serializedView = localStorage.getItem(this._localStorageKey + "_view");
 		return serializedView !== null ? JSON.parse(serializedView) : null;
 	},
 

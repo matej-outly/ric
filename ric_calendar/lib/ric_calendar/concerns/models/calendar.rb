@@ -60,6 +60,21 @@ module RicCalendar
 						return result
 					end
 
+					# *********************************************************
+					# Queries
+					# *********************************************************
+
+					#
+					# Get only calendars, which are not in black list
+					#
+					def not_disabled(disabled_calendars)
+						if disabled_calendars == nil
+							all
+						else
+							where.not(id: disabled_calendars)
+						end
+					end
+
 				end
 
 				#
@@ -90,7 +105,7 @@ module RicCalendar
 					return @kind_options
 				end
 
-			protected 
+			protected
 
 				#
 				# Resource ID must be filled if resource type is defined in config and is different than "self" calendar
