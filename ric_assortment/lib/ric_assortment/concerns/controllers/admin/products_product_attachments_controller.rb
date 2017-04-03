@@ -17,13 +17,13 @@ module RicAssortment
 
 					included do
 
+						before_action :save_referrer, only: [:edit]
 						before_action :set_product
 						before_action :set_product_attachment, only: [:destroy]
 
 					end
 
 					def edit
-						save_referrer
 					end
 					
 					def update
@@ -48,14 +48,14 @@ module RicAssortment
 					def set_product
 						@product = RicAssortment.product_model.find_by_id(params[:id])
 						if @product.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					def set_product_attachment
 						@product_attachment = RicAssortment.product_attachment_model.find_by_id(params[:product_attachment_id])
 						if @product_attachment.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_attachment_model.model_name.i18n_key}.not_found")
 						end
 					end
 

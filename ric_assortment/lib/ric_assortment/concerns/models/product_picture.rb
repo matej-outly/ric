@@ -49,6 +49,8 @@ module RicAssortment
 						has_attached_file :picture, :styles => { thumb: config(:picture_crop, :thumb), full: config(:picture_crop, :full) }
 						validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 					end
+
+					add_methods_to_json :picture_url_thumb
 					
 				end
 
@@ -88,6 +90,18 @@ module RicAssortment
 					new_record.save
 
 					return new_record
+				end
+
+				# *********************************************************
+				# Picture
+				# *********************************************************
+
+				def picture_url_thumb
+					if self.picture.present?
+						self.picture.url(:thumb)
+					else
+						nil
+					end
 				end
 
 			end

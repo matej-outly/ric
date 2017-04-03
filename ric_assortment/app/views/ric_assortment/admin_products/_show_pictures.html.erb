@@ -2,15 +2,19 @@
 	picture: { type: :picture, thumb_style: :thumb },
 	title: :string,
 }, paths: {
-	new: lambda { new_product_product_picture_path(@product) },
 	edit: lambda { |product_picture| edit_product_product_picture_path(@product, product_picture) },
 	move: lambda { |product_picture, relation, destination_id| move_product_product_picture_path(@product, product_picture, relation, destination_id) },
 	destroy: lambda { |product_picture| product_product_picture_path(@product, product_picture) },
-}, global_actions: {
-	edit_many: { 
-		path: lambda { |unused| edit_many_product_product_pictures_path(@product) },
-		icon: "plus",
-		label: t("headers.ric_assortment.admin_product_pictures.edit_many"),
-		style: "primary"
-	}
-}, moving: true) %>
+}, moving: true, inline_destroy: true, thumbnail_crop: 150) %>
+<%= rug_form_for(@product, update_url: :product_path) do |f| %>
+	<%= f.dropzone_many_row(
+			:product_pictures, 
+			attachment_name: :picture, 
+			create_url: lambda { product_product_pictures_path(@product) },
+			show_url: lambda { |product_picture| product_product_picture_path(@product, product_picture) },
+			collection: @product.product_pictures.order(position: :asc),
+			label: false,
+			move_to_object: "rug_table_1b125f102634a4ef4b590f3a8b833b7b890e90c4"
+		)
+	%>
+<% end %>

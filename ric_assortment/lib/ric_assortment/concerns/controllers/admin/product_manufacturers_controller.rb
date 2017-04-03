@@ -16,7 +16,8 @@ module RicAssortment
 				module ProductManufacturersController extend ActiveSupport::Concern
 
 					included do
-					
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_product_manufacturer, only: [:show, :edit, :update, :destroy]
 
 					end
@@ -50,7 +51,7 @@ module RicAssortment
 						@product_manufacturer = RicAssortment.product_manufacturer_model.new(product_manufacturer_params)
 						if @product_manufacturer.save
 							respond_to do |format|
-								format.html { redirect_to product_manufacturers_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_manufacturer_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_manufacturer_model.model_name.i18n_key}.create") }
 								format.json { render json: @product_manufacturer.id }
 							end
 						else
@@ -64,7 +65,7 @@ module RicAssortment
 					def update
 						if @product_manufacturer.update(product_manufacturer_params)
 							respond_to do |format|
-								format.html { redirect_to product_manufacturers_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_manufacturer_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_manufacturer_model.model_name.i18n_key}.update") }
 								format.json { render json: @product_manufacturer.id }
 							end
 						else
@@ -93,7 +94,7 @@ module RicAssortment
 					def set_product_manufacturer
 						@product_manufacturer = RicAssortment.product_manufacturer_model.find_by_id(params[:id])
 						if @product_manufacturer.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_manufacturer_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_manufacturer_model.model_name.i18n_key}.not_found")
 						end
 					end
 

@@ -16,27 +16,18 @@ module RicAssortment
 				module ProductPicturesController extend ActiveSupport::Concern
 
 					included do
-					
+						
+						before_action :save_referrer, only: [:edit]
 						before_action :set_product
 						before_action :set_product_picture, only: [:show, :edit, :update, :move, :destroy]
 
 					end
 
-					def edit_many
-					end
-
 					def show
-						render json: @product_picture.to_json(methods: :picture_url)
-					end
-
-					def new
-						save_referrer
-						@product_picture = RicAssortment.product_picture_model.new
-						@product_picture.product_id = @product.id
+						render json: @product_picture.to_json
 					end
 
 					def edit
-						save_referrer
 					end
 
 					def create
@@ -44,7 +35,7 @@ module RicAssortment
 						@product_picture.product_id = @product.id
 						if @product_picture.save
 							respond_to do |format|
-								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_picture_model.model_name.i18n_key}.create") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_picture_model.model_name.i18n_key}.create") }
 								format.json { render json: @product_picture.id }
 							end
 						else
@@ -86,7 +77,7 @@ module RicAssortment
 					def destroy
 						@product_picture.destroy
 						respond_to do |format|
-							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_picture_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to product_path(@product_picture.product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_picture_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @product_picture.id }
 						end
 					end
@@ -100,14 +91,14 @@ module RicAssortment
 					def set_product
 						@product = RicAssortment.product_model.find_by_id(params[:product_id])
 						if @product.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					def set_product_picture
 						@product_picture = RicAssortment.product_picture_model.find_by_id(params[:id])
 						if @product_picture.nil? || @product_picture.product_id != @product.id
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_picture_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_picture_model.model_name.i18n_key}.not_found")
 						end
 					end
 

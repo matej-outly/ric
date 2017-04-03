@@ -16,7 +16,8 @@ module RicAssortment
 				module ProductCategoriesController extend ActiveSupport::Concern
 
 					included do
-					
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_product_category, only: [:show, :edit, :update, :move_up, :move_down, :destroy]
 
 					end
@@ -46,7 +47,7 @@ module RicAssortment
 					def create
 						@product_category = RicAssortment.product_category_model.new(product_category_params)
 						if @product_category.save
-							redirect_to product_category_path(@product_category), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.create")
+							redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -54,7 +55,7 @@ module RicAssortment
 
 					def update
 						if @product_category.update(product_category_params)
-							redirect_to product_category_path(@product_category), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.update")
+							redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -63,7 +64,7 @@ module RicAssortment
 					def move_up
 						@product_category.move_left
 						respond_to do |format|
-							format.html { redirect_to product_categories_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.move") }
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.move") }
 							format.json { render json: @product_category.id }
 						end
 					end
@@ -71,7 +72,7 @@ module RicAssortment
 					def move_down
 						@product_category.move_right
 						respond_to do |format|
-							format.html { redirect_to product_categories_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.move") }
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_category_model.model_name.i18n_key}.move") }
 							format.json { render json: @product_category.id }
 						end
 					end
@@ -90,7 +91,7 @@ module RicAssortment
 					def set_product_category
 						@product_category = RicAssortment.product_category_model.find_by_id(params[:id])
 						if @product_category.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_category_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_category_model.model_name.i18n_key}.not_found")
 						end
 					end
 

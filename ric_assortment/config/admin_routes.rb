@@ -24,10 +24,7 @@ RicAssortment::AdminEngine.routes.draw do
 
 		# Product pictures
 		if RicAssortment.enable_pictures
-			resources :product_pictures, only: [:show, :new, :edit, :create, :update, :destroy], controller: "admin_product_pictures" do
-				collection do
-					get "edit_many"
-				end
+			resources :product_pictures, only: [:show, :edit, :create, :update, :destroy], controller: "admin_product_pictures" do
 				member do
 					put "move/:relation/:destination_id", action: "move", as: "move"
 				end

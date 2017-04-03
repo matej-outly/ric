@@ -16,7 +16,8 @@ module RicAssortment
 				module ProductsController extend ActiveSupport::Concern
 
 					included do
-					
+						
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_product, only: [:show, :edit, :update, :duplicate, :move, :destroy]
 
 					end
@@ -59,7 +60,7 @@ module RicAssortment
 					def create
 						@product = RicAssortment.product_model.new(product_params)
 						if @product.save
-							redirect_to product_path(@product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.create")
+							redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.create")
 						else
 							render "new"
 						end
@@ -67,7 +68,7 @@ module RicAssortment
 
 					def update
 						if @product.update(product_params)
-							redirect_to product_path(@product), notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.update")
+							redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -76,12 +77,12 @@ module RicAssortment
 					def move
 						if RicAssortment.product_model.move(params[:id], params[:relation], params[:destination_id])
 							respond_to do |format|
-								format.html { redirect_to products_path, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
 								format.json { render json: @product.id }
 							end
 						else
 							respond_to do |format|
-								format.html { redirect_to products_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
+								format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.move") }
 								format.json { render json: @product.errors }
 							end
 						end
@@ -106,7 +107,7 @@ module RicAssortment
 					def set_product
 						@product = RicAssortment.product_model.find_by_id(params[:id])
 						if @product.nil?
-							redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicAssortment.product_model.model_name.i18n_key}.not_found")
 						end
 					end
 
