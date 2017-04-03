@@ -93,14 +93,14 @@ module RicPricing
 					def set_price_list
 						@price_list = RicPricing.price_list_model.find_by_id(params[:price_list_id])
 						if @price_list.nil?
-							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicPricing.price_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicPricing.price_model.model_name.i18n_key}.not_found")
 						end
 					end
 
 					def set_price
 						@price = RicPricing.price_model.find_by_id(params[:id])
 						if @price.nil? || @price.price_list_id != @price_list.id
-							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicPricing.price_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicPricing.price_model.model_name.i18n_key}.not_found")
 						end
 					end
 

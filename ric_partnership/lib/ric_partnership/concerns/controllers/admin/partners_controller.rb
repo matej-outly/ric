@@ -101,7 +101,7 @@ module RicPartnership
 					def set_partner
 						@partner = RicPartnership.partner_model.find_by_id(params[:id])
 						if @partner.nil?
-							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicPartnership.partner_model.model_name.i18n_key}.not_found")
 						end
 					end
 

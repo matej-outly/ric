@@ -101,7 +101,7 @@ module RicReference
 					def set_reference
 						@reference = RicReference.reference_model.find_by_id(params[:id])
 						if @reference.nil?
-							redirect_to request_referrer, alert: I18n.t("activerecord.errors.models.#{RicReference.reference_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicReference.reference_model.model_name.i18n_key}.not_found")
 						end
 					end
 
