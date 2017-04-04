@@ -31,12 +31,6 @@ module RicReservation
 					has_many :reservations, -> { where(kind: "resource") }, class_name: RicReservation.reservation_model.to_s, as: :resource, dependent: :destroy	
 
 					# *********************************************************
-					# Opening hours
-					# *********************************************************
-
-					range_column :opening_hours
-
-					# *********************************************************
 					# Time windows / states
 					# *********************************************************
 
@@ -105,7 +99,6 @@ module RicReservation
 						result << :name
 						result << :period
 						result << :owner_reservation_limit
-						result << { :opening_hours => [:min, :max] }
 						return result
 					end
 

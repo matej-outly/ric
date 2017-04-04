@@ -107,12 +107,13 @@ module RicReservation
 								end
 							end
 						end
+					
+						#
+						# Reservation state
+						#
+						state_column :reservation_state, config(:reservation_states).map { |reservation_reservation_state_spec| reservation_reservation_state_spec[:name] }
+					
 					end
-
-					#
-					# Reservation state
-					#
-					state_column :reservation_state, config(:reservation_states).map { |reservation_reservation_state_spec| reservation_reservation_state_spec[:name] }
 
 					# *********************************************************
 					# Reservations
@@ -371,6 +372,13 @@ module RicReservation
 				# *************************************************************
 				# Capacity / size
 				# *************************************************************
+
+				#
+				# Default reservation size - to be overriden in model
+				# 
+				def default_reservation_size
+					1
+				end
 
 				#
 				# Default capacity kind - to be overriden in model
