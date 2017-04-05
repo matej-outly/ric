@@ -46,8 +46,10 @@ module RicReservation
 					#
 					# State
 					#
-					#state_column :reservation_state, config(:reservation_states).map { |reservation_state_spec| reservation_state_spec[:name] }
-
+					if config(:reservation_states)
+						state_column :reservation_state, config(:reservation_states).map { |reservation_state_spec| reservation_state_spec[:name] }
+					end
+					
 					# *********************************************************
 					# Period
 					# *********************************************************
@@ -203,7 +205,7 @@ module RicReservation
 				#
 				# Get state according to datetime
 				#
-				def reservation_state(base)
+				def reservation_state(base = Date.today)
 					result_reservation_state, result_reservation_state_behavior = _reservation_state(base)
 					return result_reservation_state
 				end
@@ -211,7 +213,7 @@ module RicReservation
 				#
 				# Get state behavior according to datetime
 				#
-				def reservation_state_behavior(base)
+				def reservation_state_behavior(base = Date.today)
 					result_reservation_state, result_reservation_state_behavior = _reservation_state(base)
 					return result_reservation_state_behavior
 				end

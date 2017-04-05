@@ -180,7 +180,9 @@ cs:
           capacity_overdraw: "Rezervace je nad kapacitu události."
           owner_reservation_limit_overdraw: "Maximální počet rezervací od jednoho uživatele je vyčerpán."
           put_above_line: "Rezervaci není možné posunout nad čáru."
-          closed: "Možnost rezervace je již uzavřena."
+          closed: "Možnost rezervace je uzavřena."
+          yet_closed: "Možnost rezervace je zatím uzavřena."
+          already_closed: "Možnost rezervace je již uzavřena."
           attributes:
             kind:
               blank: Vyplňte typ rezervace.
