@@ -11,6 +11,6 @@
 
 RicBoard::Engine.routes.draw do
 
-	root "board_tickets#index"
+	get "/board", to: "board_tickets#index"
 
 end
