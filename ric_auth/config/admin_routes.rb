@@ -27,7 +27,7 @@ RicAuth::AdminEngine.routes.draw do
 	end
 
 	# Profile
-	resource :profile, controller: "admin_profiles", only: [:edit, :update] do
+	resource :profile, controller: "admin_profiles", only: [:show, :edit, :update] do
 
 		# Password (profile)
 		resource :password, controller: "admin_profile_passwords", only: [:edit, :update]

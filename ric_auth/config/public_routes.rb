@@ -37,7 +37,7 @@ RicAuth::PublicEngine.routes.draw do
 	end
 
 	# Profile
-	resource :profile, controller: "public_profiles", only: [:edit, :update] do
+	resource :profile, controller: "public_profiles", only: [:show, :edit, :update] do
 
 		# Password (profile)
 		resource :password, controller: "public_profile_passwords", only: [:edit, :update]

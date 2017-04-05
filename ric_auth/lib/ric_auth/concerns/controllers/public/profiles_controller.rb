@@ -28,10 +28,7 @@ module RicAuth
 					end
 
 					def show
-						respond_to do |format|
-							format.html { render "show" }
-							format.json { render json: @user.to_json }
-						end
+						render json: @user.to_json
 					end
 
 					def edit

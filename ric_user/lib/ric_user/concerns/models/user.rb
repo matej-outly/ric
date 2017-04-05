@@ -47,6 +47,7 @@ module RicUser
 						has_attached_file :avatar, :styles => { thumb: config(:avatar_crop, :thumb), full: config(:avatar_crop, :full) }
 						validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 					end
+					add_methods_to_json :avatar_url
 
 					# *********************************************************
 					# Validators
@@ -285,6 +286,14 @@ module RicUser
 					else
 						self.name_formatted
 					end
+				end
+
+				# *************************************************************
+				# Avatar
+				# *************************************************************
+
+				def avatar_url
+					(self.avatar.present? ? self.avatar.url : nil)
 				end
 
 			end
