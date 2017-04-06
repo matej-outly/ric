@@ -61,8 +61,21 @@ module RicBoard
 					# Queries
 					# *********************************************************
 
+					#
+					# Get all active tickets for given owner
+					#
+					def active_for_owner(owner)
+						where(owner: owner).where(closed: false).where("date IS NULL OR :date <= date", date: Date.today).order(subject_type: :asc, date: :asc)
+					end
+
 				end
 
+				#
+				# Check if ticket is closable
+				#
+				def is_closable?
+					self.date.nil?
+				end
 
 			end
 		end

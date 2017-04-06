@@ -20,7 +20,7 @@ module RicBoard
 					# Structure
 					# *********************************************************
 
-					has_many :board_tickets, as: :owner, class_name: RicBoard.board_tickets_model.to_s,  dependent: :destroy
+					has_many :board_tickets, as: :owner, class_name: RicBoard.board_ticket_model.to_s,  dependent: :destroy
 
 				end
 

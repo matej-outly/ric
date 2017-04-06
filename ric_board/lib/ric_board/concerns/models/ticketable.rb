@@ -12,7 +12,7 @@
 module RicBoard
 	module Concerns
 		module Models
-			module Boardable extend ActiveSupport::Concern
+			module Ticketable extend ActiveSupport::Concern
 
 				# Ideas TODO:
 				# - Mergeable ... there will be only one valid ticket for given object.
@@ -27,7 +27,8 @@ module RicBoard
 					# Structure
 					# *********************************************************
 
-					has_many :board_tickets, as: :subject, class_name: RicBoard.board_tickets_model.to_s,  dependent: :destroy
+					has_many :board_tickets, as: :subject, class_name: RicBoard.board_ticket_model.to_s,  dependent: :destroy
+					enum_column :occasion, [:create, :update]
 
 
 					# *********************************************************
@@ -63,23 +64,31 @@ module RicBoard
 					return create_board_ticket
 				end
 
+				#
+				# Get owner for the ticket
+				#
+				def board_ticket_owner
+					raise "Board ticket owner must be implemented"
+				end
+
 			protected
 
 				def create_board_ticket_after_create
-					_create_board_ticket(create_board_ticket)
+					board_ticket = _create_board_ticket(:create, create_board_ticket)
 				end
 
 				def create_board_ticket_after_update
-					_create_board_ticket(update_board_ticket)
+					board_ticket = _create_board_ticket(:update, update_board_ticket)
 				end
 
-				def _create_board_ticket(ticket_type)
+				def _create_board_ticket(occasion, ticket_type)
 					if ticket_type != false
 						# Create board ticket
 						board_ticket = self.board_tickets.build
 
 						# TODO: Somehow fill owner!!!
 						board_ticket.owner = board_ticket_owner
+						board_ticket.occasion = occasion
 
 						if ticket_type == nil
 							# Closable ticket

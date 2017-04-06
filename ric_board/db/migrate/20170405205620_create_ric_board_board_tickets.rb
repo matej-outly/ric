@@ -19,6 +19,9 @@ class CreateRicBoardBoardTickets < ActiveRecord::Migration
 			# Expiration date
 			t.date :date, null: true, index: true
 
+			# Occasion
+			t.string :occasion
+
 		end
 
 		add_index :board_tickets, [:subject_id, :subject_type]

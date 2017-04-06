@@ -1,1 +1,36 @@
 <h1>Board</h1>
+
+<% @board_tickets_by_subject_type.each do |subject_type, board_tickets| %>
+	<%# if lookup_context.find_all('ric_board/board_tickets/_' + subject_type.underscore.pluralize).any? %>
+
+	<%= render partial: 'ric_board/board_tickets/' + subject_type.underscore.pluralize, locals: { board_tickets: board_tickets } %>
+
+<% end %>
+
+<script>
+	$(document).ready(function() {
+		$(".board-ticket").on("close.bs.alert", function() {
+			var $boardTicket = $(this);
+			var boardTicketCloseUrl = $boardTicket.attr("data-board-ticket-close");
+
+			$.ajax({
+				url: boardTicketCloseUrl,
+				dataType: 'json',
+				type: 'PUT',
+				/*
+				data: {},
+				success: function(data)
+				{
+
+				},
+				*/
+				error: function(data)
+				{
+					console.error(data);
+				},
+			});
+
+
+		});
+	});
+</script>

@@ -11,6 +11,10 @@
 
 RicBoard::Engine.routes.draw do
 
-	get "/board", to: "board_tickets#index"
+	resources :board_tickets, only: [:index] do
+		member do
+			put "close"
+		end
+	end
 
 end
