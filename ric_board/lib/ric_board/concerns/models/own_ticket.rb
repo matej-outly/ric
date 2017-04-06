@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Calendar
+# *
 # *
 # * Author: Jaroslav Mlejnek, Matěj Outlý
 # * Date  : 19. 2. 2017
@@ -12,7 +12,7 @@
 module RicBoard
 	module Concerns
 		module Models
-			module OwnBoard extend ActiveSupport::Concern
+			module OwnTicket extend ActiveSupport::Concern
 
 				included do
 

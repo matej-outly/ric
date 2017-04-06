@@ -14,8 +14,8 @@ require "ric_board/engine"
 
 # Models
 require 'ric_board/concerns/models/board_ticket'
-require 'ric_board/concerns/models/boardable'
-require 'ric_board/concerns/models/own_board'
+require 'ric_board/concerns/models/ticketable'
+require 'ric_board/concerns/models/own_ticket'
 
 module RicBoard
 
