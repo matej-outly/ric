@@ -49,4 +49,23 @@ module RicBoard
 	end
 	@@board_ticket_model = "RicBoard::BoardTicket"
 
+	#
+	# board_ticket_types = {
+	#	concert_coordinators: {
+	#		template: "default",
+	#		style: "danger",
+	#		title: "headers.dashboard.coordinators",
+	# 		priority: 99,
+	#	}
+	#}
+	#
+	mattr_accessor :board_ticket_types
+	@@board_ticket_types = {}
+
+	#
+	# Enable groupping by subject types
+	#
+	mattr_accessor :group_board_tickets
+	@@group_board_tickets = true
+
 end

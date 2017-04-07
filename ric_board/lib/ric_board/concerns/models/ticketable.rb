@@ -43,66 +43,66 @@ module RicBoard
 				#
 				# Create board ticket for object creation (method can be overriden)
 				#
-				# Returns:
-				# nil    ... create ticket about object creation, which is closable
-				# Date   ... create ticket about object creation, which is active until given date
-				# false  ... do not create ticket about object creation
+				# Returns hash:
+				# {
+				#     date: self.some_date_field, # Nil for closable tickets or Date object
+				#     owner: self.some_owner,
+				#     create: false, # Optional for disabling creating ticket for create action
+				#     update: false, # Optional for disabling creating ticket for update action
+				# }
 				#
-				def create_board_ticket
-					return nil
-				end
-
-				#
-				# Create board ticket for object update (method can be overriden)
-				#
-				# Returns:
-				# nil    ... create ticket about object update, which is closable
-				# Date   ... create ticket about object update, which is active until given date
-				# false  ... do not create ticket about object update
-				#
-				def update_board_ticket
-					return create_board_ticket
-				end
-
-				#
-				# Get owner for the ticket
-				#
-				def board_ticket_owner
-					raise "Board ticket owner must be implemented"
+				def board_ticket_params
+					raise "Board ticket params must be implemented"
 				end
 
 			protected
 
 				def create_board_ticket_after_create
-					board_ticket = _create_board_ticket(:create, create_board_ticket)
+					create_board_ticket(:create)
 				end
 
 				def create_board_ticket_after_update
-					board_ticket = _create_board_ticket(:update, update_board_ticket)
+					create_board_ticket(:update)
 				end
 
-				def _create_board_ticket(occasion, ticket_type)
-					if ticket_type != false
-						# Create board ticket
-						board_ticket = self.board_tickets.build
-
-						# TODO: Somehow fill owner!!!
-						board_ticket.owner = board_ticket_owner
-						board_ticket.occasion = occasion
-
-						if ticket_type == nil
-							# Closable ticket
-							board_ticket.closed = false
-							board_ticket.date = nil
-
-						else
-							# Ticket with Date
-							board_ticket.closed = false
-							board_ticket.date = ticket_type # Implicit conversion to Date by rails, TODO: Some checks?
+				def board_ticket_params_for_occasion(occasion)
+					if !board_ticket_params.include?(occasion) || board_ticket_params[occasion] == true
+						if !board_ticket_params.include?(:owner) || !board_ticket_params.include?(:owner_was)
+							raise "Board ticket `owner` and `owner_was` must be set in board ticket params"
 						end
 
-						board_ticket.save
+						return {
+							date: (board_ticket_params.include?(:date) ? board_ticket_params[:date] : nil),
+							owner: board_ticket_params[:owner],
+							owner_was: board_ticket_params[:owner_was],
+						}
+
+					else
+						return false
 					end
+				end
+
+				def create_board_ticket(occasion)
+					params_for_occasion = board_ticket_params_for_occasion(occasion)
+					if params_for_occasion == false
+						# Board ticket is disabled for this occasion
+						return
+					end
+
+					# Check if owner of the ticket is changed
+					# If so, destroy old ticket
+					if params_for_occasion[:owner] != params_for_occasion[:owner_was]
+						old_board_ticket = RicBoard.board_ticket_mode.find_by(subject: self, owner: params_for_occasion[:owner_was])
+						old_board_ticket.destroy unless old_board_ticket.nil?
+					end
+
+					# Create board ticket
+					board_ticket = self.board_tickets.build
+					board_ticket.date = params_for_occasion[:date]
+					board_ticket.owner = params_for_occasion[:owner]
+					board_ticket.occasion = occasion
+					board_ticket.closed = false
+					board_ticket.save
 				end
 
 			end

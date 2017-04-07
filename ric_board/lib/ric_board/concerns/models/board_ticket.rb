@@ -26,22 +26,6 @@ module RicBoard
 					belongs_to :subject, polymorphic: true
 					belongs_to :owner, polymorphic: true
 
-
-					# *********************************************************
-					# Kind
-					# *********************************************************
-
-					# Validators
-					# validates_presence_of :kind
-					# validate :validate_resource_id_based_on_kind
-
-					# Callbacks
-					# before_save :set_resource_type_based_on_kind
-					# after_save :set_resource_id_based_on_kind # ID must be known at this time
-
-					# Enum
-					# enum_column :kind, config(:kinds).keys
-
 				end
 
 				module ClassMethods
@@ -65,6 +49,7 @@ module RicBoard
 					# Get all active tickets for given owner
 					#
 					def active_for_owner(owner)
+						# Bez data jako prvni
 						where(owner: owner).where(closed: false).where("date IS NULL OR :date <= date", date: Date.today).order(subject_type: :asc, date: :asc)
 					end
 
