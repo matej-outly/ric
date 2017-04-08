@@ -37,7 +37,8 @@ cs:
         photo_crop: Ořez fotografie
       ric_notification/notification_template:
         key_values:
-          contact_message_created: Nová zpráva z fontaktního formuláře
+          contact_message_created: Nová zpráva z kontaktního formuláře
+          contact_message_notification: Potvrzení zprávy z kontaktního formuláře
     notices:
       models:
         ric_contact/contact_message:
@@ -65,6 +66,8 @@ cs:
         contact_message:
           new_message:
             subject: "Nová zpráva z kontaktního formuláře"
+          notify_message:
+            subject: "Potvrzení o přijetí zprávy"
 
   activemodel:
     errors:
