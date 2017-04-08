@@ -54,16 +54,35 @@ module RicContact
 						# Send to receiver
 						RicNotification.notify([:contact_message_created, self], :role_admin)
 
-						# Send copy to author
-						if RicContact.send_contact_messages_copy_to_author && self.respond_to?(:email) && !self.email.blank?
-							RicNotification.notify([:contact_message_created, self], self.email)
+						if self.respond_to?(:email) && !self.email.blank?
+							
+							# Send copy to author
+							if RicContact.send_contact_messages_copy_to_author
+								RicNotification.notify([:contact_message_created, self], self.email)
+							end
+
+							# Send notification to author
+							if RicContact.send_contact_messages_notification_to_author
+								RicNotification.notify([:contact_message_notification, self], self.email)
+							end
+
 						end
 					else
 
-						# Send to receiver and copy to author
+						# Send to receiver (and copy to author if configured)
 						begin 
 							RicContact.contact_message_mailer.new_message(self).deliver_now
 						rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+						end
+
+						# Send notification to author if configured
+						if self.respond_to?(:email) && !self.email.blank?
+							if RicContact.send_contact_messages_notification_to_author
+								begin 
+									RicContact.contact_message_mailer.notify_message(self).deliver_now
+								rescue Net::SMTPFatalError, Net::SMTPSyntaxError
+								end
+							end
 						end
 
 					end

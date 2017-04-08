@@ -81,6 +81,12 @@ module RicContact
 	@@send_contact_messages_copy_to_author = false
 
 	#
+	# Send notification of contact contact messages to user who created it
+	#
+	mattr_accessor :send_contact_messages_notification_to_author
+	@@send_contact_messages_notification_to_author = false
+
+	#
 	# Enable contact people subsystem
 	#
 	mattr_accessor :enable_contact_people
@@ -106,6 +112,12 @@ module RicContact
 	#
 	mattr_accessor :mailer_sender
 	#@@mailer_sender = ... to be set in module initializer
+
+	#
+	# Mailer sender name - only valid if RicNotification not used
+	#
+	mattr_accessor :mailer_sender_name
+	#@@mailer_sender_name = ... to be set in module initializer
 
 	#
 	# Mailer receiver - only valid if RicNotification not used
