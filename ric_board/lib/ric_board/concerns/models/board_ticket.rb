@@ -62,6 +62,18 @@ module RicBoard
 					self.date.nil?
 				end
 
+				#
+				# Get configuration for given subject type
+				#
+				def board_ticket_type
+					key = self.subject_type.underscore.pluralize
+					if RicBoard.board_ticket_types.include?(key)
+						return RicBoard.board_ticket_types[key]
+					else
+						raise "Key `#{key}` not found in RicBoard.board_ticket_types configuration"
+					end
+				end
+
 			end
 		end
 	end

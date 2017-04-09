@@ -1,0 +1,22 @@
+<%
+	board_ticket_template = 'ric_board/board_tickets/' + board_ticket_type.key
+%>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title"><%= I18n.t(board_ticket_type.title) %></h4>
+	</div>
+
+	<div class="panel-body">
+		<% board_tickets.each do |board_ticket| %>
+			<div class="alert alert-<%= board_ticket_type[:style] %> <%= "alert-dismissible" if !board_ticket.is_closable? %> board-ticket" role="alert" data-close-href="<%= ric_board.close_board_ticket_path(board_ticket) %>">
+				<% if board_ticket.is_closable? %>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<% end %>
+
+				<%= render partial: board_ticket_template, locals: { board_ticket: board_ticket } %>
+
+			</div>
+		<% end %>
+	</div>
+</div>

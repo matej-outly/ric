@@ -17,6 +17,9 @@ require 'ric_board/concerns/models/board_ticket'
 require 'ric_board/concerns/models/ticketable'
 require 'ric_board/concerns/models/own_ticket'
 
+# OpenStruct
+require 'ostruct'
+
 module RicBoard
 
 	#
@@ -51,7 +54,7 @@ module RicBoard
 
 	#
 	# board_ticket_types = {
-	#	concert_coordinators: {
+	#	"concert_coordinators": {
 	#		template: "default",
 	#		style: "danger",
 	#		title: "headers.dashboard.coordinators",
@@ -60,6 +63,21 @@ module RicBoard
 	#}
 	#
 	mattr_accessor :board_ticket_types
+	def self.board_ticket_type(class_name)
+		key = class_name.underscore.pluralize
+		if @@board_ticket_types.include?(key)
+			return {
+				template: "default",
+				style: "info",
+				title: nil,
+				priority: 0,
+				key: key,
+			}.merge(@@board_ticket_types[key])
+		else
+			raise "Key `#{key}` not found in RicBoard.board_ticket_types configuration"
+		end
+
+	end
 	@@board_ticket_types = {}
 
 	#
