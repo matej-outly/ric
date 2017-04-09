@@ -40,7 +40,10 @@ module RicBoard
 						@grouped.sort! { |bt1, bt2| bt2[0][:priority] <=> bt1[0][:priority] }
 
 					else
-						@board_tickets = board_tickets
+						@board_tickets = []
+						board_tickets.each do |board_ticket|
+							@board_tickets << [RicBoard.board_ticket_type(board_ticket.subject_type), board_ticket]
+						end
 					end
 				end
 
