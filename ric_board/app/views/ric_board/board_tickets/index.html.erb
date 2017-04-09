@@ -2,11 +2,11 @@
 
 <% if RicBoard.group_board_tickets == true %>
 	<% @grouped.each do |board_ticket_type, board_tickets| %>
-		<%= render partial: 'ric_board/board_tickets/templates/grouped/' + board_ticket_type.template, locals: { board_tickets: board_tickets, board_ticket_type: board_ticket_type } %>
+		<%= render partial: 'ric_board/board_tickets/templates/grouped/' + board_ticket_type[:template], locals: { board_tickets: board_tickets, board_ticket_type: board_ticket_type } %>
 	<% end %>
 <% else %>
 	<% @board_tickets.each do |board_ticket_type, board_ticket| %>
-		<%= render partial: 'ric_board/board_tickets/templates/non_grouped/' + board_ticket_type.template, locals: { board_ticket: board_ticket, board_ticket_type: board_ticket_type } %>
+		<%= render partial: 'ric_board/board_tickets/templates/non_grouped/' + board_ticket_type[:template], locals: { board_ticket: board_ticket, board_ticket_type: board_ticket_type } %>
 	<% end %>
 <% end %>
 
