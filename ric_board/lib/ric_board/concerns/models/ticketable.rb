@@ -84,7 +84,7 @@ module RicBoard
 					return {
 						date: (params.include?(:date) ? params[:date] : nil),
 						owner: params[:owner],
-						key: (params[:key].blank? ? self.class.to_s.underscore.pluralize : params[:key]), # Either defived from class name or defined key
+						key: (params[:key].blank? ? self.class.to_s.gsub("::", "_").underscore.pluralize : params[:key]), # Either defived from class name or defined key
 					}
 				end
 
