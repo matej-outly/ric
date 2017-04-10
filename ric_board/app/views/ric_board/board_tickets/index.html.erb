@@ -1,34 +1,5 @@
-<%# Template existence check: if lookup_context.find_all("ric_board/board_tickets/_" + subject_type.underscore.pluralize).any? %>
 <% content_for :page_header, "false" %>
-<% empty = true %>
-
-<% if RicBoard.group_board_tickets == true %>
-	<% @grouped.each do |board_ticket_type, board_tickets| %>
-		<% empty = false %>
-		<%= render partial: "ric_board/board_tickets/templates/grouped/" + board_ticket_type[:template], locals: { board_tickets: board_tickets, board_ticket_type: board_ticket_type } %>
-	<% end %>
-<% else %>
-	<% @board_tickets.each do |board_ticket_type, board_ticket| %>
-		<% empty = false %>
-		<%= render partial: "ric_board/board_tickets/templates/non_grouped/" + board_ticket_type[:template], locals: { board_ticket: board_ticket, board_ticket_type: board_ticket_type } %>
-	<% end %>
-<% end %>
-
-<% if empty %>
+<%= render partial: "index" %>
+<% if @empty %>
 	<%= render partial: "empty" %>
 <% end %>
-
-<script>
-	$(document).ready(function() {
-		$(".board-ticket").on("close.bs.alert", function() {
-			var $boardTicket = $(this);
-			var boardTicketCloseUrl = $boardTicket.attr("data-close-href");
-			$.ajax({
-				url: boardTicketCloseUrl,
-				dataType: 'json',
-				type: 'PUT',
-				error: function(data) { console.error(data); },
-			});
-		});
-	});
-</script>

@@ -53,31 +53,30 @@ module RicBoard
 	# Definition of types (models) usable as subject
 	#
 	# board_ticket_types = {
-	#	"concert_coordinators": {
+	#	key_1: {
 	#		template: "default",
 	#		style: "danger",
-	#		title: "headers.dashboard.coordinators",
+	#		title: "headers.dashboard.key_1",
 	# 		priority: 99,
+	#		followable: true,
 	#	}
 	#}
 	#
 	mattr_accessor :board_ticket_types
 	@@board_ticket_types = {}
 	
-	def self.board_ticket_type(class_name)
-		key = class_name.underscore.pluralize
-		if @@board_ticket_types.include?(key)
+	def self.board_ticket_type(key)
+		if @@board_ticket_types.include?(key.to_sym)
 			return {
 				template: "default",
 				style: "info",
 				title: nil,
 				priority: 0,
-				key: key,
-			}.merge(@@board_ticket_types[key])
+				key: key.to_s,
+			}.merge(@@board_ticket_types[key.to_sym])
 		else
-			raise "Key `#{key}` not found in RicBoard.board_ticket_types configuration"
+			raise "Key `#{key}` not found in RicBoard.board_ticket_types configuration."
 		end
-
 	end
 	
 	#

@@ -20,11 +20,20 @@ module RicBoard
 					# Structure
 					# *********************************************************
 
-					# belongs_to :resource, polymorphic: true
-					# has_many :events, class_name: RicBoard.event_model.to_s, dependent: :destroy
-
 					belongs_to :subject, polymorphic: true
 					belongs_to :owner, polymorphic: true
+
+					# *********************************************************
+					# Occasion
+					# *********************************************************
+
+					enum_column :occasion, [:create, :update]
+
+					# *********************************************************
+					# Validators
+					# *********************************************************
+
+					validates_presence_of :owner_id, :owner_type, :subject_id, :subject_type, :key
 
 				end
 
@@ -66,11 +75,10 @@ module RicBoard
 				# Get configuration for given subject type
 				#
 				def board_ticket_type
-					key = self.subject_type.underscore.pluralize
-					if RicBoard.board_ticket_types.include?(key)
-						return RicBoard.board_ticket_types[key]
+					if RicBoard.board_ticket_types.include?(self.key.to_sym)
+						return RicBoard.board_ticket_types[self.key.to_sym]
 					else
-						raise "Key `#{key}` not found in RicBoard.board_ticket_types configuration"
+						raise "Key `#{key}` not found in RicBoard.board_ticket_types configuration."
 					end
 				end
 

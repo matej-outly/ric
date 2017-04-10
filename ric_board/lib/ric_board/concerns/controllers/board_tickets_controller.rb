@@ -17,7 +17,7 @@ module RicBoard
 				included do
 
 					before_action :set_owner
-					before_action :set_board_ticket, only: [:close]
+					before_action :set_board_ticket, only: [:follow, :close]
 
 				end
 
@@ -33,12 +33,12 @@ module RicBoard
 					if RicBoard.group_board_tickets == true
 						
 						# Sort by group attribute and by date
-						board_tickets = board_tickets.order(subject_type: :asc).order("date ASC NULLS FIRST")
+						board_tickets = board_tickets.order(key: :asc).order("date ASC NULLS FIRST")
 
 						# Load configuration options from each subject type
 						@grouped = []
-						board_tickets.group_by(&:subject_type).each do |subject_type, board_tickets|
-							@grouped << [RicBoard.board_ticket_type(subject_type), board_tickets]
+						board_tickets.group_by(&:key).each do |key, board_tickets|
+							@grouped << [RicBoard.board_ticket_type(key), board_tickets]
 						end
 
 						# Sort dashboard by priority DESC
@@ -52,7 +52,7 @@ module RicBoard
 						# Get data for view
 						@board_tickets = []
 						board_tickets.each do |board_ticket|
-							@board_tickets << [RicBoard.board_ticket_type(board_ticket.subject_type), board_ticket]
+							@board_tickets << [RicBoard.board_ticket_type(board_ticket.key), board_ticket]
 						end
 					end
 				end
@@ -63,6 +63,17 @@ module RicBoard
 				def close
 					@board_ticket.closed = true
 					render json: @board_ticket.save
+				end
+
+				#
+				# Redirect to ticket subject according to current user role
+				#
+				def follow
+					path = follow_board_ticket_path(@board_ticket) if self.respond_to?(:follow_board_ticket_path)
+					if path.nil?
+						raise "Please define follow_board_ticket_path in RicBoard::ApplicationController."
+					end
+					redirect_to path
 				end
 
 			protected
@@ -86,7 +97,7 @@ module RicBoard
 				def set_board_ticket
 					@board_ticket = RicBoard.board_ticket_model.find_by_id(params[:id])
 					if @board_ticket.nil? || @board_ticket.owner != @owner
-						redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicBoard.board_ticket_model.model_name.i18n_key}.not_found")
+						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicBoard.board_ticket_model.model_name.i18n_key}.not_found")
 					end
 				end
 

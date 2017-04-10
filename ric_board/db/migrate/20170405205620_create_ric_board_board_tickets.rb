@@ -9,6 +9,9 @@ class CreateRicBoardBoardTickets < ActiveRecord::Migration
 			t.integer :subject_id
 			t.string :subject_type
 
+			# Key used for ticket kind identification
+			t.string :key
+
 			# Owner (polymorphic association)
 			t.integer :owner_id
 			t.string :owner_type

@@ -14,6 +14,7 @@ RicBoard::Engine.routes.draw do
 	resources :board_tickets, only: [:index] do
 		member do
 			put "close"
+			get "follow"
 		end
 	end
 
