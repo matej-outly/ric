@@ -57,6 +57,25 @@ module RicUser
 				end
 
 				#
+				# Get person based on currently selected user role
+				#
+				def person
+					self.current_person
+				end
+
+				#
+				# Get person based on currently selected user role
+				#
+				def current_person
+					self.people.each do |person|
+						if person.person_role == self.role
+							return person
+						end
+					end
+					return nil
+				end
+
+				#
 				# Common people setter is not necessary
 				#
 
