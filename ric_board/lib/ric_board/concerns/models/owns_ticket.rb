@@ -12,7 +12,7 @@
 module RicBoard
 	module Concerns
 		module Models
-			module OwnTicket extend ActiveSupport::Concern
+			module OwnsTicket extend ActiveSupport::Concern
 
 				included do
 

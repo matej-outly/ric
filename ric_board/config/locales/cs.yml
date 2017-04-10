@@ -1,1 +1,9 @@
 cs:
+
+  activerecord:
+    ric_board/board_ticket:
+      date: Datum
+      closed: Uzavřený
+      subject: Olístečkovaný objekt
+      owner: Vlastník lístečku
+      occasion: Akce

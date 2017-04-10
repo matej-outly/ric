@@ -13,12 +13,9 @@
 require "ric_board/engine"
 
 # Models
-require 'ric_board/concerns/models/board_ticket'
-require 'ric_board/concerns/models/ticketable'
-require 'ric_board/concerns/models/own_ticket'
-
-# OpenStruct
-require 'ostruct'
+require "ric_board/concerns/models/board_ticket"
+require "ric_board/concerns/models/ticketable"
+require "ric_board/concerns/models/owns_ticket"
 
 module RicBoard
 
@@ -63,6 +60,8 @@ module RicBoard
 	#}
 	#
 	mattr_accessor :board_ticket_types
+	@@board_ticket_types = {}
+	
 	def self.board_ticket_type(class_name)
 		key = class_name.underscore.pluralize
 		if @@board_ticket_types.include?(key)
@@ -78,8 +77,7 @@ module RicBoard
 		end
 
 	end
-	@@board_ticket_types = {}
-
+	
 	#
 	# Enable groupping by subject types
 	#
