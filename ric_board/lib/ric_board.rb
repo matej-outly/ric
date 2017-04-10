@@ -50,6 +50,8 @@ module RicBoard
 	@@board_ticket_model = "RicBoard::BoardTicket"
 
 	#
+	# Definition of types (models) usable as subject
+	#
 	# board_ticket_types = {
 	#	"concert_coordinators": {
 	#		template: "default",
@@ -83,5 +85,11 @@ module RicBoard
 	#
 	mattr_accessor :group_board_tickets
 	@@group_board_tickets = true
+
+	#
+	# If set to true, current_user.person is used for ticket owner resolving, otherwise just current_user is used
+	#
+	mattr_accessor :use_person_as_owner
+	@@use_person_as_owner = false
 
 end

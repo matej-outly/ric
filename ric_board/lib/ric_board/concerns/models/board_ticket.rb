@@ -42,25 +42,15 @@ module RicBoard
 					end
 
 					# *********************************************************
-					# Queries
+					# Scopes
 					# *********************************************************
 
-					#
-					# Get all active tickets for given owner
-					#
-					def active_for_owner(owner)
-						# Get active tickets
-						query = where(owner: owner).where(closed: false).where("date IS NULL OR :date <= date", date: Date.today)
+					def active
+						where(closed: false).where("date IS NULL OR :date <= date", date: Date.today)
+					end
 
-						# If groupping is enabled, sort them by group attribute
-						if RicBoard.group_board_tickets == true
-							query = query.order(subject_type: :asc)
-						end
-
-						# Order tickets
-						query = query.order("date ASC NULLS FIRST")
-
-						return query
+					def owned_by(owner)
+						where(owner: owner)
 					end
 
 				end
