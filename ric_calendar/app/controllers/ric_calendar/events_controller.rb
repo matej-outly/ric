@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Document Folders
+# * Events
 # *
 # * Author:
 # * Date  : 21. 2. 2017

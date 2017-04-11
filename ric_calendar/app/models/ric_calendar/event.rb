@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Document
+# * Event
 # *
 # * Author: Jaroslav Mlejnek
 # * Date  : 19. 2. 2017

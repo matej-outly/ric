@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Documents
+# * Calendars
 # *
 # * Author:
 # * Date  : 19. 2. 2017
