@@ -1,0 +1,9 @@
+<%= rug_form_for(@in_message, 
+	create_url: "ric_inmail.messages_path"
+) do |f| %>
+	<%= f.token_input_row :people_selector_values, ric_user_public.search_people_selectors_path, as: :people_selectors, value_attr: :value, label_attr: :title, label: RicInmail.in_message_model.human_attribute_name(:people) %>
+	<%= f.text_input_row :subject %>
+	<%= f.text_area_row :message %>
+	<%= f.primary_button_row :submit, label: t("helpers.submit.send") %>
+	<%= f.back_link_button_row %>
+<% end %>

@@ -15,7 +15,7 @@ module RicInmail
 		#
 		# Controllers
 		#
-		require 'ric_inmail/concerns/controllers/messages_controller'
+		require "ric_inmail/concerns/controllers/messages_controller"
 		
 		isolate_namespace RicInmail
 

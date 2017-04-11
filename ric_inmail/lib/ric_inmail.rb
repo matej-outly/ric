@@ -13,7 +13,7 @@
 require "ric_inmail/engine"
 
 # Models
-require 'ric_inmail/concerns/models/message'
+require "ric_inmail/concerns/models/in_message"
 
 module RicInmail
 
@@ -41,19 +41,16 @@ module RicInmail
 	#
 	# Message model
 	#
-	mattr_accessor :message_model
-	def self.message_model
-		return @@message_model.constantize
+	mattr_accessor :in_message_model
+	def self.in_message_model
+		return @@in_message_model.constantize
 	end
-	@@message_model = "RicInmail::Message"
+	@@in_message_model = "RicInmail::InMessage"
 
 	#
-	# User model
+	# If set to true, current_user.person is used for message owner and sender resolving, otherwise just current_user is used
 	#
-	mattr_accessor :user_model
-	def self.user_model
-		return @@user_model.constantize
-	end
-	@@user_model = "RicUser::User"
+	mattr_accessor :use_person
+	@@use_person = false
 
 end

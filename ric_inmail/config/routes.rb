@@ -12,6 +12,6 @@
 RicInmail::Engine.routes.draw do
 
 	# Mailbox
-	resources :messages
+	resources :messages, except: [:edit, :update]
 
 end

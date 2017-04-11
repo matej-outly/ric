@@ -12,7 +12,7 @@ cs:
       
   activerecord:
     attributes:
-      ric_inmail/message:
+      ric_inmail/in_message:
         owner: Vlastník
         owner_id: Vlastník
         folder: Složka
@@ -23,7 +23,7 @@ cs:
           drafts: Koncepty
         sender: Odesílatel
         sender_id: Odesílatel
-        receivers: Příjemci
+        people: Příjemci
         subject: Předmět
         message: Zpráva
         delivery_state: Stav doručení
@@ -37,11 +37,11 @@ cs:
         is_forwarded: Přeposláno
     notices:
       models:
-        ric_inmail/message:
+        ric_inmail/in_message:
           create: Zpráva byla úspěšně vytvořena.
           update: Zpráva byla úspěšně uložena.
           destroy: Zpráva byla úspěšně smazána.
     errors:
       models:
-        ric_inmail/message:
+        ric_inmail/in_message:
           not_found: Zpráva nebyla nalezena.

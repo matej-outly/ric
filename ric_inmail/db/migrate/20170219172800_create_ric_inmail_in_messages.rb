@@ -1,16 +1,18 @@
-class CreateRicInmailMessages < ActiveRecord::Migration
+class CreateRicInmailInMessages < ActiveRecord::Migration
 	def change
-		create_table :messages do |t|
+		create_table :in_messages do |t|
 
 			# Timestamps
 			t.timestamps null: false
 
 			# Ownership
 			t.integer :owner_id, index: true
+			t.string :owner_type, index: true
 			t.string :folder, index: true
 
 			# Sender
 			t.integer :sender_id, index: true
+			t.string :sender_type, index: true
 			
 			# Content
 			t.string :subject
