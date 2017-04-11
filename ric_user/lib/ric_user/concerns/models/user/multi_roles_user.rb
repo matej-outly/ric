@@ -34,6 +34,8 @@ module RicUser
 					enum_column :roles, RicUser.roles
 					enum_column :role, RicUser.roles
 
+					after_save :update_roles
+
 				end
 
 				module ClassMethods
@@ -71,22 +73,10 @@ module RicUser
 						new_roles.uniq!
 					end
 
-					# Perform DB actions
-					self.transaction do
-						self.user_roles.diff(new_roles, compare_attr_1: :role) do |action, item|
-							if action == :add
-								self.user_roles.create(role: item)
-							elsif action == :remove
-								item.destroy
-							end
-						end
-					end
-
-					# Clear cache
-					@roles = nil
-					self.user_roles.reset
-
-					return new_roles
+					# Store for later update
+					#@roles_was = self.roles if @roles_was.nil?
+					@roles_changed = true
+					@roles = new_roles
 				end
 
 				#
@@ -128,6 +118,30 @@ module RicUser
 					else
 						raise "Can't set role #{new_role} as current."
 					end
+				end
+
+			protected
+
+				def update_roles
+					if @roles_changed == true
+
+						# Perform DB actions
+						self.transaction do
+							self.user_roles.diff(new_roles, compare_attr_1: :role) do |action, item|
+								if action == :add
+									self.user_roles.create(role: item)
+								elsif action == :remove
+									item.destroy
+								end
+							end
+						end
+
+						# Clear cache
+						@roles = nil
+						@roles_changed = nil
+						self.user_roles.reset
+					end
+					return true
 				end
 
 			end

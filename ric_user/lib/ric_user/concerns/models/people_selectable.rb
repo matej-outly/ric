@@ -27,9 +27,15 @@ module RicUser
 
 					has_many :people_selectors, class_name: RicUser.people_selector_model.to_s, as: :subject, dependent: :destroy
 
+					# *********************************************************
+					# People selector values
+					# *********************************************************
+
+					after_save :update_people_selectors
+
 				end
 
-				def people
+				def people(options = {})
 					if @people.nil?
 
 						# Concat people from all selectors
@@ -68,7 +74,7 @@ module RicUser
 				end
 
 				def people_selector_values=(new_values)
-
+					
 					# Manage input
 					if new_values.blank?
 						new_values = []
@@ -77,23 +83,56 @@ module RicUser
 						new_values.uniq!
 					end
 
-					# Remove invalid selectors, create new selectors if missing
-					self.transaction do
-						self.people_selectors.to_a.diff(new_values, compare_attr_1: :value) do |action, item|
-							if action == :add
-								self.people_selectors.create(value: item)
-							elsif action == :remove
-								item.destroy
+					# Store for later update
+					#@people_selector_values_was = self.people_selector_values if @people_selector_values_was.nil?
+					@people_selector_values_changed = true
+					@people_selector_values = new_values
+				end
+
+				#
+				# People selectors override to ensure correct results if values
+				# manually set but not saved yet.
+				#
+				def people_selectors(force_old = false)
+					if @people_selector_values_changed == true && force_old == false
+						if @people_selector_values.nil?
+							return nil
+						else
+							return @people_selector_values.map do |value| 
+								OpenStruct.new(
+									value: value,
+									title: RicUser.people_selector_model.title(value)
+								)
 							end
 						end
+					else
+						super
 					end
+				end
 
-					# Clear cache
-					@people_selector_values = nil
-					@people = nil
-					self.people_selectors.reset
+			protected
 
-					return new_values
+				def update_people_selectors
+					if @people_selector_values_changed == true
+						
+						# Remove invalid selectors, create new selectors if missing
+						self.transaction do
+							self.people_selectors(true).diff(@people_selector_values, compare_attr_1: :value) do |action, item|
+								if action == :add
+									self.people_selectors(true).create(value: item)
+								elsif action == :remove
+									item.destroy
+								end
+							end
+						end
+
+						# Clear cache
+						@people_selector_values = nil
+						@people_selector_values_changed = nil
+						@people = nil
+						self.people_selectors(true).reset
+					end
+					return true
 				end
 
 			end

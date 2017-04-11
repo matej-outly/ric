@@ -76,13 +76,43 @@ module RicUser
 							self.available_selectors.each do |selector_key, selector_def|
 								selector_def[:search].call(query.to_s).each do |found_params|
 									result << {
-										value: "#{selector_key}/#{found_params.to_json}",
+										value: encode_value(selector_key, found_params),
 										title: selector_def[:title].call(found_params)
 									}
 								end
 							end
 						end
 						return result
+					end
+
+					# *********************************************************
+					# Title
+					# *********************************************************
+
+					def title(value)
+						key, params = decode_value(value)
+						selector_def = available_selectors[key.to_sym]
+						if selector_def && selector_def[:title]
+							return selector_def[:title].call(params)
+						else
+							raise "Unknown selector."
+						end
+					end
+
+					# *********************************************************
+					# Value
+					# *********************************************************
+
+					def decode_value(value)
+						splitted = value.split("/") # Parse value to key and params
+						key = splitted.shift
+						params = (splitted.empty? ? "null" : splitted.join("/"))
+						params = (params == "null" ? nil : JSON.parse(params).symbolize_keys)
+						return [key, params]
+					end
+
+					def encode_value(key, params)
+						"#{key}/#{params.to_json}"
 					end
 
 				end
@@ -92,13 +122,11 @@ module RicUser
 				# *************************************************************
 
 				def value
-					"#{self.key}/#{read_attribute(:params)}"
+					self.class.encode_value(self.key, self.params)
 				end
 
 				def value=(value)
-					splitted = value.split("/") # Parse value to key and params
-					self.key = splitted.shift
-					self.params = (splitted.empty? ? nil : splitted.join("/"))
+					self.key, self.params = self.class.decode_value(value)
 				end
 
 				# *************************************************************
@@ -106,11 +134,7 @@ module RicUser
 				# *************************************************************
 
 				def params
-					if read_attribute(:params) == "null"
-						return nil
-					else
-						return JSON.parse(read_attribute(:params)).symbolize_keys
-					end
+					return (read_attribute(:params) == "null" ? nil : JSON.parse(read_attribute(:params)).symbolize_keys)
 				end
 
 				def params=(val)
@@ -143,17 +167,8 @@ module RicUser
 					end
 				end
 
-				def _title
-					selector_def = self.class.available_selectors[self.key.to_sym]
-					if selector_def && selector_def[:title]
-						return selector_def[:title].call(self.params)
-					else
-						raise "Unknown selector."
-					end
-				end
-
 				def update_title
-					self.title = self._title
+					self.title = self.class.title(self.value)
 				end
 
 			end
