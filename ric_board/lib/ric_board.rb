@@ -87,7 +87,7 @@ module RicBoard
 	#
 	# If set to true, current_user.person is used for ticket owner resolving, otherwise just current_user is used
 	#
-	mattr_accessor :use_person_as_owner
-	@@use_person_as_owner = false
+	mattr_accessor :use_person
+	@@use_person = false
 
 end

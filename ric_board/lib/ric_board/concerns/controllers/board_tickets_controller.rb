@@ -87,7 +87,7 @@ module RicBoard
 				# in application to use custom owner resolve algorithm
 				#
 				def set_owner
-					if RicBoard.use_person_as_owner
+					if RicBoard.use_person
 						@owner = current_user.person
 					else
 						@owner = current_user
