@@ -2,9 +2,9 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
+# * RicBoard
 # *
-# *
-# * Author:
+# * Author: Jaroslav Mlejnek, Matěj Outlý
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
@@ -15,7 +15,6 @@ require "ric_board/engine"
 # Models
 require "ric_board/concerns/models/board_ticket"
 require "ric_board/concerns/models/ticketable"
-require "ric_board/concerns/models/owns_ticket"
 
 module RicBoard
 

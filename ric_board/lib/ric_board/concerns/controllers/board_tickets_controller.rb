@@ -2,10 +2,10 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Documents
+# * Board tickets controller
 # *
-# * Author:
-# * Date  : 19. 2. 2017
+# * Author: Jaroslav Mlejnek, Matěj Outlý
+# * Date  : 9. 4. 2017
 # *
 # *****************************************************************************
 

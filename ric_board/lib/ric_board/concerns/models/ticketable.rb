@@ -2,10 +2,10 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Calendar
+# * Model is ticketable - it can own and create some board tickets
 # *
 # * Author: Jaroslav Mlejnek, Matěj Outlý
-# * Date  : 19. 2. 2017
+# * Date  : 9. 4. 2017
 # *
 # *****************************************************************************
 
