@@ -80,8 +80,7 @@ module RicCalendar
 
 				def destroy
 					@calendar.destroy
-					redirect_url = request.referrer
-					redirect_url = ric_calendar.calendars_path if redirect_url.blank?
+					redirect_url = ric_calendar.calendars_path
 					redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.calendar_model.model_name.i18n_key}.destroy")
 				end
 
@@ -106,7 +105,7 @@ module RicCalendar
 				def set_calendar
 					@calendar = RicCalendar.calendar_model.find_by_id(params[:id])
 					if @calendar.nil?
-						redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicCalendar.calendar_model.model_name.i18n_key}.not_found")
+						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicCalendar.calendar_model.model_name.i18n_key}.not_found")
 					end
 				end
 

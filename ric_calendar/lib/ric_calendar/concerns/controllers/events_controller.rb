@@ -133,7 +133,7 @@ module RicCalendar
 				def set_event
 					@event = RicCalendar.event_model.find_by_id(params[:id])
 					if @event.nil?
-						redirect_to main_app.root_path, alert: I18n.t("activerecord.errors.models.#{RicCalendar.event_model.model_name.i18n_key}.not_found")
+						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicCalendar.event_model.model_name.i18n_key}.not_found")
 					end
 				end
 
