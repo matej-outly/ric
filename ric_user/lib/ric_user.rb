@@ -20,15 +20,18 @@ require "ric_user/concerns/models/user_person"
 require "ric_user/concerns/models/user_role"
 
 require "ric_user/concerns/models/user"
-require "ric_user/concerns/models/multi_people_user"
-require "ric_user/concerns/models/multi_roles_user"
-require "ric_user/concerns/models/single_person_user"
-require "ric_user/concerns/models/single_role_user"
+require "ric_user/concerns/models/user/multi_people_user"
+require "ric_user/concerns/models/user/multi_roles_user"
+require "ric_user/concerns/models/user/single_person_user"
+require "ric_user/concerns/models/user/single_role_user"
 
 require "ric_user/concerns/models/person"
-require "ric_user/concerns/models/model_1_person"
-require "ric_user/concerns/models/model_2_person"
-require "ric_user/concerns/models/model_3_person"
+require "ric_user/concerns/models/person/model_1_person"
+require "ric_user/concerns/models/person/model_2_person"
+require "ric_user/concerns/models/person/model_3_person"
+
+require "ric_user/concerns/models/people_selector"
+require "ric_user/concerns/models/people_selectable"
 
 # Mailers
 require "ric_user/concerns/mailers/user_mailer"
@@ -100,6 +103,15 @@ module RicUser
 		return @@session_model.constantize
 	end
 	@@session_model = "RicUser::Session"
+
+	#
+	# People Selector model
+	#
+	mattr_accessor :people_selector_model
+	def self.people_selector_model
+		return @@people_selector_model.constantize
+	end
+	@@people_selector_model = "RicUser::PeopleSelector"
 
 	#
 	# Mailer sender

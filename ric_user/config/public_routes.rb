@@ -21,4 +21,11 @@ RicUser::PublicEngine.routes.draw do
 	# Session
 	resource :session, controller: "public_session", only: [:show, :edit, :update]
 
+	# People selectors
+	resources :people_selectors, controller: "public_people_selectors", only: [] do
+		collection do
+			get "search"
+		end
+	end
+
 end

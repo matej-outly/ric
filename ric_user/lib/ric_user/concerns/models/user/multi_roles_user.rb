@@ -64,37 +64,29 @@ module RicUser
 				def roles=(new_roles)
 
 					# Manage input / new roles
-					new_roles = [new_roles.to_s] if !new_roles.is_a?(Array)
-					new_roles.uniq!
-
-					# Current roles
-					current_roles = self.roles
-
-					# User roles to remove
-					user_roles_to_remove = []
-					self.user_roles.each do |user_role|
-						user_roles_to_remove << user_role if !new_roles.include?(user_role.role)
-					end
-
-					# Roles to add
-					roles_to_add = []
-					new_roles.each do |role|
-						roles_to_add << role.to_s if !current_roles.include?(role.to_s)
+					if new_roles.blank?
+						new_roles = []
+					else
+						new_roles = [new_roles.to_s] if !new_roles.is_a?(Array)
+						new_roles.uniq!
 					end
 
 					# Perform DB actions
 					self.transaction do
-						user_roles_to_remove.each do |user_role|
-							user_role.destroy
-						end
-						roles_to_add.each do |role|
-							self.user_roles.create(role: role)
+						self.user_roles.diff(new_roles, compare_attr_1: :role) do |action, item|
+							if action == :add
+								self.user_roles.create(role: item)
+							elsif action == :remove
+								item.destroy
+							end
 						end
 					end
 
 					# Clear cache
 					@roles = nil
+					self.user_roles.reset
 
+					return new_roles
 				end
 
 				#

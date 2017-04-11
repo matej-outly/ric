@@ -15,8 +15,9 @@ module RicUser
 		#
 		# Controllers
 		#
-		require 'ric_user/concerns/controllers/admin/users_controller'
-		require 'ric_user/concerns/controllers/admin/user_passwords_controller'
+		require "ric_user/concerns/controllers/admin/users_controller"
+		require "ric_user/concerns/controllers/admin/user_passwords_controller"
+		require "ric_user/concerns/controllers/admin/people_selectors_controller"
 		
 		isolate_namespace RicUser
 
