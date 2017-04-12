@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Dashboard
+# * Board tickets
 # *
 # * Author:
 # * Date  : 21. 2. 2017

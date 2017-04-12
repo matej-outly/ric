@@ -16,6 +16,7 @@ module RicBoard
 		# Controllers
 		#
 		require "ric_board/concerns/controllers/board_tickets_controller"
+		require "ric_board/concerns/controllers/boards_controller"
 
 		isolate_namespace RicBoard
 
