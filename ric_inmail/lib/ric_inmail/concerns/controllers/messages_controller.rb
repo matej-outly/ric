@@ -22,6 +22,7 @@ module RicInmail
 				included do
 
 					before_action :save_referrer, only: [:new]
+					before_action :set_owner
 					before_action :set_in_message, only: [:show, :destroy]
 					before_action :set_template, only: [:new]
 
@@ -32,7 +33,6 @@ module RicInmail
 				end
 
 				def show
-					raise "Not implemented yet."
 				end
 
 				def new
@@ -42,10 +42,13 @@ module RicInmail
 
 				def create
 					@in_message = RicInmail.in_message_model.new(in_message_params)
+					@in_message.owner = @owner
+					@in_message.sender = @owner
 					if @in_message.save
+						@in_message.deliver
 						redirect_url = load_referrer
 						redirect_url = ric_inmail.messages_path if redirect_url.blank?
-						redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicInmail.in_message_model.model_name.i18n_key}.create")
+						redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicInmail.in_message_model.model_name.i18n_key}.deliver")
 					else
 						render "new"
 					end	
@@ -63,9 +66,9 @@ module RicInmail
 				# Model setters
 				# *************************************************************
 
-				def set_calendar
+				def set_in_message
 					@in_message = RicInmail.in_message_model.find_by_id(params[:id])
-					if @in_message.nil?
+					if @in_message.nil? || @in_message.owner_type != @owner.class.name || @in_message.owner_id != @owner.id
 						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicInmail.in_message_model.model_name.i18n_key}.not_found")
 					end
 				end
@@ -79,13 +82,21 @@ module RicInmail
 					end
 				end
 
+				def set_owner
+					if RicInmail.use_person
+						@owner = current_user.person
+					else
+						@owner = current_user
+					end
+				end
+
 				# *************************************************************
 				# Param filters
 				# *************************************************************
 
 				def in_message_params
 					result = params.require(:in_message).permit(RicInmail.in_message_model.permitted_columns)
-					result[:people_selector_values] = result[:people_selector_values].split(",") if !result[:people_selector_values].blank?
+					result[:receivers_selector_values] = result[:receivers_selector_values].split(",") if !result[:receivers_selector_values].blank?
 					return result
 				end
 

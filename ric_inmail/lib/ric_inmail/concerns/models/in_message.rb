@@ -32,7 +32,7 @@ module RicInmail
 					# Folder
 					# *********************************************************
 
-					enum_column :folder, [:inbox, :outbox, :archive, :drafts]
+					enum_column :folder, [:inbox, :outbox, :archive, :drafts], default: :drafts
 
 					# *********************************************************
 					# Delivery state
@@ -52,16 +52,62 @@ module RicInmail
 						return [
 							:subject, 
 							:message,
-							:people_selector_values,
+							:receivers_selector_values,
 						]
+					end
+
+					# *********************************************************
+					# Scopes
+					# *********************************************************
+
+					def owned_by(owner)
+						where(owner: owner)
 					end
 
 				end
 
+				# *************************************************************
+				# Receivers
+				# *************************************************************
+
+				def receivers
+					self.people
+				end
+
+				def receivers_selectors
+					self.people_selectors
+				end
+
+				def receivers_selector_values
+					self.people_selector_values
+				end
+
+				def receivers_selector_values=(values)
+					self.people_selector_values = values
+				end
+
+				# *************************************************************
+				# Lifecycle
+				# *************************************************************
+
 				def template=(template)
 					self.subject = template.subject if template.respond_to?(:subject) && !template.subject.nil?
 					self.message = template.message if template.respond_to?(:message) && !template.message.nil?
-					self.people_selector_values = template.people_selector_values if template.respond_to?(:people_selector_values) && !template.people_selector_values.nil?
+					self.receivers_selector_values = template.receivers_selector_values if template.respond_to?(:receivers_selector_values) && !template.receivers_selector_values.nil?
+				end
+
+				def read(flag = true)
+					self.is_read = flag
+					self.save
+				end
+
+				def flag(flag = true)
+					self.is_flagged = flag
+					self.save
+				end
+
+				def deliver
+					RicInmail.deliver(self)
 				end
 
 			end

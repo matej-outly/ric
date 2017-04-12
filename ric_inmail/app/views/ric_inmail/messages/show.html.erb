@@ -1,0 +1,5 @@
+<%= rug_show_table_for(@in_message, {
+	sender: { type: :belongs_to, label: :name_formatted },
+	subject: :string,
+	message: { type: :text, truncate: false },
+}) %>

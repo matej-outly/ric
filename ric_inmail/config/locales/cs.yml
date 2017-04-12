@@ -23,7 +23,7 @@ cs:
           drafts: Koncepty
         sender: Odesílatel
         sender_id: Odesílatel
-        people: Příjemci
+        receivers: Příjemci
         subject: Předmět
         message: Zpráva
         delivery_state: Stav doručení
@@ -39,6 +39,7 @@ cs:
       models:
         ric_inmail/in_message:
           create: Zpráva byla úspěšně vytvořena.
+          deliver: Zpráva byla úspěšně odeslána.
           update: Zpráva byla úspěšně uložena.
           destroy: Zpráva byla úspěšně smazána.
     errors:

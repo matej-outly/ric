@@ -12,10 +12,14 @@
 # Engines
 require "ric_inmail/engine"
 
+# Delivery service
+require "ric_inmail/concerns/service"
+
 # Models
 require "ric_inmail/concerns/models/in_message"
 
 module RicInmail
+	include RicInmail::Concerns::Service
 
 	#
 	# This will keep Rails Engine from generating all table prefixes with the engines name
