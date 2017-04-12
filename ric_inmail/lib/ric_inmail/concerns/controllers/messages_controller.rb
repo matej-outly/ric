@@ -85,6 +85,7 @@ module RicInmail
 				def set_owner
 					if RicInmail.use_person
 						@owner = current_user.person
+						@owner = current_user if @owner.nil?
 					else
 						@owner = current_user
 					end
