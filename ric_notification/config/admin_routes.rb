@@ -12,7 +12,7 @@
 RicNotification::AdminEngine.routes.draw do
 
 	# Notifications
-	resources :notifications, controller: "admin_notifications" do
+	resources :notifications, controller: "admin_notifications", only: [:index, :show, :destroy] do
 		member do 
 			put "deliver"
 		end

@@ -1,15 +1,16 @@
 <%= rug_show_table_for(@notification, { 
 	created_at: :datetime,
 	subject: :string,
-	message: { type: :text, truncate: false },
 	kind: :enum,
 	url: :string,
-	author: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
+	sender: { type: :belongs_to, label: :name_formatted },
 	done: :string,
 }) %>
-<h3><%= t("headers.ric_notification.admin_notifications.receivers") %></h3>
+<h3><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
+<%= @notification.message.to_s.html_safe %>
+<h3><%= RicNotification.notification_model.human_attribute_name(:receivers) %></h3>
 <%= rug_index_table_for(@notification.notification_receivers.order(created_at: :desc).page(params[:page]).per(50), { 
-	receiver: { type: :belongs_to, label: :name_or_email },
+	receiver_name_or_email: { type: :string, column_label: RicNotification.notification_receiver_model.human_attribute_name(:receiver) },
 	state: :state,
 	created_at: :datetime,
 	sent_at: :datetime,

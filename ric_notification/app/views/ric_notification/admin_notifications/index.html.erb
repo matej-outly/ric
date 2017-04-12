@@ -4,10 +4,9 @@
 	message: { type: :text, strip_tags: true },
 	kind: :enum,
 	url: :string,
-	author: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
+	sender: { type: :belongs_to, label: :name_formatted },
 	done: :string,
 }, paths: {
 	show: :notification_path,
-	edit: :edit_notification_path,
 	destroy: :notification_path
 }, pagination: true, summary: true ) %>

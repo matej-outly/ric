@@ -33,9 +33,6 @@ module RicNotification
 	# Global functions
 	# *************************************************************************
 
-	#
-	# Notify
-	#
 	def self.notify(message, receivers, options = {})
 		RicNotification.notification_model.notify(message, receivers, options)
 	end
@@ -81,15 +78,6 @@ module RicNotification
 		return @@notification_template_model.constantize
 	end
 	@@notification_template_model = "RicNotification::NotificationTemplate"
-
-	#
-	# User model
-	#
-	mattr_accessor :user_model
-	def self.user_model
-		return @@user_model.constantize
-	end
-	@@user_model = "RicUser::User"
 
 	#
 	# Mailer sender

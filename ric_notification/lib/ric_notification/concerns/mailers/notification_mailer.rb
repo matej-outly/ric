@@ -25,7 +25,7 @@ module RicNotification
 						raise "Please specify sender."
 					end
 
-					# Otehr view data
+					# Other view data
 					@notification = notification
 					@receiver = receiver
 					

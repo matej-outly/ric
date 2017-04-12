@@ -25,18 +25,12 @@ module RicNotification
 					# Validators
 					# *********************************************************
 
-					#
-					# Some columns must be present
-					#
 					validates_presence_of :key
 
 					# *********************************************************
-					# State
+					# Keys
 					# *********************************************************
 
-					#
-					# Key
-					#
 					if config(:keys)
 						enum_column :key, config(:keys)
 					end

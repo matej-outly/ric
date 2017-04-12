@@ -25,34 +25,42 @@ module RicNotification
 					# Structure
 					# *********************************************************
 
-					#
-					# Relation to notification
-					#
 					belongs_to :notification, class_name: RicNotification.notification_model.to_s
-
-					#
-					# Relation to receiver
-					#
 					belongs_to :receiver, polymorphic: true
 
 					# *********************************************************
 					# Validators
 					# *********************************************************
 
-					#
-					# Some columns must be present
-					#
 					validates_presence_of :notification_id, :receiver_id, :receiver_type
 
 					# *********************************************************
 					# State
 					# *********************************************************
 
-					#
-					# State
-					#
-					enum_column :state, ["created", "sent", "received", "accepted", "error"], default: "created"
+					enum_column :state, [:created, :sent, :received, :accepted, :error], default: :created
 					
+				end
+
+				# *************************************************************
+				# Receiver
+				# *************************************************************
+
+				#
+				# Get name or email in case name is not set
+				#
+				def receiver_name_or_email
+					if self.receiver
+						if self.receiver.respond_to?(:name_formatted) && !self.receiver.name_formatted.blank?
+							return self.receiver.name_formatted
+						elsif self.receiver.respond_to?(:name) && !self.receiver.name.blank?
+							return self.receiver.name
+						else
+							return self.receiver.email
+						end
+					else
+						return nil
+					end
 				end
 
 				# *************************************************************
@@ -63,7 +71,6 @@ module RicNotification
 				# Send given notification by email
 				#
 				def deliver_by_email(notification)
-
 					if notification.nil?
 						return false
 					end
@@ -73,11 +80,31 @@ module RicNotification
 						RicNotification::NotificationMailer.notify(notification, self.receiver).deliver_now
 						self.state = "sent"
 					#rescue Net::SMTPFatalError, Net::SMTPSyntaxError
-					rescue Exception => e
+					rescue StandardError => e
 						self.state = "error"
 						self.error_message = e.message
 					end
 				
+					# Mark as sent
+					self.sent_at = Time.current
+
+					# Save
+					self.save
+
+					return true
+				end
+
+				#
+				# Send ginev notification by InMail
+				#
+				def deliver_by_inmail(notification)
+					if notification.nil?
+						return false
+					end
+
+					# Send
+					self.state = "sent"
+
 					# Mark as sent
 					self.sent_at = Time.current
 

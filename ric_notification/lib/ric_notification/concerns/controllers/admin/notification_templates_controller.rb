@@ -21,40 +21,26 @@ module RicNotification
 					# the module's context.
 					#
 					included do
-					
-						#
-						# Set notification before some actions
-						#
+						
+						before_action :save_referrer, only: [:edit]
 						before_action :set_notification_template, only: [:show, :edit, :update]
 						before_action :create_missing_notification_templates, only: [:index]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@notification_templates = RicNotification.notification_template_model.all.order(key: :asc)
 					end
 
-					#
-					# Show action
-					#
 					def show
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @notification_template.update(notification_template_params)
-							redirect_to notification_template_path(@notification_template), notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_template_model.model_name.i18n_key}.update")
+							redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_template_model.model_name.i18n_key}.update")
 						else
 							render "edit"
 						end
@@ -74,13 +60,10 @@ module RicNotification
 					def set_notification_template
 						@notification_template = RicNotification.notification_template_model.find_by_id(params[:id])
 						if @notification_template.nil?
-							redirect_to notification_templates_path, error: I18n.t("activerecord.errors.models.#{RicNotification.notification_template_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicNotification.notification_template_model.model_name.i18n_key}.not_found")
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def notification_template_params
 						params.require(:notification_template).permit(
 							#:description,

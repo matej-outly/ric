@@ -12,11 +12,14 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 			# Message
 			t.string :subject
 			t.text :message
+
+			# Attachments
 			t.string :url
 			t.string :attachment
 
-			# Author (user)
-			t.integer :author_id, index: true
+			# Sender
+			t.integer :sender_id, index: true
+			t.string :sender_type, index: true
 
 			# Statistics
 			t.integer :receivers_count

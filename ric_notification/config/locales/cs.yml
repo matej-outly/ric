@@ -5,13 +5,8 @@ cs:
       admin_notifications:
         index: "Systémové zprávy"
         show: "Detail systémové zprávy"
-        new: "Nová systémová zpráva"
-        create: "Nová systémová zpráva"
-        edit: "Upravit systémovou zprávu"
-        update: "Upravit systémovou zprávu"
         deliver: "Odeslat systémovou zprávu"
         destroy: "Smazat systémovou zprávu"
-        receivers: "Příjemci"
       admin_notification_templates:
         index: "Šablony systémových zpráv"
         show: "Detail šablony"
@@ -25,15 +20,16 @@ cs:
         subject: Předmět
         message: Obsah
         url: URL
+        attachment: Příloha
         kind: Typ zprávy
         kind_values:
           notice: Informace
           alert: Chyba
           warning: Varování
-        author: Autor
-        author_id: Autor
+        sender: Odesílatel
         sent_at: Odesláno
         done: Hotovo
+        receivers: Příjemci
       ric_notification/notification_receiver:
         receiver: Příjemce
         state: Stav
@@ -79,7 +75,13 @@ cs:
             subject: "%{url}: Nová systémová zpráva"
 
   notifications:
-    automatic_messages:
-      create: "Objekt byl vytvořen."
-      update: "Objekt byl upraven."
-      destroy: "Objekt byl smazán."
+    automatic:
+      create:
+        subject: Objekt byl vytvořen.
+        message: Objekt byl vytvořen.
+      update: 
+        subject: Objekt byl upraven.
+        message: Objekt byl upraven.
+      destroy: 
+        subject: Objekt byl smazán.
+        message: Objekt byl smazán.

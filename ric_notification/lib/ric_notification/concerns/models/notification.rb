@@ -25,27 +25,14 @@ module RicNotification
 					# Structure
 					# *********************************************************
 
-					#
-					# Relation to users
-					#
 					has_many :notification_receivers, class_name: RicNotification.notification_receiver_model.to_s, dependent: :destroy
-					
-					#
-					# Relation to user
-					#
-					belongs_to :author, class_name: RicNotification.user_model.to_s
+					belongs_to :sender, polymorphic: true
 					
 					# *********************************************************
 					# Kind
 					# *********************************************************
 
-					enum_column :kind, ["notice", "alert", "warning"], default: "notice"
-
-					# *********************************************************
-					# (First) receiver TODO TEMP
-					# *********************************************************
-
-					#after_save :set_receiver_after_save
+					enum_column :kind, [:notice, :alert, :warning], default: :notice
 
 				end
 
@@ -55,124 +42,53 @@ module RicNotification
 					# Notification
 					# *********************************************************
 
-					#
-					# Notify
-					#
-					def notify(message, receivers, options = {})
+					def notify(content, receivers, options = {})
 
+						# Object
 						notification = RicNotification.notification_model.new
 
 						RicNotification.notification_model.transaction do
 
-							# *************************************************
-							# Message
-							# *************************************************
+							# Get subject, message and params
+							subject, message, params = parse_content(content)
 
-							# Arrayize
-							if !message.is_a?(Array)
-								message = [message]
-							end
-
-							# Check for empty
-							if message.length == 0
-								raise "Message is empty."
-							end
-
-							# Extract message text and params
-							message_text = message.shift
-							message_params = message
-
-							# Automatic message
-							if message_text.is_a?(Symbol)
-								
-								notification_template = RicNotification.notification_template_model.where(key: message_text.to_s).first
-								if notification_template
-
-									# Message and subject from template
-									message_text = notification_template.message
-									subject = notification_template.subject
-
-								else
-
-									# Static message
-									message_text = I18n.t("notifications.automatic_messages.#{message_text.to_s}", default: "")
-									subject = nil
-
-								end
-							end
-
-							# First parameter is message text (all other parameters are indexed from 1)
-							message_params.unshift(message_text)
-
-							if !message_text.blank?
+							if !message.blank?
 
 								# Interpret params and store it in DB
-								notification.message = interpret_params(message_text, message_params)
-								notification.subject = subject
+								notification.message = interpret_params(message, params)
+								notification.subject = interpret_params(subject, params)
 
-								# *************************************************
 								# Kind
-								# *************************************************
-
 								if options[:kind]
 									notification.kind = options[:kind]
 								end
 
-								# *************************************************
-								# Author
-								# *************************************************
-
-								if options[:author] && options[:author].is_a?(RicNotification.user_model)
-									notification.author_id = options[:author].id
+								# Sender
+								if options[:sender]
+									notification.sender = options[:sender]
 								end
 
-								# *************************************************
 								# URL
-								# *************************************************
-
 								if options[:url]
 									notification.url = options[:url]
 								end
 
-								# *************************************************
 								# Attachment
-								# *************************************************
-
 								if options[:attachment]
 									notification.attachment = options[:attachment]
 								end
 
-								# *************************************************
 								# Store
-								# *************************************************
-
 								notification.sent_count = 0
 								notification.save
 
-								# *************************************************
-								# Receivers
-								# *************************************************
+								p "RECEIVERS"
+								p receivers
 
-								# Arrayize
-								if !receivers.is_a?(Array)
-									receivers = [receivers]
-								end
+								# Get valid receivers
+								receivers = parse_receivers(receivers)
 
-								# Automatic receivers
-								automatic_receivers = []
-								receivers.each do |receiver|
-									if receiver.is_a?(Symbol) || receiver.is_a?(String)
-										if receiver.to_s == "all"
-											automatic_receivers.concat(RicNotification.user_model.all)
-										elsif receiver.to_s.start_with?("role_")
-											automatic_receivers.concat(RicNotification.user_model.where(role: receiver.to_s[5..-1]))
-										end
-									end
-								end
-								receivers.concat(automatic_receivers)
-
-								# Filter receivers
-								receivers = receivers.delete_if { |receiver| !valid_receiver?(receiver) }
+								p receivers
 
 								# Store
 								receivers.each do |receiver|
@@ -191,6 +107,78 @@ module RicNotification
 						notification.enqueue_for_delivery if !notification.nil?
 
 						return notification
+					end
+
+					def parse_content(content)
+						
+						# Arrayize
+						if !content.is_a?(Array)
+							content = [content]
+						end
+
+						# Check for empty
+						if content.length == 0
+							raise "Notification is incorrectly defined."
+						end
+
+						# Extract content definition and params
+						content_def = content.shift
+						params = content
+
+						if content_def.is_a?(Symbol)
+
+							notification_template = RicNotification.notification_template_model.where(key: content_def.to_s).first
+							if notification_template # Message and subject from template
+								message = notification_template.message
+								subject = notification_template.subject
+							else # Static message
+								message = I18n.t("notifications.automatic.#{message_text.to_s}.message", default: "")
+								subject = I18n.t("notifications.automatic.#{message_text.to_s}.subject", default: "")
+							end
+
+						elsif content_def.is_a?(Hash) # Defined by hash containing subject and message
+
+							subject = content_def[:subject]
+							message = content_def[:message]
+
+						elsif content_def.is_a?(String)
+
+							message = content_def
+
+						else
+							raise "Notification is incorrectly defined."
+						end
+
+						# First parameter is message (all other parameters are indexed from 1)
+						params.unshift(message)
+
+						return [subject, message, params]		
+					end
+
+					def parse_receivers(receivers)
+						
+						# Arrayize
+						if !receivers.is_a?(Array)
+							receivers = [receivers]
+						end
+
+						# Automatic receivers
+						automatic_receivers = []
+						receivers.each do |receiver|
+							if receiver.is_a?(Symbol) || receiver.is_a?(String)
+								if receiver.to_s == "all"
+									automatic_receivers.concat(RicNotification.user_model.all)
+								elsif receiver.to_s.start_with?("role_")
+									automatic_receivers.concat(RicNotification.user_model.where(role: receiver.to_s[5..-1]))
+								end
+							end
+						end
+						receivers.concat(automatic_receivers)
+
+						# Filter receivers
+						receivers = receivers.delete_if { |receiver| !valid_receiver?(receiver) }
+
+						return receivers
 					end
 
 					#
@@ -212,6 +200,14 @@ module RicNotification
 							# Result
 							evaluated_match
 						end
+					end
+
+					#
+					# Check if object is valid receiver
+					# 
+					def valid_receiver?(receiver)
+						return false if !receiver.respond_to?(:email)
+						return true
 					end
 
 					# *********************************************************
@@ -239,7 +235,6 @@ module RicNotification
 							return nil
 						end
 
-						
 						QC.enqueue("#{RicNotification.notification_model.to_s}.deliver_batch_by_email_and_enqueue", id)
 					end
 
@@ -301,16 +296,6 @@ module RicNotification
 						end
 
 					end
-
-					#
-					# Check if object is valid receiver
-					# 
-					def valid_receiver?(receiver)
-						return false if !receiver.respond_to?(:email)
-						return false if !receiver.respond_to?(:name_or_email)
-						return true
-					end
-
 				end
 
 				#
@@ -319,29 +304,6 @@ module RicNotification
 				def enqueue_for_delivery
 					QC.enqueue("#{RicNotification.notification_model.to_s}.deliver", self.id)
 				end
-
-				# *************************************************************
-				# (First) receiver TODO TEMP
-				# *************************************************************
-
-#				def receiver_id=(new_receiver_id)
-#					@receiver_id_was = @receiver_id
-#					@receiver_id = new_receiver_id
-#				end#
-
-#				def receiver_id
-#					if @receiver_id
-#						return @receiver_id
-#					elsif self.receivers.first
-#						return self.receivers.first.id
-#					else
-#						return nil
-#					end
-#				end#
-
-#				def receiver
-#					return self.receivers.first
-#				end
 
 				# *************************************************************
 				# Progress
@@ -356,16 +318,6 @@ module RicNotification
 				end
 
 			protected
-
-				# *************************************************************
-				# (First) receiver TODO TEMP
-				# *************************************************************
-
-#				def set_receiver_after_save
-#					if @receiver_id != @receiver_id_was
-#						self.receiver_ids = [@receiver_id]
-#					end
-#				end
 
 			end
 		end
