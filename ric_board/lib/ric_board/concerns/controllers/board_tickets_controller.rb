@@ -17,49 +17,10 @@ module RicBoard
 				included do
 
 					before_action :set_owner
-					before_action :set_board_ticket, only: [:follow, :close]
+					before_action :set_board_ticket, only: [:close]
 
 				end
 
-				#
-				# Show dashboard
-				#
-				def index
-
-					# Get active tickets
-					board_tickets = RicBoard.board_ticket_model.active.owned_by(@owner)
-
-					# Group them by subject type
-					if RicBoard.group_board_tickets == true
-						
-						# Sort by group attribute and by date
-						board_tickets = board_tickets.order(key: :asc).order("date ASC NULLS FIRST")
-
-						# Load configuration options from each subject type
-						@grouped = []
-						board_tickets.group_by(&:key).each do |key, board_tickets|
-							@grouped << [RicBoard.board_ticket_type(key), board_tickets]
-						end
-
-						# Sort dashboard by priority DESC
-						@grouped.sort! { |bt1, bt2| bt2[0][:priority] <=> bt1[0][:priority] }
-
-					else
-						
-						# Sort by date
-						board_tickets = board_tickets.order("date ASC NULLS FIRST")
-						
-						# Get data for view
-						@board_tickets = []
-						board_tickets.each do |board_ticket|
-							@board_tickets << [RicBoard.board_ticket_type(board_ticket.key), board_ticket]
-						end
-					end
-				end
-
-				#
-				# Close board ticket
-				#
 				def close
 					@board_ticket.closed = true
 					render json: @board_ticket.save

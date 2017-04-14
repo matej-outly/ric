@@ -82,13 +82,8 @@ module RicNotification
 								notification.sent_count = 0
 								notification.save
 
-								p "RECEIVERS"
-								p receivers
-
 								# Get valid receivers
 								receivers = parse_receivers(receivers)
-
-								p receivers
 
 								# Store
 								receivers.each do |receiver|
@@ -221,6 +216,48 @@ module RicNotification
 						config(:delivery_methods).each do |delivery_method|
 							method("deliver_by_#{delivery_method}".to_sym).call(id)
 						end
+					end
+
+					# *********************************************************
+					# Delivery - inmail
+					# *********************************************************
+
+					# TODO: statistics and state should be different for email and inmail
+
+					def deliver_by_inmail(id)
+
+						# Find object
+						notification = self.find_by_id(id)
+						if notification.nil?
+							return nil
+						end
+
+						# Nothing to do
+						#if notification.sent_count == notification.receivers_count
+						#	return 0
+						#end
+
+						# Get batch of receivers prepared for send
+						notification_receivers = notification.notification_receivers #.where(sent_at: nil)
+						
+						# Send entire batch
+						#sent_counter = 0
+						notification_receivers.each do |notification_receiver|
+							if notification_receiver.deliver_by_inmail(notification)
+								#sent_counter += 1
+							end
+						end
+
+						# Update statistics
+						#notification.sent_count += sent_counter
+						#if notification.sent_count == notification.receivers_count
+						#	notification.sent_at = Time.current
+						#end
+
+						# Save
+						#notification.save
+
+						#return (notification.receivers_count - notification.sent_count)
 					end
 
 					# *********************************************************

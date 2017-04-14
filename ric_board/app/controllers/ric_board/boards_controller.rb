@@ -2,25 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Boards
 # *
 # * Author:
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
 
-RicBoard::Engine.routes.draw do
+require_dependency "ric_board/application_controller"
 
-	# Board
-	resource :board, only: [:show] do
-		
-		# Tickets
-		resources :tickets, controller: "board_tickets", only: [] do
-			member do
-				put "close"
-			end
-		end
-
+module RicBoard
+	class BoardsController < ApplicationController
+		include RicBoard::Concerns::Controllers::BoardsController
 	end
-
 end
