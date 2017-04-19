@@ -45,15 +45,14 @@ module RicUser
 					
 					# Return invalid user with error messages
 					return user if !user.errors.empty?
-
-					# Notification
-					if new_password
-						RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
-						return user
-					else
+					if !new_password
 						# TODO user.errors.add(...)
 						return nil
 					end
+
+					# Notification
+					RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
+					return user
 				end
 
 				def destroy_user

@@ -49,28 +49,32 @@ module RicUser
 						
 						# Return invalid user with error messages
 						return user if !user.errors.empty?
-						
-						# Roles
-						user.roles = self.person_role
-
-						# Notification
-						if new_password
-							RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
-							return user
-						else
+						if !new_password
 							# TODO user.errors.add(...)
 							return nil
 						end
 
+						# Roles
+						user.roles = self.person_role
+						user.save
+
+						# Build user person
+						user = self.create_user_person(user_id: user.id)
+
+						# Notification
+						RicNotification.notify(["#{self.person_role}_welcome".to_sym, self, new_password], user) if !(defined?(RicNotification).nil?)
+						
 					else
 						roles = user.roles.dup
 						roles << self.person_role
 						user.roles = roles
-					end
-					
-					# Build user person
-					user = self.create_user_person(user_id: user.id)
+						user.save
 
+						# Build user person
+						user = self.create_user_person(user_id: user.id)
+					end
+
+					return user
 				end
 
 				def destroy_user
