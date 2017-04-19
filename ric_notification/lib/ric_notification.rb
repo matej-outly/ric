@@ -14,12 +14,18 @@ require "ric_notification/admin_engine"
 require "ric_notification/public_engine"
 
 # Models
-require 'ric_notification/concerns/models/notification'
-require 'ric_notification/concerns/models/notification_receiver'
-require 'ric_notification/concerns/models/notification_template'
+require "ric_notification/concerns/models/notification"
+require "ric_notification/concerns/models/notification_receiver"
+require "ric_notification/concerns/models/notification_template"
+
+# Services
+require "ric_notification/concerns/services/notification"
+require "ric_notification/concerns/services/delivery"
+require "ric_notification/concerns/services/email_delivery"
+require "ric_notification/concerns/services/inmail_delivery"
 
 # Mailers
-require 'ric_notification/concerns/mailers/notification_mailer'
+require "ric_notification/concerns/mailers/notification_mailer"
 
 module RicNotification
 
@@ -30,12 +36,13 @@ module RicNotification
 	end
 
 	# *************************************************************************
-	# Global functions
+	# Services
 	# *************************************************************************
 
-	def self.notify(message, receivers, options = {})
-		RicNotification.notification_model.notify(message, receivers, options)
-	end
+	include RicNotification::Concerns::Services::Notification
+	include RicNotification::Concerns::Services::Delivery
+	include RicNotification::Concerns::Services::EmailDelivery
+	include RicNotification::Concerns::Services::InmailDelivery
 
 	# *************************************************************************
 	# Configuration
@@ -84,5 +91,17 @@ module RicNotification
 	#
 	mattr_accessor :mailer_sender
 	#@@mailer_sender = ... to be set in module initializer
+
+	#
+	# Delivery methods
+	#
+	# Available methods:
+	# - email
+	# - inmail
+	#
+	mattr_accessor :delivery_methods
+	@@delivery_methods = [
+		:email
+	]
 
 end
