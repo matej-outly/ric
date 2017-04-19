@@ -83,13 +83,22 @@ cs:
             valid_to:
               before_from: Událost končí před jejím začátkem
 
+  general:
+    destroy_this_or_all_occurences: Přejete si smazat pouze tento konkrétní výskyt a nebo celou řadu?
+    action:
+      destroy_this_occurence: Smazat pouze tento výskyt
+      destroy_all_occurences: Smazat všechny výskyty
+      update_this_occurence: Upravit pouze tento výskyt 
+      update_all_occurences: Upravit všechny výskyty
+      update_this_and_future_occurences: Upravit tento a následující výskyty
+
   ice_cube:
     pieces_connector: ' / '
     not: 'mimo %{target}'
     not_on: 'kromě v %{target}'
     date:
       formats:
-        default: '%B %-d, %Y'
+        default: '%-d. %-m. %Y'
       month_names:
         -
         - Leden
@@ -136,14 +145,14 @@ cs:
       other: on the %{segments} seconds of the minute
       one: on the %{segments} second of the minute
     each_second:
-      one: Secondly
-      other: Every %{count} seconds
+      one: Každou sekundu
+      other: Každou %{count} sekundu
     each_minute:
-      one: Minutely
-      other: Every %{count} minutes
+      one: Každou minutu
+      other: Každou %{count} minutu
     each_hour:
-      one: Hourly
-      other: Every %{count} hours
+      one: Každou hodinu
+      other: Každou %{count} hodinu
     each_day:
       one: Denně
       other: Každé %{count} dny
@@ -198,65 +207,3 @@ cs:
         until: '%{rest} %{current}'
         count: '%{rest} %{current}'
         default: '%{rest} %{current}'
-
-  date:
-    abbr_day_names:
-    - Sun
-    - Mon
-    - Tue
-    - Wed
-    - Thu
-    - Fri
-    - Sat
-    abbr_month_names:
-    -
-    - Jan
-    - Feb
-    - Mar
-    - Apr
-    - May
-    - Jun
-    - Jul
-    - Aug
-    - Sep
-    - Oct
-    - Nov
-    - Dec
-    day_names:
-    - Sunday
-    - Monday
-    - Tuesday
-    - Wednesday
-    - Thursday
-    - Friday
-    - Saturday
-    formats:
-      default: "%Y-%m-%d"
-      long: "%B %d, %Y"
-      short: "%b %d"
-    month_names:
-    -
-    - January
-    - February
-    - March
-    - April
-    - May
-    - June
-    - July
-    - August
-    - September
-    - October
-    - November
-    - December
-    order:
-    - :year
-    - :month
-    - :day
-
-  time:
-    am: am
-    formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      long: "%B %d, %Y %H:%M"
-      short: "%d %b %H:%M"
-    pm: pm

@@ -1,72 +1,69 @@
 <%= rug_menu_for(@event, options.merge(path_base: "events")) do |m| %>
 	<%= m.new_item %>
-	<%= m.show_item %>
-
 	<% if !@event.nil? && !@event.new_record? %>
-
 		<% if @event.scheduled_date_from.blank? %>
+			<%= m.show_item %>
 			<%= m.edit_item %>
 			<%= m.destroy_item %>
-
 		<% else %>
-			<li>
-				<%= link_to ric_calendar.edit_event_path(@event, scheduled_date_from: @event.scheduled_date_from) do %>
-					<i class="fa fa-pencil "></i> Upravit událost</a>
-				<% end %>
-			</li>
+			<%= m.show_item nil, lambda { |event| ric_calendar.event_path(event, scheduled_date_from: @event.scheduled_date_from) } %>
+			<%= m.edit_item nil, lambda { |event| ric_calendar.edit_event_path(event, scheduled_date_from: @event.scheduled_date_from) } %>
 			<% if @event.is_recurring? %>
-				<li>
-					<%= link_to "#", rel: :nofollow, class: "delete-event-link" do %>
-						<i class="fa fa-trash"></i> Smazat událost</a>
-					<% end %>
-				</li>
-
-				<script type="text/javascript">
-					$(document).ready(function() {
-						$(".delete-event-link").click(function(e) {
-							e.preventDefault();
-
-							$link = $(this);
-
-							$.confirm({
-								title: "Smazat událost",
-								content: "Přejete si smazat pouze tuto konkrétní událost a nebo celou řadu?",
-								columnClass: "col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12",
-								buttons: {
-									onlyThis: {
-										text: "Smazat pouze tuto událost",
-										btnClass: "btn-danger",
-										action: function() {
-											// Call default link with scheduled date
-											$link.attr("data-method", "delete");
-											$link.attr("href", '<%= ric_calendar.event_path(@event, scheduled_date_from: @event.scheduled_date_from) %>')
-											$.rails.handleMethod($link);
-										}
-									},
-
-									all: {
-										text: "Smazat všechny výskyty",
-										btnClass: "btn-danger",
-										action: function() {
-											$link.attr("data-method", "delete");
-											$link.attr("href", '<%= ric_calendar.event_path @event %>')
-											$.rails.handleMethod($link);
-										}
-									},
-
-									cancel: {
-										text: "Zrušit",
-									}
-								}
-
-							});
-						})
-
-					});
-				</script>
+				<%= m.item t("headers.ric_calendar.events.destroy"), "#", class: "destroy-recurring-event-link", icon: "trash" %>
 			<% else %>
 				<%= m.destroy_item %>
 			<% end %>
 		<% end %>
 	<% end %>
+<% end %>
+
+<% if @event.is_recurring? %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("a.destroy-recurring-event-link").click(function(e) {
+				e.preventDefault();
+				var $link = $(this);
+				if (!alertify.deleteRecurringEvent) {
+					alertify.dialog('deleteRecurringEvent', function factory() {
+						return {
+							prepare: function() {
+								this.setHeader('<%= t("headers.ric_calendar.events.destroy") %>');
+								this.setContent('<%= t("general.destroy_this_or_all_occurences") %>');
+							},
+							setup: function() {
+								return { 
+									buttons:[
+										{ text: '<%= t("general.action.destroy_this_occurence").mb_upcase_first %>', className: 'btn btn-danger' },
+										{ text: '<%= t("general.action.destroy_all_occurences").mb_upcase_first %>', className: 'btn btn-danger' },
+										{ text: '<%= t("general.action.cancel").mb_upcase_first %>', key: 27/*Esc*/, invokeOnClose: true, className: 'btn' },
+									],
+									focus: { element: 0 },
+									options: {
+										maximizable: false,
+									}
+								};
+							},
+							callback: function(closeEvent) {
+								console.log(closeEvent);
+								if (closeEvent.index == 0) {
+									$link.attr('data-method', 'delete');
+									$link.attr('href', '<%= ric_calendar.event_path(@event, scheduled_date_from: @event.scheduled_date_from) %>')
+									$.rails.handleMethod($link);
+								
+								} else if (closeEvent.index == 1) {
+									$link.attr('data-method', 'delete');
+									$link.attr('href', '<%= ric_calendar.event_path @event %>')
+									$.rails.handleMethod($link);
+								
+								} else {
+									// Nothing to do ...
+								}
+							}
+						};
+					}, true, 'confirm');
+				}
+				alertify.deleteRecurringEvent(null);
+			})
+		});
+	</script>
 <% end %>

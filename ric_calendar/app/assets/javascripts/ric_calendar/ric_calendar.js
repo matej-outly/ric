@@ -17,9 +17,9 @@
  * persistently save calendar view state for better user experience.
  *
  * Options:
- * - url ... (string) Rails path to event source (usually `events_calendars_path`)
- * - newUrl .... (string) Rails path to new event action. Adds `date` as get param to path.
- * - allowedCallendars ... (function) Function which ...
+ * - url ... (string) Path to event source (usually `events_calendars_path`)
+ * - newUrl .... (string) Path to new event action. Adds `date` as get param to path.
+ * - toggleCalendarSelector ... (string) Selector to checkboxes for calendars toggling
  */
 
 function RicCalendar(hash, options)
@@ -28,7 +28,7 @@ function RicCalendar(hash, options)
 	this.calendar = null;
 	this.options = $.extend({
 		url: "/calendars/events",
-		calendarsSelector: null,
+		toggleCalendarSelector: null,
 	}, options);
 
 	// Local storage key
@@ -44,7 +44,7 @@ RicCalendar.prototype = {
 	constructor: RicCalendar,
 
 	//
-	// Drag&drop events editation
+	// Drag & Drop events editation
 	//
 	moveEvent: function(event, delta, revertFunc)
 	{
@@ -193,8 +193,8 @@ RicCalendar.prototype = {
 		);
 
 		// Set up calendars switch
-		if (self.options.calendarsSelector !== null) {
-			$(self.options.calendarsSelector).each(function() {
+		if (self.options.toggleCalendarSelector !== null) {
+			$(self.options.toggleCalendarSelector).each(function() {
 				var $checkbox = $(this);
 				var calendarId = $checkbox.attr("data-calendar-id");
 

@@ -53,12 +53,11 @@
 			<% if @event.scheduled_date_from.blank? %>
 				<%= f.primary_button_row :submit %>
 			<% else %>
-				<%= f.button "Upravit pouze tuto událost", name: :update_action, value: "only_this", type: :submit, class: "btn btn-primary" %>
-				<%= f.button "Upravit jen následující události", name: :update_action, value: "all_future", type: :submit, class: "btn btn-primary" %>
-				<%= f.primary_button_row :submit, label: "Upravit všechny události" %>
+				<%= f.primary_button_row :submit, label: t("general.action.update_all_occurences").mb_upcase_first %>
+				<%= f.button t("general.action.update_this_occurence").mb_upcase_first, name: :update_action, value: "only_this", type: :submit, class: "btn btn-default" %>
+				<%= f.button t("general.action.update_this_and_future_occurences").mb_upcase_first, name: :update_action, value: "all_future", type: :submit, class: "btn btn-default" %>
 			<% end %>
 		<% end %>
-
 		<%= f.back_link_button_row %>
 	</div>
 

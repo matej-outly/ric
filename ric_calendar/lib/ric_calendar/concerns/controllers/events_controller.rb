@@ -51,8 +51,8 @@ module RicCalendar
 					# Valid from
 					@event.valid_from = @event.date_from
 
-					# Valid to end of school year
-					current_season = RicSeason::Season.current
+					# Valid to end of season if possible
+					current_season = RicSeason.season_model.current if defined?(RicSeason)
 					if current_season != nil
 						@event.valid_to = current_season.to
 					else

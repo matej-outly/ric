@@ -6,7 +6,7 @@
 		ric_calendar_<%= hash %> = new RicCalendar('<%= hash %>', {
 			url: '<%= events_calendars_path %>',
 			newUrl: '<%= new_event_path %>',
-			calendarsSelector: '.enable-calendar',
+			toggleCalendarSelector: '.toggle-calendar',
 		});
 		ric_calendar_<%= hash %>.ready();
 	});
