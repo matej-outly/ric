@@ -43,7 +43,7 @@ module RicCalendar
 				#
 				def resources
 					result = []
-					available_resource_types = RicCalendar.calendar_model.config(:kinds).map { |key, value| value[:resource_type] }.uniq.delete_if { |value| value == RicCalendar.calendar_model.to_s }
+					available_resource_types = RicCalendar.calendar_kinds.map { |key, value| value[:resource_type] }.uniq.delete_if { |value| value == RicCalendar.calendar_model.to_s }
 					available_resource_types.each do |resource_type|
 						result += resource_type.constantize.search(params[:q]).to_a
 					end

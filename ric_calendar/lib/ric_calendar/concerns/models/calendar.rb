@@ -36,7 +36,7 @@ module RicCalendar
 					after_save :set_resource_id_based_on_kind # ID must be known at this time
 
 					# Enum
-					enum_column :kind, config(:kinds).keys
+					enum_column :kind, (RicCalendar.calendar_kinds ? RicCalendar.calendar_kinds.keys : [])
 
 				end
 
@@ -97,7 +97,7 @@ module RicCalendar
 
 				def kind_options
 					if @kind_options.nil?
-						kinds = config(:kinds)
+						kinds = RicCalendar.calendar_kinds
 						if kinds && kinds[self.kind.to_sym]
 							@kind_options = kinds[self.kind.to_sym]
 						end
