@@ -19,13 +19,18 @@ require "ric_inmail/concerns/service"
 require "ric_inmail/concerns/models/in_message"
 
 module RicInmail
-	include RicInmail::Concerns::Service
-
+	
 	#
 	# This will keep Rails Engine from generating all table prefixes with the engines name
 	#
 	def self.table_name_prefix
 	end
+
+	# *************************************************************************
+	# Services
+	# *************************************************************************
+
+	include RicInmail::Concerns::Service
 
 	# *************************************************************************
 	# Configuration

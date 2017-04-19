@@ -3,7 +3,7 @@ cs:
   headers:
     ric_inmail:
       messages:
-        index: Schránka
+        index: Interní pošta
         show: Zpráva
         new: Vytvořit zprávu
         create: Vytvořit zprávu
