@@ -115,6 +115,19 @@ module RicUser
 						"#{key}/#{params.to_json}"
 					end
 
+					# *********************************************************
+					# People
+					# *********************************************************
+
+					def people(key, params)
+						selector_def = self.available_selectors[key.to_sym]
+						if selector_def && selector_def[:select]
+							return selector_def[:select].call(params)
+						else
+							raise "Unknown selector."
+						end
+					end
+
 				end
 
 				# *************************************************************
@@ -151,21 +164,12 @@ module RicUser
 				#
 				def people
 					if @people.nil?
-						@people = self._people
+						@people = self.class.people(self.key, self.params)
 					end
 					return @people
 				end
 
 			protected
-
-				def _people
-					selector_def = self.class.available_selectors[self.key.to_sym]
-					if selector_def && selector_def[:select]
-						return selector_def[:select].call(self.params)
-					else
-						raise "Unknown selector."
-					end
-				end
 
 				def update_title
 					self.title = self.class.title(self.value)
