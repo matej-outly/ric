@@ -9,12 +9,18 @@
 # *
 # *****************************************************************************
 
+# Railtie
+require "ric_board/railtie" if defined?(Rails)
+
 # Engines
 require "ric_board/engine"
 
 # Models
 require "ric_board/concerns/models/board_ticket"
 require "ric_board/concerns/models/ticketable"
+
+# Helpers
+require "ric_board/helpers/board_helper"
 
 module RicBoard
 

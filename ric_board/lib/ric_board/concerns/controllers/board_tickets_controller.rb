@@ -26,17 +26,6 @@ module RicBoard
 					render json: @board_ticket.save
 				end
 
-				#
-				# Redirect to ticket subject according to current user role
-				#
-				def follow
-					path = follow_board_ticket_path(@board_ticket) if self.respond_to?(:follow_board_ticket_path)
-					if path.nil?
-						raise "Please define follow_board_ticket_path in RicBoard::ApplicationController."
-					end
-					redirect_to path
-				end
-
 			protected
 
 				# *************************************************************

@@ -1,4 +1,4 @@
-<div class="col-sm-6">
+<div class="col-sm-<%= (board_size > 1 ? (board_size > 4 ? "4" : "6") : "12") %>">
 	<% board_ticket_template = "ric_board/board_tickets/" + board_ticket_type[:key] %>
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -6,7 +6,7 @@
 		</div>
 		<div class="panel-body">
 			<% board_tickets.each do |board_ticket| %>
-				<% path = follow_board_ticket_path(board_ticket) %>
+				<% path = follow_board_ticket_path(board_ticket) if defined?(follow_board_ticket_path) %>
 				<<%= (path ? "a href=\"#{path}\"" : "div").html_safe %> 
 					class="alert alert-<%= board_ticket_type[:style] %> <%= "alert-dismissible" if board_ticket.is_closable? %> ticket" 
 					role="alert" 

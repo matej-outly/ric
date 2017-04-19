@@ -1,15 +1,13 @@
 <%# Template existence check: if lookup_context.find_all("ric_board/board_tickets/_" + subject_type.underscore.pluralize).any? %>
-<% @empty = true %>
+<% board_size = board.length %>
 <div class="row">
 	<% if RicBoard.group_board_tickets == true %>
-		<% @grouped.each do |board_ticket_type, board_tickets| %>
-			<% @empty = false %>
-			<%= render partial: "ric_board/boards/templates/grouped/" + board_ticket_type[:template], locals: { board_tickets: board_tickets, board_ticket_type: board_ticket_type } %>
+		<% board.each do |board_ticket_type, board_tickets| %>
+			<%= render partial: "ric_board/boards/templates/grouped/" + board_ticket_type[:template], locals: { board_size: board_size, board_tickets: board_tickets, board_ticket_type: board_ticket_type } %>
 		<% end %>
 	<% else %>
-		<% @board_tickets.each do |board_ticket_type, board_ticket| %>
-			<% @empty = false %>
-			<%= render partial: "ric_board/boards/templates/non_grouped/" + board_ticket_type[:template], locals: { board_ticket: board_ticket, board_ticket_type: board_ticket_type } %>
+		<% board.each do |board_ticket_type, board_ticket| %>
+			<%= render partial: "ric_board/boards/templates/non_grouped/" + board_ticket_type[:template], locals: { board_size: board_size, board_ticket: board_ticket, board_ticket_type: board_ticket_type } %>
 		<% end %>
 	<% end %>
 </div>
