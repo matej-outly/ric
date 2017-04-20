@@ -1,35 +1,39 @@
-<% tabs = rug_tabs %>
-<% tabs.tab :valid_banners, t("headers.ric_advert.admin_banners.valid_banners") do %>
-	<%= rug_index_table_for(@valid_banners, { 
-		name: :string,
-		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
-		kind: :enum,
-	}, paths: {
-		show: "ric_advert_admin.banner_path",
-		edit: "ric_advert_admin.edit_banner_path",
-		destroy: "ric_advert_admin.banner_path"
-	}, summary: true ) %>
+<%= rug_tabs(
+	header_style: "pills", 
+	header_class: "hr-divider-content hr-divider-nav", 
+	header_container_class: "hr-divider"
+) do |t| %>
+	<% t.tab :valid_banners, t("headers.ric_advert.admin_banners.valid_banners") do %>
+		<%= rug_index_table_for(@valid_banners, { 
+			name: :string,
+			advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
+			kind: :enum,
+		}, paths: {
+			show: "ric_advert_admin.banner_path",
+			edit: "ric_advert_admin.edit_banner_path",
+			destroy: "ric_advert_admin.banner_path"
+		}, summary: true ) %>
+	<% end %>
+	<% t.tab :invalid_banners, t("headers.ric_advert.admin_banners.invalid_banners") do %>
+		<h3><%= t("headers.ric_advert.admin_banners.sofar_invalid_banners") %></h3>
+		<%= rug_index_table_for(@sofar_invalid_banners, { 
+			name: :string,
+			advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
+			kind: :enum,
+		}, paths: {
+			show: "ric_advert_admin.banner_path",
+			edit: "ric_advert_admin.edit_banner_path",
+			destroy: "ric_advert_admin.banner_path"
+		}, summary: true ) %>
+		<h3><%= t("headers.ric_advert.admin_banners.already_invalid_banners") %></h3>
+		<%= rug_index_table_for(@already_invalid_banners.order(name: :asc), { 
+			name: :string,
+			advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
+			kind: :enum,
+		}, paths: {
+			show: "ric_advert_admin.banner_path",
+			edit: "ric_advert_admin.edit_banner_path",
+			destroy: "ric_advert_admin.banner_path"
+		}, summary: true ) %>
+	<% end %>
 <% end %>
-<% tabs.tab :invalid_banners, t("headers.ric_advert.admin_banners.invalid_banners") do %>
-	<h3><%= t("headers.ric_advert.admin_banners.sofar_invalid_banners") %></h3>
-	<%= rug_index_table_for(@sofar_invalid_banners, { 
-		name: :string,
-		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
-		kind: :enum,
-	}, paths: {
-		show: "ric_advert_admin.banner_path",
-		edit: "ric_advert_admin.edit_banner_path",
-		destroy: "ric_advert_admin.banner_path"
-	}, summary: true ) %>
-	<h3><%= t("headers.ric_advert.admin_banners.already_invalid_banners") %></h3>
-	<%= rug_index_table_for(@already_invalid_banners.order(name: :asc), { 
-		name: :string,
-		advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
-		kind: :enum,
-	}, paths: {
-		show: "ric_advert_admin.banner_path",
-		edit: "ric_advert_admin.edit_banner_path",
-		destroy: "ric_advert_admin.banner_path"
-	}, summary: true ) %>
-<% end %>
-<%= tabs.render(header_style: "pills", header_class: "hr-divider-content hr-divider-nav", header_container_class: "hr-divider") %>

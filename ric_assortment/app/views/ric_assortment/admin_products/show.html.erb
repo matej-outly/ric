@@ -2,12 +2,16 @@
 <% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:show) %>
 	<%= render partial: "show_identification" %>
 <% end %>
-<% tabs = rug_tabs %>
-<% @product.class.parts.select { |part, appearences| part != :identification }.each do |part, appearences| %>
-	<% if appearences.include?(:show) %>
-		<% tabs.tab part, t("headers.ric_assortment.admin_products.#{part.to_s}") do %>
-			<%= render partial: "show_#{part.to_s}" %>
+<%= rug_tabs(
+	header_style: "pills", 
+	header_class: "hr-divider-content hr-divider-nav", 
+	header_container_class: "hr-divider"
+) do |t| %>
+	<% @product.class.parts.select { |part, appearences| part != :identification }.each do |part, appearences| %>
+		<% if appearences.include?(:show) %>
+			<% t.tab part, t("headers.ric_assortment.admin_products.#{part.to_s}") do %>
+				<%= render partial: "show_#{part.to_s}" %>
+			<% end %>
 		<% end %>
 	<% end %>
 <% end %>
-<%= tabs.render(header_style: "pills", header_class: "hr-divider-content hr-divider-nav", header_container_class: "hr-divider") %>

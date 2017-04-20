@@ -1,31 +1,35 @@
-<% tabs = rug_tabs %>
-<% tabs.tab :identification, t("headers.ric_league.admin_league_seasons.identification") do %>
-	<%= rug_show_table_for(@league_season, { 
-		name: :string,
-		started_at: :date,
-		finished_at: :date,
-		active: :boolean
-	}) %>
+<%= rug_tabs(
+	header_style: "pills", 
+	header_class: "hr-divider-content hr-divider-nav", 
+	header_container_class: "hr-divider"
+) do |t| %>
+	<% t.tab :identification, t("headers.ric_league.admin_league_seasons.identification") do %>
+		<%= rug_show_table_for(@league_season, { 
+			name: :string,
+			started_at: :date,
+			finished_at: :date,
+			active: :boolean
+		}) %>
+	<% end %>
+	<% t.tab :teams, t("headers.ric_league.admin_league_seasons.teams") do %>
+		<%= rug_index_table_for(@league_season.teams.order(position: :asc), { 
+			name: :string,
+			key: :string
+		}, paths: {
+			show: :team_path
+		}, summary: true ) %>
+	<% end %>
+	<% t.tab :matches, t("headers.ric_league.admin_league_seasons.matches") do %>
+		<%= rug_index_table_for(@league_season.league_matches.order(played_at: :desc), { 
+			played_at: :datetime,
+			team_names: :string,
+			league_category: { type: :belongs_to, label: :name, path: :league_category_path },
+			place: :string,
+			result: :string,
+		}, paths: {
+			show: :league_match_path, 
+			edit: :edit_league_match_path, 
+			destroy: :league_match_path
+		}, summary: true ) %>
+	<% end %>
 <% end %>
-<% tabs.tab :teams, t("headers.ric_league.admin_league_seasons.teams") do %>
-	<%= rug_index_table_for(@league_season.teams.order(position: :asc), { 
-		name: :string,
-		key: :string
-	}, paths: {
-		show: :team_path
-	}, summary: true ) %>
-<% end %>
-<% tabs.tab :matches, t("headers.ric_league.admin_league_seasons.matches") do %>
-	<%= rug_index_table_for(@league_season.league_matches.order(played_at: :desc), { 
-		played_at: :datetime,
-		team_names: :string,
-		league_category: { type: :belongs_to, label: :name, path: :league_category_path },
-		place: :string,
-		result: :string,
-	}, paths: {
-		show: :league_match_path, 
-		edit: :edit_league_match_path, 
-		destroy: :league_match_path
-	}, summary: true ) %>
-<% end %>
-<%= tabs.render(header_style: "pills", header_class: "hr-divider-content hr-divider-nav", header_container_class: "hr-divider") %>

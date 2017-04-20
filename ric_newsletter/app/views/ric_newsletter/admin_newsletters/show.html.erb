@@ -1,20 +1,24 @@
-<% tabs = rug_tabs %>
-<% tabs.tab :content, t("headers.ric_newsletter.admin_newsletters.content") do %>
-	<%= rug_show_table_for(@newsletter, {
-		created_at: :datetime,
-		subject: :string,
-		content: { type: :text, truncate: false },
-	}) %>
+<%= rug_tabs(
+	header_style: "pills", 
+	header_class: "hr-divider-content hr-divider-nav", 
+	header_container_class: "hr-divider"
+) do |t| %>
+	<% t.tab :content, t("headers.ric_newsletter.admin_newsletters.content") do %>
+		<%= rug_show_table_for(@newsletter, {
+			created_at: :datetime,
+			subject: :string,
+			content: { type: :text, truncate: false },
+		}) %>
+	<% end %>
+	<% t.tab :sent_newsletters, t("headers.ric_newsletter.admin_newsletters.sent_newsletters") do %>
+		<%= rug_index_table_for(@newsletter.sent_newsletters.order(created_at: :desc), { 
+			created_at: :datetime,
+			sent_at: :datetime,
+			done: :string,
+		}, actions: {
+			resend: { path: :resend_sent_newsletter_path, label: t('general.action.resend'), icon: "envelope" }
+		}, paths: {
+			destroy: :sent_newsletter_path
+		}, summary: true ) %>
+	<% end %>
 <% end %>
-<% tabs.tab :sent_newsletters, t("headers.ric_newsletter.admin_newsletters.sent_newsletters") do %>
-	<%= rug_index_table_for(@newsletter.sent_newsletters.order(created_at: :desc), { 
-		created_at: :datetime,
-		sent_at: :datetime,
-		done: :string,
-	}, actions: {
-		resend: { path: :resend_sent_newsletter_path, label: t('general.action.resend'), icon: "envelope" }
-	}, paths: {
-		destroy: :sent_newsletter_path
-	}, summary: true ) %>
-<% end %>
-<%= tabs.render(header_style: "pills", header_class: "hr-divider-content hr-divider-nav", header_container_class: "hr-divider") %>
