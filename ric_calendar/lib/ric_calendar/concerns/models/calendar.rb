@@ -34,6 +34,7 @@ module RicCalendar
 					# Callbacks
 					before_save :set_resource_type_based_on_kind
 					after_save :set_resource_id_based_on_kind # ID must be known at this time
+					before_save :set_is_public_based_on_kind
 
 					# Enum
 					enum_column :kind, (RicCalendar.calendar_kinds ? RicCalendar.calendar_kinds.keys : [])
@@ -54,8 +55,9 @@ module RicCalendar
 						result = result.concat(self.permitted_columns_for_colored)
 						result = result.concat([
 							:name,
+							:is_public,
 							:kind,
-							:resource_id
+							:resource_id,
 						])
 						return result
 					end
@@ -80,15 +82,23 @@ module RicCalendar
 				#
 				# Load events for this calendar
 				#
-				def resource_events
-					if @resource_events.nil?
+				def select_events(context)
+					if @selected_events.nil?
 						if self.resource
-							@resource_events = self.resource.send(self.kind_options[:resource_to_events_attr])
+							if self.is_public == true
+								@selected_events = self.resource.send(self.kind_options[:events_selector]) # Events from public calendars can be selected without context
+							else
+								@selected_events = self.resource.send(self.kind_options[:events_selector], context) # Events from private calendars must be selected with context
+							end
 						else
-							@resource_events = self.kind_options[:event_type].constantize.all
+							if self.is_public == true
+								@selected_events = self.kind_options[:event_type].constantize.send(self.kind_options[:events_selector]) # Events in public calendars can be selected without context
+							else
+								@selected_events = self.kind_options[:event_type].constantize.send(self.kind_options[:events_selector], context) # Events in private calendars must be selected with context
+							end
 						end
 					end
-					return @resource_events
+					return @selected_events
 				end
 
 				# *************************************************************
@@ -125,6 +135,7 @@ module RicCalendar
 					if self.kind
 						self.resource_type = self.kind_options[:resource_type]
 					end
+					true
 				end
 
 				#
@@ -137,6 +148,17 @@ module RicCalendar
 							self.save
 						end
 					end
+					true
+				end
+
+				#
+				# If defined as public or private, this attribute is forced to is_public attribute
+				#
+				def set_is_public_based_on_kind
+					if self.kind && !self.kind_options[:is_public].nil?
+						self.is_public = self.kind_options[:is_public]
+					end
+					true
 				end
 
 			end

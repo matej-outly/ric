@@ -32,6 +32,7 @@ cs:
           red: Červená
           green: Zelená
           grey: Šedá
+        is_public: Veřejný kalendář
         kind: Typ
         kind_values:
           simple: Jednoduché události
@@ -95,7 +96,7 @@ cs:
   ice_cube:
     pieces_connector: ' / '
     not: 'mimo %{target}'
-    not_on: 'kromě v %{target}'
+    not_on: 'mimo %{target}'
     date:
       formats:
         default: '%-d. %-m. %Y'

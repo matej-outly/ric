@@ -3,9 +3,16 @@
 	update_url: "ric_calendar.calendar_path") do |f| 
 %>
 	<%= f.text_input_row :name, :text_field %>
+	<%= f.checkbox_row :is_public %>
 	<%= f.picker_row :color %>
-	<%= f.picker_row :kind %>
-	<%= f.token_input_row :resource_id, resources_calendars_path, as: :resource, limit: 1 %>
+	<div class="row">
+		<div class="col-md-6">
+			<%= f.picker_row :kind %>
+		</div>
+		<div class="col-md-6">
+			<%= f.token_input_row :resource_id, resources_calendars_path, as: :resource, limit: 1 %>
+		</div>
+	</div>
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
 <% end %>

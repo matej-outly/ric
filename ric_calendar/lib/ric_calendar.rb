@@ -71,28 +71,22 @@ module RicCalendar
 	@@calendar_kinds = {
 		simple: {
 			resource_type: "RicCalendar::Calendar",
-			resource_to_events_attr: :events,
 			event_type: "RicCalendar::Event",
-			event_to_resource_attr: :calendar,
-			event_show_path: "ric_calendar.event_path",
-			event_update_path: "ric_calendar.event_path",
+			events_selector: :events,
+			is_public: true,
 		},
 #		sample_model: {
 #			resource_type: "SampleResource",
-#			resource_to_events_attr: :sample_events,
 #			event_type: "SampleEvents",
-#			event_to_resource_attr: :sample_resource,
-#			event_show_path: "main_app.sample_event_path",
-#			event_update_path: "main_app.update_schedule_sample_event_path",
+#			events_selector: :sample_events,
+#			is_public: false,
 #		},
 #		sample_api: {
 #			source: "RicCalendar::Sources::SampleApi",
 #			resource_type: "RicCalendar::Calendar",
-#			resource_to_events_attr: :events,
 #			event_type: "RicCalendar::Event",
-#			event_to_resource_attr: :calendar,
-#			event_show_path: "ric_calendar.event_path",
-#			event_update_path: "ric_calendar.event_path",
+#			events_selector: :events,
+#			is_public: true,
 #		}
 	}
 
@@ -109,7 +103,7 @@ module RicCalendar
 		turquoise: {
 			primary: "#71e8ac",
 			faded: "#b5eed1",
-			text: "white",
+			text: "black",
 		},
 		blue: {
 			primary: "#a2e1f1",

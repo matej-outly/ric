@@ -14,11 +14,9 @@ class CreateRicCalendarCalendars < ActiveRecord::Migration
 			# Resource spec
 			t.string :resource_type, index: true
 			t.integer :resource_id, index: true
-			#t.string :resource_to_events_attr
-			
-			# Event spec
-			#t.string :event_type, index: true
-			#t.string :event_to_resource_attr
+
+			# Access level spec
+			t.boolean :is_public
 
 			# *****************************************************************
 			# Color

@@ -44,7 +44,6 @@ module RicCalendar
 						result = result.concat(self.permitted_columns_for_schedulable)
 						result = result.concat(self.permitted_columns_for_recurring)
 						result = result.concat(self.permitted_columns_for_validity)
-						result = result.concat(self.permitted_columns_for_colored)
 						result = result.concat([
 
 							# Event data

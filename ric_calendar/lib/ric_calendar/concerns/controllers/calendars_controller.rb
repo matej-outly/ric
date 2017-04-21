@@ -15,8 +15,8 @@ module RicCalendar
 			module CalendarsController extend ActiveSupport::Concern
 
 				included do
-					before_action :authorize_calendar_read
-					before_action :authorize_calendar_write, only: [:new, :edit, :create, :update, :destroy]
+					#before_action :authorize_calendar_read
+					#before_action :authorize_calendar_write, only: [:new, :edit, :create, :update, :destroy]
 					before_action :save_referrer, only: [:new, :edit]
 					before_action :set_calendar, only: [:edit, :update, :destroy]
 				end
@@ -39,11 +39,11 @@ module RicCalendar
 				end
 
 				#
-				# Resurn available resources
+				# Return available resources
 				#
 				def resources
 					result = []
-					available_resource_types = RicCalendar.calendar_kinds.map { |key, value| value[:resource_type] }.uniq.delete_if { |value| value == RicCalendar.calendar_model.to_s }
+					available_resource_types = RicCalendar.calendar_kinds.map { |key, value| value[:resource_type] }.uniq.delete_if { |value| value.nil? || value == RicCalendar.calendar_model.to_s }
 					available_resource_types.each do |resource_type|
 						result += resource_type.constantize.search(params[:q]).to_a
 					end
@@ -64,6 +64,7 @@ module RicCalendar
 						redirect_url = ric_calendar.calendars_path if redirect_url.blank?
 						redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.calendar_model.model_name.i18n_key}.create")
 					else
+						p @calendar.errors
 						render "new"
 					end
 				end
@@ -86,17 +87,37 @@ module RicCalendar
 
 			protected
 
-				def authorize_calendar_read
-					if !(can_read? || can_read_and_write?)
-						not_authorized!
+				# *************************************************************
+				# Paths for override
+				# *************************************************************
+
+				def follow_event_path(calendar_kind, event, params = {})
+					if calendar_kind == :simple
+						return ric_calendar.event_path(event, params)
+					else
+						return nil
 					end
 				end
 
-				def authorize_calendar_write
-					if !(can_read? || can_read_and_write?)
-						not_authorized!
+				def update_event_path(calendar_kind, event, params = {})
+					if calendar_kind == :simple
+						return ric_calendar.event_path(event, params)
+					else
+						return nil
 					end
 				end
+
+#				def authorize_calendar_read
+#					if !(can_read? || can_read_and_write?)
+#						not_authorized!
+#					end
+#				end
+
+#				def authorize_calendar_write
+#					if !(can_read? || can_read_and_write?)
+#						not_authorized!
+#					end
+#				end
 
 				# *************************************************************
 				# Model setters
@@ -127,7 +148,7 @@ module RicCalendar
 				def load_calendars(date_from, date_to, disabled_calendars)
 					fullevents = []
 
-					path_resolver = RugSupport::PathResolver.new(self)
+					#path_resolver = RugSupport::PathResolver.new(self)
 
 					RicCalendar.calendar_model.not_disabled(disabled_calendars).each do |calendar|
 
@@ -136,44 +157,47 @@ module RicCalendar
 							color_primary = calendar.color_primary
 							color_text = calendar.color_text
 						end
-						event_show_path = calendar.kind_options[:event_show_path]
-						event_update_path = calendar.kind_options[:event_update_path]
-
+						
 						# Go through scheduled calendar events
-						calendar.resource_events.schedule(date_from, date_to).each do |scheduled_event|
+						selected_events = calendar.select_events(current_user)
+						if selected_events
+							selected_events.schedule(date_from, date_to).each do |scheduled_event|
 
-							# Create Fullcalendar event object
-							fullevent = {
-								id: "#{calendar.kind_options[:event_type]}<#{scheduled_event[:event].id}>[#{scheduled_event[:recurrence_id]}]",
-								objectId: scheduled_event[:event].id,
-								start: scheduled_event[:event].datetime_from(scheduled_event[:date_from]),
-								end: scheduled_event[:event].datetime_to(scheduled_event[:date_to]),
-								allDay: scheduled_event[:all_day],
-								isRecurring: scheduled_event[:is_recurring],
-							}
+								# Create Fullcalendar event object
+								fullevent = {
+									id: "#{calendar.kind_options[:event_type]}<#{scheduled_event[:event].id}>[#{scheduled_event[:recurrence_id]}]",
+									objectId: scheduled_event[:event].id,
+									start: scheduled_event[:event].datetime_from(scheduled_event[:date_from]),
+									end: scheduled_event[:event].datetime_to(scheduled_event[:date_to]),
+									allDay: scheduled_event[:all_day],
+									isRecurring: scheduled_event[:is_recurring],
+								}
 
-							# Update object by calendar specific attributes
-							if color_primary
-								# Color events
-								fullevent[:textColor] = color_text
-								fullevent[:borderColor] = color_primary
-								fullevent[:backgroundColor] = color_primary
+								# Update object by calendar specific attributes - colors
+								if color_primary
+									fullevent[:textColor] = color_text
+									fullevent[:borderColor] = color_primary
+									fullevent[:backgroundColor] = color_primary
+								end
+
+								# Update object by calendar specific attributes - paths
+								follow_event_path = follow_event_path(calendar.kind.to_sym, scheduled_event[:event], scheduled_date_from: scheduled_event[:date_from])
+								update_event_path = update_event_path(calendar.kind.to_sym, scheduled_event[:event])
+								if follow_event_path
+									fullevent[:url] = follow_event_path
+								end
+								if update_event_path # Edit events (currently only simple non-repeating events)
+									fullevent[:editable] = true
+									fullevent[:editUrl] = update_event_path
+								end
+
+								# Update object by class specific attributes
+								fullevent[:title] = scheduled_event[:event].event_title
+
+								# Insert into events
+								fullevents << fullevent
+
 							end
-							if event_show_path
-								fullevent[:url] = path_resolver.resolve(event_show_path, scheduled_event[:event], scheduled_date_from: scheduled_event[:date_from])
-							end
-							if event_update_path
-								# Edit events (currently only simple non-repeating events)
-								fullevent[:editable] = true
-								fullevent[:editUrl] = path_resolver.resolve(event_update_path, scheduled_event[:event])
-							end
-
-							# Update object by class specific attributes
-							fullevent[:title] = scheduled_event[:event].event_title
-
-							# Insert into events
-							fullevents << fullevent
-
 						end
 					end
 

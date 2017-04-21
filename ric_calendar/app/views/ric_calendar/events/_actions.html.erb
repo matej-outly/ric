@@ -1,4 +1,5 @@
 <%= rug_menu_for(@event, options.merge(path_base: "events")) do |m| %>
+	<%= m.item t("headers.ric_calendar.calendars.index"), ric_calendar.calendars_path, icon: "calendar", active: (controller_name == "calendars" && action_name == "index") %>
 	<%= m.new_item %>
 	<% if !@event.nil? && !@event.new_record? %>
 		<% if @event.scheduled_date_from.blank? %>
