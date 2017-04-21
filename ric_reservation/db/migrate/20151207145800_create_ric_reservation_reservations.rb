@@ -44,9 +44,6 @@ class CreateRicReservationReservations < ActiveRecord::Migration
 
 			# Identification
 			t.string :name
-
-			# Color
-			t.string :color
 			
 		end
 	end
