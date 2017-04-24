@@ -53,7 +53,7 @@ module RicReservation
 
 			def self.month_timetable_day_label(day, options = {})
 				result = ""
-				result += "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>" if options[:label_day_of_week] != false
+				result += "<div class=\"day-of-week\">" + I18n.t("date.days.#{day}") + "</div>" if options[:label_day_of_week] != false
 				return result
 			end
 
@@ -121,7 +121,7 @@ module RicReservation
 				# Days
 				days = []
 				["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
-					label = "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>"
+					label = "<div class=\"day-of-week\">" + I18n.t("date.days.#{day}") + "</div>"
 					days << {
 						label: label_callback.call(day, options).html_safe,
 					}

@@ -64,7 +64,7 @@ module RicReservation
 			#
 			def self.week_timetable_day_label(day, date, options = {})
 				result = ""
-				result += "<div class=\"day-of-week\">" + I18n.t("views.calendar.days.#{day}") + "</div>" if options[:label_day_of_week] != false
+				result += "<div class=\"day-of-week\">" + I18n.t("date.days.#{day}") + "</div>" if options[:label_day_of_week] != false
 				result += "<div class=\"date\">#{I18n.l(date)}</div>" if options[:label_date] != false
 				return result
 			end

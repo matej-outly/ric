@@ -27,9 +27,27 @@ module RicReservation
 					# Virtual attribute for day of week setting
 					# *********************************************************
 
-					attr_accessor :day_of_week
+					attr_writer :day_of_week
 					enum_column :day_of_week, ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
+				end
+
+				def day_of_week
+					if @day_of_week.nil? && !self.date_from.blank? # Compute day of week from date_from if day_of_week not available
+						@day_of_week = self.class.available_day_of_weeks[self.date_from.cwday - 1].value
+					end
+					return @day_of_week
+				end
+
+				def time_formatted
+					if self.resource.period == "week"
+						result = ""
+						result += I18n.t("date.days.#{self.day_of_week}") + " " if !self.day_of_week.blank?
+						result += self.time_from.strftime(I18n.t("time.formats.hour_min")) if !self.time_from.blank?
+						return result
+					else
+						return super
+					end
 				end
 
 			protected
@@ -44,8 +62,6 @@ module RicReservation
 							if !idx.nil?
 								cwday = idx + 1
 							end
-						elsif !self.date_from.blank? # Compute day of week from date_from if day_of_week not available
-							cwday = self.date_from.cwday
 						end
 
 						# Set correct date_from and date_to
