@@ -171,7 +171,7 @@ RicCalendar.prototype = {
 
 				dayClick: function(date, event, view) {
 					// Create new event on click in calendar white space
-					if (self.options.newUrl !== undefined) {
+					if (self.options.newUrl !== undefined && self.options.newUrl !== null && self.options.newUrl !== '') {
 						if (self.options.newUrl.includes('?')) {
 							delimiter = '&'
 						} else {

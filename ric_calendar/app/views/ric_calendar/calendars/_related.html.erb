@@ -9,8 +9,8 @@
 					</label>
 
 					<div class="float-right">
-						<%= rug_button(rug_icon("pencil"), ric_calendar.edit_calendar_path(calendar), style: "primary", size: "xs") %>
-						<%= rug_button(rug_icon("trash"), ric_calendar.calendar_path(calendar), method: "delete", style: "danger", size: "xs") %>
+						<%= rug_button(rug_icon("pencil"), ric_calendar.edit_calendar_path(calendar), style: "primary", size: "xs") if can_read_and_write? %>
+						<%= rug_button(rug_icon("trash"), ric_calendar.calendar_path(calendar), method: "delete", style: "danger", size: "xs") if can_read_and_write? %>
 					</div>
 				</div>
 			</li>

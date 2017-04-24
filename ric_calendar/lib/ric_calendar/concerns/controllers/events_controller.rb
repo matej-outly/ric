@@ -15,11 +15,11 @@ module RicCalendar
 			module EventsController extend ActiveSupport::Concern
 
 				included do
-					#before_action :authorize_event_read
-					#before_action :authorize_event_write, only: [:new, :edit, :create, :update, :update_schedule, :destroy]
+					before_action :authorize_read
+					before_action :authorize_write, only: [:new, :edit, :create, :update, :destroy]
 					before_action :save_referrer, only: [:new, :edit]
-					before_action :set_event, only: [:show, :edit, :update, :update_schedule, :destroy]
-					before_action :set_attributes_from_params, only: [:show, :edit, :update, :update_schedule, :destroy]
+					before_action :set_event, only: [:show, :edit, :update, :destroy]
+					before_action :set_attributes_from_params, only: [:show, :edit, :update, :destroy]
 				end
 
 				def show
@@ -114,17 +114,21 @@ module RicCalendar
 
 			protected
 
-#				def authorize_event_read
-#					if !(can_read? || can_read_and_write?)
-#						not_authorized!
-#					end
-#				end
+				# *************************************************************
+				# Authorization
+				# *************************************************************
+				
+				def authorize_read
+					if !(can_read? || can_read_and_write?)
+						not_authorized!
+					end
+				end
 
-#				def authorize_event_write
-#					if !(can_read? || can_read_and_write?)
-#						not_authorized!
-#					end
-#				end
+				def authorize_write
+					if !can_read_and_write?
+						not_authorized!
+					end
+				end
 
 				# *************************************************************
 				# Model setters

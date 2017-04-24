@@ -15,8 +15,8 @@ module RicCalendar
 			module CalendarsController extend ActiveSupport::Concern
 
 				included do
-					#before_action :authorize_calendar_read
-					#before_action :authorize_calendar_write, only: [:new, :edit, :create, :update, :destroy]
+					before_action :authorize_read
+					before_action :authorize_write, only: [:new, :edit, :create, :update, :destroy]
 					before_action :save_referrer, only: [:new, :edit]
 					before_action :set_calendar, only: [:edit, :update, :destroy]
 				end
@@ -64,7 +64,6 @@ module RicCalendar
 						redirect_url = ric_calendar.calendars_path if redirect_url.blank?
 						redirect_to redirect_url, notice: I18n.t("activerecord.notices.models.#{RicCalendar.calendar_model.model_name.i18n_key}.create")
 					else
-						p @calendar.errors
 						render "new"
 					end
 				end
@@ -107,17 +106,21 @@ module RicCalendar
 					end
 				end
 
-#				def authorize_calendar_read
-#					if !(can_read? || can_read_and_write?)
-#						not_authorized!
-#					end
-#				end
+				# *************************************************************
+				# Authorization
+				# *************************************************************
 
-#				def authorize_calendar_write
-#					if !(can_read? || can_read_and_write?)
-#						not_authorized!
-#					end
-#				end
+				def authorize_read
+					if !(can_read? || can_read_and_write?)
+						not_authorized!
+					end
+				end
+
+				def authorize_write
+					if !(can_read_and_write?)
+						not_authorized!
+					end
+				end
 
 				# *************************************************************
 				# Model setters
@@ -186,7 +189,7 @@ module RicCalendar
 								if follow_event_path
 									fullevent[:url] = follow_event_path
 								end
-								if update_event_path # Edit events (currently only simple non-repeating events)
+								if update_event_path && can_read_and_write? # Edit events (currently only simple non-repeating events)
 									fullevent[:editable] = true
 									fullevent[:editUrl] = update_event_path
 								end

@@ -1,18 +1,18 @@
 <%= rug_menu_for(@event, options.merge(path_base: "events")) do |m| %>
 	<%= m.item t("headers.ric_calendar.calendars.index"), ric_calendar.calendars_path, icon: "calendar", active: (controller_name == "calendars" && action_name == "index") %>
-	<%= m.new_item %>
+	<%= m.new_item if can_read_and_write? %>
 	<% if !@event.nil? && !@event.new_record? %>
 		<% if @event.scheduled_date_from.blank? %>
 			<%= m.show_item %>
-			<%= m.edit_item %>
-			<%= m.destroy_item %>
+			<%= m.edit_item if can_read_and_write? %>
+			<%= m.destroy_item if can_read_and_write? %>
 		<% else %>
 			<%= m.show_item nil, lambda { |event| ric_calendar.event_path(event, scheduled_date_from: @event.scheduled_date_from) } %>
-			<%= m.edit_item nil, lambda { |event| ric_calendar.edit_event_path(event, scheduled_date_from: @event.scheduled_date_from) } %>
+			<%= m.edit_item nil, lambda { |event| ric_calendar.edit_event_path(event, scheduled_date_from: @event.scheduled_date_from) } if can_read_and_write? %>
 			<% if @event.is_recurring? %>
-				<%= m.item t("headers.ric_calendar.events.destroy"), "#", class: "destroy-recurring-event-link", icon: "trash" %>
+				<%= m.item t("headers.ric_calendar.events.destroy"), "#", class: "destroy-recurring-event-link", icon: "trash" if can_read_and_write? %>
 			<% else %>
-				<%= m.destroy_item %>
+				<%= m.destroy_item if can_read_and_write? %>
 			<% end %>
 		<% end %>
 	<% end %>
