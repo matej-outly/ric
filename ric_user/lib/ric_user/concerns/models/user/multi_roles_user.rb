@@ -127,7 +127,7 @@ module RicUser
 
 						# Perform DB actions
 						self.transaction do
-							self.user_roles.diff(new_roles, compare_attr_1: :role) do |action, item|
+							self.user_roles.diff(@roles, compare_attr_1: :role) do |action, item|
 								if action == :add
 									self.user_roles.create(role: item)
 								elsif action == :remove
