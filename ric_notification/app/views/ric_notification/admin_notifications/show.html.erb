@@ -3,11 +3,15 @@
 	subject: :string,
 	kind: :enum,
 	url: :string,
-	sender: { type: :belongs_to, label: :name_formatted },
+	sender_name_or_email: { type: :string, column_label: RicNotification.notification_model.human_attribute_name(:sender) },
 	done: :string,
 }) %>
-<h3><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
-<%= @notification.message.to_s.html_safe %>
+<% if !@notification.message.blank? %>
+	<h3><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
+	<div class="text-box">
+		<%= @notification.message.to_s.html_safe %>
+	</div>
+<% end %>
 <h3><%= RicNotification.notification_model.human_attribute_name(:receivers) %></h3>
 <%= rug_index_table_for(@notification.notification_receivers.order(created_at: :desc).page(params[:page]).per(50), { 
 	receiver_name_or_email: { type: :string, column_label: RicNotification.notification_receiver_model.human_attribute_name(:receiver) },

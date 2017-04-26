@@ -3,8 +3,7 @@
 	subject: :string,
 	message: { type: :text, strip_tags: true },
 	kind: :enum,
-	url: :string,
-	sender: { type: :belongs_to, label: :name_formatted },
+	sender_name_or_email: { type: :string, column_label: RicNotification.notification_model.human_attribute_name(:sender) },
 	done: :string,
 }, paths: {
 	show: :notification_path,

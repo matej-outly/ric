@@ -59,6 +59,27 @@ module RicNotification
 					end
 				end
 
+				# *************************************************************
+				# Sender
+				# *************************************************************
+
+				#
+				# Get name or email in case name is not set
+				#
+				def sender_name_or_email
+					if self.sender
+						if self.sender.respond_to?(:name_formatted) && !self.sender.name_formatted.blank?
+							return self.sender.name_formatted
+						elsif self.sender.respond_to?(:name) && !self.sender.name.blank?
+							return self.sender.name
+						else
+							return self.sender.email
+						end
+					else
+						return nil
+					end
+				end
+
 			protected
 
 			end
