@@ -49,10 +49,12 @@ module RicNotification
 				protected
 
 					def create_missing_notification_templates
-						RicNotification.notification_template_model.config(:keys).each do |key|
-							notification_template = RicNotification.notification_template_model.where(key: key).first
-							if notification_template.nil?
-								notification_template = RicNotification.notification_template_model.create(key: key)
+						if RicNotification.notification_template_model.config(:keys)
+							RicNotification.notification_template_model.config(:keys).each do |key|
+								notification_template = RicNotification.notification_template_model.where(key: key).first
+								if notification_template.nil?
+									notification_template = RicNotification.notification_template_model.create(key: key)
+								end
 							end
 						end
 					end
