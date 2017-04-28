@@ -49,6 +49,7 @@ RicAuth::Engine.routes.draw do
 	end
 
 	# Authentications
+	get "/:provider", to: "authentications#new", as: "sign_in_with_provider" # NEW action does't exist in this case because this request will be handled by OmniAuth middleware. Defined only for path helper.
 	get "/:provider/callback", to: "authentications#create"
 	delete "/:provider", to: "authentications#destroy"
 
