@@ -2,20 +2,12 @@ cs:
   
   headers:
     ric_auth:
-      admin_profile_passwords:
+      profile_passwords:
         new: Obnovit heslo
         create: Obnovit heslo
         edit: Změnit heslo
         update: Změnit heslo
-      admin_profiles:
-        edit: Upravit profil
-        update: Upravit profil
-      public_profile_passwords:
-        new: Obnovit heslo
-        create: Obnovit heslo
-        edit: Změnit heslo
-        update: Změnit heslo
-      public_profiles:
+      profiles:
         edit: Upravit profil
         update: Upravit profil
 
@@ -45,6 +37,7 @@ cs:
         not_found_in_database: "Tento uživatelský účet v aplikaci neexistuje."
         inactive: "Tento uživatelský účet je momentálně zablokovaný."
         unconfirmed: "Tento uživatelský účet zatím není ověřen. Na Vaši e-mailovou adresu byly zaslány instrukce pro ověření vašeho uživatelského účtu."
+        unknown: "Během přihlašování došlo k neznámé chybě. Obraťte se prosím se svým problémem na administrátora."
     mailer:
       confirmation_instructions:
         subject: "Instrukce pro ověření uživatelského účtu"

@@ -1,0 +1,13 @@
+cs:
+  
+  headers:
+    ric_auth_admin:
+      profile_passwords:
+        new: Obnovit heslo
+        create: Obnovit heslo
+        edit: Změnit heslo
+        update: Změnit heslo
+      profiles:
+        edit: Upravit profil
+        update: Upravit profil
+  

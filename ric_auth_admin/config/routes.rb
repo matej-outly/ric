@@ -9,8 +9,8 @@
 # *
 # *****************************************************************************
 
-RicAuth::Engine.routes.draw do
-
+RicAuthAdmin::Engine.routes.draw do
+	
 	# Devise
 	devise_scope :user do
 	
@@ -20,16 +20,10 @@ RicAuth::Engine.routes.draw do
 			post :create, path: "sign_in"
 			delete :destroy, path: "sign_out", as: "destroy"
 		end
-
-		# Registration
-		resource :registration, only: [:new, :create], controller: "registrations", path: "", path_names: { new: "sign_up" } 
-
+		
 		# Password (reset)
 		resource :password, only: [:new, :create, :edit, :update], controller: "passwords"
-
-		# Confirmation
-		resource :confirmation, only: [:new, :create], controller: "confirmations"
-
+		
 	end
 
 	# Profile
@@ -39,17 +33,5 @@ RicAuth::Engine.routes.draw do
 		resource :password, controller: "profile_passwords", only: [:edit, :update]
 	
 	end
-
-	# Overrides
-	resource :override, controller: "overrides", only: [] do
-		member do 
-			put :role
-			put :user
-		end
-	end
-
-	# Authentications
-	get "/:provider/callback", to: "authentications#create"
-	delete "/:provider", to: "authentications#destroy"
 
 end

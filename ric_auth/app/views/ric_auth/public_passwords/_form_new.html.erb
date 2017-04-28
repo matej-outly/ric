@@ -1,5 +1,0 @@
-<%= rug_form_for(resource, as: resource_name, url: ric_auth_public.password_path, html: { method: :post }) do |f| %>
-	<%= f.text_input_row :email, :email_field %>
-	<%= f.primary_button_row :submit, label: t("devise.passwords.new.send_instructions") %>
-	<%= f.link_button_row t("devise.action.sign_in").capitalize, ric_auth_public.new_session_path%>
-<% end %>

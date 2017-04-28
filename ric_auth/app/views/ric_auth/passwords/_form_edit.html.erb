@@ -1,0 +1,6 @@
+<%= rug_form_for(resource, as: resource_name, url: ric_auth.password_path, html: { method: :put }) do |f| %>
+	<%= f.hidden_field :reset_password_token %>
+	<%= f.text_input_row :password, :password_field %>
+	<%= f.text_input_row :password_confirmation, :password_field %>
+	<%= f.primary_button_row :submit, label: t("helpers.submit.reset") %>
+<% end %>

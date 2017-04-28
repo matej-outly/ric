@@ -30,10 +30,10 @@ module RicAuth
 			end
 
 			def after_inactive_sign_in_path_for(resource)
-				if request.path.starts_with?("/admin")
+				if request.path.starts_with?("/admin") # Ugly but whatever
 					ric_auth_admin.new_session_path
 				else
-					ric_auth_public.new_session_path
+					ric_auth.new_session_path
 				end
 			end
 

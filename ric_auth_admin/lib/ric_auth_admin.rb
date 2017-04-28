@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * RicAuth
+# * RicAuthAdmin
 # *
 # * Author: Matěj Outlý
 # * Date  : 9. 6. 2015
@@ -10,18 +10,9 @@
 # *****************************************************************************
 
 # Engines
-require "ric_auth/engine"
+require "ric_auth_admin/engine"
 
-# Concerns
-require "ric_auth/concerns/application_paths"
-require "ric_auth/concerns/devise_paths"
-require "ric_auth/concerns/overrides"
-
-# Models
-require "ric_auth/concerns/models/authentication"
-require "ric_auth/concerns/models/omniauthable"
-
-module RicAuth
+module RicAuthAdmin
 
 	#
 	# This will keep Rails Engine from generating all table prefixes with the engines name
@@ -54,27 +45,9 @@ module RicAuth
 	@@user_model = "RicUser::User"
 
 	#
-	# Authentication model
-	#
-	mattr_accessor :authentication_model
-	def self.authentication_model
-		return @@authentication_model.constantize
-	end
-	@@authentication_model = "RicAuth::Authentication"
-
-	#
-	# Devise paths concern
-	#
-	mattr_accessor :devise_paths_concern
-	def self.devise_paths_concern
-		return @@devise_paths_concern.constantize
-	end
-	@@devise_paths_concern = "RicAuth::Concerns::DevisePaths"
-
-	#
-	# Special layout
+	# Layout
 	#
 	mattr_accessor :layout
-	@@layout = nil
+	@@layout = "ruth_admin_auth"
 
 end

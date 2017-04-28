@@ -1,4 +1,0 @@
-<%= rug_form_for(resource, as: resource_name, url: ric_auth_public.confirmation_path, html: { method: :post }) do |f| %>
-	<%= f.text_input_row :email, :email_field, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-	<%= f.primary_button_row :submit, label: t("devise.action.confirm") %>
-<% end %>

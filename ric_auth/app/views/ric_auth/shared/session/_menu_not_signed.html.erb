@@ -1,0 +1,7 @@
+<li><%= link_to t("devise.action.sign_in").capitalize, ric_auth.new_session_path %></li>
+<% if RicAuth.user_model.registerable? %>
+	<li><%= link_to t("devise.action.sign_up").capitalize, ric_auth.new_registration_path %></li>
+<% end %>
+<% if RicAuth.user_model.recoverable? %>
+	<li><%= link_to t("devise.action.reset_password").capitalize, ric_auth.new_password_path %></li>
+<% end %>

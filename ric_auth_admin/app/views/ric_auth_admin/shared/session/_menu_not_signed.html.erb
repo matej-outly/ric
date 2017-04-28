@@ -1,0 +1,4 @@
+<li><%= link_to rug_icon(:sign_in) + t("device.action.sign_in").capitalize, ric_auth_admin.new_session_path %></li>
+<% if RicAuthAdmin.user_model.recoverable? %>
+	<li><%= link_to rug_icon(:recover) + t("device.action.reset_password").capitalize, ric_auth_admin.new_password_path %></li>
+<% end %>

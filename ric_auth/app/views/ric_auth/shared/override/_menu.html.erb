@@ -1,0 +1,11 @@
+<% current_user.roles.each do |role| %>
+	<% role_obj = current_user.class.role_obj(role) %>
+	<% 
+		if current_user.current_role == role 
+			label = (role_obj.label + "&nbsp;" + rug_icon("check")).html_safe
+		else
+			label = role_obj.label
+		end
+	%>
+	<li><%= link_to label, ric_auth.role_override_path(role: role), method: "put" %></li>
+<% end %>
