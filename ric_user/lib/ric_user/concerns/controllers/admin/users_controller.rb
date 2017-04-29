@@ -15,11 +15,6 @@ module RicUser
 			module Admin
 				module UsersController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
 						before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :confirm, :destroy]
@@ -56,7 +51,7 @@ module RicUser
 
 					def create
 						@user = RicUser.user_model.new(user_params)
-						@user.regenerate_password(disable_email: true)
+						@user.regenerate_password(notification: false)
 						if @user.save
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.create")
 						else
@@ -68,7 +63,6 @@ module RicUser
 						if @user.update(user_params)
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
 						else
-							p @user.errors
 							render "edit"
 						end
 					end

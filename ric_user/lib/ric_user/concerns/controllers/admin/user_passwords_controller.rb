@@ -15,29 +15,15 @@ module RicUser
 			module Admin
 				module UserPasswordsController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
-						#
-						# Set user before some actions
-						#
 						before_action :set_user, only: [:edit, :update, :regenerate]
 
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @user.update_password(user_params[:password], user_params[:password_confirmation])
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update_password")
@@ -46,9 +32,6 @@ module RicUser
 						end
 					end
 
-					#
-					# Regenerate action
-					#
 					def regenerate
 						if @user.regenerate_password
 							redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.regenerate_password")
@@ -59,6 +42,10 @@ module RicUser
 
 				protected
 
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+
 					def set_user
 						@user = RicUser.user_model.find_by_id(params[:id])
 						if @user.nil?
@@ -66,9 +53,10 @@ module RicUser
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
+					# *********************************************************
+					# Param filters
+					# *********************************************************
+
 					def user_params
 						params.require(:user).permit(:password, :password_confirmation)
 					end
