@@ -49,6 +49,7 @@ module RicUrl
 			end
 
 			def self.localify(path)
+				return path if path == "#"
 
 				# Match locale from path
 				locale, path = RicUrl::Helpers::LocaleHelper.disassemble(path)
