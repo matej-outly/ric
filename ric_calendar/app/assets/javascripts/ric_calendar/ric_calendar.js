@@ -54,7 +54,7 @@ RicCalendar.prototype = {
 		var datetimeTo = event.end;
 		var oldDatetimeFrom = event.oldStart;
 		var oldDatetimeTo = event.oldEnd;
-		var editUrl = event.editUrl;
+		var updateUrl = event.editUrl;
 
 		var dateFrom = (datetimeFrom ? datetimeFrom.format("YYYY-MM-DD") : null);
 		var timeFrom = (datetimeFrom && datetimeFrom.hasTime() ? datetimeFrom.format("HH:mm:ss") : null);
@@ -76,7 +76,7 @@ RicCalendar.prototype = {
 		};
 
 		$.post({
-			url: editUrl,
+			url: updateUrl,
 			data: {
 				event: ajax_data,
 				_method: "PATCH",
@@ -297,6 +297,41 @@ RicCalendar.prototype = {
 		}
 
 		return settings;
+	},
+
+	//
+	// Get currently visited date
+	//
+	getDate: function()
+	{
+		return this.calendar.fullCalendar('getDate');
+	},
+
+	//
+	// Get currently visited date range
+	//
+	getDateRange: function()
+	{
+		var view = this.calendar.fullCalendar('getView').type;
+		var date = this.calendar.fullCalendar('getDate');
+		if (view == 'month') {
+			return [
+				moment(date).startOf('month'),
+				moment(date).endOf('month'),
+			];
+		} else if (view == 'basicWeek' || view == 'agendaWeek' || view == 'listWeek') {
+			return [
+				moment(date).startOf('week'),
+				moment(date).endOf('week'),
+			];
+		} else if (view == 'basicDay' || view == 'agendaDay') {
+			return [
+				moment(date),
+				moment(date),
+			];
+		} else {
+			return null;
+		}
 	}
 
 }
