@@ -60,7 +60,7 @@ module RicBoard
 	# board_ticket_types = {
 	#	key_1: {
 	#		template: "default",
-	#		style: "danger",
+	#		color: "red",
 	#		title: "headers.dashboard.key_1",
 	# 		priority: 99,
 	#		followable: true,
@@ -74,7 +74,7 @@ module RicBoard
 		if @@board_ticket_types.include?(key.to_sym)
 			return {
 				template: "default",
-				style: "info",
+				color: "blue",
 				title: nil,
 				priority: 0,
 				key: key.to_s,
