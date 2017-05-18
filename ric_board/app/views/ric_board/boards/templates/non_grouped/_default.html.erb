@@ -2,8 +2,7 @@
 	<% board_ticket_template = "ric_board/board_tickets/" + board_ticket_type[:key] %>
 	<% path = follow_board_ticket_path(board_ticket) if defined?(follow_board_ticket_path) %>
 	<<%= (path ? "a href=\"#{path}\"" : "div").html_safe %> 
-		class="alert alert-<%= board_ticket_type[:style] %> <%= "alert-dismissible" if board_ticket.is_closable? %> ticket" 
-		role="alert" 
+		class="ticket color-<%= board_ticket_type[:color] %> <%= "alert alert-dismissible" if board_ticket.is_closable? %>" 
 		data-close-href="<%= ric_board.close_board_ticket_path(board_ticket) %>"
 	>
 		<% if board_ticket.is_closable? %>
