@@ -22,7 +22,16 @@ module RicAuth
 
 				module ClassMethods
 
-					
+					#
+					# Create new valid user model from OmniAuth data
+					#
+					# To be redefined if some more complicated conditions must be met
+					#
+					def create_from_omniauth(auth)
+						self.create(
+							email: auth.info.email
+						)
+					end
 
 				end
 

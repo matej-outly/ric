@@ -123,11 +123,11 @@ module RicUser
 				# *************************************************************
 
 				def regenerate_password(options = {})
-					new_password = RugSupport::Util::String.random(4)
+					new_password = RugSupport::Util::String.random(options[:length] ? options[:length] : 4)
 					
 					# Save
 					self.password = new_password
-					result = self.save
+					result = self.save if options[:save] != false
 
 					# Notification
 					if result
@@ -165,7 +165,7 @@ module RicUser
 
 					# Save
 					self.password = new_password
-					result = self.save
+					result = self.save if options[:save] != false
 
 					# Notification
 					if result

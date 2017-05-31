@@ -82,19 +82,7 @@ module RicAuth
 							# User with this email does not exists in DB. We can create a new user
 							# and associate it with this credential and sign it in.
 
-							user_attributes = {}
-							mapping = RicAuth.omniauth_mapping[auth.provider.to_sym]
-							if mapping 
-								mapping.each do |provider_attr, user_attr|
-									value = provider_attr.split(".").inject(auth) {|o, a| o ? o.send(a) : nil }
-									user_attributes[user_attr.to_sym] = value if value
-								end
-							end
-
-							# Force e-mail
-							user_attributes[:email] = auth.info.email
-
-							user = RicAuth.user_model.create(user_attributes)
+							user = RicAuth.user_model.create_from_omniauth(auth)
 							if user.valid?
 								user.authentications.create(
 									provider: auth.provider, 

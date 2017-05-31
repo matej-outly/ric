@@ -106,10 +106,4 @@ module RicAuth
 		# :timeoutable,
 	]
 
-	#
-	# A set of atributes mapped from OmniAuth data to user attributes. Used for creating new user record.
-	#
-	mattr_accessor :omniauth_mapping
-	@@omniauth_mapping = {}
-
 end
