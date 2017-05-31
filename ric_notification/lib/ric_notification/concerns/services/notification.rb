@@ -101,8 +101,8 @@ module RicNotification
 								message = notification_template.message
 								subject = notification_template.subject
 							else # Static message
-								message = I18n.t("notifications.automatic.#{message_text.to_s}.message", default: "")
-								subject = I18n.t("notifications.automatic.#{message_text.to_s}.subject", default: "")
+								message = I18n.t("notifications.automatic.#{content_def.to_s}.message", default: "")
+								subject = I18n.t("notifications.automatic.#{content_def.to_s}.subject", default: "")
 							end
 
 						elsif content_def.is_a?(Hash) # Defined by hash containing subject and message

@@ -37,6 +37,14 @@ module RicAuth
 				end
 			end
 
+			def after_sending_reset_password_instructions_path_for(resource)
+				if request.path.starts_with?("/admin") # Ugly but whatever
+					ric_auth_admin.new_session_path
+				else
+					ric_auth.new_session_path
+				end
+			end
+
 		end
 	end
 end
