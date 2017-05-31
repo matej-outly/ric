@@ -28,7 +28,7 @@ RicAuth::Engine.routes.draw do
 		resource :password, only: [:new, :create, :edit, :update], controller: "passwords"
 
 		# Confirmation
-		resource :confirmation, only: [:new, :create], controller: "confirmations"
+		resource :confirmation, only: [:new, :create, :show], controller: "confirmations"
 
 	end
 

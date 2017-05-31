@@ -45,6 +45,10 @@ module RicAuth
 				end
 			end
 
+			def after_confirmation_path_for(resource_name, resource)
+				main_app.root_path
+			end
+
 		end
 	end
 end
