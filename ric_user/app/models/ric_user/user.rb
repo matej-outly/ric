@@ -12,6 +12,15 @@
 module RicUser
 	class User < ActiveRecord::Base
 		include RicUser::Concerns::Models::User
+
+		if !(defined?(RicAuth).nil?)
+			if RicAuth.use_devise
+				include RicAuth::Concerns::Models::Devisable
+			end
+			if RicAuth.use_omniauth
+				include RicAuth::Concerns::Models::Omniauthable
+			end
+		end
 		
 		if RicUser.user_person_association == :none
 			include RicUser::Concerns::Models::SingleRoleUser

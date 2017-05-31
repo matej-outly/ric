@@ -1,16 +1,3 @@
-# Active devise features
-devise:
-  - database_authenticatable
-  - recoverable
-  - rememberable
-  - trackable
-  - validatable
-#  - registerable
-#  - confirmable
-#  - lockable
-#  - timeoutable
-#  - omniauthable
-
 # Avatar crop settings
 avatar_crop:
   thumb: "200x200#"

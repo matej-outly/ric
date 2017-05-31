@@ -19,6 +19,7 @@ require "ric_auth/concerns/overrides"
 
 # Models
 require "ric_auth/concerns/models/authentication"
+require "ric_auth/concerns/models/devisable"
 require "ric_auth/concerns/models/omniauthable"
 
 module RicAuth
@@ -72,9 +73,37 @@ module RicAuth
 	@@devise_paths_concern = "RicAuth::Concerns::DevisePaths"
 
 	#
+	# Use devise for basic authentication
+	#
+	mattr_accessor :use_devise
+	@@use_devise = true
+
+	#
+	# Use omniauth for authentication
+	#
+	mattr_accessor :use_omniauth
+	@@use_omniauth = false
+
+	#
 	# Special layout
 	#
 	mattr_accessor :layout
 	@@layout = nil
+
+	#
+	# Use the following devise features
+	#
+	mattr_accessor :devise_features
+	@@devise_features = [
+		:database_authenticatable,
+		:recoverable,
+		:rememberable,
+		:trackable,
+		:validatable,
+		# :registerable,
+		# :confirmable,
+		# :lockable,
+		# :timeoutable,
+	]
 
 end

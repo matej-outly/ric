@@ -20,15 +20,6 @@ module RicUser
 				# the module's context.
 				#
 				included do
-					
-					# *********************************************************
-					# Devise definition
-					# *********************************************************
-
-					#
-					# Include default devise modules defined in config.
-					#
-					devise *(config(:devise).map { |feature| feature.to_sym })
 
 					# *********************************************************
 					# Name
@@ -54,21 +45,6 @@ module RicUser
 					# *********************************************************
 
 					validates_presence_of :email
-
-					# *********************************************************
-					# Locking & confirmation
-					# *********************************************************
-					
-					define_method :active_for_authentication? do
-						return false if self.class.confirmable? && !confirmed?
-						return false if locked?
-						return true
-					end
-
-					define_method :inactive_message do
-						return :unconfirmed if self.class.confirmable? && !confirmed?
-						return :inactive # if locked?
-					end
 
 				end
 
@@ -140,50 +116,6 @@ module RicUser
 						result
 					end
 
-					# *********************************************************
-					# Features
-					# *********************************************************
-
-					def database_authenticatable?
-						config(:devise).include?("database_authenticatable")
-					end
-
-					def recoverable?
-						config(:devise).include?("recoverable")
-					end
-
-					def rememberable?
-						config(:devise).include?("rememberable")
-					end
-
-					def trackable?
-						config(:devise).include?("trackable")
-					end
-
-					def validatable?
-						config(:devise).include?("validatable")
-					end
-
-					def registerable?
-						config(:devise).include?("registerable")
-					end
-
-					def confirmable?
-						config(:devise).include?("confirmable")
-					end
-
-					def lockable?
-						config(:devise).include?("lockable")
-					end
-
-					def timeoutable?
-						config(:devise).include?("timeoutable")
-					end
-
-					def omniauthable?
-						config(:devise).include?("omniauthable")
-					end
-
 				end
 
 				# *************************************************************
@@ -253,24 +185,6 @@ module RicUser
 					result = new_password if result
 					
 					return result
-				end
-
-				# *************************************************************
-				# Locking
-				# *************************************************************
-
-				def locked?
-					return !self.locked_at.nil?	
-				end
-
-				def lock
-					self.locked_at = Time.current
-					self.save
-				end
-
-				def unlock
-					self.locked_at = nil
-					self.save
 				end
 
 				# *************************************************************
