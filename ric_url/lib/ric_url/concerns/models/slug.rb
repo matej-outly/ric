@@ -56,12 +56,12 @@ module RicUrl
 
 							data = where(locale: locale.to_s)
 							data.each do |item|
-								if config(:use_filter)
-									if config(:current_app_filter) == item.filter # Slug belongs to current application
+								if RicUrl.use_filter
+									if RicUrl.current_app_filter.to_s == item.filter # Slug belongs to current application
 										@o2t[locale.to_sym][item.original] = item.translation
 										@t2o[locale.to_sym][item.translation] = item.original
 									elsif !item.filter.blank? # Slug belongs to other application
-										url = config(:other_apps_filter, item.filter.to_sym)
+										url = RicUrl.available_filter_urls[item.filter.to_sym]
 										if !url.blank?
 											@o2t[locale.to_sym][item.original] = url.trim("/") + item.translation
 										end
@@ -222,7 +222,7 @@ module RicUrl
 
 						# Save
 						slug.locale = locale
-						slug.filter = filter if config(:use_filter) == true
+						slug.filter = filter if RicUrl.use_filter == true
 						slug.original = original
 						slug.translation = translation
 						slug.save
@@ -352,7 +352,7 @@ module RicUrl
 
 						# Locale
 						if !params[:locale].blank?
-							if config(:disable_unaccent) == true
+							if RicUrl.disable_unaccent == true
 								result = result.where("lower(locale) LIKE ('%' || lower(trim(?)) || '%')", params[:locale].to_s)
 							else
 								result = result.where("lower(unaccent(locale)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:locale].to_s)
@@ -361,7 +361,7 @@ module RicUrl
 
 						# Original
 						if !params[:original].blank?
-							if config(:disable_unaccent) == true
+							if RicUrl.disable_unaccent == true
 								result = result.where("lower(original) LIKE ('%' || lower(trim(?)) || '%')", params[:original].to_s)
 							else
 								result = result.where("lower(unaccent(original)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:original].to_s)
@@ -370,7 +370,7 @@ module RicUrl
 
 						# Translation
 						if !params[:translation].blank?
-							if config(:disable_unaccent) == true
+							if RicUrl.disable_unaccent == true
 								result = result.where("lower(translation) LIKE ('%' || lower(trim(?)) || '%')", params[:translation].to_s)
 							else
 								result = result.where("lower(unaccent(translation)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:translation].to_s)
@@ -378,9 +378,9 @@ module RicUrl
 						end
 
 						# Filter
-						if config(:use_filter) == true
+						if RicUrl.use_filter == true
 							if !params[:filter].blank?
-								if config(:disable_unaccent) == true
+								if RicUrl.disable_unaccent == true
 									result = result.where("lower(filter) LIKE ('%' || lower(trim(?)) || '%')", params[:filter].to_s)
 								else
 									result = result.where("lower(unaccent(filter)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:filter].to_s)

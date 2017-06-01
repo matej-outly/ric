@@ -6,7 +6,7 @@
 	<%= f.text_input_row :locale %>
 	<%= f.text_input_row :original %>
 	<%= f.text_input_row :translation %>
-	<% if RicUrl.slug_model.config(:use_filter) == true %>
+	<% if RicUrl.use_filter == true %>
 		<%= f.text_input_row :filter %>
 	<% end %>
 	<%= f.primary_button_row :submit %>

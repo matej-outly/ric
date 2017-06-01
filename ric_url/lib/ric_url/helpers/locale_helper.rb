@@ -41,6 +41,11 @@ module RicUrl
 				if locale && (RicUrl.disable_default_locale || (I18n.default_locale.to_sym != locale.to_sym))
 					if path == "/"
 						path = "/" + locale.to_s
+					elsif path.starts_with?("http")
+						split1 = path.split("//")
+						split2 = split1[1].to_s.split("/")
+						split1[1] = split2.insert(1, locale.to_s).join("/")
+						path = split1.join("//")
 					else
 						path = "/" + locale.to_s + path 
 					end

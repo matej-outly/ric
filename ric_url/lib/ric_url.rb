@@ -52,6 +52,12 @@ module RicUrl
 	# *************************************************************************
 
 	#
+	# Disable unaccent extension in SQL queries
+	#
+	mattr_accessor :disable_unaccent
+	@@disable_unaccent = false
+
+	#
 	# Slug model
 	#
 	mattr_accessor :slug_model
@@ -73,9 +79,41 @@ module RicUrl
 	@@enable_locales = true
 
 	#
-	# Default locale is hidden in URL by default. This feature can be disabled here by setting tue
+	# Default locale is hidden in URL by default. This feature can be disabled 
+	# by setting true to this option.
+	#
+	# Example: Default locale is "cs" and all available locales are "cs" and 
+	# "en". For false value URLs looks like this:
+	# - /fotogalerie
+	# - /en/photogallery
+	# For true value URLs looks like this:
+	# - /cs/fotogalerie
+	# - /en/photogallery
 	#
 	mattr_accessor :disable_default_locale
 	@@disable_default_locale = false
+
+	#
+	# Use filter column in slug records?
+	#
+	# Filter column can be used for filtering subset of slugs valid for some 
+	# specific application variant (different domain or subdomain) in case 
+	# these variants share database.
+	#
+	mattr_accessor :use_filter
+	@@use_filter = false
+
+	#
+	# Use this string to filter slugs valid for this application
+	#
+	mattr_accessor :current_app_filter
+	@@current_app_filter = nil
+
+	#
+	# Map of available filters => URL to be created. Used for linking to 
+	# different application variant (different domain).
+	#
+	mattr_accessor :available_filter_urls
+	@@available_filter_urls = {}
 
 end
