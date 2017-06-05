@@ -28,7 +28,15 @@ module RicReservation
 					# *********************************************************
 
 					attr_writer :day_of_week
-					enum_column :day_of_week, ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+					enum_column :day_of_week, [
+						{ value: "monday", label: I18n.t("date.days.monday") }, 
+						{ value: "tuesday", label: I18n.t("date.days.tuesday") }, 
+						{ value: "wednesday", label: I18n.t("date.days.wednesday") }, 
+						{ value: "thursday", label: I18n.t("date.days.thursday") }, 
+						{ value: "friday", label: I18n.t("date.days.friday") }, 
+						{ value: "saturday", label: I18n.t("date.days.saturday") }, 
+						{ value: "sunday", label: I18n.t("date.days.sunday") }
+					]
 
 				end
 
@@ -58,7 +66,7 @@ module RicReservation
 						cwday = nil
 						
 						if !self.day_of_week.blank?
-							idx = self.available_day_of_weeks.index { |obj| obj.value == self.self.day_of_week }
+							idx = self.class.available_day_of_weeks.index { |obj| obj.value == self.day_of_week }
 							if !idx.nil?
 								cwday = idx + 1
 							end
