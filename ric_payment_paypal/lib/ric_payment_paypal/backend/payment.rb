@@ -76,7 +76,7 @@ module RicPaymentPaypal
 					raise "Payment must be first loaded before creating."
 				end
 				if @payment.create
-					@redirect_url = payment.links.find{|v| v.rel == "approval_url" }.href # Capture redirect url
+					@redirect_url = @payment.links.find{|v| v.rel == "approval_url" }.href # Capture redirect url
 					return true
 				else
 					return false

@@ -10,17 +10,17 @@
 # *****************************************************************************
 
 # Railtie
-require 'ric_payment_thepay/railtie' if defined?(Rails)
+require "ric_payment_thepay/railtie" if defined?(Rails)
 
 # Engines
 require "ric_payment_thepay/gateway_engine"
 require "ric_payment_thepay/public_engine"
 
 # Backend
-require 'ric_payment_thepay/backend'
+require "ric_payment_thepay/backend"
 
 # Helpers
-require 'ric_payment_thepay/helpers/merchant_helper'
+require "ric_payment_thepay/helpers/merchant_helper"
 
 module RicPaymentThepay
 

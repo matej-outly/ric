@@ -19,6 +19,9 @@ require "ric_payment_paypal/public_engine"
 # Backend
 require "ric_payment_paypal/backend"
 
+# Helpers
+require "ric_payment_paypal/helpers/merchant_helper"
+
 module RicPaymentPaypal
 
 	#
