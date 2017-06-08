@@ -13,7 +13,6 @@
 require "ric_payment_gopay/railtie" if defined?(Rails)
 
 # Engines
-require "ric_payment_gopay/admin_engine"
 require "ric_payment_gopay/gateway_engine"
 require "ric_payment_gopay/public_engine"
 

@@ -15,7 +15,7 @@ module RicPaymentThepay
 		#
 		# Controllers
 		#
-		require 'ric_payment_thepay/concerns/controllers/public/payments_controller'
+		require "ric_payment_thepay/concerns/controllers/public/payments_controller"
 		
 		isolate_namespace RicPaymentThepay
 

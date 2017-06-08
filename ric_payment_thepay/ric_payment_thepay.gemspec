@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Matej Outly (Clockstar s.r.o.)"]
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
-  s.summary     = "RIC engine for payment management oner ThePay gateway"
+  s.summary     = "RIC engine for payment management over ThePay gateway"
   s.description = "Payment realization and notification from ThePay gateway."
   s.license     = "MIT"
 

@@ -14,24 +14,13 @@ module RicPaymentGopay
 		module Controllers
 			module Gateway
 				module PaymentsController extend ActiveSupport::Concern
-
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
+					
 					included do
 					
-						#
-						# Set backend before some actions
-						#
 						before_action :set_backend, only: [:notify]
 
 					end
 
-					#
-					# Notify change of payment state
-					#
 					def notify
 						
 						# Create payment object
@@ -102,9 +91,10 @@ module RicPaymentGopay
 
 				protected
 
-					#
-					# Set backend API
-					#
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+
 					def set_backend
 						@backend = RicPaymentGopay::Backend.instance
 					end

@@ -82,5 +82,28 @@ module RicPaymentThepay
 		#
 		attr_accessor :return_url
 
+		#
+		# Redirect URL for the given payment
+		#
+		def redirect_url(payment, params, options = {})
+			
+			# Get method ID
+			method_id = nil
+			method_id = params["tp_radio_value"] if !params["tp_radio_value"].blank?
+			method_id = options[:forced_value] if options[:forced_value]
+
+			# Check method ID
+			if method_id.nil?
+				return nil
+			end
+
+			# Set method ID to payment
+			payment.method_id = method_id
+
+			# Generate URL
+			url = Config.gate_url + '?' + payment.query
+			return url
+		end
+
 	end
 end

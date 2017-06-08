@@ -15,7 +15,7 @@ module RicPaymentGopay
 		#
 		# Controllers
 		#
-		require 'ric_payment_gopay/concerns/controllers/public/payments_controller'
+		require "ric_payment_gopay/concerns/controllers/public/payments_controller"
 		
 		isolate_namespace RicPaymentGopay
 

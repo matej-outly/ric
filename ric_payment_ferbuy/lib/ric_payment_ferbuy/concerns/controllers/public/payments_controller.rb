@@ -2,7 +2,8 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Payments
+# * Payments - this controller is typically rewritten inside the aplication 
+# * checkout controllers and possibly combined with other payment backends.
 # *
 # * Author: Matěj Outlý
 # * Date  : 29. 6. 2016
@@ -15,28 +16,13 @@ module RicPaymentFerbuy
 			module Public
 				module PaymentsController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
-						#
-						# Set payment subject before some actions
-						#
 						before_action :set_payment_subject, only: [:new, :success, :failed]
-						
-						#
-						# Set backend before some actions
-						#
 						before_action :set_backend, only: [:new, :success, :failed]
 
 					end
 
-					#
-					# New action
-					#
 					def new
 
 						# Already paid or in progress => exit
@@ -53,33 +39,38 @@ module RicPaymentFerbuy
 
 					end
 
-					#
-					# Success path for FerBuy
-					#
 					def success
 						redirect_to success_path, notice: I18n.t("activerecord.notices.models.ric_payment/payment.success")
 					end
 
-					#
-					# Failed path for FerBuy
-					#
 					def failed
 						redirect_to failed_path, alert: I18n.t("activerecord.errors.models.ric_payment/payment.failed")
 					end
 
 				protected
 
+					# *********************************************************
+					# Paths
+					# *********************************************************
+
+					#
+					# Success path to be overriden in the aplication
+					#
 					def success_path
 						main_app.root_path
 					end
 
+					#
+					# Failed path to be overriden in the aplication
+					#
 					def failed_path
 						main_app.root_path
 					end
 
-					#
-					# Find model according to parameter
-					#
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+
 					def set_payment_subject
 						@payment_subject = RicPayment.payment_subject_model.find_by_id(params[:id])
 						if @payment_subject.nil?
@@ -87,9 +78,6 @@ module RicPaymentFerbuy
 						end
 					end
 
-					#
-					# Set backend API
-					#
 					def set_backend
 						@backend = RicPaymentFerbuy::Backend.instance
 						@backend.success_url = ric_payment_ferbuy_public.success_payment_url(@payment_subject)

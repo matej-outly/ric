@@ -73,7 +73,7 @@ module RicPaymentThepay
 				query_data["name"] = options[:name] if options[:name]
 				query_data["value"] = options[:value] if options[:value]
 				query_data["showIcon"] = options[:show_icon] == false ? false : true
-				query_data["selected"] = thepay_radio_merchant_check(params) ? params["tp_radio_value"].to_i : "" 
+				query_data["selected"] = !params["tp_radio_value"].blank? ? params["tp_radio_value"].to_i : "" 
 				query_data["currency"] = options[:currency] if options[:currency]
 
 				# Render CSS
@@ -100,40 +100,8 @@ module RicPaymentThepay
 				return result.html_safe
 			end
 
-			def self.thepay_radio_merchant_check(params)
-				return !params["tp_radio_value"].blank?
-			end
-
-			def self.thepay_radio_merchant_redirect_url(payment, params, options = {})
-
-				# Get method ID
-				method_id = nil
-				method_id = params["tp_radio_value"] if thepay_radio_merchant_check(params)
-				method_id = options[:forced_value] if options[:forced_value]
-
-				# Check method ID
-				if method_id.nil?
-					return nil
-				end
-
-				# Set method ID to payment
-				payment.method_id = method_id
-
-				# Generate URL
-				url = RicPaymentThepay::Backend::Config.gate_url + '?' + payment.query
-				return url
-			end
-
 			def thepay_radio_merchant(payment, options = {})
 				return MerchantHelper.thepay_radio_merchant(payment, options)
-			end
-
-			def thepay_radio_merchant_check(params)
-				return MerchantHelper.thepay_radio_merchant_check(params)
-			end
-
-			def thepay_radio_merchant_redirect_url(payment, params, options = {})
-				return MerchantHelper.thepay_radio_merchant_redirect_url(payment, params, options)
 			end
 
 		end

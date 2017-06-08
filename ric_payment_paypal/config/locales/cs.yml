@@ -1,0 +1,6 @@
+cs:
+
+  headers:
+    ric_payment_paypal:
+      public_payments:
+        new: "Přesměrování na platební bránu"

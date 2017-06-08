@@ -15,21 +15,9 @@ module RicPaymentFerbuy
 			module Gateway
 				module PaymentsController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
-						#
-						# Set backend before some actions
-						#
 						before_action :set_backend, only: [:notify]
-
-						#
-						# No token verification
-						#
 						skip_before_action :verify_authenticity_token
 
 					end
@@ -144,9 +132,10 @@ module RicPaymentFerbuy
 
 				protected
 
-					#
-					# Set backend API
-					#
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+
 					def set_backend
 						@backend = RicPaymentFerbuy::Backend.instance
 					end
