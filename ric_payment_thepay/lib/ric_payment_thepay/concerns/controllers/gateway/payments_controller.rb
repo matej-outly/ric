@@ -12,7 +12,7 @@
 module RicPaymentThepay
 	module Concerns
 		module Controllers
-			module Admin
+			module Gateway
 				module PaymentsController extend ActiveSupport::Concern
 
 					included do
