@@ -157,6 +157,9 @@ module RicUrl
 					#
 					def translation_to_original(locale, translation)
 						load_cache(locale)
+
+						# Downcase if necessary
+						translation = translation.downcase if RicUrl.downcase_translations == true
 						
 						# First priority translation (without IDs)
 						result = @t2o[locale.to_sym][translation.to_s] 

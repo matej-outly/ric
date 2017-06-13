@@ -116,4 +116,12 @@ module RicUrl
 	mattr_accessor :available_filter_urls
 	@@available_filter_urls = {}
 
+	#
+	# If enabled translations are downcased before lookup. It means that
+	# translated URLs like /fotogalerie, /Fotogalerie and /FOTOGALERIE points 
+	# to the same original URL.
+	#
+	mattr_accessor :downcase_translations
+	@@downcase_translations = false
+
 end
