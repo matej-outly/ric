@@ -54,4 +54,12 @@ module RicPartnership
 	mattr_accessor :localization
 	@@localization = false
 
+	#
+	# Cropping of partner logo
+	#
+	mattr_accessor :partner_logo_crop
+	@@partner_logo_crop = {
+		full: "300x300>"
+	}
+
 end
