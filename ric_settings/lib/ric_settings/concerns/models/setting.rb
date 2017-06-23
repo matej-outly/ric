@@ -37,7 +37,7 @@ module RicSettings
 					# Validators
 					# *********************************************************
 
-					validates_presence_of :key
+					validates_presence_of :ref
 
 				end
 

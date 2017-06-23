@@ -19,81 +19,81 @@ module RicSettings
 					#
 					# Define a new setting
 					#
-					def setting(new_key, kind, category, options = {})
+					def setting(new_ref, kind, category, options = {})
 
 						# Initialize
 						@settings = {} if @settings.nil?
 						@permitted_columns = [] if @permitted_columns.nil?
-						new_key = new_key.to_sym
-						keys_to_define = [new_key]
+						new_ref = new_ref.to_sym
+						refs_to_define = [new_ref]
 
 						# Store
-						@settings[new_key] = options
-						@settings[new_key][:kind] = kind
-						@settings[new_key][:category] = category
+						@settings[new_ref] = options
+						@settings[new_ref][:kind] = kind
+						@settings[new_ref][:category] = category
 
 						# Define tableless column
 						if kind == :string # String
-							attr_accessor new_key
-							#column new_key, :varchar
-							@permitted_columns << new_key.to_sym
+							attr_accessor new_ref
+							#column new_ref, :varchar
+							@permitted_columns << new_ref.to_sym
 
 						elsif kind == :integer # Integer
-							attr_accessor new_key
-							#column new_key, :integer
-							@permitted_columns << new_key.to_sym
+							attr_accessor new_ref
+							#column new_ref, :integer
+							@permitted_columns << new_ref.to_sym
 
 						elsif kind == :currency # Currency
-							attr_accessor new_key
-							#column new_key, :integer
-							@permitted_columns << new_key.to_sym
+							attr_accessor new_ref
+							#column new_ref, :integer
+							@permitted_columns << new_ref.to_sym
 
 						elsif kind == :enum # Enum
 							if !options[:values]
-								raise "Please define values for setting #{new_key.to_s} with enum kind."
+								raise "Please define values for setting #{new_ref.to_s} with enum kind."
 							end
-							attr_accessor new_key
-							#column new_key, :varchar
-							enum_column new_key, options[:values]
-							@permitted_columns << new_key.to_sym
+							attr_accessor new_ref
+							#column new_ref, :varchar
+							enum_column new_ref, options[:values]
+							@permitted_columns << new_ref.to_sym
 
 						elsif kind == :integer_range
-							attr_accessor "#{new_key.to_s}_min".to_sym
-							attr_accessor "#{new_key.to_s}_max".to_sym
-							#column "#{new_key.to_s}_min".to_sym, :integer
-							#column "#{new_key.to_s}_max".to_sym, :integer
-							range_column new_key
-							keys_to_define = ["#{new_key.to_s}_min".to_sym, "#{new_key.to_s}_max".to_sym]
-							@permitted_columns << { new_key.to_sym => [ :min, :max ] }
+							attr_accessor "#{new_ref.to_s}_min".to_sym
+							attr_accessor "#{new_ref.to_s}_max".to_sym
+							#column "#{new_ref.to_s}_min".to_sym, :integer
+							#column "#{new_ref.to_s}_max".to_sym, :integer
+							range_column new_ref
+							refs_to_define = ["#{new_ref.to_s}_min".to_sym, "#{new_ref.to_s}_max".to_sym]
+							@permitted_columns << { new_ref.to_sym => [ :min, :max ] }
 
 						elsif kind == :double_range
-							attr_accessor "#{new_key.to_s}_min".to_sym
-							attr_accessor "#{new_key.to_s}_max".to_sym
-							#column "#{new_key.to_s}_min".to_sym, :varchar
-							#column "#{new_key.to_s}_max".to_sym, :varchar
-							range_column new_key
-							keys_to_define = ["#{new_key.to_s}_min".to_sym, "#{new_key.to_s}_max".to_sym]
-							@permitted_columns << { new_key.to_sym => [ :min, :max ] }
+							attr_accessor "#{new_ref.to_s}_min".to_sym
+							attr_accessor "#{new_ref.to_s}_max".to_sym
+							#column "#{new_ref.to_s}_min".to_sym, :varchar
+							#column "#{new_ref.to_s}_max".to_sym, :varchar
+							range_column new_ref
+							refs_to_define = ["#{new_ref.to_s}_min".to_sym, "#{new_ref.to_s}_max".to_sym]
+							@permitted_columns << { new_ref.to_sym => [ :min, :max ] }
 
 						else
-							raise "Unknown kind #{kind.to_s} of setting #{new_key.to_s}."
+							raise "Unknown kind #{kind.to_s} of setting #{new_ref.to_s}."
 						end
 
-						keys_to_define.each do |key_to_define|
+						refs_to_define.each do |ref_to_define|
 							
 							# Get method
-							define_method(key_to_define) do
-								key = key_to_define
+							define_method(ref_to_define) do
+								ref = ref_to_define
 								@settings_values = {} if @settings_values.nil?
-								@settings_values[key] = self.get(key) if !@settings_values[key]
-								return @settings_values[key]
+								@settings_values[ref] = self.get(ref) if !@settings_values[ref]
+								return @settings_values[ref]
 							end
 
 							# Set method
-							define_method((key_to_define.to_s + "=").to_sym) do |value|
-								key = key_to_define
+							define_method((ref_to_define.to_s + "=").to_sym) do |value|
+								ref = ref_to_define
 								@settings_values = {} if @settings_values.nil?
-								@settings_values[key] = value
+								@settings_values[ref] = value
 							end
 
 						end
@@ -113,12 +113,12 @@ module RicSettings
 					#
 					def categories
 						result = {}
-						self.settings.each do |setting_key, setting_options|
+						self.settings.each do |setting_ref, setting_options|
 							if setting_options[:category]
 								if result[setting_options[:category]].nil?
 									result[setting_options[:category]] = []
 								end
-								result[setting_options[:category]] << setting_key
+								result[setting_options[:category]] << setting_ref
 							end
 						end
 						return result
@@ -156,8 +156,8 @@ module RicSettings
 				end
 
 				def assign_attributes(attributes)
-					attributes.each do |key, value|
-						self.send("#{key}=", value)
+					attributes.each do |ref, value|
+						self.send("#{ref}=", value)
 					end
 				end
 
@@ -165,23 +165,23 @@ module RicSettings
 				# Store all modified values before save
 				#
 				def save
-					@settings_values.each do |key, value|
-						self.set(key, value)
+					@settings_values.each do |ref, value|
+						self.set(ref, value)
 					end
 					return true
 				end
 
 			protected
 
-				def get(key)
-					return RicSettings.setting_model.find_or_create_by(key: key.to_s).value
+				def get(ref)
+					return RicSettings.setting_model.find_or_create_by(ref: ref.to_s).value
 				end
 
-				def set(key, value)
-					object = RicSettings.setting_model.find_or_create_by(key: key.to_s)
+				def set(ref, value)
+					object = RicSettings.setting_model.find_or_create_by(ref: ref.to_s)
 					object.value = value
-					#object.kind = self.settings[key.to_sym][:kind]
-					#object.category = self.settings[key.to_sym][:category]
+					#object.kind = self.settings[ref.to_sym][:kind]
+					#object.category = self.settings[ref.to_sym][:category]
 					return object.save
 				end
 

@@ -6,8 +6,8 @@
 	) do |t| %>
 		<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
 			<% t.tab category.to_sym, t("activerecord.attributes.ric_settings/settings_collection.category_values.#{category}") do %>
-				<% settings.each do |setting_key| %>
-					<%= f.generic_row setting_key, @settings_collection.settings[setting_key.to_sym][:kind], label: t("activerecord.attributes.ric_settings/settings_collection.#{setting_key}") %>
+				<% settings.each do |setting_ref| %>
+					<%= f.generic_row setting_ref, @settings_collection.settings[setting_ref.to_sym][:kind], label: t("activerecord.attributes.ric_settings/settings_collection.#{setting_ref}") %>
 				<% end %>
 			<% end %>
 		<% end %>

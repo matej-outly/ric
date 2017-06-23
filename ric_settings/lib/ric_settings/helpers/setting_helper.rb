@@ -13,10 +13,10 @@ module RicSettings
 	module Helpers
 		module SettingHelper
 
-			def self.setting_get(key)
+			def self.setting_get(ref)
 
 				# Find model
-				setting = RicSettings.setting_model.find_by_key(key)
+				setting = RicSettings.setting_model.find_by_ref(ref)
 
 				# Return value
 				if setting
@@ -26,14 +26,14 @@ module RicSettings
 				end
 			end
 
-			def setting_get(key)
-				return SettingHelper.setting_get(key)
+			def setting_get(ref)
+				return SettingHelper.setting_get(ref)
 			end
 
-			def self.setting_set(key, value)
+			def self.setting_set(ref, value)
 
 				# Find model
-				setting = RicSettings.setting_model.find_by_key(key)
+				setting = RicSettings.setting_model.find_by_ref(ref)
 
 				# Save value
 				if setting
@@ -44,8 +44,8 @@ module RicSettings
 				end
 			end
 
-			def setting_set(key, value)
-				return SettingHelper.setting_get(key, value)
+			def setting_set(ref, value)
+				return SettingHelper.setting_get(ref, value)
 			end
 
 		end

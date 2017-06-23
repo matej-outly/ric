@@ -10,7 +10,7 @@ cs:
   activerecord:
     attributes:
       ric_settings/setting:
-        key: Identifikující klíč
+        ref: Identifikující klíč
         value: Hodnota
         kind: Typ
         kind_values:

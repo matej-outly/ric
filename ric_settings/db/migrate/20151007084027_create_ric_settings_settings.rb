@@ -8,7 +8,7 @@ class CreateRicSettingsSettings < ActiveRecord::Migration
 			t.integer :position, index: true
 			
 			# Identification
-			t.string :key, index: true
+			t.string :ref, index: true
 			t.string :value
 			t.string :kind
 			
