@@ -1,0 +1,13 @@
+<div class="callout callout-info">
+	<%= t("general.ical_import") %>
+</div>
+
+<% 
+	columns = rug_columns
+	columns.add_column_by_type(:name, :string)
+	columns.add_column_by_block(:ical_url) do |calendar|
+		url = calendar_ical_url(calendar, current_user)
+		link_to(url, url)
+	end
+%>
+<%= rug_index_table_for(@calendars, columns) %>

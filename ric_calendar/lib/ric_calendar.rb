@@ -65,6 +65,15 @@ module RicCalendar
 	@@calendar_model = "RicCalendar::Calendar"
 
 	#
+	# User model
+	#
+	mattr_accessor :user_model
+	def self.user_model
+		return @@user_model.constantize
+	end
+	@@user_model = "RicUser::User"
+
+	#
 	# Predefined calendar kinds with types and URL definitions
 	#
 	mattr_accessor :calendar_kinds

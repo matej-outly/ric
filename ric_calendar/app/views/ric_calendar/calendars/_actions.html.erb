@@ -1,6 +1,7 @@
 <% if can_read_and_write? %>
 	<%= rug_menu_for(@calendar, options.merge(path_base: "calendars")) do |m| %>
 		<%= m.item t("headers.ric_calendar.calendars.index"), ric_calendar.calendars_path, icon: "calendar", active: (controller_name == "calendars" && action_name == "index") %>
+		<%= m.item t("headers.ric_calendar.calendars.export"), ric_calendar.export_calendars_path, icon: "paperclip", active: (controller_name == "calendars" && action_name == "export") %>
 		<%= m.new_item %>
 		<%= m.edit_item %>
 		<%= m.destroy_item %>

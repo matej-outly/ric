@@ -4,6 +4,7 @@ cs:
     ric_calendar:
       calendars:
         index: Kalendář
+        export: Export kalendářů
         new: Nový kalendář
         create: Nový kalendář
         edit: Upravit kalendář
@@ -38,6 +39,7 @@ cs:
           simple: Jednoduché události
         resource: Navázaný objekt
         resource_id: Navázaný objekt
+        ical_url: URL pro import
       ric_calendar/event:
         name: Název události
         description: Popis
@@ -85,6 +87,7 @@ cs:
               before_from: Událost končí před jejím začátkem
 
   general:
+    ical_import: Pro import událostí do Vašeho mobilního telefonu nebo počítače použijte URL adresy vypsané v tabulce níže. Každý kalendář má svou URL adresu, abyste mohli importované události filtrovat stejně, jako je filtrujete na této stránce.
     destroy_this_or_all_occurences: Přejete si smazat pouze tento konkrétní výskyt a nebo celou řadu?
     action:
       destroy_this_occurence: Smazat pouze tento výskyt

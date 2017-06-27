@@ -1,4 +1,4 @@
-<% if @calendars %>
+<% if action_name == "index" %>
 	<ul class="actions-list">
 		<% @calendars.each do |calendar| %>
 			<li style="background: <%= calendar.color_primary %>; color: <%= calendar.color_text %>;">

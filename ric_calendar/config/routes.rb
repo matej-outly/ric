@@ -14,15 +14,17 @@ RicCalendar::Engine.routes.draw do
 	# Calendars
 	resources :calendars, except: [:show] do
 		collection do
+			get  "export"
+			get  "events"
 			post "events"
-			get "resources"
+			get  "resources"
+			post "resources"
 		end
+
+		# iCalendar output
+		resources :icals, only: [:show]
 	end
 
 	# Events
 	resources :events, except: [:index]
-
-	# iCalendar output
-	get "ical", to: "ical#index"
-
 end

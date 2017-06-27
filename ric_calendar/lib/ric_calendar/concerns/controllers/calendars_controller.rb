@@ -29,6 +29,13 @@ module RicCalendar
 				end
 
 				#
+				# Show export info for calendars
+				#
+				def export
+					@calendars = RicCalendar.calendar_model.all.order(name: :asc)
+				end
+
+				#
 				# Return events in Fullcalendar format via AJAX
 				#
 				def events

@@ -115,6 +115,39 @@ module RicCalendar
 					return @kind_options
 				end
 
+				# *************************************************************
+				# Export
+				# *************************************************************
+
+				def to_ical(user, date_from, date_to)
+					result = Icalendar::Calendar.new
+					
+					# Go through scheduled calendar events
+					self.select_events(user).schedule(date_from, date_to).each do |scheduled_event|
+
+						# Create iCal event
+						result.event do |e|
+							e.uid = "#{Rails.configuration.action_controller.default_url_options[:host]}@#{self.kind_options[:event_type]}<#{scheduled_event[:event].id}>[#{scheduled_event[:recurrence_id]}]"
+
+							scheduled_from = scheduled_event[:event].datetime_from(scheduled_event[:date_from])
+							scheduled_to = scheduled_event[:event].datetime_to(scheduled_event[:date_to])
+							if scheduled_event[:all_day] == false
+								e.dtstart = Icalendar::Values::DateTime.new(scheduled_from)
+								e.dtend = Icalendar::Values::DateTime.new(scheduled_to)
+							else
+								e.dtstart = Icalendar::Values::Date.new(scheduled_from)
+								e.dtend = Icalendar::Values::Date.new(scheduled_to)
+							end
+
+							e.summary     = scheduled_event[:event].event_title
+							e.description = ""
+						end
+
+					end
+					
+					return result.to_ical
+				end
+
 			protected
 
 				#
