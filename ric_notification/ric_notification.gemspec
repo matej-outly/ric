@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
   s.summary     = "RIC engine for notifications"
-  s.description = "Event logging and distribution among users via e-mail or in-application messages."
+  s.description = "Event logging and distribution among users via e-mail, SMS or in-application messages."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

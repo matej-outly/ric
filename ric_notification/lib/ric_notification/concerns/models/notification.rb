@@ -25,7 +25,7 @@ module RicNotification
 					# Structure
 					# *********************************************************
 
-					has_many :notification_receivers, class_name: RicNotification.notification_receiver_model.to_s, dependent: :destroy
+					has_many :notification_deliveries, class_name: RicNotification.notification_delivery_model.to_s, dependent: :destroy
 					belongs_to :sender, polymorphic: true
 					
 					# *********************************************************
@@ -52,11 +52,13 @@ module RicNotification
 				# *************************************************************
 
 				def done
-					if self.sent_count && self.receivers_count
-						return self.sent_count.to_s + "/" + self.receivers_count.to_s
-					else
-						return nil
+					sent_count = 0
+					receivers_count = 0
+					self.notification_deliveries.each do |notification_delivery|
+						sent_count += notification_delivery.sent_count.to_i
+						receivers_count += notification_delivery.receivers_count.to_i
 					end
+					return sent_count.to_s + "/" + receivers_count.to_s
 				end
 
 				# *************************************************************

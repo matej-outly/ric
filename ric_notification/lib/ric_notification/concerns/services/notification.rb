@@ -51,20 +51,44 @@ module RicNotification
 								if options[:attachment]
 									notification.attachment = options[:attachment]
 								end
-
-								# Store
-								notification.sent_count = 0
+								
+								# Save to DB
 								notification.save
+
+								# Delivery kinds
+								if options[:delivery_kinds] # Select only wanted delivery kinds, but valid according to module config
+									delivery_kinds = options[:delivery_kinds]
+									delivery_kinds = delivery_kinds.delete_if { |delivery_kind| !RicNotification.delivery_kinds.include?(delivery_kind.to_sym) }
+								else
+									delivery_kinds = RicNotification.delivery_kinds
+								end
 
 								# Get valid receivers
 								receivers = parse_receivers(receivers)
 
-								# Store
-								receivers.each do |receiver|
-									notification.notification_receivers.create(receiver: receiver)
+								delivery_kinds.each do |delivery_kind|
+
+									# Delivery object
+									notification_delivery = notification.notification_deliveries.create(kind: delivery_kind)
+									
+									# Filter out receivers not valid for this delivery kind
+									if delivery_kind == :email
+										filtered_receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:email) }
+									elsif delivery_kind == :sms 
+										filtered_receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:phone) }
+									else
+										filtered_receivers = receivers.dup
+									end
+
+									# Save to DB
+									filtered_receivers.each do |receiver|
+										notification_delivery.notification_receivers.create(receiver: receiver)
+									end
+									notification_delivery.sent_count = 0
+									notification_delivery.receivers_count = filtered_receivers.size
+									notification_delivery.save
+
 								end
-								notification.receivers_count = receivers.size
-								notification.save
 
 							else
 								notification = nil # Do not create notification with empty message
@@ -159,9 +183,6 @@ module RicNotification
 							end
 						end
 						receivers = new_receivers
-
-						# Filter not valid receivers if any
-						receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:email) }
 
 						return receivers
 					end

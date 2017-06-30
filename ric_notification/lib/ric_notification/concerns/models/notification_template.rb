@@ -25,24 +25,14 @@ module RicNotification
 					# Validators
 					# *********************************************************
 
-					validates_presence_of :key
+					validates_presence_of :ref
 
 					# *********************************************************
-					# Keys
+					# Ref
 					# *********************************************************
 
-					if config(:keys)
-						enum_column :key, config(:keys)
-					end
+					enum_column :ref, RicNotification.template_refs
 					
-				end
-
-				module ClassMethods
-
-					# *********************************************************
-					# Scopes
-					# *********************************************************
-
 				end
 
 			end

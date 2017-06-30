@@ -1,6 +1,10 @@
 <%= rug_show_table_for(@notification_template, { 
-	key: :enum,
-	#description: :string,
+	ref: :enum,
 	subject: :string,
-	message: { type: :text, truncate: false }
 }) %>
+<% if !@notification_template.message.blank? %>
+	<h3><%= RicNotification.notification_template_model.human_attribute_name(:message) %></h3>
+	<div class="text-box">
+		<%= @notification_template.message.to_s.html_safe %>
+	</div>
+<% end %>

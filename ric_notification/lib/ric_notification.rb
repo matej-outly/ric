@@ -15,6 +15,7 @@ require "ric_notification/public_engine"
 
 # Models
 require "ric_notification/concerns/models/notification"
+require "ric_notification/concerns/models/notification_delivery"
 require "ric_notification/concerns/models/notification_receiver"
 require "ric_notification/concerns/models/notification_template"
 
@@ -22,6 +23,7 @@ require "ric_notification/concerns/models/notification_template"
 require "ric_notification/concerns/services/notification"
 require "ric_notification/concerns/services/delivery"
 require "ric_notification/concerns/services/email_delivery"
+require "ric_notification/concerns/services/sms_delivery"
 require "ric_notification/concerns/services/inmail_delivery"
 
 # Mailers
@@ -42,6 +44,7 @@ module RicNotification
 	include RicNotification::Concerns::Services::Notification
 	include RicNotification::Concerns::Services::Delivery
 	include RicNotification::Concerns::Services::EmailDelivery
+	include RicNotification::Concerns::Services::SmsDelivery
 	include RicNotification::Concerns::Services::InmailDelivery
 
 	# *************************************************************************
@@ -69,6 +72,15 @@ module RicNotification
 	@@notification_model = "RicNotification::Notification"
 
 	#
+	# Notification delivery model
+	#
+	mattr_accessor :notification_delivery_model
+	def self.notification_delivery_model
+		return @@notification_delivery_model.constantize
+	end
+	@@notification_delivery_model = "RicNotification::NotificationDelivery"
+
+	#
 	# Notification receiver model
 	#
 	mattr_accessor :notification_receiver_model
@@ -93,15 +105,30 @@ module RicNotification
 	#@@mailer_sender = ... to be set in module initializer
 
 	#
-	# Delivery methods
+	# Delivery kinds
 	#
-	# Available methods:
+	# Available kinds:
 	# - email
+	# - sms
 	# - inmail
 	#
-	mattr_accessor :delivery_methods
-	@@delivery_methods = [
+	mattr_accessor :delivery_kinds
+	@@delivery_kinds = [
 		:email
+#		:sms,
+#		:inmail,
+	]
+
+	#
+	# Available notification template refs. For each defined ref there will be 
+	# an automatically created record in the notification_templates table. 
+	# System administrator can define content of this template via admin 
+	# interface.
+	#
+	mattr_accessor :template_refs
+	@@template_refs = [
+#		:some_notification_ref_1,
+#		:some_notification_ref_2,
 	]
 
 end

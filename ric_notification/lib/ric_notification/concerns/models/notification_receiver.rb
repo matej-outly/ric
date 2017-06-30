@@ -25,14 +25,14 @@ module RicNotification
 					# Structure
 					# *********************************************************
 
-					belongs_to :notification, class_name: RicNotification.notification_model.to_s
+					belongs_to :notification_delivery, class_name: RicNotification.notification_delivery_model.to_s
 					belongs_to :receiver, polymorphic: true
 
 					# *********************************************************
 					# Validators
 					# *********************************************************
 
-					validates_presence_of :notification_id, :receiver_id, :receiver_type
+					validates_presence_of :notification_delivery_id, :receiver_id, :receiver_type
 
 					# *********************************************************
 					# State
@@ -68,12 +68,17 @@ module RicNotification
 				# *************************************************************
 
 				#
-				# Send given notification by email
+				# Send notification by valid delivery kind
 				#
-				def deliver_by_email(notification)
-					if notification.nil?
-						return false
-					end
+				def deliver
+					return self.send("deliver_by_#{self.notification_delivery.kind}")
+				end
+
+				#
+				# Send notification by e-mail
+				#
+				def deliver_by_email
+					notification = self.notification_delivery.notification
 
 					# Send email
 					begin 
@@ -95,12 +100,19 @@ module RicNotification
 				end
 
 				#
-				# Send given notification by InMail
+				# Send notification by SMS
 				#
-				def deliver_by_inmail(notification)
-					if notification.nil?
-						return false
-					end
+				def deliver_by_sms
+					raise "Not implemented."
+
+					# TODO link to correct SMS backend
+				end
+
+				#
+				# Send notification by InMail
+				#
+				def deliver_by_inmail
+					notification = self.notification_delivery.notification
 
 					# Send
 					if defined?(RicInmail)
@@ -110,17 +122,17 @@ module RicNotification
 							sender: notification.sender,
 							receiver: self.receiver
 						)
-						#self.state = "sent"
+						self.state = "sent"
 					else
-						#self.state = "error"
-						#self.error_message = "RicInmail not included."
+						self.state = "error"
+						self.error_message = "RicInmail not included."
 					end
 
 					# Mark as sent
-					#self.sent_at = Time.current
+					self.sent_at = Time.current
 
 					# Save
-					#self.save
+					self.save
 
 					return true
 				end

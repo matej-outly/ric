@@ -29,7 +29,7 @@ module RicNotification
 					end
 
 					def index
-						@notification_templates = RicNotification.notification_template_model.all.order(key: :asc)
+						@notification_templates = RicNotification.notification_template_model.all.order(ref: :asc)
 					end
 
 					def show
@@ -49,11 +49,11 @@ module RicNotification
 				protected
 
 					def create_missing_notification_templates
-						if RicNotification.notification_template_model.config(:keys)
-							RicNotification.notification_template_model.config(:keys).each do |key|
-								notification_template = RicNotification.notification_template_model.where(key: key).first
+						if RicNotification.notification_template_model.config(:template_refs)
+							RicNotification.notification_template_model.config(:template_refs).each do |ref|
+								notification_template = RicNotification.notification_template_model.where(ref: ref).first
 								if notification_template.nil?
-									notification_template = RicNotification.notification_template_model.create(key: key)
+									notification_template = RicNotification.notification_template_model.create(ref: ref)
 								end
 							end
 						end
@@ -68,7 +68,6 @@ module RicNotification
 
 					def notification_template_params
 						params.require(:notification_template).permit(
-							#:description,
 							:subject,
 							:message,
 						)

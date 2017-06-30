@@ -6,9 +6,8 @@ class CreateRicNotificationNotificationTemplates < ActiveRecord::Migration
 			t.timestamps null: true
 			
 			# Identification
-			t.string :key
-			t.string :description
-
+			t.string :ref
+			
 			# Message
 			t.string :subject 
 			t.text :message

@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Inmail delivery service
+# * InMail delivery service
 # *
 # * Author: Matěj Outlý
 # * Date  : 19. 4. 2017
@@ -16,41 +16,36 @@ module RicNotification
 
 				module ClassMethods
 
-					# TODO: statistics and state should be different for email and inmail
 					def deliver_by_inmail(id)
 
-						# Find object
+						# Find notification object
 						notification = RicNotification.notification_model.find_by_id(id)
-						if notification.nil?
-							return nil
-						end
+						return nil if notification.nil?
+						
+						# Find delivery object
+						notification_delivery = notification.notification_deliveries.where(kind: "inmail").first
+						return nil if notification_delivery.nil?
 
 						# Nothing to do
-						#if notification.sent_count == notification.receivers_count
-						#	return 0
-						#end
-
+						return 0 if notification_delivery.sent_count == notification_delivery.receivers_count
+						
 						# Get batch of receivers prepared for send
-						notification_receivers = notification.notification_receivers #.where(sent_at: nil)
+						notification_receivers = notification_delivery.notification_receivers #.where(sent_at: nil)
 						
 						# Send entire batch
-						#sent_counter = 0
+						sent_counter = 0
 						notification_receivers.each do |notification_receiver|
-							if notification_receiver.deliver_by_inmail(notification)
-								#sent_counter += 1
-							end
+							sent_counter += 1 if notification_receiver.deliver
 						end
 
 						# Update statistics
-						#notification.sent_count += sent_counter
-						#if notification.sent_count == notification.receivers_count
-						#	notification.sent_at = Time.current
-						#end
-
+						notification_delivery.sent_count += sent_counter
+						notification_delivery.sent_at = Time.current if notification_delivery.sent_count == notification_delivery.receivers_count
+						
 						# Save
-						#notification.save
+						notification_delivery.save
 
-						#return (notification.receivers_count - notification.sent_count)
+						return (notification_delivery.receivers_count - notification_delivery.sent_count)
 					end
 
 				end

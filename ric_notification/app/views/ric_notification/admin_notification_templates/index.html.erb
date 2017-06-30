@@ -1,6 +1,5 @@
 <%= rug_index_table_for(@notification_templates, { 
-	key: :enum,
-	#description: :string,
+	ref: :enum,
 	subject: :string,
 	message: { type: :text, strip_tags: true }
 }, paths: {

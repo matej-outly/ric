@@ -14,9 +14,6 @@ module RicNotification
 		module Mailers
 			module NotificationMailer extend ActiveSupport::Concern
 
-				#
-				# New password
-				#
 				def notify(notification, receiver)
 					
 					# Sender

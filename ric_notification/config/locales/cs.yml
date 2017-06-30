@@ -29,7 +29,16 @@ cs:
         sender: Odesílatel
         sent_at: Odesláno
         done: Hotovo
+        deliveries: Metody doručení
+      ric_notification/notification_delivery:
+        sent_at: Odesláno
+        done: Hotovo
         receivers: Příjemci
+        kind: Doručovací metoda
+        kind_values:
+          email: E-mail
+          sms: SMS
+          inmail: Interní pošta
       ric_notification/notification_receiver:
         receiver: Příjemce
         state: Stav
@@ -49,8 +58,7 @@ cs:
         sent_at: Odesláno
         received_at: Doručeno
       ric_notification/notification_template:
-        key: Klíč
-        description: Popis
+        ref: Klíč
         subject: Předmět
         message: Zpráva
     notices:
@@ -66,6 +74,10 @@ cs:
       models:
         ric_notification/notification:
           not_found: Zpráva nebyla nalezena.
+        ric_notification/notification_delivery:
+          not_found: Doručovací metoda nebyla nalezena.
+        ric_notification/notification_receiver:
+          not_found: Příjemce nebyl nalezen.
         ric_notification/notification_template:
           not_found: Šablona zprávy nebyla nalezena.
     mailers:
