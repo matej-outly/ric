@@ -1,5 +1,0 @@
-<%= rug_menu_for(@league_season) do |m| %>
-	<% if @league_season && !@league_season.new_record? %>
-		<%= m.item t("headers.ric_league.admin_league_seasons.show"), league_season_path(@league_season), icon: "search" %>
-	<% end %>
-<% end %>

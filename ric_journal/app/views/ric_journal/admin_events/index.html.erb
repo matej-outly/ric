@@ -1,9 +1,0 @@
-<%= rug_index_table_for(@events, { 
-	title: :string,
-	perex: :text,
-	held_at: :datetime
-}, paths: {
-	show: "ric_journal_admin.event_path",
-	edit: "ric_journal_admin.edit_event_path",
-	destroy: "ric_journal_admin.event_path"
-}, pagination: true, summary: true ) %>

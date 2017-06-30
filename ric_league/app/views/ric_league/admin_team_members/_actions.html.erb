@@ -1,6 +1,0 @@
-<%= rug_menu_for(@team_member, options.merge(path_base: "team_members")) do |m| %>
-	<%= m.new_item nil, new_team_member_path(team_id: @team_member.team_id) %>
-	<%= m.show_item %>
-	<%= m.edit_item %>
-	<%= m.destroy_item %>
-<% end %>
