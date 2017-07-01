@@ -29,7 +29,7 @@ module RicUrl
 				else
 					
 					# Match locale from path
-					path_locale, path = RicUrl::Helpers::LocaleHelper.disassemble(env["PATH_INFO"])
+					path_locale, path = RicUrl.disassemble(env["PATH_INFO"])
 					path_locale = nil if !I18n.available_locales.include?(path_locale)
 					
 					# Match locale from browser

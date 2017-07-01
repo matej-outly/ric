@@ -29,12 +29,12 @@ module RicUrl
 				else
 					
 					# Match locale from path
-					locale, translation = RicUrl::Helpers::LocaleHelper.disassemble(env["PATH_INFO"])
+					locale, translation = RicUrl.disassemble(env["PATH_INFO"])
 
 					# Translate to original and modify request
 					original = RicUrl.slug_model.translation_to_original(I18n.locale, translation) # Previously matched locale used
 					if !original.nil?
-						original = RicUrl::Helpers::LocaleHelper.assemble(locale, original)
+						original = RicUrl.assemble(locale, original)
 						env["REQUEST_PATH"] = original
 						env["PATH_INFO"] = original
 						env["REQUEST_URI"] = original + "?" + env["QUERY_STRING"]

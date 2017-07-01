@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Engine TODO rename to Engine
 # *
 # * Author: Matěj Outlý
 # * Date  : 13. 5. 2015

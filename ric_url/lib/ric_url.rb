@@ -25,8 +25,7 @@ require "ric_url/concerns/models/slug_generator"
 require "ric_url/concerns/models/hierarchical_slug_generator"
 
 # Helpers
-require "ric_url/helpers/locale_helper"
-require "ric_url/helpers/slug_helper"
+require "ric_url/helpers/url_helper"
 
 module RicUrl
 
@@ -34,6 +33,88 @@ module RicUrl
 	# This will keep Rails Engine from generating all table prefixes with the engines name
 	#
 	def self.table_name_prefix
+	end
+
+	# *************************************************************************
+	# Interface
+	# *************************************************************************
+
+	def self.disassemble(path)
+		# TODO work correctly with http:// and https:// links
+
+		# Match locale from path
+		match = /^\/(#{I18n.available_locales.join("|")})\//.match(path + "/")
+		if match
+			locale = match[1].to_sym
+		else
+			locale = nil
+		end
+
+		# Remove locale from path
+		if locale
+			path = path[(1+locale.to_s.length)..-1]
+		end
+
+		# Root
+		if path.blank?
+			path = "/"
+		end
+		
+		return [locale, path]
+	end
+
+	def self.assemble(locale, path)
+		if locale && (RicUrl.disable_default_locale || (I18n.default_locale.to_sym != locale.to_sym))
+			if path == "/"
+				path = "/" + locale.to_s
+			elsif path.starts_with?("http")
+				split1 = path.split("//")
+				split2 = split1[1].to_s.split("/")
+				split1[1] = split2.insert(1, locale.to_s).join("/")
+				path = split1.join("//")
+			else
+				path = "/" + locale.to_s + path 
+			end
+		end
+		return path
+	end
+
+	def self.localify(path)
+		return path if path == "#"
+
+		# Match locale from path
+		locale, path = self.disassemble(path)
+
+		# Take current locale if path locale not defined
+		if locale.nil?
+			locale = I18n.locale
+		end
+
+		# Assemble back into path with locale
+		path = self.assemble(locale, path)
+
+		return path
+	end
+
+	def self.slugify(path)
+
+		# Match locale from path
+		locale, original = self.disassemble(path)
+
+		# Translate from original
+		tmp_uri = URI.parse(original)
+		tmp_path = RicUrl.slug_model.original_to_translation((locale ? locale : I18n.default_locale), tmp_uri.path)
+		if tmp_path
+			tmp_uri.path = tmp_path
+			translation = tmp_uri.to_s
+		else
+			translation = original
+		end
+
+		# Add locale if defined
+		translation = self.assemble(locale, translation)
+		
+		return translation
 	end
 
 	# *************************************************************************
