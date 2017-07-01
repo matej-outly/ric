@@ -1,0 +1,21 @@
+cs:
+  
+  headers:
+    ric_acl:
+      privileges:
+        new: Nové oprávnění
+        create: Nové oprávnění
+        edit: Upravit oprávnění
+        update: Upravit oprávnění
+      
+  activerecord:
+    attributes:
+      privilege:
+        action: Akce
+        scope: V rámci
+        scope_range: Rozsah
+        subject: Objekt
+        owner: Vlastník
+    notices:
+    errors:
+      
