@@ -21,6 +21,66 @@ module RicAcl
 					else
 						raise "Please define user." 
 					end
+					if params[:action]
+						action = params[:action]
+					else
+						raise "Please define action." 
+					end
+					if params[:subject]
+						subject = params[:subject]
+					else
+						raise "Please define subject." 
+					end
+					if params[:scope]
+						scope = params[:scope]
+					else
+						scope = nil
+					end
+
+					if subject.is_a?(ActiveRecord::Base) && scope
+						
+						# In this special case not scoped query is checked first. If success, 
+						# user holds not scoped permissions for the class or object and no
+						# other check is necessary. If failed, seconds try is performed with
+						# respect to scope. If second try is success, additional check must 
+						# be performed to ensure that given subject is in the scope of the given
+						# user.
+
+						sql = authorization_sql(subject, nil, user, action)
+						return false if !sql
+						privilege_count = self.class.connection.execute(sql).first["count"].to_i
+						if privilege_count > 0
+							return true 
+						else
+							sql = authorization_sql(subject, scope, user, action)
+							return false if !sql
+							privilege_count = self.class.connection.execute(sql).first["count"].to_i
+							if privilege_count > 0
+								if subject.class.authorized_for(user: user, scope: scope).find_by_id(subject.id)
+									return true
+								end
+							end
+						end
+					else
+
+						# All other cases can be checked only once.
+
+						sql = authorization_sql(subject, scope, user, action)
+						return false if !sql
+						privilege_count = self.class.connection.execute(sql).first["count"].to_i
+						return true if privilege_count > 0
+					end
+
+					return false
+				end
+
+				def authorize!(params = {})
+					if !authorize(params)
+						raise "Not authorized."
+					end
+				end
+
+				def authorization_sql(subject, scope, user, action)
 
 					# User / roles
 					if user.nil? # User not set => use roles for unsigned users
@@ -32,31 +92,57 @@ module RicAcl
 					end
 
 					# End if no privilege owner to check
-					return false if user_id.nil? && role_ids.empty?
+					return nil if user_id.nil? && role_ids.empty?
 
-					# Check privileges owned by user or some of the user's role
+					# Header
 					sql = %{
 						SELECT COUNT("privileges".*) AS "count"
 						FROM "privileges"
 						WHERE 
-							("privileges"."subject_type" = 'Node' AND "privileges"."subject_id" = #{self.id}) AND
-							(
-								#{!role_ids.empty? ? "(\"privileges\".\"owner_type\" = 'Role' AND \"privileges\".\"owner_id\" IN (" + role_ids.join(",") + "))" : ""}
-								#{!role_ids.empty? && !user_id.nil? ? "OR" : ""}
-								#{!user_id.nil? ? "(\"privileges\".\"owner_type\" = 'User' AND \"privileges\".\"owner_id\" = " + user_id.to_s + ")" : ""}
-							) AND
-							("privileges"."action" = '#{action}')
 					}
-					privilege_count = self.class.connection.execute(sql).first["count"].to_i
-					return true if privilege_count > 0
 
-					return false
-				end
-
-				def authorize!(params = {})
-					if !authorize(params)
-						raise "Not authorized."
+					# Subject / scope
+					if subject.class == Class 
+						sql += %{
+							("privileges"."subject_type" = '#{subject.to_s}' AND
+						}
+					elsif subject.is_a?(ActiveRecord::Base)
+						sql += %{
+							(
+								("privileges"."subject_type" = '#{subject.class.to_s}') OR
+								("privileges"."subject_type" = '#{subject.class.to_s}' AND "privileges"."subject_id" = #{subject.id})
+							) AND
+						}
+					else
+						raise "Unknown subject."
 					end
+
+					# Scope
+					if scope
+						sql += %{
+							("privileges"."scope_type" = '#{scope.to_s}' OR "privileges"."scope_type" IS NULL) AND
+						}
+					else
+						sql += %{
+							("privileges"."scope_type" IS NULL) AND
+						}
+					end
+
+					# User / roles
+					sql += %{
+						(
+							#{!role_ids.empty? ? "(\"privileges\".\"owner_type\" = 'Role' AND \"privileges\".\"owner_id\" IN (" + role_ids.join(",") + "))" : ""}
+							#{!role_ids.empty? && !user_id.nil? ? "OR" : ""}
+							#{!user_id.nil? ? "(\"privileges\".\"owner_type\" = 'User' AND \"privileges\".\"owner_id\" = " + user_id.to_s + ")" : ""}
+						) AND
+					}
+
+					# Action
+					sql += %{
+						("privileges"."action" = '#{action}')
+					}
+
+					return sql
 				end
 
 			end

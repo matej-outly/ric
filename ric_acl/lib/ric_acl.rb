@@ -21,6 +21,9 @@ require "ric_acl/concerns/models/privilege"
 # Module concerns
 require "ric_acl/concerns/authorization"
 
+# Helpers
+require "ric_acl/helpers/authorization_helper"
+
 module RicAcl
 
 	#
