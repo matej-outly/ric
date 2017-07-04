@@ -59,4 +59,39 @@ module RicAcl
 	end
 	@@privilege_model = "RicAcl::Privilege"
 
+	#
+	# User model
+	#
+	mattr_accessor :user_model
+	def self.user_model
+		return @@user_model.constantize
+	end
+	@@user_model = "RicUser::User"
+
+	#
+	# Role model
+	#
+	mattr_accessor :role_model
+	def self.role_model
+		return @@role_model.constantize
+	end
+	@@role_model = "RicUser::Role"
+
+	#
+	# Use privileges hard-coded in configuration?
+	#
+	mattr_accessor :use_static_privileges
+	@@use_static_privileges = false
+
+	#
+	# Defined privileges (used only if use_static_privileges set to true)
+	#
+	mattr_accessor :privileges
+	@@privileges = [
+#		{ role: "admin", subject_type: "Sample", action: :load },
+#		{ role: "admin", subject_type: "Sample", action: :create },
+#		{ role: "admin", subject_type: "Sample", action: :update },
+#		{ role: "admin", subject_type: "Sample", action: :destroy },
+	]
+
 end

@@ -18,7 +18,7 @@ module RicAcl
 			end
 
 			def authorize!(params = {})
-				return RicAcl.authorize(params)
+				return RicAcl.authorize!(params)
 			end
 
 		end
