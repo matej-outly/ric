@@ -20,15 +20,18 @@ require "ric_user/concerns/models/user_person"
 require "ric_user/concerns/models/user_role"
 
 require "ric_user/concerns/models/user"
-require "ric_user/concerns/models/user/multi_people_user"
-require "ric_user/concerns/models/user/multi_roles_user"
-require "ric_user/concerns/models/user/single_person_user"
-require "ric_user/concerns/models/user/single_role_user"
+require "ric_user/concerns/models/user/multi_dynamic_roles"
+require "ric_user/concerns/models/user/multi_people"
+require "ric_user/concerns/models/user/multi_static_roles"
+require "ric_user/concerns/models/user/single_static_role"
+require "ric_user/concerns/models/user/single_person"
+require "ric_user/concerns/models/user/single_dynamic_role"
 
 require "ric_user/concerns/models/person"
-require "ric_user/concerns/models/person/model_1_person"
-require "ric_user/concerns/models/person/model_2_person"
-require "ric_user/concerns/models/person/model_3_person"
+require "ric_user/concerns/models/person/model_1"
+require "ric_user/concerns/models/person/model_2"
+require "ric_user/concerns/models/person/model_3"
+require "ric_user/concerns/models/person/model_4"
 
 require "ric_user/concerns/models/people_selector"
 require "ric_user/concerns/models/people_selectable"
@@ -67,6 +70,15 @@ module RicUser
 		return @@user_model.constantize
 	end
 	@@user_model = "RicUser::User"
+
+	#
+	# Role model
+	#
+	mattr_accessor :role_model
+	def self.role_model
+		return @@role_model.constantize
+	end
+	@@role_model = "RicUser::Role"
 
 	#
 	# User role model
@@ -120,13 +132,30 @@ module RicUser
 	@@mailer_sender = "no-reply@clockapp.cz"
 
 	#
-	# Roles
+	# Association between users and roles
+	#
+	# Available values:
+	# - none
+	# - user_belongs_to_role
+	# - user_has_and_belongs_to_many_roles
+	#
+	mattr_accessor :user_role_association
+	@@user_role_association = :user_belongs_to_role
+
+	#
+	# Use roles hard-coded in configuration
+	#
+	mattr_accessor :use_static_roles
+	@@use_static_roles = true
+
+	#
+	# Available static roles (used only if use_static_roles set to true)
 	#
 	mattr_accessor :roles
 	@@roles = ["admin"]
 
 	#
-	# Default role
+	# Role set as default after user created (used only if use_static_roles set to true)
 	#
 	mattr_accessor :default_role
 	@@default_role = nil
@@ -139,14 +168,30 @@ module RicUser
 	# - one_user_one_person (model_1)
 	# - one_user_many_people (model_2)
 	# - many_users_one_person (model_3)
+	# - many_users_many_people (model_4)
 	#
 	mattr_accessor :user_person_association
-	@@user_person_association = :one_user_one_person
+	@@user_person_association = :none
 
 	#
-	# Person types
+	# Available person types
 	#
 	mattr_accessor :person_types
 	@@person_types = []
+
+	#
+	# Is user avatar croppable?
+	#
+	mattr_accessor :user_avatar_croppable
+	@@user_avatar_croppable = false
+
+	#
+	# User avatar crop styles
+	#
+	mattr_accessor :user_avatar_crop
+	@@user_avatar_crop = {
+		thumb: "200x200#",
+		full: "500x500#"
+	}
 
 end

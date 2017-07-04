@@ -1,4 +1,4 @@
-# Ric Auth
+# RicAuth
 
 RicAuth manages standard functionality connected to user authentication. It is a wrapper around gem Devise, adds some custom views, views for admin access, extensions and supports OmniAuth integration. 
 

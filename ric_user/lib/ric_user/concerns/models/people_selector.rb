@@ -14,11 +14,6 @@ module RicUser
 		module Models
 			module PeopleSelector extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 
 					# *********************************************************
@@ -31,7 +26,7 @@ module RicUser
 					# Validators
 					# *********************************************************
 
-					validates_presence_of :key
+					validates_presence_of :ref
 					#validates_presence_of :subject_id, :subject_type
 
 					# *********************************************************
@@ -45,17 +40,17 @@ module RicUser
 				module ClassMethods
 
 					# *********************************************************
-					# Definition af available selectors
+					# Definition of available selectors
 					# *********************************************************
 
 					#
 					# Define new selector with select, search and title functions
 					#
-					def define_selector(key, callbacks)
+					def define_selector(ref, callbacks)
 						raise "Please define select callback." if !callbacks[:select].is_a?(Proc)
 						raise "Please define search callback." if !callbacks[:search].is_a?(Proc)
 						raise "Please define title callback." if !callbacks[:title].is_a?(Proc)
-						self.available_selectors[key.to_sym] = callbacks
+						self.available_selectors[ref.to_sym] = callbacks
 					end
 
 					def available_selectors
@@ -73,10 +68,10 @@ module RicUser
 					def search(query)
 						result = []
 						if !query.blank?
-							self.available_selectors.each do |selector_key, selector_def|
+							self.available_selectors.each do |selector_ref, selector_def|
 								selector_def[:search].call(query.to_s).each do |found_params|
 									result << {
-										value: encode_value(selector_key, found_params),
+										value: encode_value(selector_ref, found_params),
 										title: selector_def[:title].call(found_params)
 									}
 								end
@@ -90,8 +85,8 @@ module RicUser
 					# *********************************************************
 
 					def title(value)
-						key, params = decode_value(value)
-						selector_def = available_selectors[key.to_sym]
+						ref, params = decode_value(value)
+						selector_def = available_selectors[ref.to_sym]
 						if selector_def && selector_def[:title]
 							return selector_def[:title].call(params)
 						else
@@ -104,23 +99,23 @@ module RicUser
 					# *********************************************************
 
 					def decode_value(value)
-						splitted = value.split("/") # Parse value to key and params
-						key = splitted.shift
+						splitted = value.split("/") # Parse value to ref and params
+						ref = splitted.shift
 						params = (splitted.empty? ? "null" : splitted.join("/"))
 						params = (params == "null" ? nil : JSON.parse(params).symbolize_keys)
-						return [key, params]
+						return [ref, params]
 					end
 
-					def encode_value(key, params)
-						"#{key}/#{params.to_json}"
+					def encode_value(ref, params)
+						"#{ref}/#{params.to_json}"
 					end
 
 					# *********************************************************
 					# People
 					# *********************************************************
 
-					def people(key, params)
-						selector_def = self.available_selectors[key.to_sym]
+					def people(ref, params)
+						selector_def = self.available_selectors[ref.to_sym]
 						if selector_def && selector_def[:select]
 							return selector_def[:select].call(params)
 						else
@@ -135,11 +130,11 @@ module RicUser
 				# *************************************************************
 
 				def value
-					self.class.encode_value(self.key, self.params)
+					self.class.encode_value(self.ref, self.params)
 				end
 
 				def value=(value)
-					self.key, self.params = self.class.decode_value(value)
+					self.ref, self.params = self.class.decode_value(value)
 				end
 
 				# *************************************************************
@@ -164,7 +159,7 @@ module RicUser
 				#
 				def people
 					if @people.nil?
-						@people = self.class.people(self.key, self.params)
+						@people = self.class.people(self.ref, self.params)
 					end
 					return @people
 				end

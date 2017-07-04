@@ -25,9 +25,11 @@ cs:
         name_firstname: "Křestní jméno"
         name_lastname: "Příjmení"
         email: "E-mail"
+        role_id: "Role"
         role: "Role"
         role_values:
           admin: "Administrátor"
+        role_ids: "Role"
         roles: "Role"
         roles_values:
           admin: "Administrátor"
@@ -44,7 +46,7 @@ cs:
         locked_at: "Čas zablokování"
         confirmed?: "Ověřen"
       ric_notification/notification_template:
-        key_values:
+        ref_values:
           user_new_password: Nové heslo uživatele
           user_confirmation: Instrukce pro potvrzení uživatelského účtu
           user_reset_password: Instrukce pro obnovu hesla

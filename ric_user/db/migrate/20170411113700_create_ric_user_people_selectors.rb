@@ -7,7 +7,7 @@ class CreateRicUserPeopleSelectors < ActiveRecord::Migration
 
 			# Selector definition
 			#t.string :selector
-			t.string :key
+			t.string :ref
 			t.string :params
 			
 			# Human readable title

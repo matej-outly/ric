@@ -15,30 +15,16 @@ module RicUser
 			module Public
 				module UsersController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
-						#
-						# Set user before some actions
-						#
 						before_action :set_user, only: [:show]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@users = RicUser.user_model.all.order(email: :asc).page(params[:page]).per(50)
 					end
 
-					#
-					# Search action
-					#
 					def search
 						@users = RicUser.user_model.search(params[:q]).order(name_lastname: :asc, name_firstname: :asc, email: :asc)
 						respond_to do |format|
@@ -47,9 +33,6 @@ module RicUser
 						end
 					end
 
-					#
-					# Show action
-					#
 					def show
 						respond_to do |format|
 							format.html { render "show" }
@@ -59,6 +42,10 @@ module RicUser
 
 				protected
 
+					# *********************************************************
+					# Model setters
+					# *********************************************************
+					
 					def set_user
 						@user = RicUser.user_model.find_by_id(params[:id])
 						if @user.nil?

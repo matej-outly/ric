@@ -14,11 +14,6 @@ module RicUser
 		module Models
 			module User extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 
 					# *********************************************************
@@ -32,11 +27,10 @@ module RicUser
 					# Avatar
 					# *********************************************************
 
-					if config(:avatar_croppable) == true
-						croppable_picture_column :avatar, styles: { thumb: config(:avatar_crop, :thumb), full: config(:avatar_crop, :full) }
+					if RicUser.user_avatar_croppable == true
+						croppable_picture_column :avatar, styles: { thumb: RicUser.user_avatar_crop[:thumb], full: RicUser.user_avatar_crop[:full] }
 					else
-						has_attached_file :avatar, :styles => { thumb: config(:avatar_crop, :thumb), full: config(:avatar_crop, :full) }
-						validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+						picture_column :avatar, styles: { thumb: RicUser.user_avatar_crop[:thumb], full: RicUser.user_avatar_crop[:full] }
 					end
 					add_methods_to_json :avatar_url
 
@@ -58,6 +52,9 @@ module RicUser
 						[
 							:email, 
 							:role,
+							:roles,
+							:role_id,
+							:role_ids,
 							:avatar,
 							:avatar_crop_x, 
 							:avatar_crop_y, 

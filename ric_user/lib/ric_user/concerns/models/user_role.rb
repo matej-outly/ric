@@ -14,30 +14,30 @@ module RicUser
 		module Models
 			module UserRole extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 
 					# *********************************************************
-					# Structure
+					# User
 					# *********************************************************
 
 					belongs_to :user, class_name: RicUser.user_model.to_s
-
-					# *********************************************************
-					# Validators
-					# *********************************************************
-
-					validates_presence_of :user_id, :role
-
+					validates_presence_of :user_id
+					
 					# *********************************************************
 					# Role
 					# *********************************************************
 
-					enum_column :role, RicUser.roles
+					if RicUser.use_static_roles
+						
+						enum_column :role, RicUser.roles
+						validates_presence_of :role
+						
+					else
+
+						belongs_to :role, class_name: RicUser.role_model.to_s
+						validates_presence_of :role_id
+
+					end
 
 				end
 

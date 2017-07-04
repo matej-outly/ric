@@ -14,7 +14,7 @@ module RicUser
 		include RicUser::Concerns::Models::PeopleSelector
 
 		# Define selector
-#		define_selector :selector_key, {
+#		define_selector :selector_ref, {
 #
 #			# Select function - DB query selecting valid people expected to be returned
 #			select: lambda { |params|
@@ -23,7 +23,7 @@ module RicUser
 #			
 #			# Search function - [ {some_param: value, ...}, {some_param: value, ...}, ... ] defining valid selector params expected to be returned
 #			search: lambda { |query|
-#				SomePerson.where("(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query).map { |person| { some_param: person_some_param } }
+#				SomePerson.where("(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))", query: query).map { |person| { some_param: person.some_param } }
 #			},
 #			
 #			# Selector title - title uniquely identifying selector with given params expected to be returned
