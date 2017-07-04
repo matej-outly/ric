@@ -71,6 +71,6 @@ module RicUser
 			end
 
 		end
-			
+		
 	end
 end

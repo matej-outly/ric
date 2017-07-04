@@ -12,7 +12,7 @@
 module RicNotification
 	module Concerns
 		module Models
-			module NotificationReceiver extend ActiveSupport::Concern
+			module NotificationDelivery extend ActiveSupport::Concern
 
 				#
 				# 'included do' causes the included code to be evaluated in the
