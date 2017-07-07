@@ -16,6 +16,8 @@ require "ric_user/public_engine"
 # Models
 require "ric_user/concerns/models/session"
 
+require "ric_user/concerns/models/role"
+
 require "ric_user/concerns/models/user_person"
 require "ric_user/concerns/models/user_role"
 
