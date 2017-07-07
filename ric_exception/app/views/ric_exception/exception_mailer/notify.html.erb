@@ -1,0 +1,2 @@
+<h1><%= @exception.message %></h1>
+<p><%= @exception.backtrace.join("<br/>").html_safe if @exception.backtrace %></p>

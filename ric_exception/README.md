@@ -13,18 +13,25 @@ gem "ric_exception"
 Additionaly you must connect correct exception app in the `application.rb` config file:
 
 ```ruby
-# Use RicException as exceptions app
 config.exceptions_app = RicException::Engine
 ```
 
-## Configuration
+## E-mail notifications
 
+Module can automatically send notification e-mails to developer support contact. Only internal errors are sent. Mailing can be activated by setting `mailer_sender` and `mailer_receiver` options in the module configuration file (`ric_exception.rb`):
 
+```ruby
+RicException.setup do |config|
+    config.mailer_sender = "no-reply@sample.com"
+    config.mailer_receiver = "support@developer.com"
+end
+```
 
 ## Custom views
 
-In case you want to define your custom views, you must override these view templates:
+You can define your custom views displayed to user when error occures. In order to achieve this, you must override following view templates:
 
 - `views/ric_exception/exceptions/internal_error.html.erb`
 - `views/ric_exception/exceptions/not_found.html.erb`
 - `views/ric_exception/exceptions/unacceptable.html.erb`
+

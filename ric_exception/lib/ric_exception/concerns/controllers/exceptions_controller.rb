@@ -23,9 +23,22 @@ module RicException
 				end
 
 				def internal_error
+					notify_exception
 					render :status => 500
 				end
 				
+			protected
+
+				def notify_exception
+					if RicException.mailer_sender && RicException.mailer_receiver
+						begin 
+							RicException::ExceptionMailer.notify(env["action_dispatch.exception"]).deliver_now
+						rescue StandardError => e
+							# Unfortunatelly nothing can be done except ignoring the error...
+						end
+					end
+				end
+
 			end
 		end
 	end

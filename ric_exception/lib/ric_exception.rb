@@ -12,6 +12,9 @@
 # Engines
 require "ric_exception/engine"
 
+# Mailers
+require "ric_exception/concerns/mailers/exception_mailer"
+
 module RicException
 
 	#
@@ -34,5 +37,17 @@ module RicException
 	# *************************************************************************
 	# Config options
 	# *************************************************************************
+
+	#
+	# Mailer sender
+	#
+	mattr_accessor :mailer_sender
+	#@@mailer_sender = ... to be set in module initializer
+
+	#
+	# Mailer receiver
+	#
+	mattr_accessor :mailer_receiver
+	#@@mailer_receiver = ... to be set in module initializer
 
 end
