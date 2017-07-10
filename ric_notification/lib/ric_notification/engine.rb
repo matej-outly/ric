@@ -2,18 +2,20 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Notifications
+# * Engine
 # *
 # * Author: Matěj Outlý
-# * Date  : 21. 1. 2016
+# * Date  : 9. 6. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_notification/admin_controller"
-
 module RicNotification
-	class AdminNotificationsController < AdminController
-		include RicNotification::Concerns::Controllers::Admin::NotificationsController
+	class Engine < ::Rails::Engine
+		
+		# Controllers
+		require "ric_notification/concerns/controllers/notifications_controller"
+		require "ric_notification/concerns/controllers/notification_templates_controller"
+		
+		isolate_namespace RicNotification		
 	end
 end
-

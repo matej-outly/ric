@@ -2,12 +2,12 @@ cs:
 
   headers:
     ric_notification:
-      admin_notifications:
+      notifications:
         index: "Systémové zprávy"
         show: "Detail systémové zprávy"
         deliver: "Odeslat systémovou zprávu"
         destroy: "Smazat systémovou zprávu"
-      admin_notification_templates:
+      notification_templates:
         index: "Šablony systémových zpráv"
         show: "Detail šablony"
         edit: "Upravit šablonu"

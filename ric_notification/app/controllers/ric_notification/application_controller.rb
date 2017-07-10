@@ -2,29 +2,14 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 21. 1. 2016
 # *
 # *****************************************************************************
 
 module RicNotification
-	class PublicEngine < ::Rails::Engine
-		
-		#
-		# Controllers
-		#
-		
-		isolate_namespace RicNotification
-
-		#
-		# Load admin specific routes
-		#
-		def reload_routes
-			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/public_routes.rb")
-		end
-
+	class ApplicationController < ::ApplicationController
 	end
 end

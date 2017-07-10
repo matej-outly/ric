@@ -2,13 +2,18 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Notifications
 # *
 # * Author: Matěj Outlý
-# * Date  : 26. 11. 2015
+# * Date  : 21. 1. 2016
 # *
 # *****************************************************************************
 
-RicNotification::PublicEngine.routes.draw do
+require_dependency "ric_notification/application_controller"
 
+module RicNotification
+	class NotificationsController < ApplicationController
+		include RicNotification::Concerns::Controllers::NotificationsController
+	end
 end
+

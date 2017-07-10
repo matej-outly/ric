@@ -5,11 +5,20 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 26. 11. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicNotification::Engine.routes.draw do
+
+	# Notifications
+	resources :notifications, only: [:index, :show, :destroy] do
+		member do 
+			put "deliver"
+		end
+	end
+
+	# Notification templates
+	resources :notification_templates, only: [:index, :show, :edit, :update]
+
+end

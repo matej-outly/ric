@@ -2,14 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Abstract engine controller
+# * Notification templates
 # *
 # * Author: Matěj Outlý
-# * Date  : 21. 1. 2016
+# * Date  : 9. 5. 2016
 # *
 # *****************************************************************************
 
+require_dependency "ric_notification/application_controller"
+
 module RicNotification
-	class AdminController < RuthAdmin::ApplicationController
+	class NotificationTemplatesController < ApplicationController
+		include RicNotification::Concerns::Controllers::NotificationTemplatesController
 	end
 end

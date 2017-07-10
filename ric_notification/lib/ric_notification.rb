@@ -9,9 +9,8 @@
 # *
 # *****************************************************************************
 
-# Engines
-require "ric_notification/admin_engine"
-require "ric_notification/public_engine"
+# Engine
+require "ric_notification/engine"
 
 # Models
 require "ric_notification/concerns/models/notification"
