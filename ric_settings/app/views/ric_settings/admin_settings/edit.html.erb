@@ -1,9 +1,5 @@
 <%= rug_form_for(@settings_collection, url: settings_path, method: :put) do |f| %>
-	<%= rug_tabs(
-		header_style: "pills", 
-		header_class: "hr-divider-content hr-divider-nav", 
-		header_container_class: "hr-divider"
-	) do |t| %>
+	<%= rug_tabs(RicSettings.theme.tabs_options) do |t| %>
 		<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
 			<% t.tab category.to_sym, t("activerecord.attributes.ric_settings/settings_collection.category_values.#{category}") do %>
 				<% settings.each do |setting_ref| %>

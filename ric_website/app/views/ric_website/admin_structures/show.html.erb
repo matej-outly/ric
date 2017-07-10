@@ -8,9 +8,7 @@
 	include_in_url: :boolean,
 	has_attachments: :boolean,
 }) %>
-<div class="hr-divider">
-	<h3 class="hr-divider-content hr-divider-heading"><%= RicWebsite.structure_model.human_attribute_name("fields") %></h3>
-</div>
+<h3><%= RicWebsite.structure_model.human_attribute_name("fields") %></h3>
 <%= rug_index_table_for(@structure.fields.order(position: :asc), { 
 	name: :string,
 	ref: :string,

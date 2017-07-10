@@ -2,11 +2,7 @@
 <% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:show) %>
 	<%= render partial: "show_identification" %>
 <% end %>
-<%= rug_tabs(
-	header_style: "pills", 
-	header_class: "hr-divider-content hr-divider-nav", 
-	header_container_class: "hr-divider"
-) do |t| %>
+<%= rug_tabs(RicAssortment.theme.tabs_options) do |t| %>
 	<% @product.class.parts.select { |part, appearences| part != :identification }.each do |part, appearences| %>
 		<% if appearences.include?(:show) %>
 			<% t.tab part, t("headers.ric_assortment.admin_products.#{part.to_s}") do %>

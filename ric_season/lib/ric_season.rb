@@ -73,4 +73,17 @@ module RicSeason
 	mattr_accessor :disable_unaccent
 	@@disable_unaccent = false
 	
+	#
+	# Class or object implementing actions_options, tabs_options, etc. can be set.
+	#
+	mattr_accessor :theme
+	def self.theme
+		if @@theme
+			return @@theme.constantize if @@theme.is_a?(String)
+			return @@theme
+		end
+		return OpenStruct.new
+	end
+	@@theme = nil
+	
 end

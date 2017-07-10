@@ -12,11 +12,7 @@
 		<%= @notification.message.to_s.html_safe %>
 	</div>
 <% end %>
-<%= rug_tabs(
-	header_style: "pills", 
-	header_class: "hr-divider-content hr-divider-nav", 
-	header_container_class: "hr-divider"
-) do |t| %>
+<%= rug_tabs(RicNotification.theme.tabs_options) do |t| %>
 	<% @notification.notification_deliveries.order(id: :asc).each do |notification_delivery| %>
 		<% t.tab notification_delivery.kind, notification_delivery.kind_obj.label do %>
 			<%= rug_index_table_for(notification_delivery.notification_receivers.order(created_at: :desc).page(params[:page]).per(50), { 

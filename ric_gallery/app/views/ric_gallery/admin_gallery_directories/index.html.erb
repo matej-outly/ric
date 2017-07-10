@@ -9,9 +9,7 @@
 	destroy: :gallery_directory_path
 }, moving: true, summary: true ) %>
 
-<div class="hr-divider">
-	<h3 class="hr-divider-content hr-divider-heading"><%= t("headers.ric_gallery.admin_gallery_directories.pictures") %></h3>
-</div>
+<h3><%= t("headers.ric_gallery.admin_gallery_directories.pictures") %></h3>
 
 <%= rug_picture_index_table_for(@gallery_pictures, { 
 	picture: { type: :picture, thumb_style: :thumb },

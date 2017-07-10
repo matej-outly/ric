@@ -2,9 +2,7 @@
 	name: :string,
 }) %>
 
-<div class="hr-divider">
-	<h3 class="hr-divider-content hr-divider-heading"><%= RicPricing.price_list_model.human_attribute_name("prices") %></h3>
-</div>
+<h3><%= RicPricing.price_list_model.human_attribute_name("prices") %></h3>
 
 <%= rug_index_table_for(@price_list.prices.order(position: :asc), { 
 	description: :string,

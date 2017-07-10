@@ -2,9 +2,7 @@
 	name: :string,
 	ref: :string,
 }) %>
-<div class="hr-divider">
-	<h3 class="hr-divider-content hr-divider-heading"><%= RicWebsite.enum_model.human_attribute_name("values") %></h3>
-</div>
+<h3><%= RicWebsite.enum_model.human_attribute_name("values") %></h3>
 <%= rug_show_table_for(@enum, { 
 	values: :store
 }) %>

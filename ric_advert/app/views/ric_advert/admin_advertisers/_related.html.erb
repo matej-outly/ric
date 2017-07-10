@@ -1,5 +1,0 @@
-<%= rug_menu_for(@advertiser, name: "related") do |m| %>
-	<% if @advertiser && !@advertiser.new_record? %>
-		<%= m.item t("headers.ric_advert.admin_banners.new").upcase_first, ric_advert_admin.new_banner_path(advertiser_id: @advertiser.id), icon: "plus" %>
-	<% end %>
-<% end %>

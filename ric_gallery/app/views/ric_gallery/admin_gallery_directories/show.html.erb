@@ -6,9 +6,7 @@
 }) %>
 
 <% if @gallery_directory.children.count > 0 %>
-	<div class="hr-divider">
-		<h3 class="hr-divider-content hr-divider-heading"><%= t("headers.ric_gallery.admin_gallery_directories.children") %></h3>
-	</div>
+	<h3><%= t("headers.ric_gallery.admin_gallery_directories.children") %></h3>
 	
 	<%= rug_index_table_for(@gallery_directory.children.order(lft: :asc), { 
 		name: :string,
@@ -20,9 +18,7 @@
 	} ) %>
 <% end %>
 
-<div class="hr-divider">
-	<h3 class="hr-divider-content hr-divider-heading"><%= t("headers.ric_gallery.admin_gallery_directories.pictures") %></h3>
-</div>
+<h3><%= t("headers.ric_gallery.admin_gallery_directories.pictures") %></h3>
 
 <%= rug_picture_index_table_for(@gallery_directory.gallery_pictures.order(position: :asc), { 
 	picture: { type: :picture, thumb_style: :thumb },

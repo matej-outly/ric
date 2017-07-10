@@ -14,13 +14,13 @@ require "ric_newsletter/admin_engine"
 require "ric_newsletter/public_engine"
 
 # Models
-require 'ric_newsletter/concerns/models/customer'
-require 'ric_newsletter/concerns/models/newsletter'
-require 'ric_newsletter/concerns/models/sent_newsletter'
-require 'ric_newsletter/concerns/models/sent_newsletter_customer'
+require "ric_newsletter/concerns/models/customer"
+require "ric_newsletter/concerns/models/newsletter"
+require "ric_newsletter/concerns/models/sent_newsletter"
+require "ric_newsletter/concerns/models/sent_newsletter_customer"
 
 # Mailers
-require 'ric_newsletter/concerns/mailers/newsletter_mailer'
+require "ric_newsletter/concerns/mailers/newsletter_mailer"
 
 module RicNewsletter
 
@@ -87,4 +87,17 @@ module RicNewsletter
 	mattr_accessor :mailer_sender
 	@@mailer_sender = "no-reply@clockapp.cz"
 
+	#
+	# Class or object implementing actions_options, tabs_options, etc. can be set.
+	#
+	mattr_accessor :theme
+	def self.theme
+		if @@theme
+			return @@theme.constantize if @@theme.is_a?(String)
+			return @@theme
+		end
+		return OpenStruct.new
+	end
+	@@theme = nil
+	
 end
