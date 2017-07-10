@@ -2,17 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Settings
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 10. 2015
+# * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_settings/admin_controller"
-
 module RicSettings
-	class AdminSettingsController < AdminController
-		include RicSettings::Concerns::Controllers::Admin::SettingsController
+	class ApplicationController < ::ApplicationController
 	end
 end
+

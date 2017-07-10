@@ -10,17 +10,17 @@
 # *****************************************************************************
 
 # Railtie
-require 'ric_settings/railtie' if defined?(Rails)
+require "ric_settings/railtie" if defined?(Rails)
 
 # Engines
-require "ric_settings/admin_engine"
+require "ric_settings/engine"
 
 # Models
-require 'ric_settings/concerns/models/setting'
-require 'ric_settings/concerns/models/settings_collection'
+require "ric_settings/concerns/models/setting"
+require "ric_settings/concerns/models/settings_collection"
 
 # Helpers
-require 'ric_settings/helpers/setting_helper'
+require "ric_settings/helpers/setting_helper"
 
 module RicSettings
 

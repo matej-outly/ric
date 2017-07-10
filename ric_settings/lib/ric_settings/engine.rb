@@ -2,16 +2,19 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Engine
 # *
 # * Author: Matěj Outlý
 # * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-RicSettings::AdminEngine.routes.draw do
-
-	# Settings
-	resource :settings, only: [:show, :edit, :update], controller: "admin_settings" 
-	
+module RicSettings
+	class AdminEngine < ::Rails::Engine
+		
+		# Controllers
+		require "ric_settings/concerns/controllers/settings_controller"
+		
+		isolate_namespace RicSettings
+	end
 end

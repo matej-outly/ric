@@ -12,6 +12,7 @@
 module RicUrl
 	class Engine < ::Rails::Engine
 
+		# Controllers
 		require "ric_url/concerns/controllers/slugs_controller"
 		
 		isolate_namespace RicUrl
