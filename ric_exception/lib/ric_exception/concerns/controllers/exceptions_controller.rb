@@ -30,9 +30,10 @@ module RicException
 			protected
 
 				def notify_exception
-					if RicException.mailer_sender && RicException.mailer_receiver
+					exception = env["action_dispatch.exception"]
+					if exception && RicException.mailer_sender && RicException.mailer_receiver
 						begin 
-							RicException::ExceptionMailer.notify(env["action_dispatch.exception"]).deliver_now
+							RicException::ExceptionMailer.notify(exception).deliver_now
 						rescue StandardError => e
 							# Unfortunatelly nothing can be done except ignoring the error...
 						end

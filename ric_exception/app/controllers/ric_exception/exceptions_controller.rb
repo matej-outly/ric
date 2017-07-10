@@ -12,5 +12,9 @@
 module RicException
 	class ExceptionsController < ::ApplicationController
 		include RicException::Concerns::Controllers::ExceptionsController
+
+		if !RicException.layout.blank?
+			layout RicException.layout.to_s
+		end
 	end
 end

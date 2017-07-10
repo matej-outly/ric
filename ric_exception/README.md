@@ -24,6 +24,18 @@ Module can automatically send notification e-mails to developer support contact.
 RicException.setup do |config|
     config.mailer_sender = "no-reply@sample.com"
     config.mailer_receiver = "support@developer.com"
+    ...
+end
+```
+
+## Custom layout
+
+Youe can define your custom layout for exceptions in the module configuration file (`ric_exception.rb`):
+
+```ruby
+RicException.setup do |config|
+    config.layout = "ruth_application_exception"
+    ...
 end
 ```
 

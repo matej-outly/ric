@@ -1,1 +1,16 @@
 cs:
+  headers:
+    ric_exception:
+      exceptions:
+        not_found: Obrazovka nebyla nenalezena
+        internal_error: V aplikaci se vyskytla chyba
+        unacceptable: V aplikaci se vyskytla chyba
+  content:
+    ric_exception:
+      exceptions:
+        not_found: 
+          p1: "Velice se omlouváme, ale Vámi hledaná obrazovka nebyla nalezena. O této skutečnosti nás můžete kontaktovat na adrese <a href=\"mailto:%{email}\">%{email}</a>. Pošlete nám prosím čas, kdy k chybě došlo a URL adresu obrazovky, která nebyla nalezena."
+        internal_error: 
+          p1: "Velice se omlouváme, ale Vaše akce vyvolala neznámou chybu. Aplikace je stále aktivně vyvíjena a vylepšována a proto se čas od času může vyskytnout chyba, se kterou jsme doposud nepočítali. Tato chyba byla automaticky odeslána na technickou podporu a v brzké době dojde k jejímu odstranění."
+        unacceptable: 
+          p1: "Velice se omlouváme, ale Vaše akce vyvolala neznámou chybu. Aplikace je stále aktivně vyvíjena a vylepšována a proto se čas od času může vyskytnout chyba, se kterou jsme doposud nepočítali. Budeme velice rádi, když nás o této chybě informujete na adrese <a href=\"mailto:%{email}\">%{email}</a>. Pošlete nám prosím čas, kdy k chybě došlo a obrazovku, kde se vyskytla, či akci, kterou jste prováděli těsně před jejím výskytem."

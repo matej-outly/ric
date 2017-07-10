@@ -50,4 +50,10 @@ module RicException
 	mattr_accessor :mailer_receiver
 	#@@mailer_receiver = ... to be set in module initializer
 
+	#
+	# Special layout
+	#
+	mattr_accessor :layout
+	@@layout = nil
+	
 end
