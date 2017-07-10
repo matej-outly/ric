@@ -15,30 +15,16 @@ module RicSeason
 			module Admin
 				module SeasonsController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
-						#
-						# Set season before some actions
-						#
 						before_action :set_season, only: [:show, :edit, :update, :make_current, :destroy]
 
 					end
 
-					#
-					# Index action
-					#
 					def index
 						@seasons = RicSeason.season_model.all.order(from: :desc)
 					end
 
-					#
-					# Search action
-					#
 					def search
 						@seasons = RicSeason.season_model.search(params[:q]).order(from: :desc)
 						respond_to do |format|
@@ -47,9 +33,6 @@ module RicSeason
 						end
 					end
 
-					#
-					# Show action
-					#
 					def show
 						respond_to do |format|
 							format.html { render "show" }
@@ -57,22 +40,13 @@ module RicSeason
 						end
 					end
 
-					#
-					# New action
-					#
 					def new
 						@season = RicSeason.season_model.new
 					end
 
-					#
-					# Edit action
-					#
 					def edit
 					end
 
-					#
-					# Create action
-					#
 					def create
 						@season = RicSeason.season_model.new(season_params)
 						if @season.save
@@ -88,9 +62,6 @@ module RicSeason
 						end
 					end
 
-					#
-					# Update action
-					#
 					def update
 						if @season.update(season_params)
 							respond_to do |format|
@@ -105,9 +76,6 @@ module RicSeason
 						end
 					end
 
-					#
-					# Make current action
-					#
 					def make_current
 						@season.current = true
 						@season.save
@@ -117,9 +85,6 @@ module RicSeason
 						end
 					end
 
-					#
-					# Destroy action
-					#
 					def destroy
 						@season.destroy
 						respond_to do |format|
@@ -137,9 +102,6 @@ module RicSeason
 						end
 					end
 
-					# 
-					# Never trust parameters from the scary internet, only allow the white list through.
-					#
 					def season_params
 						params.require(:season).permit(RicSeason.season_model.permitted_columns)
 					end

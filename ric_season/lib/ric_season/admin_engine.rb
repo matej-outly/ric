@@ -15,7 +15,7 @@ module RicSeason
 		#
 		# Controllers
 		#
-		require 'ric_season/concerns/controllers/admin/seasons_controller'
+		require "ric_season/concerns/controllers/admin/seasons_controller"
 		
 		isolate_namespace RicSeason
 

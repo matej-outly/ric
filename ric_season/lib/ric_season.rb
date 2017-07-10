@@ -14,7 +14,7 @@ require "ric_season/admin_engine"
 require "ric_season/public_engine"
 
 # Models
-require 'ric_season/concerns/models/season'
+require "ric_season/concerns/models/season"
 
 module RicSeason
 
@@ -48,4 +48,29 @@ module RicSeason
 	end
 	@@season_model = "RicSeason::Season"
 
+	#
+	# Season period
+	#
+	# Permitted values:
+	#  - :none
+	#  - :year
+	#  - :month
+	mattr_accessor :period
+	@@period = :year
+	
+	#
+	# Season starting date
+	#
+	# Format:
+	#  - "MM-DD" if period "year"
+	#  - "DD" if period "month"
+	mattr_accessor :start
+	@@start = "01-01"
+
+	#
+	# Disable unaccent SQL extension for search
+	#
+	mattr_accessor :disable_unaccent
+	@@disable_unaccent = false
+	
 end

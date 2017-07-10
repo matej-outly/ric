@@ -4,4 +4,4 @@ With this module you can create notifications based on templates defined by admi
 
 - E-mail
 - SMS
-- InMail (RicInmail module)
+- InMail (RicInmail module necessary)

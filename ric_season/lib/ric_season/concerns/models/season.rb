@@ -14,20 +14,12 @@ module RicSeason
 		module Models
 			module Season extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 					
 					# *********************************************************
 					# Validators
 					# *********************************************************
 
-					#
-					# Dates
-					#
 					validates :name, :from, :to, presence: true
 
 					# *********************************************************
@@ -54,9 +46,6 @@ module RicSeason
 
 				module ClassMethods
 
-					#
-					# Columns
-					#
 					def permitted_columns
 						result = []
 						[:name, :from, :to, :current].each do |column|
@@ -138,7 +127,7 @@ module RicSeason
 						if query.blank?
 							all
 						else
-							if config(:disable_unaccent) == true
+							if RicSeason.disable_unaccent == true
 								where_string = "
 									(lower(name) LIKE ('%' || lower(trim(:query)) || '%'))
 								"
@@ -157,7 +146,7 @@ module RicSeason
 				# Get season period
 				#
 				def period
-					config(:period)
+					RicSeason.period
 				end
 
 			protected
@@ -190,16 +179,16 @@ module RicSeason
 				# Automatically normalize date from
 				# 
 				def normalize_date_from
-					start = config(:start)
+					start = RicSeason.start
 					if start
-						if self.period == "year"
+						if self.period.to_sym == :year
 							first_day = Date.parse("#{self.from.cwyear}-#{start}")
 							if self.from < first_day
 								self.from = first_day - 1.year
 							else
 								self.from = first_day
 							end
-						elsif self.period == "month"
+						elsif self.period.to_sym == :month
 							first_day = Date.parse("#{self.from.cwyear}-#{self.from.month}-#{start}")
 							if self.from < first_day
 								self.from = first_day - 1.month
@@ -214,9 +203,9 @@ module RicSeason
 				# Automatically compute date to
 				#
 				def compute_date_to
-					if self.period == "year"
+					if self.period.to_sym == :year
 						self.to = self.from + 1.year - 1.day
-					elsif self.period == "month"
+					elsif self.period.to_sym == :month
 						self.to = self.from + 1.month - 1.day
 					end
 				end
