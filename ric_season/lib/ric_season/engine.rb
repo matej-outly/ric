@@ -2,13 +2,19 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Engine
 # *
 # * Author: Matěj Outlý
 # * Date  : 22. 4. 2016
 # *
 # *****************************************************************************
 
-RicSeason::PublicEngine.routes.draw do
-
+module RicSeason
+	class Engine < ::Rails::Engine
+		
+		# Controllers
+		require "ric_season/concerns/controllers/seasons_controller"
+		
+		isolate_namespace RicSeason
+	end
 end

@@ -2,7 +2,7 @@ cs:
 
   headers:
     ric_settings:
-      admin_settings:
+      settings:
         show: "Nastavení"
         edit: "Upravit nastavení"
         update: "Upravit nastavení"

@@ -9,9 +9,8 @@
 # *
 # *****************************************************************************
 
-# Engines
-require "ric_season/admin_engine"
-require "ric_season/public_engine"
+# Engine
+require "ric_season/engine"
 
 # Models
 require "ric_season/concerns/models/season"

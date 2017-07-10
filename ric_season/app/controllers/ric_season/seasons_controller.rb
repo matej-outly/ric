@@ -2,23 +2,18 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Routes
+# * Seasons
 # *
 # * Author: Matěj Outlý
 # * Date  : 22. 4. 2016
 # *
 # *****************************************************************************
 
-RicSeason::AdminEngine.routes.draw do
+require_dependency "ric_season/application_controller"
 
-	# Seasons
-	resources :seasons, controller: "admin_seasons" do
-		collection do
-			get "search"
-		end
-		member do
-			put "make_current"
-		end
+module RicSeason
+	class SeasonsController < ApplicationController
+		include RicSeason::Concerns::Controllers::SeasonsController
 	end
-
 end
+

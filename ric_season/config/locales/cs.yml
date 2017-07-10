@@ -2,7 +2,7 @@ cs:
 
   headers:
     ric_season:
-      admin_seasons:
+      seasons:
         index: "Sezóny"
         show: "Detail sezóny"
         new: "Nová sezóna"

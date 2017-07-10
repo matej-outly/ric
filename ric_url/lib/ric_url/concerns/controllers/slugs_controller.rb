@@ -27,7 +27,7 @@ module RicUrl
 
 				def filter
 					save_params_to_session(filter_params)
-					redirect_to ric_url_admin.slugs_path
+					redirect_to ric_url.slugs_path
 				end
 
 				def new
@@ -41,7 +41,7 @@ module RicUrl
 					@slug = RicUrl.slug_model.new(slug_params)
 					if @slug.save
 						respond_to do |format|
-							format.html { redirect_to ric_url_admin.slugs_path, notice: I18n.t("activerecord.notices.models.#{RicUrl.slug_model.model_name.i18n_key}.create") }
+							format.html { redirect_to ric_url.slugs_path, notice: I18n.t("activerecord.notices.models.#{RicUrl.slug_model.model_name.i18n_key}.create") }
 							format.json { render json: @slug.id }
 						end
 					else
@@ -55,7 +55,7 @@ module RicUrl
 				def update
 					if @slug.update(slug_params)
 						respond_to do |format|
-							format.html { redirect_to ric_url_admin.slugs_path, notice: I18n.t("activerecord.notices.models.#{RicUrl.slug_model.model_name.i18n_key}.update") }
+							format.html { redirect_to ric_url.slugs_path, notice: I18n.t("activerecord.notices.models.#{RicUrl.slug_model.model_name.i18n_key}.update") }
 							format.json { render json: @slug.id }
 						end
 					else
@@ -69,7 +69,7 @@ module RicUrl
 				def destroy
 					@slug.destroy
 					respond_to do |format|
-						format.html { redirect_to ric_url_admin.slugs_path, notice: I18n.t("activerecord.notices.models.#{RicUrl.slug_model.model_name.i18n_key}.destroy") }
+						format.html { redirect_to ric_url.slugs_path, notice: I18n.t("activerecord.notices.models.#{RicUrl.slug_model.model_name.i18n_key}.destroy") }
 						format.json { render json: @slug.id }
 					end
 				end
@@ -83,7 +83,7 @@ module RicUrl
 				def set_slug
 					@slug = RicUrl.slug_model.find_by_id(params[:id])
 					if @slug.nil?
-						redirect_to ric_url_admin.slugs_path, alert: I18n.t("activerecord.errors.models.#{RicUrl.slug_model.model_name.i18n_key}.not_found")
+						redirect_to ric_url.slugs_path, alert: I18n.t("activerecord.errors.models.#{RicUrl.slug_model.model_name.i18n_key}.not_found")
 					end
 				end
 

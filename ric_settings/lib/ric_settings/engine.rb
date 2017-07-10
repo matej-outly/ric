@@ -10,7 +10,7 @@
 # *****************************************************************************
 
 module RicSettings
-	class AdminEngine < ::Rails::Engine
+	class Engine < ::Rails::Engine
 		
 		# Controllers
 		require "ric_settings/concerns/controllers/settings_controller"
