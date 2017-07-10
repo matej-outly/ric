@@ -13,7 +13,7 @@
 require "ric_url/railtie" if defined?(Rails)
 
 # Engines
-require "ric_url/admin_engine"
+require "ric_url/engine"
 
 # Middlewares
 require "ric_url/middlewares/locale"

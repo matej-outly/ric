@@ -14,17 +14,10 @@ module RicUrl
 		module Models
 			module HierarchicalSlugGenerator extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 
 					after_commit :generate_slugs
-
 					before_destroy :destroy_slugs_before, prepend: true
-
 					after_destroy :destroy_slugs_after
 
 				end

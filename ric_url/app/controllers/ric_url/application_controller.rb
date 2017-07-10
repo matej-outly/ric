@@ -2,17 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Slugs
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
-# * Date  : 12. 11. 2016
+# * Date  : 13. 5. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_url/admin_controller"
-
 module RicUrl
-	class AdminSlugsController < AdminController
-		include RicUrl::Concerns::Controllers::Admin::SlugsController
+	class ApplicationController < ::ApplicationController
 	end
 end
+
