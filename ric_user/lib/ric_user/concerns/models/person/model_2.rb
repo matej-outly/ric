@@ -27,10 +27,11 @@ module RicUser
 					end
 
 					def create_user(user_params = {})
-						if !self.user_person.nil?
-							return self.user_person.user
-						end
-
+						return self.user_person.user if !self.user_person.nil?
+						
+						# Check valid conditions
+						return nil if self.email.blank?
+						
 						# User with similar e-mail may exist
 						user = RicUser.user_model.find_by(email: self.email.trim)
 						if !user

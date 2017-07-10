@@ -15,12 +15,9 @@ require "ric_user/public_engine"
 
 # Models
 require "ric_user/concerns/models/session"
-
 require "ric_user/concerns/models/role"
-
 require "ric_user/concerns/models/user_person"
 require "ric_user/concerns/models/user_role"
-
 require "ric_user/concerns/models/user"
 require "ric_user/concerns/models/user/multi_dynamic_roles"
 require "ric_user/concerns/models/user/multi_people"
@@ -28,13 +25,11 @@ require "ric_user/concerns/models/user/multi_static_roles"
 require "ric_user/concerns/models/user/single_static_role"
 require "ric_user/concerns/models/user/single_person"
 require "ric_user/concerns/models/user/single_dynamic_role"
-
 require "ric_user/concerns/models/person"
 require "ric_user/concerns/models/person/model_1"
 require "ric_user/concerns/models/person/model_2"
 require "ric_user/concerns/models/person/model_3"
 require "ric_user/concerns/models/person/model_4"
-
 require "ric_user/concerns/models/people_selector"
 require "ric_user/concerns/models/people_selectable"
 

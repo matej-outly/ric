@@ -26,9 +26,10 @@ module RicUser
 					end
 
 					def create_user(user_params = {})
-						if !self.user.nil?
-							return self.user
-						end
+						return self.user if !self.user.nil?
+						
+						# Check valid conditions
+						return nil if self.email.blank?
 
 						# Build user
 						user_params = synchronized_params.merge(user_params)
