@@ -12,7 +12,7 @@
 require_dependency "ric_user/application_controller"
 
 module RicUser
-	class AdminPeopleSelectorsController < ApplicationController
+	class PeopleSelectorsController < ApplicationController
 		include RicUser::Concerns::Controllers::PeopleSelectorsController
 	end
 end

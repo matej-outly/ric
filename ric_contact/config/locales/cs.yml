@@ -36,7 +36,7 @@ cs:
         photo: Fotografie
         photo_crop: Ořez fotografie
       ric_notification/notification_template:
-        key_values:
+        ref_values:
           contact_message_created: Nová zpráva z kontaktního formuláře
           contact_message_notification: Potvrzení zprávy z kontaktního formuláře
     notices:

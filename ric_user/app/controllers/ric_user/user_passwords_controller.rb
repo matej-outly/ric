@@ -12,7 +12,7 @@
 require_dependency "ric_user/application_controller"
 
 module RicUser
-	class AdminUserPasswordsController < ApplicationController
+	class UserPasswordsController < ApplicationController
 		include RicUser::Concerns::Controllers::UserPasswordsController
 	end
 end

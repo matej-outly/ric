@@ -120,7 +120,7 @@ module RicNotification
 
 						if content_def.is_a?(Symbol)
 
-							notification_template = RicNotification.notification_template_model.where(key: content_def.to_s).first
+							notification_template = RicNotification.notification_template_model.where(ref: content_def.to_s).first
 							if notification_template # Message and subject from template
 								message = notification_template.message
 								subject = notification_template.subject
@@ -159,8 +159,8 @@ module RicNotification
 						new_receivers = []
 						receivers.each do |receiver|
 							if receiver.is_a?(String) || receiver.is_a?(Symbol)
-								key, params = RicUser.people_selector_model.decode_value(receiver.to_s)
-								new_receivers.concat(RicUser.people_selector_model.people(key, params).to_a) # Use people selector to generate receivers
+								ref, params = RicUser.people_selector_model.decode_value(receiver.to_s)
+								new_receivers.concat(RicUser.people_selector_model.people(ref, params).to_a) # Use people selector to generate receivers
 							else
 								new_receivers << receiver
 							end

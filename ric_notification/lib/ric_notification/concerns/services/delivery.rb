@@ -20,8 +20,8 @@ module RicNotification
 					# Deliver notification (defined by ID) to receivers by all configured methods
 					#
 					def deliver(id)
-						RicNotification.delivery_methods.each do |delivery_method|
-							method("deliver_by_#{delivery_method.to_s}".to_sym).call(id)
+						RicNotification.delivery_kinds.each do |delivery_kind|
+							method("deliver_by_#{delivery_kind.to_s}".to_sym).call(id)
 						end
 					end
 

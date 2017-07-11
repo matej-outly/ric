@@ -30,12 +30,12 @@ module RicUser
 
 				def edit
 					#puts request.referrer.inspect
-					#puts ric_user_public.edit_session_url.inspect
+					#puts ric_user.edit_session_url.inspect
 					store_return_path(request.referrer)
 				end
 
 				def update
-					store_return_path(request.referrer) if request.referrer != ric_user_public.edit_session_url
+					store_return_path(request.referrer) if request.referrer != ric_user.edit_session_url
 					if @session.update(session_params)
 						respond_to do |format|
 							format.html { redirect_to (stored_return_path || session_updated_path), notice: I18n.t("activerecord.notices.models.#{RicUser.session_model.model_name.i18n_key}.update") }
@@ -93,7 +93,7 @@ module RicUser
 				end
 
 				def session_updated_path
-					ric_user_public.session_path
+					ric_user.session_path
 				end
 
 			end
