@@ -14,11 +14,6 @@ module RicReservation
 		module Models
 			module Reservation extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 					
 					# *********************************************************

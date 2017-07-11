@@ -2,14 +2,15 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Abstract engine controller
+# * Engine
 # *
 # * Author: Matěj Outlý
-# * Date  : 7. 12. 2015
+# * Date  : 12. 11. 2015
 # *
 # *****************************************************************************
 
 module RicReservation
-	class PublicController < ::ApplicationController
+	class Engine < ::Rails::Engine
+		isolate_namespace RicReservation
 	end
 end

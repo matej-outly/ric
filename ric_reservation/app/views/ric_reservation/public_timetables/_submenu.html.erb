@@ -1,9 +1,0 @@
-<% if RicReservation.resource_model.order(position: :asc).count > 1 %>
-	<div class="pill">
-		<ul class="tab-nav">
-			<% RicReservation.resource_model.order(position: :asc).each do |resource| %>
-				<li class="<%= (@resource && resource.id == @resource.id ? "active" : "") %>"><%= link_to resource.name, ric_reservation_public.timetable_path(resource) %></li>
-			<% end %>
-		</ul>
-	</div>
-<% end %>

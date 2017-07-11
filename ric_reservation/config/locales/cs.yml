@@ -1,47 +1,5 @@
 cs:
 
-  headers:
-    ric_reservation:
-      admin_resources:
-        index: Rozvrhové tabulky
-        show: Detail rozvrhové tabulky
-        new: Nová rozvrhová tabulka
-        create: Nová rozvrhová tabulka
-        edit: Upravit rozvrhovou tabulku
-        update: Upravit rozvrhovou tabulku
-        destroy: Smazat rozvrhovou tabulku
-        invalid_events: "Smazané události"
-        valid: "Platný rozvrh"
-      admin_event_reservations:
-        index: Rezervace na událost
-        new: Rezervovat
-        create_anonymous: Rezervovat anonymně
-        destroy: "Zrušit&nbsp;rezervaci"
-        present: "Změnit&nbsp;stav na&nbsp;&bdquo;přišel&ldquo;"
-        not_present: "Změnit&nbsp;stav na&nbsp;&bdquo;nepřišel&ldquo;"
-      admin_resource_reservations:
-        show: Detail rezervace
-        new: Rezervovat
-        create: Rezervovat
-        edit: Upravit rezervaci
-        update: Upravit rezervaci
-        destroy: Zrušit rezervaci
-      admin_timetables:
-        index: "Rezervace"
-        show: "Rozvrhová tabulka"
-        show_named: "Rozvrhová tabulka pro %{resource_name}"
-      public_timetables:
-        index: "Rezervace"
-        show: "Rozvrhová tabulka"
-        show_named: "Rozvrhová tabulka pro %{resource_name}"
-      public_resource_reservations:
-        show: Detail rezervace
-        new: Rezervovat
-        create: Rezervovat
-        edit: Upravit rezervaci
-        update: Upravit rezervaci
-        destroy: Zrušit rezervaci
-
   activerecord:
     attributes:
       ric_reservation/resource:

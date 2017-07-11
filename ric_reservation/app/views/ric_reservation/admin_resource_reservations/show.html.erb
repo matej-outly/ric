@@ -1,6 +1,0 @@
-<%= rug_show_table_for(@reservation, { 
-	resource: { type: :belongs_to, label: :name, path: "ric_reservation_admin.resource_path" },
-	owner: { type: :belongs_to, label: :name_formatted, path: "ric_user_admin.user_path" },
-	formatted_time: :string,
-	name: :string,
-}) %>

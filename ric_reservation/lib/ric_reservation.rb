@@ -10,24 +10,23 @@
 # *****************************************************************************
 
 # Railtie
-require 'ric_reservation/railtie' if defined?(Rails)
+require "ric_reservation/railtie" if defined?(Rails)
 
-# Engines
-require "ric_reservation/admin_engine"
-require "ric_reservation/public_engine"
+# Engine
+require "ric_reservation/engine"
 
 # Models
-require 'ric_reservation/concerns/models/resource'
-require 'ric_reservation/concerns/models/event'
-require 'ric_reservation/concerns/models/reservation'
-require 'ric_reservation/concerns/models/event_reservation'
-require 'ric_reservation/concerns/models/resource_reservation'
-require 'ric_reservation/concerns/models/weekly_resource_event'
+require "ric_reservation/concerns/models/resource"
+require "ric_reservation/concerns/models/event"
+require "ric_reservation/concerns/models/reservation"
+require "ric_reservation/concerns/models/event_reservation"
+require "ric_reservation/concerns/models/resource_reservation"
+require "ric_reservation/concerns/models/weekly_resource_event"
 
 # Helpers
-require 'ric_reservation/helpers/month_timetable_helper'
-require 'ric_reservation/helpers/timetable_pagination_helper'
-require 'ric_reservation/helpers/week_timetable_helper'
+require "ric_reservation/helpers/month_timetable_helper"
+require "ric_reservation/helpers/timetable_pagination_helper"
+require "ric_reservation/helpers/week_timetable_helper"
 
 module RicReservation
 
