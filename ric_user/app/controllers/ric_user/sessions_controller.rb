@@ -9,10 +9,10 @@
 # *
 # *****************************************************************************
 
-require_dependency "ric_user/public_controller"
+require_dependency "ric_user/application_controller"
 
 module RicUser
-	class PublicSessionController < PublicController
-		include RicUser::Concerns::Controllers::Public::SessionController
+	class SessionsController < ApplicationController
+		include RicUser::Concerns::Controllers::SessionsController
 	end
 end

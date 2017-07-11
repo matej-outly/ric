@@ -2,17 +2,18 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * People selectors
+# * Partners
 # *
 # * Author: Matěj Outlý
-# * Date  : 11. 4. 2017
+# * Date  : 8. 3. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_user/admin_controller"
+require_dependency "ric_partnership/application_controller"
 
-module RicUser
-	class AdminPeopleSelectorsController < AdminController
-		include RicUser::Concerns::Controllers::Admin::PeopleSelectorsController
+module RicPartnership
+	class PartnersController < ApplicationController
+		include RicPartnership::Concerns::Controllers::PartnersController
 	end
 end
+

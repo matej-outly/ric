@@ -9,9 +9,8 @@
 # *
 # *****************************************************************************
 
-# Engines
-require "ric_user/admin_engine"
-require "ric_user/public_engine"
+# Engine
+require "ric_user/engine"
 
 # Models
 require "ric_user/concerns/models/session"

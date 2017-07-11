@@ -50,7 +50,7 @@ module RicSeason
 					@season = RicSeason.season_model.new(season_params)
 					if @season.save
 						respond_to do |format|
-							format.html { redirect_to ric_season_admin.season_path(@season), notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.create") }
+							format.html { redirect_to ric_season.season_path(@season), notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.create") }
 							format.json { render json: @season.id }
 						end
 					else
@@ -64,7 +64,7 @@ module RicSeason
 				def update
 					if @season.update(season_params)
 						respond_to do |format|
-							format.html { redirect_to ric_season_admin.season_path(@season), notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.update") }
+							format.html { redirect_to ric_season.season_path(@season), notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.update") }
 							format.json { render json: @season.id }
 						end
 					else
@@ -79,7 +79,7 @@ module RicSeason
 					@season.current = true
 					@season.save
 					respond_to do |format|
-						format.html { redirect_to ric_season_admin.seasons_path, notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.make_current") }
+						format.html { redirect_to ric_season.seasons_path, notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.make_current") }
 						format.json { render json: @season.id }
 					end
 				end
@@ -87,7 +87,7 @@ module RicSeason
 				def destroy
 					@season.destroy
 					respond_to do |format|
-						format.html { redirect_to ric_season_admin.seasons_path, notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.destroy") }
+						format.html { redirect_to ric_season.seasons_path, notice: I18n.t("activerecord.notices.models.#{RicSeason.season_model.model_name.i18n_key}.destroy") }
 						format.json { render json: @season.id }
 					end
 				end
@@ -97,7 +97,7 @@ module RicSeason
 				def set_season
 					@season = RicSeason.season_model.find_by_id(params[:id])
 					if @season.nil?
-						redirect_to ric_season_admin.seasons_path, alert: I18n.t("activerecord.errors.models.#{RicSeason.season_model.model_name.i18n_key}.not_found")
+						redirect_to ric_season.seasons_path, alert: I18n.t("activerecord.errors.models.#{RicSeason.season_model.model_name.i18n_key}.not_found")
 					end
 				end
 

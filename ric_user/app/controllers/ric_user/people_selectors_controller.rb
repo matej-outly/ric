@@ -2,14 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Abstract engine controller
+# * People selectors
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 11. 4. 2017
 # *
 # *****************************************************************************
 
+require_dependency "ric_user/application_controller"
+
 module RicUser
-	class AdminController < RuthAdmin::ApplicationController
+	class AdminPeopleSelectorsController < ApplicationController
+		include RicUser::Concerns::Controllers::PeopleSelectorsController
 	end
 end

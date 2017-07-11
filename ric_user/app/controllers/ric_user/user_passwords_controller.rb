@@ -2,18 +2,17 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Partners
+# * User passwords
 # *
 # * Author: Matěj Outlý
-# * Date  : 8. 3. 2015
+# * Date  : 9. 6. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_partnership/admin_controller"
+require_dependency "ric_user/application_controller"
 
-module RicPartnership
-	class AdminPartnersController < AdminController
-		include RicPartnership::Concerns::Controllers::Admin::PartnersController
+module RicUser
+	class AdminUserPasswordsController < ApplicationController
+		include RicUser::Concerns::Controllers::UserPasswordsController
 	end
 end
-

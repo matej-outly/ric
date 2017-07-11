@@ -2,7 +2,7 @@ cs:
 
   headers:
     ric_partnership:
-      admin_partners:
+      partners:
         index: "Partneři"
         show: "Detail partnera"
         new: "Nový partner"

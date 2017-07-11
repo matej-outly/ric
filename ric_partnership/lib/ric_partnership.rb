@@ -9,9 +9,8 @@
 # *
 # *****************************************************************************
 
-# Engines
-require "ric_partnership/admin_engine"
-require "ric_partnership/public_engine"
+# Engine
+require "ric_partnership/engine"
 
 # Models
 require "ric_partnership/concerns/models/partner"

@@ -12,14 +12,12 @@
 module RicUser
 	module Concerns
 		module Controllers
-			module Admin
-				module PeopleSelectorsController extend ActiveSupport::Concern
+			module PeopleSelectorsController extend ActiveSupport::Concern
 
-					def search
-						render json: RicUser.people_selector_model.search(params[:q]).to_json
-					end
-
+				def search
+					render json: RicUser.people_selector_model.search(params[:q]).to_json
 				end
+
 			end
 		end
 	end

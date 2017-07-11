@@ -2,25 +2,18 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * People selectors
+# * Users
 # *
 # * Author: Matěj Outlý
-# * Date  : 11. 4. 2017
+# * Date  : 9. 6. 2015
 # *
 # *****************************************************************************
 
+require_dependency "ric_user/application_controller"
+
 module RicUser
-	module Concerns
-		module Controllers
-			module Public
-				module PeopleSelectorsController extend ActiveSupport::Concern
-
-					def search
-						render json: RicUser.people_selector_model.search(params[:q]).to_json
-					end
-
-				end
-			end
-		end
+	class AdminUsersController < ApplicationController
+		include RicUser::Concerns::Controllers::UsersController
 	end
 end
+

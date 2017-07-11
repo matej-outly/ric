@@ -9,7 +9,13 @@
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicPartnership::Engine.routes.draw do
+
+	# Partners
+	resources :partners do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+	end
+	
+end

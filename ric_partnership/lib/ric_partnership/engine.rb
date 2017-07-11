@@ -10,21 +10,11 @@
 # *****************************************************************************
 
 module RicPartnership
-	class PublicEngine < ::Rails::Engine
+	class Engine < ::Rails::Engine
 		
-		#
 		# Controllers
-		#
-
-		isolate_namespace RicPartnership
-
-		#
-		# Load public specific routes
-		#
-		def reload_routes
-			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/public_routes.rb")
-		end
+		require "ric_partnership/concerns/controllers/partners_controller"
 		
+		isolate_namespace RicPartnership
 	end
 end

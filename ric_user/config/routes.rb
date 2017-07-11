@@ -5,11 +5,44 @@
 # * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 9. 6. 2015
+# * Date  : 26. 11. 2015
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicUser::Engine.routes.draw do
+
+	# Users
+	resources :users do
+		collection do
+			post "filter"
+			get "search"
+		end
+		member do
+			get "lock"
+			put "lock"
+			get "unlock"
+			put "unlock"
+			get "confirm"
+			put "confirm"
+		end
+	end
+
+	# User passwords
+	resources :user_passwords, only: [:edit, :update] do
+		member do
+			get "regenerate"
+			put "regenerate"
+		end
+	end
+
+	# People selectors
+	resources :people_selectors, only: [] do
+		collection do
+			get "search"
+		end
+	end
+
+	# Session
+	resource :session, only: [:show, :edit, :update]
+
+end

@@ -2,7 +2,7 @@ cs:
 
   headers:
     ric_user:
-      admin_users:
+      users:
         index: "Uživatelé"
         show: "Detail uživatele"
         new: "Nový uživatel"
@@ -13,7 +13,7 @@ cs:
         unlock: "Oblokovat uživatele"
         confirm: "Ověřit uživatele"
         destroy: "Smazat uživatele"
-      admin_user_passwords:
+      user_passwords:
         edit: "Změnit heslo"
         update: "Změnit heslo"
         regenerate: "Přegenerovat heslo"
