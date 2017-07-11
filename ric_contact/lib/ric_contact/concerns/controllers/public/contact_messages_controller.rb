@@ -15,15 +15,6 @@ module RicContact
 			module Public
 				module ContactMessagesController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in
-					# the module's context.
-					#
-					included do
-
-					end
-
 					def create
 						@contact_message = RicContact.contact_message_model.new(contact_message_params)
 						if validate_recaptcha && @contact_message.save

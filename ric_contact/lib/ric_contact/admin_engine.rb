@@ -12,9 +12,7 @@
 module RicContact
 	class AdminEngine < ::Rails::Engine
 		
-		#
 		# Controllers
-		#
 		require "ric_contact/concerns/controllers/admin/contact_messages_controller"
 		require "ric_contact/concerns/controllers/admin/contact_people_controller"
 		

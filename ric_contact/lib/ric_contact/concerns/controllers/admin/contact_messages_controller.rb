@@ -15,11 +15,6 @@ module RicContact
 			module Admin
 				module ContactMessagesController extend ActiveSupport::Concern
 
-					#
-					# 'included do' causes the included code to be evaluated in the
-					# context where it is included, rather than being executed in 
-					# the module's context.
-					#
 					included do
 					
 						before_action :set_contact_message, only: [:show, :edit, :update, :destroy]

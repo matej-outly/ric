@@ -12,9 +12,7 @@
 module RicContact
 	class PublicEngine < ::Rails::Engine
 
-		#
 		# Controllers
-		#
 		require "ric_contact/concerns/controllers/public/contact_messages_controller"
 
 		isolate_namespace RicContact
