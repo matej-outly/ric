@@ -32,19 +32,37 @@ module RicUrl
 					def load_cache(locale)
 
 						# Initialize cache structures
-						if @o2t.nil?
-							@o2t = {}
-						end
-						if @t2o.nil?
-							@t2o = {}
-						end
-
+						@o2t = {} if @o2t.nil?
+						@t2o = {} if @t2o.nil?
+						
 						# Fill cache if empty
 						if @o2t[locale.to_sym].nil? || @t2o[locale.to_sym].nil?
 							
+							# Preset
 							@o2t[locale.to_sym] = {}
 							@t2o[locale.to_sym] = {}
 
+							# Static data from config
+							if RicUrl.static_slugs
+								RicUrl.static_slugs.each do |item|
+									if item[:locale].to_s == locale.to_s
+										if RicUrl.use_filter
+											if RicUrl.current_app_filter.to_s == item[:filter] # Slug belongs to current application
+												@o2t[locale.to_sym][item[:original]] = item[:translation]
+												@t2o[locale.to_sym][item[:translation]] = item[:original]
+											elsif !item[:filter].blank? # Slug belongs to other application
+												url = RicUrl.available_filter_urls[item[:filter].to_sym]
+												@o2t[locale.to_sym][item[:original]] = url.trim("/") + item[:translation] if !url.blank?
+											end
+										else
+											@o2t[locale.to_sym][item[:original]] = item[:translation]
+											@t2o[locale.to_sym][item[:translation]] = item[:original]
+										end
+									end
+								end
+							end
+
+							# Dynamic data from DB
 							data = where(locale: locale.to_s)
 							data.each do |item|
 								if RicUrl.use_filter
@@ -53,9 +71,7 @@ module RicUrl
 										@t2o[locale.to_sym][item.translation] = item.original
 									elsif !item.filter.blank? # Slug belongs to other application
 										url = RicUrl.available_filter_urls[item.filter.to_sym]
-										if !url.blank?
-											@o2t[locale.to_sym][item.original] = url.trim("/") + item.translation
-										end
+										@o2t[locale.to_sym][item.original] = url.trim("/") + item.translation if !url.blank?
 									end
 								else
 									@o2t[locale.to_sym][item.original] = item.translation

@@ -206,6 +206,14 @@ module RicUrl
 	@@downcase_translations = false
 
 	#
+	# Slugs which are by loaded to translation tables by default without necessity
+	# to generate it in generators.
+	#
+	mattr_accessor :static_slugs
+	@@static_slugs = []
+
+
+	#
 	# Class or object implementing actions_options, tabs_options, etc. can be set.
 	#
 	mattr_accessor :theme
