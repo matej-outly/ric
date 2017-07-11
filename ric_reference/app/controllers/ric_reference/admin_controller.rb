@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicReference
-	class AdminController < RuthAdmin::ApplicationController
+	class AdminController < ::ApplicationController
 	end
 end

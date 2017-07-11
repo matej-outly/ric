@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicGallery
-	class AdminController < RuthAdmin::ApplicationController
+	class AdminController < ::ApplicationController
 	end
 end

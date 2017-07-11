@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicService
-	class AdminController < RuthAdmin::ApplicationController
+	class AdminController < ::ApplicationController
 	end
 end

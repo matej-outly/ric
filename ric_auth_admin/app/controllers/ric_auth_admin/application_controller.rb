@@ -10,6 +10,6 @@
 # *****************************************************************************
 
 module RicAuthAdmin
-	class ApplicationController < RuthAdmin::ApplicationController
+	class ApplicationController < ::ApplicationController
 	end
 end
