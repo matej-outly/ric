@@ -34,8 +34,13 @@ module RicUrl
 					
 					# Match locale from browser
 					if env['HTTP_ACCEPT_LANGUAGE']
-						browser_locale = env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first.to_sym
-						browser_locale = nil if !I18n.available_locales.include?(browser_locale)
+						browser_locale = env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+						if browser_locale
+							browser_locale = browser_locale.to_sym
+							browser_locale = nil if !I18n.available_locales.include?(browser_locale)
+						else
+							browser_locale = nil
+						end
 					else
 						browser_locale = nil
 					end
