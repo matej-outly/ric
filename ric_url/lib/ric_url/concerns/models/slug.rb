@@ -46,17 +46,19 @@ module RicUrl
 							if RicUrl.static_slugs
 								RicUrl.static_slugs.each do |item|
 									if item[:locale].to_s == locale.to_s
+										translation_as_key = item[:translation]
+										translation_as_key = translation_as_key.downcase if RicUrl.downcase_translations == true
 										if RicUrl.use_filter
 											if RicUrl.current_app_filter.to_s == item[:filter] # Slug belongs to current application
 												@o2t[locale.to_sym][item[:original]] = item[:translation]
-												@t2o[locale.to_sym][item[:translation]] = item[:original]
+												@t2o[locale.to_sym][translation_as_key] = item[:original]
 											elsif !item[:filter].blank? # Slug belongs to other application
 												url = RicUrl.available_filter_urls[item[:filter].to_sym]
 												@o2t[locale.to_sym][item[:original]] = url.trim("/") + item[:translation] if !url.blank?
 											end
 										else
 											@o2t[locale.to_sym][item[:original]] = item[:translation]
-											@t2o[locale.to_sym][item[:translation]] = item[:original]
+											@t2o[locale.to_sym][translation_as_key] = item[:original]
 										end
 									end
 								end
@@ -65,17 +67,19 @@ module RicUrl
 							# Dynamic data from DB
 							data = where(locale: locale.to_s)
 							data.each do |item|
+								translation_as_key = item.translation
+								translation_as_key = translation_as_key.downcase if RicUrl.downcase_translations == true
 								if RicUrl.use_filter
 									if RicUrl.current_app_filter.to_s == item.filter # Slug belongs to current application
 										@o2t[locale.to_sym][item.original] = item.translation
-										@t2o[locale.to_sym][item.translation] = item.original
+										@t2o[locale.to_sym][translation_as_key] = item.original
 									elsif !item.filter.blank? # Slug belongs to other application
 										url = RicUrl.available_filter_urls[item.filter.to_sym]
 										@o2t[locale.to_sym][item.original] = url.trim("/") + item.translation if !url.blank?
 									end
 								else
 									@o2t[locale.to_sym][item.original] = item.translation
-									@t2o[locale.to_sym][item.translation] = item.original
+									@t2o[locale.to_sym][translation_as_key] = item.original
 								end
 							end
 
