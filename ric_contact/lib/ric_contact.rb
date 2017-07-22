@@ -16,9 +16,8 @@ require "ric_contact/public_engine"
 # Models
 require "ric_contact/concerns/models/contact_message"
 require "ric_contact/concerns/models/contact_message_tableless"
-require "ric_contact/concerns/models/contact_person"
 
-# mailers
+# Mailers
 require "ric_contact/concerns/mailers/contact_message_mailer"
 
 module RicContact
@@ -43,12 +42,6 @@ module RicContact
 	# *************************************************************************
 	# Config options
 	# *************************************************************************
-
-	#
-	# Enable contact messages subsystem
-	#
-	mattr_accessor :enable_contact_messages
-	@@enable_contact_messages = false
 
 	#
 	# Contact message model
@@ -87,25 +80,30 @@ module RicContact
 	@@send_contact_messages_notification_to_author = false
 
 	#
-	# Enable contact people subsystem
+	# Model attribute definition. must be correctly defined in both (tableless and standard) variants
 	#
-	mattr_accessor :enable_contact_people
-	@@enable_contact_people = false
+	mattr_accessor :contact_message_attributes
+	@@contact_message_attributes = [
+		{
+			name: "name",
+			type: "string",
+		},
+		{
+			name: "email",
+			type: "string",
+		},
+		{
+			name: "message",
+			type: "string",
+			required: true,
+		}
+	]
 
 	#
-	# Contact person model
+	# Which users should receive contact message
 	#
-	mattr_accessor :contact_person_model
-	def self.contact_person_model
-		return @@contact_person_model.constantize
-	end
-	@@contact_person_model = "RicContact::ContactPerson"
-
-	#
-	# Localization of some specific columns (roles, descriptions, etc.)
-	#
-	mattr_accessor :localization
-	@@localization = false
+	mattr_accessor :contact_message_receivers
+	@@contact_message_receivers = lambda { [] }
 
 	#
 	# Mailer sender - only valid if RicNotification not used
@@ -136,18 +134,6 @@ module RicContact
 	#
 	mattr_accessor :recaptcha_attribute
 	@@recaptcha_attribute = "recaptcha"
-
-	#
-	# reCAPTCHA site key # TODO not implemented, please user recaptcha.rb initializer to set this option
-	#
-	#mattr_accessor :recaptcha_site_key
-	#@@recaptcha_site_key = nil
-
-	#
-	# reCAPTCHA secret key # TODO not implemented, please user recaptcha.rb initializer to set this option
-	#
-	#mattr_accessor :recaptcha_secret_key
-	#@@recaptcha_secret_key = nil
 
 	#
 	# Class or object implementing actions_options, tabs_options, etc. can be set.

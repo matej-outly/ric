@@ -1,5 +1,13 @@
-<%= rug_form_for(RicContact.contact_message_model.new, url: ric_contact_public.contact_messages_path, html: { class: "contact-message-create" }) do |f| %>
-	<div class="flash-canvas"></div>
+<%= rug_form_for(RicContact.contact_message_model.new, 
+	url: ric_contact_public.contact_messages_path, 
+	html: { class: "contact-message-create" },
+	ajax: {
+		success_message: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create"),
+		error_message: I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.create"),
+		clear_on_submit: true,
+		behavior_on_submit: "none"
+	}
+) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.text_input_row :email, :email_field %>
 	<%= f.text_area_row :message %>

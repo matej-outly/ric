@@ -37,7 +37,7 @@ module RicContact
 					# *********************************************************
 
 					def permitted_columns
-						result = config(:attributes).map { |attribute| attribute[:name].to_sym }
+						result = RicContact.contact_message_attributes.map { |attribute| attribute[:name].to_sym }
 						return result
 					end
 
@@ -47,7 +47,7 @@ module RicContact
 					if !(defined?(RicNotification).nil?)
 						
 						# Send to receiver
-						RicNotification.notify([:contact_message_created, self], :role_admin)
+						RicNotification.notify([:contact_message_created, self], RicContact.contact_message_receivers.call)
 
 						if self.respond_to?(:email) && !self.email.blank?
 							

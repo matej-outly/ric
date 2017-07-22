@@ -43,8 +43,8 @@ module RicNotification
 			protected
 
 				def create_missing_notification_templates
-					if RicNotification.notification_template_model.config(:template_refs)
-						RicNotification.notification_template_model.config(:template_refs).each do |ref|
+					if RicNotification.template_refs
+						RicNotification.template_refs.each do |ref|
 							notification_template = RicNotification.notification_template_model.where(ref: ref).first
 							if notification_template.nil?
 								notification_template = RicNotification.notification_template_model.create(ref: ref)

@@ -17,17 +17,11 @@ module RicContact
 				included do
 					
 					# *********************************************************
-					# Config
-					# *********************************************************
-
-					self.config = RugRecord::Config.new(self)
-
-					# *********************************************************
 					# Structure
 					# *********************************************************
 					
-					if config(:attributes)
-						config(:attributes).each do |attribute|
+					if RicContact.contact_message_attributes
+						RicContact.contact_message_attributes.each do |attribute|
 							attr_accessor attribute[:name]
 						end
 					end
@@ -36,8 +30,8 @@ module RicContact
 					# Validators
 					# *********************************************************
 					
-					if config(:attributes)
-						config(:attributes).each do |attribute|
+					if RicContact.contact_message_attributes
+						RicContact.contact_message_attributes.each do |attribute|
 							if attribute[:required] == true
 								validates_presence_of attribute[:name]
 							end
@@ -53,7 +47,7 @@ module RicContact
 					# *********************************************************
 
 					def permitted_columns
-						result = config(:attributes).map { |attribute| attribute[:name].to_sym }
+						result = RicContact.contact_message_attributes.map { |attribute| attribute[:name].to_sym }
 						return result
 					end
 
@@ -68,7 +62,7 @@ module RicContact
 						if !(defined?(RicNotification).nil?)
 
 							# Send to receiver
-							RicNotification.notify([:contact_message_created, self], :role_admin)
+							RicNotification.notify([:contact_message_created, self], RicContact.contact_message_receivers.call)
 
 							if self.respond_to?(:email) && !self.email.blank?
 

@@ -17,6 +17,7 @@ module RicContact
 
 					included do
 					
+						before_action :save_referrer, only: [:new, :edit]
 						before_action :set_contact_message, only: [:show, :edit, :update, :destroy]
 
 					end
@@ -43,7 +44,7 @@ module RicContact
 						@contact_message = RicContact.contact_message_model.new(contact_message_params)
 						if @contact_message.save
 							respond_to do |format|
-								format.html { redirect_to contact_message_path(@contact_message), notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create") }
 								format.json { render json: @contact_message.id }
 							end
 						else
@@ -57,7 +58,7 @@ module RicContact
 					def update
 						if @contact_message.update(contact_message_params)
 							respond_to do |format|
-								format.html { redirect_to contact_message_path(@contact_message), notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.update") }
+								format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.update") }
 								format.json { render json: @contact_message.id }
 							end
 						else
@@ -71,7 +72,7 @@ module RicContact
 					def destroy
 						@contact_message.destroy
 						respond_to do |format|
-							format.html { redirect_to contact_messages_path, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.destroy") }
+							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.destroy") }
 							format.json { render json: @contact_message.id }
 						end
 					end
@@ -81,7 +82,7 @@ module RicContact
 					def set_contact_message
 						@contact_message = RicContact.contact_message_model.find_by_id(params[:id])
 						if @contact_message.nil?
-							redirect_to contact_messages_path, alert: I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.not_found")
+							redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.not_found")
 						end
 					end
 
