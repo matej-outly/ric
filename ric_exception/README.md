@@ -43,7 +43,20 @@ end
 
 You can define your custom views displayed to user when error occures. In order to achieve this, you must override following view templates:
 
-- `views/ric_exception/exceptions/internal_error.html.erb`
 - `views/ric_exception/exceptions/not_found.html.erb`
 - `views/ric_exception/exceptions/unacceptable.html.erb`
+- `views/ric_exception/exceptions/internal_error.html.erb`
+
+## Testing
+
+You can test appearence of error pages by setting this to `routes.rb`:
+
+```ruby
+mount RicException::Engine => "/error"
+```
+
+Then you find the error pages on the following URLs:
+- `http://localhost:3000/error/404`
+- `http://localhost:3000/error/422`
+- `http://localhost:3000/error/500`
 

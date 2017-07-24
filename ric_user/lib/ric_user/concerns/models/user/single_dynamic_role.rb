@@ -25,6 +25,14 @@ module RicUser
 
 					end
 
+					module ClassMethods
+
+						def has_role?
+							true
+						end
+
+					end
+					
 				end
 			end
 		end

@@ -35,6 +35,14 @@ module RicUser
 
 					module ClassMethods
 
+						def has_role?
+							false
+						end
+
+						def has_roles?
+							true
+						end
+
 						def role_obj(role)
 							self.available_roles.find { |r| r.value == role }
 						end

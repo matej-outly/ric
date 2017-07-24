@@ -26,6 +26,18 @@ module RicUser
 
 					end
 
+					module ClassMethods
+
+						def has_role?
+							false
+						end
+
+						def has_roles?
+							true
+						end
+					
+					end
+
 					#
 					# Get currently selected role, see current_role method
 					#
