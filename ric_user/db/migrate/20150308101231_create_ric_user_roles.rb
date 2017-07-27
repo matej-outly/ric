@@ -1,4 +1,4 @@
-class CreateRicUserSessions < ActiveRecord::Migration
+class CreateRicUserRoles < ActiveRecord::Migration
 	def change
 		create_table :roles do |t|
 

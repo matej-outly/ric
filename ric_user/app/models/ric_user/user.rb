@@ -41,9 +41,9 @@ module RicUser
 		elsif RicUser.user_person_association == :one_user_many_people
 			include RicUser::Concerns::Models::User::MultiPeople
 			if RicUser.use_static_roles
-				include RicUser::Concerns::Models::User::MultipleStaticRoles
+				include RicUser::Concerns::Models::User::MultiStaticRoles
 			else
-				include RicUser::Concerns::Models::User::MultipleDynamicRoles
+				include RicUser::Concerns::Models::User::MultiDynamicRoles
 			end
 
 		elsif RicUser.user_person_association == :many_users_one_person
@@ -64,9 +64,9 @@ module RicUser
 			
 			elsif RicUser.user_role_association == :user_has_and_belongs_to_many_roles
 				if RicUser.use_static_roles
-					include RicUser::Concerns::Models::User::MultipleStaticRoles
+					include RicUser::Concerns::Models::User::MultiStaticRoles
 				else
-					include RicUser::Concerns::Models::User::MultipleDynamicRoles
+					include RicUser::Concerns::Models::User::MultiDynamicRoles
 				end
 			end
 
