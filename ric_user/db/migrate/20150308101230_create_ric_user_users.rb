@@ -125,7 +125,7 @@ class CreateRicUserUsers < ActiveRecord::Migration
 				user.role = "admin"
 				user.save
 			else
-				admin_role = RicUser::Role.create(name: "Administrator")
+				admin_role = RicUser::Role.create(name: "Administrátor")
 				user.role_id = admin_role.id
 				user.save
 			end
@@ -133,7 +133,7 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			if RicUser.use_static_roles
 				user.roles = ["admin"]
 			else
-				admin_role = RicUser::Role.create(name: "Administrator")
+				admin_role = RicUser::Role.create(name: "Administrátor")
 				user.role_ids = [admin_role.id]
 				user.save
 			end

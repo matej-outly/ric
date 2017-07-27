@@ -7,7 +7,7 @@
 					<i class="fa fa-folder-o fa-3x"></i>
 				</span>
 				<span class="document-name">
-					<%= document_folder.name %>
+					<%= document_folder.name.to_s.gsub("_", " ") %>
 				</span>
 			<% end %>
 			<div class="document-actions">

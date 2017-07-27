@@ -3,6 +3,6 @@
 		<i class="fa <%= mime_type_fa_icon(document.current_version.attachment_content_type) %> fa-3x"></i>
 	</span>
 	<span class="document-name">
-		<%= document.name %>
+		<%= document.name.to_s.gsub("_", " ") %>
 	</span>
 <% end %>
