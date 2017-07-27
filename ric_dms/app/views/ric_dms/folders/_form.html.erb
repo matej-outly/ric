@@ -1,0 +1,21 @@
+<%= rug_form_for(@document_folder, 
+	create_url: :folders_path,
+	update_url: :folder_path
+) do |f| %>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<%= f.label_for :parent_id %>
+				<%= f.select :parent_id, nested_set_options(RicDms::DocumentFolder, @document_folder) {|i| "#{'-' * i.level} #{i.name}" }, { include_blank: "(není)" }, { class: "form-control" } %>
+				<%= f.errors :parent_id %>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<%= f.text_input_row :ref %>
+		</div>
+	</div>
+	<%= f.text_input_row :name %>
+	<%= f.text_area_row :description %>
+	<%= f.primary_button_row :submit %>
+	<%= f.back_link_button_row %>
+<% end %>

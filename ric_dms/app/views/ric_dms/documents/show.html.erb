@@ -1,0 +1,30 @@
+<% content_for :page_header, @document.name %>
+<%= render partial: "ric_dms/partials/nav" %>
+
+<%= rug_tabs(RicDms.theme.tabs_options) do |t| %>
+	<% t.tab :identification, t("headers.ric_dms.documents.identification") do %>
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="document-file">
+					<%= render partial: "ric_dms/partials/listing_file", locals: { document: @document } %>
+				</div>
+			</div>
+			<div class="col-sm-10">
+				<% if !@document.description.blank? %>
+					<div class="text-box">
+						<%= @document.description.to_s.html_safe %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+	<% t.tab :versions, t("headers.ric_dms.documents.versions") do %>
+		<%= rug_index_table_for(@document.recent_versions, {
+			created_at: :datetime,
+			attachment: { type: :file, picture: false, download: true }
+		}, paths: {
+			destroy: lambda { |document_version| folder_document_version_path(@document_folder, @document, document_version) }
+		}) %>
+	<% end %>
+<% end %>
+

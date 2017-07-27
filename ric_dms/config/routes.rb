@@ -11,13 +11,17 @@
 
 RicDms::Engine.routes.draw do
 
-	# Documents
-	resources :documents, only: [:show, :new, :create, :destroy]
+	# Folders
+	resources :folders, only: [:index, :show, :new, :edit, :create, :update, :destroy] do
 
-	# Document versions
-	resources :document_versions, only: [:destroy]
+		# Documents
+		resources :documents, only: [:show, :new, :edit, :create, :update, :destroy] do
 
-	# Directory listing
-	resources :document_folders, only: [:index, :show, :new, :create, :destroy]
+			# Document versions
+			resources :versions, only: [:destroy]
+
+		end
+
+	end	
 
 end

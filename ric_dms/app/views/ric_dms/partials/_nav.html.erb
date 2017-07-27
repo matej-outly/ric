@@ -1,0 +1,10 @@
+<div class="document-nav">
+	<ol class="breadcrumb">
+		<li><%= link_to t("headers.ric_dms.folders.index"), folders_path %></li>
+		<% if @document_folder %>
+			<% @document_folder.self_and_ancestors.each do |document_folder| %>
+				<li><%= link_to document_folder.name, folder_path(document_folder) %></li>
+			<% end %>
+		<% end %>
+	</ol>
+</div>

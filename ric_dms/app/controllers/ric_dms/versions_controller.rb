@@ -4,7 +4,7 @@
 # *
 # * Document Versions
 # *
-# * Author:
+# * Author: Matěj Outlý
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
@@ -12,7 +12,7 @@
 require_dependency "ric_dms/application_controller"
 
 module RicDms
-	class DocumentVersionsController < ApplicationController
-		include RicDms::Concerns::Controllers::DocumentVersionsController
+	class VersionsController < ApplicationController
+		include RicDms::Concerns::Controllers::VersionsController
 	end
 end

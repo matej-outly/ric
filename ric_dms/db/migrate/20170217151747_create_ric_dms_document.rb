@@ -4,12 +4,13 @@ class CreateRicDmsDocument < ActiveRecord::Migration
 
 			# Timestamps
 			t.timestamps null: true
-
-			# Document name
-			t.string :name, index: true
-
+			
 			# Folder
 			t.integer :document_folder_id, index: true
+
+			# Additional info
+			t.string :name
+			t.text :description
 
 		end
 

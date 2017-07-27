@@ -5,14 +5,16 @@ class CreateRicDmsDocumentFolder < ActiveRecord::Migration
 			# Timestamps
 			t.timestamps null: true
 
-			# Folder name
-			t.string :name
+			# Hierarchical ordering
+			t.integer :parent_id, null: true, index: true
+			t.integer :lft, null: false, index: true
+			t.integer :rgt, null: false, index: true
+			t.integer :depth, null: false, default: 0
 
-			# Tree attributes
-			t.integer :parent_id, index: true
-			t.integer :lft
-			t.integer :rgt, index: true
-			t.integer :depth
+			# Additional info
+			t.string :ref, index: true
+			t.string :name
+			t.text :description
 
 		end
 	end

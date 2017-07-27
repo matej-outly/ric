@@ -4,7 +4,7 @@
 # *
 # * Railtie for view helpers integration
 # *
-# * Author:
+# * Author: Matěj Outlý
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************

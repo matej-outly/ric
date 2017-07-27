@@ -1,0 +1,5 @@
+<%= render partial: "ric_dms/partials/nav" %>
+<div class="document-listing">
+	<%= render partial: "ric_dms/partials/listing_folders" %>
+	<%= render partial: "ric_dms/partials/listing_files" if @document_folder %>
+</div>

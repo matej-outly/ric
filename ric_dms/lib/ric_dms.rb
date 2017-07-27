@@ -2,27 +2,26 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
+# * RicDms
 # *
-# *
-# * Author:
+# * Author: Matěj Outlý
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
 
 # Railtie
-require 'ric_dms/railtie' if defined?(Rails)
+require "ric_dms/railtie" if defined?(Rails)
 
 # Engines
 require "ric_dms/engine"
 
 # Models
-require 'ric_dms/concerns/models/document'
-require 'ric_dms/concerns/models/document_folder'
-require 'ric_dms/concerns/models/document_version'
+require "ric_dms/concerns/models/document"
+require "ric_dms/concerns/models/document_folder"
+require "ric_dms/concerns/models/document_version"
 
 # Helpers
-require 'ric_dms/helpers/mime_type_helper'
-
+require "ric_dms/helpers/mime_type_helper"
 
 module RicDms
 

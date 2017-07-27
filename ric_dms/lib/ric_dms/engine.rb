@@ -4,7 +4,7 @@
 # *
 # * Engine
 # *
-# * Author:
+# * Author: Matěj Outlý
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
@@ -12,17 +12,13 @@
 module RicDms
 	class Engine < ::Rails::Engine
 
-		#
 		# Controllers
-		#
-		require 'ric_dms/concerns/controllers/documents_controller'
-		require 'ric_dms/concerns/controllers/document_versions_controller'
-		require 'ric_dms/concerns/controllers/document_folders_controller'
+		require "ric_dms/concerns/controllers/documents_controller"
+		require "ric_dms/concerns/controllers/versions_controller"
+		require "ric_dms/concerns/controllers/folders_controller"
 
-		#
 		# Authorization
-		#
-		require 'ric_dms/concerns/authorization'
+		require "ric_dms/concerns/authorization"
 
 		isolate_namespace RicDms
 

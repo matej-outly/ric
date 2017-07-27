@@ -1,0 +1,31 @@
+<div class="document-listing-folders">
+
+	<% @document_folders.each do |document_folder| %>
+		<div class="document-folder">
+			<%= link_to folder_path(document_folder), "data-document-folder-id" => document_folder.id do %>
+				<span class="document-mime-type">
+					<i class="fa fa-folder-o fa-3x"></i>
+				</span>
+				<span class="document-name">
+					<%= document_folder.name %>
+				</span>
+			<% end %>
+			<div class="document-actions">
+				<%= link_to rug_icon("pencil"), edit_folder_path(document_folder) %>
+				<%= link_to rug_icon("trash"), folder_path(document_folder), method: :delete, data: { confirm: t("general.are_you_sure") } %>
+			</div>
+		</div>
+	<% end %>
+
+	<div class="document-folder document-new">
+		<%= link_to new_folder_path(folder_id: @document_folder) do %>
+			<span class="document-mime-type">
+				<i class="fa fa-folder-o fa-3x"></i>
+			</span>
+			<span class="document-name">
+				<%= t("headers.ric_dms.folders.new") %>
+			</span>
+		<% end %>
+	</div>
+
+</div>

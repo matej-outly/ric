@@ -1,0 +1,25 @@
+<div class="document-listing-files">
+
+	<% @documents.each do |document| %>
+		<div class="document-file">
+			<%= render partial: "ric_dms/partials/listing_file", locals: { document: document } %>
+			<div class="document-actions">
+				<%= link_to rug_icon("search"), folder_document_path(@document_folder, document) %>
+				<%= link_to rug_icon("pencil"), edit_folder_document_path(@document_folder, document) %>
+				<%= link_to rug_icon("trash"), folder_document_path(@document_folder, document), method: :delete, data: { confirm: t("general.are_you_sure") } %>
+			</div>
+		</div>
+	<% end %>
+
+	<div class="document-file document-new">
+		<%= link_to new_folder_document_path(folder_id: @document_folder) do %>
+			<span class="document-mime-type">
+				<i class="fa fa-file-o fa-3x"></i>
+			</span>
+			<span class="document-name">
+				<%= t("headers.ric_dms.documents.new") %>
+			</span>
+		<% end %>
+	</div>
+
+</div>

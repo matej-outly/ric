@@ -1,0 +1,8 @@
+<%= link_to document.current_version.attachment.url, "data-document-id" => document.id do %>
+	<span class="document-mime-type">
+		<i class="fa <%= mime_type_fa_icon(document.current_version.attachment_content_type) %> fa-3x"></i>
+	</span>
+	<span class="document-name">
+		<%= document.name %>
+	</span>
+<% end %>

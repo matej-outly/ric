@@ -1,0 +1,5 @@
+<%= rug_menu_for(@document, options) do |m| %>
+	<%= m.show_item nil, lambda { |document| folder_document_path(@document_folder, document) }  %>
+	<%= m.edit_item nil, lambda { |document| edit_folder_document_path(@document_folder, document) }  %>
+	<%= m.destroy_item nil, lambda { |document| folder_document_path(@document_folder, document) }  %>
+<% end %>

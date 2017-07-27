@@ -2,16 +2,59 @@ cs:
 
   headers:
     ric_dms:
-      document_folders:
-        index: "Sdílení souborů"
-        show: "Sdílení souborů"
-        new: "Nová složka"
-        destroy: "Smazat složku"
-        destroy_current: "Smazat tuto složku"
+      folders:
+        index: Sdílení souborů
+        show: Sdílení souborů
+        new: Nová složka
+        create: Nová složka
+        edit: Upravit složku
+        update: Upravit složku
+        destroy: Smazat složku
       documents:
-        new: "Nahrát soubor"
+        show: Detail dokumentu
+        new: Nový dokument
+        create: Nový dokument
+        edit: Upravit dokument
+        update: Upravit dokument
+        identification: Základní informace
+        versions: Všechny verze
+        destroy: Smazat dokument
 
   activerecord:
     attributes:
       ric_dms/document:
         attachment: Soubor
+        name: Název
+        description: Popis
+      ric_dms/document_folder:
+        parent: Nařazená složka
+        parent_id: Nařazená složka
+        name: Název
+        description: Popis
+        ref: Systémová značka
+      ric_dms/document_version:
+        created_at: Vytvořeno
+        attachment: Soubor
+    notices:
+      models:
+        ric_dms/document_folder:
+          create: Složka byla úspěšně vytvořena.
+          update: Složka byla úspěšně upravena.
+          destroy: Složka byla úspěšně smazána.
+        ric_dms/document:
+          create: Dokument byl úspěšně vytvořen.
+          update: Dokument byl úspěšně upraven.
+          destroy: Dokument byl úspěšně smazán.
+        ric_dms/document_version:
+          destroy: Verze dokumentu byla úspěšně smazána.
+    errors:
+      models:
+        ric_dms/document_folder:
+          not_found: Složka nebyla nalezena.
+        ric_dms/document:
+          not_found: Dokument nebyl nalezen.
+          attributes:
+            name:
+              blank: Vyplňte název dokumentu
+        ric_dms/document_version:
+          not_found: Verze dokumentu nebyla nalezena.

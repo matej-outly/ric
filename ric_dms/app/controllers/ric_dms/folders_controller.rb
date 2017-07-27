@@ -4,7 +4,7 @@
 # *
 # * Document Folders
 # *
-# * Author:
+# * Author: Matěj Outlý
 # * Date  : 21. 2. 2017
 # *
 # *****************************************************************************
@@ -12,7 +12,7 @@
 require_dependency "ric_dms/application_controller"
 
 module RicDms
-	class DocumentFoldersController < ApplicationController
-		include RicDms::Concerns::Controllers::DocumentFoldersController
+	class FoldersController < ApplicationController
+		include RicDms::Concerns::Controllers::FoldersController
 	end
 end
