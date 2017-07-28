@@ -9,7 +9,21 @@
 # *
 # *****************************************************************************
 
-# This file is loaded more than once due to multiple engines in this gem 
-# causing doubled and broken routes if defined here. Therefore gem routes
-# are loaded by special routine defined in the engines. Check files *_routes.rb
-# for routes definition.
+RicPricing::Engine.routes.draw do
+
+	# Price lists
+	resources :price_lists do
+		member do
+			put "move/:relation/:destination_id", action: "move", as: "move"
+		end
+
+		# Prices
+		resources :prices, only: [:new, :edit, :create, :update, :destroy] do
+			member do
+				put "move/:relation/:destination_id", action: "move", as: "move"
+			end
+		end
+		
+	end
+
+end

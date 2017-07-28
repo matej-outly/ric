@@ -2,17 +2,14 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Prices
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
 # * Date  : 29. 3. 2017
 # *
 # *****************************************************************************
 
-require_dependency "ric_pricing/admin_controller"
-
 module RicPricing
-	class AdminPricesController < AdminController
-		include RicPricing::Concerns::Controllers::Admin::PricesController
+	class ApplicationController < ::ApplicationController
 	end
 end

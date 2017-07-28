@@ -10,23 +10,13 @@
 # *****************************************************************************
 
 module RicPricing
-	class AdminEngine < ::Rails::Engine
+	class Engine < ::Rails::Engine
 		
-		#
 		# Controllers
-		#
-		require "ric_pricing/concerns/controllers/admin/price_lists_controller"
-		require "ric_pricing/concerns/controllers/admin/prices_controller"
+		require "ric_pricing/concerns/controllers/price_lists_controller"
+		require "ric_pricing/concerns/controllers/prices_controller"
 		
 		isolate_namespace RicPricing
-
-		#
-		# Load admin specific routes
-		#
-		def reload_routes
-			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/admin_routes.rb")
-		end
 		
 	end
 end

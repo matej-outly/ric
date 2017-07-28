@@ -2,7 +2,7 @@ cs:
 
   headers:
     ric_pricing:
-      admin_price_lists:
+      price_lists:
         index: "Ceníky"
         show: "Detail ceníku"
         new: "Nový ceník"
@@ -10,7 +10,7 @@ cs:
         edit: "Upravit ceník"
         update: "Upravit ceník"
         destroy: "Smazat ceník"
-      admin_prices:
+      prices:
         index: "Ceníky"
         new: "Nová položka"
         create: "Nová položka"
@@ -21,6 +21,7 @@ cs:
   activerecord:
     attributes:
       ric_pricing/price_list:
+        subject: Navázaný objekt
         name: Název
         prices: Ceníkové položky
       ric_pricing/price:

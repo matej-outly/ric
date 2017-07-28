@@ -2,29 +2,18 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Engine
+# * Price lists
 # *
 # * Author: Matěj Outlý
 # * Date  : 29. 3. 2017
 # *
 # *****************************************************************************
 
+require_dependency "ric_pricing/application_controller"
+
 module RicPricing
-	class PublicEngine < ::Rails::Engine
-		
-		#
-		# Controllers
-		#
-
-		isolate_namespace RicPricing
-
-		#
-		# Load public specific routes
-		#
-		def reload_routes
-			config_path = File.expand_path(File.dirname(__FILE__) + "/../../config")
-			load(config_path + "/public_routes.rb")
-		end
-		
+	class PriceListsController < ApplicationController
+		include RicPricing::Concerns::Controllers::PriceListsController
 	end
 end
+

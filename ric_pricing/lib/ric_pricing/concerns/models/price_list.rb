@@ -14,17 +14,13 @@ module RicPricing
 		module Models
 			module PriceList extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 					
 					# *********************************************************
 					# Structure
 					# *********************************************************
 
+					belongs_to :subject, polymorphic: true
 					has_many :prices, class_name: RicPricing.price_model.to_s, dependent: :destroy
 
 					# *********************************************************
@@ -37,12 +33,15 @@ module RicPricing
 
 				module ClassMethods
 
-					#
+					# *********************************************************
 					# Columns
-					#
+					# *********************************************************
+
 					def permitted_columns
 						result = [
-							:name
+							:name,
+							:subject_id,
+							:subject_type
 						]
 						return result
 					end

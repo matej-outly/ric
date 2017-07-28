@@ -10,8 +10,7 @@
 # *****************************************************************************
 
 # Engines
-require "ric_pricing/admin_engine"
-require "ric_pricing/public_engine"
+require "ric_pricing/engine"
 
 # Models
 require "ric_pricing/concerns/models/price_list"

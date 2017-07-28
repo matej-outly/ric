@@ -10,6 +10,10 @@ class CreateRicPricingPriceLists < ActiveRecord::Migration
 			# Name
 			t.string :name
 
+			# Subject
+			t.integer :subject_id, index: true
+			t.string :subject_type, index: true
+
 		end
 	end
 end
