@@ -87,6 +87,12 @@ module RicOrganization
 	@@user_model = "RicUser::User"
 
 	#
+	# Available relation kinds
+	#
+	mattr_accessor :relation_kinds
+	@@relation_kinds = []
+
+	#
 	# Class or object implementing actions_options, tabs_options, etc. can be set.
 	#
 	mattr_accessor :theme
