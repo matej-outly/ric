@@ -3,6 +3,7 @@ cs:
   headers:
     ric_acl:
       privileges:
+        index: Oprávnění
         new: Nové oprávnění
         create: Nové oprávnění
         edit: Upravit oprávnění
@@ -10,12 +11,19 @@ cs:
       
   activerecord:
     attributes:
-      privilege:
+      ric_acl/privilege:
         action: Akce
         scope: V rámci
         scope_range: Rozsah
         subject: Objekt
         owner: Vlastník
     notices:
+      models:
+        ric_acl/privilege:
+          create: Oprávnění bylo úspěšně vytvořeno.
+          update: Oprávnění bylo úspěšně uloženo.
+          destroy: Oprávnění bylo úspěšně smazáno.
     errors:
-      
+      models:
+        ric_acl/privilege:
+          not_found: Oprávnění nebylo nalezeno.
