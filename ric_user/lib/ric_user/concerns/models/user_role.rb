@@ -28,15 +28,20 @@ module RicUser
 					# *********************************************************
 
 					if RicUser.use_static_roles
-						
 						enum_column :role, RicUser.roles
 						validates_presence_of :role
-						
 					else
-
 						belongs_to :role, class_name: RicUser.role_model.to_s
 						validates_presence_of :role_id
+					end
 
+					# *********************************************************
+					# Person
+					# *********************************************************
+
+					if RicUser.scope_user_role_by_person
+						belongs_to :person, class_name: RicUser.user_role_person_model.to_s
+						validates_presence_of :person_id
 					end
 
 				end

@@ -28,7 +28,6 @@ require "ric_user/concerns/models/person"
 require "ric_user/concerns/models/person/model_1"
 require "ric_user/concerns/models/person/model_2"
 require "ric_user/concerns/models/person/model_3"
-require "ric_user/concerns/models/person/model_4"
 require "ric_user/concerns/models/people_selector"
 require "ric_user/concerns/models/people_selectable"
 
@@ -84,6 +83,15 @@ module RicUser
 		return @@user_role_model.constantize
 	end
 	@@user_role_model = "RicUser::UserRole"
+
+	#
+	# User role person model
+	#
+	mattr_accessor :user_role_person_model
+	def self.user_role_person_model
+		return @@user_role_person_model.constantize
+	end
+	@@user_role_person_model = nil
 
 	#
 	# User person model
@@ -157,14 +165,19 @@ module RicUser
 	@@default_role = nil
 
 	#
+	# Scope UserRole model by person. If true, user_role_person_model must be defined
+	#
+	mattr_accessor :scope_user_role_by_person
+	@@scope_user_role_by_person = false
+
+	#
 	# Association between users and people
 	#
 	# Available values:
 	# - none
-	# - one_user_one_person (model_1)
-	# - one_user_many_people (model_2)
-	# - many_users_one_person (model_3)
-	# - many_users_many_people (model_4)
+	# - user_has_one_person (model_1)
+	# - user_has_many_people (model_2)
+	# - user_belongs_to_person (model_3)
 	#
 	mattr_accessor :user_person_association
 	@@user_person_association = :none

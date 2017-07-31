@@ -23,6 +23,9 @@ class CreateRicUserRelations < ActiveRecord::Migration
 					t.timestamps null: true
 					t.integer :user_id, index: true
 					t.string :role
+
+					# Person scope - Uncomment if scope_user_role_by_person == true
+					#t.integer :person_id, index: true
 				end
 			else
 				# Multi-role authorization, dymanic roles - Uncomment this table for multi-role authorization
@@ -30,6 +33,9 @@ class CreateRicUserRelations < ActiveRecord::Migration
 					t.timestamps null: true
 					t.integer :user_id, index: true
 					t.integer :role_id, index: true
+
+					# Person scope - Uncomment if scope_user_role_by_person == true
+					#t.integer :person_id, index: true
 				end
 			end
 
@@ -39,13 +45,13 @@ class CreateRicUserRelations < ActiveRecord::Migration
 		# Binded people
 		# *********************************************************************
 
-		if RicUser.user_person_association == :one_user_one_person || RicUser.user_person_association == :many_users_one_person
+		if RicUser.user_person_association == :user_has_one_person || RicUser.user_person_association == :users_belongs_to_person
 			# Single-person relation - Uncomment this line for single-person relation
 			add_column :users, :person_id, :integer
 			add_index :users, :person_id
 			add_column :users, :person_type, :string
 			add_index :users, :person_type
-		elsif RicUser.user_person_association == :one_user_many_people
+		elsif RicUser.user_person_association == :user_has_many_people
 			# Multi-people relation - Uncomment this table for multi-people relation
 			create_table :user_people do |t|
 				t.timestamps null: true

@@ -30,7 +30,7 @@ module RicUser
 		# People and roles
 		# *********************************************************************
 
-		if RicUser.user_person_association == :one_user_one_person
+		if RicUser.user_person_association == :user_has_one_person
 			include RicUser::Concerns::Models::User::SinglePerson
 			if RicUser.use_static_roles
 				include RicUser::Concerns::Models::User::SingleStaticRole
@@ -38,7 +38,7 @@ module RicUser
 				include RicUser::Concerns::Models::User::SingleDynamicRole
 			end
 		
-		elsif RicUser.user_person_association == :one_user_many_people
+		elsif RicUser.user_person_association == :user_has_many_people
 			include RicUser::Concerns::Models::User::MultiPeople
 			if RicUser.use_static_roles
 				include RicUser::Concerns::Models::User::MultiStaticRoles
@@ -46,15 +46,15 @@ module RicUser
 				include RicUser::Concerns::Models::User::MultiDynamicRoles
 			end
 
-		elsif RicUser.user_person_association == :many_users_one_person
+		elsif RicUser.user_person_association == :user_belongs_to_person
 			include RicUser::Concerns::Models::User::SinglePerson
 			if RicUser.use_static_roles
 				include RicUser::Concerns::Models::User::SingleStaticRole
 			else
 				include RicUser::Concerns::Models::User::SingleDynamicRole
 			end
-
-		else
+		
+		else # No people association
 			if RicUser.user_role_association == :user_belongs_to_role
 				if RicUser.use_static_roles
 					include RicUser::Concerns::Models::User::SingleStaticRole

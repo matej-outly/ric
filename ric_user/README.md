@@ -21,8 +21,8 @@ Different models in the application can act like a person. It can be for instanc
 
 - User doesn't belong to any person
 - Person with single user, user has max one person associated (model 1) - this model enforces that user belongs to one role.
-- Person with single user, user has multiple people associated (model 2) - this enforces that user has and belongs to many roles.
-- Person with multiple users, user has max one person associated (model 3) - this model enforces that user belongs to one role.
+- Person with single user, user has multiple people associated (model 2) - this enforces that user has and belongs to many roles but only one role is associated with one person. Roles and people are mapped together through the similarity of the role "ref" and people's class name (i.e. role "student" mapped to "Student" model).
+- Person with multiple users, user has max one person associated (model 3) - this model enforces that user belongs to one role. Roles and people are mapped together through the similarity of the role "ref" and people's class name (i.e. role "student" mapped to "Student" model).
 - Person with multiple users, user has multiple people associated (model 4).
 
 ## People selectors

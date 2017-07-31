@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Multi-people user
+# * Multi-people user # TODO integrate model_4 specifics ... ???
 # *
 # * Author: Matěj Outlý
 # * Date  : 20. 3. 2017
