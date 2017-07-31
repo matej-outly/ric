@@ -27,7 +27,7 @@ module RicPlugin
 					# Kind
 					# *********************************************************
 					
-					enum_column :kind, [:dependency, :exclusion]
+					enum_column :kind, [:depends_on, :excludes]
 					
 				end
 

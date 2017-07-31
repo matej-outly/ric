@@ -21,8 +21,8 @@ module RicOrganization
 					# *********************************************************
 
 					has_many :organization_assignments, class_name: RicOrganization.organization_assignment_model.to_s, dependent: :destroy
-					has_many :actor_relations, as: :actor, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
-					has_many :actee_relations, as: :actee, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
+					has_many :actor_relations, foreign_key: :actor_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
+					has_many :actee_relations, foreign_key: :actee_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
 
 				end
 

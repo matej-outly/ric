@@ -20,8 +20,8 @@ module RicPlugin
 					# Structure
 					# *********************************************************
 
-					has_many :actor_relations, as: :actor, class_name: RicPlugin.plugin_relation_model.to_s, dependent: :destroy
-					has_many :actee_relations, as: :actee, class_name: RicPlugin.plugin_relation_model.to_s, dependent: :destroy
+					has_many :actor_relations, foreign_key: :actor_id, class_name: RicPlugin.plugin_relation_model.to_s, dependent: :destroy
+					has_many :actee_relations, foreign_key: :actee_id, class_name: RicPlugin.plugin_relation_model.to_s, dependent: :destroy
 					has_and_belongs_to_many :subjects, class_name: RicPlugin.subject_model.to_s, join_table: :plugins_subjects
 
 				end
