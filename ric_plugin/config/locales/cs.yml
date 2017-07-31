@@ -1,0 +1,32 @@
+cs:
+  
+  headers:
+    ric_plugin:
+      plugins:
+        index: Pluginy
+        new: Nový plugin
+        create: Nový plugin
+        edit: Upravit plugin
+        update: Upravit plugin
+        destroy: Smazat plugin
+      subject_plugins:
+        show: Aktivované pluginy
+        edit: Upravit pluginy
+        update: Upravit pluginy
+
+  activerecord:
+    attributes:
+      ric_plugin/plugin:
+        ref: Systémová značka
+        name: Název pluginu
+    notices:
+      models:
+        ric_plugin/plugin:
+          create: Plugin byl úspěšně vytvořen.
+          update: Plugin byl úspěšně uložen.
+          destroy: Plugin byl úspěšně smazán.
+    errors:
+      models:
+        ric_plugin/plugin:
+          create: Plugin nebyl nalezen.
+      
