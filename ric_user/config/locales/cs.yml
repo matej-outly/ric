@@ -2,49 +2,63 @@ cs:
 
   headers:
     ric_user:
+      roles:
+        index: Uživatelské role
+        show: Detail role
+        new: Nová role
+        create: Nová role
+        edit: Upravit roli
+        update: Upravit roli
+        destroy: Smazat roli
       users:
-        index: "Uživatelé"
-        show: "Detail uživatele"
-        new: "Nový uživatel"
-        create: "Nový uživatel"
-        edit: "Upravit uživatele"
-        update: "Upravit uživatele"
-        lock: "Zablokovat uživatele"
-        unlock: "Oblokovat uživatele"
-        confirm: "Ověřit uživatele"
-        destroy: "Smazat uživatele"
+        index: Uživatelé
+        show: Detail uživatele
+        new: Nový uživatel
+        create: Nový uživatel
+        edit: Upravit uživatele
+        update: Upravit uživatele
+        lock: Zablokovat uživatele
+        unlock: Oblokovat uživatele
+        confirm: Ověřit uživatele
+        destroy: Smazat uživatele
       user_passwords:
-        edit: "Změnit heslo"
-        update: "Změnit heslo"
-        regenerate: "Přegenerovat heslo"
+        edit: Změnit heslo
+        update: Změnit heslo
+        regenerate: Přegenerovat heslo
 
   activerecord:
     attributes:
+      ric_user/role:
+        name: Název role
+        ref: Systémová značka
+        description: Popis
+        default_signed: Výchozí role pro přihlášené uživatele
+        default_unsigned: Výchozí role pro nepřihlášené uživatele
       ric_user/user:
-        name: "Jméno"
-        name_firstname: "Křestní jméno"
-        name_lastname: "Příjmení"
-        email: "E-mail"
-        role_id: "Role"
-        role: "Role"
+        name: Jméno
+        name_firstname: Křestní jméno
+        name_lastname: Příjmení
+        email: E-mail
+        role_id: Role
+        role: Role
         role_values:
-          admin: "Administrátor"
-        role_ids: "Role"
-        roles: "Role"
+          admin: Administrátor
+        role_ids: Role
+        roles: Role
         roles_values:
-          admin: "Administrátor"
-        avatar: "Avatar"
-        sign_in_count: "Počet přihlášení"
-        current_sign_in_at: "Čas posledního přihlášení"
-        current_password: "Současné heslo"
-        password: "Heslo"
-        password_confirmation: "Heslo (znovu pro potvrzení)"
-        new_password: "Nové heslo"
-        new_password_confirmation: "Nové heslo (znovu pro potvrzení)"
-        remember_me: "Zůstat přihlášen"
-        locked?: "Zablokován"
-        locked_at: "Čas zablokování"
-        confirmed?: "Ověřen"
+          admin: Administrátor
+        avatar: Avatar
+        sign_in_count: Počet přihlášení
+        current_sign_in_at: Čas posledního přihlášení
+        current_password: Současné heslo
+        password: Heslo
+        password_confirmation: Heslo (znovu pro potvrzení)
+        new_password: Nové heslo
+        new_password_confirmation: Nové heslo (znovu pro potvrzení)
+        remember_me: Zůstat přihlášen
+        locked?: Zablokován
+        locked_at: Čas zablokování
+        confirmed?: Ověřen
       ric_notification/notification_template:
         ref_values:
           user_new_password: Nové heslo uživatele
@@ -53,6 +67,10 @@ cs:
           user_unlock: Instrukce pro odemčení uživatelského účtu
     notices:
       models:
+        ric_user/role:
+          create: Role byla úspěšně vytvořena.
+          update: Role byla úspěšně uložena.
+          destroy: Role byla úspěšně smazána.
         ric_user/user:
           update: Uživatel byl úspěšně uložen.
           update_password: Heslo bylo úspěšně změněno.
@@ -66,6 +84,13 @@ cs:
           update: Informace o uživateli byly úspěšně uloženy.
     errors:
       models:
+        ric_user/role:
+          not_found: Role nebyla nalezena.
+          attributes:
+            name:
+              blank: Název musí být vyplněn.
+            ref:
+              blank: Systémová značka musí být vyplněna.
         ric_user/user:
           not_found: Uživatel nebyl nalezen.
           regenerate_password: Nebylo možné přegenerovat heslo.
@@ -74,21 +99,21 @@ cs:
           confirm: Nebylo možné ověřit uživatele.
           attributes:
             current_password:
-              blank: "Heslo musí být vyplněno."
-              invalid: "Heslo není správné."
+              blank: Heslo musí být vyplněno.
+              invalid: Heslo není správné.
             email:
-              not_found: "Uživatelský účet nebyl nalezen v databázi."
-              blank: "E-mail musí být vyplněn."
-              taken: "E-mail je již používán jiným uživatelem."
-              invalid: "Toto není platná e-mailová adresa."
-              already_confirmed: "Tento uživatelský účet už byl ověřen."
+              not_found: Uživatelský účet nebyl nalezen v databázi.
+              blank: E-mail musí být vyplněn.
+              taken: E-mail je již používán jiným uživatelem.
+              invalid: Toto není platná e-mailová adresa.
+              already_confirmed: Tento uživatelský účet už byl ověřen.
             password:
-              blank: "Heslo musí být vyplněno."
-              too_short: "Heslo musí mít minimálně 4 znaky."
+              blank: Heslo musí být vyplněno.
+              too_short: Heslo musí mít minimálně 4 znaky.
             password_confirmation:
-              confirmation: "Potvrzení není shodné s heslem."
+              confirmation: Potvrzení není shodné s heslem.
     mailers:
       ric_user:
         user:
           new_password:
-            subject: "Heslo bylo změněno"
+            subject: Heslo bylo změněno

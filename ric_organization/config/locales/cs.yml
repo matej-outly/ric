@@ -1,0 +1,56 @@
+cs:
+
+  headers:
+    ric_organization:
+      organizations:
+        index: Organizace
+        new: Nová organizace
+        create: Nová organizace
+        edit: Upravit organizaci
+        update: Upravit organizaci
+        destroy: Smazat organizaci
+      organization_assignments:
+        index: Organizace
+        new: Nová pozice
+        create: Nová pozice
+        edit: Upravit pozici
+        update: Upravit pozici
+        destroy: Smazat pozici
+
+  activerecord:
+    attributes:
+      ric_organization/organization:
+        name: Název organizace
+      ric_organization/organization_assignment:
+        name: Název pozice
+        organization: Organizace
+        organization_id: Organizace
+      ric_organization/organization_relation:
+        kind: Typ relace
+        actor: Původce
+        actor_id: Původce
+        actee: Příjemce
+        actee_id: Příjemce
+
+    notices:
+      models:
+        ric_organization/organization:
+          create: Organizace byla úspěšně vytvořena.
+          update: Organizace byla úspěšně uložena.
+          destroy: Organizace byla úspěšně smazána.
+        ric_organization/organization_assignment:
+          create: Pozice byla úspěšně vytvořena.
+          update: Pozice byla úspěšně uložena.
+          destroy: Pozice byla úspěšně smazána.
+        ric_organization/organization_relation:
+          create: Relace byla úspěšně vytvořena.
+          update: Relace byla úspěšně uložena.
+          destroy: Relace byla úspěšně smazána.
+    errors:
+      models:
+        ric_organization/organization:
+          not_found: Organizace nebyla nalezena.
+        ric_organization/organization_assignment:
+          not_found: Pozice nebyla nalezena.
+        ric_organization/organization_relation:
+          not_found: Relace nebyla nalezena.

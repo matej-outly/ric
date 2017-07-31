@@ -1,6 +1,6 @@
 # RicSettings
 
-With this module you can define global settings stored in DB so it can be modified by system administrator.
+With this module you can define global settings stored in DB so it can be modified by the system administrator.
 
 ## Basic instalation
 

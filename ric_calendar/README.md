@@ -1,7 +1,6 @@
-# Ric Calendar
+# RicCalendar
 
-Ric Calendar adds ability to models to be schedulable in time. These models then
-became events, which can be both non-repeating or recurring.
+Ric Calendar adds ability to models to be schedulable in time. These models then become events, which can be both non-repeating and recurring.
 
 Calendar widget is based on `Fullcalendar.io`. These gems are needed for proper
 function:
