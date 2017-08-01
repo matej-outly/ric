@@ -75,7 +75,7 @@ module RicAuth
 				def load_from_session(session)
 					if session
 						self.role_ref = session["role_ref"]
-						self.user_id = session["user_id"].to_i
+						self.user_id = session["user_id"]
 					else
 						self.role_ref = nil
 						self.user_id = nil
@@ -89,12 +89,12 @@ module RicAuth
 					result = {}
 					
 					if !self.user_id.blank? && !self.role_ref.blank?
-						result["user_id"] = self.user_id.to_i
+						result["user_id"] = self.user_id
 						result["role_ref"] = self.role_ref
 						result["changed"] = true
 					
 					elsif !self.user_id.blank?
-						result["user_id"] = self.user_id.to_i
+						result["user_id"] = self.user_id
 						self.role_ref = self.user.role
 						result["role_ref"] = self.role_ref
 						result["changed"] = true

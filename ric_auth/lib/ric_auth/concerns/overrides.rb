@@ -23,7 +23,6 @@ module RicAuth
 				# Access to former current_user
 				# *************************************************************
 
-				alias_method :real_current_user, :current_user
 				helper_method :real_current_user
 
 				# *************************************************************
@@ -31,7 +30,7 @@ module RicAuth
 				# *************************************************************
 
 				define_method(:current_user) do
-					if user_signed_in? && !@override.user_id.blank? && @override.user_id.to_i != real_current_user.id.to_i
+					if real_current_user && @override && !@override.user_id.blank? && @override.user.id != real_current_user.id
 						if real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true
 							return @override.user
 						else
@@ -41,6 +40,10 @@ module RicAuth
 					return real_current_user
 				end
 
+			end
+
+			def real_current_user
+				@real_current_user ||= warden.authenticate(:scope => :user)
 			end
 
 			def set_override
