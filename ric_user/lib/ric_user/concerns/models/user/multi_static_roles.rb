@@ -27,9 +27,38 @@ module RicUser
 						# Roles
 						# *****************************************************
 
-						enum_column :roles, RicUser.roles
+						enum_array_column :roles, RicUser.roles
 						enum_column :role, RicUser.roles
 						after_save :update_roles
+
+						#
+						# Get all roles - redefinition of enum_array getter
+						#
+						define_method(:roles) do
+							if @roles.nil?
+								@roles = self.user_roles.order(role: :asc).to_a.map { |user_role| user_role.role }
+							end
+							return @roles
+						end
+
+						#
+						# Set new roles - redefinition of enum_array setter
+						#
+						define_method(:roles=) do |new_roles|
+						
+							# Manage input / new roles
+							if new_roles.blank?
+								new_roles = []
+							else
+								new_roles = [new_roles.to_s] if !new_roles.is_a?(Array)
+								new_roles.uniq!
+							end
+
+							# Store for later update
+							#@roles_was = self.roles if @roles_was.nil?
+							@roles_changed = true
+							@roles = new_roles
+						end
 
 					end
 
@@ -43,44 +72,11 @@ module RicUser
 							true
 						end
 
-						def role_obj(role)
-							self.available_roles.find { |r| r.value == role }
-						end
-
 					end
 
 					# *********************************************************
 					# Roles as set in DB
 					# *********************************************************
-
-					#
-					# Get all roles
-					#
-					def roles
-						if @roles.nil?
-							@roles = self.user_roles.order(role: :asc).to_a.map { |user_role| user_role.role }
-						end
-						return @roles
-					end
-
-					#
-					# Set roles to DB
-					#
-					def roles=(new_roles)
-
-						# Manage input / new roles
-						if new_roles.blank?
-							new_roles = []
-						else
-							new_roles = [new_roles.to_s] if !new_roles.is_a?(Array)
-							new_roles.uniq!
-						end
-
-						# Store for later update
-						#@roles_was = self.roles if @roles_was.nil?
-						@roles_changed = true
-						@roles = new_roles
-					end
 
 					#
 					# Get currently selected role, see current_role method

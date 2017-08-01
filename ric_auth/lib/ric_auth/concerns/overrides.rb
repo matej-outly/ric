@@ -14,23 +14,56 @@ module RicAuth
 		module Overrides extend ActiveSupport::Concern
 			
 			included do	
+				
+				before_action :set_override
 				before_action :override_role_if_possible
+				before_action :redirect_if_override_changed
+
+				# *************************************************************
+				# Access to former current_user
+				# *************************************************************
+
+				alias_method :real_current_user, :current_user
+				helper_method :real_current_user
+
+				# *************************************************************
+				# Redefine current_user
+				# *************************************************************
+
+				define_method(:current_user) do
+					if real_current_user && !@override.user_id.blank? && @override.user_id.to_i != real_current_user.id.to_i
+						if real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true
+							return @override.user
+						else
+							session[RicAuth.override_model.session_key] = @override.clear_session
+						end
+					end
+					return real_current_user
+				end
+
+			end
+
+			def set_override
+				@override = RicAuth.override_model.new
+				@override.load_from_session(session[RicAuth.override_model.session_key])
 			end
 
 			def override_role_if_possible
-				if current_user
-					if session["auth_overrides"] && session["auth_overrides"]["role"]
-						if current_user.roles.include?(session["auth_overrides"]["role"])
-							current_user.current_role = session["auth_overrides"]["role"]
-							role_changed = session["auth_overrides"]["role_changed"]
-							session["auth_overrides"]["role_changed"] = false
-							if role_changed
-								redirect_to current_root_path
-							end
-						else
-							session["auth_overrides"].delete("role")
-							session["auth_overrides"]["role_changed"] = false
-						end
+				if current_user && !@override.role_ref.blank?
+					if current_user.respond_to?(:can_override_role) && current_user.can_override_role == true && current_user.roles.include?(@override.role_ref)
+						current_user.current_role = @override.role_ref
+					else
+						session[RicAuth.override_model.session_key] = @override.clear_session
+					end
+				end
+			end
+
+			def redirect_if_override_changed
+				if session[RicAuth.override_model.session_key]
+					changed = session[RicAuth.override_model.session_key]["changed"]
+					session[RicAuth.override_model.session_key]["changed"] = false
+					if changed
+						redirect_to current_root_path
 					end
 				end
 			end

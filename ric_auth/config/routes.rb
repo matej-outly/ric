@@ -41,12 +41,7 @@ RicAuth::Engine.routes.draw do
 	end
 
 	# Overrides
-	resource :override, controller: "overrides", only: [] do
-		member do 
-			put :role
-			put :user
-		end
-	end
+	resources :overrides, only: [:create]
 
 	# Authentications
 	get "/:provider", to: "authentications#new", as: "sign_in_with_provider" # NEW action does't exist in this case because this request will be handled by OmniAuth middleware. Defined only for path helper.

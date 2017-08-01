@@ -196,14 +196,6 @@ module RicUser
 					return result
 				end
 
-				# *************************************************************
-				# Avatar
-				# *************************************************************
-
-				def avatar_url
-					(self.avatar.present? ? self.avatar.url : nil)
-				end
-
 			end
 		end
 	end

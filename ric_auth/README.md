@@ -120,3 +120,31 @@ In case of OmniAuth integration tou can define login button like this:
 ```html
 <a href="/auth/facebook">Login using Facebook</a>
 ```
+
+## Role overriding
+
+If user interface is designed just for one (static) role (person association) but one user can obtain multiple roles (people associations) user should be able to switch between defined roles. This functionality is integrated to RicAuth module. All you need to do is to provide `can_override_role` attribute on the User model. It can be done statically:
+
+```ruby
+module RicUser
+    class User < ActiveRecord::Base
+        ...
+
+        # *********************************************************************
+        # Overrides
+        # *********************************************************************
+
+        def can_override_role
+            true
+        end
+
+    end
+end
+```
+
+Alternatively you can add column `can_override_role` to the `users` DB table and enable role switching only for selected users.
+
+## User overriding
+
+This feature enables the system administrator to work with the application as a different user. The feature is integrated to the RicAuth module. All you need to do is to provide `can_override_user` attribute on the User model. It can be done with `can_override_user` column in the `users` DB table so you can enable this feature only for selected users. 
+

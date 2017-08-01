@@ -1,0 +1,20 @@
+<% if real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true %>
+	<div class="modal fade" id="override-user-modal" tabindex="-1" role="dialog" aria-labelledby="override-user-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<%= rug_form_for(@override, url: ric_auth.overrides_path) do |f| %>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="override-user-modal-label"><%= t("headers.ric_auth.overrides.user") %></h4>
+					</div>
+					<div class="modal-body">
+						<%= f.token_input_row :user_id, ric_user.search_users_path, as: :user, label_attr: :name_formatted, limit: 1, label: t("activerecord.attributes.ric_auth/override.user_id") %>
+					</div>
+					<div class="modal-footer">
+						<%= f.primary_button_row :submit, label: t("helpers.submit.ok") %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+<% end %>

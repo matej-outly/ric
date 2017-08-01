@@ -10,14 +10,19 @@ cs:
       profiles:
         edit: Upravit profil
         update: Upravit profil
+      overrides:
+        user: Prohlížet jako jiný uživatel
 
   activerecord:
+    attributes:
+      ric_auth/override:
+        role_ref: role
+        user_id: Uživatel
+        user: Uživatel
     notices:
-      ric_auth:
-        override_role_set: Nyní prohlížíte aplikaci jako %{role}.
-    errors:
-      ric_auth:
-        override_role_not_set: Nepodařilo se nastavit uživatelskou roli.
+      models:
+        ric_auth/override:
+          create: Nyní prohlížíte aplikaci jako %{user} (%{role}).
 
   #
   # Devise

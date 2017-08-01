@@ -14,37 +14,23 @@ module RicAuth
 		module Controllers
 			module OverridesController extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
-					
 					before_action :authenticate_user!
-
 				end
 
-				def role
-					role = params[:role]
-					if current_user && current_user.roles.include?(role)
-						session[session_key] = {} if !session[session_key]
-						session[session_key]["role"] = role
-						session[session_key]["role_changed"] = true
-						redirect_to request.referrer, notice: I18n.t("activerecord.notices.ric_auth.override_role_set", role: current_user.class.role_obj(role).label.downcase_first)
-					else 
-						redirect_to request.referrer, alert: I18n.t("activerecord.errors.ric_auth.override_role_not_set")
+				def create
+					override = RicAuth.override_model.new(override_params)
+					session[RicAuth.override_model.session_key] = override.save_to_session
+					if override.user && override.role
+						flash[:notice] = I18n.t("activerecord.notices.models.ric_auth/override.create", user: override.user.name_formatted, role: override.role.label.downcase_first)
 					end
-				end
-
-				def user
-					# TODO
+					redirect_to request.referrer
 				end
 
 			protected
 
-				def session_key
-					"auth_overrides"
+				def override_params
+					params.require(:override).permit(RicAuth.override_model.permitted_columns)
 				end
 
 			end

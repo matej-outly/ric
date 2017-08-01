@@ -21,6 +21,7 @@ require "ric_auth/concerns/overrides"
 require "ric_auth/concerns/models/authentication"
 require "ric_auth/concerns/models/devisable"
 require "ric_auth/concerns/models/omniauthable"
+require "ric_auth/concerns/models/override"
 
 module RicAuth
 
@@ -62,6 +63,15 @@ module RicAuth
 		return @@authentication_model.constantize
 	end
 	@@authentication_model = "RicAuth::Authentication"
+
+	#
+	# Override model
+	#
+	mattr_accessor :override_model
+	def self.override_model
+		return @@override_model.constantize
+	end
+	@@override_model = "RicAuth::Override"
 
 	#
 	# Devise paths concern

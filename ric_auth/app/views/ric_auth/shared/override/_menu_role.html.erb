@@ -1,0 +1,10 @@
+<% current_user.roles_objs.each do |role_obj| %>
+	<% 
+		if current_user.current_role == role_obj.value
+			label = (role_obj.label + "&nbsp;" + rug_icon("check")).html_safe
+		else
+			label = role_obj.label
+		end
+	%>
+	<li><%= link_to label, ric_auth.overrides_path("override[user_id]" => current_user.id, "override[role_ref]" => role_obj.value), method: "post" %></li>
+<% end %>
