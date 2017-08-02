@@ -26,10 +26,32 @@ module RicPlugin
 
 				end
 
-				module ClassMethods
+				#
+				# Make this plugin dependent on the given plugin
+				#
+				def depends_on!(plugin)
+					self.actor_relations.find_or_create_by(kind: "depends_on", actee: plugin)
+				end
 
-					
+				#
+				# Get all plugins on which this plugin is dependent
+				#
+				def depends_on
+					self.actor_relations.where(kind: "depends_on").map { |i| i.actee }
+				end
 
+				#
+				# Make this plugin excluded by the given plugin
+				#
+				def excluded_by!(plugin)
+					self.actor_relations.find_or_create_by(kind: "excluded_by", actee: plugin)
+				end
+
+				#
+				# Get all plugins which excludes this module
+				#
+				def excluded_by
+					self.actor_relations.where(kind: "excluded_by").map { |i| i.actee }
 				end
 
 			end

@@ -19,6 +19,11 @@ cs:
       ric_plugin/plugin:
         ref: Systémová značka
         name: Název pluginu
+      ric_plugin/plugin_relation:
+        kind: Typ relace
+        kind_values:
+          depends_on: Závisí na modulu
+          excluded_by: Je vyloučen modulem
     notices:
       models:
         ric_plugin/plugin:
