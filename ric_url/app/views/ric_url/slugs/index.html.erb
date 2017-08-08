@@ -1,11 +1,14 @@
-<%
-	columns = rug_columns
-	columns.add_column_by_type(:locale, :string)
-	columns.add_column_by_type(:original, :string)
-	columns.add_column_by_type(:translation, :string)
-	columns.add_column_by_type(:filter, :string) if RicUrl.use_filter == true
-%>
-<%= rug_index_table_for(@slugs, columns, paths: {
-	edit: :edit_slug_path,
-	destroy: :slug_path,
-}, pagination: true, summary: true ) %>
+<%= rug_index(@slugs) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :locale %>
+		<%= b.string :original %>
+		<%= b.string :translation %>
+		<%= b.string :filter if RicUrl.use_filter == true %>
+		<%= b.action :edit, path: :edit_slug_path %>
+		<%= b.action :destroy, path: :slug_path %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>

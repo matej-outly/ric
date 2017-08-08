@@ -1,12 +1,12 @@
 <%= rug_index(@users) do |t| %>
 	<%= t.body do |b| %>
-		<%= b.string :email, show: { path: "ric_user.user_path" }, sort: true %>
+		<%= b.string :email, show: { path: :user_path }, sort: true %>
 		<%= b.string :name_lastname, sort: true %>
 		<%= b.string :name_firstname, sort: true %>
 		<%#= b.enum :role if RicUser.user_model.has_role? %>
 		<%#= b.enum_array :roles if RicUser.user_model.has_roles? %>
-		<%= b.action :edit, path: "ric_user.edit_user_path" %>
-		<%= b.action :destroy, path: "ric_user.user_path" %>
+		<%= b.action :edit, path: :edit_user_path %>
+		<%= b.action :destroy, path: :user_path %>
 	<% end %>
 	<%= t.footer do |f| %>
 		<%= f.pagination %>
