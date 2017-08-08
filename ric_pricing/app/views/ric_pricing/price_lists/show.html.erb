@@ -1,17 +1,24 @@
-<%= rug_show_table_for(@price_list, {
-	name: :string,
-}) %>
+<%= rug_show(@price_list) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name %>
+	<% end %>
+<% end %>
 
-<h3><%= RicPricing.price_list_model.human_attribute_name("prices") %></h3>
-
-<%= rug_index_table_for(@price_list.prices.order(position: :asc), { 
-	description: :string,
-	amount: :string,
-	operator: :enum,
-	price: :currency,
-}, paths: {
-	new: lambda { new_price_list_price_path(@price_list) },
-	edit: lambda { |price| edit_price_list_price_path(@price_list, price) },
-	move: lambda { |price, relation, destination_id| move_price_list_price_path(@price_list, price, relation, destination_id) },
-	destroy: lambda { |price| price_list_price_path(@price_list, price) },
-}, moving: true, summary: true ) %>
+<h3><%= RicPricing.price_list_model.human_attribute_name(:prices) %></h3>
+<%= rug_index(@price_list.prices.order(position: :asc)) do |t| %>
+	<%= t.header do |h| %>
+		<%= h.action :new, path: lambda { new_price_list_price_path(@price_list) } %>
+	<% end %>
+	<%= t.body do |b| %>
+		<%= b.action :move, lambda { |price, relation, destination_id| move_price_list_price_path(@price_list, price, relation, destination_id) } %>
+		<%= b.string :description %>
+		<%= b.string :amount %>
+		<%= b.enum :operator %>
+		<%= b.currency :price %>
+		<%= b.action :edit, path: lambda { |price| edit_price_list_price_path(@price_list, price) } %>
+		<%= b.action :destroy, path: lambda { |price| price_list_price_path(@price_list, price) } %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.summary %>
+	<% end %>
+<% end %>
