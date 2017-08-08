@@ -1,11 +1,15 @@
-<%= rug_index_table_for(@notifications, { 
-	created_at: :datetime,
-	subject: :string,
-	message: { type: :text, strip_tags: true },
-	kind: :enum,
-	sender_name_or_email: { type: :string, column_label: RicNotification.notification_model.human_attribute_name(:sender) },
-	done: :string,
-}, paths: {
-	show: :notification_path,
-	destroy: :notification_path
-}, pagination: true, summary: true ) %>
+<%= rug_index(@notifications) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.datetime :created_at %>
+		<%= b.string :subject, show: { path: :notification_path } %>
+		<%= b.text :message, type: { strip_tags: true } %>
+		<%= b.enum :kind %>
+		<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender) %>
+		<%= b.string :done %>
+		<%= b.action :destroy, path: :notification_path %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>

@@ -1,8 +1,11 @@
-<%= rug_index_table_for(@notification_templates, { 
-	ref: :enum,
-	subject: :string,
-	message: { type: :text, strip_tags: true }
-}, paths: {
-	show: :notification_template_path,
-	edit: :edit_notification_template_path,
-}, summary: true ) %>
+<%= rug_index(@notification_templates) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.enum :ref, show: { path: :notification_template_path } %>
+		<%= b.string :subject %>
+		<%= b.text :message, type: { strip_tags: true } %>
+		<%= b.action :edit, path: :edit_notification_template_path %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.summary %>
+	<% end %>
+<% end %>

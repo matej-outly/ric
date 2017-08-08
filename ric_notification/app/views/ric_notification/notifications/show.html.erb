@@ -1,27 +1,32 @@
-<%= rug_show_table_for(@notification, { 
-	created_at: :datetime,
-	subject: :string,
-	kind: :enum,
-	url: :string,
-	sender_name_or_email: { type: :string, column_label: RicNotification.notification_model.human_attribute_name(:sender) },
-	done: :string,
-}) %>
-<% if !@notification.message.blank? %>
-	<h3><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
-	<div class="text-box">
-		<%= @notification.message.to_s.html_safe %>
-	</div>
+<%= rug_show(@notification) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.datetime :created_at %>
+		<%= b.string :subject, show: { path: :notification_path } %>
+		<%= b.enum :kind %>
+		<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender) %>
+		<%= b.string :done %>
+	<% end %>
+	<% if !@notification.message.blank? %>
+		<h3><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
+		<%= rug_format_text(@notification.message, object: @notification, column: :message, truncate: false, format: :text_box) %>
+	<% end %>
 <% end %>
+
 <%= rug_tabs(RicNotification.theme.tabs_options) do |t| %>
 	<% @notification.notification_deliveries.order(id: :asc).each do |notification_delivery| %>
 		<% t.tab notification_delivery.kind, notification_delivery.kind_obj.label do %>
-			<%= rug_index_table_for(notification_delivery.notification_receivers.order(created_at: :desc).page(params[:page]).per(50), { 
-				receiver_name_or_email: { type: :string, column_label: RicNotification.notification_receiver_model.human_attribute_name(:receiver) },
-				state: :state,
-				created_at: :datetime,
-				sent_at: :datetime,
-				received_at: :datetime,
-			}, pagination: true) %>
+			<%= rug_index(notification_delivery.notification_receivers.order(created_at: :desc).page(params[:page]).per(50)) do |t| %>
+				<%= t.body do |b| %>
+					<%= b.string :receiver_name_or_email, label: RicNotification.notification_receiver_model.human_attribute_name(:receiver) %>
+					<%= b.state :state %>
+					<%= b.datetime :created_at %>
+					<%= b.datetime :sent_at %>
+					<%= b.datetime :received_at %>
+				<% end %>
+				<%= t.footer do |f| %>
+					<%= f.pagination %>
+				<% end %>
+			<% end %>
 		<% end %>
 	<% end %>
 <% end %>
