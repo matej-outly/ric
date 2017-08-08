@@ -1,4 +1,7 @@
-<%= rug_form_for(@partner, create_url: :partners_path, update_url: :partner_path) do |f| %>
+<%= rug_form_for(@partner, 
+	create_url: :partners_path, 
+	update_url: :partner_path
+) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.text_input_row :url %>
 	<%= f.dropzone_row :logo %>

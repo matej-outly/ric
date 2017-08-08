@@ -1,5 +1,7 @@
-<%= rug_show_table_for(@partner, {
-	name: :string,
-	url: :string,
-	logo: { type: :picture, thumb_style: :full },
-}) %>
+<%= rug_show(@partner) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name %>
+		<%= b.string :url %>
+		<%= b.picture :logo, type: { thumb_style: :full } %>
+	<% end %>
+<% end %>

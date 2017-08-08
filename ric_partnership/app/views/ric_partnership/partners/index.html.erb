@@ -1,9 +1,13 @@
-<%= rug_index_table_for(@partners, { 
-	name: :string,
-	url: :string
-}, paths: {
-	show: :partner_path,
-	edit: :edit_partner_path,
-	move: :move_partner_path,
-	destroy: :partner_path
-}, moving: true, pagination: true, summary: true ) %>
+<%= rug_index(@partners) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.action :move, path: :move_partner_path %>
+		<%= b.string :name, show: { path: :partner_path } %>
+		<%= b.string :url %>
+		<%= b.action :edit, path: :edit_partner_path %>
+		<%= b.action :destroy, path: :partner_path %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>
