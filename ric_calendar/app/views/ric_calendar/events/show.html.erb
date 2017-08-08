@@ -1,10 +1,10 @@
-<%= rug_show_table_for(@event, {
-	name: :string,
-	time_formatted: :string,
-}) %>
-<% if !@event.description.blank? %>
-	<h3><%= RicCalendar.event_model.human_attribute_name(:description) %></h3>
-	<div class="text-box">
-		<%= @event.description.to_s.html_safe %>
-	</div>
+<%= rug_show(@event) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name %>
+		<%= b.string :time_formatted %>
+	<% end %>
+	<% if !@event.description.blank? %>
+		<h3><%= RicCalendar.event_model.human_attribute_name(:description) %></h3>
+		<%= rug_format_text(@event.description, object: @event, column: :description, truncate: false, format: :text_box) %>
+	<% end %>
 <% end %>
