@@ -1,12 +1,20 @@
-<%= rug_index_table_for(@seasons, { 
-	name: :string,
-	from: :date,
-	to: :date,
-	current: { type: :state }
-}, paths: {
-	show: :season_path,
-	edit: :edit_season_path,
-	destroy: :season_path
-}, actions: {
-	make_current: { label: "", icon: "thumb-tack", path: "ric_season.make_current_season_path", method: "put", show_if: { |season| season.current != true } }
-}, summary: true ) %>
+<%= rug_index(@seasons) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name, show: { path: :season_path } %>
+		<%= b.date :from %>
+		<%= b.date :to %>
+		<%= b.state :current %>
+		<%= b.action :make_current, {
+				label: "", 
+				icon: "thumb-tack", 
+				path: "ric_season.make_current_season_path", 
+				method: "put", 
+				if: { |season| season.current != true } 
+			} %>
+		<%= b.action :edit, path: :edit_season_path %>
+		<%= b.action :destroy, path: :season_path %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.summary %>
+	<% end %>
+<% end %>

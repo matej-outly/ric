@@ -1,4 +1,7 @@
-<%= rug_form_for(@season, create_url: :seasons_path, update_url: :season_path) do |f| %>
+<%= rug_form_for(@season, 
+	create_url: :seasons_path, 
+	update_url: :season_path
+) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.date_picker_row :from %>
 	<%= f.checkbox_row :current %>
