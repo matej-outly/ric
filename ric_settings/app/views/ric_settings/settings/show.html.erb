@@ -1,13 +1,13 @@
 <%= rug_tabs(RicSettings.theme.tabs_options) do |t| %>
 	<% @settings_collection.categories.each_with_index do |(category, settings), index| %>
 		<% t.tab category.to_sym, t("activerecord.attributes.ric_settings/settings_collection.category_values.#{category}") do %>
-			<% 
-				columns = {}
-				settings.each do |setting_ref| 
-					columns[setting_ref] = { type: @settings_collection.settings[setting_ref.to_sym][:kind], column_label: t("activerecord.attributes.ric_settings/settings_collection.#{setting_ref}") }
-				end
-			%>
-			<%= rug_show_table_for(@settings_collection, columns) %>
+			<%= rug_show(@settings_collection) do |t| %>
+				<%= t.body do |b| %>
+					<% settings.each do |setting_ref| %>
+						<%= b.send(@settings_collection.settings[setting_ref.to_sym][:kind], setting_ref, label: t("activerecord.attributes.ric_settings/settings_collection.#{setting_ref}")) %>
+					<% end %>
+				<% end %>
+			<% end %>
 		<% end %>
 	<% end %>
 <% end %>
