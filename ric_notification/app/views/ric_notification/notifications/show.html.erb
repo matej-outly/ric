@@ -1,7 +1,7 @@
 <%= rug_show(@notification) do |t| %>
 	<%= t.body do |b| %>
 		<%= b.datetime :created_at %>
-		<%= b.string :subject, show: { path: :notification_path } %>
+		<%= b.string :subject %>
 		<%= b.enum :kind %>
 		<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender) %>
 		<%= b.string :done %>
