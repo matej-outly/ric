@@ -1,9 +1,13 @@
-<%= rug_index_table_for(@contact_messages, { 
-	created_at: :datetime,
-	name: :string,
-	email: :string,
-}, paths: {
-	show: :contact_message_path,
-	edit: :edit_contact_message_path,
-	destroy: :contact_message_path
-}, pagination: true, summary: true ) %>
+<%= rug_index(@contact_messages) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.datetime :created_at, show: { path: :contact_message_path } %>
+		<%= b.string :name %>
+		<%= b.string :email %>
+		<%= b.action :edit, path: :edit_contact_message_path %>
+		<%= b.action :destroy, path: :contact_message_path %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>

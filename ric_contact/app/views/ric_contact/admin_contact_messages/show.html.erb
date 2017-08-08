@@ -1,6 +1,11 @@
-<%= rug_show_table_for(@contact_message, {
-	created_at: :datetime,
-	name: :string,
-	email: :string,
-	message: :text
-}) %>
+<%= rug_show(@contact_message) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.datetime :created_at %>
+		<%= b.string :name %>
+		<%= b.string :email %>
+	<% end %>
+	<% if !@contact_message.message.blank? %>
+		<h3><%= RicContact.contact_message_model.human_attribute_name(:message) %></h3>
+		<%= rug_format_text(@contact_message.message, object: @contact_message, column: :message, truncate: false, format: :text_box) %>
+	<% end %>
+<% end %>
