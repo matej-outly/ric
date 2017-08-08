@@ -1,11 +1,13 @@
-<%= rug_show_table_for(@banner, { 
-	name: :string,
-	advertiser: { type: :belongs_to, label: :name, path: "ric_advert_admin.advertiser_path" },
-	url: :string,
-	kind: :enum,
-	file: :file,
-	file_kind: :enum,
-	valid_from: :date,
-	valid_to: :date,
-	priority: :integer
-}) %>
+<%= rug_show(@banner) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name %>
+		<%= b.belongs_to :advertiser, type: { label_attr: :name, path: "ric_advert_admin.advertiser_path" } %>
+		<%= b.string :url %>
+		<%= b.enum :kind %>
+		<%= b.file :file %>
+		<%= b.enum :file_kind %>
+		<%= b.date :valid_from %>
+		<%= b.date :valid_to %>
+		<%= b.integer :priority %>
+	<% end %>
+<% end %>

@@ -1,27 +1,42 @@
-<%= rug_show_table_for(@advertiser, { 
-	name: :string
-}) %>
-
-<h3><%= t("headers.ric_advert.observer_advertisers.valid_banners") %></h3>
-<%= rug_index_table_for(@advertiser.banners.valid(@today).order(name: :asc), { 
-	name: :string,
-	kind: :enum,
-}, paths: {
-	show: "ric_advert_observer.banner_path"
-}, summary: true ) %>
-
-<h3><%= t("headers.ric_advert.observer_advertisers.sofar_invalid_banners") %></h3>
-<%= rug_index_table_for(@advertiser.banners.sofar_invalid(@today).order(name: :asc), { 
-	name: :string,
-	kind: :enum,
-}, paths: {
-	show: "ric_advert_observer.banner_path"
-}, summary: true ) %>
-
-<h3><%= t("headers.ric_advert.observer_advertisers.already_invalid_banners") %></h3>
-<%= rug_index_table_for(@advertiser.banners.already_invalid(@today).order(name: :asc), { 
-	name: :string,
-	kind: :enum,
-}, paths: {
-	show: "ric_advert_observer.banner_path"
-}, summary: true ) %>
+<%= rug_tabs(RicAdvert.theme.tabs_options) do |t| %>
+	<% t.tab :identification, t("headers.ric_advert.observer_advertisers.identification") do %>
+		<%= rug_show(@advertiser) do |t| %>
+			<%= t.body do |b| %>
+				<%= b.string :name %>
+			<% end %>
+		<% end %>
+	<% end %>
+	<% t.tab :valid_banners, t("headers.ric_advert.observer_advertisers.valid_banners") do %>
+		<%= rug_index(@advertiser.banners.valid(@today).order(name: :asc)) do |t| %>
+			<%= t.body do |b| %>
+				<%= b.string :name, show: { path: "ric_advert_observer.banner_path" } %>
+				<%= b.enum :kind %>
+			<% end %>
+			<%= t.footer do |f| %>
+				<%= f.summary %>
+			<% end %>
+		<% end %>
+	<% end %>
+	<% t.tab :invalid_banners, t("headers.ric_advert.observer_advertisers.invalid_banners") do %>
+		<h3><%= t("headers.ric_advert.observer_advertisers.sofar_invalid_banners") %></h3>
+		<%= rug_index(@advertiser.banners.sofar_invalid(@today).order(name: :asc)) do |t| %>
+			<%= t.body do |b| %>
+				<%= b.string :name, show: { path: "ric_advert_observer.banner_path" } %>
+				<%= b.enum :kind %>
+			<% end %>
+			<%= t.footer do |f| %>
+				<%= f.summary %>
+			<% end %>
+		<% end %>
+		<h3><%= t("headers.ric_advert.observer_advertisers.already_invalid_banners") %></h3>
+		<%= rug_index(@advertiser.banners.already_invalid(@today)) do |t| %>
+			<%= t.body do |b| %>
+				<%= b.string :name, show: { path: "ric_advert_observer.banner_path" } %>
+				<%= b.enum :kind %>
+			<% end %>
+			<%= t.footer do |f| %>
+				<%= f.summary %>
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>

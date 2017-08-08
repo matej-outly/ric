@@ -1,7 +1,11 @@
-<%= rug_index_table_for(@advertisers, { 
-	name: :string,
-}, paths: {
-	show: "ric_advert_admin.advertiser_path",
-	edit: "ric_advert_admin.edit_advertiser_path",
-	destroy: "ric_advert_admin.advertiser_path"
-}, pagination: true, summary: true ) %>
+<%= rug_index(@advertisers) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name, show: { path: "ric_advert_admin.advertiser_path" } %>
+		<%= b.action :edit, path: "ric_advert_admin.edit_advertiser_path" %>
+		<%= b.action :destroy, path: "ric_advert_admin.advertiser_path" %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>
