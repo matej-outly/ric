@@ -1,12 +1,15 @@
-<% 
-	columns = rug_columns 
-	columns.add_column_by_type(:email, type: :string)
-	columns.add_column_by_type(:name_lastname, type: :string)
-	columns.add_column_by_type(:name_firstname, type: :string)
-	columns.add_column_by_type(:role, type: :enum) if RicUser.user_model.has_role?
-%>
-<%= rug_index_table_for(@users, columns, paths: {
-	show: :user_path,
-	edit: :edit_user_path,
-	destroy: :user_path
-}, sorting: true, pagination: true, summary: true ) %>
+<%= rug_index(@users) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :email, show: { path: "ric_user.user_path" }, sort: true %>
+		<%= b.string :name_lastname, sort: true %>
+		<%= b.string :name_firstname, sort: true %>
+		<%#= b.enum :role if RicUser.user_model.has_role? %>
+		<%#= b.enum_array :roles if RicUser.user_model.has_roles? %>
+		<%= b.action :edit, path: "ric_user.edit_user_path" %>
+		<%= b.action :destroy, path: "ric_user.user_path" %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>
