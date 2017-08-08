@@ -19,12 +19,13 @@
 		</div>
 	<% end %>
 	<% t.tab :versions, t("headers.ric_dms.documents.versions") do %>
-		<%= rug_index_table_for(@document.recent_versions, {
-			created_at: :datetime,
-			attachment: { type: :file, picture: false, download: true }
-		}, paths: {
-			destroy: lambda { |document_version| folder_document_version_path(@document_folder, @document, document_version) }
-		}) %>
+		<%= rug_index(@document.recent_versions) do |t| %>
+			<%= t.body do |b| %>
+				<%= b.datetime :created_at %>
+				<%= b.file :attachment, type: { picture: false, download: true } %>
+				<%= b.action :destroy, path: lambda { |document_version| folder_document_version_path(@document_folder, @document, document_version) } %>
+			<% end %>
+		<% end %>
 	<% end %>
 <% end %>
 
