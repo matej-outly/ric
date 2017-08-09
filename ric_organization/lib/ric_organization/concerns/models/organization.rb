@@ -29,11 +29,46 @@ module RicOrganization
 				module ClassMethods
 
 					# *********************************************************
+					# Scopes
+					# *********************************************************
+
+					def filter(params)
+						
+						# Preset
+						result = all
+
+						# Name
+						if !params[:name].blank?
+							result = result.where("lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:name].to_s)
+						end
+
+						result
+					end
+
+					def search(query)
+						if query.blank?
+							all
+						else
+							where("
+								(lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
+							", query: query.to_s)
+						end
+					end
+
+					# *********************************************************
 					# Columns
 					# *********************************************************
 
 					def permitted_columns
 						result = [
+							:name
+						]
+						return result
+					end
+
+					def filter_columns
+						result = [
+							:name,
 						]
 						return result
 					end

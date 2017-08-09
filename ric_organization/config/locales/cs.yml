@@ -50,7 +50,16 @@ cs:
       models:
         ric_organization/organization:
           not_found: Organizace nebyla nalezena.
+          create: Organizace nebyla vytvořena.
+          update: Organizace nebyla uložena.
+          destroy: Organizace nebyla smazána.
         ric_organization/organization_assignment:
           not_found: Pozice nebyla nalezena.
+          create: Pozice nebyla vytvořena.
+          update: Pozice nebyla uložena.
+          destroy: Pozice nebyla smazána.
         ric_organization/organization_relation:
           not_found: Relace nebyla nalezena.
+          create: Relace nebyla vytvořena.
+          update: Relace nebyla uložena.
+          destroy: Relace nebyla smazána.

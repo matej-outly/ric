@@ -20,7 +20,7 @@ module RicPlugin
 					# Structure
 					# *********************************************************
 
-					has_and_belongs_to_many :plugins, class_name: RicPlugin.plugin_model.to_s, join_table: :plugins_subjects
+					has_and_belongs_to_many :plugins, class_name: RicPlugin.plugin_model.to_s, join_table: :plugins_subjects, foreign_key: :subject_id
 
 				end
 

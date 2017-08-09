@@ -34,4 +34,7 @@ cs:
       models:
         ric_plugin/plugin:
           create: Plugin nebyl nalezen.
+          create: Plugin nebyl vytvořen.
+          update: Plugin nebyl uložen.
+          destroy: Plugin nebyl smazán.
       
