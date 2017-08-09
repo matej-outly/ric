@@ -1,6 +1,6 @@
 <%= rug_form_for(@field, 
-	create_url: lambda { ric_website_admin.structure_fields_path(@structure) }, 
-	update_url: lambda { |field| ric_website_admin.structure_field_path(@structure, field) }
+	create_path: lambda { ric_website_admin.structure_fields_path(@structure) }, 
+	update_path: lambda { |field| ric_website_admin.structure_field_path(@structure, field) }
 ) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.text_input_row :ref %>

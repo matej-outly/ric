@@ -1,4 +1,7 @@
-<%= rug_form_for(@product_teaser, create_url: :product_teasers_path, update_url: :product_teaser_path) do |f| %>
+<%= rug_form_for(@product_teaser, 
+	create_path: :product_teasers_path, 
+	update_path: :product_teaser_path
+) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.picker_row :key %>
 	<%= f.token_input_row :product_ids, ric_assortment_admin.search_products_path, as: :products, value_attr: :id, label_attr: :name_with_category %>

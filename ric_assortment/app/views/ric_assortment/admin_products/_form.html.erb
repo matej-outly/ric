@@ -1,4 +1,7 @@
-<%= rug_form_for(@product, create_url: :products_path, update_url: :product_path) do |f| %>
+<%= rug_form_for(@product, 
+	create_path: :products_path, 
+	update_path: :product_path
+) do |f| %>
 	<% if @product.class.parts[:identification] && @product.class.parts[:identification].include?(:form) %>
 		<%= render partial: "form_identification", locals: { f: f } %>
 	<% end %>

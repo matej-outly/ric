@@ -1,6 +1,6 @@
 <%= rug_form_for(@calendar, 
-	create_url: "ric_calendar.calendars_path", 
-	update_url: "ric_calendar.calendar_path") do |f| 
+	create_path: "ric_calendar.calendars_path", 
+	update_path: "ric_calendar.calendar_path") do |f| 
 %>
 	<%= f.text_input_row :name, :text_field %>
 	<%= f.checkbox_row :is_public %>

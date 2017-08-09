@@ -1,6 +1,6 @@
 <%= rug_form_for(@document, 
-	create_url: lambda { folder_documents_path(@document_folder) },
-	update_url: lambda { |document| folder_document_path(@document_folder, document) },
+	create_path: lambda { folder_documents_path(@document_folder) },
+	update_path: lambda { |document| folder_document_path(@document_folder, document) },
 ) do |f| %>
 	<div class="row">
 		<div class="col-sm-7">

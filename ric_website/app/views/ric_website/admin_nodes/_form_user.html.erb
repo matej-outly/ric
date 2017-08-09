@@ -1,6 +1,4 @@
-<%= rug_form_for(@node, 
-	update_url: "ric_website_admin.node_path"
-) do |f| %>
+<%= rug_form_for(@node, update_path: "ric_website_admin.node_path") do |f| %>
 	<%= f.hidden_field :parent_id %>
 	<%= f.hidden_field :structure_id %>
 	<% @node.permitted_fields.each do |field| %>

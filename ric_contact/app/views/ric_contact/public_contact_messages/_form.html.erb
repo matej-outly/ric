@@ -5,7 +5,6 @@
 		success_message: I18n.t("activerecord.notices.models.#{RicContact.contact_message_model.model_name.i18n_key}.create"),
 		error_message: I18n.t("activerecord.errors.models.#{RicContact.contact_message_model.model_name.i18n_key}.create"),
 		clear_on_submit: true,
-		behavior_on_submit: "none"
 	}
 ) do |f| %>
 	<%= f.text_input_row :name %>

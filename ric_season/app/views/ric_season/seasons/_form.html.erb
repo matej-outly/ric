@@ -1,6 +1,6 @@
 <%= rug_form_for(@season, 
-	create_url: :seasons_path, 
-	update_url: :season_path
+	create_path: :seasons_path, 
+	update_path: :season_path
 ) do |f| %>
 	<%= f.text_input_row :name %>
 	<%= f.date_picker_row :from %>

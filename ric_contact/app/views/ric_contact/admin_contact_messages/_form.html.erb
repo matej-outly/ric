@@ -1,6 +1,6 @@
 <%= rug_form_for(@contact_message, 
-	create_url: :contact_messages_path, 
-	update_url: :contact_message_path
+	create_path: :contact_messages_path, 
+	update_path: :contact_message_path
 ) do |f| %>
 	<%= f.text_input_row :name, :text_field %>
 	<%= f.text_input_row :email, :email_field %>

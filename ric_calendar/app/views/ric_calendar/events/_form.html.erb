@@ -1,6 +1,6 @@
 <%= rug_form_for(@event,
-	create_url: "ric_calendar.events_path",
-	update_url: "ric_calendar.event_path"
+	create_path: "ric_calendar.events_path",
+	update_path: "ric_calendar.event_path"
 ) do |f| %>
 	<%= f.hidden_field :scheduled_date_from %>
 

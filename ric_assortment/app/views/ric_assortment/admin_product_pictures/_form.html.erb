@@ -1,9 +1,9 @@
 <%= rug_form_for(@product_picture, 
-	update_url: lambda { |product_picture| product_product_picture_path(@product, product_picture) }, 
+	update_path: lambda { |product_picture| product_product_picture_path(@product, product_picture) }, 
 ) do |f| %>
 	<% if @product_picture.config(:picture_croppable) == true %>
-		<%= f.dropzone_row :picture, append_columns: { product_id: true }, crop: true %>
-		<%= f.crop_row :picture, label: false %>
+		<%= f.dropzone_row :picture, append_columns: { product_id: true }, reload_object: "rug_form_crop_#{Digest::SHA1.hexdigest("product_picture_picture")}" %>
+		<%= f.crop_row :picture, label: false, hash: Digest::SHA1.hexdigest("product_picture_picture") %>
 	<% else %>
 		<%= f.dropzone_row :picture, append_columns: { product_id: true } %>
 	<% end %>

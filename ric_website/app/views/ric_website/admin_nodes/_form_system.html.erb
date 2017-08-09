@@ -1,6 +1,4 @@
-<%= rug_form_for(@node, 
-	update_url: "ric_website_admin.node_path"
-) do |f| %>
+<%= rug_form_for(@node, update_path: "ric_website_admin.node_path") do |f| %>
 	<%= f.hidden_field :parent_id %>
 	<%= f.picker_row :structure_id, RicWebsite.structure_model.order(ref: :asc), :id, :name, enable_null: true %>
 	<%= f.text_input_row :ref %>

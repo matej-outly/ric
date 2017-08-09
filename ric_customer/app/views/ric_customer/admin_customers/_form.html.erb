@@ -1,4 +1,7 @@
-<%= rug_form_for(@customer, create_url: :customers_path, update_url: :customer_path) do |f| %>
+<%= rug_form_for(@customer, 
+	create_path: :customers_path, 
+	update_path: :customer_path
+) do |f| %>
 	<%= f.name_row :name %>
 	<%= f.text_input_row :email, :email_field %>
 	<%= f.text_input_row :phone, :text_field %>

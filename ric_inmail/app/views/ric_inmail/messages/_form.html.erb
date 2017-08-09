@@ -1,5 +1,5 @@
 <%= rug_form_for(@in_message, 
-	create_url: :messages_path
+	create_path: :messages_path
 ) do |f| %>
 	<%= f.token_input_row :receivers_selector_values, ric_user.search_people_selectors_path, as: :receivers_selectors, value_attr: :value, label_attr: :title, label: RicInmail.in_message_model.human_attribute_name(:receivers) %>
 	<%= f.text_input_row :subject %>

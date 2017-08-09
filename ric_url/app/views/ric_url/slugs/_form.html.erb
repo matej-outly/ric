@@ -1,6 +1,6 @@
 <%= rug_form_for(@slug, 
-	create_url: :slugs_path, 
-	update_url: :slug_path
+	create_path: :slugs_path, 
+	update_path: :slug_path
 ) do |f| %>
 	<%= f.text_input_row :locale %>
 	<%= f.text_input_row :original %>
