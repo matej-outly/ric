@@ -20,7 +20,12 @@ module RicOrganization
 					# Structure
 					# *********************************************************
 
+					# Assignments
 					has_many :organization_assignments, class_name: RicOrganization.organization_assignment_model.to_s, dependent: :destroy
+					has_many :user_assignments, class_name: RicOrganization.user_assignment_model.to_s, dependent: :destroy
+					has_many :assigned_users, class_name: RicOrganization.user_model.to_s, through: :user_assignments, source: :user
+
+					# Relations
 					has_many :actor_relations, foreign_key: :actor_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
 					has_many :actee_relations, foreign_key: :actee_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
 

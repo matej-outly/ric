@@ -31,6 +31,9 @@ cs:
         actor_id: Původce
         actee: Příjemce
         actee_id: Příjemce
+        partner_organization: Partnerská organizace
+        partner_organization_id: Partnerská organizace
+        partner_kind: Vztah
 
     notices:
       models:
@@ -43,9 +46,9 @@ cs:
           update: Pozice byla úspěšně uložena.
           destroy: Pozice byla úspěšně smazána.
         ric_organization/organization_relation:
-          create: Relace byla úspěšně vytvořena.
-          update: Relace byla úspěšně uložena.
-          destroy: Relace byla úspěšně smazána.
+          create: Partnerská organizace byla úspěšně vytvořena.
+          update: Partnerská organizace byla úspěšně uložena.
+          destroy: Partnerská organizace byla úspěšně smazána.
     errors:
       models:
         ric_organization/organization:
@@ -53,13 +56,20 @@ cs:
           create: Organizace nebyla vytvořena.
           update: Organizace nebyla uložena.
           destroy: Organizace nebyla smazána.
+          attributes:
+            actor_id:
+              blank: Původce musí být vyplněn.
+            actee_id:
+              blank: Příjemce musí být vyplněn.
+            kind:
+              blank: typ relace musí být vyplněn.
         ric_organization/organization_assignment:
           not_found: Pozice nebyla nalezena.
           create: Pozice nebyla vytvořena.
           update: Pozice nebyla uložena.
           destroy: Pozice nebyla smazána.
         ric_organization/organization_relation:
-          not_found: Relace nebyla nalezena.
-          create: Relace nebyla vytvořena.
-          update: Relace nebyla uložena.
-          destroy: Relace nebyla smazána.
+          not_found: Partnerská organizace nebyla nalezena.
+          create: Partnerská organizace nebyla vytvořena.
+          update: Partnerská organizace nebyla uložena.
+          destroy: Partnerská organizace nebyla smazána.

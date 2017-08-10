@@ -90,7 +90,7 @@ module RicOrganization
 	# Available relation kinds
 	#
 	mattr_accessor :relation_kinds
-	@@relation_kinds = []
+	@@relation_kinds = {}
 
 	#
 	# Class or object implementing actions_options, tabs_options, etc. can be set.
