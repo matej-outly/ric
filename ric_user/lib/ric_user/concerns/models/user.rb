@@ -96,6 +96,11 @@ module RicUser
 						]
 					end
 
+					def process_params(params)
+						params[:role_ids] = params[:role_ids].split(",") if params[:role_ids] && params[:role_ids].is_a?(String)
+						return params
+					end
+
 					# *********************************************************
 					# Scopes
 					# *********************************************************

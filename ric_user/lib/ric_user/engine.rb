@@ -14,6 +14,7 @@ module RicUser
 		
 		# Controllers
 		require "ric_user/concerns/controllers/users_controller"
+		require "ric_user/concerns/controllers/roles_controller"
 		require "ric_user/concerns/controllers/user_passwords_controller"
 		require "ric_user/concerns/controllers/people_selectors_controller"
 		require "ric_user/concerns/controllers/sessions_controller"

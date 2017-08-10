@@ -24,6 +24,25 @@ module RicUser
 						has_many :user_roles, class_name: RicUser.user_role_model.to_s, dependent: :destroy
 						has_many :roles, class_name: RicUser.role_model.to_s, through: :user_roles
 
+						# *********************************************************
+						# Helper for roles assigning
+						# *********************************************************
+
+						if RicUser.scope_user_role_by_person
+							define_method :assign_role_ids_scoped_by_person do |new_role_ids, person|
+								if !new_role_ids.nil?
+									current_role_ids = self.user_roles.where(person_id: person.id).map{ |user_role| user_role.role_id }
+									Array.diff(current_role_ids, new_role_ids) do |action, role_id|
+										if action == :add
+											self.user_roles.create(role_id: role_id, person_id: person.id)
+										elsif action == :remove
+											self.user_roles.where(role_id: role_id, person_id: person.id).destroy_all
+										end
+									end
+								end
+							end
+						end
+
 					end
 
 					module ClassMethods

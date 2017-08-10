@@ -11,6 +11,13 @@
 
 RicUser::Engine.routes.draw do
 
+	# Roles
+	resources :roles, only: [] do
+		collection do
+			get "search"
+		end
+	end
+
 	# Users
 	resources :users do
 		collection do

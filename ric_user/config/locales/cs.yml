@@ -72,20 +72,23 @@ cs:
           update: Role byla úspěšně uložena.
           destroy: Role byla úspěšně smazána.
         ric_user/user:
+          create: Uživatel byl úspěšně vytvořen.
           update: Uživatel byl úspěšně uložen.
           update_password: Heslo bylo úspěšně změněno.
           regenerate_password: Heslo bylo úspěšně přegenerováno a odesláno na e-mail uživatele.
-          create: Uživatel byl úspěšně vytvořen.
-          destroy: Uživatel byl úspěšně smazán.
           lock: Uživatel byl úspěšně zablokován.
           unlock: Uživatel byl úspěšně odblokován.
           confirm: Uživatel byl úspěšně ověřen.
+          destroy: Uživatel byl úspěšně smazán.
         ric_user/session:
           update: Informace o uživateli byly úspěšně uloženy.
     errors:
       models:
         ric_user/role:
           not_found: Role nebyla nalezena.
+          create: Role nebyla vytvořena.
+          update: Role nebyla uložena.
+          destroy: Role nebyla smazána.
           attributes:
             name:
               blank: Název musí být vyplněn.
@@ -93,6 +96,9 @@ cs:
               blank: Systémová značka musí být vyplněna.
         ric_user/user:
           not_found: Uživatel nebyl nalezen.
+          create: Uživatel nebyl vytvořen.
+          update: Uživatel nebyl uložen.
+          destroy: Uživatel nebyl smazán.
           regenerate_password: Nebylo možné přegenerovat heslo.
           lock: Nebylo možné zablokovat uživatele.
           unlock: Nebylo možné odblokovat uživatele.
