@@ -42,6 +42,15 @@ module RicUser
 					if RicUser.scope_user_role_by_person
 						belongs_to :person, class_name: RicUser.user_role_person_model.to_s
 						#validates_presence_of :person_id
+
+						define_method :name do
+							if @name.nil?
+								@name = self.role.name
+								@name += " @ " + self.person.name if self.person
+							end
+							return @name
+						end
+
 					end
 
 				end

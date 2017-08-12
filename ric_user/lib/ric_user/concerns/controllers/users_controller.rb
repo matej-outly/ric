@@ -15,7 +15,8 @@ module RicUser
 			module UsersController extend ActiveSupport::Concern
 
 				included do
-				
+					
+					before_action :save_referrer, only: [:new, :edit]
 					before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :confirm, :destroy]
 
 				end
@@ -52,7 +53,7 @@ module RicUser
 					@user = RicUser.user_model.new(user_params)
 					@user.regenerate_password(notification: false)
 					if @user.save
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.create")
+						redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.create")
 					else
 						render "new"
 					end
@@ -60,7 +61,7 @@ module RicUser
 
 				def update
 					if @user.update(user_params)
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
+						redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
 					else
 						render "edit"
 					end
@@ -70,27 +71,27 @@ module RicUser
 					if !@user.locked?
 						@user.lock
 						#sign_out(@user) Signs out current user also
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.lock")
+						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.lock")
 					else
-						redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.lock")
+						redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.lock")
 					end
 				end
 
 				def unlock
 					if @user.locked?
 						@user.unlock
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
+						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
 					else
-						redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
+						redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
 					end
 				end
 
 				def confirm
 					if !@user.confirmed?
 						@user.confirm
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
+						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
 					else
-						redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
+						redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
 					end
 				end
 

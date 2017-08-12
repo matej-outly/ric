@@ -47,6 +47,8 @@ cs:
         roles: Role
         roles_values:
           admin: Administrátor
+        user_role_ids: Role
+        user_roles: Role
         avatar: Avatar
         sign_in_count: Počet přihlášení
         current_sign_in_at: Čas posledního přihlášení
