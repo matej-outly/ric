@@ -1,6 +1,6 @@
 # RicAcl
 
-RicAcl implements access control list as configurable module. 
+RicAcl implements access control list as a configurable module. 
 
 ## Usage
 
@@ -141,10 +141,10 @@ class Sample < ActiveRecord::Base
 
     include RicAcl::Concerns::Models::Authorizable
 
-    authorization_scope_query :owner do |user| # Must be defined if scoped :load action can be used
+    authorization_scope_query :owner do |user| # Must be defined for scoped :load action to be used
         where(owner_id: user.id) 
     end
-    authorization_scope_setter :owner do |user| # Must be defined if scoped :create action can be used
+    authorization_scope_setter :owner do |user| # Must be defined for scoped :create action to be used
         self.owner_id = user.id
     end
 
@@ -165,7 +165,7 @@ class SamplesController < ApplicationController
     end
 
     before_action only: [:show] do
-       @sample.authorize!(user: current_user, scope: :owner, action: :load)
+        @sample.authorize!(user: current_user, scope: :owner, action: :load)
     end
 
     before_action only: [:new, :create] do
@@ -248,7 +248,7 @@ class Sample < ActiveRecord::Base
     authorization_scope_query :organization do |user|
         where(organization_id: user.current_organization.id)
     end
-    authorization_scope_query_setter :owner do |user|
+    authorization_scope_setter :organization do |user|
         self.organization_id = user.current_organization.id
     end
 
@@ -326,3 +326,5 @@ protected
 
 end
 ```
+
+Scope can be also an array. In that case authorization mechanism looks for one of the defined scopes (OR operator).

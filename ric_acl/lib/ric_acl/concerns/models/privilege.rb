@@ -16,6 +16,8 @@ module RicAcl
 
 				included do
 
+					belongs_to :owner, polymorphic: true
+
 				end
 
 				module ClassMethods

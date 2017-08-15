@@ -16,6 +16,7 @@ require "ric_acl/railtie" if defined?(Rails)
 require "ric_acl/engine"
 
 # Models
+require "ric_acl/concerns/models/authorizable"
 require "ric_acl/concerns/models/privilege"
 
 # Module concerns

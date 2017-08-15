@@ -48,13 +48,13 @@ module RicAcl
 
 						sql = authorization_sql(subject, nil, user, action)
 						return false if !sql
-						privilege_count = self.class.connection.execute(sql).first["count"].to_i
+						privilege_count = ActiveRecord::Base.connection.execute(sql).first["count"].to_i
 						if privilege_count > 0
 							return true 
 						else
 							sql = authorization_sql(subject, scope, user, action)
 							return false if !sql
-							privilege_count = self.class.connection.execute(sql).first["count"].to_i
+							privilege_count = ActiveRecord::Base.connection.execute(sql).first["count"].to_i
 							if privilege_count > 0
 								if subject.class.authorized_for(user: user, scope: scope).find_by_id(subject.id)
 									return true
@@ -67,7 +67,7 @@ module RicAcl
 
 						sql = authorization_sql(subject, scope, user, action)
 						return false if !sql
-						privilege_count = self.class.connection.execute(sql).first["count"].to_i
+						privilege_count = ActiveRecord::Base.connection.execute(sql).first["count"].to_i
 						return true if privilege_count > 0
 					end
 
@@ -75,9 +75,11 @@ module RicAcl
 				end
 
 				def authorize!(params = {})
-					if !authorize(params)
-						raise "Not authorized."
-					end
+					not_authorized if !authorize(params)
+				end
+
+				def not_authorized
+					raise "Not authorized."
 				end
 
 				def authorization_sql(subject, scope, user, action)
@@ -104,7 +106,7 @@ module RicAcl
 					# Subject / scope
 					if subject.class == Class 
 						sql += %{
-							("privileges"."subject_type" = '#{subject.to_s}' AND
+							("privileges"."subject_type" = '#{subject.to_s}') AND
 						}
 					elsif subject.is_a?(ActiveRecord::Base)
 						sql += %{
@@ -119,9 +121,15 @@ module RicAcl
 
 					# Scope
 					if scope
-						sql += %{
-							("privileges"."scope_type" = '#{scope.to_s}' OR "privileges"."scope_type" IS NULL) AND
-						}
+						if scope.is_a?(Array)
+							sql += %{
+								("privileges"."scope_type" IN (#{scope.map{ |s| "'" + s.to_s + "'" }.join(",")}) OR "privileges"."scope_type" IS NULL) AND
+							}
+						else
+							sql += %{
+								("privileges"."scope_type" = '#{scope.to_s}' OR "privileges"."scope_type" IS NULL) AND
+							}
+						end
 					else
 						sql += %{
 							("privileges"."scope_type" IS NULL) AND
@@ -131,9 +139,9 @@ module RicAcl
 					# User / roles
 					sql += %{
 						(
-							#{!role_ids.empty? ? "(\"privileges\".\"owner_type\" = 'Role' AND \"privileges\".\"owner_id\" IN (" + role_ids.join(",") + "))" : ""}
+							#{!role_ids.empty? ? "(\"privileges\".\"owner_type\" = '" + RicAcl.role_model.to_s + "' AND \"privileges\".\"owner_id\" IN (" + role_ids.join(",") + "))" : ""}
 							#{!role_ids.empty? && !user_id.nil? ? "OR" : ""}
-							#{!user_id.nil? ? "(\"privileges\".\"owner_type\" = 'User' AND \"privileges\".\"owner_id\" = " + user_id.to_s + ")" : ""}
+							#{!user_id.nil? ? "(\"privileges\".\"owner_type\" = '" + RicAcl.user_model.to_s + "' AND \"privileges\".\"owner_id\" = " + user_id.to_s + ")" : ""}
 						) AND
 					}
 

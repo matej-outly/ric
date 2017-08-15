@@ -27,7 +27,9 @@ module RicOrganization
 
 					# Relations
 					has_many :actor_relations, foreign_key: :actor_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
+					has_many :actee_organizations, class_name: RicOrganization.organization_model.to_s, through: :actor_relations, source: :actee
 					has_many :actee_relations, foreign_key: :actee_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
+					has_many :actor_organizations, class_name: RicOrganization.organization_model.to_s, through: :actee_relations, source: :actor
 
 				end
 
