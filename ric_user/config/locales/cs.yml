@@ -61,6 +61,11 @@ cs:
         locked?: Zablokován
         locked_at: Čas zablokování
         confirmed?: Ověřen
+      ric_user/user_role:
+        user_id: Uživatel
+        user: Uživatel
+        role_id: Role
+        role: Role
       ric_notification/notification_template:
         ref_values:
           user_new_password: Nové heslo uživatele
