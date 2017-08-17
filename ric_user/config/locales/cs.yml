@@ -106,6 +106,7 @@ cs:
           create: Uživatel nebyl vytvořen.
           update: Uživatel nebyl uložen.
           destroy: Uživatel nebyl smazán.
+          update_password: Heslo nebylo změněno.
           regenerate_password: Nebylo možné přegenerovat heslo.
           lock: Nebylo možné zablokovat uživatele.
           unlock: Nebylo možné odblokovat uživatele.

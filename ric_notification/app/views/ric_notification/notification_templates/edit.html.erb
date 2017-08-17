@@ -1,4 +1,6 @@
-<%= rug_show_table_for(@notification_template, { 
-	ref: :enum
-}) %>
+<%= rug_show(@notification_template) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.enum :ref %>
+	<% end %>
+<% end %>
 <%= render partial: "form" %>
