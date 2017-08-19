@@ -17,5 +17,10 @@ module RicAuth
 		if !RicAuth.layout.blank?
 			layout RicAuth.layout.to_s
 		end
+
+		if RicAuth.authenticate_token == false
+			skip_before_action :verify_authenticity_token
+		end
+
 	end
 end

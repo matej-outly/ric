@@ -116,4 +116,10 @@ module RicAuth
 		# :timeoutable,
 	]
 
+	#
+	# Authenticate token on sign in
+	#
+	mattr_accessor :authenticate_token
+	@@authenticate_token = true
+
 end
