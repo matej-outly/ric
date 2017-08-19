@@ -1,4 +1,7 @@
 <%= rug_show(@price_list) do |t| %>
+	<%= t.header do |h| %>
+		<%= h.action :edit, path: :edit_price_list_path %>
+	<% end %>
 	<%= t.body do |b| %>
 		<%= b.string :name %>
 	<% end %>
@@ -10,7 +13,7 @@
 		<%= h.action :new, path: lambda { new_price_list_price_path(@price_list) } %>
 	<% end %>
 	<%= t.body do |b| %>
-		<%= b.action :move, lambda { |price, relation, destination_id| move_price_list_price_path(@price_list, price, relation, destination_id) } %>
+		<%= b.action :move, path: lambda { |price, relation, destination_id| move_price_list_price_path(@price_list, price, relation, destination_id) } %>
 		<%= b.string :description %>
 		<%= b.string :amount %>
 		<%= b.enum :operator %>
