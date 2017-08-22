@@ -1,8 +1,20 @@
-<%= rug_form_for(@organization, 
-	create_path: lambda { organizations_path }, 
-	update_path: lambda { |organization| organization_path(organization) }
+<%= rug_form_for(organization, 
+	create_path: :organizations_path, 
+	update_path: :organization_path,
+	ajax: {
+		success_message: RicOrganization.organization_model.human_notice_message(organization.new_record? ? :create : :update),
+		error_message: RicOrganization.organization_model.human_error_message(organization.new_record? ? :create : :update),
+		clear_on_submit: organization.new_record?,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	}
 ) do |f| %>
-	<%= f.text_input_row :name, :text_field %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
+	<%= modal.body do %>
+		<%= f.text_input_row :name, :text_field %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit %>
+	<% end %>
 <% end %>

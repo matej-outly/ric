@@ -1,0 +1,24 @@
+<%= rug_menu_for(@organization, options.merge(path_base: "organizations")) do |m| %>
+	<%= m.index_item %>
+	<%= m.new_item t("headers.ric_organization.organizations.new"), false, modal: "new_organization_modal" %>
+	<%= m.edit_item t("headers.ric_organization.organizations.edit"), false, modal: "edit_organization_#{@organization.id}_modal" if @organization && !@organization.new_record? %>
+	<%= m.destroy_item %>
+<% end %>
+
+<%= rug_modal "new_organization_modal" do |m| %>
+	<%= m.header t("headers.ric_organization.organizations.new") %>
+	<%= render partial: "form", locals: {
+		modal: m,
+		organization: RicOrganization.organization_model.new
+	} %>
+<% end %>
+
+<% if @organization && !@organization.new_record? %>
+	<%= rug_modal "edit_organization_#{@organization.id}_modal" do |m| %>
+		<%= m.header t("headers.ric_organization.organizations.edit") %>
+		<%= render partial: "form", locals: {
+			modal: m,
+			organization: @organization
+		} %>
+	<% end %>
+<% end %>

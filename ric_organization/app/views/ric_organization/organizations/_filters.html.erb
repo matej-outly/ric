@@ -1,0 +1,11 @@
+<% if action_name == "index" %>
+	<%= rug_form_for(@filter_organization, 
+		url: filter_organizations_path,
+		html: { id: "filter_organization" }
+	) do |f| %>
+		<div class="form-inline">
+			<%= f.text_input_row :name, :text_field, label: false, placeholder: RicOrganization.organization_model.human_attribute_name(:name) %>
+			<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
+		</div>
+	<% end %>
+<% end %>

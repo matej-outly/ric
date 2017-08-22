@@ -16,8 +16,7 @@ module RicOrganization
 
 				included do
 					
-					before_action :save_referrer, only: [:new, :edit]
-					before_action :set_organization, only: [:show, :edit, :update, :move, :destroy]
+					before_action :set_organization, only: [:edit, :update, :move, :destroy]
 
 				end
 
@@ -25,23 +24,26 @@ module RicOrganization
 				# Actions
 				# *************************************************************
 
-				def new
-					@organization = RicOrganization.organization_model.new
+				def index
+					@filter_organization = RicOrganization.organization_model.new(load_params_from_session)
+					@organizations = RicOrganization.organization_model.filter(load_params_from_session).order(name: :asc).page(params[:page]).per(50)
 				end
 
-				def edit
+				def filter
+					save_params_to_session(filter_params)
+					redirect_to organizations_path
 				end
 
 				def create
 					@organization = RicOrganization.organization_model.new(organization_params)
 					if @organization.save
 						respond_to do |format|
-							format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicOrganization.organization_model.model_name.i18n_key}.create") }
+							format.html { redirect_to request.referrer, notice: RicOrganization.organization_model.human_notice_message(:create) }
 							format.json { render json: @organization.id }
 						end
 					else
 						respond_to do |format|
-							format.html { render "new" }
+							format.html { redirect_to request.referrer, alert: RicOrganization.organization_model.human_error_message(:create) }
 							format.json { render json: @organization.errors }
 						end
 					end
@@ -50,12 +52,12 @@ module RicOrganization
 				def update
 					if @organization.update(organization_params)
 						respond_to do |format|
-							format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicOrganization.organization_model.model_name.i18n_key}.update") }
+							format.html { redirect_to request.referrer, notice: RicOrganization.organization_model.human_notice_message(:update) }
 							format.json { render json: @organization.id }
 						end
 					else
 						respond_to do |format|
-							format.html { render "edit" }
+							format.html { redirect_to request.referrer, alert: RicOrganization.organization_model.human_error_message(:update) }
 							format.json { render json: @organization.errors }
 						end
 					end
@@ -64,12 +66,12 @@ module RicOrganization
 				def move
 					if RicOrganization.organization_model.move(params[:id], params[:relation], params[:destination_id])
 						respond_to do |format|
-							format.html { redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicOrganization.organization_model.model_name.i18n_key}.move") }
+							format.html { redirect_to request.referrer, notice: RicOrganization.organization_model.human_notice_message(:move) }
 							format.json { render json: true }
 						end
 					else
 						respond_to do |format|
-							format.html { redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicOrganization.organization_model.model_name.i18n_key}.move") }
+							format.html { redirect_to request.referrer, alert: RicOrganization.organization_model.human_error_message(:move) }
 							format.json { render json: false }
 						end
 					end
@@ -78,7 +80,7 @@ module RicOrganization
 				def destroy
 					@organization.destroy
 					respond_to do |format|
-						format.html { redirect_to ric_organization_admin.organizations_path, notice: I18n.t("activerecord.notices.models.#{RicOrganization.organization_model.model_name.i18n_key}.destroy") }
+						format.html { redirect_to request.referrer, notice: RicOrganization.organization_model.human_notice_message(:destroy) }
 						format.json { render json: @organization.id }
 					end
 				end
@@ -91,9 +93,7 @@ module RicOrganization
 
 				def set_organization
 					@organization = RicOrganization.organization_model.find_by_id(params[:id])
-					if @organization.nil?
-						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicOrganization.organization_model.model_name.i18n_key}.not_found")
-					end
+					not_found if @organization.nil?
 				end
 
 				# *************************************************************
@@ -102,6 +102,10 @@ module RicOrganization
 
 				def organization_params
 					params.require(:organization).permit(RicOrganization.organization_model.permitted_columns)
+				end
+
+				def filter_params
+					params.require(:organization).permit(RicOrganization.organization_model.filter_columns)
 				end
 
 			end
