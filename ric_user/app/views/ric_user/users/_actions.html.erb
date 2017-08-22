@@ -1,16 +1,50 @@
 <%= rug_menu_for(@user, options.merge(path_base: "users")) do |m| %>
 	<%= m.index_item %>
-	<%= m.new_item %>
+	<%= m.new_item t("headers.ric_user.users.new"), false, modal: "new_user_modal" %>
 	<%= m.show_item %>
-	<%= m.edit_item nil, nil, active: (controller_name == "users" && (action_name == "edit" || action_name == "update")) %>
 	<% if @user && !@user.new_record? %>
-		<%= m.item t("headers.ric_user.user_passwords.edit"), edit_user_password_path(@user), icon: "lock", active: (controller_name == "user_passwords" && (action_name == "edit" || action_name == "update")) %>
-		<%= m.item t("headers.ric_user.user_passwords.regenerate"), regenerate_user_password_path(@user), icon: "lock", method: :put %>
+		<%= m.edit_item t("headers.ric_user.users.edit"), false, modal: "edit_user_#{@user.id}_modal" %>
+		<%= m.edit_item t("headers.ric_user.user_passwords.edit"), false, modal: "edit_user_password_#{@user.id}_modal", icon: "lock" %>
+		<%= m.item t("headers.ric_user.user_passwords.regenerate"), regenerate_user_password_path(@user), 
+			icon: "refresh", 
+			method: :put 
+		%>
 		<% if @user.locked? %>
-			<%= m.item t("headers.ric_user.users.unlock"), unlock_user_path(@user), icon: "thumbs-up", method: :put %>
+			<%= m.item t("headers.ric_user.users.unlock"), unlock_user_path(@user), 
+				icon: "thumbs-up", 
+				method: :put 
+			%>
 		<% else %>
-			<%= m.item t("headers.ric_user.users.lock"), lock_user_path(@user), icon: "thumbs-down", method: :put %>
+			<%= m.item t("headers.ric_user.users.lock"), lock_user_path(@user), 
+				icon: "thumbs-down", 
+				method: :put 
+			%>
 		<% end %>
 	<% end %>
 	<%= m.destroy_item %>
+<% end %>
+
+<%= rug_modal "new_user_modal" do |m| %>
+	<%= m.header t("headers.ric_user.users.new") %>
+	<%= render partial: "form", locals: {
+		modal: m,
+		user: RicUser.user_model.new
+	} %>
+<% end %>
+
+<% if @user && !@user.new_record? %>
+	<%= rug_modal "edit_user_#{@user.id}_modal" do |m| %>
+		<%= m.header t("headers.ric_user.users.edit") %>
+		<%= render partial: "form", locals: {
+			modal: m,
+			user: @user
+		} %>
+	<% end %>
+	<%= rug_modal "edit_user_password_#{@user.id}_modal" do |m| %>
+		<%= m.header t("headers.ric_user.user_passwords.edit") %>
+		<%= render partial: "ric_user/user_passwords/form", locals: {
+			modal: m,
+			user: @user
+		} %>
+	<% end %>
 <% end %>

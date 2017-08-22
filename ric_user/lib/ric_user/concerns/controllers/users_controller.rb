@@ -16,10 +16,13 @@ module RicUser
 
 				included do
 					
-					before_action :save_referrer, only: [:new, :edit]
-					before_action :set_user, only: [:show, :edit, :update, :lock, :unlock, :confirm, :destroy]
+					before_action :set_user, only: [:show, :update, :lock, :unlock, :confirm, :destroy]
 
 				end
+
+				# *************************************************************
+				# Actions
+				# *************************************************************
 
 				def index
 					@filter_user = RicUser.user_model.new(load_params_from_session)
@@ -32,7 +35,11 @@ module RicUser
 				end
 
 				def search
-					@users = RicUser.user_model.search(params[:q]).order(name_lastname: :asc, name_firstname: :asc, email: :asc)
+					@users = RicUser.user_model.search(params[:q]).order(
+						name_lastname: :asc, 
+						name_firstname: :asc, 
+						email: :asc
+					)
 					respond_to do |format|
 						format.html { render "index" }
 						format.json { render json: @users.to_json }
@@ -42,28 +49,33 @@ module RicUser
 				def show
 				end
 
-				def new
-					@user = RicUser.user_model.new
-				end
-
-				def edit
-				end
-
 				def create
 					@user = RicUser.user_model.new(user_params)
 					@user.regenerate_password(notification: false)
 					if @user.save
-						redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.create")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:create) }
+							format.json { render json: @user.id }
+						end
 					else
-						render "new"
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser.user_model.human_error_message(:create) }
+							format.json { render json: @user.errors }
+						end
 					end
 				end
 
 				def update
 					if @user.update(user_params)
-						redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:update) }
+							format.json { render json: @user.id }
+						end
 					else
-						render "edit"
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser.user_model.human_error_message(:update) }
+							format.json { render json: @user.errors }
+						end
 					end
 				end
 
@@ -71,33 +83,54 @@ module RicUser
 					if !@user.locked?
 						@user.lock
 						#sign_out(@user) Signs out current user also
-						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.lock")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:lock) }
+							format.json { render json: @user.id }
+						end
 					else
-						redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.lock")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser.user_model.human_error_message(:lock) }
+							format.json { render json: false }
+						end
 					end
 				end
 
 				def unlock
 					if @user.locked?
 						@user.unlock
-						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:unlock) }
+							format.json { render json: @user.id }
+						end
 					else
-						redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.unlock")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser.user_model.human_error_message(:unlock) }
+							format.json { render json: false }
+						end
 					end
 				end
 
 				def confirm
 					if !@user.confirmed?
 						@user.confirm
-						redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:confirm) }
+							format.json { render json: @user.id }
+						end
 					else
-						redirect_to request.referrer, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.confirm")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser.user_model.human_error_message(:confirm) }
+							format.json { render json: false }
+						end
 					end
 				end
 
 				def destroy
 					@user.destroy
-					redirect_to users_path, notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.destroy")
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:destroy) }
+						format.json { render json: @user.id }
+					end
 				end
 
 			protected
@@ -108,9 +141,7 @@ module RicUser
 
 				def set_user
 					@user = RicUser.user_model.find_by_id(params[:id])
-					if @user.nil?
-						redirect_to users_path, error: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.not_found")
-					end
+					not_found if @user.nil?
 				end
 
 				# *************************************************************
@@ -118,11 +149,11 @@ module RicUser
 				# *************************************************************
 
 				def user_params
-					params.require(:user).permit(RicUser.user_model.permitted_columns)
+					return params.require(:user).permit(RicUser.user_model.permitted_columns)
 				end
 
 				def filter_params
-					params.require(:user).permit(RicUser.user_model.filter_columns)
+					return params.require(:user).permit(RicUser.user_model.filter_columns)
 				end
 
 			end

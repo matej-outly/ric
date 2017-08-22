@@ -1,0 +1,40 @@
+<%= rug_form_for(role, 
+	create_path: :roles_path, 
+	update_path: :role_path,
+	ajax: {
+		success_message: RicUser.role_model.human_notice_message(role.new_record? ? :create : :update),
+		error_message: RicUser.role_model.human_error_message(role.new_record? ? :create : :update),
+		clear_on_submit: role.new_record?,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	}
+) do |f| %>
+	<%= modal.body do %>
+		<%= rug_grid do |g| %>
+			<%= g.row do |r| %>
+				<%= g.col(6) do |c| %>
+					<%= f.text_input_row :name %>
+				<% end %>
+				<%= g.col(6) do |c| %>
+					<%= f.text_input_row :ref %>
+				<% end %>
+			<% end %>
+		<% end %>
+		<%= f.text_input_row :description %>
+		<%= rug_grid do |g| %>
+			<%= g.row do |r| %>
+				<%= g.col(6) do |c| %>
+					<%= f.checkbox_row :default_unsigned %>
+				<% end %>
+				<%= g.col(6) do |c| %>
+					<%= f.checkbox_row :default_signed %>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit %>
+	<% end %>
+<% end %>

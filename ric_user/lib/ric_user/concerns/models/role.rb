@@ -48,6 +48,19 @@ module RicUser
 						end
 					end
 
+					def filter(params = {})
+						
+						# Preset
+						result = all
+
+						# name
+						if !params[:name].blank?
+							result = result.where("lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(?))) || '%')", params[:name].to_s)
+						end
+					
+						result
+					end
+
 					# *********************************************************
 					# Columns
 					# *********************************************************
@@ -59,6 +72,12 @@ module RicUser
 							:description,
 							:default_signed,
 							:default_unsigned,
+						]
+					end
+
+					def filter_columns
+						[
+							:name
 						]
 					end
 

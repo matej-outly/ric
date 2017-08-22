@@ -1,0 +1,22 @@
+<%= rug_index(roles, options) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :name %>
+		<%= b.string :ref %>
+		<%= b.string :description %>
+		<%= b.boolean :default_unsigned %>
+		<%= b.boolean :default_signed %>
+		<%= b.action :edit, modal: true do |m, role| %>
+			<%= m.header t("headers.ric_role.roles.edit") %>
+			<%= render partial: "form", locals: {
+				modal: m,
+				table: t,
+				role: role
+			} %>
+		<% end %>
+		<%= b.action :destroy, path: :role_path, ajax: true %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.pagination %>
+		<%= f.summary %>
+	<% end %>
+<% end %>

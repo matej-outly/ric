@@ -21,6 +21,10 @@ module RicUser
 
 				end
 
+				# *************************************************************
+				# Actions
+				# *************************************************************
+
 				def show
 					respond_to do |format|
 						format.html { render "show" }

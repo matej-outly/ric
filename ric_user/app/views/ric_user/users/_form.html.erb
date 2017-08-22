@@ -1,10 +1,22 @@
-<%= rug_form_for(@user, 
+<%= rug_form_for(user, 
 	create_path: :users_path, 
-	update_path: :user_path
+	update_path: :user_path,
+	ajax: {
+		success_message: RicUser.user_model.human_notice_message(user.new_record? ? :create : :update),
+		error_message: RicUser.user_model.human_error_message(user.new_record? ? :create : :update),
+		clear_on_submit: user.new_record?,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	}
 ) do |f| %>
-	<%= f.name_row :name %>
-	<%= f.text_input_row :email, :email_field %>
-	<%= f.picker_row :role if RicUser.user_model.has_role? %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
+	<%= modal.body do %>
+		<%= f.name_row :name %>
+		<%= f.text_input_row :email, :email_field %>
+		<%#= f.picker_row :role if RicUser.user_model.has_role? %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit %>
+	<% end %>
 <% end %>

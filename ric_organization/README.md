@@ -16,6 +16,7 @@ You can couple this module with RicUser. Organizations acts as "people" in this 
 module RicUser
     class User < ActiveRecord::Base
         include RicUser::Concerns::Models::User
+        include RicOrganization::Concerns::Models::User
 
         # *********************************************************************
         # Authentication
@@ -29,14 +30,18 @@ module RicUser
         # *********************************************************************
 
         include RicUser::Concerns::Models::User::MultiDynamicRoles
-        
-        # *********************************************************************
-        # Organziations
-        # *********************************************************************
-        
-        has_many :user_assignments, class_name: RicOrganization.user_assignment_model.to_s, dependent: :destroy
-        has_many :organizations, class_name: RicOrganization.organization_model.to_s, through: :user_assignments
 
+    end
+end
+```
+
+It is also good if you add functionality to UserRole model. Override `models/ric_user/user_role.rb` file:
+
+```ruby
+module RicUser
+    class UserRole < ActiveRecord::Base
+        include RicUser::Concerns::Models::UserRole
+        include RicOrganization::Concerns::Models::UserRole
     end
 end
 ```

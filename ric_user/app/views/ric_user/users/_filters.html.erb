@@ -1,7 +1,10 @@
 <% if action_name == "index" %>
-	<%= rug_form_for(@filter_user, url: ric_user.filter_users_path) do |f| %>
+	<%= rug_form_for(@filter_user, 
+		url: ric_user.filter_users_path,
+		html: { id: "filter_user" }
+	) do |f| %>
 		<div class="form-inline">
-			<%= f.text_input_row :email, :text_field, label: false, placeholder: RicUser.user_model.human_attribute_name("email") %>
+			<%= f.text_input_row :email, :text_field, label: false, placeholder: RicUser.user_model.human_attribute_name(:email) %>
 			<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
 		</div>
 	<% end %>

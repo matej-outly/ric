@@ -12,40 +12,42 @@
 RicUser::Engine.routes.draw do
 
 	# Roles
-	resources :roles, only: [] do
+	resources :roles, only: [:index, :create, :update, :destroy] do
 		collection do
-			get "search"
+			post :filter
+			get :search
 		end
 	end
 
 	# Users
-	resources :users do
+	resources :users, only: [:index, :show, :create, :update, :destroy] do
 		collection do
-			post "filter"
-			get "search"
+			post :filter
+			get :search
 		end
 		member do
-			get "lock"
-			put "lock"
-			get "unlock"
-			put "unlock"
-			get "confirm"
-			put "confirm"
+			get :lock
+			put :lock
+			get :unlock
+			put :unlock
+			get :confirm
+			put :confirm
 		end
-	end
 
-	# User passwords
-	resources :user_passwords, only: [:edit, :update] do
-		member do
-			get "regenerate"
-			put "regenerate"
+		# User passwords
+		resource :password, controller: :user_passwords, only: [:edit, :update] do
+			member do
+				get :regenerate
+				put :regenerate
+			end
 		end
+
 	end
 
 	# People selectors
 	resources :people_selectors, only: [] do
 		collection do
-			get "search"
+			get :search
 		end
 	end
 

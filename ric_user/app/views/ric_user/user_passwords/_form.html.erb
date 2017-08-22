@@ -1,6 +1,23 @@
-<%= rug_form_for(@user, update_path: :user_password_path) do |f| %>
-	<%= f.text_input_row :password, :password_field %>
-	<%= f.text_input_row :password_confirmation, :password_field %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
+<%= rug_form_for(user, 
+	update_path: :user_password_path,
+	ajax: {
+		success_message: RicUser.user_model.human_notice_message(:update),
+		error_message: RicUser.user_model.human_error_message(:update),
+		clear_on_submit: true,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	},
+	html: {
+		id: "edit_user_password_#{user.id}"
+	}
+) do |f| %>
+	<%= modal.body do %>
+		<%= f.text_input_row :password, :password_field %>
+		<%= f.text_input_row :password_confirmation, :password_field %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit %>
+	<% end %>
 <% end %>

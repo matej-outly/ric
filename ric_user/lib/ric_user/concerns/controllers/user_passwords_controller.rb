@@ -16,26 +16,39 @@ module RicUser
 
 				included do
 				
-					before_action :set_user, only: [:edit, :update, :regenerate]
+					before_action :set_user
 
 				end
 
-				def edit
-				end
+				# *************************************************************
+				# Actions
+				# *************************************************************
 
 				def update
 					if @user.update_password(user_params[:password], user_params[:password_confirmation])
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.update_password")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser::User.human_notice_message(:update_password) }
+							format.json { render json: @user.id }
+						end
 					else
-						render "edit"
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser::User.human_error_message(:update_password) }
+							format.json { render json: @user.errors }
+						end
 					end
 				end
 
 				def regenerate
 					if @user.regenerate_password
-						redirect_to user_path(@user), notice: I18n.t("activerecord.notices.models.#{RicUser.user_model.model_name.i18n_key}.regenerate_password")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicUser::User.human_notice_message(:regenerate_password) }
+							format.json { render json: @user.id }
+						end
 					else
-						redirect_to user_path(@user), alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.regenerate_password")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicUser::User.human_error_message(:regenerate_password) }
+							format.json { render json: false }
+						end
 					end
 				end
 
@@ -46,10 +59,8 @@ module RicUser
 				# *************************************************************
 
 				def set_user
-					@user = RicUser.user_model.find_by_id(params[:id])
-					if @user.nil?
-						redirect_to users_path, alert: I18n.t("activerecord.errors.models.#{RicUser.user_model.model_name.i18n_key}.not_found")
-					end
+					@user = RicUser.user_model.find_by_id(params[:user_id])
+					not_found if @user.nil?
 				end
 
 				# *************************************************************

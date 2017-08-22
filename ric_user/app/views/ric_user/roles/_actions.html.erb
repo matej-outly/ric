@@ -1,0 +1,24 @@
+<%= rug_menu_for(@role, options.merge(path_base: "roles")) do |m| %>
+	<%= m.index_item %>
+	<%= m.new_item t("headers.ric_user.roles.new"), false, modal: "new_role_modal" %>
+	<%= m.edit_item t("headers.ric_user.roles.edit"), false, modal: "edit_role_#{@role.id}_modal" if @role && !@role.new_record? %>
+	<%= m.destroy_item %>
+<% end %>
+
+<%= rug_modal "new_role_modal" do |m| %>
+	<%= m.header t("headers.ric_user.roles.new") %>
+	<%= render partial: "form", locals: {
+		modal: m,
+		role: RicUser.role_model.new
+	} %>
+<% end %>
+
+<% if @role && !@role.new_record? %>
+	<%= rug_modal "edit_role_#{@role.id}_modal" do |m| %>
+		<%= m.header t("headers.ric_user.roles.edit") %>
+		<%= render partial: "form", locals: {
+			modal: m,
+			role: @role
+		} %>
+	<% end %>
+<% end %>

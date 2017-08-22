@@ -4,19 +4,14 @@ cs:
     ric_user:
       roles:
         index: Uživatelské role
-        show: Detail role
         new: Nová role
-        create: Nová role
         edit: Upravit roli
-        update: Upravit roli
         destroy: Smazat roli
       users:
         index: Uživatelé
         show: Detail uživatele
         new: Nový uživatel
-        create: Nový uživatel
         edit: Upravit uživatele
-        update: Upravit uživatele
         lock: Zablokovat uživatele
         unlock: Oblokovat uživatele
         confirm: Ověřit uživatele
@@ -72,6 +67,7 @@ cs:
           user_confirmation: Instrukce pro potvrzení uživatelského účtu
           user_reset_password: Instrukce pro obnovu hesla
           user_unlock: Instrukce pro odemčení uživatelského účtu
+    
     notices:
       models:
         ric_user/role:
@@ -89,6 +85,7 @@ cs:
           destroy: Uživatel byl úspěšně smazán.
         ric_user/session:
           update: Informace o uživateli byly úspěšně uloženy.
+    
     errors:
       models:
         ric_user/role:
@@ -126,6 +123,7 @@ cs:
               too_short: Heslo musí mít minimálně 4 znaky.
             password_confirmation:
               confirmation: Potvrzení není shodné s heslem.
+    
     mailers:
       ric_user:
         user:
