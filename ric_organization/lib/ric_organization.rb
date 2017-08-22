@@ -17,6 +17,8 @@ require "ric_organization/concerns/models/organization"
 require "ric_organization/concerns/models/organization_assignment"
 require "ric_organization/concerns/models/organization_relation"
 require "ric_organization/concerns/models/user_assignment"
+require "ric_organization/concerns/models/user_role"
+require "ric_organization/concerns/models/user"
 
 module RicOrganization
 

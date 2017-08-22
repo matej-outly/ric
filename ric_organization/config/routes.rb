@@ -12,6 +12,6 @@
 RicOrganization::Engine.routes.draw do
 
 	# Organizations
-	resources :organizations
+	resources :organizations, only: [:index, :create, :update, :destroy]
 
 end

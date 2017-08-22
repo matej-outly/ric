@@ -17,14 +17,16 @@ module RicOrganization
 				included do
 					
 					before_action :save_referrer, only: [:new, :edit]
-					before_action :set_organization_list
 					before_action :set_organization, only: [:show, :edit, :update, :move, :destroy]
 
 				end
 
+				# *************************************************************
+				# Actions
+				# *************************************************************
+
 				def new
 					@organization = RicOrganization.organization_model.new
-					@organization.organization_list_id = @organization_list.id
 				end
 
 				def edit
@@ -32,7 +34,6 @@ module RicOrganization
 
 				def create
 					@organization = RicOrganization.organization_model.new(organization_params)
-					@organization.organization_list_id = @organization_list.id
 					if @organization.save
 						respond_to do |format|
 							format.html { redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicOrganization.organization_model.model_name.i18n_key}.create") }
@@ -84,19 +85,20 @@ module RicOrganization
 
 			protected
 
-				def set_organization_list
-					@organization_list = RicOrganization.organization_list_model.find_by_id(params[:organization_list_id])
-					if @organization_list.nil?
+				# *************************************************************
+				# Model setters
+				# *************************************************************
+
+				def set_organization
+					@organization = RicOrganization.organization_model.find_by_id(params[:id])
+					if @organization.nil?
 						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicOrganization.organization_model.model_name.i18n_key}.not_found")
 					end
 				end
 
-				def set_organization
-					@organization = RicOrganization.organization_model.find_by_id(params[:id])
-					if @organization.nil? || @organization.organization_list_id != @organization_list.id
-						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicOrganization.organization_model.model_name.i18n_key}.not_found")
-					end
-				end
+				# *************************************************************
+				# Param filters
+				# *************************************************************
 
 				def organization_params
 					params.require(:organization).permit(RicOrganization.organization_model.permitted_columns)
