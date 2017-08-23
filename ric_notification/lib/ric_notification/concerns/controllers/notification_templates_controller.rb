@@ -16,31 +16,38 @@ module RicNotification
 
 				included do
 					
-					before_action :save_referrer, only: [:edit]
-					before_action :set_notification_template, only: [:show, :edit, :update]
+					before_action :set_notification_template, only: [:update]
 					before_action :create_missing_notification_templates, only: [:index]
 
 				end
+
+				# *************************************************************
+				# Actions
+				# *************************************************************
 
 				def index
 					@notification_templates = RicNotification.notification_template_model.all.order(ref: :asc)
 				end
 
-				def show
-				end
-
-				def edit
-				end
-
 				def update
 					if @notification_template.update(notification_template_params)
-						redirect_to load_referrer, notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_template_model.model_name.i18n_key}.update")
+						respond_to do |format|
+							format.html { redirect_to request.referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
+							format.json { render json: @notification_template.id }
+						end
 					else
-						render "edit"
+						respond_to do |format|
+							format.html { redirect_to request.referrer, alert: RicNotification.notification_template_model.human_error_message(:update) }
+							format.json { render json: @notification_template.errors }
+						end
 					end
 				end
 
 			protected
+
+				# *************************************************************
+				# Actions
+				# *************************************************************
 
 				def create_missing_notification_templates
 					if RicNotification.template_refs
@@ -55,16 +62,15 @@ module RicNotification
 
 				def set_notification_template
 					@notification_template = RicNotification.notification_template_model.find_by_id(params[:id])
-					if @notification_template.nil?
-						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicNotification.notification_template_model.model_name.i18n_key}.not_found")
-					end
+					not_found if @notification_template.nil?
 				end
 
+				# *************************************************************
+				# Param filters
+				# *************************************************************
+
 				def notification_template_params
-					params.require(:notification_template).permit(
-						:subject,
-						:message,
-					)
+					params.require(:notification_template).permit(RicNotification.notification_template_model.permitted_columns)
 				end
 
 			end

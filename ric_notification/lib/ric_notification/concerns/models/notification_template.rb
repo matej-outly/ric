@@ -14,11 +14,6 @@ module RicNotification
 		module Models
 			module NotificationTemplate extend ActiveSupport::Concern
 
-				#
-				# 'included do' causes the included code to be evaluated in the
-				# context where it is included, rather than being executed in 
-				# the module's context.
-				#
 				included do
 
 					# *********************************************************
@@ -33,6 +28,16 @@ module RicNotification
 
 					enum_column :ref, RicNotification.template_refs
 					
+				end
+
+				module ClassMethods
+
+					def permitted_columns
+						[
+							:subject,
+							:message
+						]
+					end
 				end
 
 			end

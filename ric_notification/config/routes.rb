@@ -14,11 +14,11 @@ RicNotification::Engine.routes.draw do
 	# Notifications
 	resources :notifications, only: [:index, :show, :destroy] do
 		member do 
-			put "deliver"
+			put :deliver
 		end
 	end
 
 	# Notification templates
-	resources :notification_templates, only: [:index, :show, :edit, :update]
+	resources :notification_templates, only: [:index, :update]
 
 end

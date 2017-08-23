@@ -1,9 +1,12 @@
 <%= rug_index(@notification_templates) do |t| %>
 	<%= t.body do |b| %>
-		<%= b.enum :ref, show: { path: :notification_template_path } %>
+		<%= b.enum :ref %>
 		<%= b.string :subject %>
 		<%= b.text :message, type: { strip_tags: true } %>
-		<%= b.action :edit, path: :edit_notification_template_path %>
+		<%= b.action :edit, modal: true do |m, notification_template| %>
+			<%= m.header t("headers.ric_notification.notification_templates.edit") %>
+			<%= render partial: "form", locals: { modal: m, table: t, notification_template: notification_template } %>
+		<% end %>
 	<% end %>
 	<%= t.footer do |f| %>
 		<%= f.summary %>

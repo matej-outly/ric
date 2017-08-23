@@ -1,6 +1,20 @@
-<%= rug_form_for(@notification_template, update_path: :notification_template_path) do |f| %>
-	<%= f.text_input_row :subject %>
-	<%= f.text_area_row :message %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
+<%= rug_form_for(notification_template, 
+	update_path: :notification_template_path,
+	ajax: {
+		success_message: RicNotification.notification_template_model.human_notice_message(:update),
+		error_message: RicNotification.notification_template_model.human_error_message(:update),
+		clear_on_submit: false,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	}
+) do |f| %>
+	<%= modal.body do %>
+		<%= f.text_input_row :subject %>
+		<%= f.text_area_row :message %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit %>
+	<% end %>
 <% end %>

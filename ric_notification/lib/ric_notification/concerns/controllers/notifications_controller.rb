@@ -20,6 +20,10 @@ module RicNotification
 
 				end
 
+				# *************************************************************
+				# Actions
+				# *************************************************************
+
 				def index
 					@notifications = RicNotification.notification_model.all.order(created_at: :desc).page(params[:page]).per(50)
 				end
@@ -29,21 +33,29 @@ module RicNotification
 
 				def deliver
 					@notification.enqueue_for_delivery
-					redirect_to request.referrer, notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_model.model_name.i18n_key}.enqueue_for_delivery")
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicNotification.notification_model.human_notice_message(:deliver) }
+						format.json { render json: @notification.id }
+					end
 				end
 
 				def destroy
 					@notification.destroy
-					redirect_to notifications_path, notice: I18n.t("activerecord.notices.models.#{RicNotification.notification_model.model_name.i18n_key}.destroy")
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicNotification.notification_model.human_notice_message(:destroy) }
+						format.json { render json: @notification.id }
+					end
 				end
 
 			protected
 
+				# *************************************************************
+				# Model setters
+				# *************************************************************
+
 				def set_notification
 					@notification = RicNotification.notification_model.find_by_id(params[:id])
-					if @notification.nil?
-						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicNotification.notification_model.model_name.i18n_key}.not_found")
-					end
+					not_found if @notification.nil?
 				end
 
 			end
