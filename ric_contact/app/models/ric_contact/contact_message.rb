@@ -20,6 +20,7 @@ else
 		class ContactMessage
 			include ActiveModel::Model
 			include RugRecord::Concerns::Config
+			include RugRecord::Concerns::Messages
 			include RicContact::Concerns::Models::ContactMessageTableless
 		end
 	end
