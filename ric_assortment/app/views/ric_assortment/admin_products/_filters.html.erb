@@ -4,7 +4,7 @@
 			<%= f.text_input_row :name, :text_field, label: false, placeholder: RicAssortment.product_model.human_attribute_name("name") %>
 			<%= f.text_input_row :catalogue_number, :text_field, label: false, placeholder: RicAssortment.product_model.human_attribute_name("catalogue_number") %>
 			<%= f.text_input_row :ean, :text_field, label: false, placeholder: RicAssortment.product_model.human_attribute_name("ean") %>
-			<%= f.picker_row :product_category_id, RicAssortment.product_category_model.all.order(lft: :asc), :id, :name_with_depth, enable_null: RicAssortment.product_model.human_attribute_name("all_product_categories"), label: false %>
+			<%= f.picker_row :product_category_id, collection: RicAssortment.product_category_model.all.order(lft: :asc), value_attr: :id, label_attr: :name_with_depth, enable_null: RicAssortment.product_model.human_attribute_name("all_product_categories"), label: false %>
 			<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
 		</div>
 	<% end %>

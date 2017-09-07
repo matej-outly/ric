@@ -3,7 +3,7 @@
 	update_path: :banner_path, 
 	html: { :multipart => true }
 ) do |f| %>
-	<%= f.picker_row :advertiser_id, RicAdvert.advertiser_model.all.order(name: :asc), :id, :name %>
+	<%= f.picker_row :advertiser_id, collection: RicAdvert.advertiser_model.all.order(name: :asc), value_attr: :id, label_attr: :name %>
 	<%= f.text_input_row :name, :text_field %>
 	<%= f.text_input_row :url, :text_field %>
 	<%= f.picker_row :kind %>

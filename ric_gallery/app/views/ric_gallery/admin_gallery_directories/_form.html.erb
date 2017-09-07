@@ -3,7 +3,7 @@
 	update_path: :gallery_directory_path
 ) do |f| %>
 	<%= f.text_input_row :name, :text_field, localization: (RicGallery.localization == true) %>
-	<%= f.picker_row :parent_id, @gallery_directory.available_parents, :id, :name_with_depth, enable_null: true %>
+	<%= f.picker_row :parent_id, collection: @gallery_directory.available_parents, value_attr: :id, label_attr: :name_with_depth, enable_null: true %>
 	<%= f.text_area_row :description, localization: (RicGallery.localization == true) %>
 	<%= f.dropzone_row :picture %>
 	<%= f.primary_button_row :submit %>

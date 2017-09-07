@@ -18,7 +18,7 @@
 	%>
 	<%= f.read_only_row :customers, customers_content %>
 	<%= f.read_only_row :customers_count, @customers.count, format: :input %>
-	<%= f.picker_row :newsletter_id, RicNewsletter.newsletter_model.order(created_at: :desc), :id, :identifying_name %>
+	<%= f.picker_row :newsletter_id, collection: RicNewsletter.newsletter_model.order(created_at: :desc), value_attr: :id, label_attr: :identifying_name %>
 	<%= f.primary_button_row :submit %>
 	<%= f.back_link_button_row %>
 <% end %>
