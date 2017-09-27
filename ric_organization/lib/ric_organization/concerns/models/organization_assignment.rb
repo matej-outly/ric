@@ -39,6 +39,7 @@ module RicOrganization
 
 					def permitted_columns
 						result = [
+							:name
 						]
 						return result
 					end

@@ -34,6 +34,13 @@ cs:
         partner_organization: Partnerská organizace
         partner_organization_id: Partnerská organizace
         partner_kind: Vztah
+      ric_organization/user_assignment:
+        user: Uživatel
+        user_id: Uživatel
+        organization: Organizace
+        organization_id: Organizace
+        organization_assignment: Pracovní pozice
+        organization_assignment_id: Pracovní pozice
 
     notices:
       models:

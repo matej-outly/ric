@@ -25,12 +25,14 @@ module RicOrganization
 					has_many :user_assignments, class_name: RicOrganization.user_assignment_model.to_s, dependent: :destroy
 					has_many :assigned_users, class_name: RicOrganization.user_model.to_s, through: :user_assignments, source: :user
 
-					# Relations
-					has_many :actor_relations, foreign_key: :actor_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
-					has_many :actee_organizations, class_name: RicOrganization.organization_model.to_s, through: :actor_relations, source: :actee
-					has_many :actee_relations, foreign_key: :actee_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
-					has_many :actor_organizations, class_name: RicOrganization.organization_model.to_s, through: :actee_relations, source: :actor
-
+					# Relations which are my actors
+					has_many :actor_relations, foreign_key: :actee_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
+					has_many :actor_organizations, class_name: RicOrganization.organization_model.to_s, through: :actor_relations, source: :actor
+					
+					# Relations which are my actees
+					has_many :actee_relations, foreign_key: :actor_id, class_name: RicOrganization.organization_relation_model.to_s, dependent: :destroy
+					has_many :actee_organizations, class_name: RicOrganization.organization_model.to_s, through: :actee_relations, source: :actee
+					
 				end
 
 				module ClassMethods
