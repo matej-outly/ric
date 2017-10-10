@@ -54,4 +54,10 @@ module RicAttachment
 	mattr_accessor :enable_slugs
 	@@enable_slugs = true
 
+	#
+	# Enabled editors
+	#
+	mattr_accessor :editors
+	@@editors = []
+
 end

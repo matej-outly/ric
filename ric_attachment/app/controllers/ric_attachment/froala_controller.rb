@@ -12,7 +12,7 @@
 require_dependency "ric_attachment/application_controller"
 
 module RicAttachment
-	class FrolaController < ApplicationController
-		include RicAttachment::Concerns::Controllers::FrolaController
+	class FroalaController < ApplicationController
+		include RicAttachment::Concerns::Controllers::FroalaController
 	end
 end

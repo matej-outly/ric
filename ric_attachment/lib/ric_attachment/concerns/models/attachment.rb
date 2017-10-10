@@ -95,6 +95,23 @@ module RicAttachment
 					return new_record
 				end
 
+				# *************************************************************
+				# URL (useful even if not sluggified)
+				# *************************************************************
+
+				def url_original
+					if @url_original.nil?
+						@url_original = self._url_original
+					end
+					return @url_original
+				end
+
+			protected
+
+				def _url_original
+					"/attachments/#{self.id}"
+				end
+
 			end
 		end
 	end

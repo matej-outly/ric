@@ -19,7 +19,7 @@ module RicAttachment
 				def _url_original
 					"/attachments/#{self.id}"
 				end
-
+				
 				def _generate_slug(slug_model, locale)
 					if !self.file_file_name.blank? && self.subject && self.subject.respond_to?(:compose_slug_translation)
 						filter, translation = self.subject.compose_slug_translation(locale)
