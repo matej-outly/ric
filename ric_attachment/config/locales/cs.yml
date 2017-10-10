@@ -1,0 +1,21 @@
+cs:
+     
+  activerecord:
+    attributes:
+      ric_attachment/attachment:
+        file: Soubor
+        kind: Typ souboru
+        kind_values: 
+          image: Obrázek
+          file: Soubor
+        subject: Navázaný objekt
+    notices:
+      models:
+        ric_attachment/attachment:
+          create: "Soubor byl úspěšně nahrán."
+          update: "Soubor byl úspěšně upraven."
+          destroy: "Soubor byl úspěšně smazán."
+    errors:
+      models:
+        ric_attachment/attachment:
+          not_found: "Soubor nebyl nalezen."
