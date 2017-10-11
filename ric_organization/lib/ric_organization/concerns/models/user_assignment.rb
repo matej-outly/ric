@@ -22,7 +22,7 @@ module RicOrganization
 
 					belongs_to :organization, class_name: RicOrganization.organization_model.to_s
 					belongs_to :user, class_name: RicOrganization.user_model.to_s
-					belongs_to :organization_assignment, class_name: RicOrganization.organization_assignment_model.to_s
+					belongs_to :organization_assignment, class_name: RicOrganization.organization_assignment_model.to_s if RicOrganization.enable_organization_assignments
 
 					# *********************************************************
 					# Validators

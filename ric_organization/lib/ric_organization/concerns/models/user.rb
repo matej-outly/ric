@@ -23,7 +23,7 @@ module RicOrganization
 					# Organization
 					has_many :user_assignments, class_name: RicOrganization.user_assignment_model.to_s, dependent: :destroy
 					has_many :assigned_organizations, class_name: RicOrganization.organization_model.to_s, through: :user_assignments, source: :organization
-					
+
 				end
 
 				# *************************************************************

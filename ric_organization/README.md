@@ -3,10 +3,54 @@
 RicOrganization module creates a network of organizations which are related through different relation types. These relations can be defined for instance:
 
 - producer / consumer
-- teacher / student
+- lecturer / student
 - etc.
 
 We recommend to couple this module with the RicUser module. With this, system users can be effectively scoped into the created organizations. In addition, a structure of assignments can be created inside of the organization and users can be scoped to the assignments.
+
+## Installation
+
+Add gem to your Gemfile:
+
+```ruby
+gem "ric_organization"
+```
+
+Add database migrations to you application (you can modify DB structure accordingly before migrating):
+
+    $ rake ric_organization:install:migrations
+    $ rake db:migrate
+
+Mount routing engine in your `routes.rb` file if you want to use basic organizations management screens:
+
+```ruby
+mount RicOrganization::Engine => "/admin", as: :ric_organization
+```
+
+## Configuration
+
+You can configure module through `config/initializers/ric_organization.rb` file:
+
+```ruby
+RicOrganization.setup do |config|
+    config.enable_organization_relations = true
+    config.enable_organization_assignments = false
+    config.relation_kinds = {
+        lectures: {
+            actor: :lecturer,
+            actee: :student
+        }
+    }
+end
+```
+
+Available options:
+
+- attachment_model
+- enable_organization_relations
+- enable_organization_assignments
+- enable_user_assignments
+- relation_kinds
 
 ## RicUser coupling
 
@@ -46,7 +90,7 @@ module RicUser
 end
 ```
 
-We assume that user has many roles (defined dynamicaly in DB). Association between users and roles (UserRole model) should be scoped by organization in order to determine in which organization the role is obtained. This can be achieved by RicUser configuration:
+We assume that user has many roles (defined dynamically in DB). Association between users and roles (UserRole model) should be scoped by organization in order to determine organization in which the role is obtained. This can be achieved by RicUser configuration:
 
 ```ruby
 RicUser.setup do |config| 

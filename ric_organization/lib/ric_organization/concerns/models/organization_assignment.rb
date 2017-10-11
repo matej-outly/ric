@@ -21,7 +21,7 @@ module RicOrganization
 					# *********************************************************
 
 					belongs_to :organization, class_name: RicOrganization.organization_model.to_s
-					has_many :user_assignments, class_name: RicOrganization.user_assignment_model.to_s, dependent: :destroy
+					has_many :user_assignments, class_name: RicOrganization.user_assignment_model.to_s, dependent: :destroy if RicOrganization.enable_user_assignments
 
 					# *********************************************************
 					# Validators

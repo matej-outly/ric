@@ -10,6 +10,11 @@ Add gem to your Gemfile:
 gem "ric_attachment"
 ```
 
+Add database migrations to you application (you can modify DB structure accordingly before migrating):
+
+    $ rake ric_attachment:install:migrations
+    $ rake db:migrate
+
 Mount routing engine in your `routes.rb` file:
 
 ```ruby

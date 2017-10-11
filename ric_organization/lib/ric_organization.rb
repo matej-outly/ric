@@ -89,6 +89,24 @@ module RicOrganization
 	@@user_model = "RicUser::User"
 
 	#
+	# Enable relations between organizations
+	#
+	mattr_accessor :enable_organization_relations
+	@@enable_organization_relations = true
+
+	#
+	# Enable assignments inside organizations
+	#
+	mattr_accessor :enable_organization_assignments
+	@@enable_organization_assignments = true
+
+	#
+	# Enable assignments inside organizations
+	#
+	mattr_accessor :enable_user_assignments
+	@@enable_user_assignments = true
+
+	#
 	# Available relation kinds
 	#
 	mattr_accessor :relation_kinds
