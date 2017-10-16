@@ -21,15 +21,18 @@ module RicAttachment
 
 					# Set some models before actions
 					before_action :set_subject
+					before_action :set_session_id
 
 				end
 
 				def index
 					@attachments = RicAttachment.attachment_model.all
-					if @subject
+					if @subject # Subject id a primary scope
 						@attachments = @attachments.where(subject_type: @subject.class.to_s, subject_id: @subject.id)
+					elsif @session_id # Session ID is a secondary scope
+						@attachments = @attachments.where(subject_id: nil, session_id: @session_id)
 					else
-						@attachments = @attachments.attachment_model.where(subject_id: nil)
+						@attachments = @attachments.where(subject_id: nil)
 					end
 					@attachments = @attachments.where(kind: params[:kind]) if params[:kind]
 					@attachments = @attachments.order(created_at: :asc)
@@ -44,7 +47,11 @@ module RicAttachment
 					if params[:file]
 						@attachment = RicAttachment.attachment_model.new
 						@attachment.file = params[:file]
-						@attachment.subject = @subject if @subject
+						if @subject # Subject id a primary scope
+							@attachment.subject = @subject 
+						elsif @session_id # Session ID is a secondary scope
+							@attachment.session_id = @session_id 
+						end
 						if @attachment.save
 							render json: { link: ric_attachment.attachment_path(@attachment) }
 						else
@@ -85,6 +92,10 @@ module RicAttachment
 					else
 						@subject = nil
 					end
+				end
+
+				def set_session_id
+					@session_id = params[:session_id] if params[:session_id]
 				end
 
 			end

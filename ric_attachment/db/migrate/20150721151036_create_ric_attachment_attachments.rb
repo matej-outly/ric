@@ -6,6 +6,7 @@ class CreateRicAttachmentAttachments < ActiveRecord::Migration
 			t.string :subject_type, index: true
 			t.attachment :file
 			t.string :kind, index: true
+			t.string :session_id, index: true
 		end
 	end
 end

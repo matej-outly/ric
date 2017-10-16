@@ -56,6 +56,25 @@ module RicAttachment
 						]
 					end
 
+					# *********************************************************
+					# Claim
+					# *********************************************************
+
+					#
+					# Claim attachments without subject by session ID
+					#
+					def claim(subject, session_id)
+						return false if session_id.blank?
+						self.transaction do 
+							self.where(subject_id: nil, session_id: session_id).each do |claimed_attachment|
+								claimed_attachment.session_id = nil
+								claimed_attachment.subject = subject
+								claimed_attachment.save
+							end
+						end
+						return true
+					end
+
 				end
 				
 				# *************************************************************

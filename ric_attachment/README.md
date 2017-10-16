@@ -40,7 +40,17 @@ Available options:
 
 ## Subject
 
-Each attachment can be binded to subject which creates a scope in which the attachment is managed. Subject association is set as polymorphic so there is posiibility to bind attachment to different subjects.
+Each attachment can be binded to subject which creates a scope in which the attachment is managed. Subject association is set as polymorphic so there is possibility to bind attachment to different subjects.
+
+## Session ID and attachment claiming
+
+In most cases attachments are managed (listed, created and destroyed) through the parent resource (typically some kind of WYSIWYG editor). Problem with this approach is in "new" action when the parent resource is not saved in DB (ID is not known yet) but editor requires some kind of ID cor attachments to be created in the correct scope. In this case, a temporary session ID must be used instead of resource ID. Both editor and backend should support subject ID and also session ID params (see editor settings example and backend implementation inside this module).
+
+After parent resource is finally created and ID is obtained, this resource must claim temporary attachments created with the temporary session ID with this function:
+
+```ruby
+RicAttachment::Attachment.claim(parent, session_id)
+```
 
 ## Slugs
 
@@ -57,8 +67,16 @@ $('textarea.froala').on('froalaEditor.initialized', function (e, editor) {
     $.extend(editor.opts.imageManagerLoadParams, { kind: 'image' });
     var subjectId = $(this).data('subjectId');
     var subjectType = $(this).data('subjectType');
+    var sessionId = $(this).data('sessionId');
     if (subjectId && subjectType) {
-        var params = { subject_id: subjectId, subject_type: subjectType }
+        var params = { subject_id: subjectId, subject_type: subjectType };
+        $.extend(editor.opts.imageManagerLoadParams, params);
+        $.extend(editor.opts.imageManagerDeleteParams, params);
+        $.extend(editor.opts.imageUploadParams, params);
+        $.extend(editor.opts.fileUploadParams, params);
+        $.extend(editor.opts.videoUploadParams, params);
+    } else if (sessionId) {
+        var params = { session_id: sessionId };
         $.extend(editor.opts.imageManagerLoadParams, params);
         $.extend(editor.opts.imageManagerDeleteParams, params);
         $.extend(editor.opts.imageUploadParams, params);
@@ -81,5 +99,20 @@ $('textarea.froala').on('froalaEditor.initialized', function (e, editor) {
     /* ... */
 });
 
+```
+
+You can use RugBuilder to create a text area with Froala editor integrated:
+
+```erb
+<%= f.text_area_row :attribute_name, 
+    plugin: :froala, 
+    data: (
+        @parent.new_record? ? { 
+            session_id: session.id 
+        } : { 
+            subject_id: @parent.id, 
+            subject_type: @parent.class.to_s 
+        }
+    ) %>
 ```
 
