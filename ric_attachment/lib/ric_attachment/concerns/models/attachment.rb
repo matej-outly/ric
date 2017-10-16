@@ -87,7 +87,7 @@ module RicAttachment
 					) # Dup cannot be used because of attachment
 					
 					# File
-					new_record.file = self.file
+					new_record.file = self.file if self.file.exists?
 					
 					# Save
 					new_record.save
