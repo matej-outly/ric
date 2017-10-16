@@ -340,10 +340,10 @@ module RicReservation
 					return if self.owner.nil?
 
 					# Get receiver object
-					if self.owner_type == RicNotification.user_model
-						receiver = self.owner
-					else
+					if self.owner.respond_to?(:user)
 						receiver = self.owner.user
+					else
+						receiver = self.owner
 					end
 
 					# Notify receiver

@@ -3,7 +3,7 @@ class CreateRicUserSessions < ActiveRecord::Migration
 		create_table :sessions, id: false do |t|
 			
 			# ID
-			t.string :id, null: false
+			t.string :id, index: true, null: false
 
 			# Timestamps
 			t.timestamps null: true

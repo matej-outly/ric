@@ -10,7 +10,7 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			# *****************************************************************
 
 			# Basic identification
-			t.string :email
+			t.string :email, index: true
 
 			# Authentication
 			t.string :encrypted_password, null: false, default: ""
@@ -40,7 +40,7 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			#t.string   :unlock_token # Only if unlock strategy is :email or :both
 			
 			# Lockable by admin
-			t.datetime :locked_at
+			t.datetime :locked_at, index: true
 
 			# *****************************************************************
 			# Fancy data
