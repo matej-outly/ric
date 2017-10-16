@@ -19,6 +19,6 @@ RicNotification::Engine.routes.draw do
 	end
 
 	# Notification templates
-	resources :notification_templates, only: [:index, :update]
+	resources :notification_templates, only: [:index, :edit, :update]
 
 end

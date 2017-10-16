@@ -16,7 +16,7 @@ module RicNotification
 
 				included do
 					
-					before_action :set_notification_template, only: [:update]
+					before_action :set_notification_template, only: [:edit, :update]
 					before_action :create_missing_notification_templates, only: [:index]
 
 				end
@@ -24,6 +24,9 @@ module RicNotification
 				# *************************************************************
 				# Actions
 				# *************************************************************
+
+				def edit # Edit action is kept in order to support custom views
+				end
 
 				def index
 					@notification_templates = RicNotification.notification_template_model.all.order(ref: :asc)
