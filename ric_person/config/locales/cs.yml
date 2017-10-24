@@ -1,12 +1,2 @@
 cs:
-
-  headers:
-
-  activerecord:
-    attributes:
-    
-    notices:
-      models:
-
-    errors:
-      models:
+  hello: Ahoj světe
