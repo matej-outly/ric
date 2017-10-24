@@ -44,13 +44,6 @@ RicUser::Engine.routes.draw do
 
 	end
 
-	# People selectors
-	resources :people_selectors, only: [] do
-		collection do
-			get :search
-		end
-	end
-
 	# Session
 	resource :session, only: [:show, :edit, :update]
 

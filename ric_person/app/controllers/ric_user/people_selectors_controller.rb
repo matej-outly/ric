@@ -9,16 +9,10 @@
 # *
 # *****************************************************************************
 
-module RicUser
-	module Concerns
-		module Controllers
-			module PeopleSelectorsController extend ActiveSupport::Concern
+require_dependency "ric_person/application_controller"
 
-				def search
-					render json: RicUser.people_selector_model.search(params[:q]).to_json
-				end
-
-			end
-		end
+module RicPerson
+	class PeopleSelectorsController < ApplicationController
+		include RicPerson::Concerns::Controllers::PeopleSelectorsController
 	end
 end

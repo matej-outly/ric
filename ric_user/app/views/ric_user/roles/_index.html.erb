@@ -6,7 +6,7 @@
 		<%= b.boolean :default_unsigned %>
 		<%= b.boolean :default_signed %>
 		<%= b.action :edit, modal: true do |m, role| %>
-			<%= m.header t("headers.ric_role.roles.edit") %>
+			<%= m.header t("headers.ric_user.roles.edit") %>
 			<%= render partial: "form", locals: {
 				modal: m,
 				table: t,

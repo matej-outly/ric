@@ -12,7 +12,7 @@
 ) do |f| %>
 	<%= modal.body do %>
 		<%= f.text_input_row :subject %>
-		<%= f.text_area_row :message %>
+		<%= f.text_area_row :message, plugin: false %>
 	<% end %>
 	<%= modal.footer do %>
 		<%= f.primary_button_row :submit %>

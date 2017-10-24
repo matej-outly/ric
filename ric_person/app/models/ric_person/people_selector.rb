@@ -9,9 +9,9 @@
 # *
 # *****************************************************************************
 
-module RicUser
+module RicPerson
 	class PeopleSelector < ActiveRecord::Base
-		include RicUser::Concerns::Models::PeopleSelector
+		include RicPerson::Concerns::Models::PeopleSelector
 
 		# Define selector
 #		define_selector :selector_ref, {

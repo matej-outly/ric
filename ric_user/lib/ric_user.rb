@@ -15,21 +15,12 @@ require "ric_user/engine"
 # Models
 require "ric_user/concerns/models/session"
 require "ric_user/concerns/models/role"
-require "ric_user/concerns/models/user_person"
 require "ric_user/concerns/models/user_role"
 require "ric_user/concerns/models/user"
 require "ric_user/concerns/models/user/multi_dynamic_roles"
-require "ric_user/concerns/models/user/multi_people"
 require "ric_user/concerns/models/user/multi_static_roles"
 require "ric_user/concerns/models/user/single_static_role"
-require "ric_user/concerns/models/user/single_person"
 require "ric_user/concerns/models/user/single_dynamic_role"
-require "ric_user/concerns/models/person"
-require "ric_user/concerns/models/person/model_1"
-require "ric_user/concerns/models/person/model_2"
-require "ric_user/concerns/models/person/model_3"
-require "ric_user/concerns/models/people_selector"
-require "ric_user/concerns/models/people_selectable"
 
 # Mailers
 require "ric_user/concerns/mailers/user_mailer"
@@ -94,15 +85,6 @@ module RicUser
 	@@user_role_person_model = nil
 
 	#
-	# User person model
-	#
-	mattr_accessor :user_person_model
-	def self.user_person_model
-		return @@user_person_model.constantize
-	end
-	@@user_person_model = "RicUser::UserPerson"
-
-	#
 	# User mailer
 	#
 	mattr_accessor :user_mailer
@@ -119,15 +101,6 @@ module RicUser
 		return @@session_model.constantize
 	end
 	@@session_model = "RicUser::Session"
-
-	#
-	# People Selector model
-	#
-	mattr_accessor :people_selector_model
-	def self.people_selector_model
-		return @@people_selector_model.constantize
-	end
-	@@people_selector_model = "RicUser::PeopleSelector"
 
 	#
 	# Mailer sender
@@ -169,24 +142,6 @@ module RicUser
 	#
 	mattr_accessor :scope_user_role_by_person
 	@@scope_user_role_by_person = false
-
-	#
-	# Association between users and people
-	#
-	# Available values:
-	# - none
-	# - user_has_one_person (model_1)
-	# - user_has_many_people (model_2)
-	# - user_belongs_to_person (model_3)
-	#
-	mattr_accessor :user_person_association
-	@@user_person_association = :none
-
-	#
-	# Available person types
-	#
-	mattr_accessor :person_types
-	@@person_types = []
 
 	#
 	# Is user avatar croppable?

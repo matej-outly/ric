@@ -27,50 +27,23 @@ module RicUser
 		end
 		
 		# *********************************************************************
-		# People and roles
+		# Roles
 		# *********************************************************************
-
-		if RicUser.user_person_association == :user_has_one_person
-			include RicUser::Concerns::Models::User::SinglePerson
+		
+		if RicUser.user_role_association == :user_belongs_to_role
 			if RicUser.use_static_roles
 				include RicUser::Concerns::Models::User::SingleStaticRole
 			else
 				include RicUser::Concerns::Models::User::SingleDynamicRole
 			end
 		
-		elsif RicUser.user_person_association == :user_has_many_people
-			include RicUser::Concerns::Models::User::MultiPeople
+		elsif RicUser.user_role_association == :user_has_and_belongs_to_many_roles
 			if RicUser.use_static_roles
 				include RicUser::Concerns::Models::User::MultiStaticRoles
 			else
 				include RicUser::Concerns::Models::User::MultiDynamicRoles
 			end
-
-		elsif RicUser.user_person_association == :user_belongs_to_person
-			include RicUser::Concerns::Models::User::SinglePerson
-			if RicUser.use_static_roles
-				include RicUser::Concerns::Models::User::SingleStaticRole
-			else
-				include RicUser::Concerns::Models::User::SingleDynamicRole
-			end
-		
-		else # No people association
-			if RicUser.user_role_association == :user_belongs_to_role
-				if RicUser.use_static_roles
-					include RicUser::Concerns::Models::User::SingleStaticRole
-				else
-					include RicUser::Concerns::Models::User::SingleDynamicRole
-				end
-			
-			elsif RicUser.user_role_association == :user_has_and_belongs_to_many_roles
-				if RicUser.use_static_roles
-					include RicUser::Concerns::Models::User::MultiStaticRoles
-				else
-					include RicUser::Concerns::Models::User::MultiDynamicRoles
-				end
-			end
-
 		end
-		
+
 	end
 end

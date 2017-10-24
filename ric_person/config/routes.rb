@@ -2,17 +2,20 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * People selectors
+# * Routes
 # *
 # * Author: Matěj Outlý
-# * Date  : 11. 4. 2017
+# * Date  : 26. 11. 2015
 # *
 # *****************************************************************************
 
-require_dependency "ric_user/application_controller"
+RicUser::Engine.routes.draw do
 
-module RicUser
-	class PeopleSelectorsController < ApplicationController
-		include RicUser::Concerns::Controllers::PeopleSelectorsController
+	# People selectors
+	resources :people_selectors, only: [] do
+		collection do
+			get :search
+		end
 	end
+
 end

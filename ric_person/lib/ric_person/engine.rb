@@ -9,15 +9,12 @@
 # *
 # *****************************************************************************
 
-module RicUser
+module RicPerson
 	class Engine < ::Rails::Engine
 		
 		# Controllers
-		require "ric_user/concerns/controllers/users_controller"
-		require "ric_user/concerns/controllers/roles_controller"
-		require "ric_user/concerns/controllers/user_passwords_controller"
-		require "ric_user/concerns/controllers/sessions_controller"
+		require "ric_person/concerns/controllers/people_selectors_controller"
 		
-		isolate_namespace RicUser
+		isolate_namespace RicPerson
 	end
 end

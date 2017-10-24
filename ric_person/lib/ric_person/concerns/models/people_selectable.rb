@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-module RicUser
+module RicPerson
 	module Concerns
 		module Models
 			module PeopleSelectable extend ActiveSupport::Concern
@@ -20,7 +20,7 @@ module RicUser
 					# Structure
 					# *********************************************************
 
-					has_many :people_selectors, class_name: RicUser.people_selector_model.to_s, as: :subject, dependent: :destroy
+					has_many :people_selectors, class_name: RicPerson.people_selector_model.to_s, as: :subject, dependent: :destroy
 
 					# *********************************************************
 					# People selector values
@@ -96,7 +96,7 @@ module RicUser
 							return @people_selector_values.map do |value| 
 								OpenStruct.new(
 									value: value,
-									title: RicUser.people_selector_model.title(value)
+									title: RicPerson.people_selector_model.title(value)
 								)
 							end
 						end

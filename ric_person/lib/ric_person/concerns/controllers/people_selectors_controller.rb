@@ -2,16 +2,23 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * User assignment
+# * People selectors
 # *
 # * Author: Matěj Outlý
-# * Date  : 31. 7. 2017
+# * Date  : 11. 4. 2017
 # *
 # *****************************************************************************
 
-module RicOrganization
-	class UserAssignment < ActiveRecord::Base
-		include RicOrganization::Concerns::Models::UserAssignment
-		#include RicPerson::Concerns::Models::Person
+module RicPerson
+	module Concerns
+		module Controllers
+			module PeopleSelectorsController extend ActiveSupport::Concern
+
+				def search
+					render json: RicPerson.people_selector_model.search(params[:q]).to_json
+				end
+
+			end
+		end
 	end
 end

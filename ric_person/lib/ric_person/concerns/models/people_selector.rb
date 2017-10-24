@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-module RicUser
+module RicPerson
 	module Concerns
 		module Models
 			module PeopleSelector extend ActiveSupport::Concern

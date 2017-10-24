@@ -4,6 +4,6 @@
 		<span class="m-r-sm m-l-sm">•</span>
 		<%= current_organization.name.truncate(length: 30) %>
 	<% else %>
-		<%= current_user.user_roles.where("person_id IS NULL", current_organization.id).map { |user_role| user_role.role.name }.join(", ").truncate(length: 30) %>
+		<%= current_user.user_roles.where("person_id IS NULL").map { |user_role| user_role.role.name }.join(", ").truncate(length: 30) %>
 	<% end %>
 </p>

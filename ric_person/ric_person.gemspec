@@ -5,13 +5,13 @@ version = File.read(File.expand_path('../../RIC_VERSION', __FILE__)).strip
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "ric_user"
+  s.name        = "ric_person"
   s.version     = version
   s.authors     = ["Matej Outly (Clockstar s.r.o.)"]
   s.email       = ["matej@clockstar.cz"]
   s.homepage    = "http://www.clockstar.cz"
-  s.summary     = "RIC engine for user management"
-  s.description = "Users and roles backend and administration."
+  s.summary     = "RIC engine for connecting users to different objects in the system (people)"
+  s.description = "This module contains usefull concerns for the connection realization and people selectors logic."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

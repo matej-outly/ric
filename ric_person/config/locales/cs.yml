@@ -1,0 +1,12 @@
+cs:
+
+  headers:
+
+  activerecord:
+    attributes:
+    
+    notices:
+      models:
+
+    errors:
+      models:

@@ -63,9 +63,9 @@ module RicUser
 					def permitted_columns
 						[
 							:email, 
-							:role,
-							:roles,
-							:role_id,
+							#:role,
+							#:roles,
+							#:role_id,
 							:role_ids,
 							:avatar,
 							:avatar_crop_x, 

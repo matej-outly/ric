@@ -2,15 +2,14 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * User person
+# * Abstract engine controller
 # *
 # * Author: Matěj Outlý
-# * Date  : 20. 3. 2017
+# * Date  : 9. 6. 2015
 # *
 # *****************************************************************************
 
-module RicUser
-	class UserPerson < ActiveRecord::Base
-		include RicUser::Concerns::Models::UserPerson
+module RicPerson
+	class ApplicationController < ::ApplicationController
 	end
 end

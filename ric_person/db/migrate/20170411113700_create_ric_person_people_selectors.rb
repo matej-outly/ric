@@ -1,4 +1,4 @@
-class CreateRicUserPeopleSelectors < ActiveRecord::Migration
+class CreateRicPersonPeopleSelectors < ActiveRecord::Migration
 	def change
 		create_table :people_selectors do |t|
 			

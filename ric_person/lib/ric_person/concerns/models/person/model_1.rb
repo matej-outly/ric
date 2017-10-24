@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Person with single user, user has max one person associated
+# * (Not implemented) Person with single user, user has max one person associated
 # *
 # * Author: Matěj Outlý
 # * Date  : 20. 3. 2017
