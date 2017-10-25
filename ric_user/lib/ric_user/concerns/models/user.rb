@@ -38,7 +38,7 @@ module RicUser
 					# Validators
 					# *********************************************************
 
-					validates_presence_of :email
+					#validates_presence_of :email # Already defined in devise
 
 				end
 

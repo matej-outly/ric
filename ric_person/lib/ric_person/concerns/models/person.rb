@@ -26,7 +26,8 @@ module RicPerson
 					# Validators
 					# *********************************************************
 
-					validates_presence_of :user_id, :email
+					validates_presence_of :user_id
+					#validates_presence_of :email Not working since email is virtual attribute
 
 					# *************************************************************
 					# User wrapper
