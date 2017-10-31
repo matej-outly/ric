@@ -175,6 +175,14 @@ module RicUrl
 	@@disable_default_locale = false
 
 	#
+	# By default, headers sent from browser are checked and default locale is 
+	# set automatically according to browser language (if possible). This 
+	# feature can be disable by setting true to this option.
+	#
+	mattr_accessor :disable_browser_locale
+	@@disable_browser_locale = false
+
+	#
 	# Use filter column in slug records?
 	#
 	# Filter column can be used for filtering subset of slugs valid for some 
