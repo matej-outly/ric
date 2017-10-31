@@ -1,0 +1,28 @@
+cs:
+     
+  activerecord:
+    attributes:
+      ric_staging/stage:
+        stage: Stav
+        stage_values: 
+          none: Nezpracovaný
+          developed: Rozpracovaný
+          done: Hotový
+          obsolete: Zastaralý
+        stage_colors: 
+          none: red
+          developed: yellow
+          done: green
+          obsolete: red
+        subject: Navázaný objekt
+        locale: Jazyková varianta
+    notices:
+      models:
+        ric_staging/stage:
+          update: "Stav objektu byl úspěšně vytvořen."
+          update: "Stav objektu byl úspěšně upraven."
+          destroy: "Stav objektu byl úspěšně smazán."
+    errors:
+      models:
+        ric_staging/stage:
+          not_found: "Stav objektu nebyl nalezen."
