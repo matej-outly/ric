@@ -30,7 +30,11 @@ module RicStaging
 					# Stage
 					# *********************************************************
 
-					state_column :stage, [:done, :developed, :none, :obsolete], default: :none
+					# 
+					# :done - least dominant
+					# :developed - most dominant
+					#
+					state_column :stage, [:done, :none, :obsolete, :developed], default: :none
 
 				end
 
