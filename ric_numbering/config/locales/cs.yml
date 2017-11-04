@@ -1,0 +1,16 @@
+cs:
+     
+  activerecord:
+    attributes:
+      ric_numbering/sequence:
+        
+    notices:
+      models:
+        ric_numbering/sequence:
+          update: "Číselná řada byla úspěšně vytvořena."
+          update: "Číselná řada byla úspěšně upravena."
+          destroy: "Číselná řada byla úspěšně smazána."
+    errors:
+      models:
+        ric_numbering/sequence:
+          not_found: "Číselná řada nebyla nalezena."
