@@ -1,8 +1,0 @@
-<% if !@filter_customer.class.filter_columns.empty? %>
-	<%= rug_form_for(@filter_customer, url: index_filter_customers_path) do |f| %>
-		<% @filter_customer.class.filter_columns.each do |column, spec| %>
-			<%= f.generic_row column, spec[:type], enable_null: true %>
-		<% end %>
-		<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
-	<% end %>
-<% end %>

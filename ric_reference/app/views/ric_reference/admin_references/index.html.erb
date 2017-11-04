@@ -1,9 +1,0 @@
-<%= rug_index_table_for(@references, { 
-	name: :string,
-	url: :string
-}, paths: {
-	show: :reference_path,
-	edit: :edit_reference_path,
-	move: :move_reference_path,
-	destroy: :reference_path
-}, moving: true, pagination: true, summary: true ) %>

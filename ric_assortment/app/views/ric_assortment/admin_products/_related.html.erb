@@ -1,8 +1,0 @@
-<%= rug_menu_for(@product, name: "related") do |m| %>
-	<% if @product && !@product.new_record? %>
-		<%#= m.item t("headers.ric_assortment.admin_product_variants.new"), new_product_variant_path(product_id: @product.id), icon: "plus" %>
-		<%#= m.item t("headers.ric_assortment.admin_product_attachments.new"), new_product_attachment_path(product_id: @product.id), icon: "plus" %>
-		<%#= m.item t("headers.ric_assortment.admin_product_attachment_relations.edit"), edit_product_attachment_relation_path(@product), icon: "plus" %>
-		<%#= m.item t("headers.ric_assortment.admin_product_category_relations.edit"), edit_product_category_relation_path(@product), icon: "plus" %>
-	<% end %>
-<% end %>

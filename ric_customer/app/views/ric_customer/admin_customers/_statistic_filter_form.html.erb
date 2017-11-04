@@ -1,8 +1,0 @@
-<% if !@statistic_columns.empty? %>
-	<%= rug_form_for(@filter_customer, url: statistic_filter_customers_path(@statistic)) do |f| %>
-		<% @statistic_columns.each do |column, spec| %>
-			<%= f.generic_row column, spec[:type], spec.merge({enable_null: true}) %>
-		<% end %>
-		<%= f.primary_button_row :submit, label: t("helpers.submit.filter") %>
-	<% end %>
-<% end %>

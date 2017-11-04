@@ -1,7 +1,0 @@
-# Logo crop settings
-logo_crop:
-  thumb: "320x180#"
-  full: "1000x1000>"
-
-# Optionaly disable DB function unaccent while search (i.e. PostgreSQL 8.4 does not support this function)
-disable_unaccent: false

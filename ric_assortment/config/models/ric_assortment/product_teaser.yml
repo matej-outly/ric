@@ -1,6 +1,0 @@
-# Available keys
-keys:
-  - homepage
-
-# Optionaly disable DB function unaccent while search (i.e. PostgreSQL 8.4 does not support this function)
-disable_unaccent: false

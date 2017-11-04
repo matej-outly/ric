@@ -1,8 +1,0 @@
-<%= rug_index_table_for(@product_manufacturers, { 
-	name: :string,
-	url: :url,
-	logo: { type: :picture, thumb_style: :thumb }
-}, paths: {
-	edit: :edit_product_manufacturer_path,
-	destroy: :product_manufacturer_path
-}, summary: true ) %>

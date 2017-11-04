@@ -1,5 +1,0 @@
-<%= rug_form_for(RicNewsletter.customer_model.new, url: ric_newsletter_public.newsletter_sign_up_customers_path, html: { class: "newsletter-sign-up" }) do |f| %>
-	<div class="flash-canvas"></div>
-	<%= f.text_input_row :email, :email_field %>
-	<%= f.primary_button_row :submit, label: t("helpers.submit.register") %>
-<% end %>

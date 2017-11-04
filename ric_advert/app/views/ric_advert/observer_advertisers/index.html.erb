@@ -1,9 +1,0 @@
-<%= rug_index(@advertisers) do |t| %>
-	<%= t.body do |b| %>
-		<%= b.string :name, show: { path: "ric_advert_observer.advertiser_path" } %>
-	<% end %>
-	<%= t.footer do |f| %>
-		<%= f.pagination %>
-		<%= f.summary %>
-	<% end %>
-<% end %>

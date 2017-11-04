@@ -1,8 +1,0 @@
-<%= rug_form_for(@advertiser, 
-	create_path: :advertisers_path, 
-	update_path: :advertiser_path
-) do |f| %>
-	<%= f.text_input_row :name, :text_field %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
-<% end %>

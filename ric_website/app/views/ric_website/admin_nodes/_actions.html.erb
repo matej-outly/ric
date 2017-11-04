@@ -1,6 +1,0 @@
-<%= rug_menu_for(@node, options.merge(path_base: "ric_website_admin.node")) do |m| %>
-	<%= m.edit_item %>
-	<% if @node && !@node.new_record? %>
-		<%= m.item t("headers.ric_website.admin_nodes.generate_slugs"), ric_website_admin.generate_slugs_node_path(@node), icon: "refresh", method: "put" %>
-	<% end %>
-<% end %>

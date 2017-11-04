@@ -1,8 +1,0 @@
-<% 
-	columns = rug_columns 
-	columns.add_column_by_type(:catalogue_number, :string)
-	columns.add_column_by_type(:ean, :string)
-	columns.add_column_by_type(:product_categories, type: :has_many, label: :name, path: :product_category_path)
-	columns.add_column_by_type(:product_manufacturer, type: :belongs_to, label: :name) if RicAssortment.enable_manufacturers
-%>
-<%= rug_show_table_for(@product, columns) %>

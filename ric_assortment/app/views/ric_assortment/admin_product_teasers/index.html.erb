@@ -1,9 +1,0 @@
-<%= rug_index_table_for(@product_teasers, { 
-	name: :string,
-	key: :enum,
-	products: { type: :has_many, label: :name_with_category }
-}, paths: {
-	show: :product_teaser_path,
-	edit: :edit_product_teaser_path,
-	destroy: :product_teaser_path
-}, summary: true ) %>

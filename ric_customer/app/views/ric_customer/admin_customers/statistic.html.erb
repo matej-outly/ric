@@ -1,9 +1,0 @@
-<%#= render partial: "ruth_admin/components/page_header", locals: { header: t("headers.ric_customer.admin_customers.statistic_#{@statistic.to_s}") } %>
-<%= rug_index_table_for(@customers, { 
-	name: :name,
-	email: :string
-}, paths: {
-	show: :customer_path,
-	edit: :edit_customer_path,
-	destroy: :customer_path
-}, model_class: RicCustomer.customer_model.to_s ) %>

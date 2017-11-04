@@ -1,6 +1,0 @@
-<%= rug_form_for(@product, update_path: :products_product_attachment_path) do |f| %>
-	<%= f.read_only_row :name, nil, format: :input %>
-	<%= f.token_input_row :product_attachment_ids, ric_assortment_admin.search_product_attachments_path, as: :product_attachments, value_attr: :id, label_attr: :title %>
-	<%= f.primary_button_row :submit %>
-	<%= f.back_link_button_row %>
-<% end %>
