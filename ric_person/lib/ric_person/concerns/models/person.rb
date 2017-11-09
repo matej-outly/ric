@@ -71,7 +71,7 @@ module RicPerson
 							user = RicPerson.user_model.new(email: self.email)
 							user.regenerate_password(notification: false)
 							if !user.save
-								raise "User not saved, errors: #{user.errors.to_s}"
+								raise "User not saved, errors: #{user.errors.inspect.to_s}"
 							end
 						end
 
