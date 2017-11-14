@@ -92,7 +92,7 @@ module RicNumbering
 				# Get number formatted into a fancy string according to configuration
 				#
 				def number_formatted
-					if @number_formatted.nil?
+					if @number_formatted.nil? && !self.number.nil?
 						if RicNumbering.sequence_formats && RicNumbering.sequence_formats[self.sequence_ref.to_sym]
 							@number_formatted = sprintf(RicNumbering.sequence_formats[self.sequence_ref.to_sym], self.number)
 						else
