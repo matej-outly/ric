@@ -20,19 +20,23 @@ module RicUser
 					# Name
 					# *********************************************************
 
-					name_column :name
-					add_methods_to_json :name_formatted
+					if RicUser.user_name == true
+						name_column :name
+						add_methods_to_json :name_formatted
+					end
 
 					# *********************************************************
 					# Avatar
 					# *********************************************************
 
-					if RicUser.user_avatar_croppable == true
-						croppable_picture_column :avatar, styles: { thumb: RicUser.user_avatar_crop[:thumb], full: RicUser.user_avatar_crop[:full] }
-					else
-						picture_column :avatar, styles: { thumb: RicUser.user_avatar_crop[:thumb], full: RicUser.user_avatar_crop[:full] }
+					if RicUser.user_avatar == true
+						if RicUser.user_avatar_croppable == true
+							croppable_picture_column :avatar, styles: { thumb: RicUser.user_avatar_crop[:thumb], full: RicUser.user_avatar_crop[:full] }
+						else
+							picture_column :avatar, styles: { thumb: RicUser.user_avatar_crop[:thumb], full: RicUser.user_avatar_crop[:full] }
+						end
+						add_methods_to_json :avatar_url
 					end
-					add_methods_to_json :avatar_url
 
 					# *********************************************************
 					# Validators
@@ -61,39 +65,51 @@ module RicUser
 					# *********************************************************
 
 					def permitted_columns
-						[
+						result = [
 							:email, 
 							#:role,
 							#:roles,
 							#:role_id,
 							:role_ids,
-							:avatar,
-							:avatar_crop_x, 
-							:avatar_crop_y, 
-							:avatar_crop_w, 
-							:avatar_crop_h,
-							:avatar_perform_cropping,
-							{:name => [:title, :firstname, :lastname]}
 						]
+						if RicUser.user_name == true
+							result += [
+								{:name => [:title, :firstname, :lastname]}
+							]
+						end
+						if RicUser.user_avatar == true
+							result += [
+								:avatar,
+								:avatar_crop_x, 
+								:avatar_crop_y, 
+								:avatar_crop_w, 
+								:avatar_crop_h,
+								:avatar_perform_cropping,
+							]
+						end
+						return result
 					end
 
 					def profile_columns
-						[
-							:email, 
-							:avatar,
-							:avatar_crop_x, 
-							:avatar_crop_y, 
-							:avatar_crop_w, 
-							:avatar_crop_h,
-							:avatar_perform_cropping,
-							{:name => [:title, :firstname, :lastname]}
+						result = [
+							:email
 						]
-					end
-
-					def filter_columns
-						[
-							:email, 
-						]
+						if RicUser.user_name == true
+							result += [
+								{:name => [:title, :firstname, :lastname]}
+							]
+						end
+						if RicUser.user_avatar == true
+							result += [
+								:avatar,
+								:avatar_crop_x, 
+								:avatar_crop_y, 
+								:avatar_crop_w, 
+								:avatar_crop_h,
+								:avatar_perform_cropping,
+							]
+						end
+						return result
 					end
 
 					def process_params(params)
@@ -110,11 +126,19 @@ module RicUser
 							all
 						else
 							where("
-								(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR 
-								(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR 
-								(lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
+								(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
 							", query: query)
 						end
+					end
+
+					# *********************************************************
+					# Filter
+					# *********************************************************
+
+					def filter_columns
+						[
+							:email, 
+						]
 					end
 
 					def filter(params = {})

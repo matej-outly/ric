@@ -1,6 +1,6 @@
 <%= rug_show(@user) do |t| %>
 	<%= t.body do |b| %>
-		<%= b.name :name %>
+		<%= b.name :name if RicUser.user_name == true %>
 		<%= b.string :email %>
 		<%#= b.enum :role if RicUser.user_model.has_role? %>
 		<%#= b.enum_array :roles if RicUser.user_model.has_roles? %>

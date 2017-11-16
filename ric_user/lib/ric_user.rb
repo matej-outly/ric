@@ -144,6 +144,18 @@ module RicUser
 	@@scope_user_role_by_person = false
 
 	#
+	# Include name to user model?
+	#
+	mattr_accessor :user_name
+	@@user_name = false
+
+	#
+	# Include avatar to user model?
+	#
+	mattr_accessor :user_avatar
+	@@user_avatar = false
+
+	#
 	# Is user avatar croppable?
 	#
 	mattr_accessor :user_avatar_croppable

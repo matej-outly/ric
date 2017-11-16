@@ -1,11 +1,9 @@
 <%= rug_index(users, options) do |t| %>
 	<%= t.body do |b| %>
 		<%= b.string :email, show: { path: :user_path }, sort: true %>
-		<%= b.string :name_lastname, sort: true %>
-		<%= b.string :name_firstname, sort: true %>
+		<%= b.name :name if RicUser.user_name == true %>
 		<%#= b.enum :role if RicUser.user_model.has_role? %>
 		<%#= b.enum_array :roles if RicUser.user_model.has_roles? %>
-
 		<%= b.action :edit, modal: true do |m, user| %>
 			<%= m.header t("headers.ric_user.users.edit") %>
 			<%= render partial: "form", locals: {
