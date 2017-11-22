@@ -1,9 +1,16 @@
 <%= rug_index(users, options) do |t| %>
 	<%= t.body do |b| %>
 		<%= b.string :email, show: { path: :user_path }, sort: true %>
-		<%= b.name :name if RicUser.user_name == true %>
+		<%= b.name :name, type: { strong_lastname: true } if RicUser.user_name == true %>
 		<%#= b.enum :role if RicUser.user_model.has_role? %>
 		<%#= b.enum_array :roles if RicUser.user_model.has_roles? %>
+		<%= b.state :locked?, 
+			action: { 
+				path: -> (user) { user.locked? ? unlock_user_path(user) : lock_user_path(user) } ,
+				method: :put
+			}, 
+			type: { use_translation: true } 
+		%>
 		<%= b.action :edit, modal: true do |m, user| %>
 			<%= m.header t("headers.ric_user.users.edit") %>
 			<%= render partial: "form", locals: {
@@ -12,6 +19,19 @@
 				user: user
 			} %>
 		<% end %>
+		<%= b.action :edit_password, modal: true, style: :primary, icon: "lock" do |m, user| %>
+			<%= m.header t("headers.ric_user.user_passwords.edit") %>
+			<%= render partial: "ric_user/user_passwords/form", locals: {
+				modal: m,
+				table: t,
+				user: user
+			} %>
+		<% end %>
+		<%= b.action :regenerate_password, path: -> (user) { regenerate_user_password_path(user) }, 
+			icon: "refresh", 
+			method: :put,
+			style: :primary
+		%>
 		<%= b.action :destroy, path: :user_path, ajax: true %>
 	<% end %>
 	<%= t.footer do |f| %>

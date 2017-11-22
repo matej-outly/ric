@@ -3,23 +3,28 @@
 	<%= m.new_item t("headers.ric_user.users.new"), false, modal: "new_user_modal" %>
 	<%= m.show_item %>
 	<% if @user && !@user.new_record? %>
-		<%= m.edit_item t("headers.ric_user.users.edit"), false, modal: "edit_user_#{@user.id}_modal" %>
-		<%= m.edit_item t("headers.ric_user.user_passwords.edit"), false, modal: "edit_user_password_#{@user.id}_modal", icon: "lock" %>
+		<%= m.edit_item t("headers.ric_user.users.edit"), false, 
+			modal: "edit_user_#{@user.id}_modal" 
+		%>
+		<%= m.edit_item t("headers.ric_user.user_passwords.edit"), false, 
+			modal: "edit_user_password_#{@user.id}_modal", 
+			icon: "lock" 
+		%>
 		<%= m.item t("headers.ric_user.user_passwords.regenerate"), regenerate_user_password_path(@user), 
 			icon: "refresh", 
 			method: :put 
 		%>
-		<% if @user.locked? %>
-			<%= m.item t("headers.ric_user.users.unlock"), unlock_user_path(@user), 
+		<%# if @user.locked? %>
+			<%#= m.item t("headers.ric_user.users.unlock"), unlock_user_path(@user), 
 				icon: "thumbs-up", 
 				method: :put 
 			%>
-		<% else %>
-			<%= m.item t("headers.ric_user.users.lock"), lock_user_path(@user), 
+		<%# else %>
+			<%#= m.item t("headers.ric_user.users.lock"), lock_user_path(@user), 
 				icon: "thumbs-down", 
 				method: :put 
 			%>
-		<% end %>
+		<%# end %>
 	<% end %>
 	<%= m.destroy_item %>
 <% end %>

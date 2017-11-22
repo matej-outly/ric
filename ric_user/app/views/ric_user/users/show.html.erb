@@ -6,6 +6,12 @@
 		<%#= b.enum_array :roles if RicUser.user_model.has_roles? %>
 		<%= b.integer :sign_in_count %>
 		<%= b.datetime :current_sign_in_at %>
-		<%= b.boolean :locked? %>
+		<%= b.state :locked?, 
+			action: { 
+				path: -> (user) { user.locked? ? unlock_user_path(user) : lock_user_path(user) } ,
+				method: :put
+			}, 
+			type: { use_translation: true } 
+		%>
 	<% end %>
 <% end %>

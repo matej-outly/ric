@@ -80,7 +80,7 @@ module RicUser
 				end
 
 				def lock
-					if !@user.locked?
+					if !@user.locked? && (current_user.nil? || @user.id != current_user.id)
 						@user.lock
 						#sign_out(@user) Signs out current user also
 						respond_to do |format|
@@ -96,7 +96,7 @@ module RicUser
 				end
 
 				def unlock
-					if @user.locked?
+					if @user.locked? && (current_user.nil? || @user.id != current_user.id)
 						@user.unlock
 						respond_to do |format|
 							format.html { redirect_to request.referrer, notice: RicUser.user_model.human_notice_message(:unlock) }

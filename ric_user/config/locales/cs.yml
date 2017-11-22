@@ -54,8 +54,20 @@ cs:
         new_password_confirmation: Nové heslo (znovu pro potvrzení)
         remember_me: Zůstat přihlášen
         locked?: Zablokován
+        locked?_values:
+          bool_yes: Zablokován
+          bool_no: Nezablokován
+        locked?_colors:
+          bool_yes: red
+          bool_no: green
         locked_at: Čas zablokování
         confirmed?: Ověřen
+        confirmed?_values:
+          bool_yes: Ověřen
+          bool_no: Neověřen
+        confirmed?_colors:
+          bool_yes: green
+          bool_no: red
       ric_user/user_role:
         user_id: Uživatel
         user: Uživatel

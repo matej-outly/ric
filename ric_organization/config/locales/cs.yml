@@ -41,6 +41,22 @@ cs:
         organization_id: Organizace
         organization_assignment: Pracovní pozice
         organization_assignment_id: Pracovní pozice
+        name: Jméno
+        name_firstname: Křestní jméno
+        name_lastname: Příjmení
+        email: E-mail
+        current_password: Současné heslo
+        password: Heslo
+        password_confirmation: Heslo (znovu pro potvrzení)
+        new_password: Nové heslo
+        new_password_confirmation: Nové heslo (znovu pro potvrzení)
+        locked?: Zablokován
+        locked?_values:
+          bool_yes: Zablokován
+          bool_no: Nezablokován
+        locked?_colors:
+          bool_yes: red
+          bool_no: green
 
     notices:
       models:

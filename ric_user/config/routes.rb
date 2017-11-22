@@ -35,7 +35,7 @@ RicUser::Engine.routes.draw do
 		end
 
 		# User passwords
-		resource :password, controller: :user_passwords, only: [:edit, :update] do
+		resource :password, controller: :user_passwords, only: [:update] do
 			member do
 				get :regenerate
 				put :regenerate
