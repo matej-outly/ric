@@ -44,6 +44,20 @@ module RicOrganization
 						return result
 					end
 
+					# *********************************************************
+					# Scopes
+					# *********************************************************
+
+					def search(query)
+						if query.blank?
+							all
+						else
+							where("
+								(lower(unaccent(name)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
+							", query: query.to_s)
+						end
+					end
+
 				end
 
 			end

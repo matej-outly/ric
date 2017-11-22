@@ -23,6 +23,10 @@ module RicUser
 					if RicUser.user_name == true
 						name_column :name
 						add_methods_to_json :name_formatted
+
+						# Filter
+						attr_accessor :name_f
+
 					end
 
 					# *********************************************************
@@ -125,9 +129,11 @@ module RicUser
 						if query.blank?
 							all
 						else
-							where("
-								(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))
-							", query: query)
+							where_string = "(lower(unaccent(email)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))"
+							if RicUser.user_name == true
+								where_string += "OR (lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%')) OR (lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:query))) || '%'))"
+							end
+							where(where_string, query: query)
 						end
 					end
 
@@ -136,15 +142,25 @@ module RicUser
 					# *********************************************************
 
 					def filter_columns
-						[
-							:email, 
-						]
+						result = [:email]
+						result << :name_f if RicUser.user_name == true
+						return result
 					end
 
 					def filter(params = {})
 						
 						# Preset
 						result = all
+
+						# Name
+						if RicUser.user_name == true
+							if !params[:name_f].blank?
+								result = result.where("
+									(lower(unaccent(name_lastname)) LIKE ('%' || lower(unaccent(trim(:name))) || '%')) OR 
+									(lower(unaccent(name_firstname)) LIKE ('%' || lower(unaccent(trim(:name))) || '%'))
+								", name: params[:name_f].to_s)
+							end
+						end
 
 						# E-mail
 						if !params[:email].blank?
