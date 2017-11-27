@@ -123,4 +123,43 @@ end
 
 Optional helper method `sequence_scope` must return numbered model which will be used for scoping of the `document` sequence.
 
+### Shared numbering
 
+If you need to share number with some other object of similar type, you can define optional `sequence_share` method to return an existing object with defined attribute number. Newly created object will obtain the same number as object given by `sequence_share` method. Sequence is not incremented in this case.
+
+```ruby
+class Document < ActiveRecord::Base
+    
+    belongs_to :sample
+
+    ...
+
+    include RicNumbering::Concerns::Models::Numbered
+
+    def sequence_owner
+        if self.sample
+            return self.sample.organization
+        else
+            return nil
+        end
+    end
+
+    def sequence_ref
+        if self.sample
+            return :document
+        else
+            return nil
+        end
+    end
+
+    def sequence_share
+        if some_condition
+            return self.sample.documents.where(some_condition).order(created_at: :desc).take
+        else
+            return nil
+        end
+    end
+
+    ...
+end
+```

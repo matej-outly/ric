@@ -50,6 +50,13 @@ module RicNumbering
 				end
 
 				#
+				# Optional sequence share can be defined in concern user
+				#
+				def sequence_share
+					nil
+				end
+
+				#
 				# Optional sequence scope can be defined in concern user
 				#
 				def sequence_scope
@@ -58,25 +65,35 @@ module RicNumbering
 
 				def obtain_number
 					ActiveRecord::Base.transaction do
-						if self.number.nil? && self.sequence_ref
+						if self.number.nil? 
+							share = self.sequence_share
+							ref = self.sequence_ref
+							
+							if share
 
-							# Get sequence generator
-							if self.sequence_owner && self.sequence_owner.respond_to?(:sequences)
-								sequences = self.sequence_owner.sequences
-							else
-								sequences = RicNumbering.sequence_model
+								# Share number
+								self.number = share.number
+
+							elsif ref
+
+								# Get sequence generator
+								if self.sequence_owner && self.sequence_owner.respond_to?(:sequences)
+									sequences = self.sequence_owner.sequences
+								else
+									sequences = RicNumbering.sequence_model
+								end
+
+								# Find correct sequence
+								if self.sequence_scope.nil?
+									sequence = sequences.find_or_create_by(ref: ref)
+								else
+									sequence = sequences.find_or_create_by(ref: ref, scope: self.sequence_scope)
+								end
+
+								# Increase sequence number and save it to this object
+								self.number = sequence.increase
+
 							end
-
-							# Find correct sequence
-							if self.sequence_scope.nil?
-								sequence = sequences.find_or_create_by(ref: self.sequence_ref)
-							else
-								sequence = sequences.find_or_create_by(ref: self.sequence_ref, scope: self.sequence_scope)
-							end
-
-							# Increase sequence number and save it to this object
-							self.number = sequence.increase
-
 						end
 					end
 				end
