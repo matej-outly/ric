@@ -1,6 +1,6 @@
 <%= rug_form_for(@user, update_path: lambda { |user| ric_auth.profile_path }) do |f| %>
-	<%= f.name_row :name %>
-	<% if @user.config(:avatar_croppable) == true %>
+	<%= f.name_row :name if RicUser.user_name == true %>
+	<% if RicUser.user_avatar_croppable == true %>
 		<%= f.dropzone_row :avatar, reload_object: "rug_form_crop_#{Digest::SHA1.hexdigest("user_avatar")}" %>
 		<%= f.crop_row :avatar, label: false, hash: Digest::SHA1.hexdigest("user_avatar") %>
 	<% else %>
