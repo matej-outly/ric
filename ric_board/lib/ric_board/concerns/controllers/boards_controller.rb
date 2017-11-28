@@ -17,7 +17,7 @@ module RicBoard
 				included do
 
 					before_action :set_owner
-					helper_method :follow_board_ticket_path
+					helper_method :follow_board_ticket_path # Defined in RicBoard::ApplicationController
 			
 				end
 

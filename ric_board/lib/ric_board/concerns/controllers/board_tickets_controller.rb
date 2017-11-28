@@ -46,9 +46,7 @@ module RicBoard
 
 				def set_board_ticket
 					@board_ticket = RicBoard.board_ticket_model.find_by_id(params[:id])
-					if @board_ticket.nil? || @board_ticket.owner != @owner
-						redirect_to request.referrer, status: :see_other, alert: I18n.t("activerecord.errors.models.#{RicBoard.board_ticket_model.model_name.i18n_key}.not_found")
-					end
+					not_found if @board_ticket.nil? || @board_ticket.owner != @owner
 				end
 
 			end

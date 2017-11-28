@@ -47,24 +47,24 @@ module RicBoard
 				# {
 				#     date: self.some_date_field, # Nil for closable tickets or Date object
 				#     owner: self.some_owner,
-				#     create: false, # Optional for disabling creating ticket for create action
-				#     update: false, # Optional for disabling creating ticket for update action
-				#     key: "...", # Optional if key shouldn't be derived from subject type
+				#     create: false, # Possible to disable create action
+				#     update: false, # Possible to disable update action
+				#     destroy: false, # Possible to disable destroy action
+				#     key: "...", # Optional if key can't be derived from subject class name
 				# }
 				#
 				def board_ticket_params
-					raise "Board ticket params must be implemented"
+					raise "Board ticket params must be implemented."
 				end
 
 			protected
 
 				def initialize_owner_was
-					if @owner_was.nil?
-						@owner_was = []
-					end
+					@owner_was = [] if @owner_was.nil?
 				end
 
 				def save_owner_after_find
+					
 					# Get current owner
 					@owner_was = board_ticket_params[:owner] if !board_ticket_params.blank?
 
@@ -74,6 +74,7 @@ module RicBoard
 					elsif !@owner_was.is_a?(Array)
 						@owner_was = [@owner_was]
 					end
+
 				end
 
 				def create_board_ticket_after_create
@@ -94,7 +95,7 @@ module RicBoard
 					return false if params.include?(occasion) && params[occasion] != true
 
 					if !params.include?(:owner)
-						raise "Board ticket `owner` must be set in board ticket params"
+						raise "Board ticket `owner` must be set in board ticket params."
 					end
 
 					# Convert owner into array
@@ -108,7 +109,7 @@ module RicBoard
 					return {
 						date: (params.include?(:date) ? params[:date] : nil),
 						owner: owner,
-						key: (params[:key].blank? ? self.class.to_s.gsub("::", "_").underscore.pluralize : params[:key]), # Either defived from class name or defined key
+						key: (params[:key].blank? ? self.class.to_s.gsub("::", "_").underscore.pluralize : params[:key]), # Either derived from class name or custom defined key
 					}
 				end
 
@@ -119,8 +120,7 @@ module RicBoard
 						return
 					end
 
-					# Check if owner of the ticket is changed
-					# If so, destroy old ticket
+					# Check if owner of the ticket is changed. If so, destroy old ticket.
 					@owner_was.diff(params[:owner]) do |action, owner|
 						if action == :remove
 							old_board_ticket = RicBoard.board_ticket_model.find_by(subject: self, owner: owner)

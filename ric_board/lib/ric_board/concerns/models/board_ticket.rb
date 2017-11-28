@@ -43,9 +43,6 @@ module RicBoard
 					# Columns
 					# *********************************************************
 
-					#
-					# Get all columns permitted for editation
-					#
 					def permitted_columns
 						return []
 					end
