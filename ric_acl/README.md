@@ -2,6 +2,37 @@
 
 RicAcl implements access control list as a configurable module. 
 
+## Installation
+
+Add gem to your Gemfile:
+
+```ruby
+gem "ric_acl"
+```
+
+Add database migrations to you application (you can modify DB structure accordingly before migrating):
+
+    $ rake ric_acl:install:migrations
+    $ rake db:migrate
+
+## Configuration
+
+You can configure module through `config/initializers/ric_acl.rb` file:
+
+```ruby
+RicAcl.setup do |config|
+    ...
+end
+```
+
+Available options:
+
+- privilege_model
+- user_model
+- role_model
+- use_static_privileges
+- privileges
+
 ## Usage
 
 ### Example: Privilege definition
@@ -328,3 +359,21 @@ end
 ```
 
 Scope can be also an array. In that case authorization mechanism looks for one of the defined scopes (OR operator).
+
+### Static privileges
+
+Not implemented.
+
+It's possible to use privileges hard-coded in configuration file instead of stored in DB. In order to achieve this, you must edit the configuration file like this:
+
+```ruby
+RicAcl.setup do |config|
+    config.use_static_privileges = true
+    config.privileges = [
+       { role: "admin", subject_type: "Sample", action: :load },
+       { role: "admin", subject_type: "Sample", action: :create },
+       { role: "admin", subject_type: "Sample", action: :update },
+       { role: "admin", subject_type: "Sample", action: :destroy },
+    ]
+end
+```

@@ -27,6 +27,7 @@ You can configure module through `config/initializers/ric_board.rb` file:
 
 ```ruby
 RicBoard.setup do |config|
+    ...
 end
 ```
 

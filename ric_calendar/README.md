@@ -2,23 +2,50 @@
 
 Ric Calendar adds ability to models to be schedulable in time. These models then become events, which can be both non-repeating and recurring.
 
+## Installation
+
+Add gem to your Gemfile:
+
+```ruby
+gem "ric_calendar"
+```
+
 Calendar widget is based on `Fullcalendar.io`. These gems are needed for proper
 function:
 
 ```ruby
-# Calendar
 gem 'fullcalendar.io-rails'
-
-#
-# For recurring events:
-#
-
-# Schedule
-gem 'ice_cube'
-
-# Form widget
-gem 'recurring_select'
+gem 'ice_cube' # For recurring events only
+gem 'recurring_select' # For recurring events only
 ```
+
+Add database migrations to you application (you can modify DB structure accordingly before migrating):
+
+    $ rake ric_calendar:install:migrations
+    $ rake db:migrate
+
+Mount routing engine in your `routes.rb` file:
+
+```ruby
+mount RicCalendar::Engine => "/", as: :ric_calendar
+```
+
+## Configuration
+
+You can configure module through `config/initializers/ric_calendar.rb` file:
+
+```ruby
+RicCalendar.setup do |config|
+    ...
+end
+```
+
+Available options:
+
+- event_model
+- calendar_model
+- user_model
+- calendar_kinds
 
 ## Classic (non-repeating) events
 
@@ -106,7 +133,6 @@ The meaning is:
   drag&drop. If you want enable this feature, fill the path to appropriate edit
   controller. Will be explained bellow. Example `"event_path"`
 - `:color` - color of calendar (CSS style) or `null` to use default. Example `"#fff"`
-
 
 ## Editing events by drag&drop in Fullcalendar
 

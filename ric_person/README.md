@@ -6,9 +6,38 @@ Different models in the application can act like a person. It can be for instanc
 
 ## Installation
 
-## Usage
+Add gem to your Gemfile:
 
+```ruby
+gem "ric_person"
+```
 
+Add database migrations to you application (you can modify DB structure accordingly before migrating):
+
+    $ rake ric_person:install:migrations
+    $ rake db:migrate
+
+Mount routing engine in your `routes.rb` file:
+
+```ruby
+mount RicPerson::Engine => "/", as: :ric_person
+```
+
+## Configuration
+
+You can configure module through `config/initializers/ric_person.rb` file:
+
+```ruby
+RicPerson.setup do |config|
+    ...
+end
+```
+
+Available options:
+
+- user_model
+- people_selector_model
+- person_types
 
 ## Not implemented
 

@@ -27,6 +27,7 @@ You can configure module through `config/initializers/ric_staging.rb` file:
 
 ```ruby
 RicStaging.setup do |config|
+    ...
 end
 ```
 
