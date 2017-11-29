@@ -1,6 +1,8 @@
 <% content_for :page_header, "false" %>
-<% board = board(@owner) %>
-<%= render partial: "show", locals: { board: board } %>
-<% if board.empty? %>
+<% board_tickets = board_tickets(@owner) %>
+<%= render partial: "ric_board/board_tickets/index", locals: { 
+	board_tickets: board_tickets 
+} %>
+<% if board_tickets.empty? %>
 	<%= render partial: "empty" %>
 <% end %>

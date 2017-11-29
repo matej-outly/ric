@@ -55,6 +55,18 @@ module RicBoard
 	@@board_ticket_model = "RicBoard::BoardTicket"
 
 	#
+	# Definition of board panels
+	#
+	# board_panels = {
+	#	key_1: {
+	#		show_if: "Sample.authorize(user: current_user, action: :load)"
+	#	}
+	# }
+	#
+	mattr_accessor :board_panels
+	@@board_panels = {}
+
+	#
 	# Definition of types (models) usable as subject
 	#
 	# board_ticket_types = {

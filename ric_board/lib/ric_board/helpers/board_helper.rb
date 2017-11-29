@@ -17,7 +17,7 @@ module RicBoard
 			# Get current board tickets owned by specified owner grouped or 
 			# not grouped according to configuration
 			#
-			def board(owner)
+			def board_tickets(owner)
 				
 				# Get active tickets
 				board_tickets = RicBoard.board_ticket_model.active.owned_by(owner)
