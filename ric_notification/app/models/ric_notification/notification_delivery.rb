@@ -12,5 +12,7 @@
 module RicNotification
 	class NotificationDelivery < ActiveRecord::Base
 		include RicNotification::Concerns::Models::NotificationDelivery
+		include RicNotification::Concerns::Models::NotificationDelivery::Batch
+		include RicNotification::Concerns::Models::NotificationDelivery::Instantly
 	end
 end

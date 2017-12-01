@@ -38,6 +38,7 @@ module RicNotification
 							:message
 						]
 					end
+					
 				end
 
 			end

@@ -33,7 +33,13 @@ module RicNotification
 					# State
 					# *********************************************************
 
-					enum_column :state, [:created, :sent, :received, :accepted, :error], default: :created
+					enum_column :state, [
+						:created, 
+						:sent, 
+						:received, 
+						:accepted, 
+						:error
+					], default: :created
 					
 				end
 
@@ -63,73 +69,10 @@ module RicNotification
 				# *************************************************************
 
 				#
-				# Send notification by valid delivery kind
+				# Deliver notification by correct delivery kind
 				#
 				def deliver
 					return self.send("deliver_by_#{self.notification_delivery.kind}")
-				end
-
-				#
-				# Send notification by e-mail
-				#
-				def deliver_by_email
-					notification = self.notification_delivery.notification
-
-					# Send email
-					begin 
-						RicNotification::NotificationMailer.notify(notification, self.receiver).deliver_now
-						self.state = "sent"
-					#rescue Net::SMTPFatalError, Net::SMTPSyntaxError
-					rescue StandardError => e
-						self.state = "error"
-						self.error_message = e.message
-					end
-				
-					# Mark as sent
-					self.sent_at = Time.current
-
-					# Save
-					self.save
-
-					return true
-				end
-
-				#
-				# Send notification by SMS
-				#
-				def deliver_by_sms
-					raise "Not implemented."
-
-					# TODO link to correct SMS backend
-				end
-
-				#
-				# Send notification by InMail
-				#
-				def deliver_by_inmail
-					notification = self.notification_delivery.notification
-
-					# Send
-					if defined?(RicInmail)
-						RicInmail.receive(
-							subject: notification.subject,
-							message: notification.message,
-							sender: notification.sender,
-							receiver: self.receiver
-						)
-						self.state = "sent"
-					else
-						self.state = "error"
-						self.error_message = "RicInmail not included."
-					end
-
-					# Mark as sent
-					self.sent_at = Time.current
-
-					# Save
-					self.save
-
-					return true
 				end
 
 			end

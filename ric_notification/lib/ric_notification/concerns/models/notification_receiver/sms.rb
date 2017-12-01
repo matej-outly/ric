@@ -10,10 +10,24 @@
 # *****************************************************************************
 
 module RicNotification
-	class NotificationReceiver < ActiveRecord::Base
-		include RicNotification::Concerns::Models::NotificationReceiver
-		include RicNotification::Concerns::Models::NotificationReceiver::Email
-		include RicNotification::Concerns::Models::NotificationReceiver::Sms
-		include RicNotification::Concerns::Models::NotificationReceiver::Inmail
+	module Concerns
+		module Models
+			module NotificationReceiver 
+				module Sms extend ActiveSupport::Concern
+
+				protected
+				
+					#
+					# Send notification by SMS
+					#
+					def deliver_by_sms
+						raise "Not implemented."
+
+						# TODO link to correct SMS backend
+					end
+
+				end
+			end
+		end
 	end
 end

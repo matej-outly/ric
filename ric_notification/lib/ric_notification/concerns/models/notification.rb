@@ -32,17 +32,6 @@ module RicNotification
 				end
 
 				# *************************************************************
-				# Delivery
-				# *************************************************************
-
-				#
-				# Enqueue for delivery
-				#
-				def enqueue_for_delivery
-					QC.enqueue("RicNotification.deliver", self.id)
-				end
-
-				# *************************************************************
 				# Progress
 				# *************************************************************
 
@@ -75,6 +64,45 @@ module RicNotification
 					else
 						return nil
 					end
+				end
+
+				# *************************************************************
+				# Delivery
+				# *************************************************************
+
+				#
+				# Enqueue for delivery
+				#
+				def enqueue_for_delivery
+					QC.enqueue("#{self.class.to_s}.deliver", self.id)
+				end
+
+				#
+				# Deliver notification to receivers by all configured methods
+				#
+				def deliver
+					self.notification_deliveries.each do |notification_delivery|
+						notification_delivery.deliver
+					end
+				end
+
+				module ClassMethods
+
+					#
+					# Deliver notification (defined by ID) to receivers by all configured methods
+					#
+					def deliver(notification_id)
+						
+						# Find notification object
+						notification = RicNotification.notification_model.find_by_id(notification_id)
+						return nil if notification.nil?
+
+						# Deliver
+						notification.deliver
+
+						return notification
+					end
+
 				end
 
 			end

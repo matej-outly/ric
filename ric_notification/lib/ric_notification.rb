@@ -15,15 +15,17 @@ require "ric_notification/engine"
 # Models
 require "ric_notification/concerns/models/notification"
 require "ric_notification/concerns/models/notification_delivery"
+require "ric_notification/concerns/models/notification_delivery/batch"
+require "ric_notification/concerns/models/notification_delivery/instantly"
 require "ric_notification/concerns/models/notification_receiver"
+require "ric_notification/concerns/models/notification_receiver/email"
+require "ric_notification/concerns/models/notification_receiver/inmail"
+require "ric_notification/concerns/models/notification_receiver/sms"
 require "ric_notification/concerns/models/notification_template"
 
 # Services
 require "ric_notification/concerns/services/notification"
 require "ric_notification/concerns/services/delivery"
-require "ric_notification/concerns/services/email_delivery"
-require "ric_notification/concerns/services/sms_delivery"
-require "ric_notification/concerns/services/inmail_delivery"
 
 # Mailers
 require "ric_notification/concerns/mailers/notification_mailer"
@@ -42,9 +44,6 @@ module RicNotification
 
 	include RicNotification::Concerns::Services::Notification
 	include RicNotification::Concerns::Services::Delivery
-	include RicNotification::Concerns::Services::EmailDelivery
-	include RicNotification::Concerns::Services::SmsDelivery
-	include RicNotification::Concerns::Services::InmailDelivery
 
 	# *************************************************************************
 	# Configuration
@@ -98,10 +97,16 @@ module RicNotification
 	@@notification_template_model = "RicNotification::NotificationTemplate"
 
 	#
-	# Mailer sender
+	# Available notification template refs. For each defined ref there will be 
+	# an automatically created record in the notification_templates table. 
+	# System administrator can define content of this template via admin 
+	# interface.
 	#
-	mattr_accessor :mailer_sender
-	#@@mailer_sender = ... to be set in module initializer
+	mattr_accessor :template_refs
+	@@template_refs = [
+#		:some_notification_ref_1,
+#		:some_notification_ref_2,
+	]
 
 	#
 	# Delivery kinds
@@ -119,16 +124,20 @@ module RicNotification
 	]
 
 	#
-	# Available notification template refs. For each defined ref there will be 
-	# an automatically created record in the notification_templates table. 
-	# System administrator can define content of this template via admin 
-	# interface.
+	# Mailer sender
 	#
-	mattr_accessor :template_refs
-	@@template_refs = [
-#		:some_notification_ref_1,
-#		:some_notification_ref_2,
-	]
+	mattr_accessor :mailer_sender
+	#@@mailer_sender = ... to be set in module initializer
+
+	#
+	# Used SMS backend
+	#
+	# Available backends:
+	# - plivo
+	# - text_magic ... not implemented
+	#
+	mattr_accessor :sms_backend
+	@@sms_backend = :plivo
 
 	#
 	# Class or object implementing actions_options, tabs_options, etc. can be set.

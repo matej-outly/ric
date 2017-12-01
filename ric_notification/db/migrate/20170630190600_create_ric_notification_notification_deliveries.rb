@@ -9,7 +9,7 @@ class CreateRicNotificationNotificationDeliveries < ActiveRecord::Migration
 			# Relations
 			t.integer :notification_id, index: true
 			
-			# Kind (email, SMS, inmail)
+			# Delivery kind (email, SMS, inmail)
 			t.string :kind
 
 			# Statistics
