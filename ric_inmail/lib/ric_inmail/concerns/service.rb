@@ -45,7 +45,7 @@ module RicInmail
 				end
 
 				#
-				# Receive new message to the deilivery service defined by params
+				# Receive new message to the delivery service defined by params
 				#
 				def receive(params = {})
 					
