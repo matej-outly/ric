@@ -168,19 +168,19 @@ module RicReservation
 					end
 
 					# *********************************************************
-					# Overlapping TODO: make compatible with RicCalendar, other periods than ONCE
+					# Overlapping TODO: other periods than ONCE
 					# *********************************************************
 
 					def overlaps_with_resource_reservation(resource_reservation)
 						where(
 							"
-								(#{ActiveRecord::Base.connection.quote_column_name("period")} = :period_once) AND 
-								(#{ActiveRecord::Base.connection.quote_column_name("from")} < :to) AND 
-								(:from < #{ActiveRecord::Base.connection.quote_column_name("to")})
+								(#{ActiveRecord::Base.connection.quote_column_name("date_from")} = :date_from) AND 
+								(#{ActiveRecord::Base.connection.quote_column_name("time_from")} < :time_to) AND 
+								(:time_from < #{ActiveRecord::Base.connection.quote_column_name("time_to")})
 							", 
-							from: resource_reservation.schedule_from, 
-							to: resource_reservation.schedule_to, 
-							period_once: "once"
+							date_from: resource_reservation.date_from, # TODO suppor multi-day events/reservations
+							time_from: resource_reservation.time_from, 
+							time_to: resource_reservation.time_to
 						)
 					end
 

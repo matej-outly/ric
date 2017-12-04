@@ -58,30 +58,36 @@ module RicReservation
 					end
 
 					# *********************************************************
-					# Overlapping TODO
+					# Overlapping
 					# *********************************************************
 
 					def overlaps_with_resource_reservation(resource_reservation)
 						where(
 							"
-								(schedule_from < :to) AND 
-								(:from < schedule_to)
+								(date_from = :date_from) AND 
+								(time_from < :time_to) AND 
+								(:time_from < time_to)
 							", 
-							from: resource_reservation.schedule_from, 
-							to: resource_reservation.schedule_to
+							date_from: resource_reservation.date_from,
+							date_to: resource_reservation.date_to, # TODO support multi-day reservations 
+							time_from: resource_reservation.time_from, 
+							time_to: resource_reservation.time_to
 						)
 					end
 
-					#def overlaps_with_event(event) # TODO: Other periods than ONCE
-					#	where(
-					#		"
-					#			(schedule_from < :to) AND 
-					#			(:from < schedule_to)
-					#		", 
-					#		from: event.from, 
-					#		to: event.to
-					#	)
-					#end
+					def overlaps_with_event(event) # TODO: Other periods than ONCE
+						where(
+							"
+								(date_from = :date_from) AND 
+								(time_from < :time_to) AND 
+								(:time_from < time_to)
+							", 
+							date_from: event.date_from,
+							date_to: event.date_to, # TODO support multi-day reservations / events
+							time_from: event.time_from, 
+							time_to: event.time_to
+						)
+					end
 
 				end
 
@@ -93,7 +99,6 @@ module RicReservation
 
 				def check_overlapping
 					result = true
-					return true # TMP hack
 					
 					# Overlapping with other reservation
 					if self.id
