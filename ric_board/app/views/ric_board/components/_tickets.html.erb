@@ -1,4 +1,5 @@
 <%# Template existence check: if lookup_context.find_all("ric_board/board_tickets/_" + subject_type.underscore.pluralize).any? %>
+<% board_tickets = board_tickets(@owner) %>
 <% board_size = board_tickets.length %>
 <div class="row">
 	<% if RicBoard.group_board_tickets == true %>

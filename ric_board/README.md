@@ -21,6 +21,12 @@ Mount routing engine in your `routes.rb` file:
 mount RicBoard::Engine => "/", as: :ric_board
 ```
 
+You can route your root to RicBoard dashboard with this route:
+
+```ruby
+root "ric_board/boards#show"
+```
+
 ## Configuration
 
 You can configure module through `config/initializers/ric_board.rb` file:

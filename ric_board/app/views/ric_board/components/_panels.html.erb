@@ -1,0 +1,14 @@
+<div class="row">
+	<% RicBoard.board_panels.each do |panel, panel_options| %>
+		<% if lookup_context.find_all("ric_board/board_panels/_#{panel.to_s}").any? %>
+			<% if panel_options[:show_if] ? eval("(#{panel_options[:show_if]}) == true") : true %>
+				<% partial = render(partial: "ric_board/board_panels/#{panel.to_s}").trim(" \t\n").html_safe %>
+				<% if !partial.blank? %>
+					<div class="col-sm-<%= panel_options[:width] ? panel_options[:width] : (options[:columns] ? (12 / options[:columns]) : 4) %>">
+						<%= partial %>
+					</div>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end %>
+</div>

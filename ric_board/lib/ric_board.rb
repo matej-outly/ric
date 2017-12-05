@@ -55,6 +55,24 @@ module RicBoard
 	@@board_ticket_model = "RicBoard::BoardTicket"
 
 	#
+	# Dashboard layout
+	#
+	mattr_accessor :layout
+	@@layout = {
+		jumbotron: {
+			width: 12
+		},
+		panels: {
+			width: 8,
+			columns: 2
+		},
+		tickets: {
+			width: 4,
+			columns: 1
+		}
+	}
+
+	#
 	# Definition of board panels
 	#
 	# board_panels = {
