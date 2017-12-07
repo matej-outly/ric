@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ric_numbering (1.56.0.dev)
+    ric_dms (1.56.0.dev)
       rails (~> 4.2)
 
 GEM
@@ -104,7 +104,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ric_numbering!
+  ric_dms!
 
 BUNDLED WITH
    1.16.0
