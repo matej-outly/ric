@@ -14,6 +14,6 @@ module RicNotification
 		include RicNotification::Concerns::Models::NotificationReceiver
 		include RicNotification::Concerns::Models::NotificationReceiver::Email
 		include RicNotification::Concerns::Models::NotificationReceiver::Sms
-		include RicNotification::Concerns::Models::NotificationReceiver::Inmail
+		include RicNotification::Concerns::Models::NotificationReceiver::Mailboxer
 	end
 end

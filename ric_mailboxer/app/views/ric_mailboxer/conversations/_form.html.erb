@@ -1,0 +1,30 @@
+<%= rug_form_for(conversation, 
+	method: conversation.new_record? ? :post : :patch,
+	create_url: :mailbox_conversations_path,
+	update_url: -> (conversation) { mailbox_conversation_path(id: conversation.id) },
+	ajax: {
+		success_message: RicMailboxer.conversation_model.human_notice_message(conversation.new_record? ? :create : :update),
+		error_message: RicMailboxer.conversation_model.human_error_message(conversation.new_record? ? :create : :update),
+		clear_on_submit: conversation.new_record?,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	},
+	html: {
+		id: "edit_conversation_#{conversation.id}"
+	}
+) do |f| %>
+	<%= modal.body do %>
+		<%= f.token_input_row(:recipient_ids, main_app.search_admin_users_path, 
+			as: :recipients, 
+			value_attr: :id, 
+			label_attr: :email
+		) if conversation.new_record? %>
+		<%= f.text_input_row :subject %>
+		<%= f.text_area_row :body, plugin: false if conversation.new_record? %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit, label: t("helpers.submit.#{conversation.new_record? ? "send" : "update"}") %>
+	<% end %>
+<% end %>

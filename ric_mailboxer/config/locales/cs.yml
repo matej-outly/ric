@@ -1,0 +1,59 @@
+cs:
+
+  headers:
+    ric_mailboxer:
+      mailboxes:
+        index: Interní pošta
+        show: Přijaté zprávy 
+        sent: Odeslané zprávy
+        trash: Smazané zprávy
+      conversations:
+        index: Interní pošta
+        show: Přijaté zprávy 
+        new: Nová konverzace
+        edit: Upravit konverzaci
+      messages:
+        index: Interní pošta
+        show: Zpráva
+        new: Vytvořit zprávu
+        create: Vytvořit zprávu
+        edit: Vytvořit zprávu
+        update: Vytvořit zprávu
+      
+  activemodel:
+    attributes:
+      ric_mailboxer/conversation:
+        senders: Odesílatel
+        sender_ids: Odesílatel
+        recipients: Příjemci
+        recipient_ids: Příjemci
+        subject: Téma
+        body: Zpráva
+    notices:
+      models:
+        ric_mailboxer/conversation:
+          create: Konverzace byla úspěšně vytvořena.
+          reply: Zpráva byla úspěšně odeslána.
+          update: Konverzace byla úspěšně uložena.
+          trash: Konverzace byla úspěšně přesunuta do koše.
+          untrash: Konverzace byla úspěšně obnovena.
+          destroy: Konverzace byla úspěšně smazána.
+    errors:
+      models:
+        ric_mailboxer/conversation:
+          not_found: Konverzace nebyla nalezena.
+          create: Konverzace nebyla vytvořena.
+          reply: Zpráva nebyla odeslána.
+          update: Konverzace nebyla uložena.
+          trash: Konverzace nebyla přesunuta do koše.
+          untrash: Konverzace nebyla obnovena.
+          destroy: Konverzace nebyla smazána.
+          attributes:
+            sender_id: 
+              blank: Odesílatel musí být vyplněn.
+            recipient_ids: 
+              blank: Příjemci musí být vyplněni.
+            subject:
+              blank: Téma musí být vyplněno.
+            body:
+              blank: Zpráva musí být vyplněna.

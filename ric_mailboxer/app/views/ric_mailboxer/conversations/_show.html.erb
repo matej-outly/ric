@@ -1,0 +1,28 @@
+<% conversation.receipts_for(owner).each do |receipt| %>
+
+	<%= receipt.message.sender.email %><br/>
+	<%= receipt.message.body %>
+
+	<hr/>
+
+<% end %>
+
+<% conversation = RicMailboxer::Conversation.new(conversation, body: "") %>
+<%= rug_form_for(conversation, 
+	method: :post,
+	url: reply_mailbox_conversation_path(id: conversation.id),
+	ajax: {
+		success_message: RicMailboxer.conversation_model.human_notice_message(:reply),
+		error_message: RicMailboxer.conversation_model.human_error_message(:reply),
+		clear_on_submit: conversation.new_record?,
+		on_success: {
+			reload_page: true
+		}
+	},
+	html: {
+		id: "reply_conversation_#{conversation.id}"
+	}
+) do |f| %>
+	<%= f.text_area_row :body, plugin: false, label: false %>
+	<%= f.primary_button_row :submit, label: t("helpers.submit.send") %>
+<% end %>

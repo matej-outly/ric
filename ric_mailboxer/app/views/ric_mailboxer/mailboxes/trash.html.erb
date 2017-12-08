@@ -1,0 +1,18 @@
+<%= rug_index(@conversations) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.string :subject, label: RicMailboxer.conversation_model.human_attribute_name(:subject) %>
+		<%= b.has_many :recipients, 
+			type: { label_attr: :email }, 
+			label: RicMailboxer.conversation_model.human_attribute_name(:recipients) 
+		%>
+		<%= b.action :untrash, 
+			method: :put,
+			path: :untrash_mailbox_conversation_path, 
+			icon: "undo",
+			style: :primary
+		%>
+		<%= b.action :destroy, 
+			path: :mailbox_conversation_path
+		%>
+	<% end %>
+<% end %>

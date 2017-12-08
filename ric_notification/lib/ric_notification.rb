@@ -19,7 +19,7 @@ require "ric_notification/concerns/models/notification_delivery/batch"
 require "ric_notification/concerns/models/notification_delivery/instantly"
 require "ric_notification/concerns/models/notification_receiver"
 require "ric_notification/concerns/models/notification_receiver/email"
-require "ric_notification/concerns/models/notification_receiver/inmail"
+require "ric_notification/concerns/models/notification_receiver/mailboxer"
 require "ric_notification/concerns/models/notification_receiver/sms"
 require "ric_notification/concerns/models/notification_template"
 
@@ -114,13 +114,13 @@ module RicNotification
 	# Available kinds:
 	# - email
 	# - sms
-	# - inmail
+	# - mailboxer
 	#
 	mattr_accessor :delivery_kinds
 	@@delivery_kinds = [
 		:email
 #		:sms,
-#		:inmail,
+#		:mailboxer,
 	]
 
 	#

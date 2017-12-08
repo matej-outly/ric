@@ -1,0 +1,40 @@
+<%= rug_button(rug_icon(:new) + t("headers.ric_mailboxer.conversations.new"), false, 
+	modal: "new_conversation_modal") 
+%>
+<%= rug_modal "new_conversation_modal" do |m| %>
+	<%= m.header t("headers.ric_mailboxer.conversations.new") %>
+	<%= render partial: "ric_mailboxer/conversations/form", locals: {
+		modal: m,
+		conversation: RicMailboxer::Conversation.new
+	} %>
+<% end %>
+
+<hr/>
+
+<% conversations.each do |conversation| %>
+
+	<%= link_to mailbox_conversation_path(conversation), class: (active_conversation == conversation ? "active" : "") do %>
+		<%= conversation.subject %><br/>
+		<%= conversation.recipients.map{ |u| u.email } %>
+	<% end %>
+
+	<br/>
+
+	<%= rug_button(rug_icon(:edit), false, 
+		modal: "edit_conversation_#{conversation.id}_modal") 
+	%>
+	<%= rug_modal "edit_conversation_#{conversation.id}_modal" do |m| %>
+		<%= m.header t("headers.ric_mailboxer.conversations.new") %>
+		<%= render partial: "ric_mailboxer/conversations/form", locals: {
+			modal: m,
+			conversation: RicMailboxer::Conversation.new(conversation)
+		} %>
+	<% end %>
+
+	<%= rug_button(rug_icon(:destroy), trash_mailbox_conversation_path(conversation), 
+		method: :delete 
+	) %>
+
+	<hr/>
+
+<% end %>

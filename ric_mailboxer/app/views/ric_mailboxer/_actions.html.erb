@@ -1,0 +1,10 @@
+<%= rug_menu(options) do |m| %>
+	<%= m.item t("headers.ric_mailboxer.mailboxes.show"), ric_mailboxer.mailbox_path, 
+		icon: "inbox", 
+		active: ((controller_name == "mailboxes" || controller_name == "conversations") && action_name == "show")
+	%>
+	<%= m.item t("headers.ric_mailboxer.mailboxes.trash"), ric_mailboxer.trash_mailbox_path, 
+		icon: "trash", 
+		active: (controller_name == "mailboxes" && action_name == "trash")
+	%>
+<% end %>

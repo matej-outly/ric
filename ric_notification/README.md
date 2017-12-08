@@ -3,8 +3,8 @@
 With this module you can create notifications based on templates defined by the system administrator and send it in a batch with different delivery methods:
 
 - E-mail
-- SMS
-- InMail (RicInmail module necessary)
+- SMS (RicSms module necessary)
+- Mailboxer (RicMailboxer module necessary)
 
 ## Installation
 
@@ -22,7 +22,7 @@ Add database migrations to you application (you can modify DB structure accordin
 Mount routing engine in your `routes.rb` file:
 
 ```ruby
-mount RicNotification::Engine => "/", as: :ric_dms
+mount RicNotification::Engine => "/", as: :ric_notification
 ```
 
 ## Configuration

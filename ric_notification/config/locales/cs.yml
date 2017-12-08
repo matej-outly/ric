@@ -38,7 +38,7 @@ cs:
         kind_values:
           email: E-mail
           sms: SMS
-          inmail: Interní pošta
+          mailboxer: Interní pošta
       ric_notification/notification_receiver:
         receiver: Příjemce
         state: Stav
