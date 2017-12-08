@@ -11,13 +11,13 @@ This document describes how to correctly integrate the module into the applicati
 
 In many cases RicUser module is used for user management. Anyway, you can integrate it with your custom made user model without any problem.
 
-In case of admin access optionality, RuthAdmin module should be integrated.
+In case of admin access, RuthAdmin module should be integrated optionality.
 
 Also RicNotification module should be integrated. This module is necessary for RicAuth::Mailer.
 
-## Gemfile
+## Installation
 
-Following gems must be added to application Gemfile:
+Following gems must be added to the application Gemfile:
 
 ```ruby
 # Authentication
@@ -32,7 +32,7 @@ gem "omniauth-facebook"
 gem "omniauth-twitter" # etc ...
 ```
 
-And of course gem of Ric modules:
+And also RIC module gem must be included:
 
 ```ruby
 gem "ric_auth"
