@@ -12,14 +12,10 @@
 module RicException
 	class Engine < ::Rails::Engine
 		
-		#
 		# Controllers
-		#
 		require "ric_exception/concerns/controllers/exceptions_controller"
 		
-		#
 		# Namespace
-		#
 		isolate_namespace RicException
 
 	end

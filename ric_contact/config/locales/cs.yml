@@ -70,6 +70,11 @@ cs:
             subject: "Potvrzení o přijetí zprávy"
 
   activemodel:
+    ric_contact/contact_message:
+        created_at: Vytvořeno
+        name: Jméno odesílatele
+        email: E-mail odesílatele
+        message: Zpráva
     errors:
       models:
         ric_contact/contact_message:
@@ -78,5 +83,3 @@ cs:
           attributes:
             message:
               blank: Zpráva musí být vyplněna.
-        ric_contact/contact_person:
-          not_found: Kontaktní osoba nebyla nalezena.
