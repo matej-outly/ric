@@ -1,26 +1,23 @@
-<% conversation.receipts_for(owner).each do |receipt| %>
+<%= render partial: "ric_mailboxer/messages/index", locals: {
+	owner: owner,
+	conversation: conversation,
+	receipts: conversation.receipts_for(owner)
+} %>
 
-	<%= receipt.message.sender.email %><br/>
-	<%= receipt.message.body %>
-
-	<hr/>
-
-<% end %>
-
-<% conversation = RicMailboxer::Conversation.new(conversation, body: "") %>
-<%= rug_form_for(conversation, 
+<% ric_conversation = RicMailboxer::Conversation.new(conversation, body: "") %>
+<%= rug_form_for(ric_conversation, 
 	method: :post,
-	url: reply_mailbox_conversation_path(id: conversation.id),
+	url: reply_mailbox_conversation_path(id: ric_conversation.id),
 	ajax: {
 		success_message: RicMailboxer.conversation_model.human_notice_message(:reply),
 		error_message: RicMailboxer.conversation_model.human_error_message(:reply),
-		clear_on_submit: conversation.new_record?,
+		clear_on_submit: ric_conversation.new_record?,
 		on_success: {
 			reload_page: true
 		}
 	},
 	html: {
-		id: "reply_conversation_#{conversation.id}"
+		id: "reply_conversation_#{ric_conversation.id}"
 	}
 ) do |f| %>
 	<%= f.text_area_row :body, plugin: false, label: false %>

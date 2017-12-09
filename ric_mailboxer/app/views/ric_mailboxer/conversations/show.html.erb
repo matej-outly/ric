@@ -1,0 +1,43 @@
+<%= rug_grid do |g| %>
+	<%= g.row do |r| %>
+		<%= r.col(3) do %>
+
+			<%# New conversation %>
+			<%= rug_button(rug_icon(:new) + t("headers.ric_mailboxer.conversations.new"), false, 
+				modal: "new_conversation_modal") 
+			%>
+			<%= rug_modal "new_conversation_modal" do |m| %>
+				<%= m.header t("headers.ric_mailboxer.conversations.new") %>
+				<%= render partial: "ric_mailboxer/conversations/form", locals: {
+					modal: m,
+					conversation: RicMailboxer::Conversation.new
+				} %>
+			<% end %>
+			<hr/>
+
+			<%# List of conversations %>
+			<%= render partial: "ric_mailboxer/conversations/index", locals: {
+				owner: @owner,
+				conversations: @conversations,
+				active_conversation: @conversation,
+				options: {
+					add_position: :append,
+					paginate_path: :mailbox_conversations_path
+				}
+			} %>
+
+		<% end %>
+		<%= r.col(9) do %>
+			
+			<%# Conversation detail (list of messages and reply form) %>
+			<% if @conversation %>
+				<%= render partial: "ric_mailboxer/conversations/show", locals: {
+					owner: @owner,
+					conversation: @conversation,
+					options: {}
+				} %>
+			<% end %>
+
+		<% end %>
+	<% end %>
+<% end %>

@@ -22,8 +22,9 @@ module RicMailboxer
 				end
 
 				def show # == inbox
-					@conversations = @mailbox.conversations.not_trash(@owner)
+					@conversations = @mailbox.conversations.not_trash(@owner).page(params[:page]).per(3)
 					@conversation = @conversations.first
+					render "ric_mailboxer/conversations/show"
 				end
 
 				def trash

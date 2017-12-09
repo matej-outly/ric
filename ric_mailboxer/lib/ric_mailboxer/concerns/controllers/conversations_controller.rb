@@ -18,13 +18,35 @@ module RicMailboxer
 
 					before_action :set_owner
 					before_action :set_mailbox
+					before_action :set_conversations, only: [:index, :show]
 					before_action :set_conversation, only: [:show, :reply, :update, :trash, :untrash, :destroy]
 
 				end
 
+				def index
+					respond_to do |format|
+						format.json do
+							render json: @conversations.map { |conversation|
+								{
+									id: conversation.id,
+									html: render_to_string(
+										partial: "index", 
+										formats: [:html], 
+										locals: { 
+											owner: @owner,
+											mailbox: @mailbox,
+											conversations: conversation, 
+											active_conversation: nil,
+											options: { partial: true } 
+										}
+									)
+								}
+							}
+						end
+					end
+				end
+
 				def show
-					@conversations = @mailbox.conversations.not_trash(@owner)
-					render "ric_mailboxer/mailboxes/show"
 				end
 
 				def create
@@ -121,6 +143,10 @@ module RicMailboxer
 				def set_conversation
 					@conversation = @mailbox.conversations.find_by_id(params[:id])
 					not_found if @conversation.nil?
+				end
+
+				def set_conversations
+					@conversations = @mailbox.conversations.not_trash(@owner).page(params[:page]).per(3)
 				end
 
 				# *************************************************************

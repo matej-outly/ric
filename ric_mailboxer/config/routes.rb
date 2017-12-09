@@ -18,7 +18,7 @@ RicMailboxer::Engine.routes.draw do
 		end 
 
 		# Conversations
-		resources :conversations, only: [:show, :create, :update, :destroy] do
+		resources :conversations, only: [:index, :show, :create, :update, :destroy] do
 			member do 
 				post :reply
 				delete :trash

@@ -1,0 +1,11 @@
+
+<% receipts.each do |receipt| %>
+
+	<%= receipt.is_unread? %>
+	<%= receipt.message.sender.email %><br/>
+	<%= receipt.message.body %>
+
+	<hr/>
+
+	<% receipt.mark_as_read if receipt.is_unread? %>
+<% end %>
