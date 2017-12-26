@@ -218,7 +218,7 @@ module RicReservation
 				label_callback = options[:day_label_callback] ? options[:day_label_callback] : method(:week_timetable_day_label)
 
 				# Days
-				tmp_date = date.week_monday
+				tmp_date = date.beginning_of_week
 				days = []
 				["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].each do |day|
 					days << {

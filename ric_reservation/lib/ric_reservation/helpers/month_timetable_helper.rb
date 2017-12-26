@@ -77,7 +77,7 @@ module RicReservation
 				
 				# Get monday
 				first_this_month = date.beginning_of_month
-				first_monday = first_this_month.week_monday
+				first_monday = first_this_month.beginning_of_week
 
 				# Items
 				items = []
@@ -139,7 +139,7 @@ module RicReservation
 
 				# Dates
 				first_this_month = date.beginning_of_month
-				first_monday = first_this_month.week_monday
+				first_monday = first_this_month.beginning_of_week
 				first_next_month = first_this_month + 1.month
 				
 				# Weeks

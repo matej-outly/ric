@@ -60,3 +60,6 @@ Then you find the error pages on the following URLs:
 - `http://localhost:3000/error/422`
 - `http://localhost:3000/error/500`
 
+## Known bugs and future features
+
+- [ ] Should check for multiple sending of similar error message - to prevent SMTP overflow - once for 10 minutes

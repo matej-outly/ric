@@ -1157,7 +1157,7 @@ module RicReservation
 						self.schedule(self.from.to_date)
 					
 					elsif self.resource.period == "week" # Automatic schedule is possible for events in resources with period "week"
-						monday = self.resource.valid_from.week_monday # Monday matching to resource "valid from" date
+						monday = self.resource.valid_from.beginning_of_week # Monday matching to resource "valid from" date
 						self.schedule(monday + (self.from.to_date.cwday - 1).days) # Schedule to the matching day in the week identified by resource "valid from" date
 					end
 

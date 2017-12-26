@@ -50,3 +50,7 @@ Available options:
 - mailer_sender
 - delivery_kinds
 - template_refs
+
+## Known bugs
+
+- [ ] Repeated delivery if marked as "sent" not working - should remove the "sent" flag and deliver
