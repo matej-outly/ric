@@ -55,9 +55,7 @@ module RicPerson
 						super
 					end
 				end
-
-			protected
-
+			
 				# *************************************************************
 				# User wrapper
 				# *************************************************************
@@ -87,6 +85,8 @@ module RicPerson
 					#	self.user.destroy
 					#end
 				end
+
+			protected
 
 				def read_user_attribute(name)
 					@user_values = {} if @user_values.nil?
