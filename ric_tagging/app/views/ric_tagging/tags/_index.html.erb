@@ -1,0 +1,40 @@
+<%= rug_index(tags, options.merge(
+	layout: :list, 
+	class: "tag-list", 
+	list_class: "tag-list", 
+	item_class: "tag-list-item",
+	empty_message: false
+)) do |t| %>
+	<%= t.body do |b, tag| %>
+
+		<div class="tag tag-<%= tag.color %>">
+			<%= tag.name %>
+			<div class="actions">
+				<%= b.action :edit, object: tag, label: false, modal: true do |m, tag| %>
+					<%= m.header t("headers.ric_tagging.tags.edit") %>
+					<%= render partial: "ric_tagging/tags/form", locals: { 
+						table: t, 
+						modal: m, 
+						tag: tag
+					} %>
+				<% end %>
+				<%= b.action :destroy, 
+					object: tag, 
+					label: false, 
+					path: -> (tag) { personalist_tag_path(tag) }
+				%>
+			</div>
+		</div>
+
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.action :new, label: t("headers.ric_tagging.tags.new"), style: :concept, modal: true do |m| %>
+			<%= m.header t("headers.ric_tagging.tags.new") %>
+			<%= render partial: "ric_tagging/tags/form", locals: { 
+				table: t, 
+				modal: m, 
+				tag: RicTagging.tag_model.new
+			} %>
+		<% end %>
+	<% end %>
+<% end %>

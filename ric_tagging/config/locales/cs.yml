@@ -1,0 +1,33 @@
+cs:
+     
+  activerecord:
+    attributes:
+      ric_tagging/tag:
+        name: Jméno
+        color: Barva
+        color_values:
+          yellow: Žlutá
+          blue: Modrá
+          turquoise: Tyrkysová
+          pink: Růžová
+          purple: Fialová
+          orange: Oranžová 
+          red: Červená
+          green: Zelená
+          grey: Šedá
+    notices:
+      models:
+        ric_tagging/tag:
+          create: "Tag byl úspěšně vytvořen."
+          update: "Tag byl úspěšně upraven."
+          destroy: "Tag byl úspěšně smazán."
+    errors:
+      models:
+        ric_tagging/tag:
+          not_found: "Tag nebyl nalezen."
+          create: "Tag nebyl vytvořen."
+          update: "Tag nebyl upraven."
+          destroy: "Tag nebyl smazán."
+          attributes:
+            name:
+              blank: Jméno musí být vyplněno.
