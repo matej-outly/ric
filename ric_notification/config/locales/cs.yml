@@ -30,6 +30,7 @@ cs:
         sent_at: Odesláno
         done: Hotovo
         deliveries: Metody doručení
+        info: Základní informace
       ric_notification/notification_delivery:
         sent_at: Odesláno
         done: Hotovo

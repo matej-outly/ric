@@ -1,14 +1,23 @@
-<%= rug_show(@notification) do |t| %>
-	<%= t.body do |b| %>
-		<%= b.datetime :created_at %>
-		<%= b.string :subject %>
-		<%= b.enum :kind %>
-		<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender) %>
-		<%= b.string :done %>
-	<% end %>
-	<% if !@notification.message.blank? %>
-		<h3><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
-		<%= rug_format_text(@notification.message, object: @notification, column: :message, truncate: false, format: :text_box) %>
+<%= rug_grid do |g| %>
+	<%= g.row do |r| %>
+		<%= r.col(6) do %>
+			<h3 class="m-t-0"><%= RicNotification.notification_model.human_attribute_name(:info) %></h3>
+			<%= rug_show(@notification) do |t| %>
+				<%= t.body do |b| %>
+					<%= b.datetime :created_at %>
+					<%= b.string :subject %>
+					<%= b.enum :kind %>
+					<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender) %>
+					<%= b.string :done %>
+				<% end %>
+			<% end %>
+		<% end %>
+		<% if !@notification.message.blank? %>
+			<%= r.col(6) do %>
+				<h3 class="m-t-0"><%= RicNotification.notification_model.human_attribute_name(:message) %></h3>
+				<%= rug_format_text(@notification.message, object: @notification, column: :message, truncate: false, format: :text_box) %>
+			<% end %>	
+		<% end %>
 	<% end %>
 <% end %>
 
