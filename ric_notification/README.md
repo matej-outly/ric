@@ -51,6 +51,12 @@ Available options:
 - delivery_kinds
 - template_refs
 
+## Usage
+
+```ruby
+RicNotification.notify([:sample_notification_ref, param_1, param_2], [receiver_1, receiver_2], options)
+```
+
 ## Known bugs
 
 - [ ] Repeated delivery if marked as "sent" not working - should remove the "sent" flag and deliver

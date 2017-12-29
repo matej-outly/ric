@@ -54,6 +54,10 @@ module RicUser
 						def has_roles?
 							true
 						end
+
+						def with_role(role)
+							joins(:user_roles).where(user_roles: { role_id: role.id })
+						end
 					
 					end
 
