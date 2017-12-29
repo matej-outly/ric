@@ -12,7 +12,7 @@
 module RicTagging
 	module Concerns
 		module Controllers
-			module StagesController extend ActiveSupport::Concern
+			module TagsController extend ActiveSupport::Concern
 
 				included do
 					
