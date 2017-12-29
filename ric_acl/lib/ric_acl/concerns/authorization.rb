@@ -15,7 +15,7 @@ module RicAcl
 
 			module ClassMethods
 				
-				def authorize(params = {})
+				def _authorize(params = {})
 					if params[:user]
 						user = params[:user]
 					else
@@ -56,8 +56,12 @@ module RicAcl
 							return false if !sql
 							privilege_count = ActiveRecord::Base.connection.execute(sql).first["count"].to_i
 							if privilege_count > 0
-								if subject.class.authorized_for(user: user, scope: scope).find_by_id(subject.id)
-									return true
+								authorized_subjects = subject.class.authorized_for(user: user, scope: scope)
+								authorized_subjects = [authorized_subjects] if !authorized_subjects.is_a?(Array)
+								authorized_subjects.each do |authorized_subjects_collection|
+									if authorized_subjects_collection.find_by_id(subject.id)
+										return true
+									end
 								end
 							end
 						end
@@ -72,6 +76,13 @@ module RicAcl
 					end
 
 					return false
+				end
+
+				def authorize(params = {})
+					deactivate_logging
+					result = _authorize(params)
+					activate_logging
+					return result
 				end
 
 				def authorize!(params = {})
@@ -151,6 +162,26 @@ module RicAcl
 					}
 
 					return sql
+				end
+
+			protected
+
+				# *************************************************************************
+				# Logging
+				# *************************************************************************
+				
+				def deactivate_logging
+					@deactivated_logger = ActiveRecord::Base.logger
+					ActiveRecord::Base.logger = nil
+				end
+
+				def activate_logging
+					ActiveRecord::Base.logger = @deactivated_logger
+					@deactivated_logger = nil
+				end
+
+				def deactivated_logger
+					@deactivated_logger
 				end
 
 			end

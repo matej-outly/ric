@@ -56,8 +56,19 @@ module RicAcl
 					def authorized_for(params = {})
 						raise "Please define user." if !params[:user]
 						raise "Please define scope." if !params[:scope]
-						raise "Authorization scope not defined." if !self.authorization_scopes[params[:scope].to_sym] || !self.authorization_scopes[params[:scope].to_sym][:query]
-						return self.instance_exec(params[:user], &self.authorization_scopes[params[:scope].to_sym][:query]) # ???
+						scopes = params[:scope]
+						if scopes.is_a?(Array)
+							results = []
+							scopes.each do |scope|
+								raise "Authorization scope not defined." if !self.authorization_scopes[scope.to_sym] || !self.authorization_scopes[scope.to_sym][:query]
+								results << self.instance_exec(params[:user], &self.authorization_scopes[scope.to_sym][:query])
+							end
+							return results
+						else
+							scope = scopes
+							raise "Authorization scope not defined." if !self.authorization_scopes[scope.to_sym] || !self.authorization_scopes[scope.to_sym][:query]
+							return self.instance_exec(params[:user], &self.authorization_scopes[scope.to_sym][:query])
+						end
 					end
 
 				end
@@ -80,6 +91,7 @@ module RicAcl
 				# Authorization scope usage
 				# *************************************************************
 
+				# TODO multiple scopes??
 				def authorize_for(params = {})
 					raise "Please define user." if !params[:user]
 					raise "Please define scope." if !params[:scope]
