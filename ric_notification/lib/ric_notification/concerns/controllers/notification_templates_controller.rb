@@ -16,7 +16,7 @@ module RicNotification
 
 				included do
 					
-					before_action :set_notification_template, only: [:edit, :update]
+					before_action :set_notification_template, only: [:edit, :update, :disable, :enable, :dry, :undry]
 					before_action :create_missing_notification_templates, only: [:index]
 
 				end
@@ -30,6 +30,38 @@ module RicNotification
 
 				def index
 					@notification_templates = RicNotification.notification_template_model.all.order(ref: :asc)
+				end
+
+				def disable
+					@notification_template.update(disabled: true)
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
+						format.json { render json: @notification_template.id }
+					end
+				end
+
+				def enable
+					@notification_template.update(disabled: false)
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
+						format.json { render json: @notification_template.id }
+					end
+				end
+
+				def dry
+					@notification_template.update(dry: true)
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
+						format.json { render json: @notification_template.id }
+					end
+				end
+
+				def undry
+					@notification_template.update(dry: false)
+					respond_to do |format|
+						format.html { redirect_to request.referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
+						format.json { render json: @notification_template.id }
+					end
 				end
 
 				def update

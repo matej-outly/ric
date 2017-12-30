@@ -24,13 +24,16 @@ module RicNotification
 						RicNotification.notification_model.transaction do
 
 							# Get subject, message and params
-							subject, message, params = parse_content(content)
+							subject, message, params, notification_template = parse_content(content)
 
 							if !message.blank?
 
 								# Interpret params and store it in DB
 								notification.message = interpret_params(message, params)
 								notification.subject = interpret_params(subject, params)
+
+								# Notification template
+								notification.notification_template = notification_template
 
 								# Kind
 								if options[:kind]
@@ -55,38 +58,42 @@ module RicNotification
 								# Save to DB
 								notification.save
 
-								# Delivery kinds
-								if options[:delivery_kinds] # Select only wanted delivery kinds, but valid according to module config
-									delivery_kinds = options[:delivery_kinds]
-									delivery_kinds = delivery_kinds.delete_if { |delivery_kind| !RicNotification.delivery_kinds.include?(delivery_kind.to_sym) }
-								else
-									delivery_kinds = RicNotification.delivery_kinds
-								end
-
-								# Get valid receivers
-								receivers = parse_receivers(receivers)
-
-								delivery_kinds.each do |delivery_kind|
-
-									# Delivery object
-									notification_delivery = notification.notification_deliveries.create(kind: delivery_kind)
-									
-									# Filter out receivers not valid for this delivery kind
-									if delivery_kind == :email
-										filtered_receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:email) }
-									elsif delivery_kind == :sms 
-										filtered_receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:phone) }
+								if !notification_template || notification_template.dry != true
+								
+									# Delivery kinds
+									if options[:delivery_kinds] # Select only wanted delivery kinds, but valid according to module config
+										delivery_kinds = options[:delivery_kinds]
+										delivery_kinds = delivery_kinds.delete_if { |delivery_kind| !RicNotification.delivery_kinds.include?(delivery_kind.to_sym) }
 									else
-										filtered_receivers = receivers.dup
+										delivery_kinds = RicNotification.delivery_kinds
 									end
 
-									# Save to DB
-									filtered_receivers.each do |receiver|
-										notification_delivery.notification_receivers.create(receiver: receiver)
+									# Get valid receivers
+									receivers = parse_receivers(receivers)
+
+									delivery_kinds.each do |delivery_kind|
+
+										# Delivery object
+										notification_delivery = notification.notification_deliveries.create(kind: delivery_kind)
+										
+										# Filter out receivers not valid for this delivery kind
+										if delivery_kind == :email
+											filtered_receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:email) }
+										elsif delivery_kind == :sms 
+											filtered_receivers = receivers.delete_if { |receiver| !receiver.respond_to?(:phone) }
+										else
+											filtered_receivers = receivers.dup
+										end
+
+										# Save to DB
+										filtered_receivers.each do |receiver|
+											notification_delivery.notification_receivers.create(receiver: receiver)
+										end
+										notification_delivery.sent_count = 0
+										notification_delivery.receivers_count = filtered_receivers.size
+										notification_delivery.save
+
 									end
-									notification_delivery.sent_count = 0
-									notification_delivery.receivers_count = filtered_receivers.size
-									notification_delivery.save
 
 								end
 
@@ -116,17 +123,24 @@ module RicNotification
 
 						# Extract content definition and params
 						content_def = content.shift
+						
+						# Preset
 						params = content
+						subject = nil
+						message = nil
+						notification_template = nil
 
 						if content_def.is_a?(Symbol)
 
 							notification_template = RicNotification.notification_template_model.where(ref: content_def.to_s).first
-							if notification_template # Message and subject from template
-								message = notification_template.message
-								subject = notification_template.subject
-							else # Static message
-								message = I18n.t("notifications.automatic.#{content_def.to_s}.message", default: "")
-								subject = I18n.t("notifications.automatic.#{content_def.to_s}.subject", default: "")
+							if !notification_template.disabled == true
+								if notification_template # Message and subject from template
+									message = notification_template.message
+									subject = notification_template.subject
+								else # Static message
+									message = I18n.t("notifications.automatic.#{content_def.to_s}.message", default: "")
+									subject = I18n.t("notifications.automatic.#{content_def.to_s}.subject", default: "")
+								end
 							end
 
 						elsif content_def.is_a?(Hash) # Defined by hash containing subject and message
@@ -145,7 +159,7 @@ module RicNotification
 						# First parameter is message (all other parameters are indexed from 1)
 						params.unshift(message)
 
-						return [subject, message, params]		
+						return [subject, message, params, notification_template]		
 					end
 
 					def parse_receivers(receivers)

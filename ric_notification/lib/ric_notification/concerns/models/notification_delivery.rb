@@ -54,7 +54,7 @@ module RicNotification
 					return case self.kind.to_sym
 						when :email then :batch
 						when :sms then :batch
-						when :inmain then :instantly
+						when :mailboxer then :instantly
 					end
 				end
 

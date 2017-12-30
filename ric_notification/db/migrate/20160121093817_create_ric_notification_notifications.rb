@@ -5,6 +5,9 @@ class CreateRicNotificationNotifications < ActiveRecord::Migration
 			# Timestamps
 			t.timestamps null: true
 			
+			# Association to template
+			t.integer :notification_template_id, index: true
+
 			# Kind
 			t.string :kind
 

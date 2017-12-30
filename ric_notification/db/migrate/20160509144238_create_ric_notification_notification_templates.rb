@@ -11,6 +11,10 @@ class CreateRicNotificationNotificationTemplates < ActiveRecord::Migration
 			# Message
 			t.string :subject 
 			t.text :message
+
+			# Handlers
+			t.boolean :disabled
+			t.booelan :dry
 			
 		end
 	end

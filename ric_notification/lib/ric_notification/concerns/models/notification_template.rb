@@ -17,6 +17,12 @@ module RicNotification
 				included do
 
 					# *********************************************************
+					# Structure
+					# *********************************************************
+
+					has_many :notification_templates, class_name: RicNotification.notification_template_model.to_s, dependent: :nullify
+
+					# *********************************************************
 					# Validators
 					# *********************************************************
 
@@ -27,7 +33,7 @@ module RicNotification
 					# *********************************************************
 
 					enum_column :ref, RicNotification.template_refs
-					
+
 				end
 
 				module ClassMethods
@@ -35,7 +41,9 @@ module RicNotification
 					def permitted_columns
 						[
 							:subject,
-							:message
+							:message,
+							:disabled,
+							:dry
 						]
 					end
 					

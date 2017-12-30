@@ -13,6 +13,16 @@
 	<%= modal.body do %>
 		<%= f.text_input_row :subject %>
 		<%= f.text_area_row :message, plugin: false %>
+		<%= rug_grid do |g| %>
+			<%= g.row do |r| %>
+				<%= r.col(6) do %>
+					<%= f.checkbox_row :disabled %>
+				<% end %>
+				<%= r.col(6) do %>
+					<%= f.checkbox_row :dry %>
+				<% end %>
+			<% end %>
+		<% end %>
 	<% end %>
 	<%= modal.footer do %>
 		<%= f.primary_button_row :submit %>

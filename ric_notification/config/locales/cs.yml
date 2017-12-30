@@ -62,6 +62,20 @@ cs:
         ref: Klíč
         subject: Předmět
         message: Zpráva
+        disabled: Nevytvářet notifikace
+        disabled_values:
+          bool_yes: Nevytvářet
+          bool_no: Vytvářet
+        disabled_colors:
+          bool_yes: red
+          bool_no: green
+        dry: Neodesílat notifikace
+        dry_values:
+          bool_yes: Neodesílat
+          bool_no: Odesílat
+        dry_colors:
+          bool_yes: red
+          bool_no: green
     notices:
       models:
         ric_notification/notification:

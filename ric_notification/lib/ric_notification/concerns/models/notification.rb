@@ -22,6 +22,7 @@ module RicNotification
 
 					has_many :notification_deliveries, class_name: RicNotification.notification_delivery_model.to_s, dependent: :destroy
 					belongs_to :sender, polymorphic: true
+					belongs_to :notification_template, class_name: RicNotification.notification_template_model.to_s
 					
 					# *********************************************************
 					# Kind
