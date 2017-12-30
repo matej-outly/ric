@@ -73,7 +73,7 @@ module RicUser
 						end
 
 						def with_role(role)
-							joins(:user_roles).where(user_roles: { role: role })
+							joins(:user_roles).where(user_roles: { role: role }).distinct
 						end
 
 					end
