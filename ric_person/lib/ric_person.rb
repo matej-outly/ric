@@ -59,6 +59,13 @@ module RicPerson
 	@@people_selector_model = "RicPerson::PeopleSelector"
 
 	#
+	# Relation to user is enforced be default. If set to false, person can be 
+	# created without user account (email is not required in this case).
+	#
+	mattr_accessor :enforce_user
+	@@enforce_user = true
+
+	#
 	# Available person types
 	#
 	mattr_accessor :person_types

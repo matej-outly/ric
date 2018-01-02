@@ -37,6 +37,7 @@ Available options:
 
 - user_model
 - people_selector_model
+- enforce_user
 - person_types
 
 ## Not implemented
