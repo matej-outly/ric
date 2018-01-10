@@ -57,7 +57,7 @@ module RicNumbering
 				end
 
 				#
-				# Optional sequence scope can be defined in concern user
+				# Optional sequence scope can be defined in concern user. it can be either model or simple string
 				#
 				def sequence_scope
 					nil
@@ -87,7 +87,12 @@ module RicNumbering
 								if self.sequence_scope.nil?
 									sequence = sequences.find_or_create_by(ref: ref)
 								else
-									sequence = sequences.find_or_create_by(ref: ref, scope: self.sequence_scope)
+									if self.sequence_scope.is_a?(ActiveRecord::Base)
+										sequence = sequences.find_or_create_by(ref: ref, scope: self.sequence_scope)
+									else
+										scope_string = self.sequence_scope.to_s
+										sequence = sequences.find_or_create_by(ref: ref, scope_string: scope_string)
+									end
 								end
 
 								# Increase sequence number and save it to this object
@@ -111,7 +116,14 @@ module RicNumbering
 				def number_formatted
 					if @number_formatted.nil? && !self.number.nil?
 						if RicNumbering.sequence_formats && RicNumbering.sequence_formats[self.sequence_ref.to_sym]
-							@number_formatted = sprintf(RicNumbering.sequence_formats[self.sequence_ref.to_sym], self.number)
+							format_string = RicNumbering.sequence_formats[self.sequence_ref.to_sym]
+
+							# Interpret
+							scope = self.sequence_scope
+							eval("format_string = \"#{format_string}\"")
+
+							# Format
+							@number_formatted = sprintf(format_string, self.number)
 						else
 							@number_formatted = self.number.to_s
 						end

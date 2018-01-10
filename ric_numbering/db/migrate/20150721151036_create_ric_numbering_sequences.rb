@@ -13,6 +13,7 @@ class CreateRicNumberingSequences < ActiveRecord::Migration
 			# Scope
 			t.integer :scope_id, index: true
 			t.string  :scope_type, index: true
+			t.string  :scope_string, index: true
 
 			# Current number
 			t.integer :current, limit: 8
