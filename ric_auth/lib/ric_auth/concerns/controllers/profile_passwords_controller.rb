@@ -21,6 +21,7 @@ module RicAuth
 				#
 				included do
 					
+					prepend_before_action :disable_password_enforcement if defined?(disable_password_enforcement)
 					before_action :authenticate_user!
 					before_action :set_user
 
@@ -32,7 +33,8 @@ module RicAuth
 				def update
 					if @user.update_with_password(user_params)
 						sign_in @user, :bypass => true
-						redirect_to ric_auth.edit_profile_path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update_password")
+						path = stored_location_for(:user) || ric_auth.edit_profile_path
+						redirect_to path, notice: I18n.t("activerecord.notices.models.#{RicAuth.user_model.model_name.i18n_key}.update_password")
 					else
 						render "edit"
 					end

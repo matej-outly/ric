@@ -42,6 +42,10 @@ class CreateRicUserUsers < ActiveRecord::Migration
 			# Lockable by admin
 			t.datetime :locked_at, index: true
 
+			# Password change enforceable
+			t.datetime :password_forced_at
+			t.datetime :password_changed_at
+
 			# *****************************************************************
 			# Fancy data
 			# *****************************************************************

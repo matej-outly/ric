@@ -48,6 +48,16 @@ module RicUser
 
 					#validates_presence_of :email # Already defined in devise
 
+					# *********************************************************
+					# Password changed
+					# *********************************************************
+
+					before_save do
+						if self.respond_to?(:password_changed_at) && self.encrypted_password_changed?
+							self.password_changed_at = Time.current
+						end
+					end
+
 				end
 
 				module ClassMethods
@@ -181,7 +191,10 @@ module RicUser
 					
 					# Save
 					self.password = new_password
-					result = self.save if options[:save] != false
+					if options[:save] != false
+						result = self.save 
+						self.update(password_forced_at: Time.current) if self.respond_to?(:password_forced_at) && options[:force] != false
+					end
 
 					# Notification
 					if result
@@ -219,8 +232,11 @@ module RicUser
 
 					# Save
 					self.password = new_password
-					result = self.save if options[:save] != false
-
+					if options[:save] != false
+						result = self.save 
+						self.update(password_forced_at: Time.current) if self.respond_to?(:password_forced_at) && options[:force] != false
+					end
+					
 					# Notification
 					if result
 						if options[:notification] == false

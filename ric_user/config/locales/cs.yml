@@ -120,6 +120,7 @@ cs:
           lock: Nebylo možné zablokovat uživatele.
           unlock: Nebylo možné odblokovat uživatele.
           confirm: Nebylo možné ověřit uživatele.
+          password_enforced: Před pokračováním se prosím změňte své heslo.
           attributes:
             current_password:
               blank: Heslo musí být vyplněno.

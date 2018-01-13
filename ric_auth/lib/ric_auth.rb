@@ -16,6 +16,7 @@ require "ric_auth/engine"
 require "ric_auth/concerns/application_paths"
 require "ric_auth/concerns/devise_paths"
 require "ric_auth/concerns/overrides"
+require "ric_auth/concerns/password_enforcement"
 
 # Models
 require "ric_auth/concerns/models/authentication"
