@@ -21,7 +21,7 @@ module RicAuth
 				#
 				included do
 					
-					prepend_before_action :disable_password_enforcement if defined?(disable_password_enforcement)
+					prepend_before_action :disable_password_enforcement if self.instance_methods.include?(:disable_password_enforcement)
 					before_action :authenticate_user!
 					before_action :set_user
 

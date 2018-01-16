@@ -35,7 +35,7 @@ module RicAttachment
 						@attachments = @attachments.where(subject_id: nil)
 					end
 					@attachments = @attachments.where(kind: params[:kind]) if params[:kind]
-					@attachments = @attachments.order(created_at: :asc)
+					@attachments = @attachments.order(id: :asc)
 					result = []
 					@attachments.each do |attachment|
 						result << { url: ric_attachment.attachment_path(attachment) }

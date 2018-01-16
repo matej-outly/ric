@@ -42,6 +42,15 @@ Available options:
 
 Each attachment can be binded to subject which creates a scope in which the attachment is managed. Subject association is set as polymorphic so there is a possibility to bind attachment to different subjects.
 
+```ruby
+class Conduct::Communication < ActiveRecord::Base
+
+    has_many :attachments, class_name: "RicAttachment::Attachment", dependent: :destroy, as: :subject
+
+    ...
+end
+```
+
 ## Session ID and attachment claiming
 
 In most cases attachments are managed (listed, created and destroyed) through the parent resource (typically with some kind of WYSIWYG editor). Problem with this approach is in the "new" action when the parent resource is not saved in DB (ID is not known yet) but editor requires parent resource ID for attachments to be created in the correct scope. In this case, a temporary session ID must be used instead of resource ID. Both editor and backend should support subject ID and also session ID params (see editor settings example and backend implementation inside this module).

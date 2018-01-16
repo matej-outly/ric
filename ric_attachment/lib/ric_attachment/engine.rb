@@ -14,6 +14,7 @@ module RicAttachment
 
 		# Controllers
 		require "ric_attachment/concerns/controllers/attachments_controller"
+		require "ric_attachment/concerns/controllers/editable_attachments_controller"
 		require "ric_attachment/concerns/controllers/froala_controller"
 		require "ric_attachment/concerns/controllers/tinymce_controller"
 		

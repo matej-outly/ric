@@ -1,0 +1,14 @@
+<%= rug_index(attachments, options.merge( 
+	reload_path: lambda { |id| ric_attachment.attachments_path(id: id) },
+	layout: :thumbnails, 
+	thumbnails_crop: 150, 
+	thumbnails_grid: 3
+)) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.file :file, type: { thumb_style: :original, full_style: :original, fancybox: true } %>
+		<%= b.action :destroy, 
+			path: lambda { |attachment| ric_attachment.attachment_path(attachment) }, 
+			ajax: true  
+		%>
+	<% end %>
+<% end %>

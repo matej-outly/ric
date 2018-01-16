@@ -12,7 +12,10 @@
 RicAttachment::Engine.routes.draw do
 	
 	# Read attachment interface
-	resources :attachments, only: [:show]
+	resources :attachments, only: [:index, :show]
+
+	# Edit attachment interface
+	resources :attachments, only: [:create, :update, :destroy], controller: "editable_attachments"
 
 	# Froala interface
 	if RicAttachment.editors.include?(:froala)
