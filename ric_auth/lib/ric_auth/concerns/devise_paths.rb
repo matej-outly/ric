@@ -14,15 +14,27 @@ module RicAuth
 		module DevisePaths extend ActiveSupport::Concern
 
 			def after_sign_in_path_for(resource)
-				stored_location_for(:user) || current_root_path
+				if RicAuth.redirect_to_stored_location_after_sign_in == true
+					stored_location_for(:user) || current_root_path
+				else
+					current_root_path
+				end
 			end
 
 			def after_sign_out_path_for(resource)
-				main_app.root_path
+				if RicAuth.redirect_to_stored_location_after_sign_out == true
+					stored_location_for(:user) || main_app.root_path
+				else
+					main_app.root_path
+				end
 			end
 
 			def after_sign_up_path_for(resource)
-				after_sign_in_path_for(resource)
+				if RicAuth.redirect_to_stored_location_after_sign_up == true
+					stored_location_for(:user) || current_root_path
+				else
+					current_root_path
+				end
 			end
 
 			def after_inactive_sign_up_path_for(resource)

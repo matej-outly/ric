@@ -96,6 +96,30 @@ module RicAuth
 	@@use_omniauth = false
 
 	#
+	# Store location for redirect after sign in/out/up
+	#
+	mattr_accessor :store_location_for_redirect
+	@@store_location_for_redirect = true
+
+	#
+	# Redirect after sign in?
+	#
+	mattr_accessor :redirect_to_stored_location_after_sign_in
+	@@redirect_to_stored_location_after_sign_in = true
+
+	#
+	# Redirect after sign out?
+	#
+	mattr_accessor :redirect_to_stored_location_after_sign_out
+	@@redirect_to_stored_location_after_sign_out = false
+
+	#
+	# Redirect after sign up?
+	#
+	mattr_accessor :redirect_to_stored_location_after_sign_up
+	@@redirect_to_stored_location_after_sign_up = false
+
+	#
 	# Special layout
 	#
 	mattr_accessor :layout

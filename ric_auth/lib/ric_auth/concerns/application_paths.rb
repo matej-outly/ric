@@ -14,7 +14,7 @@ module RicAuth
 		module ApplicationPaths extend ActiveSupport::Concern
 
 			def after_unauthenticated_path_for(resource)
-				store_location_for(:user, request.path)
+				store_location_for(:user, request.path) if RicAuth.store_location_for_redirect == true
 				if defined?(RicAuthAdmin) && request.path.starts_with?("/admin") # Ugly but whatever
 					ric_auth_admin.new_session_path
 				else
