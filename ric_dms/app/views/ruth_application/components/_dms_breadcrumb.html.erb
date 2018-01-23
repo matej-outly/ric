@@ -1,0 +1,19 @@
+<% if ["folders", "documents"].include?(controller_name) %>
+	<div class="<%= align ? "float-" + align.to_s : "" %>">
+		<ol class="breadcrumb">
+			<li><%= link_to t("headers.ric_dms.folders.index"), ric_dms.folders_path %></li>
+			<% if @document_folder %>
+				<% @document_folder.self_and_ancestors.each do |document_folder| %>
+					<% if (@document.nil? || @document.new_record?) && document_folder.id == @document_folder.id %>
+						<li class="active"><%= document_folder.name %></li>
+					<% else %>
+						<li><%= link_to document_folder.name, ric_dms.folder_path(document_folder) %></li>
+					<% end %>
+				<% end %>
+			<% end %>
+			<% if @document && !@document.new_record? %>
+				<li class="active"><%= @document.name %></li>
+			<% end %>
+		</ol>
+	</div>
+<% end %>

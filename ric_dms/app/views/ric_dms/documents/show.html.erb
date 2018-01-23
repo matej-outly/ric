@@ -1,31 +1,35 @@
 <% content_for :page_header, @document.name %>
-<%= render partial: "ric_dms/partials/nav" %>
 
-<%= rug_tabs(RicDms.theme.tabs_options) do |t| %>
-	<% t.tab :identification, t("headers.ric_dms.documents.identification") do %>
-		<div class="row">
-			<div class="col-sm-2">
-				<div class="document-file">
-					<%= render partial: "ric_dms/partials/listing_file", locals: { document: @document } %>
+<div class="form-box p-b-sm">
+	<%= rug_tabs(RicDms.theme.tabs_options) do |t| %>
+		<% t.tab :identification, t("headers.ric_dms.documents.identification") do %>
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="document-file">
+						<%= render partial: "ric_dms/partials/listing_file", locals: { document: @document } %>
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<% if !@document.description.blank? %>
+						<div class="text-box">
+							<%= @document.description.to_s.html_safe %>
+						</div>
+					<% end %>
 				</div>
 			</div>
-			<div class="col-sm-10">
-				<% if !@document.description.blank? %>
-					<div class="text-box">
-						<%= @document.description.to_s.html_safe %>
-					</div>
+		<% end %>
+		<% t.tab :versions, t("headers.ric_dms.documents.versions") do %>
+			<%= rug_index(@document.recent_versions) do |t| %>
+				<%= t.body do |b| %>
+					<%= b.datetime :created_at %>
+					<%= b.file :attachment, type: { picture: false, download: true } %>
+					<% if can_destroy? %>
+						<%= b.action :destroy, 
+							path: lambda { |document_version| folder_document_version_path(@document_folder, @document, document_version) } 
+						%>
+					<% end %>
 				<% end %>
-			</div>
-		</div>
-	<% end %>
-	<% t.tab :versions, t("headers.ric_dms.documents.versions") do %>
-		<%= rug_index(@document.recent_versions) do |t| %>
-			<%= t.body do |b| %>
-				<%= b.datetime :created_at %>
-				<%= b.file :attachment, type: { picture: false, download: true } %>
-				<%= b.action :destroy, path: lambda { |document_version| folder_document_version_path(@document_folder, @document, document_version) } %>
 			<% end %>
 		<% end %>
 	<% end %>
-<% end %>
-
+</div>

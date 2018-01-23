@@ -14,19 +14,30 @@ module RicDms
 		module Authorization extend ActiveSupport::Concern
 
 			included do
-				helper_method :can_read?
-				helper_method :can_read_and_write?
+				helper_method :can_load?
+				helper_method :can_create?
+				helper_method :can_update?
+				helper_method :can_destroy?
 			end
 
-			def can_read?
+			def root_folder
+				:all # All folders
+			end
+
+			def can_load?
 				true
 			end
 
-			def can_read_and_write?
+			def can_create?
 				true
 			end
 
-			def not_autorized!
+			def can_update?
+				true
+			end
+			
+			def can_destroy?
+				true
 			end
 
 		end

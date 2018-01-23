@@ -16,8 +16,29 @@ module RicDms
 
 				included do
 
+					before_action :set_root_folder
 					before_action :set_document_folder
 					before_action :set_document, only: [:show, :edit, :update, :destroy]
+
+					# *********************************************************
+					# Authorization
+					# *********************************************************
+
+					before_action only: [:show] do
+						not_authorized if !can_load?
+					end
+
+					before_action only: [:new, :create] do
+						not_authorized if !can_create?
+					end
+
+					before_action only: [:edit, :update] do
+						not_authorized if !can_update?
+					end
+
+					before_action only: [:destroy] do
+						not_authorized if !can_destroy?
+					end
 
 				end
 
@@ -41,7 +62,7 @@ module RicDms
 					@document.document_folder_id = @document_folder.id
 					if @document.save
 						respond_to do |format|
-							format.html { redirect_to folder_path(@document.document_folder), notice: t("activerecord.notices.models.ric_dms/document.create") }
+							format.html { redirect_to folder_path(@document.document_folder), notice: RicDms.document_model.human_notice_message(:create) }
 							format.json { render json: @document.id }
 						end
 					else
@@ -57,7 +78,7 @@ module RicDms
 					@document.document_folder_id = @document_folder.id
 					if @document.save
 						respond_to do |format|
-							format.html { redirect_to folder_path(@document.document_folder), notice: t("activerecord.notices.models.ric_dms/document.update") }
+							format.html { redirect_to folder_path(@document.document_folder), notice: RicDms.document_model.human_notice_message(:update) }
 							format.json { render json: @document.id }
 						end
 					else
@@ -71,7 +92,7 @@ module RicDms
 				def destroy
 					@document.destroy
 					respond_to do |format|
-						format.html { redirect_to folder_path(@document.document_folder), notice: t("activerecord.notices.models.ric_dms/document.destroy") }
+						format.html { redirect_to folder_path(@document.document_folder), notice: RicDms.document_model.human_notice_message(:destroy) }
 						format.json { render json: @document.id }
 					end
 				end
@@ -82,18 +103,20 @@ module RicDms
 				# Model setters
 				# *************************************************************
 
+				def set_root_folder
+					@root_folder = root_folder
+					not_found if @root_folder === :none
+					@root_folder = nil if @root_folder === :all
+				end
+
 				def set_document_folder
 					@document_folder = RicDms.document_folder_model.find(params[:folder_id])
-					if @document_folder.nil?
-						redirect_to folders_path, alert: t("activerecord.errors.models.ric_dms/document_folder.not_found")
-					end
+					not_found if @document_folder.nil? || !RicDms.document_folder_model.is_descendant?(@document_folder, @root_folder)
 				end
 
 				def set_document
 					@document = RicDms.document_model.find(params[:id])
-					if @document.nil? || @document.document_folder_id != @document_folder.id
-						redirect_to folders_path, alert: t("activerecord.errors.models.ric_dms/document.not_found")
-					end
+					not_found if @document.nil? || @document.document_folder_id != @document_folder.id
 				end
 
 				# *************************************************************

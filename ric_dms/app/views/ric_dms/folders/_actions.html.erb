@@ -1,4 +1,4 @@
 <%= rug_menu_for(@document_folder, options.merge(path_base: "folder")) do |m| %>
-	<%= m.edit_item %>
-	<%= m.destroy_item %>
+	<%= m.edit_item if can_update? %>
+	<%= m.destroy_item if can_destroy? %>
 <% end %>

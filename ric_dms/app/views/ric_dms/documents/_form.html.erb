@@ -3,11 +3,11 @@
 	update_path: lambda { |document| folder_document_path(@document_folder, document) },
 ) do |f| %>
 	<div class="row">
-		<div class="col-sm-7">
+		<div class="col-sm-8">
 			<%= f.text_input_row :name %>
 			<%= f.text_area_row :description %>
 		</div>
-		<div class="col-sm-5">
+		<div class="col-sm-4">
 			<%= f.dropzone_row :attachment %>
 		</div>
 	</div>

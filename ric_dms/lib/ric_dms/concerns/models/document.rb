@@ -164,13 +164,10 @@ module RicDms
 				# *************************************************************
 
 				def set_name_before_validation
-					p "BEFORE VALID"
-					p self.name
-					p self.attachment
 					if self.name.blank? && !self.attachment.nil?
 						self.name = self.attachment.original_filename
-						p self.name
 					end
+					true
 				end
 
 			end
