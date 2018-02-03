@@ -70,7 +70,8 @@ cs:
             subject: "Potvrzení o přijetí zprávy"
 
   activemodel:
-    ric_contact/contact_message:
+    attributes:
+      ric_contact/contact_message:
         created_at: Vytvořeno
         name: Jméno odesílatele
         email: E-mail odesílatele
