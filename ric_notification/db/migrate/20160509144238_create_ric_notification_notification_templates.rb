@@ -14,7 +14,7 @@ class CreateRicNotificationNotificationTemplates < ActiveRecord::Migration
 
 			# Handlers
 			t.boolean :disabled
-			t.booelan :dry
+			t.boolean :dry
 			
 		end
 	end
