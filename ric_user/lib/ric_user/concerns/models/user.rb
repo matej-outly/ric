@@ -187,6 +187,7 @@ module RicUser
 				# *************************************************************
 
 				def regenerate_password(options = {})
+					result = true
 					new_password = RugSupport::Util::String.random(options[:length] ? options[:length] : 4)
 					
 					# Save
@@ -217,6 +218,7 @@ module RicUser
 				end
 
 				def update_password(new_password, password_confirmation, options = {})
+					result = true
 					
 					# Check blank
 					if new_password.blank?

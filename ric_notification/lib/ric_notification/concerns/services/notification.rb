@@ -210,8 +210,6 @@ module RicNotification
 							# Substitude all %1, %2, %3, ... to a form which can be evaluated
 							template_to_eval = match[2..-2].gsub(/%([0-9]+)/, "params[\\1]")
 							
-							p template_to_eval
-
 							# Evaluate match
 							begin
 								evaluated_match = eval(template_to_eval)
