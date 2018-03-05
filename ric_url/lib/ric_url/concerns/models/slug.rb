@@ -213,7 +213,7 @@ module RicUrl
 					#
 					# Add new slug or edit existing
 					#
-					def add_slug(locale, original, translation, filter = nil)
+					def add_slug(locale, original, translation, filter = nil, uniquer = nil)
 						
 						# Do not process blank
 						return if original.blank? # || translation.blank? blank translation means that original translates to root
@@ -222,10 +222,23 @@ module RicUrl
 						locale = locale.to_s
 						original = "/" + original.to_s.trim("/")
 						translation = "/" + translation.to_s.trim("/")
+						not_uniq_translation = "/" + translation.gsub(":uniquer", "").to_s.trim("/")
+						uniq_translation = "/" + translation.gsub(":uniquer", uniquer).to_s.trim("/")
 
 						# Root is not slugged
 						return if original == "/"
 						
+						# Find occupations, if found some, translation must be uniqued with token
+						occupations = all
+						occupations = occupations.where.not(original: original)
+						occupations = occupations.where(locale: locale, translation: not_uniq_translation)
+						occupations = occupations.where(filter: filter) if RicUrl.use_filter == true
+						if occupations.count > 0
+							translation = uniq_translation
+						else
+							translation = not_uniq_translation
+						end
+
 						# Try to find existing record
 						slug = where(locale: locale, original: original).first
 						if slug.nil?

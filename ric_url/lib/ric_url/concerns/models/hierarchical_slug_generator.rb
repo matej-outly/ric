@@ -46,15 +46,18 @@ module RicUrl
 
 				def generate_slugs(options = {})
 					return if @disable_slug_generator == true
+					ActiveRecord::Base.transaction do
 
-					# Generate slug in this model
-					if !RicUrl.slug_model.nil?
-						I18n.available_locales.each do |locale|
-							self._destroy_slug_was(RicUrl.slug_model, locale)
-							self._generate_slug(RicUrl.slug_model, locale)
+						# Generate slug in this model
+						if !RicUrl.slug_model.nil?
+							I18n.available_locales.each do |locale|
+								self._destroy_slug_was(RicUrl.slug_model, locale)
+								self._generate_slug(RicUrl.slug_model, locale)
+							end
 						end
-					end
 
+					end
+					
 					# Propagate to other models
 					if options[:disable_propagation] != true
 						
