@@ -213,7 +213,7 @@ module RicUrl
 					#
 					# Add new slug or edit existing
 					#
-					def add_slug(locale, original, translation, filter = nil, uniquer = nil)
+					def add_slug(locale, original, translation, filter = nil, uniquer = "")
 						
 						# Do not process blank
 						return if original.blank? # || translation.blank? blank translation means that original translates to root
@@ -223,7 +223,11 @@ module RicUrl
 						original = "/" + original.to_s.trim("/")
 						translation = "/" + translation.to_s.trim("/")
 						not_uniq_translation = "/" + translation.gsub(":uniquer", "").to_s.trim("/")
-						uniq_translation = "/" + translation.gsub(":uniquer", uniquer).to_s.trim("/")
+						if uniquer
+							uniq_translation = "/" + translation.gsub(":uniquer", uniquer).to_s.trim("/")
+						else
+							uniq_translation = not_uniq_translation
+						end
 
 						# Root is not slugged
 						return if original == "/"
