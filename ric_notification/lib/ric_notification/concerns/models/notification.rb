@@ -98,6 +98,24 @@ module RicNotification
 						notification = RicNotification.notification_model.find_by_id(notification_id)
 						return nil if notification.nil?
 
+						# Load balance
+						if !RicNotification.load_balance.blank?
+							notifications_sent_in_protected_time_window = RicNotification.notification_model
+								.joins(:notification_deliveries)
+								.where.not(id: notification.id)
+								.where("notification_deliveries.sent_at > ?", Time.current - RicNotification.load_balance.minutes).distinct
+							if notifications_sent_in_protected_time_window.count > 0
+
+								# Sleep for given amount of time
+								sleep (RicNotification.load_balance * 60) # seconds
+
+								# Then try again
+								notification.enqueue_for_delivery
+
+								return notification
+							end
+						end
+
 						# Deliver
 						notification.deliver
 

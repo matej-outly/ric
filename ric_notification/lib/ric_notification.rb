@@ -140,6 +140,17 @@ module RicNotification
 	@@sms_backend = :plivo
 
 	#
+	# Load balancer defined in minutes
+	#
+	# If another notification have been delivered in last X minutes, delivery 
+	# will be postponed. It should prevent delivery service overloading in case
+	# of some mistake ale security problem.
+	#
+	#
+	mattr_accessor :load_balance
+	@@load_balance = nil
+
+	#
 	# Class or object implementing actions_options, tabs_options, etc. can be set.
 	#
 	mattr_accessor :theme
