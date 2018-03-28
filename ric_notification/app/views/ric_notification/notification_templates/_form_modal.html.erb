@@ -1,0 +1,30 @@
+<%= rug_form_for(notification_template, 
+	update_path: :notification_template_path,
+	ajax: {
+		success_message: RicNotification.notification_template_model.human_notice_message(:update),
+		error_message: RicNotification.notification_template_model.human_error_message(:update),
+		clear_on_submit: false,
+		on_success: {
+			toggle_modal: { selector: "##{modal.id}" },
+			reload_page: true
+		}
+	}
+) do |f| %>
+	<%= modal.body do %>
+		<%= f.text_input_row :subject %>
+		<%= f.text_area_row :message, plugin: false %>
+		<%= rug_grid do |g| %>
+			<%= g.row do |r| %>
+				<%= r.col(6) do %>
+					<%= f.checkbox_row :disabled %>
+				<% end %>
+				<%= r.col(6) do %>
+					<%= f.checkbox_row :dry %>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end %>
+	<%= modal.footer do %>
+		<%= f.primary_button_row :submit %>
+	<% end %>
+<% end %>

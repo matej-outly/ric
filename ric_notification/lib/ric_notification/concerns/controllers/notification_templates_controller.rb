@@ -18,6 +18,7 @@ module RicNotification
 					
 					before_action :set_notification_template, only: [:edit, :update, :disable, :enable, :dry, :undry]
 					before_action :create_missing_notification_templates, only: [:index]
+					before_action :save_referrer, only: [:edit]
 
 				end
 
@@ -25,7 +26,7 @@ module RicNotification
 				# Actions
 				# *************************************************************
 
-				def edit # Edit action is kept in order to support custom views
+				def edit
 				end
 
 				def index
@@ -67,12 +68,12 @@ module RicNotification
 				def update
 					if @notification_template.update(notification_template_params)
 						respond_to do |format|
-							format.html { redirect_to request.referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
+							format.html { redirect_to load_referrer, notice: RicNotification.notification_template_model.human_notice_message(:update) }
 							format.json { render json: @notification_template.id }
 						end
 					else
 						respond_to do |format|
-							format.html { redirect_to request.referrer, alert: RicNotification.notification_template_model.human_error_message(:update) }
+							format.html { render "edit" }
 							format.json { render json: @notification_template.errors }
 						end
 					end

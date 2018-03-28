@@ -1,0 +1,19 @@
+<%= rug_index(notification_templates) do |t| %>
+	<%= t.body do |b| %>
+		<%= b.enum :ref %>
+		<%= b.string :subject %>
+		<%= b.text :message, type: { strip_tags: true } %>
+		<%= b.state :disabled, type: { use_translation: true }, action: {
+			path: -> (nt) { nt.disabled == true ? ric_notification.enable_notification_template_path(nt) : ric_notification.disable_notification_template_path(nt) },
+			method: :put
+		}  %>
+		<%= b.state :dry, type: { use_translation: true }, action: {
+			path: -> (nt) { nt.dry == true ? ric_notification.undry_notification_template_path(nt) : ric_notification.dry_notification_template_path(nt) },
+			method: :put
+		} %>
+		<%= b.action :edit, path: "ric_notification.edit_notification_template_path" %>
+	<% end %>
+	<%= t.footer do |f| %>
+		<%= f.summary %>
+	<% end %>
+<% end %>
