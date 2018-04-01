@@ -54,6 +54,11 @@ module RicNotification
 								if options[:attachment]
 									notification.attachment = options[:attachment]
 								end
+
+								# Signature
+								if !options[:signature].blank?
+									notification.message += options[:signature].to_s
+								end
 								
 								# Save to DB
 								notification.save
