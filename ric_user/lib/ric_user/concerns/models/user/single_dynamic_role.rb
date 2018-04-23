@@ -32,6 +32,17 @@ module RicUser
 						end
 
 					end
+
+					# *********************************************************
+					# Ref
+					# *********************************************************
+
+					def role_ref
+						if @role_ref.nil?
+							@role_ref = self.role.ref
+						end
+						return @role_ref
+					end
 					
 				end
 			end

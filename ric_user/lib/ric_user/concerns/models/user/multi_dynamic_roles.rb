@@ -79,6 +79,17 @@ module RicUser
 					end
 
 					# *********************************************************
+					# Refs
+					# *********************************************************
+
+					def role_refs
+						if @role_refs.nil?
+							@role_refs = self.roles.map{ |role| role.ref }.compact.uniq
+						end
+						return @role_refs
+					end
+
+					# *********************************************************
 					# Roles as set by application
 					# *********************************************************
 
