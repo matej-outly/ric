@@ -1,18 +1,20 @@
 <% content_for :page_header, "false" %>
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-10 col-md-offset-1">
 		<div class="row">
 			<% RicBoard.layout.each do |component, component_options| %>
-				<% if lookup_context.find_all("ric_board/components/_#{component.to_s}").any? %>
-					<% partial = render(partial: "ric_board/components/#{component.to_s}",
-						locals: {
-							options: component_options
-						}
-					).trim(" \t\n").html_safe %>
-					<% if !partial.blank? %>
-						<div class="col-md-<%= component_options[:width] ? component_options[:width] : 12 %>">
-							<%= partial %>
-						</div>
+				<% if component_options[:show_if] ? eval("(#{component_options[:show_if]}) == true") : true %>
+					<% if lookup_context.find_all("ric_board/components/_#{component.to_s}").any? %>
+						<% partial = render(partial: "ric_board/components/#{component.to_s}",
+							locals: {
+								options: component_options
+							}
+						).trim(" \t\n").html_safe %>
+						<% if !partial.blank? %>
+							<div class="col-md-<%= component_options[:width] ? component_options[:width] : 12 %>">
+								<%= partial %>
+							</div>
+						<% end %>
 					<% end %>
 				<% end %>
 			<% end %>
