@@ -17,6 +17,7 @@ class CreateRicNumberingSequences < ActiveRecord::Migration
 
 			# Current number
 			t.integer :current, limit: 8
+			t.text :blocked_numbers
 		end
 	end
 end
