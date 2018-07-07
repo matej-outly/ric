@@ -22,7 +22,8 @@ cs:
     notices:
       models:
         ric_auth/override:
-          create: Nyní prohlížíte aplikaci jako %{user} (%{role}).
+          create: Nyní prohlížíte aplikaci jako %{user}.
+          create_both: Nyní prohlížíte aplikaci jako %{user} (%{role}).
 
   #
   # Devise

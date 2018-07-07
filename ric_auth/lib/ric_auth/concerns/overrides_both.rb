@@ -11,7 +11,7 @@
 
 module RicAuth
 	module Concerns
-		module Overrides extend ActiveSupport::Concern
+		module OverrideBoth extend ActiveSupport::Concern
 			
 			included do	
 				

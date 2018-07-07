@@ -21,9 +21,7 @@ module RicAuth
 				def create
 					override = RicAuth.override_model.new(override_params)
 					session[RicAuth.override_model.session_key] = override.save_to_session
-					if override.user && override.role
-						flash[:notice] = I18n.t("activerecord.notices.models.ric_auth/override.create", user: override.user.name_formatted, role: override.role.label.downcase_first)
-					end
+					flash[:notice] = I18n.t("activerecord.notices.models.ric_auth/override.create", user: override.user.name_formatted) if override.user
 					redirect_to request.referrer
 				end
 

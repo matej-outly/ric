@@ -12,7 +12,7 @@
 module RicAuth
 	module Concerns
 		module Models
-			module Override extend ActiveSupport::Concern
+			module OverrideBoth extend ActiveSupport::Concern
 
 				included do
 					attr_accessor :role_ref

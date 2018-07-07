@@ -15,14 +15,16 @@ require "ric_auth/engine"
 # Concerns
 require "ric_auth/concerns/application_paths"
 require "ric_auth/concerns/devise_paths"
-require "ric_auth/concerns/overrides"
+require "ric_auth/concerns/overrides_user"
+require "ric_auth/concerns/overrides_both"
 require "ric_auth/concerns/password_enforcement"
 
 # Models
 require "ric_auth/concerns/models/authentication"
 require "ric_auth/concerns/models/devisable"
 require "ric_auth/concerns/models/omniauthable"
-require "ric_auth/concerns/models/override"
+require "ric_auth/concerns/models/override_user"
+require "ric_auth/concerns/models/override_both"
 
 module RicAuth
 

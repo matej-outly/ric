@@ -12,6 +12,6 @@
 module RicAuth
 	class Override
 		include ActiveModel::Model
-		include RicAuth::Concerns::Models::Override
+		include RicAuth::Concerns::Models::OverrideUser
 	end
 end

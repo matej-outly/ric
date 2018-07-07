@@ -146,7 +146,7 @@ Alternatively you can add column `can_override_role` to the `users` DB table and
 
 User overriding feature enables the system administrator to work with the application as a different user. The feature is integrated to the RicAuth module. All you need to do is to provide `can_override_user` attribute on the User model. It can be done with `can_override_user` column in the `users` DB table so you can enable this feature only for selected users.
 
-To include both features into the application, you must include `RicAuth::Concerns::Overrides` concertn into the `ApplicationController` class:
+To include both features into the application, you must include `RicAuth::Concerns::OverridesBoth` or `RicAuth::Concerns::OverridesUser` concern to support user overriding into the `ApplicationController` class:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -156,7 +156,8 @@ class ApplicationController < ActionController::Base
     # Overrides
     # *************************************************************************
 
-    include RicAuth::Concerns::Overrides
+    include RicAuth::Concerns::OverridesUser
 end
 ```
 
+And include `override_user_modal` into the `ruth_application.rb` config file.
