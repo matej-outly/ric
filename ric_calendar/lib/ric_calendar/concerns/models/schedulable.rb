@@ -143,7 +143,7 @@ module RicCalendar
 				# Make DateTime object from (given) Date and Time objects
 				#
 				def datetime_from(base_date = self.date_from)
-					if self.time_from
+					if !self.all_day && self.time_from
 						DateTime.compose(base_date, self.time_from)
 					else
 						base_date.to_datetime
@@ -154,7 +154,7 @@ module RicCalendar
 				# Make DateTime object from (given) Date and Time objects
 				#
 				def datetime_to(base_date = self.date_to)
-					if self.time_to
+					if !self.all_day && self.time_to
 						DateTime.compose(base_date, self.time_to)
 					else
 						base_date.to_datetime
