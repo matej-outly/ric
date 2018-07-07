@@ -1,7 +1,7 @@
 <div class="document-listing-files">
 
 	<% @documents.each do |document| %>
-		<div class="document-file">
+		<div class="document-file" data-mh="document">
 			<%= render partial: "ric_dms/partials/listing_file", locals: { document: document } %>
 			<div class="document-actions">
 				<%= link_to rug_icon(:show), folder_document_path(@document_folder, document) if can_load? %>
@@ -12,10 +12,10 @@
 	<% end %>
 
 	<% if can_create? %>
-		<div class="document-file document-new">
+		<div class="document-file document-new" data-mh="document">
 			<%= link_to new_folder_document_path(folder_id: @document_folder) do %>
 				<span class="document-mime-type">
-					<i class="fa fa-file-o fa-3x"></i>
+					<i class="fas fa-file fa-3x"></i>
 				</span>
 				<span class="document-name">
 					<%= t("headers.ric_dms.documents.new") %>
