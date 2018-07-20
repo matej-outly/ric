@@ -18,8 +18,9 @@ module RicNotification
 					
 					# Sender
 					@sender = RicNotification.mailer_sender
-					if @sender.nil?
-						raise "Please specify sender."
+					raise "Please specify sender." if @sender.nil?
+					if !RicNotification.mailer_sender_name.blank?
+						@sender = "#{RicNotification.mailer_sender_name} <#{@sender}>"
 					end
 
 					# Other view data

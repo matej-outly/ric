@@ -130,6 +130,12 @@ module RicNotification
 	#@@mailer_sender = ... to be set in module initializer
 
 	#
+	# Mailer sender name
+	#
+	mattr_accessor :mailer_sender_name
+	#@@mailer_sender_name = ... to be set in module initializer
+
+	#
 	# Used SMS backend
 	#
 	# Available backends:
