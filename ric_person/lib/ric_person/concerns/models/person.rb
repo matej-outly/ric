@@ -23,20 +23,11 @@ module RicPerson
 					belongs_to :user, class_name: RicPerson.user_model.to_s
 					
 					# *********************************************************
-					# Validators
+					# User wrapper
 					# *********************************************************
 
-					if RicPerson.enforce_user == true
-						validates_presence_of :user_id
-						#validates_presence_of :email Not working since email is virtual attribute
-					end
-
-					# *************************************************************
-					# User wrapper
-					# *************************************************************
-
 					after_find :load_user_attributes
-					before_validation :ensure_user
+					before_save :ensure_user
 					after_save :save_user_attributes
 					after_destroy :cleanup_user
 
@@ -63,29 +54,89 @@ module RicPerson
 				# *************************************************************
 
 				def ensure_user
+
+					# User not associated, but e-mail filled -> user must be found and associated
 					if self.user.nil? && !self.email.blank?
 						
 						# Find or create user object
-						user = RicPerson.user_model.find_by(email: self.email)
-						if user.nil?
-							user = RicPerson.user_model.new(email: self.email)
-							user.regenerate_password(notification: false)
-							if !user.save
-								raise "User not saved, errors: #{user.errors.inspect.to_s}"
-							end
+						target_user = RicPerson.user_model.find_by(email: self.email)
+						if target_user.nil?
+							target_user = RicPerson.user_model.new(email: self.email)
+							target_user.regenerate_password(notification: false)
+							raise "User not saved, errors: #{target_user.errors.inspect.to_s}" if !target_user.save
 						end
 
-						# Associate with user assignment
-						self.user_id = user.id
+						# Associate user object
+						self.user_id = target_user.id
 
 					end
+
+					# User associated, but e-mail blanked -> user must not be associated
+					if !self.user.nil? && self.email.blank?
+						self.cleanup_user
+					end
+
+					# User associated, e-mail changed -> user must be reassociated
+					if !self.user.nil? && !self.email.blank? && self.email != self.user.email
+
+						if self.related_people.empty? # Current user has only one relation 
+
+							target_user = RicPerson.user_model.find_by(email: self.email)
+							if !target_user.nil? # Target e-mail exists in different user
+								
+								# Old user object destroyed
+								self.user.destroy
+
+								# Associate new user object
+								self.user_id = target_user.id
+								
+							else # Completely new e-mail
+								# Nothing to do, e-mail will be changed correctly in save_user_attributes
+							end
+						
+						else # Current user has many relations
+
+							# Unassociate current user object
+							self.user_id = nil
+
+							# Find or create user object
+							target_user = RicPerson.user_model.find_by(email: self.email)
+							if target_user.nil?
+								target_user = RicPerson.user_model.new(email: self.email)
+								target_user.regenerate_password(notification: false)
+								raise "User not saved, errors: #{target_user.errors.inspect.to_s}" if !target_user.save
+							end
+
+							# Associate user object
+							self.user_id = target_user.id
+
+						end
+
+					end
+
 				end
 
 				def cleanup_user
-					# TODO check all person types
-					#if self.user && (self.user.user_assignment_ids - [self.id]).length == 0
-					#	self.user.destroy
-					#end
+					return if self.user.nil?
+
+					# Current user has only one relation 
+					if self.related_people.empty? 
+						self.user.destroy
+					end
+					
+					self.user_id = nil
+				end
+
+				def related_people
+					return if self.user.nil?
+
+					result = []
+					self.user.people.each do |person|
+						if !(person.class.to_s == self.class.to_s && person.id == self.id)
+							result << person
+						end
+					end
+					return result
 				end
 
 			protected

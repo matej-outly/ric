@@ -2,7 +2,7 @@
 # * Copyright (c) Clockstar s.r.o. All rights reserved.
 # *****************************************************************************
 # *
-# * Multi-people user TODO
+# * Multi-people user
 # *
 # * Author: Matěj Outlý
 # * Date  : 20. 3. 2017
@@ -16,58 +16,74 @@ module RicPerson
 			
 				included do
 					
-					# *****************************************************
-					# People
-					# *****************************************************
-
-					has_many :user_people, class_name: RicUser.user_person_model.to_s, dependent: :destroy
-
-					# *****************************************************
+					# *********************************************************
 					# Specific person getters
-					# *****************************************************
+					# *********************************************************
 
-					if RicUser.person_types
-						RicUser.person_types.each do |person_type|
-							define_method(person_type.split("::").last.to_snake) do
-								user_person = self.user_people.where(person_type: person_type).first
-								if user_person
-									return user_person.person
-								else
-									return nil
+					if RicPerson.person_types
+						RicPerson.person_types.each do |person_type|
+
+							# Plural getter
+							define_method(person_type.split("::").last.pluralize.to_snake) do
+								name = person_type.split("::").last.pluralize.to_snake
+								value = self.instance_variable_get("@#{name}")
+								if value.nil? && !self.new_record?
+									klass = person_type.constantize rescue nil
+									if klass
+										value = klass.where(user_id: self.id).order(id: :asc)
+										self.instance_variable_set("@#{name}", value)
+									end
 								end
+								return value
 							end
+
+							# Singular getter
+							define_method(person_type.split("::").last.singularize.to_snake) do
+								name = person_type.split("::").last.singularize.to_snake
+								value = self.instance_variable_get("@#{name}")
+								if value.nil? && !self.new_record?
+									klass = person_type.constantize rescue nil
+									if klass
+										value = klass.where(user_id: self.id).order(id: :asc).first
+										self.instance_variable_set("@#{name}", value)
+									end
+								end
+								return value
+							end
+
 						end
 					end
 
 				end
 
+				# *************************************************************
+				# Common person getters
+				# *************************************************************
+
 				#
-				# Common people getter
+				# Common people (plural) getter
 				#
 				def people
-					if @people.nil?
-						@people = self.user_people.order(id: :asc).to_a.map { |user_person| user_person.person }
+					if @people.nil? && !self.new_record? && RicPerson.person_types
+						@people = []
+						RicPerson.person_types.each do |person_type|
+							klass = person_type.constantize rescue nil
+							if klass
+								@people += klass.where(user_id: self.id).order(id: :asc).to_a
+							end
+						end
 					end
 					return @people
 				end
 
 				#
-				# Get person based on currently selected user role
+				# Common person (singular) getter
 				#
 				def person
-					self.current_person
-				end
-
-				#
-				# Get person based on currently selected user role
-				#
-				def current_person
-					self.people.each do |person|
-						if person.person_role == self.role
-							return person
-						end
+					if @person.nil?
+						@person = self.people.first
 					end
-					return nil
+					return @person
 				end
 
 			end

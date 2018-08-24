@@ -13,6 +13,7 @@
 require "ric_person/engine"
 
 # Models
+require "ric_person/concerns/models/user"
 require "ric_person/concerns/models/person"
 require "ric_person/concerns/models/people_selector"
 require "ric_person/concerns/models/people_selectable"
