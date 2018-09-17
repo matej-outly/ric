@@ -29,7 +29,7 @@ module RicPerson
 					after_find :load_user_attributes
 					before_save :ensure_user
 					after_save :save_user_attributes
-					after_destroy :cleanup_user
+					before_destroy :cleanup_user
 
 				end
 
