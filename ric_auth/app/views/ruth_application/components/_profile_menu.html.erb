@@ -8,7 +8,7 @@
 		</button>
 		<ul class="dropdown-menu">
 			<%= render partial: "ric_auth/shared/profile/menu" %>
-			<% if real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true %>
+			<% if defined?(real_current_user) && real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true %>
 				<li role="separator" class="divider"></li>
 				<%= render partial: "ric_auth/shared/override/menu_user" %>
 			<% end %>
