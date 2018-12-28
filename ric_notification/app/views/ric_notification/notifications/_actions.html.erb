@@ -1,14 +1,15 @@
 <%= rug_menu_for(@notification, options.merge(path_base: "notifications")) do |m| %>
-	<%= m.item t("headers.ric_notification.notification_templates.index"), notification_templates_path, 
-		icon: "cog",
-		active: (controller_name == "notification_templates")
-	%>
 	<%= m.index_item t("headers.ric_notification.notifications.index"), nil, 
-		active: (controller_name == "notifications" && action_name == "index") 
+		active: (controller_name == "notifications" && action_name == "index"),
+		icon: "comments"
 	%>
 	<% if @notification && !@notification.new_record? %>
 		<%= m.show_item %>
 		<%= m.item t("headers.ric_notification.notifications.deliver"), deliver_notification_path(@notification), method: :put, icon: "download" %>
 		<%= m.destroy_item %>
 	<% end %>
+	<%= m.item t("headers.ric_notification.notification_templates.index"), notification_templates_path, 
+		icon: "cog",
+		active: (controller_name == "notification_templates")
+	%>
 <% end %>

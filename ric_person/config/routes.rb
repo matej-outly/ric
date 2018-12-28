@@ -9,7 +9,7 @@
 # *
 # *****************************************************************************
 
-RicUser::Engine.routes.draw do
+RicPerson::Engine.routes.draw do
 
 	# People selectors
 	resources :people_selectors, only: [] do

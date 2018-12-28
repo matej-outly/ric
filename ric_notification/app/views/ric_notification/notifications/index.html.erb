@@ -1,11 +1,11 @@
 <%= rug_index(@notifications) do |t| %>
 	<%= t.body do |b| %>
-		<%= b.datetime :created_at %>
+		<%= b.datetime :created_at, nowrap: true %>
 		<%= b.string :subject, show: { path: :notification_path } %>
 		<%= b.text :message, type: { strip_tags: true } %>
-		<%= b.enum :kind %>
-		<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender) %>
-		<%= b.string :done %>
+		<%= b.enum :kind, nowrap: true %>
+		<%= b.string :sender_name_or_email, label: RicNotification.notification_model.human_attribute_name(:sender), nowrap: true %>
+		<%= b.string :done, nowrap: true, align: :right %>
 		<%= b.action :destroy, path: :notification_path %>
 	<% end %>
 	<%= t.footer do |f| %>
