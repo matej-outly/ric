@@ -1,33 +1,43 @@
-<div class="btn-group <%= align ? "navbar-" + align.to_s : "" %>">
-	<% if user_signed_in? %>
-		<button onclick="window.location='<%= ric_auth.edit_profile_path %>'" type="button" class="btn btn-link navbar-btn">
-			<%= rug_icon("user") %>
-		</button>
-		<button type="button" class="btn btn-link navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<%= rug_icon("caret-down") %>
-		</button>
-		<ul class="dropdown-menu">
-			<%= render partial: "ric_auth/shared/profile/menu" %>
-			<% if defined?(real_current_user) && real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true %>
+<ul class="nav navbar-nav <%= align ? "navbar-" + align.to_s : "" %>">
+	<li class="dropdown">
+
+		<% if user_signed_in? %>
+			
+			<a href="#" class="dropdown-toggle navbar-avatar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				<div class="avatar avatar-sm">
+					<% if current_user.respond_to?(:avatar) && current_user.avatar && current_user.avatar.exists? %>
+						<%= image_tag current_user.avatar.url(:thumb) %>
+					<% else %>
+						<%= rug_icon("user") %>	
+					<% end %>
+				</div>
+			</a>
+			
+			<ul class="dropdown-menu">
+				<%= render partial: "ric_auth/shared/profile/menu" %>
+				<% if defined?(real_current_user) && real_current_user.respond_to?(:can_override_user) && real_current_user.can_override_user == true %>
+					<li role="separator" class="divider"></li>
+					<%= render partial: "ric_auth/shared/override/menu_user" %>
+				<% end %>
+				<% if current_user.respond_to?(:can_override_role) && current_user.can_override_role == true %>
+					<li role="separator" class="divider"></li>
+					<%= render partial: "ric_auth/shared/override/menu_role" %>
+				<% end %>
 				<li role="separator" class="divider"></li>
-				<%= render partial: "ric_auth/shared/override/menu_user" %>
-			<% end %>
-			<% if current_user.respond_to?(:can_override_role) && current_user.can_override_role == true %>
-				<li role="separator" class="divider"></li>
-				<%= render partial: "ric_auth/shared/override/menu_role" %>
-			<% end %>
-			<li role="separator" class="divider"></li>
-			<%= render partial: "ric_auth/shared/session/menu_signed" %>
-		</ul>
-	<% else %>
-		<button onclick="window.location='<%= ric_auth.new_session_path %>'" type="button" class="btn btn-link navbar-btn">
-			<%= rug_icon("sign-in") %>
-		</button>
-		<button type="button" class="btn btn-link navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-			<%= render partial: "ric_auth/shared/session/menu_not_signed" %>
-		</ul>
-	<% end %>
-</div>
+				<%= render partial: "ric_auth/shared/session/menu_signed" %>
+			</ul>
+
+		<% else %>
+
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				<%= rug_icon("sign-in") %>	
+			</a>
+			
+			<ul class="dropdown-menu">
+				<%= render partial: "ric_auth/shared/session/menu_not_signed" %>
+			</ul>
+
+		<% end %>
+
+	</li>
+</ul>
