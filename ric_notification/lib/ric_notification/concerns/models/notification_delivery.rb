@@ -55,6 +55,7 @@ module RicNotification
 						when :email then :batch
 						when :sms then :batch
 						when :mailboxer then :instantly
+						else :instantly
 					end
 				end
 
