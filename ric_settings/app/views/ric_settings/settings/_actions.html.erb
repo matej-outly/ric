@@ -1,4 +1,4 @@
 <%= rug_menu(options) do |m| %>
 	<%= m.item t("headers.ric_settings.settings.show"), :settings, icon: "cog", active: (action_name == "show") %>
-	<%= m.item t("headers.ric_settings.settings.edit"), :edit_settings, icon: "pencil", active: (action_name == "edit" || action_name == "update") %>
+	<%= m.item t("headers.ric_settings.settings.edit"), :edit_settings, icon: :edit, active: (action_name == "edit" || action_name == "update") %>
 <% end %>
