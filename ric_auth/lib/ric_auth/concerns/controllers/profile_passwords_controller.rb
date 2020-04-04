@@ -53,7 +53,7 @@ module RicAuth
 				# Never trust parameters from the scary internet, only allow the white list through.
 				#
 				def user_params
-					params.require(:user).permit(
+					params.require(RicAuth.user_model.model_name.param_key).permit(
 						:current_password, 
 						:password, 
 						:password_confirmation

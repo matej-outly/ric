@@ -57,7 +57,7 @@ module RicAuthAdmin
 				end
 
 				def user_params
-					params.require(:user).permit(RicAuthAdmin.user_model.profile_columns)
+					params.require(RicAuth.user_model.model_name.param_key).permit(RicAuthAdmin.user_model.profile_columns)
 				end
 
 			end
