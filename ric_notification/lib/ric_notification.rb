@@ -97,6 +97,15 @@ module RicNotification
 	@@notification_template_model = "RicNotification::NotificationTemplate"
 
 	#
+	# People selector model
+	#
+	mattr_accessor :people_selector_model
+	def self.people_selector_model
+		return @@people_selector_model.constantize
+	end
+	@@people_selector_model = "RicPerson::PeopleSelector"
+
+	#
 	# Available notification template refs. For each defined ref there will be 
 	# an automatically created record in the notification_templates table. 
 	# System administrator can define content of this template via admin 

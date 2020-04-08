@@ -178,9 +178,9 @@ module RicNotification
 						new_receivers = []
 						receivers.each do |receiver|
 							if receiver.is_a?(String) || receiver.is_a?(Symbol)
-								if defined?(RicPerson)
-									ref, params = RicPerson.people_selector_model.decode_value(receiver.to_s)
-									new_receivers.concat(RicPerson.people_selector_model.people(ref, params).to_a) # Use people selector to generate receivers
+								if RicNotification.people_selector_model && RicNotification.people_selector_model.respond_to?(:decode_value) && RicNotification.people_selector_model.respond_to?(:people)
+									ref, params = RicNotification.people_selector_model.decode_value(receiver.to_s)
+									new_receivers.concat(RicNotification.people_selector_model.people(ref, params).to_a) # Use people selector to generate receivers
 								end
 							else
 								new_receivers << receiver
